@@ -1,0 +1,10 @@
+<% if target.errors.any? %>
+<div id="error-explanation">
+  <p class="error-head"><%= t('.fix_the_errors', count: target.errors.count) %></p>
+  <ul>
+  <% target.errors.full_messages.each do |msg| %>
+    <li><%= msg %></li>
+  <% end %>
+  </ul>
+</div>
+<% end %>

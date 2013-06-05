@@ -1,4 +1,12 @@
 GIT
+  remote: git://github.com/kreintjes/i18n_alchemy.git
+  revision: a76e885143a948cca18d1933d9c351f23d858b1b
+  specs:
+    i18n_alchemy (0.1.0)
+      activesupport (>= 3.0)
+      i18n (>= 0.5)
+
+GIT
   remote: git://github.com/mcasimir/devise-i18n-views.git
   revision: 35987ea588c0741c3fcab15ccd8baa07a9a61b39
   ref: 35987ea588c0741c3fcab15ccd8baa07a9a61b39
@@ -143,6 +151,7 @@ DEPENDENCIES
   devise (= 3.0.0.rc)
   devise-i18n
   devise-i18n-views!
+  i18n_alchemy!
   jbuilder (~> 1.0.1)
   jquery-rails
   pg

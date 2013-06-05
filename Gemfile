@@ -44,14 +44,19 @@ end
 # Use debugger
 # gem 'debugger', group: [:development, :test]
 
-# Translations
+# Rails-i18n for standard rails locales
 gem 'rails-i18n'
 
-# Authentication
+# Devise for authentication
 gem 'devise', '3.0.0.rc'
 gem 'devise-i18n'
 gem 'devise-i18n-views', github: 'mcasimir/devise-i18n-views', ref: '35987ea588c0741c3fcab15ccd8baa07a9a61b39'
 
+# Use CanCan for access control / authorisation
 gem 'cancan'
 
+# Use I18n alchemy gem for easy number (and possibly date) parsing and localization in forms
+gem 'i18n_alchemy', github: 'kreintjes/i18n_alchemy'
+
+# Responders gem for nice and easy responses after CRUD actions
 gem 'responders'

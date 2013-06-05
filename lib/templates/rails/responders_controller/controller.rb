@@ -30,9 +30,9 @@ class <%= controller_class_name %>Controller < ApplicationController
   # POST <%= route_url %>
   def create
 <% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) }.present? -%>
-    @<%= singular_table_name %>.localized.attributes = <%= "params[:#{singular_table_name}]" %>
+    @<%= singular_table_name %>.localized.attributes = resource_params
 <% else -%>
-    @<%= singular_table_name %>.attributes = <%= "params[:#{singular_table_name}]" %>
+    @<%= singular_table_name %>.attributes = resource_params
 <% end -%>
     @<%= singular_table_name %>.save
     respond_with(@<%= singular_table_name %>)
@@ -41,9 +41,9 @@ class <%= controller_class_name %>Controller < ApplicationController
   # PATCH/PUT <%= route_url %>/1
   def update
 <% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) }.present? -%>
-    @<%= singular_table_name %>.localized.update_attributes(<%= "params[:#{singular_table_name}]" %>)
+    @<%= singular_table_name %>.localized.update_attributes(resource_params)
 <% else -%>
-    @<%= singular_table_name %>.update_attributes(<%= "params[:#{singular_table_name}]" %>)
+    @<%= singular_table_name %>.update_attributes(resource_params)
 <% end -%>
     respond_with(@<%= singular_table_name %>)
   end
@@ -67,7 +67,7 @@ private
   end
 
   # Only allow a trusted parameter "white list" through.
-  def <%= "#{singular_table_name}_params" %>
+  def resource_params
 <%- if attributes_names.empty? -%>
     params[<%= ":#{singular_table_name}" %>]
 <%- else -%>
