@@ -29,14 +29,22 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # POST <%= route_url %>
   def create
+<% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) }.present? -%>
+    @<%= singular_table_name %>.localized.attributes = <%= "params[:#{singular_table_name}]" %>
+<% else -%>
     @<%= singular_table_name %>.attributes = <%= "params[:#{singular_table_name}]" %>
+<% end -%>
     @<%= singular_table_name %>.save
     respond_with(@<%= singular_table_name %>)
   end
 
   # PATCH/PUT <%= route_url %>/1
   def update
+<% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) }.present? -%>
+    @<%= singular_table_name %>.localized.update_attributes(<%= "params[:#{singular_table_name}]" %>)
+<% else -%>
     @<%= singular_table_name %>.update_attributes(<%= "params[:#{singular_table_name}]" %>)
+<% end -%>
     respond_with(@<%= singular_table_name %>)
   end
 
