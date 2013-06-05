@@ -1,0 +1,26 @@
+<% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) } -%>
+<%%= form_for(@<%= singular_table_name %>.localized) do |f| %>
+<% else -%>
+<%%= form_for(@<%= singular_table_name %>) do |f| %>
+<% end -%>
+  <%%= render 'shared/error_messages', target: @<%= singular_table_name %> %>
+
+<% attributes.each do |attribute| -%>
+  <div class="field">
+<% if attribute.password_digest? -%>
+    <%%= f.label :password %>
+    <%%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%%= f.label :password_confirmation %>
+    <%%= f.password_field :password_confirmation %>
+<% else -%>
+    <%%= f.label :<%= attribute.name %> %>
+    <%%= f.<%= attribute.field_type %> :<%= attribute.name %> %>
+<% end -%>
+  </div>
+<% end -%>
+  <div class="actions">
+    <%%= f.submit %>
+  </div>
+<%% end %>

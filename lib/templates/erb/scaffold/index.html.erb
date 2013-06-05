@@ -1,0 +1,39 @@
+<h1><%%= index_title(<%= class_name %>) %></h1>
+
+<%% if @<%= plural_table_name %>.empty? %>
+  <p><%%= t('.empty', default: :empty_objects, classes: <%= class_name %>.model_name.human(count: 2).lcfirst) %></p>
+<%% else %>
+<table>
+  <thead>
+    <tr>
+<% attributes.reject(&:password_digest?).each do |attribute| -%>
+      <th><%%= <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %></th>
+<% end -%>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <%% @<%= plural_table_name %>.each do |<%= singular_table_name %>| %>
+    <tr>
+<% if attributes.any? -%>
+      <td><%%= name_link_to_show(<%= singular_table_name %>) %></td>
+<% attributes.from(1).each do |attribute| -%>
+<% if [:integer, :float, :decimal].include?(attribute.type) -%>
+      <td><%%= <%= singular_table_name %>.localized.<%= attribute.name %> %></td>
+<% else -%>
+      <td><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
+<% end -%>
+<% end -%>
+<% end -%>
+      <td class="icons">
+        <%%= icon_link_to_edit(<%= singular_table_name %>) %>
+        <%%= icon_link_to_destroy(<%= singular_table_name %>) %>
+      </td>
+    </tr>
+    <%% end %>
+  </tbody>
+</table>
+<%% end %>
+
+<%%= button_link_to_new(<%= class_name %>) %>

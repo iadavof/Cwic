@@ -1,0 +1,16 @@
+<h1><%%= show_title(@<%= singular_table_name %>) %></h1>
+
+<dl>
+<% attributes.reject(&:password_digest?).each do |attribute| -%>
+  <dt><%%= <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %></dt>
+<% if [:integer, :float, :decimal].include?(attribute.type) -%>
+  <dd><%%= @<%= singular_table_name %>.localized.<%= attribute.name %> %></dd>
+<% else -%>
+  <dd><%%= @<%= singular_table_name %>.<%= attribute.name %> %></dd>
+<% end -%>
+<% end -%>
+</dl>
+
+<%%= button_link_back_to_index(<%= class_name %>) %>
+<%%= button_link_to_edit(@<%= singular_table_name %>) %>
+<%%= button_link_to_destroy(@<%= singular_table_name %>) %>
