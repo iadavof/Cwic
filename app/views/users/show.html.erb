@@ -1,0 +1,14 @@
+<h1><%= show_title(@user) %></h1>
+
+<dl>
+  <dt><%= User.human_attribute_name(:first_name) %></dt>
+  <dd><%= @user.first_name %></dd>
+  <dt><%= User.human_attribute_name(:last_name) %></dt>
+  <dd><%= @user.last_name %></dd>
+  <dt><%= User.human_attribute_name(:infix) %></dt>
+  <dd><%= @user.infix %></dd>
+</dl>
+
+<%= button_link_back_to_index(User) %>
+<%= button_link_to_edit(@user) %>
+<%= button_link_to_destroy(@user) %>

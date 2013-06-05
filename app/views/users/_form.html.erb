@@ -1,0 +1,19 @@
+<%= form_for(@user) do |f| %>
+  <%= render 'shared/error_messages', target: @user %>
+
+  <div class="field">
+    <%= f.label :first_name %>
+    <%= f.text_field :first_name %>
+  </div>
+  <div class="field">
+    <%= f.label :last_name %>
+    <%= f.text_field :last_name %>
+  </div>
+  <div class="field">
+    <%= f.label :infix %>
+    <%= f.text_field :infix %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

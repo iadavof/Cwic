@@ -48,7 +48,7 @@ end
 gem 'rails-i18n'
 
 # Authentication
-gem 'devise'
+gem 'devise', '3.0.0.rc'
 gem 'devise-i18n'
 gem 'devise-i18n-views', github: 'mcasimir/devise-i18n-views', ref: '35987ea588c0741c3fcab15ccd8baa07a9a61b39'
 

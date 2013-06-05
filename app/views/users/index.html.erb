@@ -1,0 +1,32 @@
+<h1><%= index_title(User) %></h1>
+
+<% if @users.empty? %>
+  <p><%= t('.empty', default: :empty_objects, classes: User.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= User.human_attribute_name(:first_name) %></th>
+      <th><%= User.human_attribute_name(:last_name) %></th>
+      <th><%= User.human_attribute_name(:infix) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @users.each do |user| %>
+    <tr>
+      <td><%= name_link_to_show(user) %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.infix %></td>
+      <td class="icons">
+        <%= icon_link_to_edit(user) %>
+        <%= icon_link_to_destroy(user) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new(User) %>
