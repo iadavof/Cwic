@@ -54,6 +54,7 @@ GEM
     minitest (4.7.4)
     multi_json (1.7.6)
     pg (0.15.1)
+    pg (0.15.1-x86-mingw32)
     polyglot (0.3.3)
     rack (1.5.2)
     rack-test (0.6.2)
@@ -112,6 +113,7 @@ GEM
 
 PLATFORMS
   ruby
+  x86-mingw32
 
 DEPENDENCIES
   coffee-rails (~> 4.0.0)
