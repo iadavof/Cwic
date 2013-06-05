@@ -43,3 +43,13 @@ end
 
 # Use debugger
 # gem 'debugger', group: [:development, :test]
+
+# Translations
+gem 'rails-i18n'
+
+# Authentication
+gem 'devise'
+gem 'devise-i18n'
+gem 'devise-i18n-views', github: 'mcasimir/devise-i18n-views', ref: '35987ea588c0741c3fcab15ccd8baa07a9a61b39'
+
+gem 'responders'
