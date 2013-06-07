@@ -1,0 +1,190 @@
+@font-face {
+  font-family: 'Aller';
+  src: url('../fonts/aller_rg-webfont.eot');
+  src: url('../fonts/aller_rg-webfont.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/aller_rg-webfont.woff') format('woff'), 
+       url('../fonts/aller_rg-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aller';
+  src: url('../fonts/aller_bd-webfont.eot');
+  src: url('../fonts/aller_bd-webfont.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/aller_bd-webfont.woff') format('woff'), 
+       url('../fonts/aller_bd-webfont.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Aller';
+  src: url('../fonts/aller_it-webfont.eot');
+  src: url('../fonts/aller_it-webfont.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/aller_it-webfont.woff') format('woff'), 
+       url('../fonts/aller_it-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'Aller';
+  src: url('../fonts/aller_bdit-webfont.eot');
+  src: url('../fonts/aller_bdit-webfont.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/aller_bdit-webfont.woff') format('woff'), 
+       url('../fonts/aller_bdit-webfont.ttf') format('truetype');
+  font-weight: bold;
+  font-style: italic;
+}
+
+@font-face {
+  font-family: 'AllerLight';
+  src: url('../fonts/aller_lt-webfont.eot');
+  src: url('../fonts/aller_lt-webfont.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/aller_lt-webfont.woff') format('woff'), 
+       url('../fonts/aller_lt-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'AllerLight';
+  src: url('../fonts/aller_ltit-webfont.eot');
+  src: url('../fonts/aller_ltit-webfont.eot?#iefix') format('embedded-opentype'), 
+       url('../fonts/aller_ltit-webfont.woff') format('woff'), 
+       url('../fonts/aller_ltit-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
+html {
+  background: #f7f7f7;
+}
+
+body {
+  color: #444444;
+  font-size: 80%;
+  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  margin: 0;
+  padding: 0;
+  line-height: 200%;
+}
+
+.clearfix:after {
+  display: block;
+  content: '.';
+  height: 0;
+  visibility: hidden;
+  clear: both;
+}
+
+#menu-bar {
+  background: #666666;
+  border-bottom: 1px solid #444444;
+  background-image: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, transparent 100%);
+}
+
+#main-menu {
+  display: block;
+  float: right;
+  list-style-type: none;
+  margin: 0 0 -1px 0;
+  padding: 0;
+}
+
+#main-menu > li {
+  display: inline-block;
+  padding: 0;
+  margin: 0;
+}
+
+#main-menu > li > a {
+  display: block;
+  padding: 5px 8px;
+  color: #ffffff;
+  text-decoration: none;
+}
+
+#main-menu > li > a:hover {
+  background: rgba(255,255,255,0.1);
+}
+
+#main-menu > li.active > a {
+  background: #ff3520;
+  color: #ffffff;
+}
+
+#main-menu > li.selected > a {
+  background: #f7f7f7;
+  background-image: -moz-linear-gradient(top, #ffffff 0%, #f7f7f7 100%);
+  color: #444444;
+}
+
+#submenu-bar {
+  background: #dddddd;
+  border-bottom: 1px solid #b5b5b5;
+  text-align: center;
+}
+
+#title-box {
+  display: inline-block;
+  box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  border: 1px solid #e6301d;
+  border-radius: 5px;
+  background: #ff3520;
+  color: #ffffff;
+  text-shadow: 0 0 3px rgba(0,0,0,0.6);
+  margin: 20px 10px 0 10px;
+  text-align: left;
+}
+
+#title-box > .inner {
+  padding: 20px 25px;
+}
+
+h1 {
+  line-height: 1em;
+  font-size: 2.5em;
+  font-weight: normal;
+  font-family: 'AllerLight', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  letter-spacing: 0.02em;
+  word-spacing: 0.03em;
+  margin: 0;
+}
+
+img {
+  border: 0;
+}
+
+.appname {
+  font-weight: bold;
+  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+
+a {
+  color: #ff3520;
+  text-decoration: underline;
+}
+
+a:hover {
+  color: #ff3520;
+  text-decoration: none;
+}
+
+a > img {
+  display: block;
+}
+
+#content {
+  margin: 20px 10px;
+}
+
+#content {
+  border: 1px solid #cccccc;
+  background: #ffffff;
+}
+
+#content > .inner {
+  padding: 15px 20px;
+}
