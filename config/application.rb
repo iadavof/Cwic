@@ -26,5 +26,9 @@ module Cwic
 
     # Load core extensions (only autoloading is not enough, since the String class is already loaded and therefore the core_ext will not be loaded anymore)
     Dir[File.join(Rails.root, 'lib', 'core_ext', '*.rb')].each { |l| require l }
+
+    config.generators do |g|
+	   g.stylesheets false
+    end
   end
 end

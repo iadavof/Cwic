@@ -4,7 +4,12 @@ class User < ActiveRecord::Base
   # :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
-  
+
+  has_many :organisation_users
+  has_many :organisations, through: :organisation_users
+
+  accepts_nested_attributes_for :organisations
+
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
   validates :infix, length: { maximum: 255 }

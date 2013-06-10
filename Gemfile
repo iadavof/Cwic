@@ -60,3 +60,19 @@ gem 'i18n_alchemy', github: 'kreintjes/i18n_alchemy'
 
 # Responders gem for nice and easy responses after CRUD actions
 gem 'responders'
+
+
+group :test, :development do
+
+  gem 'rspec-rails'
+  gem 'factory_girl_rails'
+
+end
+
+
+group :test do
+
+  gem 'forgery'
+  gem 'database_cleaner'
+
+end

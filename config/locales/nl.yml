@@ -1,1 +1,64 @@
 nl:
+  submit: 'Verstuur'
+  back: 'Terug'
+  show: 'Toon'
+  edit: 'Bewerk'
+  destroy: 'Verwijder'
+  update: 'Update'
+  index_objects: 'Lijst met %{classes}'
+  empty_objects: 'Geen %{classes}'
+  new_object: 'Maak %{class} aan'
+  show_object: '%{class}: %{name}'
+  edit_object: 'Bewerk %{class}: %{name}'
+  to_new_object: 'Maak %{class} aan'
+  to_show_object: 'Bekijk %{name}'
+  to_edit_object: 'Bewerk'
+  to_destroy_object: 'Verwijder'
+  back_to_show_object: 'Terug naar %{name}'
+  back_to_index_objects: 'Terug naar lijst met %{classes}'
+  icon_to_edit_object: 'Bewerk %{name}'
+  icon_to_destroy_object: 'Verwijder %{name}'
+  destroy_are_you_sure: 'Weet je het zeker?'
+  to_close_object: 'Sluiten'
+  to_open_object: 'Openen'
+  icon_to_close_object: 'Sluit %{name}'
+  icon_to_open_object: 'Open %{name}'
+  include_blank_none: 'Geen'
+  prompt_choose: 'Kies...'
+  unknown_html: '<em>Onbekend</em>'
+  none_html: '<em>Geen</em>'
+  na_html: '<em>n.v.t.</em>'
+  'true': 'Ja'
+  'false': 'Nee'
+
+  views:
+    pagination:
+    first: 'Eerste'
+    last: 'Laatste'
+    previous: 'Vorige'
+    next: 'Volgende'
+    truncate: '...'
+
+
+  activerecord:
+    models:
+      user:
+        one: 'Gebruiker'
+        other: 'Gebruikers'
+      organisation:
+        one: 'Organisatie'
+        other: 'Organisaties'
+
+    attributes:
+      user:
+        first_name: 'Voornaam'
+        last_name: 'Achternaam'
+        infix: 'Tussenvoegsel'
+      organisation:
+        name: 'Naam'
+        street: 'Straat'
+        house_number: 'Huisnummer'
+        postal_code: 'Postcode'
+        city: 'Plaats'
+        country: 'Land'
+

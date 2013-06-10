@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_action :get_organisation
   before_action :load_resource
   authorize_resource
 
@@ -45,9 +46,9 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @users = User.accessible_by(current_ability, :index)
+      @users = @organisation.users.accessible_by(current_ability, :index)
     when 'new', 'create'
-      @user = User.new
+      @user = @organisations.build
     else
       @user = User.find(params[:id])
     end
@@ -60,5 +61,9 @@ private
 
   def interpolation_options
     { resource_name: @user.instance_name }
+  end
+
+  def load_forum
+    @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
   end
 end
