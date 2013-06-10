@@ -22,7 +22,11 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-gem 'turbolinks'
+# [2013-06-10 kevin] Disabled Turoblinks, because it breaks things
+#gem 'turbolinks'
+
+# Let jQuery function with Turbolinks
+#gem 'jquery-turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.0.1'
@@ -63,9 +67,6 @@ gem 'responders'
 
 # Nested forms helpers
 gem 'nested_form'
-
-# Let jQuery function with Turbolinks
-gem 'jquery-turbolinks'
 
 group :development do
   # Disable messages about assets in development
