@@ -61,18 +61,27 @@ gem 'i18n_alchemy', github: 'kreintjes/i18n_alchemy'
 # Responders gem for nice and easy responses after CRUD actions
 gem 'responders'
 
+# Nested forms helpers
+gem 'nested_form'
 
-group :test, :development do
+# Let jQuery function with Turbolinks
+gem 'jquery-turbolinks'
 
-  gem 'rspec-rails'
-  gem 'factory_girl_rails'
-
+group :development do
+  # Disable messages about assets in development
+  gem 'quiet_assets'
 end
 
+group :test, :development do
+  # The RSpec testing framework
+  gem 'rspec-rails'
+  # Factory girl to generate data for tests (this is a replacement for fixtures)
+  gem 'factory_girl_rails'
+end
 
 group :test do
-
+  # The forgery fake data generator (useful for testing)
   gem 'forgery'
+  # The database cleaner gem to wipe the database (with support for multiple strategies)
   gem 'database_cleaner'
-
 end

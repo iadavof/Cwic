@@ -43,6 +43,7 @@ GEM
     arel (4.0.0)
     atomic (1.1.9)
     bcrypt-ruby (3.0.1)
+    bcrypt-ruby (3.0.1-x86-mingw32)
     builder (3.1.4)
     cancan (1.6.10)
     coffee-rails (4.0.0)
@@ -76,6 +77,9 @@ GEM
     jquery-rails (3.0.0)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-turbolinks (1.0.0)
+      railties (>= 3.1.0)
+      turbolinks
     json (1.8.0)
     libv8 (3.11.8.17)
     mail (2.5.4)
@@ -84,10 +88,13 @@ GEM
     mime-types (1.23)
     minitest (4.7.4)
     multi_json (1.7.6)
+    nested_form (0.3.2)
     orm_adapter (0.4.0)
     pg (0.15.1)
     pg (0.15.1-x86-mingw32)
     polyglot (0.3.3)
+    quiet_assets (1.0.2)
+      railties (>= 3.1, < 5.0)
     rack (1.5.2)
     rack-test (0.6.2)
       rack (>= 1.0)
@@ -175,7 +182,10 @@ DEPENDENCIES
   i18n_alchemy!
   jbuilder (~> 1.0.1)
   jquery-rails
+  jquery-turbolinks
+  nested_form
   pg
+  quiet_assets
   rails (= 4.0.0.rc1)
   rails-i18n
   responders

@@ -1,0 +1,30 @@
+<h1><%= index_title(EntityType) %></h1>
+
+<% if @entity_types.empty? %>
+  <p><%= t('.empty', default: :empty_objects, classes: EntityType.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= EntityType.human_attribute_name(:name) %></th>
+      <th><%= EntityType.human_attribute_name(:description) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entity_types.each do |entity_type| %>
+    <tr>
+      <td><%= name_link_to_show([@organisation, entity_type]) %></td>
+      <td><%= entity_type.description %></td>
+      <td class="icons">
+        <%= icon_link_to_edit([@organisation, entity_type]) %>
+        <%= icon_link_to_destroy([@organisation, entity_type]) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new([@organisation, EntityType]) %>

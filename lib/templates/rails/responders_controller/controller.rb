@@ -66,7 +66,6 @@ private
     end
   end
 
-  # Only allow a trusted parameter "white list" through.
   def resource_params
 <%- if attributes_names.empty? -%>
     params[<%= ":#{singular_table_name}" %>]

@@ -1,0 +1,17 @@
+<div class="nested_object">
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="field">
+    <%= f.label :data_type %>
+    <%= f.collection_select :data_type_id, DataType.all.sort, :id, :human_name, prompt: t('prompt_choose') %>
+  </div>
+  <div class="actions">
+    <%= f.link_to_remove t('.remove_this_property_type') %>
+  </div>
+</div>
