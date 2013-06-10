@@ -1,0 +1,20 @@
+<h1><%= show_title(@organisation) %></h1>
+
+<dl>
+  <dt><%= Organisation.human_attribute_name(:name) %></dt>
+  <dd><%= @organisation.name %></dd>
+  <dt><%= Organisation.human_attribute_name(:street) %></dt>
+  <dd><%= @organisation.street %></dd>
+  <dt><%= Organisation.human_attribute_name(:house_number) %></dt>
+  <dd><%= @organisation.house_number %></dd>
+  <dt><%= Organisation.human_attribute_name(:postal_code) %></dt>
+  <dd><%= @organisation.postal_code %></dd>
+  <dt><%= Organisation.human_attribute_name(:city) %></dt>
+  <dd><%= @organisation.city %></dd>
+  <dt><%= Organisation.human_attribute_name(:country) %></dt>
+  <dd><%= @organisation.country %></dd>
+</dl>
+
+<%= button_link_back_to_index(Organisation) %>
+<%= button_link_to_edit(@organisation) %>
+<%= button_link_to_destroy(@organisation) %>

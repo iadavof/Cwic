@@ -6,4 +6,10 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-User.create({ first_name: 'Admin', last_name: 'IADA', email: 'admin@iada.nl', password: 'bla12345', confirmed_at: DateTime.now })
+# Create default Roles
+or1 = OrganisationRole.create(name: 'Administrator')
+
+# Create test administrator user
+u1 = User.create(first_name: 'Admin', last_name: 'IADA', email: 'admin@iada.nl', password: 'bla12345', confirmed_at: DateTime.now)
+o1 = Organisation.create(name: 'IADA', street: 'Stationsplein', house_number: '13-22', postal_code: '6512 AB', city: 'Nijmegen', country: 'Netherlands')
+ou1 = OrganisationUser.create(organisation: o1, user: u1, organisation_role: or1)

@@ -19,6 +19,9 @@
           <li id="main-menu-item-3">
             <a href="#">Instellingen</a>
           </li>
+          <li id="main-menu-item-4">
+            <%= link_to(t('devise.sesssions.destroy.logout'), destroy_user_session_path, method: :delete) %>
+          </li>
         </ul>
       </div>
       <div id="submenu-box" class="clearfix">
