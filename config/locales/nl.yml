@@ -39,7 +39,6 @@ nl:
     next: 'Volgende'
     truncate: '...'
 
-
   activerecord:
     models:
       user:
@@ -62,3 +61,6 @@ nl:
         city: 'Plaats'
         country: 'Land'
 
+  home:
+    index:
+      welcome: 'Welkom bij Cwic'

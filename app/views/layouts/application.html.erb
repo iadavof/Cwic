@@ -15,6 +15,7 @@
         <p id="alert"><%= alert %></p>
       <% end %>
       <%= content_for?(:content) ? yield(:content) : yield %>
+      <%= link_to(t('devise.sessions.destroy.logout'), destroy_user_session_path, :method => :delete) %>
     </div>
 </body>
 </html>
