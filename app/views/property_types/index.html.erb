@@ -1,0 +1,34 @@
+<h1><%= index_title(PropertyType) %></h1>
+
+<% if @property_types.empty? %>
+  <p><%= t('.empty', default: :empty_objects, classes: PropertyType.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= PropertyType.human_attribute_name(:entity_type) %></th>
+      <th><%= PropertyType.human_attribute_name(:name) %></th>
+      <th><%= PropertyType.human_attribute_name(:description) %></th>
+      <th><%= PropertyType.human_attribute_name(:data_type) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @property_types.each do |property_type| %>
+    <tr>
+      <td><%= name_link_to_show(property_type) %></td>
+      <td><%= property_type.name %></td>
+      <td><%= property_type.description %></td>
+      <td><%= property_type.data_type %></td>
+      <td class="icons">
+        <%= icon_link_to_edit(property_type) %>
+        <%= icon_link_to_destroy(property_type) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new(PropertyType) %>

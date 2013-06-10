@@ -1,0 +1,12 @@
+<h1><%= show_title(@entity_type) %></h1>
+
+<dl>
+  <dt><%= EntityType.human_attribute_name(:name) %></dt>
+  <dd><%= @entity_type.name %></dd>
+  <dt><%= EntityType.human_attribute_name(:description) %></dt>
+  <dd><%= @entity_type.description %></dd>
+</dl>
+
+<%= button_link_back_to_index([@organisation, EntityType]) %>
+<%= button_link_to_edit([@organisation, @entity_type]) %>
+<%= button_link_to_destroy([@organisation, @entity_type]) %>

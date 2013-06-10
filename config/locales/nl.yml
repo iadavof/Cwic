@@ -61,6 +61,12 @@ nl:
         city: 'Plaats'
         country: 'Land'
 
+  data_types:
+    string:
+      name: 'vrije tekst'
+    integer:
+      name: 'geheel getal'
+
   home:
     index:
       welcome: 'Welkom bij Cwic'

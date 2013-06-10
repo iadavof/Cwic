@@ -1,0 +1,22 @@
+<%= nested_form_for([@organisation, @entity_type]) do |f| %>
+  <%= render 'shared/error_messages', target: @entity_type %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_area :description %>
+  </div>
+  <div class="nested_form">
+    <h2><%= EntityType.human_attribute_name(:property_types) %></h2>
+    <%= f.fields_for :property_types %>
+    <div class="actions">
+      <%= f.link_to_add t('.add_a_property_type'), :property_types %>
+    </div>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

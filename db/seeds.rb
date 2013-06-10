@@ -6,10 +6,17 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# Create default Roles
+# Create default data types
+DataType.create([
+  { key: 'string', rails_type: 'String', form_type: 'text_field' },
+  { key: 'text', rails_type: 'String', form_type: 'text_area' },
+  { key: 'integer', rails_type: 'Integer', form_type: 'number_field' },
+])
+
+# Create default roles
 or1 = OrganisationRole.create(name: 'Administrator')
 
 # Create test administrator user
-u1 = User.create(first_name: 'Admin', last_name: 'IADA', email: 'admin@iada.nl', password: 'bla12345', confirmed_at: DateTime.now)
+u1 = User.create(first_name: 'Admin', last_name: 'IADA', email: 'admin@iada.nl', password: 'cwictest', confirmed_at: DateTime.now)
 o1 = Organisation.create(name: 'IADA', street: 'Stationsplein', house_number: '13-22', postal_code: '6512 AB', city: 'Nijmegen', country: 'Netherlands')
 ou1 = OrganisationUser.create(organisation: o1, user: u1, organisation_role: or1)
