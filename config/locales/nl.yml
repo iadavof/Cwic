@@ -5,11 +5,11 @@ nl:
   edit: 'Bewerk'
   destroy: 'Verwijder'
   update: 'Update'
-  index_objects: 'Lijst met %{classes}'
+  index_objects_html: 'Lijst met <strong>%{classes}</strong>'
   empty_objects: 'Geen %{classes}'
-  new_object: 'Maak %{class} aan'
-  show_object: '%{class}: %{name}'
-  edit_object: 'Bewerk %{class}: %{name}'
+  new_object_html: 'Maak <strong>%{class}</strong> aan'
+  show_object_html: '%{class}: <strong>%{name}</strong>'
+  edit_object_html: 'Bewerk %{class}: <strong>%{name}</strong>'
   to_new_object: 'Maak %{class} aan'
   to_show_object: 'Bekijk %{name}'
   to_edit_object: 'Bewerk'
@@ -69,4 +69,4 @@ nl:
 
   home:
     index:
-      welcome: 'Welkom bij Cwic'
+      welcome_html: 'Welkom bij <strong>Cwic</strong>'

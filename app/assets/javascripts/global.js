@@ -1,10 +1,17 @@
 $(document).ready(function() {
+  menuInit();
+});
+
+function menuInit() {
+  var submenuBox = $('#submenu-box');
   $(window).on('resize', function() {
     var selectedSubmenu = $('#submenu-box > .submenu.selected').first();
-    $('#submenu-box').css({height: selectedSubmenu.outerHeight(false)});
+    if (selectedSubmenu) {
+      $(submenuBox).css({height: selectedSubmenu.outerHeight(false)});
+    }
   });
   
-  $('#submenu-box').css({height: 0});
+  $(submenuBox).css({height: 0});
   $('#submenu-box > .submenu').hide();
   
   slideSubMenuByMenuItem($('#main-menu > li.active').first().attr('id'), false);
@@ -12,67 +19,42 @@ $(document).ready(function() {
   $('#main-menu > li > a').on('click', function() {
     return slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
   });
-});
+}
 
 function slideSubMenuByMenuItem(htmlId, animated) {
+  var submenuBox = $('#submenu-box');
   var menuItem = $('#' + htmlId);
   var relatedSubmenu = $('#submenu-box > .submenu[data-main-menu-relation="' + htmlId + '"]').first();
-  var duration = animated ? 300 : 0;
+  var duration = animated ? 250 : 0;
   
-  if (relatedSubmenu.length == 0) {
+  if($(submenuBox).is(':animated')) {
+    return false;
+  } else if (!htmlId || relatedSubmenu.length == 0 || menuItem.length == 0) {
     return true;
   } else {
+    var menuItems = $('#main-menu > li');
+    var submenus = $('#submenu-box > .submenu');
+    
     if ($(menuItem).hasClass('selected')) {
-      $('#main-menu > li.selected').removeClass('selected');
-      $('#submenu-box').animate({height: 0}, duration, 'swing', function() {
-        $('#submenu-box > .submenu').removeClass('selected').hide();
+      $(menuItems).removeClass('selected');
+      $(submenuBox).animate({height: 0}, duration, 'swing', function() {
+        $(submenus).removeClass('selected').hide();
       });
     } else {
-      $('#main-menu > li.selected').removeClass('selected');
+      $(menuItems).removeClass('selected');
       $(menuItem).addClass('selected');
-      if ($('#submenu-box').height() > 0) {
-        $('#submenu-box').animate({height: 0}, duration, 'swing', function() {
-          $('#submenu-box > .submenu').removeClass('selected').hide();
+      if ($(submenuBox).height() > 0) {
+        $(submenuBox).animate({height: 0}, duration, 'swing', function() {
+          $(submenus).removeClass('selected').hide();
           $(relatedSubmenu).addClass('selected').show();
-          $('#submenu-box').animate({height: relatedSubmenu.outerHeight(false)}, duration);
+          $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration);
         });
       } else {
-        $('#submenu-box > .submenu').removeClass('selected').hide();
+        $(submenus).removeClass('selected').hide();
         $(relatedSubmenu).addClass('selected').show();
-        $('#submenu-box').animate({height: relatedSubmenu.outerHeight(false)}, duration);
+        $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration);
       }
     }
     return false;
   }
 }
-
-/*
-    var relatedSubmenu = $('#submenu-box > .submenu[data-main-menu-relation="' + $(parent).attr('id') + '"]');
-    if (relatedSubmenu.length > 0) {
-      if (!$(parent).hasClass('selected')) {
-        $('#main-menu > li.selected').removeClass('selected');
-        $(parent).addClass('selected');
-        if ($('#submenu-box').height() > 0) {
-          $('#submenu-box').animate({height: 0}, 300, 'swing', function() {
-            $('#submenu-box > .submenu.selected').removeClass('selected').hide();
-            $(relatedSubmenu).addClass('selected').show();
-            $('#submenu-box').animate({height: relatedSubmenu.outerHeight(false)}, 300);
-          });
-        } else {
-          $('#submenu-box > .submenu.selected').removeClass('selected').hide();
-          $(relatedSubmenu).addClass('selected').show();
-          $('#submenu-box').animate({height: relatedSubmenu.outerHeight(false)}, 300);
-        }
-      } else {
-        $(parent).removeClass('selected');
-        if ($('#submenu-box').height() > 0) {
-          $('#submenu-box').animate({height: 0}, 300, 'swing', function() {
-            $('#submenu-box > .submenu.selected').removeClass('selected').hide();
-          });
-        } else {
-          $('#submenu-box > .submenu.selected').removeClass('selected').hide();
-        }
-      }
-      return false;
-    }
-*/
