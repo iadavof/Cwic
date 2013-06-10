@@ -45,11 +45,11 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @entity_types = EntityType.accessible_by(current_ability, :index)
+      @entity_types = @organisation.entity_types.accessible_by(current_ability, :index)
     when 'new', 'create'
-      @entity_type = EntityType.new
+      @entity_type = @organisation.entity_types.build
     else
-      @entity_type = EntityType.find(params[:id])
+      @entity_type = @organisation.entity_types.find(params[:id])
     end
   end
 
