@@ -1,10 +1,9 @@
 require "application_responder"
 
 class ApplicationController < ActionController::Base
-
   before_action :authenticate_user!
-
   check_authorization unless :devise_controller?
+
   self.responder = ApplicationResponder
   respond_to :html
 
@@ -13,7 +12,11 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from CanCan::AccessDenied do |exception|
-    redirect_to root_url, :alert => exception.message
+    redirect_to root_url, alert: exception.message
   end
 
+  def current_organisation
+    Organisation.first # XXX TODO this should return the currently selected organisation
+  end
+  helper_method :current_organisation
 end
