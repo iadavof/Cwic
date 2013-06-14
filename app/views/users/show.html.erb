@@ -1,4 +1,6 @@
-<h1><%= show_title(@user) %></h1>
+<% content_for :page_title do %>
+  <%= show_title(@user) %>
+<% end %>
 
 <dl>
   <dt><%= User.human_attribute_name(:first_name) %></dt>

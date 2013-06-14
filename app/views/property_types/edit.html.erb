@@ -1,4 +1,6 @@
-<h1><%= edit_title(@property_type) %></h1>
+<% content_for :page_title do %>
+  <%= edit_title(@property_type) %>
+<% end %>
 
 <%= render 'form' %>
 

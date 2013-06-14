@@ -1,4 +1,6 @@
-<h1><%= index_title(PropertyType) %></h1>
+<% content_for :page_title do %>
+  <%= index_title(PropertyType) %>
+<% end %>
 
 <% if @property_types.empty? %>
   <p><%= t('.empty', default: :empty_objects, classes: PropertyType.model_name.human(count: 2).lcfirst) %></p>

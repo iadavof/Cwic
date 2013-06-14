@@ -211,6 +211,60 @@ a > img {
   display: block;
 }
 
+.icon {
+  text-decoration: none;
+}
+
+input, textarea {
+  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-size: 1em;
+  border: 1px solid #cccccc;
+  padding: 8px;
+  width: 15em;
+  transition: border-color 0.2s;
+  vertical-align: top;
+}
+
+input:focus, textarea:focus {
+  border-color: #999999;
+}
+
+textarea {
+  width: 30em;
+  height: 10em;
+}
+
+input[type="submit"],
+input[type="reset"],
+button, 
+.button {
+  width: auto;
+  border: 0 none;
+  background-color: #666666;
+  color: #ffffff;
+  padding: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 3px;
+  line-height: normal;
+  transition: background-color 0.2s;
+}
+
+input[type="submit"]:hover,
+input[type="reset"]:hover,
+button:hover, 
+.button:hover {
+  background-color: #555555;
+  color: #ffffff;
+}
+
+label {
+  display: inline-block;
+  width: 10em;
+  padding: 8px 0;
+  line-height: normal;
+}
+
 #content {
   margin: 20px 10px;
 }

@@ -1,4 +1,6 @@
-<h1><%= show_title(@property_type) %></h1>
+<% content_for :page_title do %>
+  <%= show_title(@property_type) %>
+<% end %>
 
 <dl>
   <dt><%= PropertyType.human_attribute_name(:entity_type) %></dt>

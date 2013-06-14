@@ -1,4 +1,6 @@
-<h1><%= edit_title(@user) %></h1>
+<% content_for :page_title do %>
+  <%= edit_title(@user) %>
+<% end %>
 
 <%= render 'form' %>
 

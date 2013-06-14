@@ -1,4 +1,6 @@
-<h1><%= new_title(EntityType) %></h1>
+<% content_for :page_title do %>
+  <%= new_title(EntityType) %>
+<% end %>
 
 <%= render 'form' %>
 

@@ -1,4 +1,6 @@
-<h1><%= new_title(User) %></h1>
+<% content_for :page_title do %>
+  <%= new_title(User) %>
+<% end %>
 
 <%= render 'form' %>
 
