@@ -23,6 +23,8 @@ nl:
   to_open_object: 'Openen'
   icon_to_close_object: 'Sluit %{name}'
   icon_to_open_object: 'Open %{name}'
+  add_nested_object: 'Voeg %{class} toe'
+  remove_nested_object: 'Verwijder %{class}'
   include_blank_none: 'Geen'
   prompt_choose: 'Kies...'
   unknown_html: '<em>Onbekend</em>'
@@ -47,6 +49,18 @@ nl:
       organisation:
         one: 'Organisatie'
         other: 'Organisaties'
+      entity_type:
+        one: 'Objectsoort'
+        other: 'Objectsoorten'
+      property_type:
+        one: 'Eigenschapsoort'
+        other: 'Eigenschapsoorten'
+      entity:
+        one: 'Object'
+        other: 'Objecten'
+      property:
+        one: 'Eigenschap'
+        other: 'Eigenschappen'
 
     attributes:
       user:
@@ -60,12 +74,28 @@ nl:
         postal_code: 'Postcode'
         city: 'Plaats'
         country: 'Land'
+      entity_type:
+        name: 'Naam'
+        description: 'Omschrijving'
+      property_type:
+        name: 'Naam'
+        description: 'Omschrijving'
+        data_type: 'Datatype'
+      entity:
+        name: 'Naam'
+        description: 'Omschrijving'
+        entity_type: 'Type'
 
   data_types:
     string:
-      name: 'vrije tekst'
+      name: 'regel tekst'
+      description: 'Een veld waarin een regel tekst kan worden opgegeven'
+    text:
+      name: 'lange tekst'
+      description: 'Een veld waarin meerdere regels tekst kunnen worden opgegeven'
     integer:
       name: 'geheel getal'
+      description: 'Een veld waarin een geheel getal kan worden opgegeven (zonder decimalen)'
 
   home:
     index:

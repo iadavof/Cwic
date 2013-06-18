@@ -1,0 +1,8 @@
+<% content_for :page_title do %>
+<h1><%= edit_title(@entity) %></h1>
+<% end %>
+
+<%= render 'form' %>
+
+<%= button_link_back_to_show([@organisation, @entity]) %>
+<%= button_link_back_to_index([@organisation, Entity]) %>

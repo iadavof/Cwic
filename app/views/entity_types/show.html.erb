@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= show_title(@entity_type) %>
+<%= show_title(@entity_type) %>
 <% end %>
 
 <dl>
@@ -8,6 +8,9 @@
   <dt><%= EntityType.human_attribute_name(:description) %></dt>
   <dd><%= @entity_type.description %></dd>
 </dl>
+
+<h2><%= PropertyType.model_name.human(count: 2) %></h2>
+<%= render @entity_type.property_types %>
 
 <%= button_link_back_to_index([@organisation, EntityType]) %>
 <%= button_link_to_edit([@organisation, @entity_type]) %>

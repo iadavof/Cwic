@@ -20,12 +20,13 @@ Cwic::Application.configure do
   config.active_support.deprecation = :log
 
   # Raise an error on page load if there are pending migrations
-  config.active_record.migration_error = :page_load
+  config.active_record.migration_error = false
 
   # Debug mode disables concatenation and preprocessing of assets.
   # This option may cause significant delays in view rendering with a large
   # number of complex assets.
-  config.assets.debug = true
+  # [2013-06-10 kevin] Disables assets debug for better development performance
+  config.assets.debug = false
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
 end

@@ -7,6 +7,10 @@ class DataType < ActiveRecord::Base
     I18n.t("data_types.#{key}.name")
   end
 
+  def human_description
+    I18n.t("data_types.#{key}.description")
+  end
+
   def instance_name
     self.key
   end

@@ -1,0 +1,21 @@
+<% content_for :page_title do %>
+<h1><%= show_title(@entity) %></h1>
+<% end %>
+
+<dl>
+  <dt><%= Entity.human_attribute_name(:entity_type) %></dt>
+  <dd><%= @entity.entity_type.name %></dd>
+  <dt><%= Entity.human_attribute_name(:name) %></dt>
+  <dd><%= @entity.name %></dd>
+  <dt><%= Entity.human_attribute_name(:description) %></dt>
+  <dd><%= @entity.description %></dd>
+</dl>
+
+<h2><%= PropertyType.model_name.human(count: 2) %></h2>
+<dl>
+  <%= render @entity.properties %>
+</dl>
+
+<%= button_link_back_to_index([@organisation, Entity]) %>
+<%= button_link_to_edit([@organisation, @entity]) %>
+<%= button_link_to_destroy([@organisation, @entity]) %>

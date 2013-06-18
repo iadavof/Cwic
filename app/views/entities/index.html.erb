@@ -1,0 +1,34 @@
+<% content_for :page_title do %>
+<h1><%= index_title(Entity) %></h1>
+<% end %>
+
+<% if @entities.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: Entity.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= Entity.human_attribute_name(:entity_type) %></th>
+      <th><%= Entity.human_attribute_name(:name) %></th>
+      <th><%= Entity.human_attribute_name(:description) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entities.each do |entity| %>
+    <tr>
+      <td><%= entity.entity_type.name %></td>
+      <td><%= name_link_to_show([@organisation, entity]) %></td>
+      <td><%= entity.description %></td>
+      <td class="icons">
+        <%= icon_link_to_edit([@organisation, entity]) %>
+        <%= icon_link_to_destroy([@organisation, entity]) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new([@organisation, Entity]) %>

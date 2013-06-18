@@ -1,4 +1,5 @@
 <div class="nested_object">
+  <h3><%= PropertyType.model_name.human %></h3>
   <div class="field">
     <%= f.label :name %>
     <%= f.text_field :name %>
@@ -9,9 +10,9 @@
   </div>
   <div class="field">
     <%= f.label :data_type %>
-    <%= f.collection_select :data_type_id, DataType.all.sort, :id, :human_name, prompt: t('prompt_choose') %>
+    <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description }] }, prompt: t('prompt_choose') %>
   </div>
   <div class="actions">
-    <%= f.link_to_remove t('.remove_this_property_type') %>
+    <%= f.link_to_remove t('remove_nested_object', class: PropertyType.model_name.human.lcfirst) %>
   </div>
 </div>
