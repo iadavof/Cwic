@@ -1,5 +1,5 @@
 class Entity < ActiveRecord::Base
-  belongs_to :entity_type
+  belongs_to :entity_type, counter_cache: true
   belongs_to :organisation
   has_many :properties, dependent: :destroy, inverse_of: :entity
 

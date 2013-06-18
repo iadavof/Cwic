@@ -77,10 +77,10 @@
             <h3>hoi</h3>
             <ul>
               <li>
-                <%= link_to(t('.entity_types'), organisation_entity_types_path(current_organisation)) %>
+                <%= link_to(EntityType.model_name.human(count: 2), organisation_entity_types_path(current_organisation)) %>
               </li>
               <li>
-                <%= link_to(t('.entities'), organisation_entities_path(current_organisation)) %>
+                <%= link_to(Entity.model_name.human(count: 2), organisation_entities_path(current_organisation)) %>
               </li>
             </ul>
           </div>

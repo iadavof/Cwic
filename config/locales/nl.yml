@@ -18,7 +18,7 @@ nl:
   back_to_index_objects: 'Terug naar lijst met %{classes}'
   icon_to_edit_object: 'Bewerk %{name}'
   icon_to_destroy_object: 'Verwijder %{name}'
-  destroy_are_you_sure: 'Weet je het zeker?'
+  destroy_are_you_sure: 'Weet u het zeker?'
   to_close_object: 'Sluiten'
   to_open_object: 'Openen'
   icon_to_close_object: 'Sluit %{name}'
@@ -110,6 +110,11 @@ nl:
     integer:
       name: 'geheel getal'
       description: 'Een veld waarin een geheel getal kan worden opgegeven (zonder decimalen)'
+
+  entity_types:
+    still_used_destroy_confirm:
+      one: 'Deze objectsoort wordt nog gebruikt door een object. Weet u zeker dat u door wilt gaan?'
+      other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
 
   home:
     index:

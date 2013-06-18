@@ -14,4 +14,4 @@
 
 <%= button_link_back_to_index([@organisation, EntityType]) %>
 <%= button_link_to_edit([@organisation, @entity_type]) %>
-<%= button_link_to_destroy([@organisation, @entity_type]) %>
+<%= button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type)) %>

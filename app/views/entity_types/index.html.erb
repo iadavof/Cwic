@@ -21,7 +21,7 @@
       <td><%= entity_type.description %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, entity_type]) %>
-        <%= icon_link_to_destroy([@organisation, entity_type]) %>
+        <%= icon_link_to_destroy([@organisation, entity_type], confirm: destroy_confirm(entity_type)) %>
       </td>
     </tr>
     <% end %>

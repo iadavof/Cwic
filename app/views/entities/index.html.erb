@@ -18,8 +18,8 @@
   <tbody>
     <% @entities.each do |entity| %>
     <tr>
-      <td><%= entity.entity_type.name %></td>
       <td><%= name_link_to_show([@organisation, entity]) %></td>
+      <td><%= name_link_to_show([@organisation, entity.entity_type]) %></td>
       <td><%= entity.description %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, entity]) %>

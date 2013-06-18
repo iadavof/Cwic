@@ -1,5 +1,5 @@
 <div class="field">
   <%= f.hidden_field :property_type_id %>
   <%= f.label :value, f.object.property_type.name, title: f.object.property_type.description %>
-  <%= f.text_field :value, title: property.property_type.name_with_description %>
+  <%= f.text_field :value, title: f.object.property_type.name_with_description %>
 </div>

@@ -3,15 +3,15 @@
 <% end %>
 
 <dl>
-  <dt><%= Entity.human_attribute_name(:entity_type) %></dt>
-  <dd><%= @entity.entity_type.name %></dd>
   <dt><%= Entity.human_attribute_name(:name) %></dt>
   <dd><%= @entity.name %></dd>
+  <dt><%= Entity.human_attribute_name(:entity_type) %></dt>
+  <dd><%= name_link_to_show([@organisation, @entity.entity_type]) %></dd>
   <dt><%= Entity.human_attribute_name(:description) %></dt>
   <dd><%= @entity.description %></dd>
 </dl>
 
-<h2><%= PropertyType.model_name.human(count: 2) %></h2>
+<h2><%= Property.model_name.human(count: 2) %></h2>
 <dl>
   <%= render @entity.properties %>
 </dl>
