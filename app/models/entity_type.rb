@@ -1,4 +1,5 @@
 class EntityType < ActiveRecord::Base
+  has_many :entities, dependent: :destroy
   has_many :property_types, dependent: :destroy, inverse_of: :entity_type
 
   validates :name, presence: true, length: { maximum: 255 }

@@ -1,11 +1,11 @@
 <div class="property_type">
-  <h3><%= PropertyType.model_name.human %> <%= property_type_counter + 1 %></h3>
+  <h3><%= property_type.name %></h3>
   <dl>
-    <dt><%= PropertyType.human_attribute_name(:name) %></dt>
-    <dd><%= property_type.name %></dd>
     <dt><%= PropertyType.human_attribute_name(:description) %></dt>
     <dd><%= property_type.description %></dd>
     <dt><%= PropertyType.human_attribute_name(:data_type) %></dt>
     <dd title="<%= property_type.data_type.human_description %>"><%= property_type.data_type.human_name %></dd>
+    <dt><%= PropertyType.human_attribute_name(:default_value) %></dt>
+    <dd><%= property_type.default_value %></dd>
   </dl>
 </div>

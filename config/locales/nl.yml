@@ -94,6 +94,7 @@ nl:
         name: 'Naam'
         description: 'Omschrijving'
         data_type: 'Datatype'
+        default_value: 'Standaardwaarde'
       entity:
         name: 'Naam'
         description: 'Omschrijving'

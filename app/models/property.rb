@@ -1,4 +1,5 @@
 class Property < ActiveRecord::Base
+  default_scope includes(:property_type).order('property_types.name')
   belongs_to :entity
   belongs_to :property_type
 
