@@ -1,10 +1,12 @@
-<h1><%= new_title(User) %></h1>
+<% content_for :page_title do %>
+  <%= t('.sign_up') %>
+<% end %>
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
   <h2><%= t('.your_info') %></h2>
   <div class="field">
     <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
+    <%= f.text_field :first_name, :autofocus => true %>
   </div>
   <div class="field">
     <%= f.label :infix %>
@@ -14,35 +16,48 @@
     <%= f.label :last_name %>
     <%= f.text_field :last_name %>
   </div>
-    <h2><%= Organisation.model_name.human.lcfirst %></h2>
-    <%= f.fields_for :organisations do |organisations| %>
-    <div class="field">
-      <%= organisations.label :name %>
-      <%= organisations.text_field :name %>
-    </div>
-    <div class="field">
-      <%= organisations.label :street %>
-      <%= organisations.text_field :street %>
-    </div>
-    <div class="field">
-      <%= organisations.label :house_number %>
-      <%= organisations.text_field :house_number %>
-    </div>
-    <div class="field">
-      <%= organisations.label :postal_code %>
-      <%= organisations.text_field :postal_code %>
-    </div>
-    <div class="field">
-      <%= organisations.label :city %>
-      <%= organisations.text_field :city %>
-    </div>
-    <div class="field">
-      <%= organisations.label :country %>
-      <%= organisations.text_field :country %>
-    </div>
-    <% end %>
-    <div class="actions">
-      <%= f.submit "Sign up" %>
-    </div>
+  <div class="field">
+    <%= f.label :email %>
+    <%= f.email_field :email %>
+  </div>
+  <div class="field">
+    <%= f.label :password %>
+    <%= f.password_field :password %>
+  </div>
+  <div class="field">
+    <%= f.label :password_confirmation %>
+    <%= f.password_field :password_confirmation %>
+  </div>
+
+  <h2><%= Organisation.model_name.human %></h2>
+  <%= f.fields_for :organisations do |organisations| %>
+  <div class="field">
+    <%= organisations.label :name %>
+    <%= organisations.text_field :name %>
+  </div>
+  <div class="field">
+    <%= organisations.label :street %>
+    <%= organisations.text_field :street %>
+  </div>
+  <div class="field">
+    <%= organisations.label :house_number %>
+    <%= organisations.text_field :house_number %>
+  </div>
+  <div class="field">
+    <%= organisations.label :postal_code %>
+    <%= organisations.text_field :postal_code %>
+  </div>
+  <div class="field">
+    <%= organisations.label :city %>
+    <%= organisations.text_field :city %>
+  </div>
+  <div class="field">
+    <%= organisations.label :country %>
+    <%= organisations.text_field :country %>
+  </div>
+  <% end %>
+  <div class="actions">
+    <%= f.submit t('.sign_up') %>
+  </div>
 <% end %>
 <%= render "devise/shared/links" %>

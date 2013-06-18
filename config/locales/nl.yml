@@ -33,6 +33,19 @@ nl:
   'true': 'Ja'
   'false': 'Nee'
 
+  devise:
+    shared:
+      links:
+        did_not_receive_confirmation_instructions: 'Geen bevestigingsinstructies ontvangen?'
+        did_not_receive_unlock_instructions: 'Geen deblokkeerinstructies ontvangen?'
+        sign_in_with: 'Inloggen met %{provider}'
+    passwords:
+      new:
+        forgot_password: 'Wachtwoord vergeten?'
+    registrations:
+      new:
+        your_info: 'Uw gegevens'
+
   views:
     pagination:
     first: 'Eerste'
