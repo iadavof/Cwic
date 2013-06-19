@@ -1,0 +1,68 @@
+<%
+menu = {
+  overview: {
+    goodmorning: {
+      home: { url: home_index_path }
+    },
+    goodafternoon: {
+      bla: { url: '#' }
+    },
+    goodevening: {
+      bla: { url: '#' }
+    },
+    goodnight: {
+      bla: { url: '#' }
+    }
+  },
+  bookings: {
+    hallo: {
+      blabla: { url: '#' }
+    }
+  },
+  settings: {
+    entity_types: {
+      index: { url: organisation_entity_types_path(current_organisation) },
+      new: { url: new_organisation_entity_type_path(current_organisation) }
+    },
+    entities: {
+      index: { url: organisation_entities_path(current_organisation) },
+      new: { url: new_organisation_entity_path(current_organisation) }
+    }
+  },
+  logout: { url: destroy_user_session_path, method: :delete }
+}
+%>
+<div id="menu-bar" class="clearfix">
+  <ul id="main-menu">
+    <% menu.each_with_index do |(category_name, category_content), index| %>
+    <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: (category_name == current_menu_category ? "active" : nil)) do %>
+      <% if category_content[:url].present? # No subitems %>
+        <%= link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url)) %>
+      <% else # With subitems %>
+        <%= link_to(t(".#{category_name}"), '#') %>
+      <% end %>
+    <% end %>
+    <% end %>
+  </ul>
+</div>
+<div id="submenu-box" class="clearfix">
+  <% menu.each_with_index do |(category_name, category_content), index| %>
+  <% unless category_content[:url].present? # With ubitems %>
+  <div class="submenu clearfix" data-main-menu-relation="main-menu-item-<%= index + 1 %>">
+    <h2><%= t(".#{category_name}") %></h2>
+    <% category_content.each do |sub_category_name, sub_category_content| %>
+    <div class="submenu-block">
+      <%= content_tag(:h3, t(".#{sub_category_name}"), class: (sub_category_name == current_menu_sub_category ? "active" : nil)) %>
+      <ul>
+        <% sub_category_content.each do |link_name, link_content| %>
+        <%= content_tag(:li, class: (link_name == current_menu_link ? "active" : nil)) do %>
+          <%= link_to((link_content[:name].present? ? link_content[:name] : t(".#{link_name}")), link_content[:url], link_content.except(:name, :url)) %>
+        <% end %>
+        <% end %>
+      </ul>
+    </div>
+    <% end %>
+  </div>
+  <% end %>
+  <% end %>
+</div>

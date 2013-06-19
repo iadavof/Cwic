@@ -25,4 +25,34 @@ class ApplicationController < ActionController::Base
   def load_organisation
     @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
   end
+
+  @current_menu_category = nil
+  def current_menu_category
+    if @current_menu_category.present?
+      @current_menu_category
+    else
+      nil
+    end
+  end
+  helper_method :current_menu_category
+
+  @current_menu_sub_category = nil
+  def current_menu_sub_category
+    if @current_menu_sub_category.present?
+      @current_menu_sub_category
+    else
+      controller_name.to_sym
+    end
+  end
+  helper_method :current_menu_sub_category
+
+  @current_menu_link = nil
+  def current_menu_link
+    if @current_menu_link.present?
+      @current_menu_link
+    else
+      action_name.to_sym
+    end
+  end
+  helper_method :current_menu_link
 end
