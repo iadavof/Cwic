@@ -57,10 +57,10 @@ menu = {
     <h2><%= t(".#{category_name}") %></h2>
     <% category_content.each do |sub_category_name, sub_category_content| %>
     <div class="submenu-block">
-      <%= content_tag(:h3, t(".#{sub_category_name}"), class: (sub_category_name == current_menu_sub_category ? "active" : nil)) %>
+      <%= content_tag(:h3, t(".#{sub_category_name}"), class: (category_name == current_menu_category && sub_category_name == current_menu_sub_category ? "active" : nil)) %>
       <ul>
         <% sub_category_content.each do |link_name, link_content| %>
-        <%= content_tag(:li, class: (link_name == current_menu_link ? "active" : nil)) do %>
+        <%= content_tag(:li, class: (category_name == current_menu_category && sub_category_name == current_menu_sub_category && link_name == current_menu_link ? "active" : nil)) do %>
           <%= link_to((link_content[:name].present? ? link_content[:name] : t(".#{link_name}")), link_content[:url], link_content.except(:name, :url)) %>
         <% end %>
         <% end %>

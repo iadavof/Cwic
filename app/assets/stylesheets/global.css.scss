@@ -185,9 +185,13 @@ body {
   margin: 0;
 }
 
-#submenu-box > .submenu > .submenu-block > ul {
+#submenu-box > .submenu > .submenu-block > ul > li {
   padding: 0;
   margin: 0;
+}
+
+#submenu-box > .submenu > .submenu-block > ul > li.active {
+  background-color: #330000;
 }
 
 h1 {
