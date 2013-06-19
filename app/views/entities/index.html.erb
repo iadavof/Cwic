@@ -8,8 +8,8 @@
 <table>
   <thead>
     <tr>
-      <th><%= Entity.human_attribute_name(:entity_type) %></th>
       <th><%= Entity.human_attribute_name(:name) %></th>
+      <th><%= Entity.human_attribute_name(:entity_type) %></th>
       <th><%= Entity.human_attribute_name(:description) %></th>
       <th></th>
     </tr>
@@ -19,8 +19,8 @@
     <% @entities.each do |entity| %>
     <tr>
       <td><%= name_link_to_show([@organisation, entity]) %></td>
-      <td><%= name_link_to_show([@organisation, entity.entity_type]) %></td>
-      <td><%= entity.description %></td>
+      <td><%= name_link_to_show([@organisation, entity.entity_type], title: format_description_title(entity.entity_type)) %></td>
+      <td><%= format_description(entity.description) %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, entity]) %>
         <%= icon_link_to_destroy([@organisation, entity]) %>

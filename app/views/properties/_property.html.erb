@@ -1,2 +1,2 @@
-<dt title="<%= property.property_type.description %>"><%= property.property_type.name %></dt>
-<dd title="<%= property.property_type.name_with_description %>"><%= property.value %></dd>
+<dt title="<%= format_description_title(property.property_type) %>"><%= property.property_type.name %></dt>
+<dd title="<%= format_description_with_name_title(property.property_type) %>"><%= property.value %></dd>
