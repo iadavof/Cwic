@@ -20,6 +20,9 @@ menu = {
     }
   },
   settings: {
+    organisation_users: {
+      index: { url: organisation_organisation_users_path(current_organisation) }
+    },
     entity_types: {
       index: { url: organisation_entity_types_path(current_organisation) },
       new: { url: new_organisation_entity_type_path(current_organisation) }

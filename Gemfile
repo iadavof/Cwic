@@ -53,6 +53,7 @@ gem 'rails-i18n'
 
 # Devise for authentication
 gem 'devise', '3.0.0.rc'
+gem 'devise_invitable', github: 'scambra/devise_invitable', branch: 'rails4'
 gem 'devise-i18n'
 gem 'devise-i18n-views', github: 'mcasimir/devise-i18n-views', ref: '35987ea588c0741c3fcab15ccd8baa07a9a61b39'
 

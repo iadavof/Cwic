@@ -1,0 +1,17 @@
+nl:
+  devise:
+    invitations:
+      send_instructions: 'Een e-mail met instructies is verzonden naar %{email}.'
+      invitation_token_invalid: 'De uitnodigingscode is niet geldig!'
+      updated: 'Je wachtwoord is succesvol ingesteld. Je bent nu ingelogd.'
+      no_invitations_remaining: "No invitations remaining"
+      invitation_removed: 'Your invitation was removed.'
+      new:
+        header: "Verstuur een uitnodiging"
+        submit_button: "Verstuur uitnodiging"
+      edit:
+        header: "Stel je wachtwoord in"
+        submit_button: "Stel wachtwoord in"
+    mailer:
+      invitation_instructions:
+        subject: 'Join Cwic!'

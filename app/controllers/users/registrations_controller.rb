@@ -1,4 +1,4 @@
-class Users::RegistrationsController < Devise::RegistrationsController
+class Users::RegistrationsController < DeviseInvitable::RegistrationsController
   before_action :configure_permitted_parameters
 
   def new

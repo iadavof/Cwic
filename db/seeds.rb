@@ -7,16 +7,18 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Create default data types
-DataType.create([
+DataType.create!([
   { key: 'string', rails_type: 'String', form_type: 'text_field' },
   { key: 'text', rails_type: 'String', form_type: 'text_area' },
   { key: 'integer', rails_type: 'Integer', form_type: 'number_field' },
 ])
 
 # Create default roles
-or1 = OrganisationRole.create(name: 'Administrator')
+or1 = OrganisationRole.create!(name: 'Administrator')
+OrganisationRole.create!(name: 'Planner')
+OrganisationRole.create!(name: 'Viewer')
 
 # Create test administrator user
-u1 = User.create(first_name: 'Admin', last_name: 'IADA', email: 'admin@iada.nl', password: 'cwictest', confirmed_at: DateTime.now)
-o1 = Organisation.create(name: 'IADA', street: 'Stationsplein', house_number: '13-22', postal_code: '6512 AB', city: 'Nijmegen', country: 'Netherlands')
-ou1 = OrganisationUser.create(organisation: o1, user: u1, organisation_role: or1)
+u1 = User.create!(first_name: 'Admin', last_name: 'IADA', email: 'admin@iada.nl', password: 'cwictest', confirmed_at: DateTime.now)
+o1 = Organisation.create!(name: 'IADA', street: 'Stationsplein', house_number: '13-22', postal_code: '6512 AB', city: 'Nijmegen', country: 'Netherlands')
+ou1 = OrganisationUser.create!(organisation: o1, user: u1, organisation_role: or1)

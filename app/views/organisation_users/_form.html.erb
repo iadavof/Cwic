@@ -1,0 +1,12 @@
+<%= form_for([@organisation, @organisation_user]) do |f| %>
+  <%= render 'shared/error_messages', target: @organisation_user %>
+
+  <div class="field">
+    <%= f.hidden_field :user_id %>
+    <%= f.label :organisation_role %>
+    <%= f.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, prompt: t('prompt_choose') %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
