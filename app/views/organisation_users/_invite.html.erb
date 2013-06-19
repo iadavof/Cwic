@@ -1,0 +1,9 @@
+<%= form_tag({controller: 'organisation_users', action: 'new'}, method: 'post') do %>
+  <div class="field">
+    <%= label_tag(:email, t('email')) %>
+    <%= text_field_tag :email %>
+  </div>
+  <div class="actions">
+    <%= submit_tag(t('.add')) %>
+  </div>
+<% end %>

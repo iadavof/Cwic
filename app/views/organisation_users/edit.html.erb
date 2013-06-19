@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+<%= edit_title(@organisation_user) %>
+<% end %>
+
+<%= render 'form' %>
+
+<%= button_link_back_to_index(OrganisationUser, location: organisation_organisation_users_path(@organisation)) %>
