@@ -4,10 +4,11 @@ Cwic::Application.routes.draw do
   get "home/index"
   root to: 'home#index'
 
-  devise_for :users, controllers: { registrations: "users/registrations" }
+  devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
 
   resources :organisations do
-    resources :users
+    resources :organisation_users, except: [:show, :new]
+    match '/organisation_users/new', :controller => 'organisation_users', :action => 'new', :via => 'post'
     resources :entity_types
     resources :entities
   end

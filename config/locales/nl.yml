@@ -45,6 +45,9 @@ nl:
     registrations:
       new:
         your_info: 'Uw gegevens'
+    sessions:
+      destroy:
+        logout: 'Uitloggen'
 
   views:
     pagination:
@@ -62,6 +65,9 @@ nl:
       organisation:
         one: 'Organisatie'
         other: 'Organisaties'
+      organisation_user:
+        one: 'Gebruiker'
+        other: 'Gebruikers'
       entity_type:
         one: 'Objectsoort'
         other: 'Objectsoorten'
@@ -115,6 +121,12 @@ nl:
     still_used_destroy_confirm:
       one: 'Deze objectsoort wordt nog gebruikt door een object. Weet u zeker dat u door wilt gaan?'
       other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
+
+  organisation_users:
+    invite:
+      add: 'Toevoegen'
+    create:
+      user_already_has_a_role_in_organisation: 'Deze gebruiker heeft al een rol in je organisatie'
 
   home:
     index:
