@@ -79,7 +79,7 @@
         <div class="submenu clearfix" data-main-menu-relation="main-menu-item-3">
           <h2>Instellingen</h2>
           <div class="submenu-block">
-            <h3>hoi</h3>
+            <h3><%= Entity.model_name.human(count: 2) %></h3>
             <ul>
               <li>
                 <%= link_to(EntityType.model_name.human(count: 2), organisation_entity_types_path(current_organisation)) %>

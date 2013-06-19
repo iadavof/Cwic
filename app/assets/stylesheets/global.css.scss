@@ -166,8 +166,27 @@ body {
   margin: 0;
 }
 
+#submenu-box > .submenu > h2 {
+  visibility: hidden;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+}
+
 #submenu-box > .submenu > .submenu-block {
   float: left;
+  margin: 0 15px;
+}
+
+#submenu-box > .submenu > .submenu-block > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#submenu-box > .submenu > .submenu-block > ul {
+  padding: 0;
+  margin: 0;
 }
 
 h1 {
@@ -236,7 +255,11 @@ input, textarea {
   padding: 8px;
   width: 15em;
   transition: border-color 0.2s;
-  vertical-align: top;
+}
+
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
 }
 
 input:focus, textarea:focus {
@@ -252,11 +275,12 @@ input[type="submit"],
 input[type="reset"],
 button, 
 .button {
+  display: inline-block;
   width: auto;
   border: 0 none;
   background-color: #666666;
   color: #ffffff;
-  padding: 8px;
+  padding: 8px 10px;
   text-decoration: none;
   cursor: pointer;
   border-radius: 3px;
@@ -277,6 +301,7 @@ label {
   width: 10em;
   padding: 8px 0;
   line-height: normal;
+  vertical-align: top;
 }
 
 #content {
@@ -290,4 +315,25 @@ label {
 
 #content > .inner {
   padding: 15px 20px;
+}
+
+table {
+  background-color: #fdfdfd;
+  border: 1px solid #cccccc;
+  margin: 20px 0;
+  border-collapse: collapse;
+}
+
+table thead {
+  background-color: #dddddd;
+  border-bottom: 1px solid #cccccc;
+}
+
+table td,
+table th {
+  padding: 6px 10px;
+}
+
+table tr:nth-child(even) {
+  background-color: #f3f3f3;
 }
