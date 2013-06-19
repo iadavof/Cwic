@@ -9,6 +9,11 @@
   <body>
     <div id="header">
       <div id="menu-bar" class="clearfix">
+        <% if current_user.present? %>
+        <div id="user-info">
+          <i class="icon-user"></i> <%= current_user.instance_name %><%= ' (' + current_organisation.instance_name + ')' if current_organisation.present? %>
+        </div>
+        <% end %>
         <ul id="main-menu">
           <li id="main-menu-item-1" class="active">
             <a href="#">Overzicht</a>

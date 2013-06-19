@@ -84,6 +84,20 @@ body {
   background: #666666;
   border-bottom: 1px solid #444444;
   background-image: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, transparent 100%);
+  color: #ffffff;
+}
+
+#menu-bar i[class^="icon-"], #menu-bar i[class*=" icon-"] {
+  font-size: 1.1em;
+  position: relative;
+  bottom: -0.12em;
+  margin: 0 0.2em 0 0;
+}
+
+#user-info {
+  float: left;
+  padding: 5px 8px;
+  margin: 0 0 -1px 0;
 }
 
 #main-menu {
