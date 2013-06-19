@@ -7,8 +7,10 @@
   </div>
   <% if @entity.entity_type.present? %>
   <div class="field">
+    <% if @entity.errors[:name].present? %><div class="with_errors"><% end %>
     <%= f.label :name %>
     <%= f.text_field :name %>
+    <% if @entity.errors[:name].present? %></div><% end %>
   </div>
   <div class="field">
     <%= f.label :description %>

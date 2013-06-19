@@ -85,6 +85,7 @@ body {
   border-bottom: 1px solid #444444;
   background-image: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, transparent 100%);
   color: #ffffff;
+  text-align: right;
 }
 
 #menu-bar i[class^="icon-"], #menu-bar i[class*=" icon-"] {
@@ -101,11 +102,11 @@ body {
 }
 
 #main-menu {
-  display: block;
-  float: right;
+  display: inline-block;
   list-style-type: none;
   margin: 0 0 -1px 0;
   padding: 0;
+  white-space: nowrap;
 }
 
 #main-menu > li {
@@ -248,13 +249,17 @@ a > img {
   text-decoration: none;
 }
 
-input, textarea {
+input, textarea, select {
   font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   border: 1px solid #cccccc;
   padding: 8px;
   width: 15em;
   transition: border-color 0.2s;
+}
+
+select {
+  width: auto;
 }
 
 input::-moz-focus-inner {
@@ -299,7 +304,7 @@ button:hover,
 label {
   display: inline-block;
   width: 10em;
-  padding: 8px 0;
+  padding: 9px 0;
   line-height: normal;
   vertical-align: top;
 }
@@ -322,6 +327,7 @@ table {
   border: 1px solid #cccccc;
   margin: 20px 0;
   border-collapse: collapse;
+  max-width: 100%;
 }
 
 table thead {

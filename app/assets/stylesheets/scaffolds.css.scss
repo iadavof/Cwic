@@ -8,10 +8,19 @@ div {
   color: green;
 }
 
-.field_with_errors {
-  padding: 2px;
-  background-color: red;
+.field > .with_errors {
   display: inline-block;
+  background-color: #ffc2bc;
+  background-color: rgba(255,53,32,0.3);
+  padding: 5px;
+  margin-left: -5px;
+  border-radius: 3px;
+  color: #ff3520;
+}
+
+.field_with_errors {
+  display: inline-block;
+  vertical-align: top;
 }
 
 #error_explanation {
