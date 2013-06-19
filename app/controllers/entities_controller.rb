@@ -24,28 +24,17 @@ class EntitiesController < ApplicationController
 
   # POST /entities
   def create
+    return if check_entity_type_changed('new')
     @entity.attributes = resource_params
-    if params[:entity_type_changed].present?
-      @entity.properties.clear
-      @entity.properties.build(@entity.entity_type.property_types.map { |pt| { property_type: pt } }) if @entity.entity_type.present?
-      render 'new'
-    else
-      @entity.save
-      respond_with(@organisation, @entity)
-    end
+    @entity.save
+    respond_with(@organisation, @entity)
   end
 
   # PATCH/PUT /entities/1
   def update
-    @entity.attributes = resource_params
-    if params[:entity_type_changed].present?
-      @entity.properties.clear
-      @entity.properties.build(@entity.entity_type.property_types.map { |pt| { property_type: pt } }) if @entity.entity_type.present?
-      render 'edit'
-    else
-      @entity.save
-      respond_with(@organisation, @entity)
-    end
+    return if check_entity_type_changed('new')
+    @entity.update_attributes(resource_params)
+    respond_with(@organisation, @entity)
   end
 
   # DELETE /entities/1
@@ -72,5 +61,14 @@ private
 
   def interpolation_options
     { resource_name: @entity.instance_name }
+  end
+
+  def check_entity_type_changed(template)
+    return false unless params[:entity_type_changed].present?
+    @entity.entity_type_id = resource_params[:entity_type_id]
+    @entity.properties.clear
+    @entity.properties.build(@entity.entity_type.property_types.map { |pt| { property_type: pt, value: pt.default_value } }) if @entity.entity_type.present?
+    render template
+    true
   end
 end
