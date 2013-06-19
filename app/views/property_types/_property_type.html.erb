@@ -2,7 +2,7 @@
   <h3><%= property_type.name %></h3>
   <dl>
     <dt><%= PropertyType.human_attribute_name(:description) %></dt>
-    <dd><%= property_type.description %></dd>
+    <dd><%= simple_format(property_type.description) %></dd>
     <dt><%= PropertyType.human_attribute_name(:data_type) %></dt>
     <dd title="<%= property_type.data_type.human_description %>"><%= property_type.data_type.human_name %></dd>
     <dt><%= PropertyType.human_attribute_name(:default_value) %></dt>
