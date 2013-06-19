@@ -4,12 +4,6 @@ $(document).ready(function() {
 
 function menuInit() {
   var submenuBox = $('#submenu-box');
-  $(window).on('resize', function() {
-    var selectedSubmenu = $('#submenu-box > .submenu.selected').first();
-    if (selectedSubmenu) {
-      $(submenuBox).css({height: selectedSubmenu.outerHeight(false)});
-    }
-  });
   
   $(submenuBox).css({height: 0});
   $('#submenu-box > .submenu').hide();
@@ -47,12 +41,16 @@ function slideSubMenuByMenuItem(htmlId, animated) {
         $(submenuBox).animate({height: 0}, duration, 'swing', function() {
           $(submenus).removeClass('selected').hide();
           $(relatedSubmenu).addClass('selected').show();
-          $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration);
+          $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function() {
+            $(this).css({height: 'auto'});
+          });
         });
       } else {
         $(submenus).removeClass('selected').hide();
         $(relatedSubmenu).addClass('selected').show();
-        $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration);
+        $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function(){
+          $(this).css({height: 'auto'});
+        });
       }
     }
     return false;

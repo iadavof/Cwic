@@ -84,14 +84,29 @@ body {
   background: #666666;
   border-bottom: 1px solid #444444;
   background-image: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, transparent 100%);
+  color: #ffffff;
+  text-align: right;
+}
+
+#menu-bar i[class^="icon-"], #menu-bar i[class*=" icon-"] {
+  font-size: 1.1em;
+  position: relative;
+  bottom: -0.12em;
+  margin: 0 0.2em 0 0;
+}
+
+#user-info {
+  float: left;
+  padding: 5px 8px;
+  margin: 0 0 -1px 0;
 }
 
 #main-menu {
-  display: block;
-  float: right;
+  display: inline-block;
   list-style-type: none;
   margin: 0 0 -1px 0;
   padding: 0;
+  white-space: nowrap;
 }
 
 #main-menu > li {
@@ -152,8 +167,27 @@ body {
   margin: 0;
 }
 
+#submenu-box > .submenu > h2 {
+  visibility: hidden;
+  height: 1px;
+  padding: 0;
+  margin: 0;
+}
+
 #submenu-box > .submenu > .submenu-block {
   float: left;
+  margin: 0 15px;
+}
+
+#submenu-box > .submenu > .submenu-block > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#submenu-box > .submenu > .submenu-block > ul {
+  padding: 0;
+  margin: 0;
 }
 
 h1 {
@@ -215,14 +249,22 @@ a > img {
   text-decoration: none;
 }
 
-input, textarea {
+input, textarea, select {
   font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   border: 1px solid #cccccc;
   padding: 8px;
   width: 15em;
   transition: border-color 0.2s;
-  vertical-align: top;
+}
+
+select {
+  width: auto;
+}
+
+input::-moz-focus-inner {
+  border: 0;
+  padding: 0;
 }
 
 input:focus, textarea:focus {
@@ -238,11 +280,12 @@ input[type="submit"],
 input[type="reset"],
 button, 
 .button {
+  display: inline-block;
   width: auto;
   border: 0 none;
   background-color: #666666;
   color: #ffffff;
-  padding: 8px;
+  padding: 8px 10px;
   text-decoration: none;
   cursor: pointer;
   border-radius: 3px;
@@ -261,8 +304,9 @@ button:hover,
 label {
   display: inline-block;
   width: 10em;
-  padding: 8px 0;
+  padding: 9px 0;
   line-height: normal;
+  vertical-align: top;
 }
 
 #content {
@@ -276,4 +320,26 @@ label {
 
 #content > .inner {
   padding: 15px 20px;
+}
+
+table {
+  background-color: #fdfdfd;
+  border: 1px solid #cccccc;
+  margin: 20px 0;
+  border-collapse: collapse;
+  max-width: 100%;
+}
+
+table thead {
+  background-color: #dddddd;
+  border-bottom: 1px solid #cccccc;
+}
+
+table td,
+table th {
+  padding: 6px 10px;
+}
+
+table tr:nth-child(even) {
+  background-color: #f3f3f3;
 }

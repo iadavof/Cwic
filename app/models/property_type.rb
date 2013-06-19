@@ -16,14 +16,6 @@ class PropertyType < ActiveRecord::Base
     self.name
   end
 
-  def name_with_description
-    if self.description.present?
-      "#{self.name} (#{self.description}"
-    else
-      "#{self.name}"
-    end
-  end
-
 private
   def create_properties
     self.entity_type.entities.each do |entity|

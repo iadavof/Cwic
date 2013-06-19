@@ -6,7 +6,7 @@
   <dt><%= EntityType.human_attribute_name(:name) %></dt>
   <dd><%= @entity_type.name %></dd>
   <dt><%= EntityType.human_attribute_name(:description) %></dt>
-  <dd><%= @entity_type.description %></dd>
+  <dd><%= simple_format(@entity_type.description) %></dd>
 </dl>
 
 <h2><%= PropertyType.model_name.human(count: 2) %></h2>

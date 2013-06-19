@@ -106,6 +106,24 @@ nl:
         description: 'Omschrijving'
         entity_type: 'Type'
 
+  layouts:
+    menu:
+      overview: 'Overzicht'
+      bookings: 'Boekingen'
+      settings: 'Instellingen'
+      logout: 'Uitloggen'
+      goodmorning: 'Goedemorgen'
+      goodafternoon: 'Goedemiddag'
+      goodevening: 'Goedeavond'
+      goodnight: 'Goedenacht'
+      hallo: 'Hallo'
+      blabla: 'blabla'
+      bla: 'bla'
+      entity_types: 'Objectsoorten'
+      entities: 'Objecten'
+      index: 'Lijst'
+      new: 'Nieuw'
+
   data_types:
     string:
       name: 'regel tekst'

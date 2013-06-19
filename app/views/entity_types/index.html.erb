@@ -18,7 +18,7 @@
     <% @entity_types.each do |entity_type| %>
     <tr>
       <td><%= name_link_to_show([@organisation, entity_type]) %></td>
-      <td><%= entity_type.description %></td>
+      <td><%= format_description(entity_type.description) %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, entity_type]) %>
         <%= icon_link_to_destroy([@organisation, entity_type], confirm: destroy_confirm(entity_type)) %>

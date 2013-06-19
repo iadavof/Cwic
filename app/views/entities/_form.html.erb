@@ -3,12 +3,14 @@
 
   <div class="field">
     <%= f.label :entity_type %>
-    <%= f.select :entity_type_id, EntityType.all.sort.map { |et| [et.name, et.id, { title: et.description }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();" }  %>
+    <%= f.select :entity_type_id, EntityType.all.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();" }  %>
   </div>
   <% if @entity.entity_type.present? %>
   <div class="field">
+    <% if @entity.errors[:name].present? %><div class="with_errors"><% end %>
     <%= f.label :name %>
     <%= f.text_field :name %>
+    <% if @entity.errors[:name].present? %></div><% end %>
   </div>
   <div class="field">
     <%= f.label :description %>

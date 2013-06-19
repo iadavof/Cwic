@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :invitable, :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :organisation_users, inverse_of: :user
+  has_many :organisation_users, inverse_of: :user, dependent: :destroy
   has_many :organisations, through: :organisation_users
   has_many :invitations, class_name: 'User', as: :invited_by
 
