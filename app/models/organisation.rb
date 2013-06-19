@@ -6,10 +6,10 @@ class Organisation < ActiveRecord::Base
   validates :city, presence: true, length: { maximum: 255 }
   validates :country, presence: true, length: { maximum: 255 }
 
-  has_many :organisation_users
+  has_many :organisation_users, dependent: :destroy
   has_many :users, through: :organisation_users
-  has_many :entity_types
-  has_many :entities
+  has_many :entity_types, dependent: :destroy
+  has_many :entities, dependent: :destroy
 
   def instance_name
     self.name

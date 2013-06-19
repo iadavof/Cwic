@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   devise :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  has_many :organisation_users
+  has_many :organisation_users, dependent: :destroy
   has_many :organisations, through: :organisation_users
 
   accepts_nested_attributes_for :organisations
