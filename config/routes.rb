@@ -1,4 +1,7 @@
 Cwic::Application.routes.draw do
+
+  resources :reservations
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   get "home/index"
@@ -9,9 +12,11 @@ Cwic::Application.routes.draw do
   end
 
   resources :organisations do
-    resources :organisation_users, except: [:show, :new]
+    resources :organisation_users, except: [:show, :new, :destroy]
     match '/organisation_users/new', controller: 'organisation_users', action: 'new', via: 'post'
     resources :entity_types
     resources :entities
+    resources :reservations
+    resources :organisation_clients
   end
 end

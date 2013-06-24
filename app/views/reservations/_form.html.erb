@@ -1,0 +1,23 @@
+<%= form_for([@organisation, @reservation]) do |f| %>
+  <%= render 'shared/error_messages', target: @reservation %>
+
+  <div class="field">
+    <%= f.label :begins_at %>
+    <%= f.text_field :begins_at, :id => 'begins_at_date_time', :value => (@reservation.begins_at.blank? ? '' : @reservation.begin_at.strftime('%d-%m-%Y H:i'))  %>
+  </div>
+  <div class="field">
+    <%= f.label :ends_at %>
+    <%= f.text_field :ends_at, :id => 'ends_at_date_time', :value => (@reservation.ends_at.blank? ? '' : @reservation.ends_at.strftime('%d-%m-%Y H:i'))  %>
+  </div>
+  <div class="field">
+    <%= f.label :entity %>
+    <%= f.text_field :entity %>
+  </div>
+  <div class="field">
+    <%= f.label :organisation_client %>
+    <%= f.text_field :organisation_client %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

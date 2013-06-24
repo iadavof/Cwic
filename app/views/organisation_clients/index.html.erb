@@ -1,0 +1,35 @@
+<% content_for :page_title do %>
+<%= index_title(OrganisationClient) %>
+<% end %>
+
+<% if @organisation_clients.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: OrganisationClient.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= OrganisationClient.human_attribute_name(:first_name) %></th>
+      <th><%= OrganisationClient.human_attribute_name(:infix) %></th>
+      <th><%= OrganisationClient.human_attribute_name(:last_name) %></th>
+      <th><%= OrganisationClient.human_attribute_name(:email) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @organisation_clients.each do |organisation_client| %>
+    <tr>
+      <td><%= name_link_to_show([@organisation, organisation_client]) %></td>
+      <td><%= organisation_client.infix %></td>
+      <td><%= organisation_client.last_name %></td>
+      <td><%= organisation_client.email %></td>
+      <td class="icons">
+        <%= icon_link_to_edit([@organisation, organisation_client]) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new([@organisation, OrganisationClient]) %>
