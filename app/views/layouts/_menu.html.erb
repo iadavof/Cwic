@@ -46,7 +46,7 @@ menu = {
   <% end %>
   <ul id="main-menu">
     <% menu.each_with_index do |(category_name, category_content), index| %>
-    <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: (category_name == current_menu_category ? "active" : nil)) do %>
+    <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: ((category_name == current_menu_category || category_content[current_menu_sub_category].present?) ? "active" : nil)) do %>
       <% if category_content[:url].present? # No subitems %>
         <%= link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url)) %>
       <% else # With subitems %>
@@ -63,10 +63,10 @@ menu = {
     <h2><%= t(".#{category_name}") %></h2>
     <% category_content.each do |sub_category_name, sub_category_content| %>
     <div class="submenu-block">
-      <%= content_tag(:h3, t(".#{sub_category_name}"), class: (category_name == current_menu_category && sub_category_name == current_menu_sub_category ? "active" : nil)) %>
+      <%= content_tag(:h3, t(".#{sub_category_name}"), class: ((category_name == current_menu_category || category_content[current_menu_sub_category].present?) && sub_category_name == current_menu_sub_category ? "active" : nil)) %>
       <ul>
         <% sub_category_content.each do |link_name, link_content| %>
-        <%= content_tag(:li, class: (category_name == current_menu_category && sub_category_name == current_menu_sub_category && link_name == current_menu_link ? "active" : nil)) do %>
+        <%= content_tag(:li, class: ((category_name == current_menu_category || category_content[current_menu_sub_category].present?) && sub_category_name == current_menu_sub_category && link_name == current_menu_link ? "active" : nil)) do %>
           <%= link_to((link_content[:name].present? ? link_content[:name] : t(".#{link_name}")), link_content[:url], link_content.except(:name, :url)) %>
         <% end %>
         <% end %>

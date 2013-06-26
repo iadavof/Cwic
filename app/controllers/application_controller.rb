@@ -17,23 +17,24 @@ class ApplicationController < ActionController::Base
     redirect_to root_url, alert: exception.message
   end
 
+  def load_organisation
+    @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
+  end
+
   def current_organisation
     current_user.organisations.first if current_user.present? # XXX TODO this should return the currently selected organisation
   end
   helper_method :current_organisation
-
-  def load_organisation
-    @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
-  end
 
   @current_menu_category = nil
   def current_menu_category
     if @current_menu_category.present?
       @current_menu_category
     else
-      nil
+      nil # We let the menu view determine the current main category based on the current sub category.
     end
   end
+  attr_writer :current_menu_category
   helper_method :current_menu_category
 
   @current_menu_sub_category = nil

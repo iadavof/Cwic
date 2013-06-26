@@ -1,5 +1,4 @@
 class EntitiesController < ApplicationController
-  before_action { @current_menu_category = :settings }
   before_action :load_resource
   authorize_resource
 
