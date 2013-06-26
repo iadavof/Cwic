@@ -33,30 +33,6 @@ nl:
   'true': 'Ja'
   'false': 'Nee'
 
-  devise:
-    shared:
-      links:
-        did_not_receive_confirmation_instructions: 'Geen bevestigingsinstructies ontvangen?'
-        did_not_receive_unlock_instructions: 'Geen deblokkeerinstructies ontvangen?'
-        sign_in_with: 'Inloggen met %{provider}'
-    passwords:
-      new:
-        forgot_password: 'Wachtwoord vergeten?'
-    registrations:
-      new:
-        your_info: 'Uw gegevens'
-    sessions:
-      destroy:
-        logout: 'Uitloggen'
-
-  views:
-    pagination:
-    first: 'Eerste'
-    last: 'Laatste'
-    previous: 'Vorige'
-    next: 'Volgende'
-    truncate: '...'
-
   activerecord:
     models:
       user:
@@ -83,7 +59,12 @@ nl:
       property:
         one: 'Eigenschap'
         other: 'Eigenschappen'
-
+      reserveration:
+        one: 'Reservering'
+        other: 'Reserveringen'
+      organisation_client:
+        one: 'Klant'
+        other: 'Klanten'
     attributes:
       user:
         first_name: 'Voornaam'
@@ -106,45 +87,61 @@ nl:
         name: 'Naam'
         description: 'Omschrijving'
         data_type: 'Datatype'
+        required: 'Verplicht?'
         default_value: 'Standaardwaarde'
       entity:
         name: 'Naam'
         description: 'Omschrijving'
         entity_type: 'Type'
+      properties:
+        value: 'Eigenschap'
+
+  devise:
+    shared:
+      links:
+        did_not_receive_confirmation_instructions: 'Geen bevestigingsinstructies ontvangen?'
+        did_not_receive_unlock_instructions: 'Geen deblokkeerinstructies ontvangen?'
+        sign_in_with: 'Inloggen met %{provider}'
+    passwords:
+      new:
+        forgot_password: 'Wachtwoord vergeten?'
+    registrations:
+      new:
+        your_info: 'Uw gegevens'
+    sessions:
+      destroy:
+        logout: 'Uitloggen'
+
+  views:
+    pagination:
+      first: 'Eerste'
+      last: 'Laatste'
+      previous: 'Vorige'
+      next: 'Volgende'
+      truncate: '...'
 
   layouts:
     menu:
-      overview: 'Overzicht'
-      bookings: 'Boekingen'
-      settings: 'Instellingen'
       logout: 'Uitloggen'
-      goodmorning: 'Goedemorgen'
-      goodafternoon: 'Goedemiddag'
-      goodevening: 'Goedeavond'
-      goodnight: 'Goedenacht'
-      hallo: 'Hallo'
-      blabla: 'blabla'
-      bla: 'bla'
+      overview: 'Overzicht'
+      reservations: 'Reserveringen'
+      settings: 'Instellingen'
+      home: 'Home'
+      organisation_clients: 'Klanten'
       entity_types: 'Objectsoorten'
       entities: 'Objecten'
       index: 'Lijst'
       new: 'Nieuw'
 
-  data_types:
-    string:
-      name: 'regel tekst'
-      description: 'Een veld waarin een regel tekst kan worden opgegeven'
-    text:
-      name: 'lange tekst'
-      description: 'Een veld waarin meerdere regels tekst kunnen worden opgegeven'
-    integer:
-      name: 'geheel getal'
-      description: 'Een veld waarin een geheel getal kan worden opgegeven (zonder decimalen)'
+  shared:
+    error_messages:
+      fix_the_errors:
+        one: 'Er ging iets mis. Los de fout op en probeer het opnieuw:'
+        other: 'Er ging iets mis. Los de %{count} fouten op en probeer het opnieuw:'
 
-  entity_types:
-    still_used_destroy_confirm:
-      one: 'Deze objectsoort wordt nog gebruikt door een object. Weet u zeker dat u door wilt gaan?'
-      other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
+  home:
+    index:
+      welcome_html: 'Welkom bij <strong>Cwic</strong>'
 
   organisation_users:
     index:
@@ -157,10 +154,28 @@ nl:
     create:
       user_already_has_a_role_in_organisation: 'Deze gebruiker heeft al een rol in je organisatie'
 
-  home:
-    index:
-      welcome_html: 'Welkom bij <strong>Cwic</strong>'
-
   invitations:
     invitation_sent: 'Uitnodiging verzonden'
     cannot_send_invitation: 'Kan de uitndodiging helaas niet versturen'
+
+  entity_types:
+    still_used_destroy_confirm:
+      one: 'Deze objectsoort wordt nog gebruikt door een object. Weet u zeker dat u door wilt gaan?'
+      other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
+
+  data_types:
+    string:
+      name: 'regel tekst'
+      description: 'Een veld waarin een regel tekst kan worden opgegeven'
+    text:
+      name: 'lange tekst'
+      description: 'Een veld waarin meerdere regels tekst kunnen worden opgegeven'
+    integer:
+      name: 'geheel getal'
+      description: 'Een veld waarin een geheel getal kan worden opgegeven (zonder decimalen)'
+    decimal:
+      name: 'decimaal getal'
+      description: 'Een veld waarin een decimaal getal kan worden opgegeven (met een komma om de decimale te scheiden)'
+    boolean:
+      name: 'ja/nee'
+      description: 'Een checkbox veld om aan te geven of het de eigenschap wel of niet bezit'

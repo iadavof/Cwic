@@ -2,17 +2,8 @@
 menu = {
   overview: {
     home: {
-      index: { url: home_index_path }
+      index: { name: t('.home'), url: home_index_path }
     },
-    goodafternoon: {
-      bla: { url: '#' }
-    },
-    goodevening: {
-      bla: { url: '#' }
-    },
-    goodnight: {
-      bla: { url: '#' }
-    }
   },
   reservations: {
     reservations: {
@@ -60,7 +51,7 @@ menu = {
 </div>
 <div id="submenu-box" class="clearfix">
   <% menu.each_with_index do |(category_name, category_content), index| %>
-  <% unless category_content[:url].present? # With ubitems %>
+  <% unless category_content[:url].present? # With subitems %>
   <div class="submenu clearfix" data-main-menu-relation="main-menu-item-<%= index + 1 %>">
     <h2><%= t(".#{category_name}") %></h2>
     <% category_content.each do |sub_category_name, sub_category_content| %>

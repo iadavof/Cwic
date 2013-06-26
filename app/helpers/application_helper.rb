@@ -1,6 +1,6 @@
 module ApplicationHelper
-  def can?(*params)
-    true
+  def format_bool(bool)
+    I18n.t(bool.to_s)
   end
 
   # Format description (title) helpers. Useful for (a.o.) entities and entity types.

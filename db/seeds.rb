@@ -11,6 +11,8 @@ DataType.create!([
   { key: 'string', rails_type: 'String', form_type: 'text_field' },
   { key: 'text', rails_type: 'String', form_type: 'text_area' },
   { key: 'integer', rails_type: 'Integer', form_type: 'number_field' },
+  { key: 'decimal', rails_type: 'BigDecimal', form_type: 'number_field' },
+  { key: 'boolean', rails_type: 'Boolean', form_type: 'check_box' },
 ])
 
 # Create default roles

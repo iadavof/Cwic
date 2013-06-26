@@ -1,5 +1,5 @@
 class PropertyType < ActiveRecord::Base
-  default_scope order(:name)
+  default_scope { order(:name) }
 
   belongs_to :entity_type
   belongs_to :data_type
@@ -12,11 +12,14 @@ class PropertyType < ActiveRecord::Base
 
   after_create :create_properties
 
+  delegate :cast_value, :parse_value, :format_value, to: :data_type
+
   def instance_name
     self.name
   end
 
 private
+  # Create/preset the new property for old entities of entity_type
   def create_properties
     self.entity_type.entities.each do |entity|
       entity.properties.create(property_type: self, value: self.default_value)

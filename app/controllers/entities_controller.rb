@@ -35,6 +35,7 @@ class EntitiesController < ApplicationController
   def update
     return if check_entity_type_changed('new')
     @entity.update_attributes(resource_params)
+    puts @entity.errors.inspect
     respond_with(@organisation, @entity)
   end
 
@@ -67,9 +68,13 @@ private
   def check_entity_type_changed(template)
     return false unless params[:entity_type_changed].present?
     @entity.entity_type_id = resource_params[:entity_type_id]
-    @entity.properties.clear
-    @entity.properties.build(@entity.entity_type.property_types.map { |pt| { property_type: pt, value: pt.default_value } }) if @entity.entity_type.present?
+    build_properties if @entity.entity_type.present?
     render template
     true
+  end
+
+  def build_properties
+    @entity.properties.clear
+    @entity.properties.build(@entity.entity_type.property_types.map { |pt| { property_type: pt, value: pt.default_value } })
   end
 end

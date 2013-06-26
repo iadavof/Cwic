@@ -7,7 +7,9 @@ Cwic::Application.routes.draw do
   get "home/index"
   root to: 'home#index'
 
-  devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' } do
+  devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
+
+  devise_scope :user do
     match '/users/:user_id/invitation/resend', controller: 'users/invitations', action: 'resend_invitation', via: 'post', as: 'resend_invitation'
   end
 

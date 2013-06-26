@@ -13,6 +13,10 @@
     <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description }] }, prompt: t('prompt_choose') %>
   </div>
   <div class="field">
+    <%= f.label :required %>
+    <%= f.check_box :required %>
+  </div>
+  <div class="field">
     <%= f.label :default_value %>
     <%= f.text_field :default_value %>
   </div>
