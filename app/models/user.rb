@@ -21,10 +21,10 @@ class User < ActiveRecord::Base
   end
 
   def get_status
-    if !self.invitation_accepted?
-      return :awaiting_invitation_acceptance
-    else
+    if accepted_or_not_invited?
       return :active
+    else
+      return :awaiting_invitation_acceptance
     end
   end
 end

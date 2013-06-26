@@ -1,10 +1,10 @@
 class Users::InvitationsController < Devise::InvitationsController
   before_action :configure_permitted_parameters
 
-  prepend_before_filter :authenticate_inviter!, :only => [:new, :create]
-  prepend_before_filter :has_invitations_left?, :only => [:create]
-  prepend_before_filter :require_no_authentication, :only => [:edit, :update, :destroy]
-  prepend_before_filter :resource_from_invitation_token, :only => [:edit, :destroy]
+  prepend_before_filter :authenticate_inviter!, only: [:new, :create]
+  prepend_before_filter :has_invitations_left?, only: [:create]
+  prepend_before_filter :require_no_authentication, only: [:edit, :update, :destroy]
+  prepend_before_filter :resource_from_invitation_token, only: [:edit, :destroy]
   helper_method :after_sign_in_path_for
 
   # GET /resource/invitation/new
@@ -17,19 +17,19 @@ class Users::InvitationsController < Devise::InvitationsController
         self.resource.email = params[:email]
         render :new
       else
-        redirect_to home_index_path
+        redirect_to organisation_users_index_path
       end
     else
-      redirect_to home_index_path
+      redirect_to organisation_users_index_path
     end
   end
 
   def resend_invitation
     if params[:user_id].present? && user = User.find(params[:user_id])
       user.invite!
-      redirect_to organisation_organisation_users_path(current_organisation), notice: t('invitations.invitation_resent')
+      redirect_to after_invite_path_for(resource), notice: t('invitations.invitation_resent')
     else
-      redirect_to organisation_organisation_users_path(current_organisation), warning: t('invitations.cannot_resend_invitation')
+      redirect_to after_invite_path_for(resource), warning: t('invitations.cannot_resend_invitation')
     end
   end
 
@@ -39,8 +39,8 @@ class Users::InvitationsController < Devise::InvitationsController
     self.resource = resource_class.invite!(invite_params, current_inviter)
 
     if resource.errors.empty?
-      set_flash_message :notice, :send_instructions, :email => self.resource.email
-      respond_with resource, :location => after_invite_path_for(resource)
+      set_flash_message :notice, :send_instructions, email: self.resource.email
+      respond_with resource, location: after_invite_path_for(resource)
     else
       respond_with_navigational(resource) { render :new }
     end
@@ -59,7 +59,7 @@ class Users::InvitationsController < Devise::InvitationsController
       flash_message = resource.active_for_authentication? ? :updated : :updated_not_active
       set_flash_message :notice, flash_message
       sign_in(resource_name, resource)
-      respond_with resource, :location => after_accept_path_for(resource)
+      respond_with resource, location: after_accept_path_for(resource)
     else
       respond_with_navigational(resource){ render :edit }
     end
@@ -102,6 +102,10 @@ class Users::InvitationsController < Devise::InvitationsController
 
   def update_resource_params
     devise_parameter_sanitizer.for(:accept_invitation)
+  end
+
+  def after_invite_path_for(resource)
+    organisation_organisation_users_path(current_organisation)
   end
 end
 

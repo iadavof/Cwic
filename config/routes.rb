@@ -14,7 +14,7 @@ Cwic::Application.routes.draw do
   end
 
   resources :organisations do
-    resources :organisation_users, except: [:show, :new, :destroy]
+    resources :organisation_users, except: [:show, :new]
     match '/organisation_users/new', controller: 'organisation_users', action: 'new', via: 'post'
     resources :entity_types
     resources :entities

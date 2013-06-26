@@ -4,32 +4,32 @@ module LinkHelper
   def link_to_index(object, options = {})
     options[:name] ||= t('.to_index', default: :to_index_objects, classes: object_classes_name(object).lcfirst)
     options[:location] ||= polymorphic_path(object)
-    link_to_if(can?(:index, object), options[:name], options[:location], class: options[:css_class], data: { action: 'index' }, title: options[:title]) {}
+    link_to_if(can?(:index, relevant_object(object)), options[:name], options[:location], class: options[:css_class], data: { action: 'index' }, title: options[:title]) {}
   end
 
   def link_to_new(object, options = {})
     options[:name] ||= t('.to_new', default: :to_new_object, class: object_class_name(object).lcfirst)
     options[:location] ||= new_polymorphic_path(object)
-    link_to_if(can?(:new, object), options[:name], options[:location], class: options[:css_class], data: { action: 'new' }, title: options[:title]) {}
+    link_to_if(can?(:new, relevant_object(object)), options[:name], options[:location], class: options[:css_class], data: { action: 'new' }, title: options[:title]) {}
   end
 
   def link_to_show(object, options = {})
     options[:name] ||= t('.to_show', default: :to_show_object, class: object_class_name(object).lcfirst, name: object_name(object))
     options[:location] ||= object
-    link_to_if(can?(:show, object), options[:name], options[:location], class: options[:css_class], data: { action: 'show' }, title: options[:title])
+    link_to_if(can?(:show, relevant_object(object)), options[:name], options[:location], class: options[:css_class], data: { action: 'show' }, title: options[:title])
   end
 
   def link_to_edit(object, options = {})
     options[:name] ||= t('.to_edit', default: :to_edit_object, class: object_class_name(object).lcfirst, name: object_name(object))
     options[:location] ||= edit_polymorphic_path(object)
-    link_to_if(can?(:edit, object), options[:name], options[:location], class: options[:css_class], data: { action: 'edit' }, title: options[:title]) {}
+    link_to_if(can?(:edit, relevant_object(object)), options[:name], options[:location], class: options[:css_class], data: { action: 'edit' }, title: options[:title]) {}
   end
 
   def link_to_destroy(object, options = {})
     options[:name] ||= t('.to_destroy', default: :to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
     options[:location] ||= object
     options[:confirm] ||= t('.destroy_are_you_sure', default: :destroy_are_you_sure)
-    link_to_if(can?(:destroy, object), options[:name], options[:location], method: :delete, data: { confirm: options[:confirm], action: 'destroy' }, class: options[:css_class], title: options[:title]) {}
+    link_to_if(can?(:destroy, relevant_object(object)), options[:name], options[:location], method: :delete, data: { confirm: options[:confirm], action: 'destroy' }, class: options[:css_class], title: options[:title]) {}
   end
 
   # Link back to object helpers

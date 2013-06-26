@@ -70,6 +70,10 @@ nl:
         first_name: 'Voornaam'
         last_name: 'Achternaam'
         infix: 'Tussenvoegsel'
+        email: 'E-mail'
+        password: 'Wachtwoord'
+        password_confirmation: 'Bevestig wachtwoord'
+        remember_me: 'Onthoud mij'
       organisation:
         name: 'Naam'
         street: 'Straat'
@@ -146,7 +150,7 @@ nl:
   organisation_users:
     index:
       status: 'Status'
-      active: 'Active'
+      active: 'Actief'
       awaiting_invitation_acceptance: 'Wacht op bevestiging'
       resend_invitation: 'Opnieuw uitnodigen'
     invite:
@@ -156,6 +160,7 @@ nl:
 
   invitations:
     invitation_sent: 'Uitnodiging verzonden'
+    invitation_resent: 'Uitnodiging opnieuw verzonden'
     cannot_send_invitation: 'Kan de uitndodiging helaas niet versturen'
 
   entity_types:

@@ -55,7 +55,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @organisation_users = @organisation.organisation_users.accessible_by(current_ability, :index).where.not(user: current_user)
+      @organisation_users = @organisation.organisation_users.accessible_by(current_ability, :index)
     when 'new', 'create'
       @organisation_user = @organisation.organisation_users.build
     else

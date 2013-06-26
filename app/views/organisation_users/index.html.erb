@@ -3,7 +3,7 @@
 <% end %>
 
 <% if @organisation_users.empty? %>
-  <p><%= t('.empty', default: :empty_objects, classes: OrganisationUser.model_name.human(count: 2).lcfirst) %></p>
+<p><%= t('.empty', default: :empty_objects, classes: OrganisationUser.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <table>
   <thead>
