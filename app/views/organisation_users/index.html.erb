@@ -10,6 +10,7 @@
     <tr>
       <th><%= OrganisationUser.human_attribute_name(:user) %></th>
       <th><%= OrganisationUser.human_attribute_name(:organisation_role) %></th>
+      <th><%= t('.status') %></th>
       <th></th>
     </tr>
   </thead>
@@ -17,8 +18,9 @@
   <tbody>
     <% @organisation_users.each do |organisation_user| %>
     <tr>
-      <td><%= name_link_to_show([@organisation, organisation_user]) %></td>
+      <td><%= organisation_user.instance_name %></td>
       <td><%= organisation_user.organisation_role.name %></td>
+      <td><%= status_actions_for_user(organisation_user.user) %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, organisation_user]) %>
         <%= icon_link_to_destroy([@organisation, organisation_user]) %>

@@ -68,6 +68,9 @@ nl:
       organisation_user:
         one: 'Gebruiker'
         other: 'Gebruikers'
+      organisation_role:
+        one: 'Rol'
+        other: 'Rollen'
       entity_type:
         one: 'Objectsoort'
         other: 'Objectsoorten'
@@ -93,6 +96,9 @@ nl:
         postal_code: 'Postcode'
         city: 'Plaats'
         country: 'Land'
+      organisation_user:
+        user: 'Gebruiker'
+        organisation_role: 'Rol'
       entity_type:
         name: 'Naam'
         description: 'Omschrijving'
@@ -141,6 +147,11 @@ nl:
       other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
 
   organisation_users:
+    index:
+      status: 'Status'
+      active: 'Active'
+      awaiting_invitation_acceptance: 'Wacht op bevestiging'
+      resend_invitation: 'Opnieuw uitnodigen'
     invite:
       add: 'Toevoegen'
     create:
@@ -149,3 +160,7 @@ nl:
   home:
     index:
       welcome_html: 'Welkom bij <strong>Cwic</strong>'
+
+  invitations:
+    invitation_sent: 'Uitnodiging verzonden'
+    cannot_send_invitation: 'Kan de uitndodiging helaas niet versturen'

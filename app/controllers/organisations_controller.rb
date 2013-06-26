@@ -35,12 +35,6 @@ class OrganisationsController < ApplicationController
     respond_with(@organisation)
   end
 
-  # DELETE /organisations/1
-  def destroy
-    @organisation.destroy
-    respond_with(@organisation)
-  end
-
 private
   def load_resource
     case params[:action]

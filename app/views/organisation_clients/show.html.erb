@@ -1,0 +1,18 @@
+<% content_for :page_title do %>
+<%= show_title(@organisation_client) %>
+<% end %>
+
+<dl>
+  <dt><%= OrganisationClient.human_attribute_name(:first_name) %></dt>
+  <dd><%= @organisation_client.first_name %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:infix) %></dt>
+  <dd><%= @organisation_client.infix %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:last_name) %></dt>
+  <dd><%= @organisation_client.last_name %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
+  <dd><%= @organisation_client.email %></dd>
+</dl>
+
+<%= button_link_back_to_index(OrganisationClient) %>
+<%= button_link_to_edit(@organisation_client) %>
+<%= button_link_to_destroy(@organisation_client) %>

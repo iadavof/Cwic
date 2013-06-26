@@ -24,6 +24,15 @@ class Users::InvitationsController < Devise::InvitationsController
     end
   end
 
+  def resend_invitation
+    if params[:user_id].present? && user = User.find(params[:user_id])
+      user.invite!
+      redirect_to organisation_organisation_users_path(current_organisation), notice: t('invitations.invitation_resent')
+    else
+      redirect_to organisation_organisation_users_path(current_organisation), warning: t('invitations.cannot_resend_invitation')
+    end
+  end
+
   # POST /resource/invitation
   def create
     # The invite call on the user will also calls the save method on this user object and stores the organisation_users relation

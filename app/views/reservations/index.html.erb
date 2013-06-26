@@ -1,0 +1,36 @@
+<% content_for :page_title do %>
+<%= index_title(Reservation) %>
+<% end %>
+
+<% if @reservations.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= Reservation.human_attribute_name(:begins_at) %></th>
+      <th><%= Reservation.human_attribute_name(:ends_at) %></th>
+      <th><%= Reservation.human_attribute_name(:entity) %></th>
+      <th><%= Reservation.human_attribute_name(:organisation_client) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reservations.each do |reservation| %>
+    <tr>
+      <td><%= name_link_to_show([@organisation, reservation]) %></td>
+      <td><%= reservation.ends_at %></td>
+      <td><%= reservation.entity %></td>
+      <td><%= reservation.organisation_client %></td>
+      <td class="icons">
+        <%= icon_link_to_edit([@organisation, reservation]) %>
+        <%= icon_link_to_destroy([@organisation, reservation]) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new([@organisation, Reservation]) %>
