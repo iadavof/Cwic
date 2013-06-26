@@ -42,7 +42,7 @@ menu = {
   <div id="user-info">
     <a id="current-user" href="#"><i class="icon-user"></i> <%= current_user.instance_name %><%= ' (' + current_organisation.instance_name + ')' if current_organisation.present? %></a>
     <ul id="user-menu">
-      <li><%= link_to(t('.logout'), destroy_user_session_path, method: :delete) %></li>
+      <li><%= link_to(content_tag(:i, '', class: 'icon-off') + ' ' + t('.logout'), destroy_user_session_path, method: :delete) %></li>
     </ul>
   </div>
   <% end %>

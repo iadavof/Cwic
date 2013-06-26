@@ -1,0 +1,37 @@
+@import 'imports/whhg';
+
+[data-action="new"] {
+  @extend .icon-circleadd;
+  &:before {
+    @extend [class^="icon-"];
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+  }
+}
+
+[data-action="destroy"] {
+  @extend .icon-remove-sign;
+  &:before {
+    @extend [class^="icon-"];
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+  }
+}
+
+[data-action="edit"] {
+  @extend .icon-edit;
+  &:before {
+    @extend [class^="icon-"];
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+  }
+}
+
+[data-action="index"] {
+  @extend .icon-circle-arrow-left;
+  &:before {
+    @extend [class^="icon-"];
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+  }
+}
