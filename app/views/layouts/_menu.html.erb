@@ -1,8 +1,8 @@
 <%
 menu = {
   overview: {
-    goodmorning: {
-      home: { url: home_index_path }
+    home: {
+      index: { url: home_index_path }
     },
     goodafternoon: {
       bla: { url: '#' }
@@ -14,12 +14,12 @@ menu = {
       bla: { url: '#' }
     }
   },
-  bookings: {
-    calendar: {
-      weekview: { url: organisation_reservations_path(current_organisation) }
+  reservations: {
+    reservations: {
+      index: { url: organisation_reservations_path(current_organisation) }
     },
-    clients: {
-      client_overview: { url: organisation_organisation_clients_path(current_organisation) }
+    organisation_clients: {
+      index: { url: organisation_organisation_clients_path(current_organisation) }
     }
   },
   settings: {
