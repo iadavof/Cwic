@@ -34,3 +34,23 @@
 <% end %>
 
 <%= button_link_to_new([@organisation, Reservation]) %>
+
+<div id="schedule-container"></div>
+
+<div id="schedule-templates" style="display: none;">
+  <div class="schedule" id="scheduleContainerTemplate">
+    <div class="time-axis"></div>
+    <div class="schedule-body"></div>
+  </div>
+
+
+  <div class="day-row" id="dayRowTemplate">
+    <p class="day-name">name</p>
+    <div class="day-row-time-parts">
+    </div>
+  </div>
+
+  <div class="hour-time-frame" id="hourTimeFrameTemplate"></div>
+
+  <div class="schedule-item" id="scheduleItemTemplate"></div>
+</div>
