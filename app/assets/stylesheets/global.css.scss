@@ -190,12 +190,16 @@ body {
   margin: 0;
 }
 
-#submenu-box > .submenu > .submenu-block > ul > li.active {
-  background-color: #330000;
+#submenu-box > .submenu > .submenu-block > ul > li a {
+  display: inline-block;
 }
 
-h1 {
-  margin-left: 20px;
+#submenu-box > .submenu > .submenu-block > ul > li.active a {
+  background-color: #ff3520;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 0 8px;
+  border-radius: 3px;
 }
 
 h1.title-box,
@@ -217,12 +221,36 @@ h6.title-box  {
   text-align: left;
 }
 
-h1 {
-  font-size: 2.5em;
+h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
-  font-family: 'AllerLight', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   letter-spacing: 0.02em;
   word-spacing: 0.03em;
+}
+
+h1 {
+  font-family: 'AllerLight', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-size: 2.5em;
+  margin-left: 20px;
+}
+
+h2 {
+  font-size: 1.8em;
+}
+
+h3 {
+  font-size: 1.6em;
+}
+
+h4 {
+  font-size: 1.4em;
+}
+
+h5 {
+  font-size: 1.3m;
+}
+
+h6 {
+  font-size: 1.2em;
 }
 
 img {
@@ -346,4 +374,29 @@ table th {
 
 table tr:nth-child(even) {
   background-color: #f3f3f3;
+}
+
+dl {
+  display: block;
+  margin: 20px 0;
+  padding: 0;
+}
+
+dl dt, 
+dl dd {
+  margin: 0;
+  padding: 0;
+}
+
+dl dt {
+  font-weight: bold;
+}
+
+dl dt:after {
+  display: inline;
+  content: ':';
+}
+
+dd + dt {
+  margin-top: 10px;
 }
