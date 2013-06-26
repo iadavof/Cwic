@@ -173,7 +173,7 @@ nl:
     integer:
       name: 'geheel getal'
       description: 'Een veld waarin een geheel getal kan worden opgegeven (zonder decimalen)'
-    decimal:
+    float:
       name: 'decimaal getal'
       description: 'Een veld waarin een decimaal getal kan worden opgegeven (met een komma om de decimale te scheiden)'
     boolean:

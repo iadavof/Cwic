@@ -7,6 +7,7 @@
   </div>
   <% if @entity.entity_type.present? %>
   <div class="field">
+    <% # XXX TODO remove this? Either put it in the form builder (maybe use simple form?) or try to work it out with the field_with_errors construction %>
     <% if @entity.errors[:name].present? %><div class="with_errors"><% end %>
     <%= f.label :name %>
     <%= f.text_field :name %>

@@ -4,26 +4,16 @@ class DataType < ActiveRecord::Base
   validates :form_type, presence: true, length: { maximum: 255 }
 
   def cast_value(value)
+    puts value.inspect
+    return nil if value.blank?
+
     case self.rails_type
     when 'Integer'
       Integer(value)
-    when 'BigDecimal'
-      BigDecimal(value)
+    when 'Float'
+      Float(value)
     when 'Boolean'
       ActiveRecord::ConnectionAdapters::Column.value_to_boolean(value)
-    else
-      value
-    end
-  end
-
-  def format_value(value)
-    case self.rails_type
-    when 'Integer'
-      I18n::Alchemy::NumericParser.localize(value)
-    when 'BigDecimal'
-      I18n::Alchemy::NumericParser.localize(value)
-    when 'Boolean'
-      I18n.t(value.to_s)
     else
       value
     end
@@ -33,12 +23,28 @@ class DataType < ActiveRecord::Base
     case self.rails_type
     when 'Integer'
       parsed = (I18n::Alchemy::NumericParser.parse(value))
-    when 'BigDecimal'
+    when 'Float'
       parsed = (I18n::Alchemy::NumericParser.parse(value))
     else
       parsed = value
     end
     cast_value(parsed) rescue value
+  end
+
+  def format_value(value)
+    puts value.inspect
+    return value if value.blank?
+
+    case self.rails_type
+    when 'Integer'
+      I18n::Alchemy::NumericParser.localize(value)
+    when 'Float'
+      I18n::Alchemy::NumericParser.localize(value)
+    when 'Boolean'
+       I18n.t(value.to_s)
+    else
+      value
+    end
   end
 
   def human_name

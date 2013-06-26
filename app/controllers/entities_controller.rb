@@ -35,7 +35,6 @@ class EntitiesController < ApplicationController
   def update
     return if check_entity_type_changed('new')
     @entity.update_attributes(resource_params)
-    puts @entity.errors.inspect
     respond_with(@organisation, @entity)
   end
 

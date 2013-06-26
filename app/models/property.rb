@@ -1,5 +1,6 @@
 class Property < ActiveRecord::Base
   default_scope { includes(:property_type).order('property_types.name') }
+
   belongs_to :entity
   belongs_to :property_type
 
@@ -9,20 +10,21 @@ class Property < ActiveRecord::Base
   validates :value, presence: true, if: :required?
   validates :value, length: { maximum: 255 }, allow_blank: true, if: :string?
   validates :value, numericality: { only_integer: true }, allow_blank: true, if: :integer?
-  validates :value, numericality: true, allow_blank: true, if: :decimal?
+  validates :value, numericality: true, allow_blank: true, if: :float?
 
-  delegate :cast_value, :parse_value, :format_value, to: :property_type
+  after_find :cast_value
+  before_validation :parse_value
 
-  after_find do
-    self.value = cast_value(self.value)
+  def cast_value
+    self.value = self.property_type.cast_value(self.value)
   end
 
-  before_validation do
-    self.value = parse_value(self.value)
+  def parse_value
+    self.value = self.property_type.parse_value(self.value)
   end
 
   def formatted_value
-    self.format_value(self.value)
+    self.property_type.format_value(self.value)
   end
 
   def required?
@@ -37,11 +39,27 @@ class Property < ActiveRecord::Base
     self.property_type.data_type.key == 'integer'
   end
 
-  def decimal?
-    self.property_type.data_type.key == 'decimal'
+  def float?
+    self.property_type.data_type.key == 'float'
   end
 
   def instance_name
     self.property_type.instance_name
+  end
+
+  # We overwrite the errors object with our own error object to support dynamic attribute name in the errors.
+  def errors
+    @errors ||= Errors.new(self)
+  end
+end
+
+# Our own errors class that add the property's attribute name to the error message.
+class Errors < ActiveModel::Errors
+  def add(attribute, message = nil, options = {})
+    super
+    if attribute == :value
+      message = self[attribute].pop
+      self[attribute] << "'#{@base.property_type.name}' #{message}"
+    end
   end
 end
