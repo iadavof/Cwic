@@ -368,6 +368,14 @@ button:hover,
   color: #ffffff;
 }
 
+input[type="submit"] {
+  background-color: #ff3520;
+}
+
+input[type="submit"]:hover {
+  background-color: #ff4537;
+}
+
 label {
   display: inline-block;
   width: 10em;

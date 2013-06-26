@@ -1,6 +1,6 @@
 @import 'imports/whhg';
 
-[data-action="new"] {
+.button[data-action="new"] {
   @extend .icon-circleadd;
   &:before {
     @extend [class^="icon-"];
@@ -9,7 +9,7 @@
   }
 }
 
-[data-action="destroy"] {
+.button[data-action="destroy"] {
   @extend .icon-remove-sign;
   &:before {
     @extend [class^="icon-"];
@@ -18,7 +18,7 @@
   }
 }
 
-[data-action="edit"] {
+.button[data-action="edit"] {
   @extend .icon-edit;
   &:before {
     @extend [class^="icon-"];
@@ -27,7 +27,7 @@
   }
 }
 
-[data-action="index"] {
+.button[data-action="index"] {
   @extend .icon-circle-arrow-left;
   &:before {
     @extend [class^="icon-"];
