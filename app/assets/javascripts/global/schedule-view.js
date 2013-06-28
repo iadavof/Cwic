@@ -76,6 +76,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 begin_time: '12:34',
                 end_time: '13:37',
                 color: '#FF0000',
+                description: 'Alle nerorz in da house',
             },
             {
                 itemid: 2,
@@ -84,6 +85,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 begin_time: '9:00',
                 end_time: '17:00',
                 color: '#35ff20',
+                description: 'Alle nerorz in da house',
             },
             {
                 itemid: 3,
@@ -92,6 +94,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 begin_time: '16:30',
                 end_time: '23:30',
                 color: '#2035ff',
+                description: 'Alle nerorz in da house',
             },
         ],
     },
@@ -106,6 +109,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 begin_time: '20:30',
                 end_time: '23:30',
                 color: '#ff3520',
+                description: 'Alle nerorz in da house',
             },
             {
                 itemid: 2,
@@ -114,6 +118,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 begin_time: '9:00',
                 end_time: '17:00',
                 color: '#35ff20',
+                description: 'Alle nerorz in da house',
             },
             {
                 itemid: 3,
@@ -122,6 +127,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 begin_time: '16:30',
                 end_time: '23:30',
                 color: '#2035ff',
+                description: 'Alle nerorz in da house',
             },
         ],
     },
@@ -136,7 +142,8 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 end_date: '2013-06-05',
                 begin_time: '20:30',
                 end_time: '23:30',
-               color: '#ff3520',
+                color: '#ff3520',
+                description: 'Alle nerorz in da house',
             },
             {
                 itemid: 2,
@@ -145,6 +152,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 begin_time: '20:30',
                 end_time: '23:30',
                 color: '#35ff20',
+                description: 'Alle nerorz in da house',
             },
             {
                 itemid: 3,
@@ -153,6 +161,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 begin_time: '16:30',
                 end_time: '23:30',
                 color: '#2035ff',
+                description: 'Alle nerorz in da house',
             },
         ],
     },
@@ -193,29 +202,35 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
             switch(dayi) {
                 case 0:
                 console.debug(days[dayi].date);
-                    this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), item.begin_time, '24:00', item.color, schedule_object_id);
+                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), item.begin_time, '24:00', item.color, item.description, schedule_object_id);
+                    schedulePart.find('div.continue.right').show();
                     break;
                 case days.length - 1:
-                    this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), '00:00', item.end_time, item.color, schedule_object_id);
+                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), '00:00', item.end_time, item.color, item.description, schedule_object_id);
+                    schedulePart.find('div.continue.left').show();
                     break;
                 default:
-                    this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), '00:00', '24:00', item.color, schedule_object_id);
+                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), '00:00', '24:00', item.color, item.description, schedule_object_id);
+                    schedulePart.find('div.continue').show();
             }
         }
     }
 }
 
-IADAscheduleView.prototype.addSingleDayBlock = function(dayRowScheduleRow, begin_time, end_time, color, schedule_object_id) {
+IADAscheduleView.prototype.addSingleDayBlock = function(dayRowScheduleRow, begin_time, end_time, color, text, schedule_object_id) {
     console.debug(begin_time, end_time);
     var newScheduleItem = this.getTemplateClone('scheduleItemTemplate');
     newScheduleItem.css('left', + this.dayTimeToPercentage(begin_time) + '%');
     newScheduleItem.css('width', + this.dayTimePercentageSpan(begin_time, end_time) + '%');
     newScheduleItem.css('background-color', color);
+    newScheduleItem.find('p.item-text').text(text);
+    newScheduleItem.find('p.item-text').attr('title', text);
     $(dayRowScheduleRow).find('.scheduleObject_' + schedule_object_id).append(newScheduleItem);
+    return newScheduleItem;
 }
 
 IADAscheduleView.prototype.addSingleDayItem = function(dayRowScheduleRow, item, schedule_object_id) {
-    this.addSingleDayBlock(dayRowScheduleRow, item.begin_time, item.end_time, item.color, schedule_object_id);
+    this.addSingleDayBlock(dayRowScheduleRow, item.begin_time, item.end_time, item.color, item.description, schedule_object_id);
 }
 
 IADAscheduleView.prototype.dayTimePercentageSpan = function(begintime, endtime) {

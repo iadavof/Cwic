@@ -63,7 +63,7 @@ div.schedule-container div.schedule-body p.day-name {
   line-height: 1.5em;
   white-space: nowrap;
   margin-top: -0.75em;
-  z-index: 2;
+  z-index: 4;
   color: #555;
   font-style: italic;
 }
@@ -118,4 +118,37 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item {
   width: 1px;
   z-index: 1;
   background-color: #555;
+  overflow: hidden;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue {
+  position: absolute;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  color: #FFF;
+  margin-top: -7.5px;
+  display: none;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue.left {
+  left: 5px;
+  right: auto;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue.right {
+  right: 5px;
+  left: auto;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item p.item-text {
+  position: absolute;
+  left: 25px;
+  top: 50%;
+  height: 15px;
+  line-height: 15px;
+  font-size: 15px;
+  margin-top: -7.5px;
+  color: #222;
 }
