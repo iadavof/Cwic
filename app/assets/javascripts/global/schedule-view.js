@@ -33,7 +33,16 @@ function IADAscheduleView(options) {
 }
 
 IADAscheduleView.prototype.addTimeAxis = function() {
-    $(this.scheduleContainer).find('.time-axis').sticky({getWidthFrom: '.schedule-body'});
+    var timeAxis = $(this.scheduleContainer).find('.time-axis')
+
+    for(var i = 0; i < 24; i += 1) {
+        var hourpart = this.getTemplateClone('hourTimeAxisFrameTemplate');
+        $(hourpart).attr('id', 'hour_'+ i);
+        $(hourpart).find('p.time').text(i + ':00');
+        $(timeAxis).append(hourpart);
+    }
+
+    timeAxis.sticky({getWidthFrom: '.schedule-body'});
 }
 
 IADAscheduleView.prototype.createSchedule = function() {
@@ -147,6 +156,13 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
         var beginDate = Date.parse(item.begin_date);
         this.addSingleDayItem($(this.scheduleContainer).find('#'+ beginDate), item, schedule_object_id);
     } else {
+        var beginDate = Date.parse(item.begin_date);
+        var endDate = Date.parse(item.end_date);
+        var days = this.getDatesBetween(beginDate, endDate);
+        for(var dayi in days) {
+
+        }
+
         //TODO meerdaarse items
     }
 }

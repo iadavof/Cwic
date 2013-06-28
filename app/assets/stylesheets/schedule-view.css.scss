@@ -16,6 +16,16 @@ div.schedule-container div.time-axis {
   background-color: yellow;
 }
 
+div.schedule-container div.time-axis div.hour-time-axis-frame {
+  position: relative;
+  float: left;
+  width: 4.166666%;
+  height: 100%;
+  border-left: 1px solid #ccc;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
 div.schedule-container div.schedule-body {
   position: relative;
   clear: both;
