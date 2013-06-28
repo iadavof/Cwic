@@ -137,6 +137,10 @@ body {
   text-decoration: none;
 }
 
+#main-menu > li > a:first-letter {
+  text-decoration: underline;
+}
+
 #main-menu > li > a:hover, 
 #user-menu > li > a:hover {
   background: rgba(255,255,255,0.1);
