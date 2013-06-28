@@ -9,11 +9,18 @@ div.schedule-container {
   min-height: 300px;
 }
 
+div.schedule-container div.sticky-wrapper {
+  margin-bottom: -1px;
+}
+
 div.schedule-container div.time-axis {
   position: relative;
   width: 100%;
-  height: 100px;
-  background-color: yellow;
+  height: auto;
+  background-color: #ffffff;
+  z-index: 10;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: -1px;
 }
 
 div.schedule-container div.time-axis div.hour-time-axis-frame {
@@ -21,7 +28,9 @@ div.schedule-container div.time-axis div.hour-time-axis-frame {
   float: left;
   width: 4.166666%;
   height: 100%;
-  border-left: 1px solid #ccc;
+  text-align: center;
+  font-weight: bold;
+  left: 2.083333%;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
@@ -40,6 +49,10 @@ div.schedule-container div.schedule-body div.day-row {
 
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+div.schedule-container div.schedule-body div.day-row:first-child {
+  margin-top: 0;
 }
 
 div.schedule-container div.schedule-body p.day-name {
