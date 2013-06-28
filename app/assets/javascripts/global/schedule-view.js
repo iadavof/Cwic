@@ -75,7 +75,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 end_date: '2013-06-08',
                 begin_time: '12:34',
                 end_time: '13:37',
-                color: '#FF0000',
+                color: '#ff3520',
                 description: 'Alle nerorz in da house',
             },
             {
