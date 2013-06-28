@@ -20,7 +20,7 @@
     <% @organisation_users.each do |organisation_user| %>
     <tr>
       <td><%= organisation_user.instance_name %></td>
-      <td><%= organisation_user.user.email %></td>
+      <td><%= mail_to(organisation_user.user.email) %></td>
       <td><%= organisation_user.organisation_role.name %></td>
       <td><%= status_actions_for_user(organisation_user) %></td>
       <td class="icons">

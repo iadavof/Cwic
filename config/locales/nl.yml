@@ -59,7 +59,7 @@ nl:
       property:
         one: 'Eigenschap'
         other: 'Eigenschappen'
-      reserveration:
+      reservation:
         one: 'Reservering'
         other: 'Reserveringen'
       organisation_client:
@@ -148,6 +148,7 @@ nl:
       settings: 'Instellingen'
       home: 'Home'
       organisation_clients: 'Klanten'
+      organisation_users: 'Gebruikers'
       entity_types: 'Objectsoorten'
       entities: 'Objecten'
       index: 'Lijst'
