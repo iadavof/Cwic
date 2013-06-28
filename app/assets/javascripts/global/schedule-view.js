@@ -13,7 +13,7 @@ Object.extend = function(destination, source) {
 
 
 IADAscheduleView.prototype.scheduleContainer = null;
-IADAscheduleView.prototype.scheduleItems = null;
+IADAscheduleView.prototype.scheduleObjects = null;
 IADAscheduleView.prototype.options = null;
 
 
@@ -25,8 +25,15 @@ function IADAscheduleView(options) {
     }, options || {});
 
     this.createSchedule();
-    this.loadScheduleItems();
+    this.addTimeAxis();
+    this.loadScheduleObjects();
+    this.initDayRowScheduleObjectRows();
+    this.addAllScheduleItems();
 
+}
+
+IADAscheduleView.prototype.addTimeAxis = function() {
+    $(this.scheduleContainer).find('.time-axis').sticky({getWidthFrom: '.schedule-body'});
 }
 
 IADAscheduleView.prototype.createSchedule = function() {
@@ -46,70 +53,127 @@ IADAscheduleView.prototype.createSchedule = function() {
 
 }
 
-IADAscheduleView.prototype.loadScheduleItems = function() {
-    items = [
-        {
-            itemid: 1,
-            begin: '2013-06-05 20:30',
-            end: '2013-06-05 23:30',
-            color: '#FF0000',
-        },
-        {
-            itemid: 2,
-            begin: '2013-06-07 16:00',
-            end: '2013-06-07 20:30',
-            color: '#00FF00',
-        },
-        {
-            itemid: 3,
-            begin: '2013-06-09 11:30',
-            end: '2013-06-09 20:00',
-            color: '#0000FF',
-        },
+IADAscheduleView.prototype.loadScheduleObjects = function() {
+
+
+    schedule_objects = [
+    {
+        schedule_object_id: 1,
+        items: [
+            {
+                itemid: 1,
+                begin_date: '2013-06-05',
+                end_date: '2013-06-05',
+                begin_time: '20:30',
+                end_time: '23:30',
+                color: '#FF0000',
+            },
+            {
+                itemid: 2,
+                begin_date: '2013-06-07',
+                end_date: '2013-06-07',
+                begin_time: '9:00',
+                end_time: '17:00',
+                color: '#00FF00',
+            },
+            {
+                itemid: 3,
+                begin_date: '2013-06-08',
+                end_date: '2013-06-08',
+                begin_time: '16:30',
+                end_time: '23:30',
+                color: '#0000FF',
+            },
+        ],
+    },
+
+    {
+        schedule_object_id: 2,
+        schedule_object_color: '#0000FF',
+        items: [
+            {
+                itemid: 1,
+                begin_date: '2013-06-05',
+                end_date: '2013-06-05',
+                begin_time: '20:30',
+                end_time: '23:30',
+               color: '#FF0000',
+            },
+            {
+                itemid: 2,
+                begin_date: '2013-06-07',
+                end_date: '2013-06-07',
+                begin_time: '20:30',
+                end_time: '23:30',
+                color: '#00FF00',
+            },
+            {
+                itemid: 3,
+                begin_date: '2013-06-08',
+                end_date: '2013-06-08',
+                begin_time: '16:30',
+                end_time: '23:30',
+                color: '#0000FF',
+            },
+        ],
+    },
+
     ];
-    this.scheduleItems = items;
+
+    this.scheduleObjects = schedule_objects;
 }
 
-IADAscheduleView.prototype.addScheduleItem = function(item) {
-    var beginDay = selectDayRowWithDate(item.begin);
-    var endDay = selectDayRowWithDate(item.end);
-    if(beginDay == endDay) {
-        this.addSingleDayItem(beginDay, item);
+IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
+    for(var schi in this.scheduleObjects) {
+        var schobject = this.scheduleObjects[schi];
+        var newSchObjItemParts = this.getTemplateClone('dayRowScheduleObjectItemPartsTemplate');
+        newSchObjItemParts.attr('id', 'scheduleObject_' + schobject.schedule_object_id);
+        $(this.scheduleContainer).find('.day-row .day-row-schedule-objects').append(newSchObjItemParts);
+
+    }
+}
+
+IADAscheduleView.prototype.addAllScheduleItems = function() {
+    for(var schoi in this.scheduleObjects) {
+        var schobject = this.scheduleObjects[schoi];
+        for(var schi in schobject.items) {
+            this.addScheduleItem(schobject.items[schi], schobject.schedule_object_id);
+        }
+    }
+}
+
+IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) {
+    if(item.begin_date == item.end_date) {
+        var beginDate = Date.parse(item.begin_date);
+        this.addSingleDayItem($(this.scheduleContainer).find('#'+ beginDate), item, schedule_object_id);
     } else {
         //TODO meerdaarse items
     }
 }
 
-IADAscheduleView.prototype.addSingleDayItem = function(dayrow, item) {
+IADAscheduleView.prototype.addSingleDayItem = function(dayRowScheduleRow, item, schedule_object_id) {
     var newScheduleItem = this.getTemplateClone('scheduleItemTemplate');
-    newScheduleItem.css('left', + this.dayTimeToPercentage(item.begin) * '%');
-    newScheduleItem.css('width', + this.dayTimePercentageSpan(item.begin, item.end) * '%');
+    newScheduleItem.css('left', + this.dayTimeToPercentage(item.begin_time) + '%');
+    newScheduleItem.css('width', + this.dayTimePercentageSpan(item.begin_time, item.end_time) + '%');
+    newScheduleItem.css('background-color', item.color);
 
-    $(dayrow).append()
+    $(dayRowScheduleRow).find('#scheduleObject_' + schedule_object_id).append(newScheduleItem);
 }
 
-IADAscheduleView.prototype.dayTimeToPercentage = function(begintime, endtime) {
-    var begin = Date.parse(item.begin);
-    var end = Date.parse(item.end);
-    var time = begin - end;
-    return (time.getHours() * 60 + time.getMinutes()) / 14.4;
+IADAscheduleView.prototype.dayTimePercentageSpan = function(begintime, endtime) {
+    var hours = parseInt(endtime.split(':')[0]) - parseInt(begintime.split(':')[0]);
+    var minutes = parseInt(endtime.split(':')[1]) - parseInt(begintime.split(':')[1]);
+    return (hours * 60 + minutes) / 14.4;
 }
 
 IADAscheduleView.prototype.dayTimeToPercentage = function(time) {
-    var time = Date.parse(time);
-    return (time.getHours() * 60 + time.getMinutes()) / 14.4;
+    var hours = parseInt(time.split(':')[0]);
+    var minutes = parseInt(time.split(':')[1]);
+    return (hours * 60 + minutes) / 14.4;
 }
-
-IADAscheduleView.prototype.selectDayRowWithDate = function(itemdate) {
-    var itemDate = Date.parse(itemdate);
-    var beginItemDate = Date(itemDate.getFullYear(), itemDate.getMonth(), itemDate.getDate());
-    return $(this.scheduleContainer).find('#' + beginItemDate.getTime());
-}
-
 
 IADAscheduleView.prototype.getTemplateClone = function(id) {
     var newitem = $('#schedule-templates').find('#'+id).clone();
-    console.debug(newitem);
     newitem.removeAttr('id');
     newitem.show();
     return newitem;
