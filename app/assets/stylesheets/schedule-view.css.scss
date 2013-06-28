@@ -1,0 +1,154 @@
+div.schedule-container p {
+  padding: 0;
+  margin: 0;
+}
+
+div.schedule-container {
+  position: relative;
+  width: 100%;
+  min-height: 300px;
+}
+
+div.schedule-container div.sticky-wrapper {
+  margin-bottom: -1px;
+}
+
+div.schedule-container div.time-axis {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #ffffff;
+  z-index: 10;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: -1px;
+}
+
+div.schedule-container div.time-axis div.hour-time-axis-frame {
+  position: relative;
+  float: left;
+  width: 4.166666%;
+  height: 100%;
+  text-align: center;
+  font-weight: bold;
+  left: 2.083333%;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+div.schedule-container div.schedule-body {
+  position: relative;
+  clear: both;
+}
+
+div.schedule-container div.schedule-body div.day-row {
+  position: relative;
+  width: 100%;
+  min-height: 20px;
+  border: 1px solid #ccc;
+  margin: 5px 0;
+
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+div.schedule-container div.schedule-body div.day-row:first-child {
+  margin-top: 0;
+}
+
+div.schedule-container div.schedule-body p.day-name {
+  position: absolute;
+  top: 50%;
+  left: 2%;
+  height: 1.5em;
+  line-height: 1.5em;
+  white-space: nowrap;
+  margin-top: -0.75em;
+  z-index: 4;
+  color: #555;
+  font-style: italic;
+}
+
+div.schedule-container div.schedule-body div.day-row div.day-row-time-parts {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  width: 100%;
+}
+
+div.schedule-container div.schedule-body div.day-row div.day-row-schedule-objects {
+  position: relative;
+  width: 100%;
+}
+
+div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts {
+  position: relative;
+  left: 0;
+  top: 0;
+  height: 20px;
+  width: 100%;
+  z-index: 4;
+}
+
+div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts:nth-child(n+1) {
+  border-top: 1px dotted #ccc;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+div.schedule-container div.schedule-body div.day-row div.day-row-time-parts div.hour-time-frame {
+  position: relative;
+  float: left;
+  width: 4.166666%;
+  height: 100%;
+  border-left: 1px solid #ccc;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+div.schedule-container div.schedule-body div.day-row div.day-row-time-parts div.hour-time-frame:first-child {
+  border: none;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 1px;
+  z-index: 1;
+  background-color: #555;
+  overflow: hidden;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue {
+  position: absolute;
+  top: 50%;
+  width: 15px;
+  height: 15px;
+  line-height: 15px;
+  color: #FFF;
+  margin-top: -7.5px;
+  display: none;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue.left {
+  left: 5px;
+  right: auto;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue.right {
+  right: 5px;
+  left: auto;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item p.item-text {
+  position: absolute;
+  left: 25px;
+  top: 50%;
+  height: 15px;
+  line-height: 15px;
+  font-size: 15px;
+  margin-top: -7.5px;
+  color: #222;
+}

@@ -1,5 +1,6 @@
 $(document).ready(function() {
   menuInit();
+  keyboardShortcutsInit();
 });
 
 function menuInit() {
@@ -55,4 +56,25 @@ function slideSubMenuByMenuItem(htmlId, animated) {
     }
     return false;
   }
+}
+
+function keyboardShortcutsInit() {
+  $(document).keydown(function(event) {
+    if(event.altKey) {
+      var keyString = String.fromCharCode(event.which);
+      $('#main-menu > li > a').each(function(){
+        var menuItemId = $(this).parent().attr('id');
+        var menuItemFirstLetter = $(this).text().substr(0,1).toUpperCase();
+        console.log(keyString + ' ' + menuItemId + ' ' + menuItemFirstLetter);
+        if(keyString == menuItemFirstLetter) {
+          return executeShortcut(menuItemId);
+        }
+      });
+    }
+  });
+}
+
+function executeShortcut(htmlId) {
+  slideSubMenuByMenuItem(htmlId, true);
+  return false;
 }
