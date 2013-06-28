@@ -35,10 +35,10 @@ function IADAscheduleView(options) {
 IADAscheduleView.prototype.addTimeAxis = function() {
     var timeAxis = $(this.scheduleContainer).find('.time-axis')
 
-    for(var i = 0; i < 24; i += 1) {
+    for(var i = 1; i < 24; i += 1) {
         var hourpart = this.getTemplateClone('hourTimeAxisFrameTemplate');
         $(hourpart).attr('id', 'hour_'+ i);
-        $(hourpart).find('p.time').text(i + ':00');
+        $(hourpart).find('p.time').text(i);
         $(timeAxis).append(hourpart);
     }
 
@@ -83,7 +83,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 end_date: '2013-06-07',
                 begin_time: '9:00',
                 end_time: '17:00',
-                color: '#00FF00',
+                color: '#35ff20',
             },
             {
                 itemid: 3,
@@ -91,13 +91,43 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 end_date: '2013-06-08',
                 begin_time: '16:30',
                 end_time: '23:30',
-                color: '#0000FF',
+                color: '#2035ff',
             },
         ],
     },
 
     {
         schedule_object_id: 2,
+        items: [
+            {
+                itemid: 1,
+                begin_date: '2013-06-05',
+                end_date: '2013-06-05',
+                begin_time: '20:30',
+                end_time: '23:30',
+                color: '#ff3520',
+            },
+            {
+                itemid: 2,
+                begin_date: '2013-06-07',
+                end_date: '2013-06-07',
+                begin_time: '9:00',
+                end_time: '17:00',
+                color: '#35ff20',
+            },
+            {
+                itemid: 3,
+                begin_date: '2013-06-08',
+                end_date: '2013-06-08',
+                begin_time: '16:30',
+                end_time: '23:30',
+                color: '#2035ff',
+            },
+        ],
+    },
+
+    {
+        schedule_object_id: 3,
         schedule_object_color: '#0000FF',
         items: [
             {
@@ -106,7 +136,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 end_date: '2013-06-05',
                 begin_time: '20:30',
                 end_time: '23:30',
-               color: '#FF0000',
+               color: '#ff3520',
             },
             {
                 itemid: 2,
@@ -114,7 +144,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 end_date: '2013-06-07',
                 begin_time: '20:30',
                 end_time: '23:30',
-                color: '#00FF00',
+                color: '#35ff20',
             },
             {
                 itemid: 3,
@@ -122,7 +152,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
                 end_date: '2013-06-08',
                 begin_time: '16:30',
                 end_time: '23:30',
-                color: '#0000FF',
+                color: '#2035ff',
             },
         ],
     },
