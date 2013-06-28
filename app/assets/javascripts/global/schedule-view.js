@@ -159,7 +159,7 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
         var beginDate = Date.parse(item.begin_date);
         var endDate = Date.parse(item.end_date);
         var days = this.getDatesBetween(beginDate, endDate);
-        for(var dayi = 0; dayi <= days.length; dayi += 1) {
+        for(var dayi = 0; dayi < days.length; dayi += 1) {
             switch(dayi) {
                 case 0:
                 console.debug(days[dayi].date);
