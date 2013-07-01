@@ -59,7 +59,7 @@ nl:
       property:
         one: 'Eigenschap'
         other: 'Eigenschappen'
-      reserveration:
+      reservation:
         one: 'Reservering'
         other: 'Reserveringen'
       organisation_client:
@@ -83,6 +83,7 @@ nl:
         country: 'Land'
       organisation_user:
         user: 'Gebruiker'
+        user_email: 'E-mailadres'
         organisation_role: 'Rol'
       entity_type:
         name: 'Naam'
@@ -99,6 +100,12 @@ nl:
         entity_type: 'Type'
       properties:
         value: 'Eigenschap'
+    errors:
+      models:
+        organisation_user:
+          attributes:
+            user:
+              taken: 'bestaat al binnen de organisatie'
 
   devise:
     shared:
@@ -116,6 +123,15 @@ nl:
       destroy:
         logout: 'Uitloggen'
 
+  flash:
+    organisation_users:
+      create:
+        notice: '%{resource_name} (%{resource_email}) toegevoegd.'
+      send_invitation:
+        notice: '%{resource_name} (%{resource_email}) uitgenodigd.'
+      resend_invitation:
+        notice: '%{resource_name} (%{resource_email}) opnieuw uitgenodigd.'
+
   views:
     pagination:
       first: 'Eerste'
@@ -132,6 +148,7 @@ nl:
       settings: 'Instellingen'
       home: 'Home'
       organisation_clients: 'Klanten'
+      organisation_users: 'Gebruikers'
       entity_types: 'Objectsoorten'
       entities: 'Objecten'
       index: 'Lijst'
@@ -152,16 +169,9 @@ nl:
       status: 'Status'
       active: 'Actief'
       awaiting_invitation_acceptance: 'Wacht op bevestiging'
-      resend_invitation: 'Opnieuw uitnodigen'
-    invite:
-      add: 'Toevoegen'
-    create:
-      user_already_has_a_role_in_organisation: 'Deze gebruiker heeft al een rol in je organisatie'
-
-  invitations:
-    invitation_sent: 'Uitnodiging verzonden'
-    invitation_resent: 'Uitnodiging opnieuw verzonden'
-    cannot_send_invitation: 'Kan de uitndodiging helaas niet versturen'
+      resend_invitation: 'Herstuur uitnodiging'
+    new_invitation:
+      intro: 'Het systeem kent de gebruiker met e-mailadres "%{email}" niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
 
   entity_types:
     still_used_destroy_confirm:
