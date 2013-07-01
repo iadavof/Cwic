@@ -166,6 +166,73 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
         ],
     },
 
+    {
+        schedule_object_id: 4,
+        schedule_object_color: '#0000FF',
+        items: [
+            {
+                itemid: 1,
+                begin_date: '2013-06-05',
+                end_date: '2013-06-05',
+                begin_time: '20:30',
+                end_time: '23:30',
+                color: '#ff3520',
+                description: 'Alle nerorz in da house',
+            },
+            {
+                itemid: 2,
+                begin_date: '2013-06-07',
+                end_date: '2013-06-07',
+                begin_time: '20:30',
+                end_time: '23:30',
+                color: '#35ff20',
+                description: 'Alle nerorz in da house',
+            },
+            {
+                itemid: 3,
+                begin_date: '2013-06-08',
+                end_date: '2013-06-08',
+                begin_time: '16:30',
+                end_time: '23:30',
+                color: '#2035ff',
+                description: 'Alle nerorz in da house',
+            },
+        ],
+    },
+
+    {
+        schedule_object_id: 5,
+        schedule_object_color: '#0000FF',
+        items: [
+            {
+                itemid: 1,
+                begin_date: '2013-06-05',
+                end_date: '2013-06-05',
+                begin_time: '20:30',
+                end_time: '23:30',
+                color: '#ff3520',
+                description: 'Alle nerorz in da house',
+            },
+            {
+                itemid: 2,
+                begin_date: '2013-06-07',
+                end_date: '2013-06-07',
+                begin_time: '20:30',
+                end_time: '23:30',
+                color: '#35ff20',
+                description: 'Alle nerorz in da house',
+            },
+            {
+                itemid: 3,
+                begin_date: '2013-06-08',
+                end_date: '2013-06-08',
+                begin_time: '16:30',
+                end_time: '23:30',
+                color: '#2035ff',
+                description: 'Alle nerorz in da house',
+            },
+        ],
+    },
     ];
 
     this.scheduleObjects = schedule_objects;
@@ -177,7 +244,14 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
         var newSchObjItemParts = this.getTemplateClone('dayRowScheduleObjectItemPartsTemplate');
         newSchObjItemParts.addClass('scheduleObject_' + schobject.schedule_object_id);
         $(this.scheduleContainer).find('.day-row .day-row-schedule-objects').append(newSchObjItemParts);
+    }
 
+    if(this.scheduleObjects.length == 1) {
+        $('.day-row-schedule-object-item-parts').css('height', '60px');
+    } else if(this.scheduleObjects.length == 2) {
+        $('.day-row-schedule-object-item-parts').css('height', '30px');
+    } else {
+        $('.day-axis .day-axis-row').height($('.day-row').outerHeight());
     }
 }
 
@@ -262,9 +336,9 @@ IADAscheduleView.prototype.getDatesBetween = function(begin, end) {
 IADAscheduleView.prototype.appendDay = function(day) {
     var dayAxisDiv = this.getTemplateClone('dayAxisRowTemplate');
     dayAxisDiv.attr('id', 'label_' + day.date);
-    dayAxisDiv.find('p.day-name').text(day.name.daynamesmall);
-    dayAxisDiv.find('p.day-nr').text(day.name.daynr);
-    dayAxisDiv.find('p.month-name').text(day.name.monthnamesmall);
+    dayAxisDiv.find('div.day-name p').text(day.name.daynamesmall);
+    dayAxisDiv.find('div.day-nr p').text(day.name.daynr);
+    dayAxisDiv.find('div.month-name p').text(day.name.monthnamesmall);
 
     $(this.scheduleContainer).find('.day-axis').append(dayAxisDiv);
 
@@ -295,9 +369,11 @@ Date.prototype.customFormat = function(formatString){
     var dateObject = this;
     YY = ((YYYY=dateObject.getFullYear())+"").slice(-2);
     MM = (M=dateObject.getMonth()+1)<10?('0'+M):M;
-    MMM = (MMMM=["January","February","March","April","May","June","July","August","September","October","November","December"][M-1]).substring(0,3);
+    MMM = $.datepicker._defaults.monthNamesShort[M-1]; //(MMMM=["January","February","March","April","May","June","July","August","September","October","November","December"][M-1]).substring(0,3);
+    MMMM = $.datepicker._defaults.monthNames[M-1];
     DD = (D=dateObject.getDate())<10?('0'+D):D;
-    DDD = (DDDD=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dateObject.getDay()]).substring(0,3);
+    DDD = $.datepicker._defaults.dayNamesShort[dateObject.getDay()]; //(DDDD=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dateObject.getDay()]).substring(0,3);
+    DDDD = $.datepicker._defaults.dayNames[dateObject.getDay()];
     th=(D>=10&&D<=20)?'th':((dMod=D%10)==1)?'st':(dMod==2)?'nd':(dMod==3)?'rd':'th';
     formatString = formatString.replace("#YYYY#",YYYY).replace("#YY#",YY).replace("#MMMM#",MMMM).replace("#MMM#",MMM).replace("#MM#",MM).replace("#M#",M).replace("#DDDD#",DDDD).replace("#DDD#",DDD).replace("#DD#",DD).replace("#D#",D).replace("#th#",th);
 
