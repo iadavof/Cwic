@@ -1,4 +1,5 @@
 class Reservation < ActiveRecord::Base
+
   belongs_to :organisation_client
   belongs_to :entity
   belongs_to :organisation
@@ -8,7 +9,79 @@ class Reservation < ActiveRecord::Base
   validates :entity, presence: true
   validates :organisation_client, presence: true
 
+  attr_accessor :begins_at_date, :begins_at_time, :ends_at_date, :ends_at_time
+
+  before_validation :make_begins_at, :make_ends_at
+
   def instance_name
     self.begins_at
   end
+
+  def make_begins_at
+    if @begins_at_date.present? && @begins_at_time.present?
+      self.begins_at = DateTime.new(@begins_at_date.year, @begins_at_date.month, @begins_at_date.day, @begins_at_time.hour, @begins_at_time.min)
+    end
+  end
+
+  def make_ends_at
+    if @ends_at_date.present? && @ends_at_time.present?
+      self.ends_at = DateTime.new(@ends_at_date.year, @ends_at_date.month, @ends_at_date.day, @ends_at_time.hour, @ends_at_time.min)
+    end
+  end
+
+  def begins_at_date
+    return @begins_at_date if @begins_at_date.present?
+    return @begins_at if @begins_at.present?
+    return Date.today
+  end
+
+  def begins_at_time
+    return @begins_at_time if @begins_at_time.present?
+    return @begins_at if @begins_at.present?
+    return Time.now
+  end
+
+  def ends_at_date
+    return @ends_at_date if @ends_at_date.present?
+    return @ends_at if @ends_at.present?
+    return Date.today
+  end
+
+  def ends_at_time
+    return @ends_at_time if @ends_at_time.present?
+    return @ends_at if @ends_at.present?
+    return Time.now
+  end
+
+
+  def begins_at_date=(new_date)
+    @begins_at_date = self.string_to_datetime(new_date, I18n.t('date.formats.default'))
+  end
+
+
+  def begins_at_time=(new_time)
+    @begins_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time'))
+  end
+
+  def ends_at_date=(new_date)
+    @ends_at_date = self.string_to_datetime(new_date, I18n.t('date.formats.default'))
+  end
+
+
+  def ends_at_time=(new_time)
+    @ends_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time'))
+  end
+
+  protected
+
+  def string_to_datetime(value, format)
+    return value unless value.is_a?(String)
+
+    begin
+      DateTime.strptime(value, format)
+    rescue ArgumentError
+      nil
+    end
+  end
+
 end

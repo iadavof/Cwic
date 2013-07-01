@@ -33,6 +33,14 @@ nl:
   'true': 'Ja'
   'false': 'Nee'
 
+  date:
+    formats:
+      default: '%d-%m-%Y'
+
+  time:
+    formats:
+      time: '%H:%M'
+
   activerecord:
     models:
       user:

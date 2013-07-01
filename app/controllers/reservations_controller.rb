@@ -54,7 +54,7 @@ private
   end
 
   def resource_params
-    params.require(:reservation).permit(:begins_at, :ends_at, :entity, :organisation_client_id)
+    params.require(:reservation).permit(:begins_at_date, :begins_at_time, :ends_at_date, :ends_at_time, :entity, :organisation_client_id)
   end
 
   def interpolation_options
