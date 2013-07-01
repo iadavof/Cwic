@@ -9,13 +9,10 @@ Cwic::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
 
-  devise_scope :user do
-    match '/users/:user_id/invitation/resend', controller: 'users/invitations', action: 'resend_invitation', via: 'post', as: 'resend_invitation'
-  end
-
   resources :organisations do
-    resources :organisation_users, except: [:show, :new]
-    match '/organisation_users/new', controller: 'organisation_users', action: 'new', via: 'post'
+    resources :organisation_users, except: :show
+    match '/organisation_users/send_invitation', controller: 'organisation_users', action: 'send_invitation', via: 'post'
+    match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
     resources :entity_types
     resources :entities
     resources :reservations

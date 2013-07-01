@@ -2,6 +2,20 @@
 <%= new_title(OrganisationUser) %>
 <% end %>
 
-<%= render 'form' %>
+<%= form_for([@organisation, @organisation_user]) do |f| %>
+  <%= render 'shared/error_messages', target: @organisation_user %>
+
+  <div class="field">
+    <%= f.label :user_email %>
+    <%= f.text_field :user_email %>
+  </div>
+  <div class="field">
+    <%= f.label :organisation_role %>
+    <%= f.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, prompt: t('prompt_choose') %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>
 
 <%= button_link_back_to_index(OrganisationUser, location: organisation_organisation_users_path(@organisation)) %>
