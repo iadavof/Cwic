@@ -15,7 +15,9 @@ Cwic::Application.routes.draw do
     match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
     resources :entity_types
     resources :entities
+    match '/reservations/index_domain', controller: 'reservations', action: 'index_domain', via: 'post', as: 'reservations_domain_json'
     resources :reservations
+
     resources :organisation_clients
   end
 end

@@ -15,6 +15,8 @@ Object.extend = function(destination, source) {
 IADAscheduleView.prototype.scheduleContainer = null;
 IADAscheduleView.prototype.scheduleObjects = null;
 IADAscheduleView.prototype.options = null;
+IADAscheduleView.prototype.beginDate = null;
+IADAscheduleView.prototype.endDate = null;
 
 
 
@@ -24,11 +26,7 @@ function IADAscheduleView(options) {
         container: 'schedule-container'
     }, options || {});
 
-    this.createSchedule();
-    this.addTimeAxis();
     this.loadScheduleObjects();
-    this.initDayRowScheduleObjectRows();
-    this.addAllScheduleItems();
 
 }
 
@@ -46,10 +44,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
 }
 
 IADAscheduleView.prototype.createSchedule = function() {
-    var beginDate = "2013-06-05";
-    var endDate = "2013-06-20";
-
-    var days = this.getDatesBetween(Date.parse(beginDate), Date.parse(endDate));
+    var days = this.getDatesBetween(Date.parse(this.beginDate), Date.parse(this.endDate));
 
     this.scheduleContainer = $('#' + this.options.container);
     this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
@@ -64,178 +59,33 @@ IADAscheduleView.prototype.createSchedule = function() {
 
 IADAscheduleView.prototype.loadScheduleObjects = function() {
 
+    schedule = this;
+/*
+    this.beginDate = '2013-08-08';
+    this.endDate = '2013-08-12';
+*/
+    $.ajax({
+        type: 'POST',
+        url: './reservations/index_domain',
+        data: {
+            entity_ids: '1,2,3',
+            schedule_begin: this.beginDate,
+            schedule_end: this.endDate,
+        }
+    }).success(function(response) {
+        schedule.afterScheduleObjectsLoad(response);
+    });
+}
 
-    schedule_objects = [
-    {
-        schedule_object_id: 1,
-        items: [
-            {
-                itemid: 1,
-                begin_date: '2013-06-05',
-                end_date: '2013-06-08',
-                begin_time: '12:34',
-                end_time: '13:37',
-                color: '#ff3520',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 2,
-                begin_date: '2013-06-07',
-                end_date: '2013-06-07',
-                begin_time: '9:00',
-                end_time: '17:00',
-                color: '#35ff20',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 3,
-                begin_date: '2013-06-08',
-                end_date: '2013-06-08',
-                begin_time: '16:30',
-                end_time: '23:30',
-                color: '#2035ff',
-                description: 'Alle nerorz in da house',
-            },
-        ],
-    },
+IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
+    this.scheduleObjects = response.schedule_objects;
+    this.beginDate = response.begin_date;
+    this.endDate = response.end_date;
 
-    {
-        schedule_object_id: 2,
-        items: [
-            {
-                itemid: 1,
-                begin_date: '2013-06-05',
-                end_date: '2013-06-05',
-                begin_time: '20:30',
-                end_time: '23:30',
-                color: '#ff3520',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 2,
-                begin_date: '2013-06-07',
-                end_date: '2013-06-07',
-                begin_time: '9:00',
-                end_time: '17:00',
-                color: '#35ff20',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 3,
-                begin_date: '2013-06-08',
-                end_date: '2013-06-08',
-                begin_time: '16:30',
-                end_time: '23:30',
-                color: '#2035ff',
-                description: 'Alle nerorz in da house',
-            },
-        ],
-    },
-
-    {
-        schedule_object_id: 3,
-        schedule_object_color: '#0000FF',
-        items: [
-            {
-                itemid: 1,
-                begin_date: '2013-06-05',
-                end_date: '2013-06-05',
-                begin_time: '20:30',
-                end_time: '23:30',
-                color: '#ff3520',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 2,
-                begin_date: '2013-06-07',
-                end_date: '2013-06-07',
-                begin_time: '20:30',
-                end_time: '23:30',
-                color: '#35ff20',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 3,
-                begin_date: '2013-06-08',
-                end_date: '2013-06-08',
-                begin_time: '16:30',
-                end_time: '23:30',
-                color: '#2035ff',
-                description: 'Alle nerorz in da house',
-            },
-        ],
-    },
-
-    {
-        schedule_object_id: 4,
-        schedule_object_color: '#0000FF',
-        items: [
-            {
-                itemid: 1,
-                begin_date: '2013-06-05',
-                end_date: '2013-06-05',
-                begin_time: '20:30',
-                end_time: '23:30',
-                color: '#ff3520',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 2,
-                begin_date: '2013-06-07',
-                end_date: '2013-06-07',
-                begin_time: '20:30',
-                end_time: '23:30',
-                color: '#35ff20',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 3,
-                begin_date: '2013-06-08',
-                end_date: '2013-06-08',
-                begin_time: '16:30',
-                end_time: '23:30',
-                color: '#2035ff',
-                description: 'Alle nerorz in da house',
-            },
-        ],
-    },
-
-    {
-        schedule_object_id: 5,
-        schedule_object_color: '#0000FF',
-        items: [
-            {
-                itemid: 1,
-                begin_date: '2013-06-05',
-                end_date: '2013-06-05',
-                begin_time: '20:30',
-                end_time: '23:30',
-                color: '#ff3520',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 2,
-                begin_date: '2013-06-07',
-                end_date: '2013-06-07',
-                begin_time: '20:30',
-                end_time: '23:30',
-                color: '#35ff20',
-                description: 'Alle nerorz in da house',
-            },
-            {
-                itemid: 3,
-                begin_date: '2013-06-08',
-                end_date: '2013-06-08',
-                begin_time: '16:30',
-                end_time: '23:30',
-                color: '#2035ff',
-                description: 'Alle nerorz in da house',
-            },
-        ],
-    },
-    ];
-
-    this.scheduleObjects = schedule_objects;
+    this.createSchedule();
+    this.addTimeAxis();
+    this.initDayRowScheduleObjectRows();
+    this.addAllScheduleItems();
 }
 
 IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
@@ -245,13 +95,14 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
         newSchObjItemParts.addClass('scheduleObject_' + schobject.schedule_object_id);
         $(this.scheduleContainer).find('.day-row .day-row-schedule-objects').append(newSchObjItemParts);
     }
-
-    if(this.scheduleObjects.length == 1) {
-        $('.day-row-schedule-object-item-parts').css('height', '60px');
-    } else if(this.scheduleObjects.length == 2) {
-        $('.day-row-schedule-object-item-parts').css('height', '30px');
-    } else {
-        $('.day-axis .day-axis-row').height($('.day-row').outerHeight());
+    if(this.scheduleObjects != null) {
+        if(this.scheduleObjects.length == 1) {
+            $('.day-row-schedule-object-item-parts').css('height', '60px');
+        } else if(this.scheduleObjects.length == 2) {
+            $('.day-row-schedule-object-item-parts').css('height', '30px');
+        } else {
+            $('.day-axis .day-axis-row').height($('.day-row').outerHeight());
+        }
     }
 }
 
