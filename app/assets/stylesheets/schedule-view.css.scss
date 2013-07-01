@@ -11,6 +11,7 @@ div.schedule-container {
 
 div.schedule-container div.sticky-wrapper {
   margin-bottom: -1px;
+  margin-left: 5%;
 }
 
 div.schedule-container div.time-axis {
@@ -21,6 +22,19 @@ div.schedule-container div.time-axis {
   z-index: 10;
   border-bottom: 2px solid #ccc;
   margin-bottom: -1px;
+}
+
+div.schedule-container div.day-axis {
+    position: relative;
+    float: left;
+    width: 5%;
+    height: 100%;
+    overflow: hidden;
+}
+
+div.schedule-container div.day-axis-row {
+  position: relative;
+  height: 62px;
 }
 
 div.schedule-container div.time-axis div.hour-time-axis-frame {
@@ -37,13 +51,14 @@ div.schedule-container div.time-axis div.hour-time-axis-frame {
 
 div.schedule-container div.schedule-body {
   position: relative;
-  clear: both;
+  float: right;
+  width: 95%;
 }
 
 div.schedule-container div.schedule-body div.day-row {
   position: relative;
   width: 100%;
-  min-height: 20px;
+  min-height: 60px;
   border: 1px solid #ccc;
   margin: 5px 0;
 
@@ -51,21 +66,37 @@ div.schedule-container div.schedule-body div.day-row {
   -moz-box-sizing: border-box;
 }
 
-div.schedule-container div.schedule-body div.day-row:first-child {
+div.schedule-container div.schedule-body div.day-row:first-child, div.schedule-container div.day-axis div.day-axis-row {
+  margin-top: 5px;
+}
+
+div.schedule-container div.day-axis div.day-axis-row p {
+  text-align: center;
+  width: 100%;
+  height: 15px;
+  line-height: 10px;
+  font-style: italic;
+  font-size: 0.9em;
+}
+
+div.schedule-container div.schedule-body div.day-row:first-child, div.schedule-container div.day-axis div.day-axis-row:first-child {
   margin-top: 0;
 }
 
-div.schedule-container div.schedule-body p.day-name {
-  position: absolute;
-  top: 50%;
-  left: 2%;
-  height: 1.5em;
-  line-height: 1.5em;
-  white-space: nowrap;
-  margin-top: -0.75em;
-  z-index: 4;
-  color: #555;
-  font-style: italic;
+div.schedule-container div.day-axis div.day-axis-row p.day-name {
+  padding-top: 6px;
+  height: 9px;
+}
+
+div.schedule-container div.day-axis div.day-axis-row p.day-nr {
+  height: 30px;
+  line-height: 30px;
+  font-size: 2.2em;
+}
+
+div.schedule-container div.day-axis div.day-axis-row p.month-name {
+  padding-bottom: 5px;
+  height: 10px;
 }
 
 div.schedule-container div.schedule-body div.day-row div.day-row-time-parts {

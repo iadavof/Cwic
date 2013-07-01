@@ -201,7 +201,6 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
         for(var dayi = 0; dayi < days.length; dayi += 1) {
             switch(dayi) {
                 case 0:
-                console.debug(days[dayi].date);
                     var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), item.begin_time, '24:00', item.color, item.description, schedule_object_id);
                     schedulePart.find('div.continue.right').show();
                     break;
@@ -218,7 +217,6 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
 }
 
 IADAscheduleView.prototype.addSingleDayBlock = function(dayRowScheduleRow, begin_time, end_time, color, text, schedule_object_id) {
-    console.debug(begin_time, end_time);
     var newScheduleItem = this.getTemplateClone('scheduleItemTemplate');
     newScheduleItem.css('left', + this.dayTimeToPercentage(begin_time) + '%');
     newScheduleItem.css('width', + this.dayTimePercentageSpan(begin_time, end_time) + '%');
@@ -262,9 +260,17 @@ IADAscheduleView.prototype.getDatesBetween = function(begin, end) {
 }
 
 IADAscheduleView.prototype.appendDay = function(day) {
+    var dayAxisDiv = this.getTemplateClone('dayAxisRowTemplate');
+    dayAxisDiv.attr('id', 'label_' + day.date);
+    dayAxisDiv.find('p.day-name').text(day.name.daynamesmall);
+    dayAxisDiv.find('p.day-nr').text(day.name.daynr);
+    dayAxisDiv.find('p.month-name').text(day.name.monthnamesmall);
+
+    $(this.scheduleContainer).find('.day-axis').append(dayAxisDiv);
+
+
     var daydiv = this.getTemplateClone('dayRowTemplate');
     $(daydiv).attr('id', day.date);
-    $(daydiv).find('p.day-name').text(day.name);
 
     for(var i = 0; i < 24; i += 1) {
         var hourpart = this.getTemplateClone('hourTimeFrameTemplate');
@@ -276,7 +282,12 @@ IADAscheduleView.prototype.appendDay = function(day) {
 }
 
 IADAscheduleView.prototype.formatDate = function(date) {
-    return date.customFormat("#DDDD# #DD# #MMMM# #YYYY#");
+    return {
+        full: date.customFormat("#DDDD# #DD# #MMMM# #YYYY#"),
+        daynr: date.customFormat("#D#"),
+        daynamesmall: date.customFormat("#DDD#"),
+        monthnamesmall: date.customFormat("#MMM#"),
+    }
 }
 
 Date.prototype.customFormat = function(formatString){
