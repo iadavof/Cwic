@@ -90,10 +90,14 @@ div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object
   z-index: 4;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts:nth-child(n+1) {
+div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts {
   border-top: 1px dotted #ccc;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts:first-child {
+  border-top: 0 none;
 }
 
 div.schedule-container div.schedule-body div.day-row div.day-row-time-parts div.hour-time-frame {
