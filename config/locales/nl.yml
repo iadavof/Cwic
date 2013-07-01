@@ -102,6 +102,10 @@ nl:
         value: 'Eigenschap'
     errors:
       models:
+        user:
+          attributes:
+            password_confirmation:
+              confirmation: 'komt niet met het wachtwoord overeen'
         organisation_user:
           attributes:
             user:
@@ -126,11 +130,11 @@ nl:
   flash:
     organisation_users:
       create:
-        notice: '%{resource_name} (%{resource_email}) toegevoegd.'
+        notice: '%{resource_name} (%{resource_email}) is toegevoegd.'
       send_invitation:
-        notice: '%{resource_name} (%{resource_email}) uitgenodigd.'
+        notice: '%{resource_name} (%{resource_email}) is uitgenodigd.'
       resend_invitation:
-        notice: '%{resource_name} (%{resource_email}) opnieuw uitgenodigd.'
+        notice: '%{resource_name} (%{resource_email}) is opnieuw uitgenodigd.'
 
   views:
     pagination:
@@ -171,7 +175,7 @@ nl:
       awaiting_invitation_acceptance: 'Wacht op bevestiging'
       resend_invitation: 'Herstuur uitnodiging'
     new_invitation:
-      intro: 'Het systeem kent de gebruiker met e-mailadres "%{email}" niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
+      intro: 'Het systeem kent de gebruiker met het e-mailadres "%{email}" niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
 
   entity_types:
     still_used_destroy_confirm:

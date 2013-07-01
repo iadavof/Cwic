@@ -27,4 +27,15 @@ class User < ActiveRecord::Base
       return :awaiting_invitation_acceptance
     end
   end
+
+  # Overwrite Devise resend_confirmation_token method to deal with invitations.
+  def resend_confirmation_token
+    if accepted_or_not_invited?
+      # User was not invited or has already accepted (in the latter case we are probably dealing with a reconfirmation e-mail), simply resend confirmation e-mail:
+      super
+    else
+      # User was invited. Do not (re)send confirmation e-mail, but resend invitation e-mail instead:
+      self.invite!
+    end
+  end
 end

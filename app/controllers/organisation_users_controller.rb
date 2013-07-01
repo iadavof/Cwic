@@ -38,6 +38,7 @@ class OrganisationUsersController < ApplicationController
   end
 
   def send_invitation
+    @current_menu_link = :create # Set current_menu_link to create, since we actually are still creating a new organisation user.
     # The invite call on the user will also calls the save method on this user object and stores the organisation_users relation
     @user = User.invite!(invite_params, current_user)
     if @user.valid?

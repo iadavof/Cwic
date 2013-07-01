@@ -3,13 +3,13 @@ class Users::InvitationsController < Devise::InvitationsController
 
   # GET /resource/invitation/new
   def new
-    # Disabled. This is handled in organisation_users controller.
+    # Disabled. This is handled in the organisation_users controller.
     return
   end
 
   # POST /resource/invitation
   def create
-    # Disabled. This is handled in organisation_users controller.
+    # Disabled. This is handled in the organisation_users controller.
     return
   end
 
@@ -19,7 +19,7 @@ class Users::InvitationsController < Devise::InvitationsController
   end
 
   def configure_permitted_parameters
-    devise_parameter_sanitizer.for(:accept_invitation) { |u| u.permit(:first_name, :infix, :last_name, :password, :password_confirmation, :invitation_token) }
+    devise_parameter_sanitizer.for(:accept_invitation) { |u| u.permit(:first_name, :infix, :last_name, :password, :password_confirmation, :invitation_token) } # We need to include first_name, infix and last_name
   end
 end
 
