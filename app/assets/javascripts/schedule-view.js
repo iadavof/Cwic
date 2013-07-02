@@ -220,10 +220,10 @@ Date.prototype.customFormat = function(formatString){
     var dateObject = this;
     YY = ((YYYY=dateObject.getFullYear())+"").slice(-2);
     MM = (M=dateObject.getMonth()+1)<10?('0'+M):M;
-    MMM = $.datepicker._defaults.monthNamesShort[M-1]; //(MMMM=["January","February","March","April","May","June","July","August","September","October","November","December"][M-1]).substring(0,3);
+    MMM = $.datepicker._defaults.monthNamesShort[M-1];
     MMMM = $.datepicker._defaults.monthNames[M-1];
     DD = (D=dateObject.getDate())<10?('0'+D):D;
-    DDD = $.datepicker._defaults.dayNamesShort[dateObject.getDay()]; //(DDDD=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dateObject.getDay()]).substring(0,3);
+    DDD = $.datepicker._defaults.dayNamesShort[dateObject.getDay()];
     DDDD = $.datepicker._defaults.dayNames[dateObject.getDay()];
     th=(D>=10&&D<=20)?'th':((dMod=D%10)==1)?'st':(dMod==2)?'nd':(dMod==3)?'rd':'th';
     formatString = formatString.replace("#YYYY#",YYYY).replace("#YY#",YY).replace("#MMMM#",MMMM).replace("#MMM#",MMM).replace("#MM#",MM).replace("#M#",M).replace("#DDDD#",DDDD).replace("#DDD#",DDD).replace("#DD#",DD).replace("#D#",D).replace("#th#",th);
