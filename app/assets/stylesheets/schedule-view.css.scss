@@ -7,6 +7,7 @@ div.schedule-container {
   position: relative;
   width: 100%;
   min-height: 300px;
+  margin: 20px 0;
 }
 
 div.schedule-container div.sticky-wrapper {
@@ -193,6 +194,13 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item div.conti
   color: #FFF;
   margin-top: -7.5px;
   display: none;
+}
+
+div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue [class^="icon-"],
+div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue [class*=" icon-"] {
+  height: 15px;
+  line-height: 15px;
+  vertical-align: baseline;
 }
 
 div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue.left {

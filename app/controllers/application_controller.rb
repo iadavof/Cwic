@@ -22,7 +22,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organisation
-    current_user.organisations.first if current_user.present? # XXX TODO this should return the currently selected organisation
+    @current_organisation ||= current_user.organisations.first if current_user.present? # XXX TODO this should return the currently selected organisation
   end
   helper_method :current_organisation
 

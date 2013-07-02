@@ -1,0 +1,10 @@
+<div class="nested_object">
+  <h5><%= PropertyTypeOption.model_name.human %></h5>
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="actions">
+    <%= f.link_to_remove t('remove_nested_object', class: PropertyTypeOption.model_name.human.lcfirst) %>
+  </div>
+</div>

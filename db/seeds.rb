@@ -13,6 +13,8 @@ DataType.create!([
   { key: 'integer', rails_type: 'Integer', form_type: 'text_field' },
   { key: 'float', rails_type: 'Float', form_type: 'text_field' },
   { key: 'boolean', rails_type: 'Boolean', form_type: 'check_box' },
+  { key: 'enum', rails_type: 'String', form_type: 'collection_select' },
+  { key: 'set', rails_type: 'Array', form_type: 'collection_select_multi' },
 ])
 
 # Create default roles
