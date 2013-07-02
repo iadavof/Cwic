@@ -13,6 +13,6 @@
   <dd><%= @organisation_client.email %></dd>
 </dl>
 
-<%= button_link_back_to_index(OrganisationClient) %>
-<%= button_link_to_edit(@organisation_client) %>
-<%= button_link_to_destroy(@organisation_client) %>
+<%= button_link_back_to_index([@organisation, OrganisationClient]) %>
+<%= button_link_to_edit([@organisation, @organisation_client]) %>
+<%= button_link_to_destroy([@organisation, @organisation_client]) %>

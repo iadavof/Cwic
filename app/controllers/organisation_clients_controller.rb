@@ -26,13 +26,13 @@ class OrganisationClientsController < ApplicationController
   def create
     @organisation_client.attributes = resource_params
     @organisation_client.save
-    respond_with(@organisation_client)
+    respond_with(@organisation_client, location: organisation_organisation_client_path(@organisation, @organisation_client))
   end
 
   # PATCH/PUT /organisation_clients/1
   def update
     @organisation_client.update_attributes(resource_params)
-    respond_with(@organisation_client)
+    respond_with(@organisation_client, location: organisation_organisation_client_path(@organisation, @organisation_client))
   end
 
   # DELETE /organisation_clients/1
