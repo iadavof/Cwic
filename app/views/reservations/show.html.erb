@@ -4,15 +4,15 @@
 
 <dl>
   <dt><%= Reservation.human_attribute_name(:begins_at) %></dt>
-  <dd><%= @reservation.begins_at %></dd>
+  <dd><%=l(@reservation.begins_at, format: :long) %></dd>
   <dt><%= Reservation.human_attribute_name(:ends_at) %></dt>
-  <dd><%= @reservation.ends_at %></dd>
+  <dd><%=l(@reservation.ends_at, format: :long) %></dd>
   <dt><%= Reservation.human_attribute_name(:entity) %></dt>
-  <dd><%= @reservation.entity %></dd>
+  <dd><%= @reservation.entity.instance_name %></dd>
   <dt><%= Reservation.human_attribute_name(:organisation_client) %></dt>
-  <dd><%= @reservation.organisation_client %></dd>
+  <dd><%= @reservation.organisation_client.instance_name %></dd>
 </dl>
 
-<%= button_link_back_to_index(Reservation) %>
-<%= button_link_to_edit(@reservation) %>
-<%= button_link_to_destroy(@reservation) %>
+<%= button_link_back_to_index([@organisation, Reservation]) %>
+<%= button_link_to_edit([@organisation, @reservation]) %>
+<%= button_link_to_destroy([@organisation, @reservation]) %>

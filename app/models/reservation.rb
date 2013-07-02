@@ -14,7 +14,7 @@ class Reservation < ActiveRecord::Base
   before_validation :make_begins_at, :make_ends_at
 
   def instance_name
-    self.begins_at
+    "#{self.class.model_name.human} ##{self.id.to_s}"
   end
 
   def make_begins_at
@@ -31,45 +31,45 @@ class Reservation < ActiveRecord::Base
 
   def begins_at_date
     return @begins_at_date if @begins_at_date.present?
-    return @begins_at if @begins_at.present?
+    return begins_at.to_date if begins_at.present?
     return Date.today
   end
 
   def begins_at_time
     return @begins_at_time if @begins_at_time.present?
-    return @begins_at if @begins_at.present?
+    return begins_at.to_time if begins_at.present?
     return Time.now
   end
 
   def ends_at_date
     return @ends_at_date if @ends_at_date.present?
-    return @ends_at if @ends_at.present?
+    return ends_at.to_date if ends_at.present?
     return Date.today
   end
 
   def ends_at_time
     return @ends_at_time if @ends_at_time.present?
-    return @ends_at if @ends_at.present?
+    return ends_at.to_time if ends_at.present?
     return Time.now
   end
 
 
   def begins_at_date=(new_date)
-    @begins_at_date = self.string_to_datetime(new_date, I18n.t('date.formats.default'))
+    @begins_at_date = self.string_to_datetime(new_date, I18n.t('date.formats.default')).to_date
   end
 
 
   def begins_at_time=(new_time)
-    @begins_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time'))
+    @begins_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time')).to_time
   end
 
   def ends_at_date=(new_date)
-    @ends_at_date = self.string_to_datetime(new_date, I18n.t('date.formats.default'))
+    @ends_at_date = self.string_to_datetime(new_date, I18n.t('date.formats.default')).to_date
   end
 
 
   def ends_at_time=(new_time)
-    @ends_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time'))
+    @ends_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time')).to_time
   end
 
   protected

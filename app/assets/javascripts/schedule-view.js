@@ -23,7 +23,8 @@ IADAscheduleView.prototype.endDate = null;
 function IADAscheduleView(options) {
 
     this.options = Object.extend({
-        container: 'schedule-container'
+        container: 'schedule-container',
+        backend_url: 'je moeder',
     }, options || {});
 
     this.loadScheduleObjects();
@@ -66,7 +67,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
 */
     $.ajax({
         type: 'POST',
-        url: './reservations/index_domain',
+        url: this.options.backend_url  + '/index_domain',
         data: {
             entity_ids: '1,2,3',
             schedule_begin: this.beginDate,
@@ -177,7 +178,7 @@ IADAscheduleView.prototype.getTemplateClone = function(id) {
 
 IADAscheduleView.prototype.getDatesBetween = function(begin, end) {
     var days = [];
-    for(var daynr = 0; daynr < Math.floor((end-begin) / (3600000*24)); daynr += 1) {
+    for(var daynr = 0; daynr <= Math.floor((end-begin) / (3600000*24)); daynr += 1) {
         var newday = new Date(begin + (daynr * 3600000 * 24));
         days.push({date: newday.getTime(), name: this.formatDate(newday)});
     }
