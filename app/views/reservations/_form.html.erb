@@ -13,11 +13,11 @@
   </div>
   <div class="field">
     <%= f.label :entity %>
-    <%= f.collection_select :entity_id, @organisation.entities.all.sort, :id, :name, prompt: t('prompt_choose') %>
+    <%= f.collection_select :entity_id, @organisation.entities.all.sort, :id, :instance_name, prompt: t('prompt_choose') %>
   </div>
   <div class="field">
     <%= f.label :organisation_client %>
-    <%= f.collection_select :organisation_client_id, @organisation.organisation_clients.all.sort, :id, :name, prompt: t('prompt_choose') %>
+    <%= f.collection_select :organisation_client_id, @organisation.organisation_clients.all.sort, :id, :instance_name, prompt: t('prompt_choose') %>
   </div>
   <div class="actions">
     <%= f.submit %>
