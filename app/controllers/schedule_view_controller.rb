@@ -19,7 +19,16 @@ def index_domain
       current_reservations = @organisation.reservations.where(entity_id: eid).where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
       items = []
       current_reservations.each do |r|
-       items << {item_id: r.id, begin_date: r.begins_at.strftime('%Y-%m-%d'), begin_time: r.begins_at.strftime('%H:%M'), end_date: r.ends_at.strftime('%Y-%m-%d'), end_time: r.ends_at.strftime('%H:%M'), color: r.entity.entity_type.color, description: 'Beschrijving TODO'}
+       items << {
+                  item_id: r.id,
+                  begin_date: r.begins_at.strftime('%Y-%m-%d'),
+                  begin_time: r.begins_at.strftime('%H:%M'),
+                  end_date: r.ends_at.strftime('%Y-%m-%d'),
+                  end_time: r.ends_at.strftime('%H:%M'),
+                  bg_color: r.entity.entity_type.color,
+                  text_color: bw_text_color(r.entity.entity_type.color) == :white ? '#FFFFFF' : '#222222',
+                  description: r.entity.description,
+                }
       end
       result << {schedule_object_id: eid, items: items }
     end
@@ -29,5 +38,27 @@ def index_domain
   end
 end
 
+def entities
+  result = []
+  @organisation.entities.each do |e|
+    result << {
+                id: e.id,
+                icon: 'http://www.veryicon.com/icon/png/Object/Office%20Space/Chair.png',
+                name: e.instance_name,
+                color: e.entity_type.color,
+              }
+  end
+  render json: {entities: result}, status: :ok
+end
+
+protected
+
+def bw_text_color(hex_bg_color)
+  rgb_bg_color = hex_bg_color[1..7].scan(/../).map { |color| color.to_i(16) }
+  puts rgb_bg_color.inspect
+  bg_brightness = rgb_bg_color.sum
+  puts bg_brightness.inspect
+  (bg_brightness < 383 ? :white : :black)
+end
 
 end

@@ -16,6 +16,7 @@ Cwic::Application.routes.draw do
     resources :entity_types
     resources :entities
     match '/schedule_view/index_domain', controller: 'schedule_view', action: 'index_domain', via: 'post', as: 'reservations_domain_json'
+    match '/schedule_view/entities', controller: 'schedule_view', action: 'entities', via: 'post', as: 'entities_json'
     match '/schedule_view', controller: 'schedule_view', action: 'index', via: 'get', as: 'schedule_view_index'
     resources :reservations
 
