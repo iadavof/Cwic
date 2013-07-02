@@ -1,7 +1,6 @@
 class EntitiesController < ApplicationController
   before_action :load_resource
-  authorize_resource
-
+  authorize_resource through: :organisation
 
   # GET /entities
   def index
@@ -34,6 +33,7 @@ class EntitiesController < ApplicationController
   # PATCH/PUT /entities/1
   def update
     return if check_entity_type_changed('new')
+    puts resource_params.inspect
     @entity.update_attributes(resource_params)
     respond_with(@organisation, @entity)
   end
@@ -57,7 +57,7 @@ private
   end
 
   def resource_params
-    params.require(:entity).permit(:name, :description, :entity_type_id, :organisation_id, properties_attributes: [:id, :property_type_id, :value])
+    params.require(:entity).permit(:name, :description, :entity_type_id, :organisation_id, properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []])
   end
 
   def interpolation_options

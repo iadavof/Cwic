@@ -2,7 +2,6 @@ class EntityTypesController < ApplicationController
   before_action :load_resource
   authorize_resource through: :organisation
 
-
   # GET /entity_types
   def index
     respond_with(@entity_types)
@@ -55,7 +54,7 @@ private
   end
 
   def resource_params
-    params.require(:entity_type).permit(:name, :description, property_types_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :_destroy])
+    params.require(:entity_type).permit(:name, :description, property_types_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :_destroy, property_type_options_attributes: [:id, :name, :_destroy]])
   end
 
   def interpolation_options
