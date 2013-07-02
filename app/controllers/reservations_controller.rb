@@ -22,7 +22,7 @@ class ReservationsController < ApplicationController
         current_reservations = @organisation.reservations.where(entity_id: eid).where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
         items = []
         current_reservations.each do |r|
-         items << {item_id: r.id, begin_date: r.begins_at.strftime('%Y-%m-%d'), begin_time: r.begins_at.strftime('%H:%M'), end_date: r.ends_at.strftime('%Y-%m-%d'), end_time: r.ends_at.strftime('%H:%M'), color: '#FF0000', description: 'Beschrijving TODO'}
+         items << {item_id: r.id, begin_date: r.begins_at.strftime('%Y-%m-%d'), begin_time: r.begins_at.strftime('%H:%M'), end_date: r.ends_at.strftime('%Y-%m-%d'), end_time: r.ends_at.strftime('%H:%M'), color: '#ff3520', description: 'Beschrijving TODO'}
         end
         result << {schedule_object_id: eid, items: items }
       end
