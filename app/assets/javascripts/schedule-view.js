@@ -187,10 +187,15 @@ IADAscheduleView.prototype.getDatesBetween = function(begin, end) {
 
 IADAscheduleView.prototype.appendDay = function(day) {
     var dayAxisDiv = this.getTemplateClone('dayAxisRowTemplate');
+    dayAxisDiv.append('<div class="inner" />');
+    var dayAxisDivInner = dayAxisDiv.find('div.inner');
     dayAxisDiv.attr('id', 'label_' + day.date);
     dayAxisDiv.find('div.day-name p').text(day.name.daynamesmall);
     dayAxisDiv.find('div.day-nr p').text(day.name.daynr);
     dayAxisDiv.find('div.month-name p').text(day.name.monthnamesmall);
+    dayAxisDiv.find('div.day-name').appendTo(dayAxisDivInner);
+    dayAxisDiv.find('div.day-nr').appendTo(dayAxisDivInner);
+    dayAxisDiv.find('div.month-name').appendTo(dayAxisDivInner);
 
     $(this.scheduleContainer).find('.day-axis').append(dayAxisDiv);
 

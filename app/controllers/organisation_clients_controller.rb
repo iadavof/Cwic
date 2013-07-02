@@ -38,7 +38,7 @@ class OrganisationClientsController < ApplicationController
   # DELETE /organisation_clients/1
   def destroy
     @organisation_client.destroy
-    respond_with(@organisation_client)
+    respond_with(@organisation_client, location: organisation_organisation_clients_path(@organisation))
   end
 
 private
