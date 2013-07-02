@@ -23,7 +23,8 @@ IADAscheduleView.prototype.endDate = null;
 function IADAscheduleView(options) {
 
     this.options = Object.extend({
-        container: 'schedule-container'
+        container: 'schedule-container',
+        backend_url: 'je moeder',
     }, options || {});
 
     this.loadScheduleObjects();
@@ -66,7 +67,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
 */
     $.ajax({
         type: 'POST',
-        url: './reservations/index_domain',
+        url: this.options.backend_url  + '/index_domain',
         data: {
             entity_ids: '1,2,3',
             schedule_begin: this.beginDate,
@@ -177,7 +178,7 @@ IADAscheduleView.prototype.getTemplateClone = function(id) {
 
 IADAscheduleView.prototype.getDatesBetween = function(begin, end) {
     var days = [];
-    for(var daynr = 0; daynr < Math.floor((end-begin) / (3600000*24)); daynr += 1) {
+    for(var daynr = 0; daynr <= Math.floor((end-begin) / (3600000*24)); daynr += 1) {
         var newday = new Date(begin + (daynr * 3600000 * 24));
         days.push({date: newday.getTime(), name: this.formatDate(newday)});
     }
@@ -186,10 +187,15 @@ IADAscheduleView.prototype.getDatesBetween = function(begin, end) {
 
 IADAscheduleView.prototype.appendDay = function(day) {
     var dayAxisDiv = this.getTemplateClone('dayAxisRowTemplate');
+    dayAxisDiv.append('<div class="inner" />');
+    var dayAxisDivInner = dayAxisDiv.find('div.inner');
     dayAxisDiv.attr('id', 'label_' + day.date);
     dayAxisDiv.find('div.day-name p').text(day.name.daynamesmall);
     dayAxisDiv.find('div.day-nr p').text(day.name.daynr);
     dayAxisDiv.find('div.month-name p').text(day.name.monthnamesmall);
+    dayAxisDiv.find('div.day-name').appendTo(dayAxisDivInner);
+    dayAxisDiv.find('div.day-nr').appendTo(dayAxisDivInner);
+    dayAxisDiv.find('div.month-name').appendTo(dayAxisDivInner);
 
     $(this.scheduleContainer).find('.day-axis').append(dayAxisDiv);
 
@@ -220,10 +226,10 @@ Date.prototype.customFormat = function(formatString){
     var dateObject = this;
     YY = ((YYYY=dateObject.getFullYear())+"").slice(-2);
     MM = (M=dateObject.getMonth()+1)<10?('0'+M):M;
-    MMM = $.datepicker._defaults.monthNamesShort[M-1]; //(MMMM=["January","February","March","April","May","June","July","August","September","October","November","December"][M-1]).substring(0,3);
+    MMM = $.datepicker._defaults.monthNamesShort[M-1];
     MMMM = $.datepicker._defaults.monthNames[M-1];
     DD = (D=dateObject.getDate())<10?('0'+D):D;
-    DDD = $.datepicker._defaults.dayNamesShort[dateObject.getDay()]; //(DDDD=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"][dateObject.getDay()]).substring(0,3);
+    DDD = $.datepicker._defaults.dayNamesShort[dateObject.getDay()];
     DDDD = $.datepicker._defaults.dayNames[dateObject.getDay()];
     th=(D>=10&&D<=20)?'th':((dMod=D%10)==1)?'st':(dMod==2)?'nd':(dMod==3)?'rd':'th';
     formatString = formatString.replace("#YYYY#",YYYY).replace("#YY#",YY).replace("#MMMM#",MMMM).replace("#MMM#",MMM).replace("#MM#",MM).replace("#M#",M).replace("#DDDD#",DDDD).replace("#DDD#",DDD).replace("#DD#",DD).replace("#D#",D).replace("#th#",th);

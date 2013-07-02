@@ -13,30 +13,9 @@
  *
  * Change version 0.1.0 - moved the t-rex up here
  *
-                                                  ____
-       ___                                      .-~. /_"-._
-      `-._~-.                                  / /_ "~o\  :Y
-          \  \                                / : \~x.  ` ')
-           ]  Y                              /  |  Y< ~-.__j
-          /   !                        _.--~T : l  l<  /.-~
-         /   /                 ____.--~ .   ` l /~\ \<|Y
-        /   /             .-~~"        /| .    ',-~\ \L|
-       /   /             /     .^   \ Y~Y \.^>/l_   "--'
-      /   Y           .-"(  .  l__  j_j l_/ /~_.-~    .
-     Y    l          /    \  )    ~~~." / `/"~ / \.__/l_
-     |     \     _.-"      ~-{__     l  :  l._Z~-.___.--~
-     |      ~---~           /   ~~"---\_  ' __[>
-     l  .                _.^   ___     _>-y~
-      \  \     .      .-~   .-~   ~>--"  /
-       \  ~---"            /     ./  _.-'
-        "-.,_____.,_  _.--~\     _.-~
-                    ~~     (   _}       -Row
-                           `. ~(
-                             )  \
-                            /,`--'~\--'~\
-                  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-                             ->T-Rex<-
 */
+
+/* AANGEPAST, ZOEK NAAR 'HACK VAN CHRISTIAAN' */
 
 (function ($) {
 
@@ -278,10 +257,12 @@
             if (showOn == 'button' || showOn == 'both') { // pop-up time picker when 'button' element is clicked
                 var button = this._get(inst, 'button');
 
+                /* HACK VAN CHRISTIAAN */
                 if(button == null) {
                     button = $('<button class="ui-timepicker-trigger" type="button">...</button>');
                     input.after(button);
                 }
+                /* EINDE HACK VAN CHRISTIAAN */
 
                 $(button).bind("click.timepicker", function () {
                     if ($.timepicker._timepickerShowing && $.timepicker._lastInput == input[0]) {

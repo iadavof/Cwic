@@ -8,6 +8,7 @@
 <table>
   <thead>
     <tr>
+      <th><%= Reservation.human_attribute_name(:id) %></th>
       <th><%= Reservation.human_attribute_name(:begins_at) %></th>
       <th><%= Reservation.human_attribute_name(:ends_at) %></th>
       <th><%= Reservation.human_attribute_name(:entity) %></th>
@@ -20,9 +21,10 @@
     <% @reservations.each do |reservation| %>
     <tr>
       <td><%= name_link_to_show([@organisation, reservation]) %></td>
-      <td><%= reservation.ends_at %></td>
-      <td><%= reservation.entity %></td>
-      <td><%= reservation.organisation_client %></td>
+      <td><%= l(reservation.begins_at, format: :long) %></td>
+      <td><%= l(reservation.ends_at, format: :long) %></td>
+      <td><%= reservation.entity.instance_name %></td>
+      <td><%= reservation.organisation_client.instance_name %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, reservation]) %>
         <%= icon_link_to_destroy([@organisation, reservation]) %>
@@ -34,7 +36,11 @@
 <% end %>
 
 <%= button_link_to_new([@organisation, Reservation]) %>
-
+<script type="text/javascript">
+  $(document).ready(function() {
+      var schedule = new IADAscheduleView({container: 'schedule-container', backend_url: '<%= organisation_reservations_path(@organisation) %>'});
+  });
+</script>
 <div id="schedule-container"></div>
 
 <div id="schedule-templates" style="display: none;">

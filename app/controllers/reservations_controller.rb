@@ -12,7 +12,7 @@ class ReservationsController < ApplicationController
       entity_ids = params[:entity_ids].split(',')
       if params[:schedule_begin].present? && params[:schedule_end].present?
         start_date = Date.strptime(params[:schedule_begin], "%Y-%m-%d")
-        end_date = Date.strptime(params[:schedule_end], "%Y-%m-%d") + 1.day
+        end_date = Date.strptime(params[:schedule_end], "%Y-%m-%d")
       else
         start_date = Date.today
         end_date = (Date.today + 2.weeks)
@@ -22,7 +22,7 @@ class ReservationsController < ApplicationController
         current_reservations = @organisation.reservations.where(entity_id: eid).where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
         items = []
         current_reservations.each do |r|
-         items << {item_id: r.id, begin_date: r.begins_at.strftime('%Y-%m-%d'), begin_time: r.begins_at.strftime('%H:%i'), end_date: r.ends_at.strftime('%Y-%m-%d'), end_time: r.ends_at.strftime('%H:%i'), color: '#FF0000', description: 'Beschrijving TODO'}
+         items << {item_id: r.id, begin_date: r.begins_at.strftime('%Y-%m-%d'), begin_time: r.begins_at.strftime('%H:%M'), end_date: r.ends_at.strftime('%Y-%m-%d'), end_time: r.ends_at.strftime('%H:%M'), color: '#FF0000', description: 'Beschrijving TODO'}
         end
         result << {schedule_object_id: eid, items: items }
       end
@@ -51,19 +51,19 @@ class ReservationsController < ApplicationController
   def create
     @reservation.attributes = resource_params
     @reservation.save
-    respond_with(@reservation)
+    respond_with(@reservation, location: organisation_reservation_path(@organisation, @reservation))
   end
 
   # PATCH/PUT /reservations/1
   def update
     @reservation.update_attributes(resource_params)
-    respond_with(@reservation)
+    respond_with(@reservation, location: organisation_reservation_path(@organisation, @reservation))
   end
 
   # DELETE /reservations/1
   def destroy
     @reservation.destroy
-    respond_with(@reservation)
+    respond_with(@reservation, location: organisation_reservations_path(@organisation))
   end
 
 private
@@ -79,7 +79,7 @@ private
   end
 
   def resource_params
-    params.require(:reservation).permit(:begins_at_date, :begins_at_time, :ends_at_date, :ends_at_time, :entity, :organisation_client_id)
+    params.require(:reservation).permit(:begins_at_date, :begins_at_time, :ends_at_date, :ends_at_time, :entity_id, :organisation_client_id)
   end
 
   def interpolation_options

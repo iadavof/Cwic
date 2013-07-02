@@ -14,4 +14,5 @@
 //= require jquery_ujs
 //= require jquery.ui.all
 //= require jquery_nested_form
+//= require jquery.ui.timepicker_edited
 //= require_tree .
