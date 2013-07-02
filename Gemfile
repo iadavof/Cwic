@@ -22,6 +22,8 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 gem 'rails-asset-jqueryui'
+# Color picker
+gem 'jquery-minicolors-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
 # [2013-06-10 kevin] Disabled Turoblinks, because it breaks things
