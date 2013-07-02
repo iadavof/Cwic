@@ -54,7 +54,7 @@ private
   end
 
   def resource_params
-    params.require(:entity_type).permit(:name, :description, property_types_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :_destroy, property_type_options_attributes: [:id, :name, :_destroy]])
+    params.require(:entity_type).permit(:name, :color, :description, property_types_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :_destroy, property_type_options_attributes: [:id, :name, :_destroy]])
   end
 
   def interpolation_options

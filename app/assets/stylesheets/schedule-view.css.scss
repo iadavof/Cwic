@@ -112,7 +112,7 @@ div.schedule-container div.day-axis div.day-axis-row div.month-name p {
   font-style: italic;
   font-size: 0.9em;
  }
- 
+
 div.schedule-container div.day-axis div.day-axis-row div.month-name {
   height: 10px;
 }
@@ -191,7 +191,6 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item div.conti
   width: 15px;
   height: 15px;
   line-height: 15px;
-  color: #FFF;
   margin-top: -7.5px;
   display: none;
 }
@@ -221,5 +220,26 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item p.item-te
   line-height: 15px;
   font-size: 15px;
   margin-top: -7.5px;
-  color: #222;
+}
+
+div.schedule-container div.entityContainer {
+
+}
+
+div.schedule-container div.entityContainer div.entity-button {
+  position: relative;
+  float: left;
+  border: 1px solid #ccc;
+  margin: 10px;
+}
+
+div.schedule-container div.entityContainer div.entity-button img.entity-icon {
+  width: 40px;
+  height: 40px;
+  margin: 5px;
+  border: 5px solid #fff;
+}
+
+div.schedule-container div.entityContainer div.entity-button p.entity-name {
+
 }

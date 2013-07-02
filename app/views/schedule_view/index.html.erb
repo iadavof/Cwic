@@ -1,0 +1,48 @@
+<% content_for :page_title do %>
+<%= t('.schedule_view') %>
+<% end %>
+
+<script type="text/javascript">
+  $(document).ready(function() {
+      var schedule = new IADAscheduleView({container: 'schedule-container', backend_url: '<%= organisation_schedule_view_index_path(@organisation) %>'});
+  });
+</script>
+<div id="schedule-container" class="clearfix"></div>
+
+<div id="schedule-templates" style="display: none;">
+  <div class="schedule" id="scheduleContainerTemplate">
+    <div class="entityContainer clearfix">
+    </div>
+    <div class="time-axis clearfix"></div>
+    <div class="day-axis"></div>
+    <div class="schedule-body"></div>
+  </div>
+
+  <div class="hour-time-axis-frame" id="hourTimeAxisFrameTemplate"><p class="time"></p></div>
+
+  <div class="entity-button" id="entityButtonTemplate">
+    <img class="entity-icon" />
+    <p class="entity-name"></p>
+  </div>
+
+
+  <div class="day-row" id="dayRowTemplate">
+    <div class="day-row-time-parts"></div>
+    <div class="day-row-schedule-objects"></div>
+  </div>
+
+  <div class="hour-time-frame" id="hourTimeFrameTemplate"></div>
+
+ <div class="day-axis-row" id="dayAxisRowTemplate">
+    <div class="day-name"><p></p></div>
+    <div class="day-nr"><p></p></div>
+    <div class="month-name"><p></p></div>
+  </div>
+
+  <div class="schedule-item" id="scheduleItemTemplate">
+    <div class="continue left"><i class="icon-arrow-right"></i></div>
+    <div class="continue right"><i class="icon-arrow-right"></i></div>
+    <p class="item-text"></p>
+  </div>
+  <div class="day-row-schedule-object-item-parts" id="dayRowScheduleObjectItemPartsTemplate"></div>
+</div>

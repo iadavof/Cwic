@@ -112,6 +112,11 @@ nl:
         entity_type: 'Type'
       properties:
         value: 'Eigenschap'
+      reservation:
+        begins_at: 'Begint op'
+        ends_at: 'Eindigt op'
+        entity: 'Object'
+        organisation_client: 'Klant'
     errors:
       models:
         user:
@@ -122,6 +127,12 @@ nl:
           attributes:
             user:
               taken: 'bestaat al binnen de organisatie'
+
+  errors:
+    messages:
+      date_must_be_in_future: 'moet in de toekomst liggen'
+      date_must_be_after_attribute: 'moet na %{attribute_name} (%{formatted_date}) zijn'
+      date_must_be_after_date: 'moet na %{formatted_date} zijn'
 
   devise:
     shared:

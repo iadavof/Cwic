@@ -31,6 +31,31 @@ function IADAscheduleView(options) {
 
 }
 
+IADAscheduleView.prototype.createEntityShowCase = function() {
+    var schedule = this;
+    $.ajax({
+        type: 'POST',
+        url: this.options.backend_url  + '/entities',
+        data: {
+
+        }
+    }).success(function(response) {
+        schedule.afterEntitiesLoad(response);
+    });
+};
+
+IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
+    for(var entnr in response.entities) {
+        var entity = response.entities[entnr];
+        var jentity = this.getTemplateClone('entityButtonTemplate');
+        jentity.attr('id', 'entity_'+ entity.id);
+        jentity.find('.entity-name').text(entity.name);
+        jentity.find('img.entity-icon').attr('src', entity.icon);
+        jentity.find('img.entity-icon').css('border-color', entity.color);
+        $(this.scheduleContainer).find('.entityContainer').append(jentity);
+    }
+}
+
 IADAscheduleView.prototype.addTimeAxis = function() {
     var timeAxis = $(this.scheduleContainer).find('.time-axis')
 
@@ -83,6 +108,8 @@ IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
     this.beginDate = response.begin_date;
     this.endDate = response.end_date;
 
+    this.createEntityShowCase();
+
     this.createSchedule();
     this.addTimeAxis();
     this.initDayRowScheduleObjectRows();
@@ -127,34 +154,35 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
         for(var dayi = 0; dayi < days.length; dayi += 1) {
             switch(dayi) {
                 case 0:
-                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), item.begin_time, '24:00', item.color, item.description, schedule_object_id);
+                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), item.begin_time, '24:00', item, schedule_object_id);
                     schedulePart.find('div.continue.right').show();
                     break;
                 case days.length - 1:
-                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), '00:00', item.end_time, item.color, item.description, schedule_object_id);
+                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), '00:00', item.end_time, item, schedule_object_id);
                     schedulePart.find('div.continue.left').show();
                     break;
                 default:
-                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), '00:00', '24:00', item.color, item.description, schedule_object_id);
+                    var schedulePart = this.addSingleDayBlock($(this.scheduleContainer).find('#'+ days[dayi].date), '00:00', '24:00', item, schedule_object_id);
                     schedulePart.find('div.continue').show();
             }
         }
     }
 }
 
-IADAscheduleView.prototype.addSingleDayBlock = function(dayRowScheduleRow, begin_time, end_time, color, text, schedule_object_id) {
+IADAscheduleView.prototype.addSingleDayBlock = function(dayRowScheduleRow, begin_time, end_time, item, schedule_object_id) {
     var newScheduleItem = this.getTemplateClone('scheduleItemTemplate');
     newScheduleItem.css('left', + this.dayTimeToPercentage(begin_time) + '%');
     newScheduleItem.css('width', + this.dayTimePercentageSpan(begin_time, end_time) + '%');
-    newScheduleItem.css('background-color', color);
-    newScheduleItem.find('p.item-text').text(text);
-    newScheduleItem.find('p.item-text').attr('title', text);
+    newScheduleItem.css('background-color', item.bg_color);
+    newScheduleItem.css('color', item.text_color);
+    newScheduleItem.find('p.item-text').text(item.description);
+    newScheduleItem.find('p.item-text').attr('title', item.description);
     $(dayRowScheduleRow).find('.scheduleObject_' + schedule_object_id).append(newScheduleItem);
     return newScheduleItem;
 }
 
 IADAscheduleView.prototype.addSingleDayItem = function(dayRowScheduleRow, item, schedule_object_id) {
-    this.addSingleDayBlock(dayRowScheduleRow, item.begin_time, item.end_time, item.color, item.description, schedule_object_id);
+    this.addSingleDayBlock(dayRowScheduleRow, item.begin_time, item.end_time, item, schedule_object_id);
 }
 
 IADAscheduleView.prototype.dayTimePercentageSpan = function(begintime, endtime) {
