@@ -14,21 +14,45 @@ Object.extend = function(destination, source) {
 
 IADAscheduleView.prototype.scheduleContainer = null;
 IADAscheduleView.prototype.scheduleObjects = null;
+IADAscheduleView.prototype.selectedEntities = [];
 IADAscheduleView.prototype.options = null;
 IADAscheduleView.prototype.beginDate = null;
 IADAscheduleView.prototype.endDate = null;
-
-
 
 function IADAscheduleView(options) {
 
     this.options = Object.extend({
         container: 'schedule-container',
-        backend_url: 'je moeder',
+        backend_url: 'url to backend',
     }, options || {});
 
-    this.loadScheduleObjects();
+    this.initScheduleStub();
 
+    this.createEntityShowCase();
+    this.bindControls();
+    this.createSchedule();
+    this.addTimeAxis();
+
+}
+
+IADAscheduleView.prototype.initScheduleStub = function() {
+    this.beginDate = new Date().customFormat('#YYYY#-#MM#-#DD#');
+    this.endDate = (new Date((new Date()).getTime() + (7 * 3600000 * 24))).customFormat('#YYYY#-#MM#-#DD#');
+    this.scheduleContainer = $('#' + this.options.container);
+    this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
+    this.scheduleContainer.addClass('schedule-container');
+    this.createSchedule();
+}
+
+IADAscheduleView.prototype.toggleEntity = function (entity_button) {
+    if($(entity_button).hasClass('active')) {
+        $(entity_button).removeClass('active');
+        this.selectedEntities.splice( $.inArray($(entity_button).attr('id').split('_')[1], this.selectedEntities), 1 );
+    } else {
+        $(entity_button).addClass('active');
+        this.selectedEntities.push($(entity_button).attr('id').split('_')[1]);
+    }
+    this.updateSchedule();
 }
 
 IADAscheduleView.prototype.createEntityShowCase = function() {
@@ -44,7 +68,24 @@ IADAscheduleView.prototype.createEntityShowCase = function() {
     });
 };
 
+IADAscheduleView.prototype.bindControls = function() {
+    var schedule = this;
+    $(this.scheduleContainer).find('#scheduleBeginDate').datepicker({showOn: 'both', altField: '#backendBeginDate', altFormat: 'yy-mm-dd'});
+    $(this.scheduleContainer).find('#scheduleBeginDate').datepicker("setDate", new Date(this.beginDate));
+    $(this.scheduleContainer).find('#scheduleEndDate').datepicker({showOn: 'both', altField: '#backendEndDate', altFormat: 'yy-mm-dd'});
+    $(this.scheduleContainer).find('#scheduleEndDate').datepicker("setDate", new Date(this.endDate));
+    $(this.scheduleContainer).find('#scheduleDateUpdate').click(function(){schedule.setDateDomain();});
+}
+
+IADAscheduleView.prototype.setDateDomain = function() {
+    this.beginDate = $(this.scheduleContainer).find('#backendBeginDate').val();
+    this.endDate = $(this.scheduleContainer).find('#backendEndDate').val();
+    console.debug(this.beginDate, this.endDate);
+    this.updateSchedule();
+}
+
 IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
+    this.entities = response.entities;
     for(var entnr in response.entities) {
         var entity = response.entities[entnr];
         var jentity = this.getTemplateClone('entityButtonTemplate');
@@ -52,6 +93,14 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
         jentity.find('.entity-name').text(entity.name);
         jentity.find('img.entity-icon').attr('src', entity.icon);
         jentity.find('img.entity-icon').css('border-color', entity.color);
+        if(entity.selected) {
+            this.selectedEntities.push(entity.id);
+            jentity.addClass('active');
+        }
+
+        var schedule = this;
+        jentity.bind('click', function() {schedule.toggleEntity(this);});
+
         $(this.scheduleContainer).find('.entityContainer').append(jentity);
     }
 }
@@ -72,11 +121,6 @@ IADAscheduleView.prototype.addTimeAxis = function() {
 IADAscheduleView.prototype.createSchedule = function() {
     var days = this.getDatesBetween(Date.parse(this.beginDate), Date.parse(this.endDate));
 
-    this.scheduleContainer = $('#' + this.options.container);
-    this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
-    this.scheduleContainer.addClass('schedule-container');
-
-
     for(var daynr in days) {
         this.appendDay(days[daynr]);
     }
@@ -84,23 +128,33 @@ IADAscheduleView.prototype.createSchedule = function() {
 }
 
 IADAscheduleView.prototype.loadScheduleObjects = function() {
+    if(this.selectedEntities.length > 0) {
+        schedule = this;
 
-    schedule = this;
-/*
-    this.beginDate = '2013-08-08';
-    this.endDate = '2013-08-12';
-*/
-    $.ajax({
-        type: 'POST',
-        url: this.options.backend_url  + '/index_domain',
-        data: {
-            entity_ids: '1,2,3',
-            schedule_begin: this.beginDate,
-            schedule_end: this.endDate,
-        }
-    }).success(function(response) {
-        schedule.afterScheduleObjectsLoad(response);
-    });
+        $.ajax({
+            type: 'POST',
+            url: this.options.backend_url  + '/index_domain',
+            data: {
+                entity_ids: this.selectedEntities.join(','),
+                schedule_begin: this.beginDate,
+                schedule_end: this.endDate,
+            }
+        }).success(function(response) {
+            schedule.afterScheduleObjectsLoad(response);
+        });
+    }
+}
+
+IADAscheduleView.prototype.clearSchedule = function() {
+    this.scheduleContainer.find('.schedule-body').html('');
+    this.scheduleContainer.find('.day-axis').html('');
+}
+
+IADAscheduleView.prototype.updateSchedule = function() {
+    if(this.selectedEntities.length > 0) {
+        this.clearSchedule();
+        this.loadScheduleObjects();
+    }
 }
 
 IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
@@ -108,10 +162,7 @@ IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
     this.beginDate = response.begin_date;
     this.endDate = response.end_date;
 
-    this.createEntityShowCase();
-
     this.createSchedule();
-    this.addTimeAxis();
     this.initDayRowScheduleObjectRows();
     this.addAllScheduleItems();
 }
@@ -121,6 +172,7 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
         var schobject = this.scheduleObjects[schi];
         var newSchObjItemParts = this.getTemplateClone('dayRowScheduleObjectItemPartsTemplate');
         newSchObjItemParts.addClass('scheduleObject_' + schobject.schedule_object_id);
+        newSchObjItemParts.find('p.name').text(schobject.schedule_object_name);
         $(this.scheduleContainer).find('.day-row .day-row-schedule-objects').append(newSchObjItemParts);
     }
     if(this.scheduleObjects != null) {
@@ -129,6 +181,7 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
         } else if(this.scheduleObjects.length == 2) {
             $('.day-row-schedule-object-item-parts').css('height', '30px');
         } else {
+            $('.day-row-schedule-object-item-parts').css('height', '20px');
             $('.day-axis .day-axis-row').height($('.day-row').outerHeight());
         }
     }
@@ -215,18 +268,12 @@ IADAscheduleView.prototype.getDatesBetween = function(begin, end) {
 
 IADAscheduleView.prototype.appendDay = function(day) {
     var dayAxisDiv = this.getTemplateClone('dayAxisRowTemplate');
-    dayAxisDiv.append('<div class="inner" />');
-    var dayAxisDivInner = dayAxisDiv.find('div.inner');
     dayAxisDiv.attr('id', 'label_' + day.date);
     dayAxisDiv.find('div.day-name p').text(day.name.daynamesmall);
     dayAxisDiv.find('div.day-nr p').text(day.name.daynr);
     dayAxisDiv.find('div.month-name p').text(day.name.monthnamesmall);
-    dayAxisDiv.find('div.day-name').appendTo(dayAxisDivInner);
-    dayAxisDiv.find('div.day-nr').appendTo(dayAxisDivInner);
-    dayAxisDiv.find('div.month-name').appendTo(dayAxisDivInner);
 
     $(this.scheduleContainer).find('.day-axis').append(dayAxisDiv);
-
 
     var daydiv = this.getTemplateClone('dayRowTemplate');
     $(daydiv).attr('id', day.date);

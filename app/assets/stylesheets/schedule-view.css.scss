@@ -156,6 +156,19 @@ div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object
   -moz-box-sizing: border-box;
 }
 
+div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts p.name {
+  position: absolute;
+  left: 25px;
+  top: 50%;
+  height: 10px;
+  line-height: 10px;
+  font-size: 10px;
+  margin-top: -5px;
+  overflow: hidden;
+  font-style: italic;
+  color: #444;
+}
+
 div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts:first-child {
   border-top: 0 none;
 }
@@ -183,6 +196,7 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item {
   z-index: 1;
   background-color: #555;
   overflow: hidden;
+  box-shadow: 0 9px 0 rgba(255, 255, 255, 0.1) inset;
 }
 
 div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue {
@@ -220,26 +234,40 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item p.item-te
   line-height: 15px;
   font-size: 15px;
   margin-top: -7.5px;
+  overflow: hidden;
 }
 
 div.schedule-container div.entityContainer {
-
+  padding: 20px;
+  border: 1px solid #ccc;
 }
 
 div.schedule-container div.entityContainer div.entity-button {
   position: relative;
   float: left;
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   margin: 10px;
+  width: 70px;
+  cursor: pointer;
+}
+
+div.schedule-container div.entityContainer div.entity-button.active {
+  border-color: #FF3520;
 }
 
 div.schedule-container div.entityContainer div.entity-button img.entity-icon {
-  width: 40px;
-  height: 40px;
+  width: 50px;
+  height: 50px;
   margin: 5px;
   border: 5px solid #fff;
 }
 
 div.schedule-container div.entityContainer div.entity-button p.entity-name {
-
+  width: 100%;
+  text-align: center;
+  overflow: hidden;
+  wordwrap: break-word;
+  line-height: 12px;
+  font-size: 11px;
+  height: 25px;
 }

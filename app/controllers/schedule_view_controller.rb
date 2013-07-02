@@ -15,8 +15,9 @@ def index_domain
       end_date = (Date.today + 2.weeks)
     end
     result = []
-    entity_ids.each do |eid|
-      current_reservations = @organisation.reservations.where(entity_id: eid).where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
+    entities = @organisation.entities.where(id: entity_ids)
+    entities.each do |ent|
+      current_reservations = @organisation.reservations.where(entity_id: ent.id).where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
       items = []
       current_reservations.each do |r|
        items << {
@@ -30,7 +31,7 @@ def index_domain
                   description: r.entity.description,
                 }
       end
-      result << {schedule_object_id: eid, items: items }
+      result << {schedule_object_id: ent.id, schedule_object_name: ent.instance_name, items: items }
     end
     render json: {begin_date: start_date.strftime('%Y-%m-%d'), end_date: end_date.strftime('%Y-%m-%d'), schedule_objects: result}, status: :ok
   else
@@ -46,6 +47,7 @@ def entities
                 icon: 'http://www.veryicon.com/icon/png/Object/Office%20Space/Chair.png',
                 name: e.instance_name,
                 color: e.entity_type.color,
+                selected: false,
               }
   end
   render json: {entities: result}, status: :ok
