@@ -4,7 +4,6 @@ class DataType < ActiveRecord::Base
   validates :form_type, presence: true, length: { maximum: 255 }
 
   def cast_value(value)
-    puts value.inspect
     return nil if value.blank?
 
     case self.rails_type
@@ -32,7 +31,6 @@ class DataType < ActiveRecord::Base
   end
 
   def format_value(value)
-    puts value.inspect
     return value if value.blank?
 
     case self.rails_type

@@ -1,5 +1,5 @@
 <div class="field">
   <%= f.hidden_field :property_type_id %>
   <%= f.label :value, f.object.property_type.name, title: format_description_title(f.object.property_type) %>
-  <%= f.send(f.object.property_type.data_type.form_type.to_sym, :value, title: format_description_with_name_title(f.object.property_type), value: f.object.formatted_value) %>
+  <%= render_field(f) %>
 </div>

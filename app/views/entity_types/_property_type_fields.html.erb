@@ -12,6 +12,15 @@
     <%= f.label :data_type %>
     <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description }] }, prompt: t('prompt_choose') %>
   </div>
+  <div class="nested_form">
+    <h4><%= PropertyTypeOption.model_name.human(count: 2) %></h4>
+    <%= f.fields_for :property_type_options do |ptof| %>
+      <%= render partial: 'property_type_option_fields', locals: { f: ptof } %>
+    <% end %>
+    <div class="actions">
+      <%= f.link_to_add t('add_nested_object', class: PropertyTypeOption.model_name.human.lcfirst), :property_type_options %>
+    </div>
+  </div>
   <div class="field">
     <%= f.label :required %>
     <%= f.check_box :required %>

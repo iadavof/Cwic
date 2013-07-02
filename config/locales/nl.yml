@@ -61,6 +61,9 @@ nl:
       property_type:
         one: 'Eigenschapsoort'
         other: 'Eigenschapsoorten'
+      property_type_option:
+        one: 'Eigenschapoptie'
+        other: 'Eigenschapopties'
       entity:
         one: 'Object'
         other: 'Objecten'
@@ -75,6 +78,7 @@ nl:
         other: 'Klanten'
     attributes:
       user:
+        name: 'Naam'
         first_name: 'Voornaam'
         last_name: 'Achternaam'
         infix: 'Tussenvoegsel'
@@ -192,17 +196,23 @@ nl:
 
   data_types:
     string:
-      name: 'regel tekst'
+      name: 'Regel tekst'
       description: 'Een veld waarin een regel tekst kan worden opgegeven'
     text:
-      name: 'lange tekst'
+      name: 'Lange tekst'
       description: 'Een veld waarin meerdere regels tekst kunnen worden opgegeven'
     integer:
-      name: 'geheel getal'
+      name: 'Geheel getal'
       description: 'Een veld waarin een geheel getal kan worden opgegeven (zonder decimalen)'
     float:
-      name: 'decimaal getal'
+      name: 'Decimaal getal'
       description: 'Een veld waarin een decimaal getal kan worden opgegeven (met een komma om de decimale te scheiden)'
     boolean:
-      name: 'ja/nee'
+      name: 'Ja/nee'
       description: 'Een checkbox veld om aan te geven of het de eigenschap wel of niet bezit'
+    enum:
+      name: 'Keuze'
+      description: 'Een veld waarbij een enkele keuze moet worden gemaakt uit een aantal (zelf in te stellen) opties'
+    set:
+      name: 'Meerdere keuzes'
+      description: 'Een veld waarbij meerdere items gekozen mogen worden uit een aantal (zelf in te stellen) opties'

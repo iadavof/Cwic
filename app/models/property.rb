@@ -3,6 +3,7 @@ class Property < ActiveRecord::Base
 
   belongs_to :entity
   belongs_to :property_type
+  has_and_belongs_to_many :values, class_name: 'PropertyTypeOption', join_table: 'properties_values', association_foreign_key: 'value_id'
 
   validates :entity, presence: true
   validates :property_type, presence: true
@@ -15,16 +16,42 @@ class Property < ActiveRecord::Base
   after_find :cast_value
   before_validation :parse_value
 
+  delegate :single_option?, :multiple_options?, to: :property_type
+
+  def formatted_value
+    if self.multiple_options?
+      # We are dealing with a option values property (set). Format it by rendering the values array.
+      self.values.map(&:instance_name).to_sentence
+    else
+      # We are dealing with a simple single value property (primitive type or enum). Format it by letting the property type format it.
+      self.property_type.format_value(self.value)
+    end
+  end
+
+  def instance_name
+    self.property_type.instance_name
+  end
+
+  # We overwrite the errors object with our own error object to support dynamic attribute name in the errors.
+  def errors
+    @errors ||= Errors.new(self)
+  end
+
+private
   def cast_value
-    self.value = self.property_type.cast_value(self.value)
+    if self.multiple_options?
+      self.value = self.values.present? # To fix the required validation for multiple option properties.
+    else
+      self.value = self.property_type.cast_value(self.value)
+    end
   end
 
   def parse_value
-    self.value = self.property_type.parse_value(self.value)
-  end
-
-  def formatted_value
-    self.property_type.format_value(self.value)
+    if self.multiple_options?
+      self.value = self.values.present? ? true : nil # To fix the required validation for multiple option properties.
+    else
+      self.value = self.property_type.parse_value(self.value)
+    end
   end
 
   def required?
@@ -41,15 +68,6 @@ class Property < ActiveRecord::Base
 
   def float?
     self.property_type.data_type.key == 'float'
-  end
-
-  def instance_name
-    self.property_type.instance_name
-  end
-
-  # We overwrite the errors object with our own error object to support dynamic attribute name in the errors.
-  def errors
-    @errors ||= Errors.new(self)
   end
 end
 
