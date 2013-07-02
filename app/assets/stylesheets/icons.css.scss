@@ -28,7 +28,16 @@
 }
 
 .button[data-action="index"] {
-  @extend .icon-circle-arrow-left;
+  @extend .icon-list;
+  &:before {
+    @extend [class^="icon-"];
+    margin: 0 5px 0 0;
+    vertical-align: middle;
+  }
+}
+
+.button[data-action="show"] {
+  @extend .icon-eye-view;
   &:before {
     @extend [class^="icon-"];
     margin: 0 5px 0 0;
