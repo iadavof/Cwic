@@ -30,15 +30,44 @@ function slideSubMenuByMenuItem(htmlId, animated) {
     var menuItems = $('#main-menu > li');
     var submenus = $('#submenu-box > .submenu');
     
-    if ($(menuItem).hasClass('selected')) {
+    $(menuItems).children('a').each(function(){
+      var shortcutKey = getShortcutKeyById($(this).parent().attr('id'));
+      if (shortcutKey) {
+        var txt = $(this).text();
+        var index = txt.toUpperCase().indexOf(shortcutKey);
+        if (index >= 0) {
+          $(this).html(txt.substring(0, index) + '<span class="shortcut-highlight">' + txt.substring(index, index + 1) + '</span>' + txt.substring(index + 1));
+        }
+      }
+    });
+    
+    if ($(menuItem).hasClass('selected')) { /* Contract expanded submenu */
       $(menuItems).removeClass('selected');
+      $(menuItems).children('a').each(function(){
+        var shortcutKey = getShortcutKeyById($(this).parent().attr('id'));
+        if (shortcutKey) {
+          $(this).attr('title', jsLang.strings.expand_menu + ' [Alt+' + shortcutKey + ']');
+        }
+      });
       $(submenuBox).animate({height: 0}, duration, 'swing', function() {
         $(submenus).removeClass('selected').hide();
       });
     } else {
       $(menuItems).removeClass('selected');
+      $(menuItems).children('a').each(function(){
+        var shortcutKey = getShortcutKeyById($(this).parent().attr('id'));
+        if (shortcutKey) {
+          $(this).attr('title', jsLang.strings.expand_menu + ' [Alt+' + shortcutKey + ']');
+        }
+      });
       $(menuItem).addClass('selected');
-      if ($(submenuBox).height() > 0) {
+      $(menuItem).children('a').each(function(){
+        var shortcutKey = getShortcutKeyById($(this).parent().attr('id'));
+        if (shortcutKey) {
+          $(this).attr('title', jsLang.strings.contract_menu + ' [Alt+' + shortcutKey + ']');
+        }
+      });
+      if ($(submenuBox).height() > 0) { /* Contract expanded submenu first, then expand requested submenu */
         $(submenuBox).animate({height: 0}, duration, 'swing', function() {
           $(submenus).removeClass('selected').hide();
           $(relatedSubmenu).addClass('selected').show();
@@ -46,7 +75,7 @@ function slideSubMenuByMenuItem(htmlId, animated) {
             $(this).css({height: 'auto'});
           });
         });
-      } else {
+      } else { /* Expand requested submenu */
         $(submenus).removeClass('selected').hide();
         $(relatedSubmenu).addClass('selected').show();
         $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function(){
@@ -64,9 +93,8 @@ function keyboardShortcutsInit() {
       var keyString = String.fromCharCode(event.which);
       $('#main-menu > li > a').each(function(){
         var menuItemId = $(this).parent().attr('id');
-        var menuItemFirstLetter = $(this).text().substr(0,1).toUpperCase();
-        console.log(keyString + ' ' + menuItemId + ' ' + menuItemFirstLetter);
-        if(keyString == menuItemFirstLetter) {
+        var menuItemShortcutKey = getShortcutKeyById($(this).parent().attr('id'));
+        if(keyString == menuItemShortcutKey) {
           return executeShortcut(menuItemId);
         }
       });
@@ -77,4 +105,13 @@ function keyboardShortcutsInit() {
 function executeShortcut(htmlId) {
   slideSubMenuByMenuItem(htmlId, true);
   return false;
+}
+
+function getShortcutKeyById(id) {
+  var key = jsLang.shortcutKeys[id.replace(/[^a-zA-Z0-9]/g, '_')];
+  if (typeof(key) != 'undefined' && key.length == 1) {
+    return key.toUpperCase();
+  } else {
+    return false;
+  }
 }

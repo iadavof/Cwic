@@ -16,4 +16,5 @@
 //= require jquery_nested_form
 //= require jquery-minicolors
 //= require jquery.ui.timepicker_edited
+//= require_tree ./i18n
 //= require_tree .
