@@ -13,6 +13,13 @@
   <div class="schedule" id="scheduleContainerTemplate">
     <div class="entityContainer clearfix">
     </div>
+    <div class="controlContainer clearfix">
+      <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100000;" />
+      <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100000;" />
+      <input type="hidden" id="backendBeginDate" />
+      <input type="hidden" id="backendEndDate" />
+      <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
+    </div>
     <div class="time-axis clearfix"></div>
     <div class="day-axis"></div>
     <div class="schedule-body"></div>
@@ -34,9 +41,11 @@
   <div class="hour-time-frame" id="hourTimeFrameTemplate"></div>
 
  <div class="day-axis-row" id="dayAxisRowTemplate">
-    <div class="day-name"><p></p></div>
-    <div class="day-nr"><p></p></div>
-    <div class="month-name"><p></p></div>
+    <div class="inner">
+      <div class="day-name"><p></p></div>
+      <div class="day-nr"><p></p></div>
+      <div class="month-name"><p></p></div>
+    </div>
   </div>
 
   <div class="schedule-item" id="scheduleItemTemplate">
@@ -44,5 +53,7 @@
     <div class="continue right"><i class="icon-arrow-right"></i></div>
     <p class="item-text"></p>
   </div>
-  <div class="day-row-schedule-object-item-parts" id="dayRowScheduleObjectItemPartsTemplate"></div>
+  <div class="day-row-schedule-object-item-parts" id="dayRowScheduleObjectItemPartsTemplate">
+    <p class="name"></p>
+  </div>
 </div>
