@@ -61,7 +61,7 @@ function slideSubMenuByMenuItem(htmlId, animated) {
         }
       });
       $(menuItem).addClass('selected');
-      $(menuItems).children('a').each(function(){
+      $(menuItem).children('a').each(function(){
         var shortcutKey = getShortcutKeyById($(this).parent().attr('id'));
         if (shortcutKey) {
           $(this).attr('title', jsLang.strings.contract_menu + ' [Alt+' + shortcutKey + ']');
