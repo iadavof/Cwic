@@ -1,6 +1,4 @@
 class PropertyType < ActiveRecord::Base
-  include ApplicationHelper # XXX TODO move format_description_with_name_title method to somewhere else?
-
   default_scope { order(:name) }
 
   belongs_to :entity_type
@@ -13,11 +11,18 @@ class PropertyType < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 255 }
   validates :data_type, presence: true
 
+  validates :default_value, length: { maximum: 255 }, allow_blank: true, if: :string?
+  validates :default_value, numericality: { only_integer: true }, allow_blank: true, if: :integer?
+  validates :default_value, numericality: true, allow_blank: true, if: :float?
+
+  after_find :cast_default_value
+  before_validation :parse_default_value
+
   after_create :create_properties
 
   accepts_nested_attributes_for :property_type_options, allow_destroy: true
 
-  delegate :cast_value, :parse_value, to: :data_type
+  delegate :string?, :integer?, :float?, :cast_value, :parse_value, to: :data_type
 
   def format_value(value)
     if self.single_option?
@@ -51,11 +56,35 @@ class PropertyType < ActiveRecord::Base
     self.name
   end
 
+  # We overwrite the errors object with our own error object to support dynamic attribute name in the errors.
+  def errors
+    @errors ||= PropertyTypeErrors.new(self)
+  end
+
 private
+  def cast_default_value
+    self.default_value = self.cast_value(self.default_value)
+  end
+
+  def parse_default_value
+    self.default_value = self.parse_value(self.default_value)
+  end
+
   # Create/preset the new property for old entities of entity_type
   def create_properties
     self.entity_type.entities.each do |entity|
       entity.properties.create(property_type: self, value: self.default_value)
+    end
+  end
+end
+
+# Our own errors class that add the property's attribute name to the error message.
+class PropertyTypeErrors < ActiveModel::Errors
+  def add(attribute, message = nil, options = {})
+    super
+    if attribute == :default_value
+      message = self[attribute].pop
+      self[attribute] << "'#{@base.name}' #{message}"
     end
   end
 end

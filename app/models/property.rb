@@ -16,7 +16,17 @@ class Property < ActiveRecord::Base
   after_find :cast_value
   before_validation :parse_value
 
-  delegate :single_option?, :multiple_options?, to: :property_type
+  delegate :required?, :string?, :integer?, :float?, :single_option?, :multiple_options?, to: :property_type
+
+  def set_default_value
+    if self.multiple_options?
+      self.values = self.property_type.property_type_options.where(default: true)
+    elsif self.single_option?
+      self.value = self.property_type.property_type_options.where(default: true).first.id
+    else
+      self.value = self.property_type.default_value
+    end
+  end
 
   def formatted_value
     if self.multiple_options?
@@ -34,13 +44,13 @@ class Property < ActiveRecord::Base
 
   # We overwrite the errors object with our own error object to support dynamic attribute name in the errors.
   def errors
-    @errors ||= Errors.new(self)
+    @errors ||= PropertyErrors.new(self)
   end
 
 private
   def cast_value
     if self.multiple_options?
-      self.value = self.values.present? # To fix the required validation for multiple option properties.
+      self.value = self.values.present? # Needed to let the required validation for multiple option properties work.
     else
       self.value = self.property_type.cast_value(self.value)
     end
@@ -48,31 +58,15 @@ private
 
   def parse_value
     if self.multiple_options?
-      self.value = self.values.present? ? true : nil # To fix the required validation for multiple option properties.
+      self.value = self.values.present? ? true : nil # Needed to let the required validation for multiple option properties work.
     else
       self.value = self.property_type.parse_value(self.value)
     end
   end
-
-  def required?
-    self.property_type.required?
-  end
-
-  def string?
-    self.property_type.data_type.key == 'string'
-  end
-
-  def integer?
-    self.property_type.data_type.key == 'integer'
-  end
-
-  def float?
-    self.property_type.data_type.key == 'float'
-  end
 end
 
 # Our own errors class that add the property's attribute name to the error message.
-class Errors < ActiveModel::Errors
+class PropertyErrors < ActiveModel::Errors
   def add(attribute, message = nil, options = {})
     super
     if attribute == :value

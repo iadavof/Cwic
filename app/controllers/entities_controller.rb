@@ -32,8 +32,7 @@ class EntitiesController < ApplicationController
 
   # PATCH/PUT /entities/1
   def update
-    return if check_entity_type_changed('new')
-    puts resource_params.inspect
+    return if check_entity_type_changed('edit')
     @entity.update_attributes(resource_params)
     respond_with(@organisation, @entity)
   end
@@ -74,6 +73,6 @@ private
 
   def build_properties
     @entity.properties.clear
-    @entity.properties.build(@entity.entity_type.property_types.map { |pt| { property_type: pt, value: pt.default_value } })
+    @entity.properties.build(@entity.entity_type.property_types.map { |pt| { property_type: pt } }).each { |p| p.set_default_value }
   end
 end

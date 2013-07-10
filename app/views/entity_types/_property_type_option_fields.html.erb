@@ -1,10 +1,8 @@
-<div class="nested_object">
-  <h5><%= PropertyTypeOption.model_name.human %></h5>
+<div class="property-type-option-wrapper">
   <div class="field">
     <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-  <div class="actions">
+    <%= f.text_field :name, class: 'property-type-option-name-field' %>
+    <%= f.check_box :default, class: 'property-type-option-default-field', title: PropertyTypeOption.human_attribute_name(:default) %>
     <%= f.link_to_remove t('remove_nested_object', class: PropertyTypeOption.model_name.human.lcfirst) %>
   </div>
 </div>

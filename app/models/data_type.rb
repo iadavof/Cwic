@@ -45,6 +45,18 @@ class DataType < ActiveRecord::Base
     end
   end
 
+  def string?
+    self.key == 'string'
+  end
+
+  def integer?
+    self.key == 'integer'
+  end
+
+  def float?
+    self.key == 'float'
+  end
+
   def human_name
     I18n.t("data_types.#{key}.name")
   end

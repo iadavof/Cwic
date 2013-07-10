@@ -13,14 +13,12 @@
     <%= f.label :description %>
     <%= f.text_area :description %>
   </div>
-  <div class="nested_form">
+  <div class="nested-form property-types">
     <h2><%= PropertyType.model_name.human(count: 2) %></h2>
     <%= f.fields_for :property_types do |ptf| %>
       <%= render partial: 'property_type_fields', locals: { f: ptf } %>
     <% end %>
-    <div class="actions">
-      <%= f.link_to_add t('add_nested_object', class: PropertyType.model_name.human.lcfirst), :property_types %>
-    </div>
+    <%= f.link_to_add t('add_nested_object', class: PropertyType.model_name.human.lcfirst), :property_types %>
   </div>
   <div class="actions">
     <%= f.submit %>

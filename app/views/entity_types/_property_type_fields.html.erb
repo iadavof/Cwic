@@ -1,4 +1,4 @@
-<div class="nested_object">
+<div class="nested-object property-type-wrapper">
   <h3><%= PropertyType.model_name.human %></h3>
   <div class="field">
     <%= f.label :name %>
@@ -9,27 +9,24 @@
     <%= f.text_area :description %>
   </div>
   <div class="field">
-    <%= f.label :data_type %>
-    <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description }] }, prompt: t('prompt_choose') %>
-  </div>
-  <div class="nested_form">
-    <h4><%= PropertyTypeOption.model_name.human(count: 2) %></h4>
-    <%= f.fields_for :property_type_options do |ptof| %>
-      <%= render partial: 'property_type_option_fields', locals: { f: ptof } %>
-    <% end %>
-    <div class="actions">
-      <%= f.link_to_add t('add_nested_object', class: PropertyTypeOption.model_name.human.lcfirst), :property_type_options %>
-    </div>
-  </div>
-  <div class="field">
     <%= f.label :required %>
     <%= f.check_box :required %>
   </div>
   <div class="field">
+    <%= f.label :data_type %>
+    <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, :'data-key' => dt.key }] }, { prompt: true }, { class: 'data-type-field' } %>
+  </div>
+  <div class="nested-form property-type-options" style="display: none;">
+    <h4><%= PropertyTypeOption.model_name.human(count: 2) %></h4>
+    <%= f.fields_for :property_type_options do |ptof| %>
+      <%= render partial: 'property_type_option_fields', locals: { f: ptof } %>
+    <% end %>
+    <%= f.link_to_add t('add_nested_object', class: PropertyTypeOption.model_name.human.lcfirst), :property_type_options %>
+  </div>
+  <div class="field property-type-default-value-wrapper" style="display: none;">
     <%= f.label :default_value %>
-    <%= f.text_field :default_value %>
+    <span class="property-type-default-value-formatted-field-container"></span>
+    <%= f.hidden_field :default_value, class: 'property-type-default-value-field' %>
   </div>
-  <div class="actions">
-    <%= f.link_to_remove t('remove_nested_object', class: PropertyType.model_name.human.lcfirst) %>
-  </div>
+  <%= f.link_to_remove t('remove_nested_object', class: PropertyType.model_name.human.lcfirst) %>
 </div>
