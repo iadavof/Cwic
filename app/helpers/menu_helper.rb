@@ -8,10 +8,15 @@ module MenuHelper
       },
       reservations: {
         reservations: {
-          index: { url: organisation_reservations_path(current_organisation) }
+          index: { url: organisation_reservations_path(current_organisation) },
+          new: { url: new_organisation_reservation_path(current_organisation) }
+        },
+        schedule_view: {
+          index: { url: organisation_schedule_view_index_path(current_organisation) }
         },
         organisation_clients: {
-          index: { url: organisation_organisation_clients_path(current_organisation) }
+          index: { url: organisation_organisation_clients_path(current_organisation) },
+          new: { url: new_organisation_organisation_client_path(current_organisation) }
         }
       },
       settings: {

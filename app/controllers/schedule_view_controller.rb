@@ -44,7 +44,7 @@ def entities
   @organisation.entities.each do |e|
     result << {
                 id: e.id,
-                icon: 'http://www.veryicon.com/icon/png/Object/Office%20Space/Chair.png',
+                icon: ActionController::Base.helpers.asset_path('Chair.png'),
                 name: e.instance_name,
                 color: e.entity_type.color,
                 selected: false,
