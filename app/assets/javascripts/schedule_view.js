@@ -70,11 +70,40 @@ IADAscheduleView.prototype.createEntityShowCase = function() {
 
 IADAscheduleView.prototype.bindControls = function() {
     var schedule = this;
-    $(this.scheduleContainer).find('#scheduleBeginDate').datepicker({showOn: 'both', altField: '#backendBeginDate', altFormat: 'yy-mm-dd'});
-    $(this.scheduleContainer).find('#scheduleBeginDate').datepicker("setDate", new Date(this.beginDate));
-    $(this.scheduleContainer).find('#scheduleEndDate').datepicker({showOn: 'both', altField: '#backendEndDate', altFormat: 'yy-mm-dd'});
-    $(this.scheduleContainer).find('#scheduleEndDate').datepicker("setDate", new Date(this.endDate));
-    $(this.scheduleContainer).find('#scheduleDateUpdate').click(function(){schedule.setDateDomain();});
+    this.scheduleContainer.find('#scheduleBeginDate').datepicker({showOn: 'both', altField: '#backendBeginDate', altFormat: 'yy-mm-dd'}).datepicker("setDate", new Date(this.beginDate));
+    this.scheduleContainer.find('#scheduleEndDate').datepicker({showOn: 'both', altField: '#backendEndDate', altFormat: 'yy-mm-dd'}).datepicker("setDate", new Date(this.endDate));
+    this.scheduleContainer.find('#scheduleDateUpdate').click(function(){schedule.setDateDomain();});
+
+    var newReservation = null;
+    var newItem = {};
+    var scheduleview = this;
+    this.scheduleContainer.find('.schedule-body').on('mousedown', '.day-row-schedule-object-item-parts', function(event) {
+        newItem.schedule_object_id = event.target.id.split('_')[1];
+        //var parentOffset = $(this).parent().offset();
+        var offset = $(this).offset();
+        var relX = event.pageX - offset.left;
+        if(newReservation == null) {
+            var newScheduleItem = scheduleview.getTemplateClone('scheduleItemTemplate');
+            newItem.begin_time = scheduleview.nearestTimePoint(relX);
+            newScheduleItem.css('left', + scheduleview.dayTimeToPercentage(newItem.begin_time) + '%');
+            $(this).append(newScheduleItem);
+        } else {
+            newItem.end_time = scheduleview.nearestTimePoint(relX);
+            newScheduleItem.css('width', + scheduleview.dayTimePercentageSpan(newItem.begin_time, newItem.end_time) + '%');
+        }
+    });
+    this.scheduleContainer.find('.schedule-body').on('mouseup', '.day-row-schedule-object-item-parts', function(event) {
+        //handle new entry
+    });
+}
+
+IADAscheduleView.prototype.nearestTimePoint = function(relX, parentWidth) {
+    var steps = 48; // half hour steps
+    var step = parentWidth / steps;
+    var fullsteps = Math.round(relX / step);
+    var stepMinutes = 24 * 60 / steps;
+    var nearestTimeMinutes = fullsteps * stepMinutes;
+    return (Math.floor(nearestTimeMinutes / 60) < 10) ? '0' : '' + Math.floor(nearestTimeMinutes / 60) + ':' + nearestTimeMinutes % 60;
 }
 
 IADAscheduleView.prototype.setDateDomain = function() {
@@ -91,15 +120,14 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
         var jentity = this.getTemplateClone('entityButtonTemplate');
         jentity.attr('id', 'entity_'+ entity.id);
         jentity.find('.entity-name').text(entity.name);
-        jentity.find('img.entity-icon').attr('src', entity.icon);
-        jentity.find('img.entity-icon').css('border-color', entity.color);
+        jentity.find('img.entity-icon').attr('src', entity.icon).css('border-color', entity.color);
         if(entity.selected) {
             this.selectedEntities.push(entity.id);
             jentity.addClass('active');
         }
 
         var schedule = this;
-        jentity.bind('click', function() {schedule.toggleEntity(this);});
+        jentity.on('click', function() {schedule.toggleEntity(this);});
 
         $(this.scheduleContainer).find('.entityContainer').append(jentity);
     }
@@ -110,8 +138,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
 
     for(var i = 1; i < 24; i += 1) {
         var hourpart = this.getTemplateClone('hourTimeAxisFrameTemplate');
-        $(hourpart).attr('id', 'hour_'+ i);
-        $(hourpart).find('p.time').text(i);
+        $(hourpart).attr('id', 'hour_'+ i).find('p.time').text(i);
         $(timeAxis).append(hourpart);
     }
 
@@ -171,7 +198,7 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
     for(var schi in this.scheduleObjects) {
         var schobject = this.scheduleObjects[schi];
         var newSchObjItemParts = this.getTemplateClone('dayRowScheduleObjectItemPartsTemplate');
-        newSchObjItemParts.addClass('scheduleObject_' + schobject.schedule_object_id);
+        newSchObjItemParts.attr('id', 'scheduleObject_' + schobject.schedule_object_id);
         newSchObjItemParts.find('p.name').text(schobject.schedule_object_name);
         $(this.scheduleContainer).find('.day-row .day-row-schedule-objects').append(newSchObjItemParts);
     }
@@ -230,7 +257,7 @@ IADAscheduleView.prototype.addSingleDayBlock = function(dayRowScheduleRow, begin
     newScheduleItem.css('color', item.text_color);
     newScheduleItem.find('p.item-text').text(item.description);
     newScheduleItem.find('p.item-text').attr('title', item.description);
-    $(dayRowScheduleRow).find('.scheduleObject_' + schedule_object_id).append(newScheduleItem);
+    $(dayRowScheduleRow).find('#scheduleObject_' + schedule_object_id).append(newScheduleItem);
     return newScheduleItem;
 }
 
@@ -280,7 +307,8 @@ IADAscheduleView.prototype.appendDay = function(day) {
 
     for(var i = 0; i < 24; i += 1) {
         var hourpart = this.getTemplateClone('hourTimeFrameTemplate');
-        $(hourpart).attr('id', 'hour_'+ i);
+        hourpart.attr('id', 'hour_'+ i);
+        hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
         $(daydiv).find('.day-row-time-parts').append(hourpart);
     }
 
