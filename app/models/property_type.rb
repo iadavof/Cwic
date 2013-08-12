@@ -34,6 +34,10 @@ class PropertyType < ActiveRecord::Base
     end
   end
 
+  def has_options?
+    self.single_option? || self.multiple_options?
+  end
+
   def single_option?
     case self.data_type.key
     when 'enum'
@@ -49,6 +53,26 @@ class PropertyType < ActiveRecord::Base
       true
     else
       false
+    end
+  end
+
+  def formatted_default_value
+    if self.has_options?
+      # We are dealing with an option property (enum/set). Format it by determining the name of the corresponding option.
+      self.property_type_options.where(default: true).map(&:instance_name).to_sentence
+    else
+      # We are dealing with a primitive property. Format it by letting its data type format it.
+      self.format_value(self.default_value)
+    end
+  end
+
+  def form_default_value
+    return nil if self.data_type.nil? # New property type that does not have a data type (yet)
+    case self.data_type.key
+    when 'integer', 'float'
+      self.format_value(self.default_value)
+    else
+      self.default_value
     end
   end
 

@@ -3,13 +3,15 @@
   <dl>
     <dt><%= PropertyType.human_attribute_name(:description) %></dt>
     <dd><%= simple_format(property_type.description) %></dd>
-    <dt><%= PropertyType.human_attribute_name(:data_type) %></dt>
-    <dd title="<%= property_type.data_type.human_description %>"><%= property_type.data_type.human_name %></dd>
-    <dt><%= PropertyTypeOption.model_name.human(count: 2) %></dt>
-    <dd><%= property_type.property_type_options.map(&:name).to_sentence %></dd>
     <dt><%= PropertyType.human_attribute_name(:required) %></dt>
     <dd><%= format_bool(property_type.required) %></dd>
+    <dt><%= PropertyType.human_attribute_name(:data_type) %></dt>
+    <dd title="<%= property_type.data_type.human_description %>"><%= property_type.data_type.human_name %></dd>
+    <% if property_type.has_options? %>
+    <dt><%= PropertyTypeOption.model_name.human(count: 2) %></dt>
+    <dd><%= property_type.property_type_options.map(&:name).to_sentence %></dd>
+    <% end %>
     <dt><%= PropertyType.human_attribute_name(:default_value) %></dt>
-    <dd><%= property_type.default_value %></dd>
+    <dd><%= property_type.formatted_default_value %></dd>
   </dl>
 </div>
