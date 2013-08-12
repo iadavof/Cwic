@@ -14,8 +14,8 @@
     <div class="entityContainer clearfix">
     </div>
     <div class="controlContainer clearfix">
-      <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100000;" />
-      <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100000;" />
+      <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100;" />
+      <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100;" />
       <input type="hidden" id="backendBeginDate" />
       <input type="hidden" id="backendEndDate" />
       <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
@@ -57,3 +57,11 @@
     <p class="name"></p>
   </div>
 </div>
+
+<a href="#x" class="overlay" id="new_reservation"></a>
+<div class="popup" id="new_reservation_popup">
+  <%= render 'reservations/form' %>
+  <a class="close" href="#close"></a>
+</div>
+
+<a href="#new_reservation"><%= t('.new_reservation') %></a>

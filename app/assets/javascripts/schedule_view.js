@@ -74,27 +74,57 @@ IADAscheduleView.prototype.bindControls = function() {
     this.scheduleContainer.find('#scheduleEndDate').datepicker({showOn: 'both', altField: '#backendEndDate', altFormat: 'yy-mm-dd'}).datepicker("setDate", new Date(this.endDate));
     this.scheduleContainer.find('#scheduleDateUpdate').click(function(){schedule.setDateDomain();});
 
-    var newReservation = null;
+    var newScheduleItem = null;
     var newItem = {};
     var scheduleview = this;
     this.scheduleContainer.find('.schedule-body').on('mousedown', '.day-row-schedule-object-item-parts', function(event) {
-        newItem.schedule_object_id = event.target.id.split('_')[1];
-        //var parentOffset = $(this).parent().offset();
-        var offset = $(this).offset();
-        var relX = event.pageX - offset.left;
-        if(newReservation == null) {
-            var newScheduleItem = scheduleview.getTemplateClone('scheduleItemTemplate');
-            newItem.begin_time = scheduleview.nearestTimePoint(relX);
+        if(newScheduleItem == null) {
+            newScheduleItem = scheduleview.getTemplateClone('scheduleItemTemplate');
+            var offset = $(this).offset();
+            var relX = event.pageX - offset.left;
+            newItem.end_date = newItem.begin_date = new Date(parseInt($(this).closest('.day-row').attr('id')));
+            newItem.schedule_object_id = parseInt(event.target.id.split('_')[1]);
+            newItem.end_time = newItem.begin_time = scheduleview.nearestTimePoint(relX, $(this).width());
             newScheduleItem.css('left', + scheduleview.dayTimeToPercentage(newItem.begin_time) + '%');
             $(this).append(newScheduleItem);
-        } else {
-            newItem.end_time = scheduleview.nearestTimePoint(relX);
+        }
+    });
+
+    this.scheduleContainer.find('.schedule-body').on('mousemove', '.day-row-schedule-object-item-parts', function(event) {
+        var offset = $(this).offset();
+        var relX = event.pageX - offset.left;
+        if(newScheduleItem != null) {
+            newItem.end_time = scheduleview.nearestTimePoint(relX, $(this).width());
             newScheduleItem.css('width', + scheduleview.dayTimePercentageSpan(newItem.begin_time, newItem.end_time) + '%');
         }
     });
-    this.scheduleContainer.find('.schedule-body').on('mouseup', '.day-row-schedule-object-item-parts', function(event) {
+    this.scheduleContainer.find('.schedule-body').on('mouseup', function() {
         //handle new entry
+        if(newScheduleItem != null && newItem.begin_time < newItem.end_time) {
+            schedule.setNewReservationForm(newItem);
+            window.location.hash = '#new_reservation';
+            $('#new_reservation_popup').find('a.close').on('click', function() {
+                if(newScheduleItem != null) {
+                    newScheduleItem.remove();
+                    newScheduleItem = null;
+                }
+            });
+        } else {
+            if(newScheduleItem != null) {
+                newScheduleItem.remove();
+                newScheduleItem = null;
+            }
+        }
     });
+}
+
+IADAscheduleView.prototype.setNewReservationForm = function(item) {
+    var reservationForm = $('#new_reservation_popup');
+    reservationForm.find('input#begins_at_date').datepicker("setDate", item.begin_date);
+    reservationForm.find('input#ends_at_date').datepicker("setDate", item.end_date);
+    reservationForm.find('input#begins_at_time').val(item.begin_time);
+    reservationForm.find('input#ends_at_time').val(item.end_time);
+    reservationForm.find('select#reservation_entity_id').val(item.schedule_object_id);
 }
 
 IADAscheduleView.prototype.nearestTimePoint = function(relX, parentWidth) {
@@ -103,7 +133,7 @@ IADAscheduleView.prototype.nearestTimePoint = function(relX, parentWidth) {
     var fullsteps = Math.round(relX / step);
     var stepMinutes = 24 * 60 / steps;
     var nearestTimeMinutes = fullsteps * stepMinutes;
-    return (Math.floor(nearestTimeMinutes / 60) < 10) ? '0' : '' + Math.floor(nearestTimeMinutes / 60) + ':' + nearestTimeMinutes % 60;
+    return ((Math.floor(nearestTimeMinutes / 60) < 10) ? '0' : '') + Math.floor(nearestTimeMinutes / 60) + ':' + ((Math.floor(nearestTimeMinutes % 60) < 10) ? '0' : '') + nearestTimeMinutes % 60;
 }
 
 IADAscheduleView.prototype.setDateDomain = function() {

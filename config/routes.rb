@@ -1,6 +1,5 @@
 Cwic::Application.routes.draw do
 
-  resources :reservations
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -19,7 +18,6 @@ Cwic::Application.routes.draw do
     match '/schedule_view/entities', controller: 'schedule_view', action: 'entities', via: 'post', as: 'entities_json'
     match '/schedule_view', controller: 'schedule_view', action: 'index', via: 'get', as: 'schedule_view_index'
     resources :reservations
-
     resources :organisation_clients
   end
 end

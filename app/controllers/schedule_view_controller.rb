@@ -1,6 +1,7 @@
 class ScheduleViewController < ApplicationController
 
 def index
+  @reservation = @organisation.reservations.build
   render :index
 end
 

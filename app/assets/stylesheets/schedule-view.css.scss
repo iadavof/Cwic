@@ -167,6 +167,15 @@ div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object
   overflow: hidden;
   font-style: italic;
   color: #444;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: moz-none;
+  -ms-user-select: none;
+  user-select: none;
+
+  cursor: default;
 }
 
 div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts:first-child {
