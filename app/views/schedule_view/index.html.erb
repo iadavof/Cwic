@@ -11,10 +11,12 @@
 
 <div id="schedule-templates" style="display: none;">
   <div class="schedule" id="scheduleContainerTemplate">
-    <div class="entityContainer clearfix">
+    <div class="entity-container clearfix">
+      <h2><%= Entity.model_name.human(count: 2) %></h2>
     </div>
-    <div class="controlContainer clearfix">
+    <div class="control-container clearfix">
       <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100;" />
+      <span class="tm"><%=t('.tm') %></span>
       <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100;" />
       <input type="hidden" id="backendBeginDate" />
       <input type="hidden" id="backendEndDate" />

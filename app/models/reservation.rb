@@ -18,13 +18,15 @@ class Reservation < ActiveRecord::Base
 
   def make_begins_at
     if @begins_at_date.present? && @begins_at_time.present?
-      self.begins_at = DateTime.new(@begins_at_date.year, @begins_at_date.month, @begins_at_date.day, @begins_at_time.hour, @begins_at_time.min)
+      puts self.begins_at.inspect
+      self.begins_at = Time.new(@begins_at_date.year, @begins_at_date.month, @begins_at_date.day, @begins_at_time.hour, @begins_at_time.min).utc
+      puts self.begins_at.inspect
     end
   end
 
   def make_ends_at
     if @ends_at_date.present? && @ends_at_time.present?
-      self.ends_at = DateTime.new(@ends_at_date.year, @ends_at_date.month, @ends_at_date.day, @ends_at_time.hour, @ends_at_time.min)
+      self.ends_at = Time.new(@ends_at_date.year, @ends_at_date.month, @ends_at_date.day, @ends_at_time.hour, @ends_at_time.min).utc
     end
   end
 
@@ -59,7 +61,9 @@ class Reservation < ActiveRecord::Base
 
 
   def begins_at_time=(new_time)
-    @begins_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time')).to_time
+    puts new_time.inspect
+    @begins_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time')).to_time.utc
+    puts @begins_at_time.inspect
   end
 
   def ends_at_date=(new_date)
@@ -68,7 +72,7 @@ class Reservation < ActiveRecord::Base
 
 
   def ends_at_time=(new_time)
-    @ends_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time')).to_time
+    @ends_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time')).to_time.utc
   end
 
   protected

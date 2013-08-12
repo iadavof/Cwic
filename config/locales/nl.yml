@@ -232,3 +232,8 @@ nl:
     set:
       name: 'Meerdere keuzes'
       description: 'Een veld waarbij meerdere items gekozen mogen worden uit een aantal (zelf in te stellen) opties'
+
+  schedule_view:
+    index:
+      set: 'Stel in'
+      tm: t/m

@@ -1,3 +1,14 @@
+APP.schedule_view = {
+  init: function() {
+    var dateOptions = { showOn: 'both' };
+    var timeOptions = { showPeriodLabels: false, showOn: 'both' };
+    $('#begins_at_date').datepicker(dateOptions);
+    $('#begins_at_time').timepicker(timeOptions);
+    $('#ends_at_date').datepicker(dateOptions);
+    $('#ends_at_time').timepicker(timeOptions);
+  },
+};
+
 Object.extend = function(destination, source) {
     for(var property in source) {
         if(source.hasOwnProperty(property)) {
@@ -42,6 +53,7 @@ IADAscheduleView.prototype.initScheduleStub = function() {
     this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
     this.scheduleContainer.addClass('schedule-container');
     this.createSchedule();
+    this.disabledOverlay();
 }
 
 IADAscheduleView.prototype.toggleEntity = function (entity_button) {
@@ -122,8 +134,8 @@ IADAscheduleView.prototype.setNewReservationForm = function(item) {
     var reservationForm = $('#new_reservation_popup');
     reservationForm.find('input#begins_at_date').datepicker("setDate", item.begin_date);
     reservationForm.find('input#ends_at_date').datepicker("setDate", item.end_date);
-    reservationForm.find('input#begins_at_time').val(item.begin_time);
-    reservationForm.find('input#ends_at_time').val(item.end_time);
+    reservationForm.find('input#begins_at_time').timepicker("setTime", item.begin_time);
+    reservationForm.find('input#ends_at_time').timepicker("setTime", item.end_time);
     reservationForm.find('select#reservation_entity_id').val(item.schedule_object_id);
 }
 
@@ -159,7 +171,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
         var schedule = this;
         jentity.on('click', function() {schedule.toggleEntity(this);});
 
-        $(this.scheduleContainer).find('.entityContainer').append(jentity);
+        $(this.scheduleContainer).find('.entity-container').append(jentity);
     }
 }
 
@@ -208,10 +220,18 @@ IADAscheduleView.prototype.clearSchedule = function() {
 }
 
 IADAscheduleView.prototype.updateSchedule = function() {
+    this.clearSchedule();
     if(this.selectedEntities.length > 0) {
-        this.clearSchedule();
         this.loadScheduleObjects();
+        this.scheduleContainer.find('.schedule-body .disabled-overlay').remove();
+    } else {
+        this.createSchedule();
+        this.disabledOverlay();
     }
+}
+
+IADAscheduleView.prototype.disabledOverlay = function() {
+    this.scheduleContainer.find('.schedule-body').append($('<div></div>', {class: 'disabled-overlay', text: 'Geen objecten geselecteerd.'})); //I18n T TODO
 }
 
 IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
