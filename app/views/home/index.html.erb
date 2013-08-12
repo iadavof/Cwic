@@ -44,7 +44,7 @@ end
 def bw_text_color(hex_bg_color)
   rgb_bg_color = hex_color_to_rgb(hex_bg_color)
   bg_brightness = rgb_bg_color.sum
-  (bg_brightness < 383 ? '#FFFFFF' : '#444444')
+  (bg_brightness < 383 ? '#FFFFFF' : '#000000')
 end
 
 def text_color(bg_color, diff_method)
