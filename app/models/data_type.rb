@@ -31,7 +31,7 @@ class DataType < ActiveRecord::Base
   end
 
   def format_value(value)
-    return value if value.blank?
+    return value if value.nil? # We cannot check on blank, because else the boolean false is not formatted correctly.
 
     case self.rails_type
     when 'Integer'
@@ -39,7 +39,7 @@ class DataType < ActiveRecord::Base
     when 'Float'
       I18n::Alchemy::NumericParser.localize(value)
     when 'Boolean'
-       I18n.t(value.to_s)
+      I18n.t(value.to_s)
     else
       value
     end

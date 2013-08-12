@@ -26,7 +26,7 @@
   <div class="field property-type-default-value-wrapper" style="display: none;">
     <%= f.label :default_value %>
     <span class="property-type-default-value-formatted-field-container"></span>
-    <%= f.hidden_field :default_value, class: 'property-type-default-value-field' %>
+    <%= f.hidden_field :default_value, class: 'property-type-default-value-field', value: f.object.form_default_value %>
   </div>
   <%= f.link_to_remove t('remove_nested_object', class: PropertyType.model_name.human.lcfirst) %>
 </div>
