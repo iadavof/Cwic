@@ -22,7 +22,8 @@ class Property < ActiveRecord::Base
     if self.multiple_options?
       self.values = self.property_type.property_type_options.where(default: true)
     elsif self.single_option?
-      self.value = self.property_type.property_type_options.where(default: true).first.id
+      default = self.property_type.property_type_options.where(default: true)
+      self.value = default.first.id if default.present?
     else
       self.value = self.property_type.default_value
     end

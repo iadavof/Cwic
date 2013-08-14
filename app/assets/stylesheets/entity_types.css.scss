@@ -1,0 +1,74 @@
+a.property-type-add {
+  display: inline-block;
+  font-size: 12pt;
+  margin-bottom: 1em;
+}
+
+div.property-type-wrapper {
+  width: 800px;
+  min-height: 140px;
+  border: 2px solid #ccc;
+  padding: 10px;
+  margin-bottom: 10px;
+}
+
+div.property-type-wrapper div.horizontal-block {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 20px;
+}
+
+div.property-type-wrapper div.property-type-name-wrapper input {
+  width: 120px;
+}
+
+div.property-type-wrapper div.property-type-description-wrapper textarea {
+  width: 250px;
+  height: 110px;
+}
+
+div.property-type-wrapper div.property-type-extra-fields label {
+  width: 120px;
+  text-align: right;
+  padding-right: 10px;
+}
+
+div.property-type-wrapper div.property-type-extra-fields input,
+div.property-type-wrapper div.property-type-extra-fields textarea {
+  width: 120px;
+}
+
+div.property-type-wrapper div.property-type-extra-fields textarea {
+  height: 60px;
+}
+
+div.property-type-wrapper div.property-type-extra-fields input[type='checkbox'] {
+  margin: 9px 0;
+}
+
+div.property-type-wrapper div.property-type-remove {
+  float: right;
+  font-size: 12pt;
+}
+
+div.property-type-wrapper div.property-type-options {
+  border-top: 2px dashed #ccc;
+  padding-top: 10px;
+}
+
+div.property-type-wrapper div.property-type-options th {
+  vertical-align: top;
+  line-height: normal;
+}
+
+div.property-type-wrapper div.property-type-options td.default,
+div.property-type-wrapper div.property-type-options th.default {
+  text-align: center;
+}
+
+div.property-type-wrapper div.property-type-options th.default a.property-type-options-clear-default-link {
+  display: block;
+  font-size: 7pt;
+  font-weight: normal;
+  font-style: italic;
+}

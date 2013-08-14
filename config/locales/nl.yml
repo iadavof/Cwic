@@ -99,18 +99,24 @@ nl:
         organisation_role: 'Rol'
       entity_type:
         name: 'Naam'
+        color: 'Kleur'
         description: 'Omschrijving'
       property_type:
         name: 'Naam'
         description: 'Omschrijving'
         data_type: 'Datatype'
+        data_type_id: 'Datatype'
         required: 'Verplicht?'
         default_value: 'Standaardwaarde'
       property_types:
-        default_value: 'Standaardwaarde bij'
+        name: 'Eigenschap naam'
+        data_type_id: 'Datatype bij eigenschap'
+        default_value: 'Standaardwaarde bij eigenschap'
+        property_type_options:
+          name: 'Eigenschap optiewaarde' # Does not work :/
       property_type_option:
         name: 'Waarde'
-        default: 'Standaard'
+        default: 'Standaard?'
       entity:
         name: 'Naam'
         description: 'Omschrijving'
@@ -209,6 +215,9 @@ nl:
     still_used_destroy_confirm:
       one: 'Deze objectsoort wordt nog gebruikt door een object. Weet u zeker dat u door wilt gaan?'
       other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
+    property_type_fields:
+      required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
+      clear: 'Leegmaken'
 
   data_types:
     string:
@@ -227,7 +236,7 @@ nl:
       name: 'Ja/nee'
       description: 'Een checkbox veld om aan te geven of het de eigenschap wel of niet bezit'
     enum:
-      name: 'Keuze'
+      name: 'Enkele keuze'
       description: 'Een veld waarbij een enkele keuze moet worden gemaakt uit een aantal (zelf in te stellen) opties'
     set:
       name: 'Meerdere keuzes'
