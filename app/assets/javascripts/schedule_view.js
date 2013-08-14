@@ -31,7 +31,7 @@ IADAscheduleView.prototype.beginDate = null;
 IADAscheduleView.prototype.endDate = null;
 
 IADAscheduleView.prototype.needleTimeout = null;
-
+IADAscheduleView.prototype.currentMode = 'week';
 
 function IADAscheduleView(options) {
 
@@ -53,6 +53,7 @@ IADAscheduleView.prototype.initScheduleStub = function() {
     var week = this.startAndEndOfWeek();
     this.beginDate = week[0];
     this.endDate = week[1];
+    console.debug('sadgfasdf', this.beginDate, this.endDate);
     this.scheduleContainer = $('#' + this.options.container);
     this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
     this.scheduleContainer.addClass('schedule-container');
@@ -111,29 +112,90 @@ IADAscheduleView.prototype.bindControls = function() {
     var navigation = this.scheduleContainer.find('.control-container.navigate');
     navigation.find('.button').on('click', function () {
         var beginEnd = null;
-        var begin_date = Date.parse(schedule.beginDate);
-        var end_date = Date.parse(schedule.endDate);
-        console.debug(begin_date);
-        if(this.id == 'prevWeek') {
-            beginEnd = schedule.startAndEndOfWeek(new Date(begin_date  - 24 * 3600000));
+
+        console.debug(schedule.beginDate, schedule.endDate);
+        var begin_date = schedule.dateToFirstMSec(schedule.beginDate);
+        var end_date = schedule.dateToFirstMSec(schedule.endDate);
+
+        console.debug(begin_date, end_date);
+
+        if(this.id == 'dayMode') {
+            if(schedule.currentMode == 'day') {
+                return;
+            }
+            if(schedule.currentMode == 'week') {
+                beginEnd = schedule.startAndEndOfWeek(new Date(begin_date));
+            } else if (schedule.currentMode == 'month') {
+                beginEnd = schedule.startAndEndOfMonth(new Date(begin_date));
+            }
+            today = schedule.dateToFirstMSec(new Date());
+            if(Date.parse(beginEnd[0]) < today && today < Date.parse(beginEnd[1])) {
+                beginEnd[0] = beginEnd[1] = new Date(today).customFormat('#YYYY#-#MM#-#DD#');
+            } else {
+                beginEnd[0] = beginEnd[1] = schedule.beginDate;
+            }
+            schedule.currentMode = 'day';
         }
-        if(this.id == 'currWeek') {
-            beginEnd = schedule.startAndEndOfWeek();
+
+        if(this.id == 'weekMode') {
+            if(schedule.currentMode == 'week') {
+                return;
+            }
+            if(schedule.currentMode == 'day') {
+                beginEnd = schedule.startAndEndOfWeek(new Date(begin_date));
+            } else if (schedule.currentMode == 'month') {
+                beginEnd = schedule.startAndEndOfMonth(new Date(begin_date));
+                today = schedule.dateToFirstMSec(new Date());
+                if(Date.parse(beginEnd[0]) < today && today < Date.parse(beginEnd[1])) {
+                    beginEnd = schedule.startAndEndOfWeek(new Date(today));
+                } else {
+                    beginEnd = schedule.startAndEndOfWeek(new Date(begin_date));
+                }
+            }
+            schedule.currentMode = 'week';
         }
-        if(this.id == 'nextWeek') {
-            beginEnd = schedule.startAndEndOfWeek(new Date(end_date + 24 * 3600000));
+
+        if(this.id == 'monthMode') {
+            if(schedule.currentMode == 'month') {
+                return;
+            }
+            console.debug(begin_date);
+            beginEnd = schedule.startAndEndOfMonth(new Date(begin_date));
+            schedule.currentMode = 'month';
         }
-        if(this.id == 'prevMonth') {
-            beginEnd = schedule.startAndEndOfMonth(new Date(begin_date), -1);
+
+        if(this.id == 'previous') {
+            if(schedule.currentMode == 'day') {
+                beginEnd[0] = beginEnd[1] = new Date(begin_date - 24 * 3600000).customFormat('#YYYY#-#MM#-#DD#');
+            } else if(schedule.currentMode == 'week') {
+                beginEnd = schedule.startAndEndOfWeek(new Date(begin_date - 24 * 3600000));
+            } else if(schedule.currentMode == 'month') {
+                beginEnd = schedule.startAndEndOfMonth(new Date(begin_date), -1);
+            }
         }
-        if(this.id == 'currMonth') {
-            beginEnd = schedule.startAndEndOfMonth(new Date(), 0);
+
+        if(this.id == 'next') {
+            if(schedule.currentMode == 'day') {
+                beginEnd[0] = beginEnd[1] = new Date(end_date + 24 * 3600000);
+            } else if(schedule.currentMode == 'week') {
+                beginEnd = schedule.startAndEndOfWeek(new Date(end_date + 24 * 3600000));
+            } else if(schedule.currentMode == 'month') {
+                beginEnd = schedule.startAndEndOfMonth(new Date(begin_date), 1);
+            }
         }
-        if(this.id == 'nextMonth') {
-            beginEnd = schedule.startAndEndOfMonth(new Date(end_date), 1);
+
+        if(this.id == 'current') {
+            if(schedule.currentMode == 'day') {
+                beginEnd[0] = beginEnd[1] = new Date().customFormat('#YYYY#-#MM#-#DD#');
+            } else if(schedule.currentMode == 'week') {
+                beginEnd = schedule.startAndEndOfWeek();
+            } else if(schedule.currentMode == 'month') {
+                beginEnd = schedule.startAndEndOfMonth();
+            }
         }
 
         if(beginEnd != null) {
+            console.debug(beginEnd);
             schedule.beginDate = beginEnd[0];
             schedule.endDate = beginEnd[1];
             schedule.updateDateDomainControl();
@@ -375,7 +437,7 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
 IADAscheduleView.prototype.dateToFirstMSec = function (date) {
     var ret = new Date(Date.parse(date));
     ret.setHours(0,0,0,0);
-    ret = new Date(ret).getTime();
+    ret = ret.getTime();
     return ret;
 }
 
