@@ -88,8 +88,8 @@ IADAscheduleView.prototype.toggleEntities = function (on) {
 IADAscheduleView.prototype.createEntityShowCase = function() {
     var schedule = this;
 
-    this.scheduleContainer.find('.entity-container a#selectAll').on('click', function(){schedule.toggleEntities(true);});
-    this.scheduleContainer.find('.entity-container a#selectNone').on('click', function(){schedule.toggleEntities(false);});
+    this.scheduleContainer.find('.entity-container a#selectAll').on('click', function(e){e.preventDefault(); schedule.toggleEntities(true); return false;});
+    this.scheduleContainer.find('.entity-container a#selectNone').on('click', function(e){e.preventDefault(); schedule.toggleEntities(false); return false;});
 
     $.ajax({
         type: 'POST',
@@ -258,6 +258,7 @@ IADAscheduleView.prototype.createSchedule = function() {
             this.showCurrentDayTimeNeedle();
         }
     }
+    this.scheduleContainer.find('.schedule-body').css('height', 'auto');
 
 }
 
@@ -283,7 +284,9 @@ IADAscheduleView.prototype.clearSchedule = function() {
     if(this.needleTimeout != null) {
        clearTimeout(this.needleTimeout);
     }
-    this.scheduleContainer.find('.schedule-body').html('');
+    var scheduleBody = this.scheduleContainer.find('.schedule-body');
+    scheduleBody.css('height', scheduleBody.height());
+    scheduleBody.html('');
     this.scheduleContainer.find('.day-axis').html('');
 }
 
@@ -345,8 +348,6 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
     if(item.begin_date == item.end_date) {
         var beginDate = this.dateToFirstMSec(item.begin_date);
         this.addSingleDayItem($(this.scheduleContainer).find('#'+ beginDate), item, schedule_object_id);
-        console.debug(new Date(beginDate).toString());
-        console.debug($(this.scheduleContainer).find('#'+ beginDate));
     } else {
         var beginDate = this.dateToFirstMSec(item.begin_date);
         var endDate = this.dateToFirstMSec(item.end_date);
