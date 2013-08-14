@@ -44,7 +44,6 @@ function IADAscheduleView(options) {
 
     this.createEntityShowCase();
     this.bindControls();
-    this.createSchedule();
     this.addTimeAxis();
 
 }
@@ -117,7 +116,7 @@ IADAscheduleView.prototype.bindControls = function() {
         var begin_date = schedule.dateToFirstMSec(schedule.beginDate);
         var end_date = schedule.dateToFirstMSec(schedule.endDate);
 
-        console.debug(begin_date, end_date);
+        console.debug(begin_date, end_date, new Date(begin_date), new Date(end_date));
 
         if(this.id == 'dayMode') {
             if(schedule.currentMode == 'day') {
@@ -166,9 +165,10 @@ IADAscheduleView.prototype.bindControls = function() {
 
         if(this.id == 'previous') {
             if(schedule.currentMode == 'day') {
-                beginEnd[0] = beginEnd[1] = new Date(begin_date - 24 * 3600000).customFormat('#YYYY#-#MM#-#DD#');
+                var newDate = new Date(begin_date - 1).customFormat('#YYYY#-#MM#-#DD#');
+                beginEnd = [newDate, newDate];
             } else if(schedule.currentMode == 'week') {
-                beginEnd = schedule.startAndEndOfWeek(new Date(begin_date - 24 * 3600000));
+                beginEnd = schedule.startAndEndOfWeek(new Date(begin_date - 1));
             } else if(schedule.currentMode == 'month') {
                 beginEnd = schedule.startAndEndOfMonth(new Date(begin_date), -1);
             }
@@ -176,7 +176,8 @@ IADAscheduleView.prototype.bindControls = function() {
 
         if(this.id == 'next') {
             if(schedule.currentMode == 'day') {
-                beginEnd[0] = beginEnd[1] = new Date(end_date + 24 * 3600000);
+                var newDate = new Date(end_date + 24 * 3600000);
+                beginEnd = [newDate, newDate];
             } else if(schedule.currentMode == 'week') {
                 beginEnd = schedule.startAndEndOfWeek(new Date(end_date + 24 * 3600000));
             } else if(schedule.currentMode == 'month') {
@@ -195,7 +196,7 @@ IADAscheduleView.prototype.bindControls = function() {
         }
 
         if(beginEnd != null) {
-            console.debug(beginEnd);
+            console.debug('new', beginEnd);
             schedule.beginDate = beginEnd[0];
             schedule.endDate = beginEnd[1];
             schedule.updateDateDomainControl();
@@ -536,23 +537,17 @@ IADAscheduleView.prototype.formatDate = function(date) {
 
 IADAscheduleView.prototype.startAndEndOfWeek = function(date) {
 
-  // If no date object supplied, use current date
-  // Copy date so don't modify supplied date
-  var now = date? new Date(date) : new Date();
+    var date = date? new Date(date) : new Date();
 
-  // set time to some convenient value
-  now.setHours(0,0,0,0);
+    date.setHours(0,0,0,0);
 
-  // Get the previous Monday
-  var monday = new Date(now);
-  monday.setDate(monday.getDate() - monday.getDay() + 1);
+    var day = date.getDay(), diff = date.getDate() - day + (day == 0 ? -7 : 0);
+    var monday = new Date(date.setDate(diff + 1));
 
-  // Get next Sunday
-  var sunday = new Date(now);
-  sunday.setDate(sunday.getDate() - sunday.getDay() + 7);
+    var day = date.getDay(), diff = date.getDate() - day + (day == 0 ? -7 : 0);
+    var sunday = new Date(date.setDate(diff + 7));
 
-  // Return array of date objects
-  return [monday.customFormat('#YYYY#-#MM#-#DD#'), sunday.customFormat('#YYYY#-#MM#-#DD#')];
+    return [monday.customFormat('#YYYY#-#MM#-#DD#'), sunday.customFormat('#YYYY#-#MM#-#DD#')];
 }
 
 IADAscheduleView.prototype.startAndEndOfMonth = function(date, monthdiff) {
