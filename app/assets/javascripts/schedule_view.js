@@ -71,8 +71,26 @@ IADAscheduleView.prototype.toggleEntity = function (entity_button) {
     this.updateSchedule();
 }
 
+IADAscheduleView.prototype.toggleEntities = function (on) {
+    schedule = this;
+    if(on) {
+        this.scheduleContainer.find('.entity-container .entity-button').addClass('active');
+        this.scheduleContainer.find('.entity-container .entity-button').each(function() {
+            schedule.selectedEntities.push(this.id.split('_')[1]);
+        });
+    } else {
+        this.scheduleContainer.find('.entity-container .entity-button').removeClass('active');
+        this.selectedEntities = [];
+    }
+    this.updateSchedule();
+}
+
 IADAscheduleView.prototype.createEntityShowCase = function() {
     var schedule = this;
+
+    this.scheduleContainer.find('.entity-container a#selectAll').on('click', function(){schedule.toggleEntities(true);});
+    this.scheduleContainer.find('.entity-container a#selectNone').on('click', function(){schedule.toggleEntities(false);});
+
     $.ajax({
         type: 'POST',
         url: this.options.backend_url  + '/entities',
@@ -199,6 +217,7 @@ IADAscheduleView.prototype.setDateDomain = function() {
 }
 
 IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
+
     this.entities = response.entities;
     for(var entnr in response.entities) {
         var entity = response.entities[entnr];

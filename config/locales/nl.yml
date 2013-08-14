@@ -252,3 +252,5 @@ nl:
       previous_month: 'Vorige maand'
       current_month: 'Deze maand'
       next_month: 'Volgende maand'
+      select_all: 'Alles selecteren'
+      select_none: 'Niets selecteren'

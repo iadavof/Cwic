@@ -282,6 +282,12 @@ div.schedule-container div.entity-container {
   border: 1px solid #ccc;
 }
 
+div.schedule-container div.entity-container div.fast-select {
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
 div.schedule-container div.entity-container div.entity-button {
   position: relative;
   float: left;
