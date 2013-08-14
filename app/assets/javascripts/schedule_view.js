@@ -176,7 +176,7 @@ IADAscheduleView.prototype.bindControls = function() {
 
         if(this.id == 'next') {
             if(schedule.currentMode == 'day') {
-                var newDate = new Date(end_date + 24 * 3600000);
+                var newDate = new Date(end_date + 24 * 3600000).customFormat('#YYYY#-#MM#-#DD#');
                 beginEnd = [newDate, newDate];
             } else if(schedule.currentMode == 'week') {
                 beginEnd = schedule.startAndEndOfWeek(new Date(end_date + 24 * 3600000));
@@ -187,7 +187,8 @@ IADAscheduleView.prototype.bindControls = function() {
 
         if(this.id == 'current') {
             if(schedule.currentMode == 'day') {
-                beginEnd[0] = beginEnd[1] = new Date().customFormat('#YYYY#-#MM#-#DD#');
+                var newDate = new Date().customFormat('#YYYY#-#MM#-#DD#');
+                beginEnd = [newDate, newDate];
             } else if(schedule.currentMode == 'week') {
                 beginEnd = schedule.startAndEndOfWeek();
             } else if(schedule.currentMode == 'month') {

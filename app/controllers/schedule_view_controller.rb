@@ -9,8 +9,8 @@ def index_domain
   if params[:entity_ids].present?
     entity_ids = params[:entity_ids].split(',')
     if params[:schedule_begin].present? && params[:schedule_end].present?
-      start_date = Date.strptime(params[:schedule_begin], "%Y-%m-%d")
-      end_date = Date.strptime(params[:schedule_end], "%Y-%m-%d")
+      start_date = DateTime.strptime(params[:schedule_begin], "%Y-%m-%d").change({hour: 0, minutes: 0, sec: 0})
+      end_date = DateTime.strptime(params[:schedule_end], "%Y-%m-%d").change({hour: 23, minutes: 59, sec: 59})
     else
       start_date = Date.today
       end_date = (Date.today + 2.weeks)
