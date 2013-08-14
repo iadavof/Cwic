@@ -3,6 +3,10 @@ module ApplicationHelper
     I18n.t(bool.to_s)
   end
 
+  def format_text(text)
+    text.present? ? text : I18n.t('none_html').html_safe
+  end
+
   # Format description (title) helpers. Useful for (a.o.) entities and entity types.
   def format_description_title(obj)
     obj = obj.description if obj.respond_to?(:description)

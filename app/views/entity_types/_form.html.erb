@@ -15,10 +15,10 @@
   </div>
   <div class="nested-form property-types">
     <h2><%= PropertyType.model_name.human(count: 2) %></h2>
-    <%= f.fields_for :property_types do |ptf| %>
+    <%= f.fields_for :property_types, wrapper: false do |ptf| %>
       <%= render partial: 'property_type_fields', locals: { f: ptf } %>
     <% end %>
-    <%= f.link_to_add t('add_nested_object', class: PropertyType.model_name.human.lcfirst), :property_types %>
+    <%= f.link_to_add '', :property_types, class: 'icon icon-plus property-type-add', title: t('add_nested_object', class: PropertyType.model_name.human.lcfirst) %>
   </div>
   <div class="actions">
     <%= f.submit %>

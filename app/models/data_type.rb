@@ -57,6 +57,10 @@ class DataType < ActiveRecord::Base
     self.key == 'float'
   end
 
+  def has_required?
+    self.key != 'boolean'
+  end
+
   def human_name
     I18n.t("data_types.#{key}.name")
   end

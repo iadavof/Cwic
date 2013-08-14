@@ -1,32 +1,44 @@
-<div class="nested-object property-type-wrapper">
-  <h3><%= PropertyType.model_name.human %></h3>
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
+<div class="fields property-type-wrapper">
+  <div class="field horizontal-block property-type-name-wrapper">
+    <%= f.text_field :name, placeholder: PropertyType.human_attribute_name(:name), title: PropertyType.human_attribute_name(:name) %>
   </div>
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
+  <div class="field horizontal-block property-type-description-wrapper">
+    <%= f.text_area :description, placeholder: PropertyType.human_attribute_name(:description), title: PropertyType.human_attribute_name(:description) %>
   </div>
-  <div class="field">
-    <%= f.label :required %>
-    <%= f.check_box :required %>
+  <div class="horizontal-block property-type-extra-fields">
+    <div class="field">
+      <%= f.label :data_type_id %>
+      <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, :'data-key' => dt.key }] }, { prompt: true }, { class: 'data-type-field' } %>
+    </div>
+    <div class="field property-type-required-wrapper">
+      <%= f.label :required, title: t('.required_expl') %>
+      <%= f.check_box :required %>
+    </div>
+    <div class="field property-type-default-value-wrapper" style="display: none;">
+      <%= f.label :default_value %>
+      <span class="property-type-default-value-formatted-field-container"></span>
+      <%= f.hidden_field :default_value, class: 'property-type-default-value-field', value: f.object.form_default_value %>
+    </div>
   </div>
-  <div class="field">
-    <%= f.label :data_type %>
-    <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, :'data-key' => dt.key }] }, { prompt: true }, { class: 'data-type-field' } %>
+  <div class="property-type-remove">
+    <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: PropertyType.model_name.human.lcfirst) %>
   </div>
   <div class="nested-form property-type-options" style="display: none;">
     <h4><%= PropertyTypeOption.model_name.human(count: 2) %></h4>
-    <%= f.fields_for :property_type_options do |ptof| %>
-      <%= render partial: 'property_type_option_fields', locals: { f: ptof } %>
-    <% end %>
-    <%= f.link_to_add t('add_nested_object', class: PropertyTypeOption.model_name.human.lcfirst), :property_type_options %>
+    <table>
+      <thead>
+        <tr>
+          <th><%= PropertyTypeOption.human_attribute_name(:name) %></th>
+          <th class="default"><%= PropertyTypeOption.human_attribute_name(:default) %><a href="javascript:void(0);" class="property-type-options-clear-default-link"><%= t('.clear') %></a></th>
+          <th></th>
+        </tr>
+      </thead>
+      <tbody class="property-type-options-target">
+        <%= f.fields_for :property_type_options, wrapper: false do |ptof| %>
+          <%= render partial: 'property_type_option_fields', locals: { f: ptof } %>
+        <% end %>
+      </tbody>
+    </table>
+    <%= f.link_to_add '', :property_type_options, class: 'icon icon-plus', title: t('add_nested_object', class: PropertyTypeOption.model_name.human.lcfirst) %>
   </div>
-  <div class="field property-type-default-value-wrapper" style="display: none;">
-    <%= f.label :default_value %>
-    <span class="property-type-default-value-formatted-field-container"></span>
-    <%= f.hidden_field :default_value, class: 'property-type-default-value-field', value: f.object.form_default_value %>
-  </div>
-  <%= f.link_to_remove t('remove_nested_object', class: PropertyType.model_name.human.lcfirst) %>
 </div>
