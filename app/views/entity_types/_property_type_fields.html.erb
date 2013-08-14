@@ -8,7 +8,7 @@
   <div class="horizontal-block property-type-extra-fields">
     <div class="field">
       <%= f.label :data_type_id %>
-      <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, :'data-key' => dt.key }] }, { prompt: true }, { class: 'data-type-field' } %>
+      <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, :'data-key' => dt.key }] }, { prompt: true }, { class: 'property-type-data-type-field' } %>
     </div>
     <div class="field property-type-required-wrapper">
       <%= f.label :required, title: t('.required_expl') %>
@@ -41,4 +41,5 @@
     </table>
     <%= f.link_to_add '', :property_type_options, class: 'icon icon-plus', title: t('add_nested_object', class: PropertyTypeOption.model_name.human.lcfirst) %>
   </div>
+  <%= f.hidden_field :index, class: 'property-type-index-field' %>
 </div>
