@@ -1,5 +1,6 @@
 <tr class="fields property-type-option-wrapper">
+  <td><div class="icon icon-move property-type-option-handle"></div></td>
   <td><%= f.text_field :name, class: 'property-type-option-name-field' %></td>
   <td class="default"><%= f.check_box :default, class: 'property-type-option-default-field', title: PropertyTypeOption.human_attribute_name(:default) %></td>
-  <td><%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: PropertyTypeOption.model_name.human.lcfirst) %></td>
+  <td><%= f.hidden_field :index, class: 'property-type-option-index-field' %><%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: PropertyTypeOption.model_name.human.lcfirst) %></td>
 </tr>

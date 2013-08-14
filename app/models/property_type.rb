@@ -1,5 +1,5 @@
 class PropertyType < ActiveRecord::Base
-  default_scope { order(:name) }
+  default_scope { order(:index) }
 
   belongs_to :entity_type
   belongs_to :data_type

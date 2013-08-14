@@ -2,18 +2,21 @@ APP.entity_types = {
   init: function() {
     $('#entity_type_color').minicolors();
     $('form.new_entity_type, form.edit_entity_type')
-      .submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); })
+      .submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
       .find('.property-type-wrapper').each(function () { APP.entity_types.initializePropertyTypeWrapper($(this)); });
+    $('#property-types').sortable({ placeholder: 'ui-state-highlight', handle: '.property-type-handle' });
     $(document).on('nested:fieldAdded:property_types', function(event) { APP.entity_types.initializePropertyTypeWrapper(event.field); });
     $(document).on('nested:fieldAdded:property_type_options', function(event) { APP.entity_types.initializePropertyTypeOptionWrapper(event.field); });
   },
   initializePropertyTypeWrapper: function(propertyTypeWrapper) {
     // Initialize field actions
-    var dataTypeField = propertyTypeWrapper.find('.data-type-field');
+    var dataTypeField = propertyTypeWrapper.find('.property-type-data-type-field');
     dataTypeField.change(function () { APP.entity_types.dataTypeChanged(propertyTypeWrapper); });
 
     var clearDefaultLink = propertyTypeWrapper.find('.property-type-options-clear-default-link')
     clearDefaultLink.click(function() { APP.entity_types.optionsDefaultUncheckAll(propertyTypeWrapper); });
+
+    propertyTypeWrapper.find('.property-type-options-target').sortable({ placeholder: 'ui-state-highlight', handle: '.property-type-option-handle' });
 
     // Initialize data type specific fields
     if(dataTypeField.val()) {
@@ -23,7 +26,7 @@ APP.entity_types = {
   },
   dataTypeChanged: function(propertyTypeWrapper) {
     // Determine the selected data type
-    var dataType = propertyTypeWrapper.find('.data-type-field').find(':selected').data('key')
+    var dataType = propertyTypeWrapper.find('.property-type-data-type-field').find(':selected').data('key')
     var requiredWrapper = propertyTypeWrapper.find('.property-type-required-wrapper');
     var defaultValueWrapper = propertyTypeWrapper.find('.property-type-default-value-wrapper');
     var defaultValueFormattedFieldContainer = defaultValueWrapper.find('.property-type-default-value-formatted-field-container');
@@ -79,7 +82,7 @@ APP.entity_types = {
     // Swap the newly created field to the right spot
     propertyTypeWrapper.find('.property-type-options-target').append(propertyTypeOptionWrapper);
 
-    var dataType = propertyTypeWrapper.find('.data-type-field').find(':selected').data('key');
+    var dataType = propertyTypeWrapper.find('.property-type-data-type-field').find(':selected').data('key');
     if(dataType == 'set') {
       // Set: transform fields to check boxes.
       propertyTypeOptionWrapper.find('.property-type-option-default-field')
@@ -131,5 +134,13 @@ APP.entity_types = {
     } else {
       formattedField.val(field.val());
     }
+  },
+  updateIndexes: function(form) {
+    $(form).find('.property-type-wrapper:visible').each(function(index) {
+      $(this).find('.property-type-index-field').val(index);
+      $(this).find('.property-type-option-wrapper:visible').each(function(index) {
+        $(this).find('.property-type-option-index-field').val(index);
+      });
+    });
   }
 };

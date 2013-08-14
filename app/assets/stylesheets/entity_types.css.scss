@@ -9,13 +9,24 @@ div.property-type-wrapper {
   min-height: 140px;
   border: 2px solid #ccc;
   padding: 10px;
-  margin-bottom: 10px;
+  margin: 10px 0;
+  background-color: #fff;
 }
 
 div.property-type-wrapper div.horizontal-block {
   display: inline-block;
   vertical-align: top;
   margin-right: 20px;
+}
+
+div.property-type-wrapper div.property-type-handle {
+  font-size: 22pt;
+
+}
+
+div.property-type-wrapper div.property-type-handle,
+div.property-type-wrapper div.property-type-option-handle {
+  cursor: move;
 }
 
 div.property-type-wrapper div.property-type-name-wrapper input {
@@ -27,8 +38,12 @@ div.property-type-wrapper div.property-type-description-wrapper textarea {
   height: 110px;
 }
 
+div.property-type-wrapper div.property-type-extra-fields {
+  margin-right: 0;
+}
+
 div.property-type-wrapper div.property-type-extra-fields label {
-  width: 120px;
+  width: 110px;
   text-align: right;
   padding-right: 10px;
 }
@@ -56,9 +71,18 @@ div.property-type-wrapper div.property-type-options {
   padding-top: 10px;
 }
 
+div.property-type-wrapper div.property-type-options h4,
+div.property-type-wrapper div.property-type-options table {
+  margin: 5px 0;
+}
+
 div.property-type-wrapper div.property-type-options th {
   vertical-align: top;
   line-height: normal;
+}
+
+div.property-type-wrapper div.property-type-options tbody.property-type-options-target tr:nth-child(2n+1) {
+  background-color: #fff;
 }
 
 div.property-type-wrapper div.property-type-options td.default,

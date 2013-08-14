@@ -13,8 +13,8 @@
     <%= f.label :description %>
     <%= f.text_area :description %>
   </div>
-  <div class="nested-form property-types">
-    <h2><%= PropertyType.model_name.human(count: 2) %></h2>
+  <h2><%= PropertyType.model_name.human(count: 2) %></h2>
+  <div class="nested-form" id="property-types">
     <%= f.fields_for :property_types, wrapper: false do |ptf| %>
       <%= render partial: 'property_type_fields', locals: { f: ptf } %>
     <% end %>
