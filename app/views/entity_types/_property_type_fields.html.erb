@@ -1,5 +1,5 @@
 <div class="fields property-type-wrapper">
-  <div class="horizontal-block icon icon-move sortable-handle"></div>
+  <div class="horizontal-block icon icon-move property-type-handle"></div>
   <div class="field horizontal-block property-type-name-wrapper">
     <%= f.text_field :name, placeholder: PropertyType.human_attribute_name(:name), title: PropertyType.human_attribute_name(:name) %>
   </div>
@@ -29,6 +29,7 @@
     <table>
       <thead>
         <tr>
+          <th></th>
           <th><%= PropertyTypeOption.human_attribute_name(:name) %></th>
           <th class="default"><%= PropertyTypeOption.human_attribute_name(:default) %><a href="javascript:void(0);" class="property-type-options-clear-default-link"><%= t('.clear') %></a></th>
           <th></th>

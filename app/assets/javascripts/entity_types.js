@@ -4,7 +4,7 @@ APP.entity_types = {
     $('form.new_entity_type, form.edit_entity_type')
       .submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
       .find('.property-type-wrapper').each(function () { APP.entity_types.initializePropertyTypeWrapper($(this)); });
-    $('#property-types').sortable({ placeholder: 'ui-state-highlight', handle: '.sortable-handle' });
+    $('#property-types').sortable({ placeholder: 'ui-state-highlight', handle: '.property-type-handle' });
     $(document).on('nested:fieldAdded:property_types', function(event) { APP.entity_types.initializePropertyTypeWrapper(event.field); });
     $(document).on('nested:fieldAdded:property_type_options', function(event) { APP.entity_types.initializePropertyTypeOptionWrapper(event.field); });
   },
@@ -15,6 +15,8 @@ APP.entity_types = {
 
     var clearDefaultLink = propertyTypeWrapper.find('.property-type-options-clear-default-link')
     clearDefaultLink.click(function() { APP.entity_types.optionsDefaultUncheckAll(propertyTypeWrapper); });
+
+    propertyTypeWrapper.find('.property-type-options-target').sortable({ placeholder: 'ui-state-highlight', handle: '.property-type-option-handle' });
 
     // Initialize data type specific fields
     if(dataTypeField.val()) {
@@ -134,8 +136,11 @@ APP.entity_types = {
     }
   },
   updateIndexes: function(form) {
-    $(form).find('.property-type-wrapper:visible').each(function (index) {
+    $(form).find('.property-type-wrapper:visible').each(function(index) {
       $(this).find('.property-type-index-field').val(index);
+      $(this).find('.property-type-option-wrapper:visible').each(function(index) {
+        $(this).find('.property-type-option-index-field').val(index);
+      });
     });
   }
 };

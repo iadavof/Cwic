@@ -1,5 +1,5 @@
 class PropertyTypeOption < ActiveRecord::Base
-  default_scope { order(:name) }
+  default_scope { order(:index) }
 
   belongs_to :property_type
   has_and_belongs_to_many :properties, join_table: 'properties_values', foreign_key: 'value_id'

@@ -19,8 +19,13 @@ div.property-type-wrapper div.horizontal-block {
   margin-right: 20px;
 }
 
-div.property-type-wrapper div.sortable-handle {
+div.property-type-wrapper div.property-type-handle {
   font-size: 22pt;
+
+}
+
+div.property-type-wrapper div.property-type-handle,
+div.property-type-wrapper div.property-type-option-handle {
   cursor: move;
 }
 
@@ -66,9 +71,18 @@ div.property-type-wrapper div.property-type-options {
   padding-top: 10px;
 }
 
+div.property-type-wrapper div.property-type-options h4,
+div.property-type-wrapper div.property-type-options table {
+  margin: 5px 0;
+}
+
 div.property-type-wrapper div.property-type-options th {
   vertical-align: top;
   line-height: normal;
+}
+
+div.property-type-wrapper div.property-type-options tbody.property-type-options-target tr:nth-child(2n+1) {
+  background-color: #fff;
 }
 
 div.property-type-wrapper div.property-type-options td.default,
