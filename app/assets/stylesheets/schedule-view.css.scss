@@ -103,8 +103,9 @@ div.schedule-container div.schedule-body div.day-row div.time-needle {
   display: block;
   height: 115%;
   top: -7.5%;
-  width: 0px;
-  border: 1px dotted #FF8D20;
+  width: 2px;
+  background-color: #FF8D20;
+  z-index: 5;
 }
 
 div.schedule-container div.schedule-body div.day-row:first-child, div.schedule-container div.day-axis div.day-axis-row {

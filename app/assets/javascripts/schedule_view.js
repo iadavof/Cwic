@@ -324,11 +324,13 @@ IADAscheduleView.prototype.addAllScheduleItems = function() {
 
 IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) {
     if(item.begin_date == item.end_date) {
-        var beginDate = Date.parse(item.begin_date);
+        var beginDate = this.dateToFirstMSec(item.begin_date);
         this.addSingleDayItem($(this.scheduleContainer).find('#'+ beginDate), item, schedule_object_id);
+        console.debug(new Date(beginDate).toString());
+        console.debug($(this.scheduleContainer).find('#'+ beginDate));
     } else {
-        var beginDate = Date.parse(item.begin_date);
-        var endDate = Date.parse(item.end_date);
+        var beginDate = this.dateToFirstMSec(item.begin_date);
+        var endDate = this.dateToFirstMSec(item.end_date);
         var days = this.getDatesBetween(beginDate, endDate);
         for(var dayi = 0; dayi < days.length; dayi += 1) {
             switch(dayi) {
@@ -346,6 +348,13 @@ IADAscheduleView.prototype.addScheduleItem = function(item, schedule_object_id) 
             }
         }
     }
+}
+
+IADAscheduleView.prototype.dateToFirstMSec = function (date) {
+    var ret = new Date(Date.parse(date));
+    ret.setHours(0,0,0,0);
+    ret = new Date(ret).getTime();
+    return ret;
 }
 
 IADAscheduleView.prototype.addSingleDayBlock = function(dayRowScheduleRow, begin_time, end_time, item, schedule_object_id) {
@@ -420,7 +429,7 @@ IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
     this.scheduleContainer.find('.day-row').css('border-color', '#ccc');
     this.scheduleContainer.find('.time-needle').remove();
     this.scheduleContainer.find('.day-axis-row').css('color', '#444');
-    var firstDaySecond = new Date(new Date().setHours(0,0,0,0)).getTime();
+    var firstDaySecond = this.dateToFirstMSec(new Date());
     var date_row = $('.day-row#' + firstDaySecond);
     this.scheduleContainer.find('.day-axis .day-axis-row#label_' + firstDaySecond).css('color', '#FF8D20');
     if(date_row.length != 0) {
