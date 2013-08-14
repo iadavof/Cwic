@@ -30,6 +30,9 @@ IADAscheduleView.prototype.options = null;
 IADAscheduleView.prototype.beginDate = null;
 IADAscheduleView.prototype.endDate = null;
 
+IADAscheduleView.prototype.needleTimeout = null;
+
+
 function IADAscheduleView(options) {
 
     this.options = Object.extend({
@@ -47,8 +50,9 @@ function IADAscheduleView(options) {
 }
 
 IADAscheduleView.prototype.initScheduleStub = function() {
-    this.beginDate = new Date().customFormat('#YYYY#-#MM#-#DD#');
-    this.endDate = (new Date((new Date()).getTime() + (7 * 3600000 * 24))).customFormat('#YYYY#-#MM#-#DD#');
+    var week = this.startAndEndOfWeek();
+    this.beginDate = week[0];
+    this.endDate = week[1];
     this.scheduleContainer = $('#' + this.options.container);
     this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
     this.scheduleContainer.addClass('schedule-container');
@@ -86,6 +90,46 @@ IADAscheduleView.prototype.bindControls = function() {
     this.scheduleContainer.find('#scheduleEndDate').datepicker({showOn: 'both', altField: '#backendEndDate', altFormat: 'yy-mm-dd'}).datepicker("setDate", new Date(this.endDate));
     this.scheduleContainer.find('#scheduleDateUpdate').click(function(){schedule.setDateDomain();});
 
+    var navigation = this.scheduleContainer.find('.control-container.navigate');
+    navigation.find('.button').on('click', function () {
+        var beginEnd = null;
+        var begin_date = Date.parse(schedule.beginDate);
+        if(this.id == 'prevWeek') {
+            beginEnd = schedule.startAndEndOfWeek(new Date(begin_date - 7 * 24 * 3600000));
+        }
+        if(this.id == 'currWeek') {
+            beginEnd = schedule.startAndEndOfWeek();
+        }
+        if(this.id == 'nextWeek') {
+            beginEnd = schedule.startAndEndOfWeek(new Date(begin_date + 7 * 24 * 3600000));
+        }
+        if(this.id == 'prevMonth') {
+            beginEnd = schedule.startAndEndOfMonth(new Date(begin_date), -1);
+        }
+        if(this.id == 'currMonth') {
+            beginEnd = schedule.startAndEndOfMonth(new Date(), 0);
+        }
+        if(this.id == 'nextMonth') {
+            beginEnd = schedule.startAndEndOfMonth(new Date(begin_date), 1);
+        }
+
+        if(beginEnd != null) {
+            schedule.beginDate = beginEnd[0];
+            schedule.endDate = beginEnd[1];
+            schedule.updateDateDomainControl();
+            schedule.updateSchedule();
+        }
+    });
+
+    this.bindNewReservationControls();
+}
+
+IADAscheduleView.prototype.updateDateDomainControl = function() {
+    this.scheduleContainer.find('#scheduleBeginDate').datepicker("setDate", new Date(this.beginDate));
+    this.scheduleContainer.find('#scheduleEndDate').datepicker("setDate", new Date(this.endDate));
+}
+
+IADAscheduleView.prototype.bindNewReservationControls = function() {
     var newScheduleItem = null;
     var newItem = {};
     var scheduleview = this;
@@ -151,7 +195,6 @@ IADAscheduleView.prototype.nearestTimePoint = function(relX, parentWidth) {
 IADAscheduleView.prototype.setDateDomain = function() {
     this.beginDate = $(this.scheduleContainer).find('#backendBeginDate').val();
     this.endDate = $(this.scheduleContainer).find('#backendEndDate').val();
-    console.debug(this.beginDate, this.endDate);
     this.updateSchedule();
 }
 
@@ -192,6 +235,9 @@ IADAscheduleView.prototype.createSchedule = function() {
 
     for(var daynr in days) {
         this.appendDay(days[daynr]);
+        if(days[daynr].date == new Date().setHours(0,0,0,0)) {
+            this.showCurrentDayTimeNeedle();
+        }
     }
 
 }
@@ -215,6 +261,9 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
 }
 
 IADAscheduleView.prototype.clearSchedule = function() {
+    if(this.needleTimeout != null) {
+       clearTimeout(this.needleTimeout);
+    }
     this.scheduleContainer.find('.schedule-body').html('');
     this.scheduleContainer.find('.day-axis').html('');
 }
@@ -335,6 +384,8 @@ IADAscheduleView.prototype.getTemplateClone = function(id) {
 }
 
 IADAscheduleView.prototype.getDatesBetween = function(begin, end) {
+    begin = new Date(begin).setHours(0,0,0,0);
+    end = new Date(end).setHours(0,0,0,0);
     var days = [];
     for(var daynr = 0; daynr <= Math.floor((end-begin) / (3600000*24)); daynr += 1) {
         var newday = new Date(begin + (daynr * 3600000 * 24));
@@ -365,6 +416,22 @@ IADAscheduleView.prototype.appendDay = function(day) {
     $(this.scheduleContainer).find('.schedule-body').append(daydiv);
 }
 
+IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
+    this.scheduleContainer.find('.day-row').css('border-color', '#ccc');
+    this.scheduleContainer.find('.time-needle').remove();
+    this.scheduleContainer.find('.day-axis-row').css('color', '#444');
+    var firstDaySecond = new Date(new Date().setHours(0,0,0,0)).getTime();
+    var date_row = $('.day-row#' + firstDaySecond);
+    this.scheduleContainer.find('.day-axis .day-axis-row#label_' + firstDaySecond).css('color', '#FF8D20');
+    if(date_row.length != 0) {
+        date_row.css('border-color', '#FF8D20');
+        var needle = $('<div>', {class: 'time-needle', style: 'left: ' + this.dayTimeToPercentage(new Date().customFormat('#hhh#:#mm#')) + '%;'});
+        date_row.append(needle);
+        var schedule = this;
+        setTimeout(function() {schedule.showCurrentDayTimeNeedle();}, 30000);
+    }
+}
+
 IADAscheduleView.prototype.formatDate = function(date) {
     return {
         full: date.customFormat("#DDDD# #DD# #MMMM# #YYYY#"),
@@ -372,6 +439,42 @@ IADAscheduleView.prototype.formatDate = function(date) {
         daynamesmall: date.customFormat("#DDD#"),
         monthnamesmall: date.customFormat("#MMM#"),
     }
+}
+
+IADAscheduleView.prototype.startAndEndOfWeek = function(date) {
+
+  // If no date object supplied, use current date
+  // Copy date so don't modify supplied date
+  var now = date? new Date(date) : new Date();
+
+  // set time to some convenient value
+  now.setHours(0,0,0,0);
+
+  // Get the previous Monday
+  var monday = new Date(now);
+  monday.setDate(monday.getDate() - monday.getDay() + 1);
+
+  // Get next Sunday
+  var sunday = new Date(now);
+  sunday.setDate(sunday.getDate() - sunday.getDay() + 7);
+
+  // Return array of date objects
+  return [monday.customFormat('#YYYY#-#MM#-#DD#'), sunday.customFormat('#YYYY#-#MM#-#DD#')];
+}
+
+IADAscheduleView.prototype.startAndEndOfMonth = function(date, monthdiff) {
+    var now = date? new Date(date) : new Date();
+    var monthdiff = monthdiff? monthdiff : 0;
+
+    // set time to some convenient value
+    now.setHours(0,0,0,0);
+
+    var y = now.getFullYear(), m = now.getMonth();
+    var firstDay = new Date(y, m + monthdiff, 1);
+    var lastDay = new Date(y, m + monthdiff + 1, 0);
+
+      // Return array of date objects
+      return [firstDay.customFormat('#YYYY#-#MM#-#DD#'), lastDay.customFormat('#YYYY#-#MM#-#DD#')];
 }
 
 Date.prototype.customFormat = function(formatString){

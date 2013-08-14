@@ -237,3 +237,9 @@ nl:
     index:
       set: 'Stel in'
       tm: t/m
+      previous_week: 'Vorige week'
+      current_week: 'Deze week'
+      next_week: 'Volgende week'
+      previous_month: 'Vorige maand'
+      current_month: 'Deze maand'
+      next_month: 'Volgende maand'

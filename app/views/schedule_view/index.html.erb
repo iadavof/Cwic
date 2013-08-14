@@ -14,7 +14,8 @@
     <div class="entity-container clearfix">
       <h2><%= Entity.model_name.human(count: 2) %></h2>
     </div>
-    <div class="control-container clearfix">
+    <div class="clearfix">
+    <div class="control-container" style="float: right;">
       <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100;" />
       <span class="tm"><%=t('.tm') %></span>
       <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100;" />
@@ -22,6 +23,16 @@
       <input type="hidden" id="backendEndDate" />
       <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
     </div>
+    <div class="control-container navigate">
+      <a id="prevWeek" class="button"><%=t('.previous_week') %></a>
+      <a id="currWeek" class="button"><%=t('.current_week') %></a>
+      <a id="nextWeek" class="button"><%=t('.next_week') %></a>
+      <span style="margin: 0px 10px;"></span>
+      <a id="prevMonth" class="button"><%=t('.previous_month') %></a>
+      <a id="currMonth" class="button"><%=t('.current_month') %></a>
+      <a id="nextMonth" class="button"><%=t('.next_month') %></a>
+    </div>
+  </div>
     <div class="time-axis clearfix"></div>
     <div class="day-axis"></div>
     <div class="schedule-body"></div>
@@ -66,4 +77,4 @@
   <a class="close" href="#close"></a>
 </div>
 
-<a href="#new_reservation"><%= t('.new_reservation') %></a>
+<a href="#new_reservation" class="button"><%= t('.new_reservation') %></a>

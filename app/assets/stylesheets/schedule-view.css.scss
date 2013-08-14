@@ -12,7 +12,7 @@ div.schedule-container {
 
 div.schedule-container div.control-container {
   margin: 20px 0;
-  text-align: center;
+  float: left;
 }
 
 div.schedule-container div.control-container span.tm {
@@ -96,6 +96,15 @@ div.schedule-container div.schedule-body div.day-row {
 
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+div.schedule-container div.schedule-body div.day-row div.time-needle {
+  position: absolute;
+  display: block;
+  height: 115%;
+  top: -7.5%;
+  width: 0px;
+  border: 1px dotted #FF8D20;
 }
 
 div.schedule-container div.schedule-body div.day-row:first-child, div.schedule-container div.day-axis div.day-axis-row {
