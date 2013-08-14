@@ -112,14 +112,16 @@ IADAscheduleView.prototype.bindControls = function() {
     navigation.find('.button').on('click', function () {
         var beginEnd = null;
         var begin_date = Date.parse(schedule.beginDate);
+        var end_date = Date.parse(schedule.endDate);
+        console.debug(begin_date);
         if(this.id == 'prevWeek') {
-            beginEnd = schedule.startAndEndOfWeek(new Date(begin_date - 7 * 24 * 3600000));
+            beginEnd = schedule.startAndEndOfWeek(new Date(begin_date  - 24 * 3600000));
         }
         if(this.id == 'currWeek') {
             beginEnd = schedule.startAndEndOfWeek();
         }
         if(this.id == 'nextWeek') {
-            beginEnd = schedule.startAndEndOfWeek(new Date(begin_date + 7 * 24 * 3600000));
+            beginEnd = schedule.startAndEndOfWeek(new Date(end_date + 24 * 3600000));
         }
         if(this.id == 'prevMonth') {
             beginEnd = schedule.startAndEndOfMonth(new Date(begin_date), -1);
@@ -128,7 +130,7 @@ IADAscheduleView.prototype.bindControls = function() {
             beginEnd = schedule.startAndEndOfMonth(new Date(), 0);
         }
         if(this.id == 'nextMonth') {
-            beginEnd = schedule.startAndEndOfMonth(new Date(begin_date), 1);
+            beginEnd = schedule.startAndEndOfMonth(new Date(end_date), 1);
         }
 
         if(beginEnd != null) {
