@@ -4,7 +4,7 @@ APP.entity_types = {
     $('form.new_entity_type, form.edit_entity_type')
       .submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
       .find('.property-type-wrapper').each(function () { APP.entity_types.initializePropertyTypeWrapper($(this)); });
-    $('#property-types').sortable({ placeholder: 'ui-state-highlight', distance: 10 });
+    $('#property-types').sortable({ placeholder: 'ui-state-highlight', handle: '.sortable-handle' });
     $(document).on('nested:fieldAdded:property_types', function(event) { APP.entity_types.initializePropertyTypeWrapper(event.field); });
     $(document).on('nested:fieldAdded:property_type_options', function(event) { APP.entity_types.initializePropertyTypeOptionWrapper(event.field); });
   },
