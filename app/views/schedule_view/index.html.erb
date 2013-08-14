@@ -13,6 +13,10 @@
   <div class="schedule" id="scheduleContainerTemplate">
     <div class="entity-container clearfix">
       <h2><%= Entity.model_name.human(count: 2) %></h2>
+        <div class="fast-select">
+          <a id="selectAll" class="button"><%=t('.select_all') %></a>
+          <a id="selectNone" class="button"><%=t('.select_none') %></a>
+        </div>
     </div>
     <div class="clearfix">
     <div class="control-container" style="float: right;">

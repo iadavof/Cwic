@@ -103,8 +103,9 @@ div.schedule-container div.schedule-body div.day-row div.time-needle {
   display: block;
   height: 115%;
   top: -7.5%;
-  width: 0px;
-  border: 1px dotted #FF8D20;
+  width: 2px;
+  background-color: #FF8D20;
+  z-index: 5;
 }
 
 div.schedule-container div.schedule-body div.day-row:first-child, div.schedule-container div.day-axis div.day-axis-row {
@@ -279,6 +280,12 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item p.item-te
 div.schedule-container div.entity-container {
   padding: 20px;
   border: 1px solid #ccc;
+}
+
+div.schedule-container div.entity-container div.fast-select {
+  position: absolute;
+  right: 10px;
+  top: 10px;
 }
 
 div.schedule-container div.entity-container div.entity-button {
