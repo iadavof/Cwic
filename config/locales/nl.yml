@@ -101,6 +101,12 @@ nl:
         name: 'Naam'
         color: 'Kleur'
         description: 'Omschrijving'
+      entity_type/property_types:
+        name: 'Eigenschapnaam'
+        data_type_id: 'Datatype bij eigenschap'
+        default_value: 'Standaardwaarde bij eigenschap'
+      entity_type/property_types/property_type_options:
+        name: 'Optiewaarde bij eigenschap'
       property_type:
         name: 'Naam'
         description: 'Omschrijving'
@@ -108,12 +114,6 @@ nl:
         data_type_id: 'Datatype'
         required: 'Verplicht?'
         default_value: 'Standaardwaarde'
-      property_types:
-        name: 'Eigenschap naam'
-        data_type_id: 'Datatype bij eigenschap'
-        default_value: 'Standaardwaarde bij eigenschap'
-        property_type_options:
-          name: 'Eigenschap optiewaarde' # Does not work :/
       property_type_option:
         name: 'Waarde'
         default: 'Standaard?'

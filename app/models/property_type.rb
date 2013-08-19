@@ -119,7 +119,11 @@ class PropertyTypeErrors < ActiveModel::Errors
     super
     if [:data_type_id, :default_value].include?(attribute)
       message = self[attribute].pop
-      self[attribute] << "'#{@base.name}' #{message}"
+      if @base.name.present?
+        self[attribute] << "'#{@base.name}' #{message}"
+      else
+        self[attribute] << "#{message}"
+      end
     end
   end
 end
