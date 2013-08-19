@@ -77,6 +77,9 @@ nl:
       organisation_client:
         one: 'Klant'
         other: 'Klanten'
+      entity_type_icon:
+        one: 'Objecticoon'
+        other: 'Objecticonen'
     attributes:
       user:
         name: 'Naam'
@@ -122,6 +125,12 @@ nl:
         name: 'Naam'
         description: 'Omschrijving'
         entity_type: 'Type'
+      entity_type_icon:
+        name: 'Naam'
+        organisation: 'Organisatie'
+        entity_type_icon_image: 'Icoon'
+        remote_image_url: 'URL van externe afbeelding'
+        image_from_file: 'Locale afbeelding'
       properties:
         value: 'Eigenschap'
       reservation:
@@ -219,6 +228,10 @@ nl:
     property_type_fields:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
       clear: 'Leegmaken'
+
+  entity_type_icons:
+    form:
+      remove_icon: 'Icoon verwijderen'
 
   data_types:
     string:
