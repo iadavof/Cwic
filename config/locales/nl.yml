@@ -195,6 +195,7 @@ nl:
       reservations: 'Reserveringen'
       settings: 'Instellingen'
       home: 'Home'
+      admin: 'Admin'
       organisation_clients: 'Klanten'
       organisation_users: 'Gebruikers'
       entity_types: 'Objectsoorten'

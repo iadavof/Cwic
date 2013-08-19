@@ -31,7 +31,7 @@ APP.global = {
       var submenus = $('#submenu-box > .submenu');
 
       $(menuItems).children('a').each(function(){
-        var shortcutKey = APP.global.getShortcutKeyById($(this).parent().attr('id'));
+        var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
         if (shortcutKey) {
           var txt = $(this).text();
           var index = txt.toUpperCase().indexOf(shortcutKey);
@@ -44,7 +44,7 @@ APP.global = {
       if ($(menuItem).hasClass('selected')) { /* Contract expanded submenu */
         $(menuItems).removeClass('selected');
         $(menuItems).children('a').each(function(){
-          var shortcutKey = APP.global.getShortcutKeyById($(this).parent().attr('id'));
+          var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
           if (shortcutKey) {
             $(this).attr('title', jsLang.strings.expand_menu + ' [Alt+' + shortcutKey + ']');
           }
@@ -55,14 +55,14 @@ APP.global = {
       } else {
         $(menuItems).removeClass('selected');
         $(menuItems).children('a').each(function(){
-          var shortcutKey = APP.global.getShortcutKeyById($(this).parent().attr('id'));
+          var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
           if (shortcutKey) {
             $(this).attr('title', jsLang.strings.expand_menu + ' [Alt+' + shortcutKey + ']');
           }
         });
         $(menuItem).addClass('selected');
         $(menuItem).children('a').each(function(){
-          var shortcutKey = APP.global.getShortcutKeyById($(this).parent().attr('id'));
+          var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
           if (shortcutKey) {
             $(this).attr('title', jsLang.strings.contract_menu + ' [Alt+' + shortcutKey + ']');
           }
@@ -92,7 +92,7 @@ APP.global = {
         var keyString = String.fromCharCode(event.which);
         $('#main-menu > li > a').each(function(){
           var menuItemId = $(this).parent().attr('id');
-          var menuItemShortcutKey = APP.global.getShortcutKeyById($(this).parent().attr('id'));
+          var menuItemShortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
           if(keyString == menuItemShortcutKey) {
             return APP.global.executeShortcut(menuItemId);
           }

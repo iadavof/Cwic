@@ -11,9 +11,9 @@
     <% menu.each_with_index do |(category_name, category_content), index| %>
     <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: (category_matches?(category_name) ? "active" : nil)) do %>
       <% if category_content[:url].present? # No subitems %>
-        <%= link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url)) %>
+        <%= link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url), {data: {shortcut_for: "#{category_name}"}}) %>
       <% else # With subitems %>
-        <%= link_to(t(".#{category_name}"), '#') %>
+        <%= link_to(t(".#{category_name}"), '#', {data: {shortcut_for: "#{category_name}"}}) %>
       <% end %>
     <% end %>
     <% end %>

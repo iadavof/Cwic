@@ -1,8 +1,9 @@
 var jsLang = {
   shortcutKeys: {
-    main_menu_item_1: 'o',
-    main_menu_item_2: 'r',
-    main_menu_item_3: 's'
+    overview: 'v', // o gives focus errors in firefox
+    reservations: 'r',
+    settings: 's',
+    admin: 'a',
   },
   strings: {
     expand_menu: 'Menu uitklappen',
