@@ -27,6 +27,7 @@ nl:
   remove_nested_object: 'Verwijder %{class}'
   include_blank_none: 'Geen'
   prompt_choose: 'Kies...'
+  prompt_all_organisations: 'Alle organisaties'
   unknown_html: '<em>Onbekend</em>'
   none_html: '<em>Geen</em>'
   na_html: '<em>n.v.t.</em>'

@@ -1,6 +1,6 @@
 module MenuHelper
   def menu
-    {
+    menu = {
       overview: {
         home: {
           index: { name: t('.home'), url: home_index_path }
@@ -26,14 +26,24 @@ module MenuHelper
         },
         entity_types: {
           index: { url: organisation_entity_types_path(current_organisation) },
-          new: { url: new_organisation_entity_type_path(current_organisation) }
+          new: { url: new_organisation_entity_type_path(current_organisation) },
+          custom_icons: { url: organisation_entity_type_icons_path(current_organisation) }
         },
         entities: {
           index: { url: organisation_entities_path(current_organisation) },
           new: { url: new_organisation_entity_path(current_organisation) }
         }
-      }
+      },
     }
+    if @admin
+      menu[:admin] = {
+        entity_type_icons: {
+          index: { url: entity_type_icons_path },
+          new: { url: new_entity_type_icon_path }
+        }
+      }
+    end
+    menu
   end
 
   def category_name_matches?(category_name)

@@ -2,6 +2,7 @@ require "application_responder"
 
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action { @admin = true }
   check_authorization unless :devise_controller?
 
   before_action :load_organisation

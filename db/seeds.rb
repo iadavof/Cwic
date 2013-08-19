@@ -26,3 +26,5 @@ OrganisationRole.create!(name: 'Viewer')
 u1 = User.create!(first_name: 'Admin', last_name: 'IADA', email: 'admin@iada.nl', password: 'cwictest', confirmed_at: DateTime.now)
 o1 = Organisation.create!(name: 'IADA', street: 'Stationsplein', house_number: '13-22', postal_code: '6512 AB', city: 'Nijmegen', country: 'Netherlands')
 ou1 = OrganisationUser.create!(organisation: o1, user: u1, organisation_role: or1)
+
+EntityTypeIcon.create!(name: 'Object')

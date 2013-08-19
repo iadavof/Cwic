@@ -1,12 +1,19 @@
 APP.entity_types = {
   init: function() {
-    $('#entity_type_color').minicolors();
+    APP.entity_types.initIconSelector();
     $('form.new_entity_type, form.edit_entity_type')
       .submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
       .find('.property-type-wrapper').each(function () { APP.entity_types.initializePropertyTypeWrapper($(this)); });
     $('#property-types').sortable({ placeholder: 'ui-state-highlight', handle: '.property-type-handle' });
     $(document).on('nested:fieldAdded:property_types', function(event) { APP.entity_types.initializePropertyTypeWrapper(event.field); });
     $(document).on('nested:fieldAdded:property_type_options', function(event) { APP.entity_types.initializePropertyTypeOptionWrapper(event.field); });
+  },
+  initIconSelector: function() {
+    $(".field.icon-select").on('click', 'label', function() {
+      $(".field.icon-select label").removeClass('active');
+        $(this).addClass('active');
+    });
+
   },
   initializePropertyTypeWrapper: function(propertyTypeWrapper) {
     // Initialize field actions

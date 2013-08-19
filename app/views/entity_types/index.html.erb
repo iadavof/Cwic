@@ -8,6 +8,7 @@
 <table>
   <thead>
     <tr>
+      <th></th>
       <th><%= EntityType.human_attribute_name(:name) %></th>
       <th><%= EntityType.human_attribute_name(:description) %></th>
       <th></th>
@@ -17,6 +18,7 @@
   <tbody>
     <% @entity_types.each do |entity_type| %>
     <tr>
+      <td><%= image_tag(entity_type.entity_type_icon.image.icon.url) %></td>
       <td><%= name_link_to_show([@organisation, entity_type]) %></td>
       <td><%= format_description(entity_type.description) %></td>
       <td class="icons">

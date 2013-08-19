@@ -52,7 +52,6 @@ IADAscheduleView.prototype.initScheduleStub = function() {
     var week = this.startAndEndOfWeek();
     this.beginDate = week[0];
     this.endDate = week[1];
-    console.debug('sadgfasdf', this.beginDate, this.endDate);
     this.scheduleContainer = $('#' + this.options.container);
     this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
     this.scheduleContainer.addClass('schedule-container');
@@ -112,11 +111,8 @@ IADAscheduleView.prototype.bindControls = function() {
     navigation.find('.button').on('click', function () {
         var beginEnd = null;
 
-        console.debug(schedule.beginDate, schedule.endDate);
         var begin_date = schedule.dateToFirstMSec(schedule.beginDate);
         var end_date = schedule.dateToFirstMSec(schedule.endDate);
-
-        console.debug(begin_date, end_date, new Date(begin_date), new Date(end_date));
 
         if(this.id == 'dayMode') {
             if(schedule.currentMode == 'day') {
@@ -158,7 +154,6 @@ IADAscheduleView.prototype.bindControls = function() {
             if(schedule.currentMode == 'month') {
                 return;
             }
-            console.debug(begin_date);
             beginEnd = schedule.startAndEndOfMonth(new Date(begin_date));
             schedule.currentMode = 'month';
         }
@@ -197,7 +192,6 @@ IADAscheduleView.prototype.bindControls = function() {
         }
 
         if(beginEnd != null) {
-            console.debug('new', beginEnd);
             schedule.beginDate = beginEnd[0];
             schedule.endDate = beginEnd[1];
             schedule.updateDateDomainControl();

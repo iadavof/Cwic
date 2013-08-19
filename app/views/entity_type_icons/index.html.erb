@@ -1,0 +1,38 @@
+<% content_for :page_title do %>
+<%= index_title(EntityTypeIcon) %>
+<% end %>
+
+<% if @entity_type_icons.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: EntityTypeIcon.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th></th>
+      <th><%= EntityTypeIcon.human_attribute_name(:name) %></th>
+      <% if @admin %>
+      <th><%= EntityTypeIcon.human_attribute_name(:organisation) %></th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entity_type_icons.each do |entity_type_icon| %>
+    <tr>
+      <td><%= image_tag(entity_type_icon.image.icon.url) %></td>
+      <td><%= name_link_to_show(entity_type_icon) %></td>
+      <% if @admin %>
+       <td><%= entity_type_icon.organisation.present? ? entity_type_icon.organisation.name : t('prompt_all_organisations') %></td>
+      <% end %>
+      <td class="icons">
+        <%= icon_link_to_edit(@organisation.present? ? [@organisation, entity_type_icon] : entity_type_icon) %>
+        <%= icon_link_to_destroy(@organisation.present? ? [@organisation, entity_type_icon] : entity_type_icon) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new(@organisation.present? ? [@organisation, EntityTypeIcon] : EntityTypeIcon) %>

@@ -1,12 +1,15 @@
 Cwic::Application.routes.draw do
 
 
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   get "home/index"
   root to: 'home#index'
 
   devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
+  # admin page for managing the entity type icons
+  resources :entity_type_icons
 
   resources :organisations do
     resources :organisation_users, except: :show
@@ -19,5 +22,6 @@ Cwic::Application.routes.draw do
     match '/schedule_view', controller: 'schedule_view', action: 'index', via: 'get', as: 'schedule_view_index'
     resources :reservations
     resources :organisation_clients
+    resources :entity_type_icons
   end
 end

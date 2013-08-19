@@ -77,6 +77,10 @@ gem 'responders'
 # Nested forms helpers
 gem 'nested_form'
 
+# Image uploads
+gem 'mini_magick'
+gem 'carrierwave'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'

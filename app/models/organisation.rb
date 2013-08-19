@@ -2,6 +2,7 @@ class Organisation < ActiveRecord::Base
   has_many :organisation_users, dependent: :destroy
   has_many :users, through: :organisation_users
   has_many :entity_types, dependent: :destroy
+  has_many :entity_type_icons, dependent: :destroy
   has_many :entities, dependent: :destroy
   has_many :reservations, dependent: :destroy
   has_many :organisation_clients, dependent: :destroy
