@@ -619,7 +619,7 @@ IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
 }
 
 IADAscheduleView.prototype.bindEntityInfoControls = function() {
-    this.scheduleContainer.find('p.entity-description').on('click', function(){
-        $(this).toggleClass('closed');
+    this.scheduleContainer.find('p.entity-name').on('click', function() {
+        $(this).siblings('.entity-description').toggleClass('opened');
     });
 }

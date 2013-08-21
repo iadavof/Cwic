@@ -35,7 +35,7 @@ class ScheduleViewController < ApplicationController
                     end_time: r.ends_at.strftime('%H:%M'),
                     bg_color: r.entity.color,
                     text_color: r.entity.text_color,
-                    description: r.entity.description,
+                    description: r.organisation_client.instance_name,
                   }
         end
         result << { schedule_object_id: ent.id, schedule_object_name: ent.instance_name, items: items }

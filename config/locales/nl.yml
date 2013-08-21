@@ -267,6 +267,8 @@ nl:
   schedule_view:
     today_and_tomorrow:
       today_and_tomorrow: 'Vandaag en morgen'
+      entity_block:
+        click_for_description: 'Klik voor de beschrijving'
     horizontal_calendar:
       horizontal_calendar: 'Horizontale kalender'
       set: 'Stel in'
