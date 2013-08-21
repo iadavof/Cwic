@@ -62,16 +62,16 @@ nl:
       entity_type:
         one: 'Objectsoort'
         other: 'Objectsoorten'
-      entity_type_property:
+      property_type:
         one: 'Eigenschap'
         other: 'Eigenschappen'
-      entity_type_property_option:
+      property_type_option:
         one: 'Optie'
         other: 'Opties'
       entity:
         one: 'Object'
         other: 'Objecten'
-      entity_property:
+      property:
         one: 'Eigenschap'
         other: 'Eigenschappen'
       reservation:
@@ -108,20 +108,20 @@ nl:
         name: 'Naam'
         description: 'Omschrijving'
         entity_type_icon: 'Objecticoon'
-      entity_type/entity_type_properties:
+      entity_type/property_types:
         name: 'Eigenschapnaam'
         data_type_id: 'Datatype bij eigenschap'
         default_value: 'Standaardwaarde bij eigenschap'
-      entity_type/entity_type_properties/entity_type_property_options:
+      entity_type/property_types/property_type_options:
         name: 'Optiewaarde bij eigenschap'
-      entity_type_property:
+      property_type:
         name: 'Naam'
         description: 'Omschrijving'
         data_type: 'Datatype'
         data_type_id: 'Datatype'
         required: 'Verplicht'
         default_value: 'Standaardwaarde'
-      entity_type_property_option:
+      property_type_option:
         name: 'Waarde'
         default: 'Standaard?'
       entity:
@@ -135,7 +135,7 @@ nl:
         entity_type_icon_image: 'Icoon'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Locale afbeelding'
-      entity_properties:
+      properties:
         value: 'Eigenschap'
       reservation:
         begins_at: 'Begint op'
@@ -233,7 +233,7 @@ nl:
     still_used_destroy_confirm:
       one: 'Deze objectsoort wordt nog gebruikt door een object. Weet u zeker dat u door wilt gaan?'
       other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
-    entity_type_property_fields:
+    property_type_fields:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
       clear: 'Leegmaken'
 

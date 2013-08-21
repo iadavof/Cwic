@@ -17,12 +17,12 @@
       <%= f.label "entity_type_icon_id_#{eti.id}", eti.name, { style: "background-image: url('#{eti.image.icon.url}');", class: (eti.id == @entity_type.entity_type_icon.id) ? 'active' : ''} %>
     <% end %>
   </div>
-    <h2><%= EntityTypeProperty.model_name.human(count: 2) %></h2>
-    <div class="nested-form" id="entity-type-properties">
-      <%= f.fields_for :entity_type_properties, @entity_type.entity_type_properties.sort_by(&:index), wrapper: false do |ptf| %>
-        <%= render partial: 'entity_type_property_fields', locals: { f: ptf } %>
+    <h2><%= PropertyType.model_name.human(count: 2) %></h2>
+    <div class="nested-form" id="property-types">
+      <%= f.fields_for :property_types, @entity_type.property_types.sort_by(&:index), wrapper: false do |ptf| %>
+        <%= render partial: 'property_type_fields', locals: { f: ptf } %>
       <% end %>
-      <%= f.link_to_add '', :entity_type_properties, class: 'icon icon-plus entity-type-property-add', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
+      <%= f.link_to_add '', :property_types, class: 'icon icon-plus property-type-add', title: t('add_nested_object', class: PropertyType.model_name.human.lcfirst) %>
     </div>
     <div class="actions">
       <%= f.submit %>

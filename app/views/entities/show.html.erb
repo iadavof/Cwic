@@ -11,9 +11,9 @@
   <dd><%= simple_format(@entity.description) %></dd>
 </dl>
 
-<h2><%= EntityProperty.model_name.human(count: 2) %></h2>
+<h2><%= Property.model_name.human(count: 2) %></h2>
 <dl>
-  <%= render @entity.entity_properties %>
+  <%= render @entity.properties %>
 </dl>
 
 <%= button_link_back_to_index([@organisation, Entity]) %>
