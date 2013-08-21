@@ -27,13 +27,13 @@ div#entity-type-form {
     display: none;
   }
 
-  a.property-type-add {
+  a.entity-type-property-add {
     display: inline-block;
     font-size: 1.3em;
     margin-bottom: 1em;
   }
 
-  div.property-type-wrapper {
+  div.entity-type-property-wrapper {
     width: 800px;
     border: 2px solid #ccc;
     padding: 10px;
@@ -73,7 +73,7 @@ div#entity-type-form {
       margin-left: 2px;
     }
 
-    .property-type-options {
+    .entity-type-property-options {
       display: none;
     }
 
@@ -162,7 +162,7 @@ div#entity-type-form {
         margin: 9px 0;
       }
 
-      div.property-type-options {
+      div.entity-type-property-options {
         border-top: 2px dashed #ccc;
         padding-top: 10px;
 

@@ -1,0 +1,8 @@
+<% content_for :page_title do %>
+  <%= edit_title(@entity_type_property) %>
+<% end %>
+
+<%= render 'form' %>
+
+<%= button_link_back_to_show(@entity_type_property) %>
+<%= button_link_back_to_index(EntityTypeProperty) %>

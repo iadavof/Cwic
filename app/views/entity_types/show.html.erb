@@ -9,8 +9,8 @@
   <dd><%= simple_format(@entity_type.description) %></dd>
 </dl>
 
-<h2><%= PropertyType.model_name.human(count: 2) %></h2>
-<%= render @entity_type.property_types %>
+<h2><%= EntityTypeProperty.model_name.human(count: 2) %></h2>
+<%= render @entity_type.entity_type_properties %>
 
 <%= button_link_back_to_index([@organisation, EntityType]) %>
 <%= button_link_to_edit([@organisation, @entity_type]) %>
