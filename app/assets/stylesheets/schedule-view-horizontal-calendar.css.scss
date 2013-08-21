@@ -1,30 +1,30 @@
-div.schedule-container p {
+div.horizontal-calendar p {
   padding: 0;
   margin: 0;
 }
 
-div.schedule-container {
+div.horizontal-calendar {
   position: relative;
   width: 100%;
   min-height: 300px;
   margin: 20px 0;
 }
 
-div.schedule-container div.control-container {
+div.horizontal-calendar div.control-container {
   margin: 20px 0;
   float: left;
 }
 
-div.schedule-container div.control-container span.tm {
+div.horizontal-calendar div.control-container span.tm {
   padding: 0 10px;
 }
 
-div.schedule-container div.sticky-wrapper {
+div.horizontal-calendar div.sticky-wrapper {
   margin-bottom: -1px;
   margin-left: 4%;
 }
 
-div.schedule-container div.time-axis {
+div.horizontal-calendar div.time-axis {
   position: relative;
   width: 100%;
   height: auto;
@@ -34,7 +34,7 @@ div.schedule-container div.time-axis {
   margin-bottom: -1px;
 }
 
-div.schedule-container div.day-axis {
+div.horizontal-calendar div.day-axis {
     position: relative;
     float: left;
     max-width: 4%;
@@ -42,20 +42,20 @@ div.schedule-container div.day-axis {
     overflow: hidden;
 }
 
-div.schedule-container div.day-axis-row {
+div.horizontal-calendar div.day-axis-row {
   position: relative;
   height: 62px;
   padding: 1px 0;
 }
 
-div.schedule-container div.day-axis-row > .inner {
+div.horizontal-calendar div.day-axis-row > .inner {
   position: relative;
   height: 50px;
   top: 50%;
   margin-top: -25px;
 }
 
-div.schedule-container div.time-axis div.hour-time-axis-frame {
+div.horizontal-calendar div.time-axis div.hour-time-axis-frame {
   position: relative;
   float: left;
   width: 4.166666%;
@@ -67,7 +67,7 @@ div.schedule-container div.time-axis div.hour-time-axis-frame {
   -moz-box-sizing: border-box;
 }
 
-div.schedule-container div.schedule-body div.disabled-overlay {
+div.horizontal-calendar div.schedule-body div.disabled-overlay {
   background-color: transparent;
   background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(66,66,66,.1) 35px, rgba(55,55,55,.1) 70px);
   position: absolute;
@@ -80,7 +80,7 @@ div.schedule-container div.schedule-body div.disabled-overlay {
   padding-top: 30px;
 }
 
-div.schedule-container div.schedule-body {
+div.horizontal-calendar div.schedule-body {
   position: relative;
   float: right;
   width: 96%;
@@ -88,7 +88,7 @@ div.schedule-container div.schedule-body {
   margin-top: 1px;
 }
 
-div.schedule-container div.schedule-body div.day-row {
+div.horizontal-calendar div.schedule-body div.day-row {
   position: relative;
   width: 100%;
   min-height: 62px;
@@ -99,7 +99,7 @@ div.schedule-container div.schedule-body div.day-row {
   -moz-box-sizing: border-box;
 }
 
-div.schedule-container div.schedule-body div.day-row div.time-needle {
+div.horizontal-calendar div.schedule-body div.day-row div.time-needle {
   position: absolute;
   display: block;
   height: 115%;
@@ -109,25 +109,25 @@ div.schedule-container div.schedule-body div.day-row div.time-needle {
   z-index: 5;
 }
 
-div.schedule-container div.schedule-body div.day-row:first-child, div.schedule-container div.day-axis div.day-axis-row {
+div.horizontal-calendar div.schedule-body div.day-row:first-child, div.horizontal-calendar div.day-axis div.day-axis-row {
   margin-top: 3px;
 }
 
-div.schedule-container div.day-axis div.day-axis-row div {
+div.horizontal-calendar div.day-axis div.day-axis-row div {
   position: relative;
   text-align: center;
   width: 100%;
 }
 
-div.schedule-container div.schedule-body div.day-row:first-child {
+div.horizontal-calendar div.schedule-body div.day-row:first-child {
   margin-top: 0;
 }
 
-div.schedule-container div.day-axis div.day-axis-row:first-child {
+div.horizontal-calendar div.day-axis div.day-axis-row:first-child {
   margin-top: -1px;
 }
 
-div.schedule-container div.day-axis div.day-axis-row div.day-name p {
+div.horizontal-calendar div.day-axis div.day-axis-row div.day-name p {
   height: 10px;
   width: 100%;
   line-height: 10px;
@@ -135,11 +135,11 @@ div.schedule-container div.day-axis div.day-axis-row div.day-name p {
   font-size: 0.9em;
 }
 
-div.schedule-container div.day-axis div.day-axis-row div.day-name {
+div.horizontal-calendar div.day-axis div.day-axis-row div.day-name {
   height: 10px;
 }
 
-div.schedule-container div.day-axis div.day-axis-row div.month-name p {
+div.horizontal-calendar div.day-axis div.day-axis-row div.month-name p {
   height: 10px;
   width: 100%;
   line-height: 10px;
@@ -147,22 +147,22 @@ div.schedule-container div.day-axis div.day-axis-row div.month-name p {
   font-size: 0.9em;
  }
 
-div.schedule-container div.day-axis div.day-axis-row div.month-name {
+div.horizontal-calendar div.day-axis div.day-axis-row div.month-name {
   height: 10px;
 }
 
-div.schedule-container div.day-axis div.day-axis-row div.day-nr p {
+div.horizontal-calendar div.day-axis div.day-axis-row div.day-nr p {
   height: 30px;
   line-height: 30px;
   font-size: 2.2em;
   width: 100%;
 }
 
-div.schedule-container div.day-axis div.day-axis-row div.day-nr {
+div.horizontal-calendar div.day-axis div.day-axis-row div.day-nr {
   height: 30px;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-time-parts {
+div.horizontal-calendar div.schedule-body div.day-row div.day-row-time-parts {
   position: absolute;
   left: 0;
   top: 0;
@@ -170,12 +170,12 @@ div.schedule-container div.schedule-body div.day-row div.day-row-time-parts {
   width: 100%;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-schedule-objects {
+div.horizontal-calendar div.schedule-body div.day-row div.day-row-schedule-objects {
   position: relative;
   width: 100%;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts {
+div.horizontal-calendar div.schedule-body div.day-row div.day-row-schedule-object-item-parts {
   position: relative;
   left: 0;
   top: 0;
@@ -184,13 +184,13 @@ div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object
   z-index: 4;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts {
+div.horizontal-calendar div.schedule-body div.day-row div.day-row-schedule-object-item-parts {
   border-top: 1px dotted #ccc;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts p.name {
+div.horizontal-calendar div.schedule-body div.day-row div.day-row-schedule-object-item-parts p.name {
   position: absolute;
   left: 25px;
   top: 50%;
@@ -212,11 +212,11 @@ div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object
   cursor: default;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-schedule-object-item-parts:first-child {
+div.horizontal-calendar div.schedule-body div.day-row div.day-row-schedule-object-item-parts:first-child {
   border-top: 0 none;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-time-parts div.hour-time-frame {
+div.horizontal-calendar div.schedule-body div.day-row div.day-row-time-parts div.hour-time-frame {
   position: relative;
   float: left;
   width: 4.166666%;
@@ -226,11 +226,11 @@ div.schedule-container div.schedule-body div.day-row div.day-row-time-parts div.
   -moz-box-sizing: border-box;
 }
 
-div.schedule-container div.schedule-body div.day-row div.day-row-time-parts div.hour-time-frame:first-child {
+div.horizontal-calendar div.schedule-body div.day-row div.day-row-time-parts div.hour-time-frame:first-child {
   border: none;
 }
 
-div.schedule-container div.schedule-body div.day-row div.schedule-item {
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item {
   position: absolute;
   top: 0;
   left: 0;
@@ -241,7 +241,7 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item {
   overflow: hidden;
 }
 
-div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue {
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.continue {
   position: absolute;
   top: 50%;
   width: 15px;
@@ -251,24 +251,24 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item div.conti
   display: none;
 }
 
-div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue [class^="icon-"],
-div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue [class*=" icon-"] {
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.continue [class^="icon-"],
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.continue [class*=" icon-"] {
   height: 15px;
   line-height: 15px;
   vertical-align: baseline;
 }
 
-div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue.left {
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.continue.left {
   left: 5px;
   right: auto;
 }
 
-div.schedule-container div.schedule-body div.day-row div.schedule-item div.continue.right {
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.continue.right {
   right: 5px;
   left: auto;
 }
 
-div.schedule-container div.schedule-body div.day-row div.schedule-item p.item-text {
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item p.item-text {
   position: absolute;
   left: 25px;
   top: 50%;
@@ -278,18 +278,18 @@ div.schedule-container div.schedule-body div.day-row div.schedule-item p.item-te
   overflow: hidden;
 }
 
-div.schedule-container div.entity-container {
+div.horizontal-calendar div.entity-container {
   padding: 20px;
   border: 1px solid #ccc;
 }
 
-div.schedule-container div.entity-container div.fast-select {
+div.horizontal-calendar div.entity-container div.fast-select {
   position: absolute;
   right: 10px;
   top: 10px;
 }
 
-div.schedule-container div.entity-container div.entity-button {
+div.horizontal-calendar div.entity-container div.entity-button {
   position: relative;
   float: left;
   border: 2px solid #ccc;
@@ -300,18 +300,18 @@ div.schedule-container div.entity-container div.entity-button {
   height: 100px;
 }
 
-div.schedule-container div.entity-container div.entity-button.active {
+div.horizontal-calendar div.entity-container div.entity-button.active {
   border-color: #FF3520;
 }
 
-div.schedule-container div.entity-container div.entity-button img.entity-icon {
+div.horizontal-calendar div.entity-container div.entity-button img.entity-icon {
   width: 50px;
   height: 50px;
   margin: 5px;
   border: 5px solid #fff;
 }
 
-div.schedule-container div.entity-container div.entity-button p.entity-name {
+div.horizontal-calendar div.entity-container div.entity-button p.entity-name {
   width: 100%;
   text-align: center;
   overflow: hidden;

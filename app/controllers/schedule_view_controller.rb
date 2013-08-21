@@ -1,16 +1,13 @@
 class ScheduleViewController < ApplicationController
-  def index
-    @reservation = @organisation.reservations.build
-    render :index
-  end
 
   def horizontal_calendar
-
+    # creating new reservation for the option to add one in this view
+    @reservation = @organisation.reservations.build
     render :horizontal_calendar
   end
 
   def today_and_tomorrow
-
+    @entity_types = @organisation.entity_types
     render :today_and_tomorrow
   end
 

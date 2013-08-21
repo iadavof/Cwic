@@ -12,7 +12,8 @@ module MenuHelper
           new: { url: new_organisation_reservation_path(current_organisation) }
         },
         schedule_view: {
-          index: { url: organisation_schedule_view_index_path(current_organisation) }
+          horizontal_calendar: { url: organisation_schedule_view_horizontal_calendar_path(current_organisation) },
+          today_and_tomorrow: { url: organisation_schedule_view_today_and_tomorrow_path(current_organisation) }
         },
         organisation_clients: {
           index: { url: organisation_organisation_clients_path(current_organisation) },

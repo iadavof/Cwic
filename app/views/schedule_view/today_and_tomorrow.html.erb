@@ -1,84 +1,20 @@
 <% content_for :page_title do %>
-<%= t('.schedule_view') %>
+<%= t('.today_and_tomorrow') %>
 <% end %>
 
 <script type="text/javascript">
   $(document).ready(function() {
-      var schedule = new IADAscheduleView({container: 'schedule-container', backend_url: '<%= organisation_schedule_view_index_path(@organisation) %>', view: 'horizontalCalendar'});
+      var schedule = new IADAscheduleView({container: 'today-and-tomorrow-container', backend_url: '<%= organisation_schedule_view_index_path(@organisation) %>', view: 'todayAndTomorrow'});
   });
 </script>
-<div id="schedule-container" class="clearfix"></div>
-
-<div id="schedule-templates" style="display: none;">
-  <div class="schedule" id="scheduleContainerTemplate">
-    <div class="entity-container clearfix">
-      <h2><%= Entity.model_name.human(count: 2) %></h2>
-        <div class="fast-select">
-          <a id="selectAll" class="button"><%=t('.select_all') %></a>
-          <a id="selectNone" class="button"><%=t('.select_none') %></a>
-        </div>
-    </div>
-    <div class="clearfix">
-    <div class="control-container" style="float: right;">
-      <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100;" />
-      <span class="tm"><%=t('.tm') %></span>
-      <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100;" />
-      <input type="hidden" id="backendBeginDate" />
-      <input type="hidden" id="backendEndDate" />
-      <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
-    </div>
-    <div class="control-container navigate">
-      <a id="previous" class="button"><i class="icon-chevron-left"></i></a>
-      <a id="current" class="button"><%=t('.today') %></a>
-      <a id="next" class="button"><i class="icon-chevron-right"></i></a>
-      <span style="margin: 0px 10px;"></span>
-      <a id="dayMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.day') %></a>
-      <a id="weekMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.week') %></a>
-      <a id="monthMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.month') %></a>
-    </div>
-  </div>
-    <div class="time-axis clearfix"></div>
-    <div class="day-axis"></div>
-    <div class="schedule-body"></div>
-  </div>
-
-  <div class="hour-time-axis-frame" id="hourTimeAxisFrameTemplate"><p class="time"></p></div>
-
-  <div class="entity-button" id="entityButtonTemplate">
-    <img class="entity-icon" />
-    <p class="entity-name"></p>
-  </div>
-
-
-  <div class="day-row" id="dayRowTemplate">
-    <div class="day-row-time-parts"></div>
-    <div class="day-row-schedule-objects"></div>
-  </div>
-
-  <div class="hour-time-frame" id="hourTimeFrameTemplate"></div>
-
- <div class="day-axis-row" id="dayAxisRowTemplate">
-    <div class="inner">
-      <div class="day-name"><p></p></div>
-      <div class="day-nr"><p></p></div>
-      <div class="month-name"><p></p></div>
-    </div>
-  </div>
-
-  <div class="schedule-item" id="scheduleItemTemplate">
-    <div class="continue left"><i class="icon-arrow-right"></i></div>
-    <div class="continue right"><i class="icon-arrow-right"></i></div>
-    <p class="item-text"></p>
-  </div>
-  <div class="day-row-schedule-object-item-parts" id="dayRowScheduleObjectItemPartsTemplate">
-    <p class="name"></p>
-  </div>
+<div id="today-and-tomorrow-container" class="clearfix today-and-tomorrow-container">
+  <% if @entity_types.empty? %>
+  <p><%= t('.empty', default: :empty_objects, classes: EntityType.model_name.human(count: 2).lcfirst) %></p>
+  <% else %>
+    <% if @entity_types.count == 1 %>
+      <%= render partial: 'schedule_view/today_and_tomorrow/entity_block', collection: @entity_types.first.entities, as: :entity %>
+    <% else %>
+      <%= render partial: 'schedule_view/today_and_tomorrow/entity_type_block', collection: @entity_types, as: :entity_type %>
+    <% end %>
+  <% end %>
 </div>
-
-<a href="#x" class="overlay" id="new_reservation"></a>
-<div class="popup" id="new_reservation_popup">
-  <%= render 'reservations/form' %>
-  <a class="close" href="#close"></a>
-</div>
-
-<a href="#new_reservation" class="button"><%= t('.new_reservation') %></a>

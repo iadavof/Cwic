@@ -1,0 +1,6 @@
+<div id=<%= "entity_type_#{entity_type.id}" %> class="entity-type-container">
+<%= image_tag(entity_type.entity_type_icon.image.icon.url, {class: 'entity_type_icon'}) %>
+<h2><%= entity_type.name %></h2>
+
+<%= render partial: 'schedule_view/today_and_tomorrow/entity_block', collection: entity_type.entities, as: :entity %>
+</div>

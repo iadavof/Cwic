@@ -1,0 +1,122 @@
+div.today-and-tomorrow-container {
+
+}
+
+div.today-and-tomorrow-container div.entity-type-container {
+  display: block;
+  float: left;
+  margin: 10px;
+  border: 1px solid #ccc;
+  padding: 5px;
+}
+
+div.today-and-tomorrow-container div.entity-type-container h2 {
+  width: 85%;
+  margin-left: 5%;
+  display: inline;
+}
+
+div.today-and-tomorrow-container div.entity-type-container img.entity_type_icon {
+  width: 10%;
+}
+
+div.today-and-tomorrow-container div.entity-container {
+  width: 400px;
+  border: 2px solid #ccc;
+  margin: 5px 0;
+  padding: 0 5px;
+}
+
+div.today-and-tomorrow-container div.entity-container p {
+  margin: 0;
+  padding: 0;
+}
+
+div.today-and-tomorrow-container div.entity-container p.entity-name {
+  background-color: #DDDDDD;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.today-and-tomorrow-container div.entity-container p.entity-description {
+  width: 95%;
+  margin-left: 5%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-style: itallic;
+  color: #666;
+}
+
+div.today-and-tomorrow-container div.entity-container div.progress-bar {
+  background-color: #F7F7F7;
+  height: 10px;
+  padding: 2px;
+  width: 95%;
+  margin: 5px auto;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0 1px 2px #444 inset, 0 1px 0 #888;
+  -webkit-box-shadow: 0 1px 2px #444 inset, 0 1px 0 #888;
+  box-shadow: 0 1px 2px #444 inset, 0 1px 0 #888;
+  line-height: 10px;
+}
+
+div.today-and-tomorrow-container div.entity-container div.progress-bar span {
+  display: inline-block;
+  height: 100%;
+  -moz-border-radius: 2px;
+  -webkit-border-radius: 2px;
+  border-radius: 2px;
+  -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+  -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+  box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
+        -webkit-transition: width .4s ease-in-out;
+        -moz-transition: width .4s ease-in-out;
+        -ms-transition: width .4s ease-in-out;
+        -o-transition: width .4s ease-in-out;
+        transition: width .4s ease-in-out;
+}
+
+div.today-and-tomorrow-container div.entity-container div.progress-bar.blue span {
+  background-color: #FF3520;
+}
+
+div.today-and-tomorrow-container div.entity-container div.progress-bar.stripes span {
+  -webkit-background-size: 30px 30px;
+  -moz-background-size: 30px 30px;
+  background-size: 30px 30px;
+  background-image: -webkit-gradient(linear, left top, right bottom,
+            color-stop(.25, rgba(255, 255, 255, .15)), color-stop(.25, transparent),
+            color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .15)),
+            color-stop(.75, rgba(255, 255, 255, .15)), color-stop(.75, transparent),
+            to(transparent));
+  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+            transparent 75%, transparent);
+  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+            transparent 75%, transparent);
+  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+            transparent 75%, transparent);
+  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+            transparent 75%, transparent);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
+            transparent 75%, transparent);
+
+  -webkit-animation: animate-stripes 3s linear infinite;
+  -moz-animation: animate-stripes 3s linear infinite;
+}
+
+@-webkit-keyframes animate-stripes {
+  0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}
+
+@-moz-keyframes animate-stripes {
+  0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+}

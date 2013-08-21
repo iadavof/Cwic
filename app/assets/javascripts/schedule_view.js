@@ -57,7 +57,7 @@ IADAscheduleView.prototype.renderHorizontalCalendar = function () {
     this.addTimeAxis();
 }
 
-IADAscheduleView.prototype.todayAndTomorrow = function() {
+IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
 
 }
 
@@ -67,7 +67,7 @@ IADAscheduleView.prototype.initScheduleStub = function() {
     this.endDate = week[1];
     this.scheduleContainer = $('#' + this.options.container);
     this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
-    this.scheduleContainer.addClass('schedule-container');
+    this.scheduleContainer.addClass('horizontal-calendar');
     this.createSchedule();
     this.disabledOverlay();
 }
