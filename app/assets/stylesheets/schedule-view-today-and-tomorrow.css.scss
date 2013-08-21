@@ -26,6 +26,7 @@ div.today-and-tomorrow-container div.entity-container {
   border: 2px solid #ccc;
   margin: 10px 0;
   padding: 0 5px;
+  padding-top: 25px;
 }
 
 div.today-and-tomorrow-container div.entity-container p {
@@ -50,14 +51,88 @@ div.today-and-tomorrow-container div.entity-container p.entity-name {
   box-shadow: 1px 1px 1px 1px rgba(68, 68, 68, 0.2);
 }
 
-div.today-and-tomorrow-container div.entity-container p.entity-description {
-  width: 95%;
-  margin-top: 25px;
+div.today-and-tomorrow-container div.entity-container div.entity-description {
+  width: 90%;
   margin-left: 5%;
+  margin-top: -10px;
+  margin-bottom: 10px;
+  padding: 0 2.5%;
   font-style: itallic;
   color: #666;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
+  max-height: 0px;
+  overflow: hidden;
+
+  -moz-transition: 500ms;
+  -ms-transition: 500ms;
+  -o-transition: 500ms;
+  -webkit-transition: 500ms;
+  transition: 500ms;
+
+}
+
+div.today-and-tomorrow-container div.entity-container div.entity-description.opened {
+  max-height: 10000px;
+}
+
+div.today-and-tomorrow-container div.entity-container div.entity-description p {
+  padding-top: 5px;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-now {
+  margin-bottom: 10px;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-now p.reservation-description {
+  width: 80%;
+  margin: 0 auto;
+  text-align: center;
+  line-height: 100%;
+
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info {
+  position:relative;
+  height: 10px;
+  font-size: 80%;
+  line-height: 10px;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.begin-time {
+  float: left;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.end-time {
+  float: right;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-next {
+  border-top: 1px dashed #ccc;
+}
+
+
+div.today-and-tomorrow-container div.entity-container div.reservation-next h4 {
+  margin: 0;
+  text-align: center;
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+  font-size: 120%;
+  line-height: 120%;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-next p.reservation-line {
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-next p.reservation-line span.time {
+  margin-right: 5px;
+  padding-right: 5px;
+  border-right: 1px solid #666;
+  font-size: 80%;
+  font-weight: bold;
 }
 
 div.today-and-tomorrow-container div.entity-container div.progress-bar {
@@ -91,7 +166,7 @@ div.today-and-tomorrow-container div.entity-container div.progress-bar span {
         transition: width .4s ease-in-out;
 }
 
-div.today-and-tomorrow-container div.entity-container div.progress-bar.blue span {
+div.today-and-tomorrow-container div.entity-container div.progress-bar.red span {
   background-color: #FF3520;
 }
 
