@@ -11,7 +11,7 @@ APP.schedule_view = {
 
 Object.extend = function(destination, source) {
     for(var property in source) {
-        if(source.hasOwnProperty(property)) {
+        if(source.hasOwnEntityProperty(property)) {
             if( destination[property] != null && typeof destination[property] == 'object') {
               destination[property] = Object.extend(destination[property], source[property])
             } else {

@@ -1,0 +1,5 @@
+<div class="field">
+  <%= f.hidden_field :entity_type_property_id %>
+  <%= f.label :value, f.object.entity_type_property.name, title: format_description_title(f.object.entity_type_property) %>
+  <%= render_field(f) %>
+</div>

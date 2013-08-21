@@ -1,0 +1,36 @@
+<% content_for :page_title do %>
+  <%= index_title(EntityTypeProperty) %>
+<% end %>
+
+<% if @entity_type_properties.empty? %>
+  <p><%= t('.empty', default: :empty_objects, classes: EntityTypeProperty.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= EntityTypeProperty.human_attribute_name(:entity_type) %></th>
+      <th><%= EntityTypeProperty.human_attribute_name(:name) %></th>
+      <th><%= EntityTypeProperty.human_attribute_name(:description) %></th>
+      <th><%= EntityTypeProperty.human_attribute_name(:data_type) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @entity_type_properties.each do |entity_type_property| %>
+    <tr>
+      <td><%= name_link_to_show(entity_type_property) %></td>
+      <td><%= entity_type_property.name %></td>
+      <td><%= entity_type_property.description %></td>
+      <td><%= entity_type_property.data_type %></td>
+      <td class="icons">
+        <%= icon_link_to_edit(entity_type_property) %>
+        <%= icon_link_to_destroy(entity_type_property) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new(EntityTypeProperty) %>
