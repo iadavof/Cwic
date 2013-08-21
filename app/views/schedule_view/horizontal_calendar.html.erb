@@ -4,7 +4,7 @@
 
 <script type="text/javascript">
   $(document).ready(function() {
-      var schedule = new IADAscheduleView({container: 'schedule-container', backend_url: '<%= organisation_schedule_view_index_path(@organisation) %>'});
+      var schedule = new IADAscheduleView({container: 'schedule-container', backend_url: '<%= organisation_schedule_view_index_path(@organisation) %>', view: 'horizontalCalendar'});
   });
 </script>
 <div id="schedule-container" class="clearfix"></div>
@@ -28,13 +28,13 @@
       <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
     </div>
     <div class="control-container navigate">
-      <a id="previous" class="button"><%=t('.previous') %></a>
+      <a id="previous" class="button"><i class="icon-chevron-left"></i></a>
       <a id="current" class="button"><%=t('.today') %></a>
-      <a id="next" class="button"><%=t('.next') %></a>
+      <a id="next" class="button"><i class="icon-chevron-right"></i></a>
       <span style="margin: 0px 10px;"></span>
-      <a id="dayMode" class="button"><%=t('.day') %></a>
-      <a id="weekMode" class="button"><%=t('.week') %></a>
-      <a id="monthMode" class="button"><%=t('.month') %></a>
+      <a id="dayMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.day') %></a>
+      <a id="weekMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.week') %></a>
+      <a id="monthMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.month') %></a>
     </div>
   </div>
     <div class="time-axis clearfix"></div>

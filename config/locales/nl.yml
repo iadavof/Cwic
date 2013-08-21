@@ -261,11 +261,9 @@ nl:
     index:
       set: 'Stel in'
       tm: t/m
-      previous: 'Vorige'
       today: 'Vandaag'
-      next: 'Volgende'
       day: 'Dag'
       week: 'Week'
-      month: 'Month'
+      month: 'Maand'
       select_all: 'Alles selecteren'
       select_none: 'Niets selecteren'

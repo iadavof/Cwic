@@ -38,13 +38,26 @@ function IADAscheduleView(options) {
     this.options = Object.extend({
         container: 'schedule-container',
         backend_url: 'url to backend',
+        view: 'horizontalCalendar'
     }, options || {});
 
+    if(this.options.view == 'horizontalCalendar') {
+        this.renderHorizontalCalendar();
+    } else if(this.options.view == 'todayAndTomorrow') {
+        this.renderTodayAndTomorrow();
+    }
+
+}
+
+IADAscheduleView.prototype.renderHorizontalCalendar = function () {
     this.initScheduleStub();
 
     this.createEntityShowCase();
     this.bindControls();
     this.addTimeAxis();
+}
+
+IADAscheduleView.prototype.todayAndTomorrow = function() {
 
 }
 
@@ -233,7 +246,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
         }
     });
     this.scheduleContainer.find('.schedule-body').on('mouseup', function() {
-        //handle new entry
+        // Handle new entry
         if(newScheduleItem != null && newItem.begin_time < newItem.end_time) {
             schedule.setNewReservationForm(newItem);
             window.location.hash = '#new_reservation';
@@ -262,7 +275,7 @@ IADAscheduleView.prototype.setNewReservationForm = function(item) {
 }
 
 IADAscheduleView.prototype.nearestTimePoint = function(relX, parentWidth) {
-    var steps = 48; // half hour steps
+    var steps = 48; // Half hour steps
     var step = parentWidth / steps;
     var fullsteps = Math.round(relX / step);
     var stepMinutes = 24 * 60 / steps;
@@ -271,9 +284,30 @@ IADAscheduleView.prototype.nearestTimePoint = function(relX, parentWidth) {
 }
 
 IADAscheduleView.prototype.setDateDomain = function() {
-    this.beginDate = $(this.scheduleContainer).find('#backendBeginDate').val();
-    this.endDate = $(this.scheduleContainer).find('#backendEndDate').val();
+    var container  = $(this.scheduleContainer);
+    var beginDateField = container.find('#backendBeginDate');
+    var endDateField = container.find('#backendEndDate');
+
+    // Check if entered endDate is bigger than the entered beginDate
+    if(Date.parse(endDateField.val()) < Date.parse(beginDateField.val())) {
+        this.setErrorField(container.find('#scheduleEndDate'), true);
+        return;
+    } else {
+        this.setErrorField(container.find('#scheduleEndDate'), false);
+    }
+
+    this.beginDate = container.find('#backendBeginDate').val();
+    this.endDate = container.find('#backendEndDate').val();
     this.updateSchedule();
+}
+
+IADAscheduleView.prototype.setErrorField =  function(field, error) {
+    if(field.parent().hasClass('field_with_errors')) {
+        field.unwrap();
+    }
+    if(error) {
+        field.wrap($('<div>', {class: 'field_with_errors'}));
+    }
 }
 
 IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
@@ -549,15 +583,15 @@ IADAscheduleView.prototype.startAndEndOfMonth = function(date, monthdiff) {
     var now = date? new Date(date) : new Date();
     var monthdiff = monthdiff? monthdiff : 0;
 
-    // set time to some convenient value
+    // Set time to some convenient value
     now.setHours(0,0,0,0);
 
     var y = now.getFullYear(), m = now.getMonth();
     var firstDay = new Date(y, m + monthdiff, 1);
     var lastDay = new Date(y, m + monthdiff + 1, 0);
 
-      // Return array of date objects
-      return [firstDay.customFormat('#YYYY#-#MM#-#DD#'), lastDay.customFormat('#YYYY#-#MM#-#DD#')];
+    // Return array of date objects
+    return [firstDay.customFormat('#YYYY#-#MM#-#DD#'), lastDay.customFormat('#YYYY#-#MM#-#DD#')];
 }
 
 Date.prototype.customFormat = function(formatString){

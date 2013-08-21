@@ -4,6 +4,16 @@ class ScheduleViewController < ApplicationController
     render :index
   end
 
+  def horizontal_calendar
+
+    render :horizontal_calendar
+  end
+
+  def today_and_tomorrow
+
+    render :today_and_tomorrow
+  end
+
   def index_domain
     if params[:entity_ids].present?
       entity_ids = params[:entity_ids].split(',')
