@@ -2,7 +2,7 @@
   <h3><%= property_type.name %></h3>
   <dl>
     <dt><%= PropertyType.human_attribute_name(:description) %></dt>
-    <dd><%= simple_format(property_type.description) %></dd>
+    <dd><%= property_type.description %></dd>
     <% if property_type.has_required? %>
     <dt><%= PropertyType.human_attribute_name(:required) %></dt>
     <dd><%= format_bool(property_type.required) %></dd>

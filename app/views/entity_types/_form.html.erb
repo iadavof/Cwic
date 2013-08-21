@@ -1,29 +1,31 @@
-<%= nested_form_for([@organisation, @entity_type]) do |f| %>
-  <%= render 'shared/error_messages', target: @entity_type %>
+<div id="entity-type-form">
+  <%= nested_form_for([@organisation, @entity_type]) do |f| %>
+    <%= render 'shared/error_messages', target: @entity_type %>
 
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :description %>
-    <%= f.text_area :description %>
-  </div>
-  <%= f.label :entity_type_icon %>
-  <div class="field icon-select clearfix">
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :description %>
+      <%= f.text_area :description %>
+    </div>
+    <%= f.label :entity_type_icon %>
+    <div class="field icon-select clearfix">
     <% EntityTypeIcon.where('organisation_id = ? OR organisation_id IS NULL', @organisation).each do |eti| %>
       <%= f.radio_button :entity_type_icon_id, eti.id %>
       <%= f.label "entity_type_icon_id_#{eti.id}", eti.name, { style: "background-image: url('#{eti.image.icon.url}');", class: (eti.id == @entity_type.entity_type_icon.id) ? 'active' : ''} %>
     <% end %>
   </div>
-  <h2><%= PropertyType.model_name.human(count: 2) %></h2>
-  <div class="nested-form" id="property-types">
-    <%= f.fields_for :property_types, wrapper: false do |ptf| %>
-      <%= render partial: 'property_type_fields', locals: { f: ptf } %>
-    <% end %>
-    <%= f.link_to_add '', :property_types, class: 'icon icon-plus property-type-add', title: t('add_nested_object', class: PropertyType.model_name.human.lcfirst) %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+    <h2><%= PropertyType.model_name.human(count: 2) %></h2>
+    <div class="nested-form" id="property-types">
+      <%= f.fields_for :property_types, @entity_type.property_types.sort_by(&:index), wrapper: false do |ptf| %>
+        <%= render partial: 'property_type_fields', locals: { f: ptf } %>
+      <% end %>
+      <%= f.link_to_add '', :property_types, class: 'icon icon-plus property-type-add', title: t('add_nested_object', class: PropertyType.model_name.human.lcfirst) %>
+    </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+  <% end %>
+</div>

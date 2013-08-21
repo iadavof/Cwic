@@ -1,103 +1,5 @@
-a.property-type-add {
-  display: inline-block;
-  font-size: 12pt;
-  margin-bottom: 1em;
-}
-
-div.property-type-wrapper {
-  width: 800px;
-  min-height: 140px;
-  border: 2px solid #ccc;
-  padding: 10px;
-  margin: 10px 0;
-  background-color: #fff;
-}
-
-div.property-type-wrapper div.horizontal-block {
-  display: inline-block;
-  vertical-align: top;
-  margin-right: 20px;
-}
-
-div.property-type-wrapper div.property-type-handle {
-  font-size: 22pt;
-
-}
-
-div.property-type-wrapper div.property-type-handle,
-div.property-type-wrapper div.property-type-option-handle {
-  cursor: move;
-}
-
-div.property-type-wrapper div.property-type-name-wrapper input {
-  width: 120px;
-}
-
-div.property-type-wrapper div.property-type-description-wrapper textarea {
-  width: 250px;
-  height: 110px;
-}
-
-div.property-type-wrapper div.property-type-extra-fields {
-  margin-right: 0;
-}
-
-div.property-type-wrapper div.property-type-extra-fields label {
-  width: 110px;
-  text-align: right;
-  padding-right: 10px;
-}
-
-div.property-type-wrapper div.property-type-extra-fields input,
-div.property-type-wrapper div.property-type-extra-fields textarea {
-  width: 120px;
-}
-
-div.property-type-wrapper div.property-type-extra-fields textarea {
-  height: 60px;
-}
-
-div.property-type-wrapper div.property-type-extra-fields input[type='checkbox'] {
-  margin: 9px 0;
-}
-
-div.property-type-wrapper div.property-type-remove {
-  float: right;
-  font-size: 12pt;
-}
-
-div.property-type-wrapper div.property-type-options {
-  border-top: 2px dashed #ccc;
-  padding-top: 10px;
-}
-
-div.property-type-wrapper div.property-type-options h4,
-div.property-type-wrapper div.property-type-options table {
-  margin: 5px 0;
-}
-
-div.property-type-wrapper div.property-type-options th {
-  vertical-align: top;
-  line-height: normal;
-}
-
-div.property-type-wrapper div.property-type-options tbody.property-type-options-target tr:nth-child(2n+1) {
-  background-color: #fff;
-}
-
-div.property-type-wrapper div.property-type-options td.default,
-div.property-type-wrapper div.property-type-options th.default {
-  text-align: center;
-}
-
-div.property-type-wrapper div.property-type-options th.default a.property-type-options-clear-default-link {
-  display: block;
-  font-size: 7pt;
-  font-weight: normal;
-  font-style: italic;
-}
-
-div.field.icon-select label {
+div#entity-type-form {
+  div.field.icon-select label {
     float: left;
     border: 2px solid #ccc;
     display: block;
@@ -112,15 +14,184 @@ div.field.icon-select label {
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
-}
+  }
 
-div.field.icon-select label.active {
-    border: 2px solid #ff3520;
-}
+  div.field.icon-select label.active {
+      border: 2px solid #ff3520;
+  }
 
-div.field.icon-select input[type="radio"] {
+  div.field.icon-select input[type="radio"] {
     float: left;
     width: 40px;
     height: 40px;
     display: none;
+  }
+
+  a.property-type-add {
+    display: inline-block;
+    font-size: 1.3em;
+    margin-bottom: 1em;
+  }
+
+  div.property-type-wrapper {
+    width: 800px;
+    border: 2px solid #ccc;
+    padding: 10px;
+    margin: 10px 0;
+    background-color: #fff;
+
+    div.horizontal-block {
+      display: inline-block;
+      vertical-align: top;
+      margin-right: 20px;
+    }
+
+    div.field {
+      margin-bottom: 0;
+    }
+
+    div.handle,
+    div.option-handle {
+      cursor: move;
+    }
+
+    div.handle {
+      font-size: 1.8em;
+      margin-right: 10px;
+    }
+
+    div.extra {
+      margin-right: 0;
+    }
+
+    div.actions {
+      float: right;
+      font-size: 1.3em;
+    }
+
+    div.actions a.icon {
+      margin-left: 2px;
+    }
+
+    .property-type-options {
+      display: none;
+    }
+
+    div.view {
+      font-size: 1em;
+      line-height: 1.5em;
+
+      div.label:after {
+        content: ": ";
+        display: inline;
+      }
+
+      div.label {
+        font-weight: bold;
+      }
+
+      div.name {
+        width: 100px;
+      }
+
+      div.description {
+        width: 250px;
+      }
+
+      div.description div.value {
+        line-height: 1.2em;
+        width: 250px;
+        max-height: 3.6em;
+        overflow: hidden;
+        text-overflow: ellipsis; /* XXX TODO does not work */
+      }
+
+      div.extra {
+        width: 300px;
+      }
+
+      div.extra dl {
+        margin: 0;
+      }
+
+      div.extra dt {
+        width: 110px;
+        float: left;
+        clear: left;
+        text-align: right;
+        margin: 0;
+        padding-right: 10px;
+      }
+
+      div.extra dd {
+        width: 180px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+
+    div.form {
+      display: none;
+
+      div.name input {
+        width: 125px;
+      }
+
+      div.description textarea {
+        width: 275px;
+        height: 110px;
+      }
+
+      div.extra label {
+        width: 110px;
+        text-align: right;
+        padding-right: 10px;
+      }
+
+      div.extra input,
+      div.extra textarea {
+        width: 120px;
+      }
+
+      div.extra textarea {
+        height: 60px;
+      }
+
+      div.extra input[type='checkbox'] {
+        margin: 9px 0;
+      }
+
+      div.property-type-options {
+        border-top: 2px dashed #ccc;
+        padding-top: 10px;
+
+        h4,
+        table {
+          margin: 5px 0;
+        }
+
+        th {
+          vertical-align: top;
+          line-height: normal;
+        }
+
+        tbody.target tr:nth-child(2n+1) {
+          background-color: #fff;
+        }
+
+        td.default,
+        th.default {
+          text-align: center;
+        }
+
+        th.default a.clear-default-link {
+          display: block;
+          font-size: 7pt;
+          font-weight: normal;
+          font-style: italic;
+        }
+      }
+    }
+  }
 }
