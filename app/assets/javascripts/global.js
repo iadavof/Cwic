@@ -113,3 +113,19 @@ APP.global = {
     }
   }
 };
+
+function array_to_sentence(array) {
+  if(array.length <= 1) {
+    return array
+  } else {
+    return array.slice(0, array.length - 1).join(', ') + " en " + array.slice(-1); // XXX TODO internationalization
+  }
+}
+
+function format_text(text) {
+  if(text == '') {
+     return '<em>Geen</em>'; // XXX TODO internationalization
+  } else {
+    return text;
+  }
+}

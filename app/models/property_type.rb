@@ -8,7 +8,8 @@ class PropertyType < ActiveRecord::Base
   has_many :properties, dependent: :destroy
 
   validates :entity_type, presence: true
-  validates :name, presence: true, length: { maximum: 255 }
+  validates :name, presence: true, length: { maximum: 50 }
+  validates :description, length: { maximum: 255 }
   validates :data_type_id, presence: true
   validates :data_type, presence: true, if: "data_type_id.present?"
 
@@ -60,9 +61,11 @@ class PropertyType < ActiveRecord::Base
   end
 
   def formatted_default_value
+    return nil if self.data_type.nil?
     if self.has_options?
       # We are dealing with an option property (enum/set). Format it by determining the name of the corresponding option.
-      value = self.property_type_options.where(default: true).map(&:instance_name).to_sentence
+      # Note: do not rewrite this to a where, since then getting the right default value when the form has validation errors does not work correctly.
+      value = self.property_type_options.select { |pto| pto.default? }.map(&:instance_name).to_sentence
     else
       # We are dealing with a primitive property. Format it by letting its data type format it.
       value = self.format_value(self.default_value)
