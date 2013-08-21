@@ -106,7 +106,6 @@ nl:
         organisation_role: 'Rol'
       entity_type:
         name: 'Naam'
-        color: 'Kleur'
         description: 'Omschrijving'
         entity_type_icon: 'Objecticoon'
       entity_type/property_types:
@@ -126,9 +125,10 @@ nl:
         name: 'Waarde'
         default: 'Standaard?'
       entity:
+        entity_type: 'Type'
         name: 'Naam'
         description: 'Omschrijving'
-        entity_type: 'Type'
+        color: 'Kleur'
       entity_type_icon:
         name: 'Naam'
         organisation: 'Organisatie'
