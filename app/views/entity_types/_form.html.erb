@@ -9,6 +9,7 @@
     <%= f.label :description %>
     <%= f.text_area :description %>
   </div>
+  <%= f.label :entity_type_icon %>
   <div class="field icon-select clearfix">
     <% EntityTypeIcon.where('organisation_id = ? OR organisation_id IS NULL', @organisation).each do |eti| %>
       <%= f.radio_button :entity_type_icon_id, eti.id %>

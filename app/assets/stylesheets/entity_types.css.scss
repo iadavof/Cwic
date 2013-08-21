@@ -103,11 +103,15 @@ div.field.icon-select label {
     display: block;
     margin: 5px;
     padding: 5px;
-    height: 80px;
-    line-height: 130px;
+    height: 60px;
+    line-height: 120px;
     background-position: center 5px;
     background-repeat: no-repeat;
     text-align: center;
+    font-size: 50%;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
 }
 
 div.field.icon-select label.active {
@@ -116,7 +120,7 @@ div.field.icon-select label.active {
 
 div.field.icon-select input[type="radio"] {
     float: left;
-    width: 50px;
-    height: 50px;
+    width: 40px;
+    height: 40px;
     display: none;
 }

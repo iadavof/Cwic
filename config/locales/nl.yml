@@ -105,6 +105,7 @@ nl:
         name: 'Naam'
         color: 'Kleur'
         description: 'Omschrijving'
+        entity_type_icon: 'Objecticoon'
       entity_type/property_types:
         name: 'Eigenschapnaam'
         data_type_id: 'Datatype bij eigenschap'
