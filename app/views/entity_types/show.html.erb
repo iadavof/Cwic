@@ -1,7 +1,7 @@
 <% content_for :page_title do %>
 <%= show_title(@entity_type) %>
 <% end %>
-<%= image_tag(@entity_type.entity_type_icon.image.medium_icon.url) %></td>
+<%= image_tag(@entity_type.icon.image.medium_icon.url) %></td>
 <dl>
   <dt><%= EntityType.human_attribute_name(:name) %></dt>
   <dd><%= @entity_type.name %></dd>

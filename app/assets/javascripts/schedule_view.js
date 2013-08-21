@@ -57,10 +57,6 @@ IADAscheduleView.prototype.renderHorizontalCalendar = function () {
     this.addTimeAxis();
 }
 
-IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
-
-}
-
 IADAscheduleView.prototype.initScheduleStub = function() {
     var week = this.startAndEndOfWeek();
     this.beginDate = week[0];
@@ -615,4 +611,15 @@ Date.prototype.customFormat = function(formatString){
     mm=(m=dateObject.getMinutes())<10?('0'+m):m;
     ss=(s=dateObject.getSeconds())<10?('0'+s):s;
     return formatString.replace("#hhh#",hhh).replace("#hh#",hh).replace("#h#",h).replace("#mm#",mm).replace("#m#",m).replace("#ss#",ss).replace("#s#",s).replace("#ampm#",ampm).replace("#AMPM#",AMPM);
+}
+
+IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
+    this.scheduleContainer = $('#' + this.options.container);
+    this.bindEntityInfoControls();
+}
+
+IADAscheduleView.prototype.bindEntityInfoControls = function() {
+    this.scheduleContainer.find('p.entity-description').on('click', function(){
+        $(this).toggleClass('closed');
+    });
 }
