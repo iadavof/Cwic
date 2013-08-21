@@ -23,8 +23,8 @@
   </div>
   <div class="entity-properties">
     <h2><%= EntityProperty.model_name.human(count: 2) %></h2>
-    <%= f.fields_for :entity_properties do |pf| %>
-      <%= render partial: 'entity_property_fields', locals: { f: pf } %>
+    <%= f.fields_for :properties do |pf| %>
+      <%= render partial: 'property_fields', locals: { f: pf } %>
     <% end %>
   </div>
   <div class="actions">

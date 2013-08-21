@@ -21,9 +21,10 @@ div.today-and-tomorrow-container div.entity-type-container img.entity_type_icon 
 }
 
 div.today-and-tomorrow-container div.entity-container {
+  position: relative;
   width: 400px;
   border: 2px solid #ccc;
-  margin: 5px 0;
+  margin: 10px 0;
   padding: 0 5px;
 }
 
@@ -33,20 +34,30 @@ div.today-and-tomorrow-container div.entity-container p {
 }
 
 div.today-and-tomorrow-container div.entity-container p.entity-name {
+  position: absolute;
+  left: -4px;
+  top: -4px;
   background-color: #DDDDDD;
+  width: auto;
+  display: inline-block;
+  padding: 0 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  cursor: pointer;
+
+  -webkit-box-shadow: 1px 1px 1px 1px rgba(68, 68, 68, 0.2);
+  box-shadow: 1px 1px 1px 1px rgba(68, 68, 68, 0.2);
 }
 
 div.today-and-tomorrow-container div.entity-container p.entity-description {
   width: 95%;
+  margin-top: 25px;
   margin-left: 5%;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
   font-style: itallic;
   color: #666;
+  border-top: 1px solid #ccc;
+  border-left: 1px solid #ccc;
 }
 
 div.today-and-tomorrow-container div.entity-container div.progress-bar {

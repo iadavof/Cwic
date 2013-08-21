@@ -56,7 +56,7 @@ private
   end
 
   def resource_params
-    params.require(:entity).permit(:name, :color, :description, :entity_type_id, :organisation_id, entity_properties_attributes: [:id, :entity_type_property_id, :value, :value_id, value_ids: []])
+    params.require(:entity).permit(:name, :color, :description, :entity_type_id, :organisation_id, properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []])
   end
 
   def interpolation_options
@@ -66,13 +66,13 @@ private
   def check_entity_type_changed(template)
     return false unless params[:entity_type_changed].present?
     @entity.entity_type_id = resource_params[:entity_type_id]
-    build_entity_properties if @entity.entity_type.present?
+    build_properties if @entity.entity_type.present?
     render template
     true
   end
 
-  def build_entity_properties
-    @entity.entity_properties.clear
-    @entity.entity_properties.build(@entity.entity_type.entity_type_properties.map { |pt| { entity_type_property: pt } }).each { |p| p.set_default_value }
+  def build_properties
+    @entity.properties.clear
+    @entity.properties.build(@entity.entity_type.properties.map { |pt| { property_type: pt } }).each { |p| p.set_default_value }
   end
 end

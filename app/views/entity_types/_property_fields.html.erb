@@ -16,7 +16,7 @@
         <dt class="required"><%= EntityTypeProperty.human_attribute_name(:required) %></dt>
         <dd class="required" data-field="required"><%= format_bool(f.object.required) %></dd>
         <dt class="entity-type-property-options"><%= EntityTypePropertyOption.model_name.human(count: 2) %></dt>
-        <dd class="entity-type-property-options" data-field="entity-type-property-options"><%= f.object.entity_type_property_options.sort_by(&:index).map(&:name).to_sentence %></dd>
+        <dd class="entity-type-property-options" data-field="entity-type-property-options"><%= f.object.options.sort_by(&:index).map(&:name).to_sentence %></dd>
         <dt><%= EntityTypeProperty.human_attribute_name(:default_value) %></dt>
         <dd data-field="default-value"><%= format_text(f.object.formatted_default_value) %></dd>
       </dl>
@@ -63,12 +63,12 @@
           </tr>
         </thead>
         <tbody class="target">
-          <%= f.fields_for :entity_type_property_options, f.object.entity_type_property_options.sort_by(&:index), wrapper: false do |ptof| %>
-            <%= render partial: 'entity_type_property_option_fields', locals: { f: ptof } %>
+          <%= f.fields_for :options, f.object.options.sort_by(&:index), wrapper: false do |ptof| %>
+            <%= render partial: 'property_option_fields', locals: { f: ptof } %>
           <% end %>
         </tbody>
       </table>
-      <%= f.link_to_add '', :entity_type_property_options, class: 'icon icon-plus', title: t('add_nested_object', class: EntityTypePropertyOption.model_name.human.lcfirst) %>
+      <%= f.link_to_add '', :options, class: 'icon icon-plus', title: t('add_nested_object', class: EntityTypePropertyOption.model_name.human.lcfirst) %>
     </div>
   </div>
   <%= f.hidden_field :index, class: 'index-field' %>

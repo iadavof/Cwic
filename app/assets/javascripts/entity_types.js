@@ -5,8 +5,8 @@ APP.entity_types = {
       .submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
       .find('.entity-type-property-wrapper').each(function () { APP.entity_types.initializeEntityTypePropertyWrapper($(this)); });
     $('#entity-type-properties').sortable({ placeholder: 'ui-state-highlight', handle: '.handle' });
-    $(document).on('nested:fieldAdded:entity_type_properties', function(event) { APP.entity_types.initializeEntityTypePropertyWrapper(event.field); });
-    $(document).on('nested:fieldAdded:entity_type_property_options', function(event) { APP.entity_types.initializeEntityTypePropertyOptionWrapper(event.field); });
+    $(document).on('nested:fieldAdded:properties', function(event) { APP.entity_types.initializeEntityTypePropertyWrapper(event.field); });
+    $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.initializeEntityTypePropertyOptionWrapper(event.field); });
   },
   initIconSelector: function() {
     $(".field.icon-select").on('click', 'label', function() {

@@ -107,12 +107,12 @@ nl:
       entity_type:
         name: 'Naam'
         description: 'Omschrijving'
-        entity_type_icon: 'Objecticoon'
-      entity_type/entity_type_properties:
+        icon: 'Objecticoon'
+      entity_type/properties:
         name: 'Eigenschapnaam'
         data_type_id: 'Datatype bij eigenschap'
         default_value: 'Standaardwaarde bij eigenschap'
-      entity_type/entity_type_properties/entity_type_property_options:
+      entity_type/properties/options:
         name: 'Optiewaarde bij eigenschap'
       entity_type_property:
         name: 'Naam'
@@ -135,7 +135,7 @@ nl:
         entity_type_icon_image: 'Icoon'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Locale afbeelding'
-      entity_properties:
+      entity/properties:
         value: 'Eigenschap'
       reservation:
         begins_at: 'Begint op'
@@ -233,7 +233,7 @@ nl:
     still_used_destroy_confirm:
       one: 'Deze objectsoort wordt nog gebruikt door een object. Weet u zeker dat u door wilt gaan?'
       other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
-    entity_type_property_fields:
+    property_fields:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
       clear: 'Leegmaken'
 

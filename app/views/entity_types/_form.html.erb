@@ -10,19 +10,19 @@
       <%= f.label :description %>
       <%= f.text_area :description %>
     </div>
-    <%= f.label :entity_type_icon %>
+    <%= f.label :icon %>
     <div class="field icon-select clearfix">
     <% EntityTypeIcon.where('organisation_id = ? OR organisation_id IS NULL', @organisation).each do |eti| %>
-      <%= f.radio_button :entity_type_icon_id, eti.id %>
-      <%= f.label "entity_type_icon_id_#{eti.id}", eti.name, { style: "background-image: url('#{eti.image.icon.url}');", class: (eti.id == @entity_type.entity_type_icon.id) ? 'active' : ''} %>
+      <%= f.radio_button :icon_id, eti.id %>
+      <%= f.label "icon_id_#{eti.id}", eti.name, { style: "background-image: url('#{eti.image.icon.url}');", class: (eti.id == @entity_type.icon.id) ? 'active' : ''} %>
     <% end %>
   </div>
     <h2><%= EntityTypeProperty.model_name.human(count: 2) %></h2>
     <div class="nested-form" id="entity-type-properties">
-      <%= f.fields_for :entity_type_properties, @entity_type.entity_type_properties.sort_by(&:index), wrapper: false do |ptf| %>
-        <%= render partial: 'entity_type_property_fields', locals: { f: ptf } %>
+      <%= f.fields_for :properties, @entity_type.properties.sort_by(&:index), wrapper: false do |ptf| %>
+        <%= render partial: 'property_fields', locals: { f: ptf } %>
       <% end %>
-      <%= f.link_to_add '', :entity_type_properties, class: 'icon icon-plus entity-type-property-add', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
+      <%= f.link_to_add '', :properties, class: 'icon icon-plus entity-type-property-add', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
     </div>
     <div class="actions">
       <%= f.submit %>
