@@ -76,6 +76,11 @@ IADAscheduleView.prototype.toggleEntity = function (entity_button) {
         $(entity_button).addClass('active');
         this.selectedEntities.push($(entity_button).attr('id').split('_')[1]);
     }
+
+    if(typeof(Storage)!=="undefined") {
+        localStorage.previouslySelectedEntities = this.selectedEntities;
+    }
+
     this.updateSchedule();
 }
 
@@ -90,6 +95,11 @@ IADAscheduleView.prototype.toggleEntities = function (on) {
         this.scheduleContainer.find('.entity-container .entity-button').removeClass('active');
         this.selectedEntities = [];
     }
+
+    if(typeof(Storage)!=="undefined") {
+        localStorage.previouslySelectedEntities = this.selectedEntities;
+    }
+
     this.updateSchedule();
 }
 
@@ -315,9 +325,12 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
         jentity.attr('id', 'entity_'+ entity.id);
         jentity.find('.entity-name').text(entity.name);
         jentity.find('img.entity-icon').attr('src', entity.icon).css('border-color', entity.color);
-        if(entity.selected) {
-            this.selectedEntities.push(entity.id);
-            jentity.addClass('active');
+
+        if(typeof(Storage) !== "undefined") {
+            if(localStorage.previouslySelectedEntities.indexOf(entity.id) > -1) {
+                this.selectedEntities.push(entity.id);
+                jentity.addClass('active');
+            }
         }
 
         var schedule = this;

@@ -54,7 +54,6 @@ class ScheduleViewController < ApplicationController
                   icon: e.entity_type.icon.image.icon.url,
                   name: e.instance_name,
                   color: e.color,
-                  selected: false,
                 }
     end
     render json: { entities: result }, status: :ok
