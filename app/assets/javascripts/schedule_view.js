@@ -632,10 +632,105 @@ Date.prototype.customFormat = function(formatString){
 IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
     this.scheduleContainer = $('#' + this.options.container);
     this.bindEntityInfoControls();
+    this.updateTodayTomorrowView();
+    var schedule = this;
+    setInterval(function() {schedule.updateTodayTomorrowView();}, 180000);
 }
 
 IADAscheduleView.prototype.bindEntityInfoControls = function() {
     this.scheduleContainer.find('p.entity-name').on('click', function() {
         $(this).siblings('.entity-description').toggleClass('opened');
     });
+}
+
+IADAscheduleView.prototype.updateTodayTomorrowView = function() {
+    var schedule = this;
+    $.ajax({
+        type: 'GET',
+        url: this.options.backend_url  + '/today_tomorrow_update',
+        data: {
+
+        }
+    }).success(function(response) {
+        schedule.afterTodayTomorrowUpdate(response);
+    });
+}
+
+IADAscheduleView.prototype.afterTodayTomorrowUpdate = function(response) {
+    if(response.length == 1) {
+        this.afterTodayTomorrowUpdateEntity(response[0].entities, this.scheduleContainer);
+    } else {
+        for(var entity_type_array_nr in response) {
+            var jentity_type = this.scheduleContainer.find('#entity_type_' + response[entity_type_array_nr].entity_type_id);
+            this.afterTodayTomorrowUpdateEntity(response[entity_type_array_nr].entities, jentity_type);
+        }
+    }
+}
+
+IADAscheduleView.prototype.afterTodayTomorrowUpdateEntity = function(entity_type_info, parentdiv) {
+    for(var entity_array_nr in entity_type_info) {
+        var entity = entity_type_info[entity_array_nr];
+        var jentity = parentdiv.find('#entity_' + entity.entity_id);
+        jentity = jentity.find('div.updated-info').html('');
+        this.createNewUpdatedInfo(entity, jentity);
+    }
+}
+
+
+IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
+    if(entity.current_reservation == null && entity.upcoming_reservations.today.length  <= 0 && entity.upcoming_reservations.tomorrow.length <= 0) {
+        parentdiv.append(this.getTemplateClone('noReservationsTemplate'));
+        return;
+    }
+
+
+    if(entity.current_reservation != null) {
+        reservation = entity.current_reservation;
+        var currentInfo = this.getTemplateClone('currentReservationTemplate');
+
+        currentInfo.find('.reservation-description').text(reservation.description);
+        currentInfo.find('.begin-time').text(reservation.begin_time);
+        currentInfo.find('.end-time').text(reservation.end_time);
+
+        if(reservation.begin_date != reservation.end_date) {
+            currentInfo.find('.begin-date').text(reservation.begin_date);
+            currentInfo.find('.end-date').text(reservation.end_date);
+            currentInfo.find('.date-info').show();
+
+            for(var daysep_nr in reservation.day_separators) {
+                currentInfo.find('.progress-bar').append($('<div>', {class: 'day-separator', style: 'left: '+ reservation.day_separators[daysep_nr] +'%'}));
+            }
+        }
+
+        currentInfo.find('.progress-bar span').css('width', reservation.progress + '%');
+
+        parentdiv.append(currentInfo);
+    }
+
+    if(entity.upcoming_reservations.today.length  > 0 || entity.upcoming_reservations.tomorrow.length  > 0) {
+        parentdiv.append($('<div>', {class: 'reservation-separator'}));
+        var nextInfo = this.getTemplateClone('nextReservationsTemplate');
+
+        for(up_nr in entity.upcoming_reservations.today) {
+            var line = this.getTemplateClone('reservationLineTemplate');
+            line.find('span.time').text(entity.upcoming_reservations.today[up_nr].begin_time + ' - ' + entity.upcoming_reservations.today[up_nr].end_time);
+            line.find('span.description').text(entity.upcoming_reservations.today[up_nr].description);
+            nextInfo.append(line);
+        }
+
+        if(entity.upcoming_reservations.tomorrow.length  > 0) {
+            nextInfo.append(this.getTemplateClone('tomorrowLineTemplate'));
+            for(up_nr in entity.upcoming_reservations.tomorrow) {
+                var line = this.getTemplateClone('reservationLineTemplate');
+                line.find('span.time').text(entity.upcoming_reservations.tomorrow[up_nr].begin_time + ' - ' + entity.upcoming_reservations.tomorrow[up_nr].end_time);
+                line.find('span.description').text(entity.upcoming_reservations.tomorrow[up_nr].description);
+                nextInfo.append(line);
+            }
+        }
+
+        parentdiv.append(nextInfo);
+
+    }
+
+
 }
