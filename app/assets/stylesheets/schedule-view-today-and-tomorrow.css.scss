@@ -24,9 +24,16 @@ div.today-and-tomorrow-container div.entity-container {
   position: relative;
   width: 400px;
   border: 2px solid #ccc;
-  margin: 10px 0;
   padding: 0 5px;
   padding-top: 25px;
+
+  float: left;
+  margin: 15px;
+}
+
+div.today-and-tomorrow-container div.entity-type-container div.entity-container {
+  margin: 10px 0;
+  float: none;
 }
 
 div.today-and-tomorrow-container div.entity-container p {
@@ -108,12 +115,12 @@ div.today-and-tomorrow-container div.entity-container div.reservation-now div.da
 }
 
 div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.begin-time,
-div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.begin-date  {
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.date-info div.begin-date  {
   float: left;
 }
 
 div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.end-time,
-div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.end-date  {
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.date-info div.end-date  {
   float: right;
 }
 
@@ -154,6 +161,7 @@ div.today-and-tomorrow-container div.entity-container div.reservation-next p.res
 }
 
 div.today-and-tomorrow-container div.entity-container div.progress-bar {
+  position: relative;
   background-color: #F7F7F7;
   height: 10px;
   padding: 2px;
@@ -166,6 +174,17 @@ div.today-and-tomorrow-container div.entity-container div.progress-bar {
   -webkit-box-shadow: 0 1px 2px #444 inset, 0 1px 0 #888;
   box-shadow: 0 1px 2px #444 inset, 0 1px 0 #888;
   line-height: 10px;
+}
+
+div.today-and-tomorrow-container div.entity-container div.progress-bar div.day-separator {
+  display: block;
+  height: 110%;
+  margin-top: -55%;
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 1px;
+  background-color: #444;
 }
 
 div.today-and-tomorrow-container div.entity-container div.progress-bar span {

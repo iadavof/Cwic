@@ -634,7 +634,7 @@ IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
     this.bindEntityInfoControls();
     this.updateTodayTomorrowView();
     var schedule = this;
-    setInterval(function() {schedule.updateTodayTomorrowView();}, 10000);
+    setInterval(function() {schedule.updateTodayTomorrowView();}, 180000);
 }
 
 IADAscheduleView.prototype.bindEntityInfoControls = function() {
@@ -696,6 +696,10 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
             currentInfo.find('.begin-date').text(reservation.begin_date);
             currentInfo.find('.end-date').text(reservation.end_date);
             currentInfo.find('.date-info').show();
+
+            for(var daysep_nr in reservation.day_separators) {
+                currentInfo.find('.progress-bar').append($('<div>', {class: 'day-separator', style: 'left: '+ reservation.day_separators[daysep_nr] +'%'}));
+            }
         }
 
         currentInfo.find('.progress-bar span').css('width', reservation.progress + '%');

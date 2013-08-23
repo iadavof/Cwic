@@ -8,6 +8,8 @@ class EntityType < ActiveRecord::Base
 
   accepts_nested_attributes_for :properties, allow_destroy: true
 
+  scope :with_entities, -> { where('entities_count > 0') }
+
   def icon_with_default
     if self.icon_without_default.nil?
       EntityTypeIcon.first

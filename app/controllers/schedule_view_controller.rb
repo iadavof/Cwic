@@ -7,7 +7,7 @@ class ScheduleViewController < ApplicationController
   end
 
   def today_and_tomorrow
-    @entity_types = @organisation.entity_types
+    @entity_types = @organisation.entity_types.with_entities
     render :today_and_tomorrow
   end
 
@@ -61,7 +61,7 @@ class ScheduleViewController < ApplicationController
 
   def today_tomorrow_update
     result = []
-    entity_types = @organisation.entity_types
+    entity_types = @organisation.entity_types.with_entities
     entity_types.each do |et|
       entity_type_result = {
         entity_type_id: et.id,
@@ -86,9 +86,10 @@ class ScheduleViewController < ApplicationController
   end
 
   def today_tomorrow_update_current_reservation(entity)
-      r = @organisation.reservations.where(entity_id: entity.id).where('begins_at <= :update_moment AND ends_at >= :update_moment', update_moment: Time.now).first
+      r = @organisation.reservations.where(entity_id: entity.id).where('begins_at < :update_moment AND ends_at >= :update_moment', update_moment: Time.now).first
+      current = nil
       if r.present?
-        {
+        current = {
           item_id: r.id,
           begin_date: r.begins_at.strftime('%Y-%m-%d'),
           begin_time: r.begins_at.strftime('%H:%M'),
@@ -97,8 +98,10 @@ class ScheduleViewController < ApplicationController
           description: r.organisation_client.instance_name,
           progress: calculate_current_progress(r),
         }
-      else
-        nil
+        if current[:begin_date] != current[:end_date]
+          current[:day_separators] = reservation_day_change_at(r)
+        end
+        current
       end
   end
 
@@ -113,25 +116,38 @@ class ScheduleViewController < ApplicationController
       res = []
       reservations = @organisation.reservations.where(entity_id: entity_id).where('begins_at >= :start AND begins_at < :end', start: scope_begin, end: scope_end)
       reservations.each do |r|
-        res << {
-                          item_id: r.id,
-                          begin_date: r.begins_at.strftime('%Y-%m-%d'),
-                          begin_time: r.begins_at.strftime('%H:%M'),
-                          end_date: r.ends_at.strftime('%Y-%m-%d'),
-                          end_time: r.ends_at.strftime('%H:%M'),
-                          description: r.organisation_client.instance_name,
-                        }
+      res << {
+                        item_id: r.id,
+                        begin_date: r.begins_at.strftime('%Y-%m-%d'),
+                        begin_time: r.begins_at.strftime('%H:%M'),
+                        end_date: r.ends_at.strftime('%Y-%m-%d'),
+                        end_time: r.ends_at.strftime('%H:%M'),
+                        description: r.organisation_client.instance_name,
+                      }
       end
       res
   end
 
   def calculate_current_progress(reservation)
+    timePontToReservationProgress(reservation, Time.now)
+  end
+
+  def timePontToReservationProgress(reservation, point)
     seconds = reservation.ends_at.to_time.to_i - reservation.begins_at.to_time.to_i
-    seconds_past = Time.now.to_i - reservation.begins_at.to_time.to_i
+    seconds_past = point.to_i - reservation.begins_at.to_time.to_i
     (seconds_past.to_f / seconds.to_f * 100.00).round(2)
   end
 
   def reservation_day_change_at(reservation)
+    dateChangeAt = []
+    point = reservation.begins_at.change({hour: 23, minutes: 59, sec: 59})
+    dateChangeAt << point.to_time
+
+    while(point + 1.day < reservation.ends_at)
+      point = point + 1.day
+      dateChangeAt << point.to_time
+    end
+    dateChangeAt.map {|p| timePontToReservationProgress(reservation, p) }
 
   end
 
