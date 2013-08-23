@@ -269,6 +269,8 @@ nl:
       today_and_tomorrow: 'Vandaag en morgen'
       entity_block:
         click_for_description: 'Klik voor de beschrijving'
+        tomorrow: 'Morgen'
+        no_reservations: 'Geen reserveringen'
     horizontal_calendar:
       horizontal_calendar: 'Horizontale kalender'
       set: 'Stel in'

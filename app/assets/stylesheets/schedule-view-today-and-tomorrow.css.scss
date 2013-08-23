@@ -124,6 +124,13 @@ div.today-and-tomorrow-container div.entity-container div.reservation-next h4 {
   line-height: 120%;
 }
 
+div.today-and-tomorrow-container div.entity-container div.reservation-next p.no-reservations {
+  text-align: center;
+  color: #ff3520;
+  font-size: 100%;
+  margin: 5px 0;
+}
+
 div.today-and-tomorrow-container div.entity-container div.reservation-next p.reservation-line {
 }
 

@@ -59,4 +59,12 @@ class ScheduleViewController < ApplicationController
     render json: { entities: result }, status: :ok
   end
 
+  def calculateCurrentProgress(reservation)
+    seconds = reservation.ends_at.time.to_i - reservation.begins_at.time.to_i
+  end
+
+  def dayChangeAt(reservation)
+
+  end
+
 end

@@ -64,27 +64,27 @@ IADAscheduleView.prototype.initScheduleStub = function() {
     this.scheduleContainer = $('#' + this.options.container);
     this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
     this.scheduleContainer.addClass('horizontal-calendar');
-    this.createSchedule();
-    this.disabledOverlay();
 }
 
-IADAscheduleView.prototype.toggleEntity = function (entity_button) {
+IADAscheduleView.prototype.toggleEntity = function(entity_button) {
+    var id = parseInt($(entity_button).attr('id').split('_')[1]);
+
     if($(entity_button).hasClass('active')) {
         $(entity_button).removeClass('active');
-        this.selectedEntities.splice( $.inArray($(entity_button).attr('id').split('_')[1], this.selectedEntities), 1 );
+        this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
     } else {
         $(entity_button).addClass('active');
-        this.selectedEntities.push($(entity_button).attr('id').split('_')[1]);
+        this.selectedEntities.push(id);
     }
 
-    if(typeof(Storage)!=="undefined") {
+    if(typeof(Storage) !== 'undefined') {
         localStorage.previouslySelectedEntities = this.selectedEntities;
     }
 
     this.updateSchedule();
 }
 
-IADAscheduleView.prototype.toggleEntities = function (on) {
+IADAscheduleView.prototype.toggleEntities = function(on) {
     schedule = this;
     if(on) {
         this.scheduleContainer.find('.entity-container .entity-button').addClass('active');
@@ -96,7 +96,7 @@ IADAscheduleView.prototype.toggleEntities = function (on) {
         this.selectedEntities = [];
     }
 
-    if(typeof(Storage)!=="undefined") {
+    if(typeof(Storage) !== 'undefined') {
         localStorage.previouslySelectedEntities = this.selectedEntities;
     }
 
@@ -317,7 +317,6 @@ IADAscheduleView.prototype.setErrorField =  function(field, error) {
 }
 
 IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
-
     this.entities = response.entities;
     for(var entnr in response.entities) {
         var entity = response.entities[entnr];
@@ -326,7 +325,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
         jentity.find('.entity-name').text(entity.name);
         jentity.find('img.entity-icon').attr('src', entity.icon).css('border-color', entity.color);
 
-        if(typeof(Storage) !== "undefined") {
+        if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
             if(localStorage.previouslySelectedEntities.indexOf(entity.id) > -1) {
                 this.selectedEntities.push(entity.id);
                 jentity.addClass('active');
@@ -337,6 +336,10 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
         jentity.on('click', function() {schedule.toggleEntity(this);});
 
         $(this.scheduleContainer).find('.entity-container').append(jentity);
+
+    }
+    if(this.selectedEntities.length > 0) {
+        this.updateSchedule();
     }
 }
 
