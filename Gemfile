@@ -78,7 +78,7 @@ gem 'responders'
 gem 'nested_form'
 
 # Image uploads
-gem 'mini_magick'
+gem 'mini_magick', github: 'minimagick/minimagick' # Temporary use master branch because of problem with 3.6.0 on Windows (when new version is released switch to that version).
 gem 'carrierwave'
 
 group :development do
