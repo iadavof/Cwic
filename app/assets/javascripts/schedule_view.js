@@ -705,10 +705,12 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
         currentInfo.find('.progress-bar span').css('width', reservation.progress + '%');
 
         parentdiv.append(currentInfo);
+        if(entity.upcoming_reservations.today.length  > 0 || entity.upcoming_reservations.tomorrow.length  > 0) {
+            parentdiv.append($('<div>', {class: 'reservation-separator'}));
+        }
     }
 
     if(entity.upcoming_reservations.today.length  > 0 || entity.upcoming_reservations.tomorrow.length  > 0) {
-        parentdiv.append($('<div>', {class: 'reservation-separator'}));
         var nextInfo = this.getTemplateClone('nextReservationsTemplate');
 
         for(up_nr in entity.upcoming_reservations.today) {
