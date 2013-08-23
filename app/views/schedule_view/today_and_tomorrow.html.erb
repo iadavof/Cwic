@@ -18,3 +18,26 @@
     <% end %>
   <% end %>
 </div>
+<div id="schedule-templates" style="display: none;">
+  <p id="reservationLineTemplate" class="reservation-line"><span class="time">88:88 - 88:88</span><span class="description">Text</span></p>
+  <p id="noReservationsTemplate" class="no-reservations"><%= t('.no_reservations') %></p>
+
+  <div id="currentReservationTemplate" class="reservation-now">
+    <p class="reservation-description">Text</p>
+    <div class="time-info">
+      <div class="begin-time">88:88</div>
+      <div class="end-time">88:88</div>
+    </div>
+    <div class="progress-bar red stripes">
+      <span style="width: 40%"></span>
+    </div>
+    <div class="date-info">
+      <div class="begin-date">00-00-0000</div>
+      <div class="end-date">00-00-0000</div>
+    </div>
+  </div>
+
+  <h4 id="tomorrowLineTemplate"><%= t('.tomorrow')%></h4>
+  <div id="nextReservationsTemplate" class="reservation-next"></div>
+
+</div>

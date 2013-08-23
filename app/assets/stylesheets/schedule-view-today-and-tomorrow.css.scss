@@ -81,7 +81,7 @@ div.today-and-tomorrow-container div.entity-container div.entity-description p {
 }
 
 div.today-and-tomorrow-container div.entity-container div.reservation-now {
-  margin-bottom: 10px;
+  padding-bottom: 10px;
 }
 
 div.today-and-tomorrow-container div.entity-container div.reservation-now p.reservation-description {
@@ -95,23 +95,34 @@ div.today-and-tomorrow-container div.entity-container div.reservation-now p.rese
   text-overflow: ellipsis;
 }
 
-div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info {
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info,
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.date-info {
   position:relative;
   height: 10px;
   font-size: 80%;
   line-height: 10px;
 }
 
-div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.begin-time {
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.date-info {
+  display: none;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.begin-time,
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.begin-date  {
   float: left;
 }
 
-div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.end-time {
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.end-time,
+div.today-and-tomorrow-container div.entity-container div.reservation-now div.time-info div.end-date  {
   float: right;
 }
 
-div.today-and-tomorrow-container div.entity-container div.reservation-next {
+div.today-and-tomorrow-container div.entity-container div.reservation-separator {
   border-top: 1px dashed #ccc;
+  height: 0px;
+}
+
+div.today-and-tomorrow-container div.entity-container div.reservation-next {
 }
 
 
@@ -124,7 +135,7 @@ div.today-and-tomorrow-container div.entity-container div.reservation-next h4 {
   line-height: 120%;
 }
 
-div.today-and-tomorrow-container div.entity-container div.reservation-next p.no-reservations {
+div.today-and-tomorrow-container div.entity-container p.no-reservations {
   text-align: center;
   color: #ff3520;
   font-size: 100%;
