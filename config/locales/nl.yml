@@ -203,6 +203,7 @@ nl:
       organisation_clients: 'Klanten'
       organisation_users: 'Gebruikers'
       entity_types: 'Objectsoorten'
+      custom_icons: 'Mijn objecticonen'
       entities: 'Objecten'
       index: 'Lijst'
       new: 'Nieuw'
@@ -241,6 +242,10 @@ nl:
     form:
       remove_icon: 'Icoon verwijderen'
 
+  entities:
+    form:
+      no_entity_types_found: 'Er zijn nog een objectsoorten toegevoegd. %{link} om een object van een bepaald objectsoort aan te kunnen maken.'
+
   data_types:
     string:
       name: 'Regel tekst'
@@ -269,6 +274,7 @@ nl:
       tomorrow: 'Morgen'
       no_reservations: 'Geen reserveringen'
       today_and_tomorrow: 'Vandaag en morgen'
+      no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'
       entity_block:
         click_for_description: 'Klik voor de beschrijving'
     horizontal_calendar:
@@ -281,3 +287,4 @@ nl:
       month: 'Maand'
       select_all: 'Alles selecteren'
       select_none: 'Niets selecteren'
+      no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'

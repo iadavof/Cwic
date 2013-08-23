@@ -338,9 +338,14 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
         $(this.scheduleContainer).find('.entity-container').append(jentity);
 
     }
-    if(this.selectedEntities.length > 0) {
-        this.updateSchedule();
+    if(this.selectedEntities.length <= 0) {
+        this.scheduleContainer.find('.entity-container p.no_entities_found').show();
+        this.scheduleContainer.find('.entity-container div.fast-select').hide();
+
+        // Ook de button voor het aanmaken van een nieuwe reservering uitschakelen (hoewel dit eigenlijk een beetje abstractiebreuk is aangezien dit buiten de schedule container zit).
+        $('a.button.new-reservation').hide();
     }
+    this.updateSchedule();
 }
 
 IADAscheduleView.prototype.addTimeAxis = function() {

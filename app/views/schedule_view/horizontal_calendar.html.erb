@@ -18,6 +18,7 @@
           <a id="selectAll" class="button"><%=t('.select_all') %></a>
           <a id="selectNone" class="button"><%=t('.select_none') %></a>
         </div>
+        <p class="no_entities_found"><%= t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe %></p>
     </div>
     <div class="clearfix">
     <div class="control-container" style="float: right;">
@@ -82,4 +83,4 @@
   <a class="close" href="#close"></a>
 </div>
 
-<%= button_link_to_new([@organisation, Reservation], location: '#new_reservation') %>
+<%= button_link_to_new([@organisation, Reservation], {location: '#new_reservation', css_class: 'button new-reservation'}) %>

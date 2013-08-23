@@ -9,7 +9,7 @@
 </script>
 <div id="today-and-tomorrow-container" class="clearfix today-and-tomorrow-container">
   <% if @entity_types.empty? %>
-  <p><%= t('.empty', default: :empty_objects, classes: EntityType.model_name.human(count: 2).lcfirst) %></p>
+    <p class="no_entities_found"><%= t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe %></p>
   <% else %>
     <% if @entity_types.count == 1 %>
       <%= render partial: 'schedule_view/today_and_tomorrow/entity_block', collection: @entity_types.first.entities, as: :entity %>

@@ -26,8 +26,12 @@ class EntityTypeIconsController < ApplicationController
   # POST /entity_type_icons
   def create
     @entity_type_icon.attributes = resource_params
-    if !@admin
-      @entity_type_icon.organisation = @organisation
+    if @admin
+      if params[:organisation_id] == ""
+        @entity_type_icon.organisation = nil
+      end
+    else
+        @entity_type_icon.organisation = @organisation
     end
     @entity_type_icon.save
     respond_with(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
@@ -36,6 +40,15 @@ class EntityTypeIconsController < ApplicationController
   # PATCH/PUT /entity_type_icons/1
   def update
     @entity_type_icon.update_attributes(resource_params)
+    puts @admin.inspect
+    if @admin
+      if params[:organisation_id] == ""
+        @entity_type_icon.organisation = nil
+      end
+    else
+        @entity_type_icon.organisation = @organisation
+    end
+    @entity_type_icon.save
     respond_with(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
   end
 
