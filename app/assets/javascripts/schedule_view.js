@@ -338,7 +338,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
         $(this.scheduleContainer).find('.entity-container').append(jentity);
 
     }
-    if(this.selectedEntities.length <= 0) {
+    if(response.entities.length <= 0) {
         this.scheduleContainer.find('.entity-container p.no_entities_found').show();
         this.scheduleContainer.find('.entity-container div.fast-select').hide();
 

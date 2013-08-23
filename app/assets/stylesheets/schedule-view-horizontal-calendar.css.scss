@@ -284,6 +284,10 @@ div.horizontal-calendar div.entity-container {
   border: 1px solid #ccc;
 }
 
+div.horizontal-calendar div.entity-container p.no_entities_found {
+  display: none;
+}
+
 div.horizontal-calendar div.entity-container div.fast-select {
   position: absolute;
   right: 10px;
