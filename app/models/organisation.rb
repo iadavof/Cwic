@@ -6,6 +6,9 @@ class Organisation < ActiveRecord::Base
   has_many :entities, dependent: :destroy
   has_many :reservations, dependent: :destroy
   has_many :organisation_clients, dependent: :destroy
+  
+  has_many :day_occupations, dependent: :destroy
+  has_many :week_occupations, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :street, presence: true, length: { maximum: 255 }
