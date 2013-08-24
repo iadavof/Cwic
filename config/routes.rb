@@ -7,6 +7,7 @@ Cwic::Application.routes.draw do
   devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
   # admin page for managing the entity type icons
   resources :entity_type_icons
+  resources :feedback_and_screencaps
 
   resources :organisations do
     resources :organisation_users, except: :show

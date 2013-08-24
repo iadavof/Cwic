@@ -12,5 +12,6 @@
  *= require jquery.ui.all
  *= require blitzer
  *= require jquery-minicolors
+ *= require feedback/base
  *= require_directory .
  */

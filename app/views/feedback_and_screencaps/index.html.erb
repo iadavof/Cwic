@@ -1,0 +1,25 @@
+<h1>Listing feedback_and_screencaps</h1>
+
+<table>
+  <tr>
+    <th>Message</th>
+    <th>Screencap</th>
+    <th></th>
+    <th></th>
+    <th></th>
+  </tr>
+
+<% @feedback_and_screencaps.each do |feedback_and_screencap| %>
+  <tr>
+    <td><%= feedback_and_screencap.message %></td>
+    <td><img src="<%= feedback_and_screencap.screencap %>" width="200" height="150"></td>
+    <td><%= link_to 'Show', feedback_and_screencap %></td>
+    <td><%= link_to 'Edit', edit_feedback_and_screencap_path(feedback_and_screencap) %></td>
+    <td><%= link_to 'Destroy', feedback_and_screencap, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+  </tr>
+<% end %>
+</table>
+
+<br />
+
+<%= link_to 'New Feedback and screencap', new_feedback_and_screencap_path %>

@@ -1,0 +1,15 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Message:</strong>
+  <%= @feedback_and_screencap.message %>
+</p>
+
+<p>
+  <strong>Screencap:</strong>
+  <img src="<%= @feedback_and_screencap.screencap %>" width="600" height="400">
+</p>
+
+
+<%= link_to 'Edit', edit_feedback_and_screencap_path(@feedback_and_screencap) %> |
+<%= link_to 'Back', feedback_and_screencaps_path %>

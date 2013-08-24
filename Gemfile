@@ -81,6 +81,9 @@ gem 'nested_form'
 gem 'mini_magick', github: 'minimagick/minimagick' # Temporary use master branch because of problem with 3.6.0 on Windows (when new version is released switch to that version).
 gem 'carrierwave'
 
+# Feedback
+gem 'feedbackandscreencap'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
