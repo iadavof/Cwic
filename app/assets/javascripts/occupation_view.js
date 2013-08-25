@@ -160,9 +160,9 @@ IADAoccupationView.prototype.daysInMonth = function() {
 IADAoccupationView.prototype.getColorForPercentage = function(pct) {
     pct = pct / 100.0
     var percentColors = [
-        { pct: 0.0, color: { r: 0xff, g: 0x00, b: 0 } },
+        { pct: 0.0, color: { r: 0x00, g: 0xff, b: 0 } },
         { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
-        { pct: 1.0, color: { r: 0x00, g: 0xff, b: 0 } } ];
+        { pct: 1.0, color: { r: 0xff, g: 0x00, b: 0 } } ];
     for (var i = 0; i < percentColors.length; i++) {
         if (pct <= percentColors[i].pct) {
             var lower = percentColors[i - 1];
