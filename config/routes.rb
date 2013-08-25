@@ -22,12 +22,13 @@ Cwic::Application.routes.draw do
 
     # JSON routes for schedules
     match '/schedule_view/index_domain', controller: 'schedule_view', action: 'index_domain', via: 'post', as: 'reservations_domain_json'
-    match '/schedule_view/entities', controller: 'schedule_view', action: 'entities', via: 'post', as: 'entities_json'
+    match '/schedule_view/entities', controller: 'schedule_view', action: 'entities', via: 'post', as: 'schedule_entities_json'
     match '/schedule_view/today_tomorrow_update', controller: 'schedule_view', action: 'today_tomorrow_update', via: 'get', as: 'today_tomorrow_update_json'
     match '/schedule_view', controller: 'schedule_view', action: 'index', via: 'get', as: 'schedule_view_index'
 
     # Routes for dayOccupation
     match '/occupation', controller: 'occupation', action: 'index', via: 'get', as: 'occupation'
+    match '/occupation/entities', controller: 'occupation', action: 'entities', via: 'post', as: 'occupation_entities_json'
     match '/day_occupation', controller: 'occupation', action: 'day_occupation', via: 'get'
     match '/week_occupation', controller: 'occupation', action: 'week_occupation', via: 'get'
     resources :reservations

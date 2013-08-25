@@ -8,5 +8,33 @@
   });
 </script>
 
-<div class="occupation-container">
+<div id="occupation-container">
+</div>
+
+<div id="occupation-templates" style="display:none;">
+
+	<div class="occupation-container" id="occupationContainerTemplate">
+	    <div class="control-container clearfix">
+	      <a id="previous" class="button"><i class="icon-chevron-left"></i></a>
+	      <a id="current" class="button"><%=t('.today') %></a>
+	      <a id="next" class="button"><i class="icon-chevron-right"></i></a>
+	    </div>
+	    <div class="day-axis clearfix"></div>
+	    <div class="entity-axis"></div>
+	    <div class="occupation-matrix-body"></div>
+	</div>
+
+	<div id="entityRowTemplate" class="entity-row">
+	    <p class="entity-name"></p>
+	    <img class="entity-icon" />
+	</div>
+
+	<div id="occupationMatrixRowTemplate" class="occupation-matrix-row clearfix">
+	</div>
+
+	<div id="occupationMatrixBlockTemplate" class="occupation-matrix-block">
+		<p class="percent">100%</p>
+	</div>
+
+	  <div class="day-axis-frame" id="dayAxisFrameTemplate"><p class="day"></p></div>
 </div>
