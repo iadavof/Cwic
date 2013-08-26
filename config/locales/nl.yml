@@ -164,6 +164,10 @@ nl:
           attributes:
             user:
               taken: 'bestaat al binnen de organisatie'
+        reservation:
+          attributes:
+            begins_at: 'overlapt met een andere reservering welke eindigt op %{other_ends_at}'
+            ends_at: 'overlapt met een andere reservering welke begint op %{other_begins_at}'
 
   errors:
     messages:
