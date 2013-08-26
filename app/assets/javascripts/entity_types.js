@@ -1,12 +1,15 @@
 APP.entity_types = {
   init: function() {
-    APP.entity_types.initIconSelector();
-    $('form.new_entity_type, form.edit_entity_type')
-      .submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
-      .find('.entity-type-property-wrapper').each(function () { APP.entity_types.initializeEntityTypePropertyWrapper($(this)); });
+    var form = $('form.new_entity_type, form.edit_entity_type');
+    form.submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
+    form.find('.entity-type-property-wrapper').each(function () { APP.entity_types.initializeEntityTypePropertyWrapper($(this)); })
+    form.find('.entity-type-option-wrapper').each(function () { APP.entity_types.initializeNestedObjectWrapper($(this)); });
+    $('#tabs').tabs({ active: this.determineFirstTab() });
+    this.initIconSelector();
     $('#entity-type-properties').sortable({ placeholder: 'ui-state-highlight', handle: '.handle' });
+    $('#entity-type-options').sortable({ placeholder: 'ui-state-highlight', handle: '.handle' });
     $(document).on('nested:fieldAdded:properties', function(event) { APP.entity_types.initializeEntityTypePropertyWrapper(event.field); });
-    $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.initializeEntityTypePropertyOptionWrapper(event.field); });
+    $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.onNestedFieldAddedOptions(event.field); });
   },
   initIconSelector: function() {
     $(".field.icon-select").on('click', 'label', function() {
@@ -14,52 +17,43 @@ APP.entity_types = {
         $(this).addClass('active');
     });
   },
-  initializeEntityTypePropertyWrapper: function(entityTypePropertyWrapper) {
-    // Initialize field actions
-    var dataTypeField = entityTypePropertyWrapper.find('select[data-field="data-type"]')
-    dataTypeField.change(function () { APP.entity_types.dataTypeChanged(entityTypePropertyWrapper); });
-    entityTypePropertyWrapper.find('.entity-type-property-options .clear-default-link').click(function() { APP.entity_types.optionsDefaultUncheckAll(entityTypePropertyWrapper); });
-    entityTypePropertyWrapper.find('.icon-edit').click(function() { APP.entity_types.editEntityTypePropertyWrapper(entityTypePropertyWrapper) });
-    entityTypePropertyWrapper.find('.icon-ok').click(function() { APP.entity_types.doneEntityTypePropertyWrapper(entityTypePropertyWrapper) });
-
-    // Make the options sortable
-    entityTypePropertyWrapper.find('.entity-type-property-options .target').sortable({ placeholder: 'ui-state-highlight', handle: '.option-handle' });
-
-    // Initialize data type specific fields
-    if(dataTypeField.val()) {
-      this.dataTypeChanged(entityTypePropertyWrapper);
-      this.setFormattedDefaultValue(entityTypePropertyWrapper);
-    }
-
-    // If the property is not valid, then show form immediately. New properties are also not valid by default.
-    if(entityTypePropertyWrapper.attr('data-valid') == 'false') {
-      this.editEntityTypePropertyWrapper(entityTypePropertyWrapper);
-    }
-  },
-  editEntityTypePropertyWrapper: function(entityTypePropertyWrapper) {
-    entityTypePropertyWrapper.find('.view').hide();
-    entityTypePropertyWrapper.find('.form').show();
-  },
-  doneEntityTypePropertyWrapper: function(entityTypePropertyWrapper) {
-    // Copy all data from input fields to corresponding containers in view
-    var dataType = entityTypePropertyWrapper.find('select[data-field="data-type"]').find(':selected').data('key');
-    /*entityTypePropertyWrapper.find('.form .field input, .form .field textarea, .form .field select').each(function () {
-      if($(this).attr('data-field')) {
-        if($(this).is('select')) {
-          // We are dealing with a checkbox field
-          var value = ($(this).val() ? $(this).find(':selected').text() : '');
-        } else if($(this).is('input') && $(this).attr('type') == 'checkbox') {
-          // We are dealing with a checkbox field
-          var value = $(this).is(':checked') ? 'Ja' : 'Nee'; // XXX TODO internationalization
-        } else {
-          // We are dealing with a normal field
-          var value = $(this).val();
-        }
-        entityTypePropertyWrapper.find('.view [data-field="' + $(this).attr('data-field') + '"]').html(format_text(value));
+  determineFirstTab: function() {
+    // Determines the first tab to open. This is the first tab with errors (if any, else simply open the first tab)
+    var first = 0;
+    $('#tabs .nav a').each(function(index) {
+      var id = $(this).attr('href');
+      var tab = $('#tabs ' + id);
+      if(tab.find('div.field_with_errors').length) {
+        first = index
+        return false; // Break
       }
-    });*/
-    entityTypePropertyWrapper.find('.view [data-field]').each(function () {
-      var input = entityTypePropertyWrapper.find('.form [data-field="' + $(this).attr('data-field') + '"]');
+    });
+    return first;
+  },
+  onNestedFieldAddedOptions: function(field) {
+    if(field.hasClass('entity-type-property-option-wrapper')) {
+      this.initializeEntityTypePropertyOptionWrapper(field);
+    } else {
+      this.initializeNestedObjectWrapper(field);
+    }
+  },
+  initializeNestedObjectWrapper: function(wrapper) {
+    wrapper.find('.icon-edit').click(function() { APP.entity_types.editNestedObjectWrapper(wrapper) });
+    wrapper.find('.icon-ok').click(function() { APP.entity_types.doneNestedObjectWrapper(wrapper) });
+
+    // If the option is not valid, then show form immediately. New properties are also not valid by default.
+    if(wrapper.attr('data-valid') == 'false') {
+      this.editNestedObjectWrapper(wrapper);
+    }
+  },
+  editNestedObjectWrapper: function(wrapper) {
+    wrapper.find('.view').hide();
+    wrapper.find('.form').show();
+  },
+  doneNestedObjectWrapper: function(wrapper) {
+    // Copy all data from input fields to corresponding containers in view
+    wrapper.find('.view [data-field]').each(function () {
+      var input = wrapper.find('.form [data-field="' + $(this).attr('data-field') + '"]');
       if(input) {
         if(input.is('select')) {
           // We are dealing with a checkbox field
@@ -76,22 +70,44 @@ APP.entity_types = {
       }
       $(this).html(format_text(value));
     });
+    wrapper.find('.form').hide();
+    wrapper.find('.view').show();
+  },
+  initializeEntityTypePropertyWrapper: function(entityTypePropertyWrapper) {
+    // Initialize field actions
+    var dataTypeField = entityTypePropertyWrapper.find('select[data-field="data-type"]')
+    dataTypeField.change(function () { APP.entity_types.dataTypeChanged(entityTypePropertyWrapper); });
+    entityTypePropertyWrapper.find('.entity-type-property-options .clear-default-link').click(function() { APP.entity_types.optionsDefaultUncheckAll(entityTypePropertyWrapper); });
+
+    // Make the options sortable
+    entityTypePropertyWrapper.find('.entity-type-property-options .target').sortable({ placeholder: 'ui-state-highlight', handle: '.option-handle' });
+
+    // Initialize data type specific fields
+    if(dataTypeField.val()) {
+      this.dataTypeChanged(entityTypePropertyWrapper);
+      this.setFormattedDefaultValue(entityTypePropertyWrapper);
+    }
+
+    this.initializeNestedObjectWrapper(entityTypePropertyWrapper);
+    entityTypePropertyWrapper.find('.icon-ok').unbind('click').click(function() { APP.entity_types.doneEntityTypePropertyWrapper(entityTypePropertyWrapper) });
+  },
+  doneEntityTypePropertyWrapper: function(entityTypePropertyWrapper) {
+    this.doneNestedObjectWrapper(entityTypePropertyWrapper);
+    var dataType = entityTypePropertyWrapper.find('select[data-field="data-type"]').find(':selected').data('key');
     if(dataType == 'enum' || dataType == 'set') {
       // We have options, copy them as well
       var options = [];
-      var def = [];
-      entityTypePropertyWrapper.find('.entity-type-property-option-wrapper:visible').each(function(index) {
+      var defaultValues = [];
+      entityTypePropertyWrapper.find('.entity-type-property-option-wrapper').filter(function() { return $(this).css('display') != 'none'; }).each(function(index) {
         var name = $(this).find('.name-field').val();
         options.push(name);
         if($(this).find('.default-field').is(':checked')) {
-          def.push(name);
+          defaultValues.push(name);
         }
       });
       entityTypePropertyWrapper.find('.view [data-field="entity-type-property-options"]').html(format_text(array_to_sentence(options)));
-      entityTypePropertyWrapper.find('.view [data-field="default-value"]').html(format_text(array_to_sentence(def)));
+      entityTypePropertyWrapper.find('.view [data-field="default-value"]').html(format_text(array_to_sentence(defaultValues)));
     }
-    entityTypePropertyWrapper.find('.form').hide();
-    entityTypePropertyWrapper.find('.view').show();
   },
   dataTypeChanged: function(entityTypePropertyWrapper) {
     // Determine the selected data type
@@ -162,14 +178,6 @@ APP.entity_types = {
       formattedField.val(field.val());
     }
   },
-  updateIndexes: function(form) {
-    $(form).find('.entity-type-property-wrapper').each(function(index) {
-      $(this).find('.index-field').val(index);
-      $(this).find('.entity-type-property-option-wrapper').each(function(index) {
-        $(this).find('.index-field').val(index);
-      });
-    });
-  },
   initializeEntityTypePropertyOptionWrapper: function(entityTypePropertyOptionWrapper) {
     var entityTypePropertyWrapper = entityTypePropertyOptionWrapper.closest('.entity-type-property-wrapper');
 
@@ -211,5 +219,16 @@ APP.entity_types = {
     field.closest('.entity-type-property-options').find('.default-field').prop('checked', false);
     // Check this radio button
     field.prop('checked', true);
+  },
+  updateIndexes: function(form) {
+    $(form).find('.entity-type-property-wrapper').each(function(index) {
+      $(this).find('.index-field').val(index);
+      $(this).find('.entity-type-property-option-wrapper').each(function(index) {
+        $(this).find('.index-field').val(index);
+      });
+    });
+    $(form).find('.entity-type-option-wrapper').each(function(index) {
+      $(this).find('.index-field').val(index);
+    });
   }
 };

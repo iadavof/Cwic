@@ -63,8 +63,8 @@
           </tr>
         </thead>
         <tbody class="target">
-          <%= f.fields_for :options, f.object.options.sort_by(&:index), wrapper: false do |ptof| %>
-            <%= render partial: 'property_option_fields', locals: { f: ptof } %>
+          <%= f.fields_for :options, f.object.options.sort_by(&:index), wrapper: false do |of| %>
+            <%= render partial: 'property_option_fields', locals: { f: of } %>
           <% end %>
         </tbody>
       </table>

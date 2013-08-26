@@ -1,4 +1,6 @@
 class EntityTypePropertyOption < ActiveRecord::Base
+  include I18n::Alchemy
+
   default_scope { order(:index) }
 
   belongs_to :entity_type_property
@@ -6,6 +8,7 @@ class EntityTypePropertyOption < ActiveRecord::Base
 
   validates :entity_type_property, presence: true
   validates :name, presence: true, length: { maximum: 255 }
+  validates :index, presence: true, numericality: { only_integer: true }
 
   after_destroy :clear_depending_entity_properties
 

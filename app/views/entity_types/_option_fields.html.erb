@@ -1,0 +1,42 @@
+<% f.object = f.object.localized %>
+<div class="fields entity-type-option-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
+  <div class="view">
+    <div class="horizontal-block icon icon-resize-vertical handle" title="<%= t('order_nested_object', classes: EntityTypeOption.model_name.human(count: 2).lcfirst) %>"></div>
+    <div class="field horizontal-block name">
+      <div class="label"><%= EntityTypeOption.human_attribute_name(:name) %></div>
+      <div class="value" data-field="name"><%= format_text(f.object.name) %></div>
+    </div>
+    <div class="field horizontal-block description">
+      <div class="label"><%= EntityTypeOption.human_attribute_name(:description) %></div>
+      <div class="ellipsis"><div class="value" data-field="description"><%= format_text(f.object.description) %></div></div>
+    </div>
+    <div class="horizontal-block extra">
+      <dl>
+        <dt><%= EntityTypeOption.human_attribute_name(:default_price) %></dt>
+        <dd data-field="default-price"><%= format_text(f.object.default_price) %></dd>
+      </dl>
+    </div>
+    <div class="actions">
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-edit', title: t('edit_nested_object', class: EntityTypeOption.model_name.human.lcfirst) %>
+      <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: EntityTypeOption.model_name.human.lcfirst), data: { confirm: t('.destroy_are_you_sure', default: :destroy_are_you_sure) } %>
+    </div>
+  </div>
+  <div class="form">
+    <div class="field horizontal-block name">
+      <%= f.text_field :name, placeholder: EntityTypeOption.human_attribute_name(:name), title: EntityTypeOption.human_attribute_name(:name), data: { field: 'name' } %>
+    </div>
+    <div class="field horizontal-block description">
+      <%= f.text_area :description, placeholder: EntityTypeOption.human_attribute_name(:description), title: EntityTypeOption.human_attribute_name(:description), data: { field: 'description' } %>
+    </div>
+    <div class="horizontal-block extra">
+      <div class="field default-price">
+        <%= f.label :default_price %>
+        <%= f.text_field :default_price, data: { field: 'default-price' } %>
+      </div>
+    </div>
+    <div class="actions">
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-ok', title: t('done_nested_object', class: EntityTypeOption.model_name.human.lcfirst) %>
+    </div>
+  </div>
+  <%= f.hidden_field :index, class: 'index-field' %>
+</div>

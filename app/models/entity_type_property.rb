@@ -1,4 +1,6 @@
 class EntityTypeProperty < ActiveRecord::Base
+  include I18n::Alchemy
+
   default_scope { order(:index) }
 
   belongs_to :entity_type
@@ -12,6 +14,7 @@ class EntityTypeProperty < ActiveRecord::Base
   validates :description, length: { maximum: 255 }
   validates :data_type_id, presence: true
   validates :data_type, presence: true, if: "data_type_id.present?"
+  validates :index, presence: true, numericality: { only_integer: true }
 
   validates :default_value, length: { maximum: 255 }, allow_blank: true, if: "data_type.present? && string?"
   validates :default_value, numericality: { only_integer: true }, allow_blank: true, if: "data_type.present? && integer?"
