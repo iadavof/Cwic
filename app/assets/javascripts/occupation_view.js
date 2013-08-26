@@ -47,8 +47,7 @@ IADAoccupationView.prototype.initiateContainer = function() {
 }
 
 IADAoccupationView.prototype.renderDayOccupation = function() {
-	this.getEntities();
-    console.debug(this.getColorForPercentage(11));
+    this.getEntities();
     this.bindWindowEvents();
 }
 
@@ -77,12 +76,14 @@ IADAoccupationView.prototype.createRows = function(response) {
 		var entityRow = this.getTemplateClone('entityRowTemplate');
 		entityRow.attr('id', 'entity_' + entity.id);
         entityRow.find('img.entity-icon').attr('src', entity.icon).css('border-color', entity.color);
-        entityRow.find('p.entity-name').text(entity.name);
-        entityRow.find('p.entity-name').attr('title', entity.name);
         this.occupationContainer.find('.entity-axis').append(entityRow);
 
         var occupationRow = this.getTemplateClone('occupationMatrixRowTemplate');
         occupationRow.attr('id', 'or_' + entity.id);
+
+        var titleDiv = this.getTemplateClone('entityRowTitleTemplate');
+        titleDiv.find('p.entity-name').text(entity.name);
+        this.occupationContainer.find('.occupation-matrix-body').append(titleDiv);
 
         for(var day = 1; day <= daysInMonth; day += 1) {
             var block = this.getTemplateClone('occupationMatrixBlockTemplate');
@@ -98,12 +99,14 @@ IADAoccupationView.prototype.createRows = function(response) {
 }
 
 IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
+    var dayAxis = this.occupationContainer.find('.day-axis');
     for(var day = 1; day <= maxNr; day += 1) {
         var block = this.getTemplateClone('dayAxisFrameTemplate');
         block.find('p.day').text(day);
         block.css('width', blockWidth + '%');
-        this.occupationContainer.find('.day-axis').append(block);
+        dayAxis.append(block);
     }
+    dayAxis.sticky({getWidthFrom: '.occupation-matrix-body'});
 }
 
 IADAoccupationView.prototype.resizeActions = function() {
@@ -180,4 +183,4 @@ IADAoccupationView.prototype.getColorForPercentage = function(pct) {
             // or output as hex if preferred
         }
     }
-}  
+}

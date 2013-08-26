@@ -33,7 +33,7 @@ div.occupation-container div.day-axis div.day-axis-frame {
 div.occupation-container div.entity-axis {
     position: relative;
     float: left;
-    max-width: 4%;
+    width: 4%;
     height: 100%;
     overflow: hidden;
 }
@@ -42,23 +42,32 @@ div.occupation-container div.entity-axis div.entity-row {
   position: relative;
   overflow: hidden;
   height: 50px;
+  width: 100%;
   text-align: center;
+
+  border-top: 1px solid #ccc;
+  border-bottom: 1px solid #ccc;
+
+  margin: 30px 0;
+
 }
 
 div.occupation-container div.entity-axis div.entity-row img.entity-icon {
   width: 50%;
-  margin: 5%;
-  border: 2px solid #fff;
+  margin: 10%;
+  border: 4px solid #fff;
 }
 
-div.occupation-container div.entity-axis div.entity-row p.entity-name {
+div.occupation-container div.occupation-matrix-body div.entity-row-title p.entity-name {
   width: 100%;
-  text-align: center;
   overflow: hidden;
   text-overflow: ellipsis;
   wordwrap: break-word;
-  font-size: 0.8em;
+  font-size: 1em;
   margin: 0;
+  height: 30px;
+  line-height: 30px;
+  padding-left: 10px;
 }
 
 div.occupation-container div.occupation-matrix-body {
@@ -66,9 +75,6 @@ div.occupation-container div.occupation-matrix-body {
   float: right;
   width: 96%;
   overflow: hidden;
-  margin-top: 1px;
-
-  border: 1px solid #ccc;
 
   box-sizing: border-box;
   -moz-box-sizing: border-box;
@@ -76,11 +82,11 @@ div.occupation-container div.occupation-matrix-body {
 
 div.occupation-container div.occupation-matrix-body div.occupation-matrix-row {
   height: 50px;
-  
+
   border: 1px solid #ccc;
 
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
+  margin: 0;
+
 }
 
 div.occupation-container div.occupation-matrix-body div.occupation-matrix-row div.occupation-matrix-block {
