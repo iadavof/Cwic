@@ -1,9 +1,9 @@
 class DayOccupation < ActiveRecord::Base
   include I18n::Alchemy
 
-  belongs_to :organisation
+  belongs_to :entity
 
-  validates :organisation, presence: true
+  validates :entity, presence: true
   validates :day, presence: true
   validates :occupation, presence: true, numericality: true
 

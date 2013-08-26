@@ -21,4 +21,17 @@ class OccupationController < ApplicationController
 	render json: { entities: result }, status: :ok
 	end
 
+	def day_occupation_percentages
+		result = [];
+		if params[:month].present? && params[:year].present?
+			start = params[:month].to_i
+			start = params[:year].to_i
+			@entities = @organisation.entities;
+
+		else
+			render status: :error
+		end
+
+	end
+
 end

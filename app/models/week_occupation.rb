@@ -1,9 +1,9 @@
 class WeekOccupation < ActiveRecord::Base
   include I18n::Alchemy
 
-  belongs_to :organisation
+  belongs_to :entity
 
-  validates :organisation, presence: true
+  validates :entity, presence: true
   validates :week, presence: true, numericality: { only_integer: true }
   validates :year, presence: true, numericality: { only_integer: true }
   validates :occupation, presence: true, numericality: true
