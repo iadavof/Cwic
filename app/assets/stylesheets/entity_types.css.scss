@@ -27,13 +27,14 @@ div#entity-type-form {
     display: none;
   }
 
-  a.entity-type-property-add {
+  a.add-nested-object {
     display: inline-block;
     font-size: 1.3em;
     margin-bottom: 1em;
   }
 
-  div.entity-type-property-wrapper {
+  div.entity-type-property-wrapper,
+  div.entity-type-option-wrapper {
     width: 800px;
     border: 2px solid #ccc;
     padding: 10px;
@@ -168,7 +169,7 @@ div#entity-type-form {
 
         h4,
         table {
-          margin: 5px 0;
+          margin: 0 0 10px 0;
         }
 
         th {

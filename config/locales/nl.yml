@@ -68,6 +68,9 @@ nl:
       entity_type_property_option:
         one: 'Optie'
         other: 'Opties'
+      entity_type_option:
+        one: 'Optie'
+        other: 'Opties'
       entity:
         one: 'Object'
         other: 'Objecten'
@@ -110,6 +113,7 @@ nl:
         icon: 'Objecticoon'
       entity_type/properties:
         name: 'Eigenschapnaam'
+        description: 'Omschrijving bij eigenschap'
         data_type_id: 'Datatype bij eigenschap'
         default_value: 'Standaardwaarde bij eigenschap'
       entity_type/properties/options:
@@ -124,6 +128,14 @@ nl:
       entity_type_property_option:
         name: 'Waarde'
         default: 'Standaard?'
+      entity_type_option:
+        name: 'Naam'
+        description: 'Omschrijving'
+        default_price: 'Standaardprijs'
+      entity_type/options:
+        name: 'Eigenschapnaam'
+        description: 'Omschrijving bij optie'
+        default_price: 'Standaardprijs bij optie'
       entity:
         entity_type: 'Type'
         name: 'Naam'
@@ -237,6 +249,10 @@ nl:
     property_fields:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
       clear: 'Leegmaken'
+    form:
+      general: 'Algemeen'
+      properties: 'Eigenschappen'
+      options: 'Opties'
 
   entity_type_icons:
     form:

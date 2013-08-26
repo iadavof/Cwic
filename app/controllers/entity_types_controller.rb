@@ -24,14 +24,14 @@ class EntityTypesController < ApplicationController
 
   # POST /entity_types
   def create
-    @entity_type.attributes = resource_params
+    @entity_type.localized.attributes = resource_params
     @entity_type.save
     respond_with(@organisation, @entity_type)
   end
 
   # PATCH/PUT /entity_types/1
   def update
-    @entity_type.update_attributes(resource_params)
+    @entity_type.localized.update_attributes(resource_params)
     respond_with(@organisation, @entity_type)
   end
 
@@ -54,7 +54,13 @@ private
   end
 
   def resource_params
-    params.require(:entity_type).permit(:name, :description, :icon_id, properties_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :index, :_destroy, options_attributes: [:id, :name, :default, :index, :_destroy]])
+    params.require(:entity_type).permit(
+      :name, :description, :icon_id,
+      properties_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :index, :_destroy,
+        options_attributes: [:id, :name, :default, :index, :_destroy]
+      ],
+      options_attributes: [:id, :name, :description, :default_price, :index, :_destroy]
+    )
   end
 
   def interpolation_options
