@@ -24,7 +24,7 @@ class ScheduleViewController < ApplicationController
       result = []
       entities = @organisation.entities.where(id: entity_ids)
       entities.each do |ent|
-        current_reservations = @organisation.reservations.where(entity_id: ent.id).where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
+        current_reservations = ent.reservations.where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
         items = []
         current_reservations.each do |r|
           items << {
@@ -86,7 +86,7 @@ class ScheduleViewController < ApplicationController
   end
 
   def today_tomorrow_update_current_reservation(entity)
-      r = @organisation.reservations.where(entity_id: entity.id).where('begins_at < :update_moment AND ends_at >= :update_moment', update_moment: Time.now).first
+      r = entity.reservations.where('begins_at < :update_moment AND ends_at >= :update_moment', update_moment: Time.now).first
       current = nil
       if r.present?
         current = {
@@ -107,14 +107,14 @@ class ScheduleViewController < ApplicationController
 
   def today_tomorrow_update_upcoming_reservation(entity)
       upcoming = {
-        today: get_standard_reservation_info_for_scope(Time.now, Time.now.change({hour: 23, minutes: 59, sec: 59}), entity.id),
-        tomorrow: get_standard_reservation_info_for_scope(Time.now.change({hour: 0, minutes: 0, sec: 0}) + 1.day, Time.now.change({hour: 23, minutes: 59, sec: 59}) + 1.day, entity.id),
+        today: get_standard_reservation_info_for_scope(Time.now, Time.now.change({hour: 23, minutes: 59, sec: 59}), entity),
+        tomorrow: get_standard_reservation_info_for_scope(Time.now.change({hour: 0, minutes: 0, sec: 0}) + 1.day, Time.now.change({hour: 23, minutes: 59, sec: 59}) + 1.day, entity),
       }
   end
 
-  def get_standard_reservation_info_for_scope (scope_begin, scope_end, entity_id)
+  def get_standard_reservation_info_for_scope (scope_begin, scope_end, entity)
       res = []
-      reservations = @organisation.reservations.where(entity_id: entity_id).where('begins_at >= :start AND begins_at < :end', start: scope_begin, end: scope_end)
+      reservations = entity.reservations.where('begins_at >= :start AND begins_at < :end', start: scope_begin, end: scope_end)
       reservations.each do |r|
       res << {
                         item_id: r.id,

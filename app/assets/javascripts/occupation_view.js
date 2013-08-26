@@ -145,8 +145,8 @@ IADAoccupationView.prototype.fillPercentages = function(response) {
         var entity = response.entities[ent_nr].entity_id;
         for(var item_nr in response.entities[ent_nr].days) {
             var day = response.entities[ent_nr].days[item_nr];
-            this.occupationContainer.find('occupation-matrix-row#or' + entity)
-            .find('.occupation-matrix-row.day_' + day.day_nr).css('background-color', this.getColorForPercentage(day.percent, 0.4))
+            this.occupationContainer.find('.occupation-matrix-row#or_' + entity)
+            .find('.occupation-matrix-block.day_' + day.day_nr).css('background-color', this.getColorForPercentage(day.percent, 0.4))
             .find('p.percent').text(Math.round(day.percent) + '%');
         }
     }
@@ -264,6 +264,12 @@ IADAoccupationView.prototype.daysInMonth = function() {
 
 
 IADAoccupationView.prototype.getColorForPercentage = function(pct, alpha) {
+    if(pct > 100) {
+        pct = 100;
+    }
+    if(pct <= 0) {
+        pct = 0.0001;
+    }
     pct = pct / 100.0
     var percentColors = [
         { pct: 0.0, color: { r: 0x00, g: 0xff, b: 0 } },

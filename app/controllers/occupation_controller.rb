@@ -24,14 +24,33 @@ class OccupationController < ApplicationController
 	def day_occupation_percentages
 		result = [];
 		if params[:month].present? && params[:year].present?
-			start = params[:month].to_i
-			start = params[:year].to_i
+			month = params[:month].to_i
+			year = params[:year].to_i
 			@entities = @organisation.entities;
-
+			@entities.each do |e|
+				result << {
+					entity_id: e.id,
+					days: day_percentages_for_entity(e, month, year),
+				}
+			end
+			render json: { entities: result }, status: :ok
 		else
-			render status: :error
+			render :json, status: :error
 		end
+	end
 
+	def day_percentages_for_entity(entity, month, year)
+		result = []
+		start_date = Date.new(year, month).beginning_of_month;
+		end_date = Date.new(year, month).end_of_month;
+		current_occupations = entity.day_occupations.where('day BETWEEN :start_date AND :stop_date', start_date: start_date, stop_date: end_date)
+		current_occupations.each do |oc|
+			result <<  {
+				day_nr: oc.day.day,
+				percent: oc.occupation,
+			}
+		end
+		result
 	end
 
 end
