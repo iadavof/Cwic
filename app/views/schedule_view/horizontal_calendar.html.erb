@@ -21,24 +21,24 @@
         <p class="no_entities_found"><%= t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe %></p>
     </div>
     <div class="clearfix">
-    <div class="control-container" style="float: right;">
-      <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100;" />
-      <span class="tm"><%=t('.tm') %></span>
-      <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100;" />
-      <input type="hidden" id="backendBeginDate" />
-      <input type="hidden" id="backendEndDate" />
-      <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
+      <div class="control-container" style="float: right;">
+        <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100;" />
+        <span class="tm"><%=t('.tm') %></span>
+        <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100;" />
+        <input type="hidden" id="backendBeginDate" />
+        <input type="hidden" id="backendEndDate" />
+        <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
+      </div>
+      <div class="control-container navigate">
+        <a id="previous" class="button"><i class="icon-chevron-left"></i></a>
+        <a id="current" class="button"><%=t('.today') %></a>
+        <a id="next" class="button"><i class="icon-chevron-right"></i></a>
+        <span style="margin: 0px 10px;"></span>
+        <a id="dayMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.day') %></a>
+        <a id="weekMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.week') %></a>
+        <a id="monthMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.month') %></a>
+      </div>
     </div>
-    <div class="control-container navigate">
-      <a id="previous" class="button"><i class="icon-chevron-left"></i></a>
-      <a id="current" class="button"><%=t('.today') %></a>
-      <a id="next" class="button"><i class="icon-chevron-right"></i></a>
-      <span style="margin: 0px 10px;"></span>
-      <a id="dayMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.day') %></a>
-      <a id="weekMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.week') %></a>
-      <a id="monthMode" class="button"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.month') %></a>
-    </div>
-  </div>
     <div class="time-axis clearfix"></div>
     <div class="day-axis"></div>
     <div class="schedule-body"></div>
@@ -83,4 +83,6 @@
   <a class="close" href="#close"></a>
 </div>
 
-<%= button_link_to_new([@organisation, Reservation], {location: '#new_reservation', css_class: 'button new-reservation'}) %>
+<div class="actions">
+  <%= button_link_to_new([@organisation, Reservation], {location: '#new_reservation', css_class: 'button new-reservation'}) %>
+</div>

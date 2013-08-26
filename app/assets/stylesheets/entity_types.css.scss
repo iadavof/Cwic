@@ -154,6 +154,10 @@ div#entity-type-form {
       div.extra textarea {
         width: 120px;
       }
+      
+      div.extra input[type="checkbox"] {
+        width: auto;
+      }
 
       div.extra textarea {
         height: 60px;

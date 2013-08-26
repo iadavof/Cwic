@@ -105,12 +105,13 @@ div.horizontal-calendar div.schedule-body div.day-row div.time-needle {
   display: block;
   height: 100%;
   padding: 4px 0;
-  top: -5px;
-  width: 6px;
-  margin-left: -3px;
+  top: -4px;
+  width: 8px;
+  margin-left: -4px;
   background-color: #ffffff;
   box-shadow: 0 0 3px rgba(0,0,0,0.6);
   z-index: 5;
+  background-image: -moz-linear-gradient(top, transparent 0%, rgba(0,0,0,0.12) 100%);
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.time-needle:before, 
@@ -123,20 +124,19 @@ div.horizontal-calendar div.schedule-body div.day-row div.time-needle:after {
   font-size: 0;
   line-height: 0;
   height: 0;
-  box-shadow: 0 0 1px rgba(0,0,0,0.3);
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.time-needle:before {
-  top: 0;
-  left: 0;
+  top: 1px;
+  left: 1px;
   border-top: 6px solid #ff3520;
   border-left: 3px solid transparent;
   border-right: 3px solid transparent;
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.time-needle:after {
-  bottom: 0;
-  left: 0;
+  bottom: 1px;
+  left: 1px;
   border-bottom: 6px solid #ff3520;
   border-left: 3px solid transparent;
   border-right: 3px solid transparent;
