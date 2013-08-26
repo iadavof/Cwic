@@ -82,7 +82,7 @@ gem 'mini_magick', github: 'minimagick/minimagick' # Temporary use master branch
 gem 'carrierwave'
 
 # Feedback
-gem 'feedbackandscreencap'
+#gem 'feedbackandscreencap' # Uitgezet want waardeloze gem, werkt na installatie volgens mij ook zonder gemvermelding.
 
 group :development do
   # Disable messages about assets in development

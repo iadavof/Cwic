@@ -47,10 +47,71 @@ IADAoccupationView.prototype.initiateContainer = function() {
 }
 
 IADAoccupationView.prototype.renderDayOccupation = function() {
-	this.getEntities();
-    console.debug(this.getColorForPercentage(11));
+    this.getEntities();
     this.bindWindowEvents();
+    this.bindControls();
 }
+
+IADAoccupationView.prototype.bindControls = function() {
+    var occ = this;
+    this.occupationContainer.find('.control-container a.button').on('click', function() {
+        if(this.id == 'previous') {
+            if(occ.options.view == 'dayOccupation') {
+                occ.currentMonth -= 1;
+                if(occ.currentMonth <= 0) {
+                    occ.currentYear -= 1;
+                    occ.currentMonth = 12;
+                }
+            } else if(occ.options.view == 'weekOccupation') {
+
+            }
+        } else if(this.id == 'current') {
+            if(occ.options.view == 'dayOccupation') {
+                var now =  new Date();
+                occ.currentMonth = now.getMonth() + 1;
+                occ.currentYear = now.getFullYear();
+            } else if(this.options.view == 'weekOccupation') {
+
+            }
+        } else if(this.id == 'next') {
+            if(occ.options.view == 'dayOccupation') {
+                occ.currentMonth += 1;
+                if(occ.currentMonth >= 13) {
+                    occ.currentYear += 1;
+                    occ.currentMonth = 1;
+                }
+            } else if(this.options.view == 'weekOccupation') {
+
+            }
+        } else if(this.id == 'occupationDateUpdate') {
+            if(occ.options.view == 'dayOccupation') {
+                occ.currentMonth = parseInt($('select#date_current_month').val());
+                occ.currentYear = parseInt($('select#date_current_year').val());
+            } else if(occ.options.view == 'weekOccupation') {
+
+            }
+        }
+        occ.updateOccupationView();
+    });
+}
+
+IADAoccupationView.prototype.updateOccupationView = function() {
+    this.occupationContainer.find('select#date_current_month').val(this.currentMonth);
+    this.occupationContainer.find('select#date_current_year').val(this.currentYear);
+    this.occupationContainer.find('div.day-axis p.month-name').text($.datepicker._defaults.monthNames[this.currentMonth-1] + ' ' + this.currentYear);
+
+    this.occupationContainer.find('div.day-axis div.day-axis-frame').remove();
+
+    var daysInMonth = this.daysInMonth();
+    var dayBlockWidth = 100.0 / daysInMonth;
+
+    this.createHeader(daysInMonth, dayBlockWidth);
+    this.generateMatrixBlocks(daysInMonth, dayBlockWidth);
+
+    //this.fillColorsRandomly();
+    this.getPercentages();
+}
+
 
 IADAoccupationView.prototype.getEntities = function() {
 	var occ = this;
@@ -65,45 +126,79 @@ IADAoccupationView.prototype.getEntities = function() {
     });
 }
 
+IADAoccupationView.prototype.getPercentages = function() {
+    var occ = this;
+    $.ajax({
+        type: 'POST',
+        url: this.options.backend_url  + '/day_occupation_percentages',
+        data: {
+            month: this.currentMonth,
+            year: this.currentYear,
+        }
+    }).success(function(response) {
+        occ.fillPercentages(response);
+    });
+}
+
+IADAoccupationView.prototype.fillPercentages = function(response) {
+    for(var ent_nr in response.entities) {
+        var entity = response.entities[ent_nr].entity_id;
+        for(var item_nr in response.entities[ent_nr].days) {
+            var day = response.entities[ent_nr].days[item_nr];
+            this.occupationContainer.find('occupation-matrix-row#or' + entity)
+            .find('.occupation-matrix-row.day_' + day.day_nr).css('background-color', this.getColorForPercentage(day.percent, 0.4))
+            .find('p.percent').text(Math.round(day.percent) + '%');
+        }
+    }
+}
+
 IADAoccupationView.prototype.createRows = function(response) {
-
-    var daysInMonth = this.daysInMonth();
-    var dayBlockWidth = 100.0 / daysInMonth;
-
-    this.createHeader(daysInMonth, dayBlockWidth);
 
 	for(ent_nr in response.entities) {
 		var entity = response.entities[ent_nr];
 		var entityRow = this.getTemplateClone('entityRowTemplate');
 		entityRow.attr('id', 'entity_' + entity.id);
         entityRow.find('img.entity-icon').attr('src', entity.icon).css('border-color', entity.color);
-        entityRow.find('p.entity-name').text(entity.name);
-        entityRow.find('p.entity-name').attr('title', entity.name);
         this.occupationContainer.find('.entity-axis').append(entityRow);
 
         var occupationRow = this.getTemplateClone('occupationMatrixRowTemplate');
         occupationRow.attr('id', 'or_' + entity.id);
 
-        for(var day = 1; day <= daysInMonth; day += 1) {
-            var block = this.getTemplateClone('occupationMatrixBlockTemplate');
-            block.addClass('day_' + day);
-            block.css('width', dayBlockWidth + '%');
-            occupationRow.append(block);
-        }
+        var titleDiv = this.getTemplateClone('entityRowTitleTemplate');
+        titleDiv.find('p.entity-name').text(entity.name);
+        this.occupationContainer.find('.occupation-matrix-body').append(titleDiv);
 
         this.occupationContainer.find('.occupation-matrix-body').append(occupationRow);
 	}
+    this.updateOccupationView();
     this.resizeActions();
-    this.fillColorsRandomly();
+}
+
+IADAoccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) {
+    var rows = this.occupationContainer.find('div.occupation-matrix-row');
+    rows.find('div.occupation-matrix-block').remove();
+
+    var zeroPercentColor = this.getColorForPercentage(0.0001, 0.1);
+
+    for(var i = 1; i <= maxNr; i += 1) {
+        var block = this.getTemplateClone('occupationMatrixBlockTemplate');
+        block.addClass('day_' + i);
+        block.css('width', blockWidth + '%');
+        block.css('background-color', zeroPercentColor);
+        rows.append(block);
+    }
 }
 
 IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
+    var dayAxis = this.occupationContainer.find('div.day-axis');
+    dayAxis.find('day-axis-frame').remove();
     for(var day = 1; day <= maxNr; day += 1) {
         var block = this.getTemplateClone('dayAxisFrameTemplate');
         block.find('p.day').text(day);
         block.css('width', blockWidth + '%');
-        this.occupationContainer.find('.day-axis').append(block);
+        dayAxis.append(block);
     }
+    dayAxis.sticky({getWidthFrom: '.occupation-matrix-body'});
 }
 
 IADAoccupationView.prototype.resizeActions = function() {
@@ -113,11 +208,23 @@ IADAoccupationView.prototype.resizeActions = function() {
 
     // The percentage notation does not fit anymore, hide it
     if(newHeight < 30) {
+        // hide the entity axis and reuse the freed space
         this.occupationContainer.find('.occupation-matrix-block p.percent').hide();
-        this.occupationContainer.find('.entity-row img.entity-icon').hide();
+        this.occupationContainer.find('.entity-axis').hide();
+        this.occupationContainer.find('.occupation-matrix-body').css('width', '100%');
+        // adjust width of day axis
+        var dayAxis = this.occupationContainer.find('.day-axis')
+        dayAxis.css('margin-left', '0');
+        dayAxis.css('width', '100%');
     } else {
+        // make room for the entity axis and show it on the left side
+        this.occupationContainer.find('.occupation-matrix-body').css('width', '96%');
         this.occupationContainer.find('.occupation-matrix-block p.percent').show();
-        this.occupationContainer.find('.entity-row img.entity-icon').show();
+        // Adjust the width of the day axis
+        var dayAxis = this.occupationContainer.find('.day-axis')
+        dayAxis.css('margin-left', '4%');
+        dayAxis.css('width', '96%');
+        this.occupationContainer.find('.entity-axis').show();
     }
 }
 
@@ -134,8 +241,7 @@ IADAoccupationView.prototype.fillColorsRandomly = function() {
     this.occupationContainer.find('.occupation-matrix-block').each(function() {
         var block = $(this);
         var percent = Math.random() * 100;
-        console.debug(occ.getColorForPercentage(percent));
-        block.css('background-color', occ.getColorForPercentage(percent));
+        block.css('background-color', occ.getColorForPercentage(percent, 0.4));
         block.find('p.percent').text(Math.round(percent) + '%');
     });
 }
@@ -157,7 +263,7 @@ IADAoccupationView.prototype.daysInMonth = function() {
 }
 
 
-IADAoccupationView.prototype.getColorForPercentage = function(pct) {
+IADAoccupationView.prototype.getColorForPercentage = function(pct, alpha) {
     pct = pct / 100.0
     var percentColors = [
         { pct: 0.0, color: { r: 0x00, g: 0xff, b: 0 } },
@@ -176,8 +282,8 @@ IADAoccupationView.prototype.getColorForPercentage = function(pct) {
                 g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
                 b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
             };
-            return 'rgb(' + [color.r, color.g, color.b].join(',') + ', .4)';
+            return 'rgb(' + [color.r, color.g, color.b].join(',') + ', '+ alpha +')';
             // or output as hex if preferred
         }
     }
-}  
+}

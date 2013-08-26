@@ -1,6 +1,6 @@
 class EntityTypeIcon < ActiveRecord::Base
   belongs_to :organisation
-  has_many :entity_types, dependent: :nullify
+  has_many :entity_types, dependent: :nullify, foreign_key: 'icon_id'
 
   mount_uploader :image, EntityTypeIconUploader
 
