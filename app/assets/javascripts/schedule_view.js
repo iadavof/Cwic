@@ -559,9 +559,9 @@ IADAscheduleView.prototype.appendDay = function(day) {
 IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
     var firstDaySecond = this.dateToFirstMSec(new Date());
     var date_row = $('.day-row#' + firstDaySecond);
-    this.scheduleContainer.find('.day-axis-row.today:not(.day-axis .day-axis-row#label_' + firstDaySecond + ')').removeClass('today');
-    this.scheduleContainer.find('.day-row.today:not(.day-row#' + firstDaySecond + ')').removeClass('today');
-    this.scheduleContainer.find('.day-row:not(.day-row#' + firstDaySecond + ')').remove('.time-needle');
+    this.scheduleContainer.find('.day-axis-row.today:not(#label_' + firstDaySecond + ')').removeClass('today');
+    this.scheduleContainer.find('.day-row.today:not(#' + firstDaySecond + ')').removeClass('today');
+    this.scheduleContainer.find('.day-row').remove('.time-needle');
     if(date_row.length != 0) {
         this.scheduleContainer.find('.day-axis .day-axis-row#label_' + firstDaySecond).addClass('today');
         date_row.addClass('today');
