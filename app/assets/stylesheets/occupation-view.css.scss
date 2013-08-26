@@ -20,6 +20,14 @@ div.occupation-container div.day-axis {
   margin-left: 4%;
 }
 
+div.occupation-container div.day-axis p.month-name {
+  width: 100%;
+  text-align: center;
+  font-weight: bold;
+  font-size: 120%;
+  margin: 0;
+}
+
 div.occupation-container div.day-axis div.day-axis-frame {
   position: relative;
   float: left;

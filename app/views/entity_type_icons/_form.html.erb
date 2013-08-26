@@ -17,20 +17,24 @@
     <div class="entity-type-icon-image">
       <%= image_tag(@entity_type_icon.image.medium_icon.url) %>
     </div>
-    <p>
     <% if @entity_type_icon.image.present? %>
-      <label>
+      <div class="field">
+        <label>
+          <%= t('.remove_icon') %>
+        </label>
         <%= f.check_box :remove_image %>
-        <%= t('.remove_icon') %>
-      </label>
-    </p>
+      </div>
     <% end %>
+  </div>
+  <div class="field">
     <%= f.label :remote_image_url %>
     <%= f.text_field :remote_image_url %>
+  </div>
+  <div class="field">
     <%= f.label :image_from_file %>
     <%= f.file_field :image %>
-    <%= f.hidden_field :image_cache %>
   </div>
+    <%= f.hidden_field :image_cache %>
   <div class="actions">
     <%= f.submit %>
   </div>

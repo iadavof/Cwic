@@ -222,6 +222,9 @@ nl:
       schedule_view: 'Planning'
       today_and_tomorrow: 'Vandaag en morgen'
       horizontal_calendar: 'Horizontale kalender'
+      occupation: 'Bezetting'
+      day_occupation: 'Dagbezetting'
+      week_occupation: 'Weekbezetting'
 
   shared:
     error_messages:
@@ -304,3 +307,9 @@ nl:
       select_all: 'Alles selecteren'
       select_none: 'Niets selecteren'
       no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'
+
+  occupation:
+    day_occupation:
+      day_occupation: 'Dagbezetting'
+      set: 'Stel in'
+      current_month: 'Deze maand'

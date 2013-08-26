@@ -29,6 +29,8 @@ Cwic::Application.routes.draw do
     # Routes for dayOccupation
     match '/occupation', controller: 'occupation', action: 'index', via: 'get', as: 'occupation'
     match '/occupation/entities', controller: 'occupation', action: 'entities', via: 'post', as: 'occupation_entities_json'
+    match '/occupation/day_occupation_percentages', controller: 'occupation', action: 'day_occupation_percentages', via: 'post', as: 'day_occupation_percentages'
+    match '/occupation/week_occupation_percentages', controller: 'occupation', action: 'week_occupation_percentages', via: 'post', as: 'week_occupation_percentages'
     match '/day_occupation', controller: 'occupation', action: 'day_occupation', via: 'get'
     match '/week_occupation', controller: 'occupation', action: 'week_occupation', via: 'get'
     resources :reservations
