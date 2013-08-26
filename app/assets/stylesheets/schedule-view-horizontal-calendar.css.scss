@@ -148,6 +148,7 @@ div.horizontal-calendar div.schedule-body div.day-row.today {
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
   background-size: 30px 30px;
   padding: 7px 0;
+  min-height: 76px;
 }
 
 div.horizontal-calendar div.day-axis div.day-axis-row.today {

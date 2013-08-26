@@ -441,7 +441,7 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
             $('.day-row-schedule-object-item-parts').css('height', '30px');
         } else {
             $('.day-row-schedule-object-item-parts').css('height', '20px');
-            $('.day-axis .day-axis-row').height($('.day-row').outerHeight());
+            $('.day-axis .day-axis-row').height($('.day-row:not(.today)').outerHeight());
         }
     }
 }
@@ -557,15 +557,16 @@ IADAscheduleView.prototype.appendDay = function(day) {
 }
 
 IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
-    var firstDaySecond = this.dateToFirstMSec(new Date());
+    var currentDate = new Date();
+    var firstDaySecond = this.dateToFirstMSec(currentDate);
     var date_row = $('.day-row#' + firstDaySecond);
     this.scheduleContainer.find('.day-axis-row.today:not(#label_' + firstDaySecond + ')').removeClass('today');
     this.scheduleContainer.find('.day-row.today:not(#' + firstDaySecond + ')').removeClass('today');
-    this.scheduleContainer.find('.day-row').remove('.time-needle');
+    this.scheduleContainer.find('.time-needle').remove();
     if(date_row.length != 0) {
         this.scheduleContainer.find('.day-axis .day-axis-row#label_' + firstDaySecond).addClass('today');
         date_row.addClass('today');
-        var needle = $('<div>', {class: 'time-needle', style: 'left: ' + this.dayTimeToPercentage(new Date().customFormat('#hhh#:#mm#')) + '%;'});
+        var needle = $('<div>', {class: 'time-needle', style: 'left: ' + this.dayTimeToPercentage(currentDate.customFormat('#hhh#:#mm#')) + '%;'});
         date_row.append(needle);
         var schedule = this;
         setTimeout(function() {schedule.showCurrentDayTimeNeedle();}, 30000);
