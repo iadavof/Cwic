@@ -12,6 +12,9 @@ class Reservation < ActiveRecord::Base
 
   before_validation :make_begins_at, :make_ends_at
 
+  after_save :trigger_day_occupation_recalculation
+  after_destroy :trigger_day_occupation_recalculation
+
   def instance_name
     "#{self.class.model_name.human} ##{self.id.to_s}"
   end
@@ -75,7 +78,47 @@ class Reservation < ActiveRecord::Base
     @ends_at_time = self.string_to_datetime(new_time, I18n.t('time.formats.time')).to_time.utc
   end
 
+
+  def length_for_day(day)
+    if day < self.begins_at.to_date || day > self.ends_at.to_date
+      return 0
+    elsif day < self.ends_at.to_date && day == self.begins_at.to_date
+      return (day + 1.day).to_time - self.begins_at
+    elsif day > self.begins_at.to_date && day == self.ends_at.to_date
+      return self.ends_at - day.to_time
+    elsif day == self.begins_at.to_date && day == self.ends_at.to_date
+      return self.ends_at - self.begins_at
+    else
+      return 86400
+    end
+  end
+
   protected
+
+  def trigger_day_occupation_recalculation
+    recalculation_dates = []
+
+    # Old values
+    if self.begins_at_was.present? && self.ends_at_was.present?
+      if self.begins_at_was.to_date != self.begins_at.to_date || self.ends_at_was.to_date != self.ends_at.to_date
+        start_date = self.begins_at_was.to_date
+        while start_date <= self.ends_at_was.to_date
+          recalculation_dates << start_date
+          start_date += 1.day
+        end
+      end
+    end
+
+    start_date = self.begins_at.to_date
+    while start_date <= self.ends_at.to_date
+      unless recalculation_dates.include?(start_date)
+        recalculation_dates << start_date
+      end
+      start_date += 1.day
+    end
+
+    DayOccupation.recalculate_occupations(self.entity, recalculation_dates)
+  end
 
   def string_to_datetime(value, format)
     return value unless value.is_a?(String)
