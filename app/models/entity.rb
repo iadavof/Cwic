@@ -2,6 +2,7 @@ class Entity < ActiveRecord::Base
   belongs_to :entity_type, counter_cache: true
   belongs_to :organisation
   has_many :properties, class_name: 'EntityProperty', dependent: :destroy, inverse_of: :entity
+  has_many :reservations, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :entity_type, presence: true
