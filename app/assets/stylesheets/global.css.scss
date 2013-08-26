@@ -284,24 +284,26 @@ div {
 }
 
 #error-explanation {
-  width: 450px;
-  padding: 7px;
-  padding-bottom: 0;
-  margin-bottom: 20px;
-  background-color: #f0f0f0;
-  h2 {
-    text-align: left;
+  display: inline-block;
+  padding: 10px;
+  margin-bottom: 25px;
+  margin-left: -5px;
+  background-color: #ffd2cf;
+  border: 1px solid #ffbfba;
+  color: #ff3520;
+  .error-head {
     font-weight: bold;
-    padding: 5px 5px 5px 15px;
-    font-size: 12px;
-    margin: -7px;
-    margin-bottom: 0px;
-    background-color: #c00;
-    color: #fff;
+    font-size: 1.1em;
+    margin: -10px -10px 0 -10px;
+    padding: 5px 10px;
+  }
+  ul {
+    margin: 0;
+    padding: 0;
+    font-size: 0.9em;
   }
   ul li {
-    font-size: 12px;
-    list-style: square;
+    list-style: square inside;
   }
 }
 
@@ -391,6 +393,16 @@ input, textarea, select {
   padding: 8px;
   width: 15em;
   transition: border-color 0.2s;
+}
+
+input[type="file"], 
+input[type="checkbox"] {
+  width: auto;
+}
+
+input[type="checkbox"] {
+  vertical-align: middle;
+  margin: 0.5em 0 0 0;
 }
 
 select {

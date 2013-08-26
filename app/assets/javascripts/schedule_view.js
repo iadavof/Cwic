@@ -557,14 +557,12 @@ IADAscheduleView.prototype.appendDay = function(day) {
 }
 
 IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
-    this.scheduleContainer.find('.day-row').css('border-color', '#ccc');
     this.scheduleContainer.find('.time-needle').remove();
-    this.scheduleContainer.find('.day-axis-row').css('color', '#444');
     var firstDaySecond = this.dateToFirstMSec(new Date());
     var date_row = $('.day-row#' + firstDaySecond);
-    this.scheduleContainer.find('.day-axis .day-axis-row#label_' + firstDaySecond).css('color', '#FF8D20');
+    this.scheduleContainer.find('.day-axis .day-axis-row#label_' + firstDaySecond).addClass('today');
     if(date_row.length != 0) {
-        date_row.css('border-color', '#FF8D20');
+        date_row.addClass('today');
         var needle = $('<div>', {class: 'time-needle', style: 'left: ' + this.dayTimeToPercentage(new Date().customFormat('#hhh#:#mm#')) + '%;'});
         date_row.append(needle);
         var schedule = this;
