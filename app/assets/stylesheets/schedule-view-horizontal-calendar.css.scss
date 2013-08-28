@@ -114,7 +114,7 @@ div.horizontal-calendar div.schedule-body div.day-row div.time-needle {
   background-image: -moz-linear-gradient(top, transparent 0%, rgba(0,0,0,0.12) 100%);
 }
 
-div.horizontal-calendar div.schedule-body div.day-row div.time-needle:before, 
+div.horizontal-calendar div.schedule-body div.day-row div.time-needle:before,
 div.horizontal-calendar div.schedule-body div.day-row div.time-needle:after {
   display: block;
   content: '.';
@@ -316,7 +316,7 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.cont
   left: auto;
 }
 
-div.horizontal-calendar div.schedule-body div.day-row div.schedule-item p.item-text {
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item a.item-text {
   position: absolute;
   left: 25px;
   top: 50%;
