@@ -1,4 +1,8 @@
 div#entity-type-form {
+  div#tabs {
+    margin-bottom: 1em;
+  }
+
   div.field.icon-select label {
     float: left;
     border: 2px solid #ccc;
@@ -154,7 +158,7 @@ div#entity-type-form {
       div.extra textarea {
         width: 120px;
       }
-      
+
       div.extra input[type="checkbox"] {
         width: auto;
       }
