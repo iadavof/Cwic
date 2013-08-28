@@ -39,6 +39,7 @@ div#entity-type-form {
 
   div.entity-type-property-wrapper,
   div.entity-type-option-wrapper {
+    font-size: 0.9em;
     width: 800px;
     border: 2px solid #ccc;
     padding: 10px;
@@ -83,7 +84,6 @@ div#entity-type-form {
     }
 
     div.view {
-      font-size: 1em;
       line-height: 1.5em;
 
       div.label:after {
@@ -155,8 +155,12 @@ div#entity-type-form {
       }
 
       div.extra input,
-      div.extra textarea {
+      div.extra textare {
         width: 120px;
+      }
+
+      div.extra select {
+        width: 138px;
       }
 
       div.extra input[type="checkbox"] {

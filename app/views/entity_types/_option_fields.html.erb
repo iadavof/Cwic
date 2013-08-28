@@ -36,7 +36,7 @@
     </div>
     <div class="actions">
       <%= link_to '', 'javascript:void(0)', class: 'icon icon-ok', title: t('done_nested_object', class: EntityTypeOption.model_name.human.lcfirst) %>
-      <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: EntityTypeOption.model_name.human.lcfirst), data: { confirm: t('.destroy_are_you_sure', default: :destroy_are_you_sure) } %>
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-remove remove-nested-fields-extra', title: t('remove_nested_object', class: EntityTypeOption.model_name.human.lcfirst) %>
     </div>
   </div>
   <%= f.hidden_field :index, class: 'index-field' %>

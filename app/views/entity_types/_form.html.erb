@@ -4,13 +4,14 @@
 
     <div id="tabs">
       <ul class="nav">
-        <li class="nav-one"><a href="#general" class="current"><%= t('.general') %></a></li>
-        <li class="nav-two"><a href="#properties"><%= t('.properties') %></a></li>
-        <li class="nav-three"><a href="#options"><%= t('.options') %></a></li>
+        <li><a href="#general" class="current"><%= t('.general') %></a></li>
+        <li><a href="#properties"><%= t('.properties') %></a></li>
+        <li><a href="#options"><%= t('.options') %></a></li>
       </ul>
 
       <div class="tab-wrap">
         <div id="general">
+          <h2><%= t('.general') %></h2>
           <div class="field">
             <%= f.label :name %>
             <%= f.text_field :name %>

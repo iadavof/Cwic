@@ -41,10 +41,16 @@ APP.entity_types = {
     wrapper.find('.icon-edit').click(function() { APP.entity_types.editNestedObjectWrapper(wrapper) });
     wrapper.find('.icon-ok').click(function() { APP.entity_types.doneNestedObjectWrapper(wrapper) });
 
+    this.enableExtraNestedObjectRemoveLink(wrapper);
+
     // If the option is not valid, then show form immediately. New properties are also not valid by default.
     if(wrapper.attr('data-valid') == 'false') {
       this.editNestedObjectWrapper(wrapper);
     }
+  },
+  enableExtraNestedObjectRemoveLink: function(wrapper) {
+    // Make the extra remove link work
+    wrapper.find('.remove-nested-fields-extra').click(function () { $(this).closest('.fields').find('.remove_nested_fields').click(); });
   },
   editNestedObjectWrapper: function(wrapper) {
     wrapper.find('.view').hide();
