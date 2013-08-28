@@ -372,6 +372,7 @@ h1 strong {
 a {
   color: #ff3520;
   text-decoration: underline;
+  background-color: transparent;
 }
 
 a:hover {
@@ -404,6 +405,7 @@ input[type="checkbox"] {
 input[type="checkbox"] {
   vertical-align: middle;
   margin: 0.5em 0 0 0;
+  border: 0 none;
 }
 
 select {

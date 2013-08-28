@@ -1,0 +1,28 @@
+/* animated stripes, 30px */
+
+@-webkit-keyframes animate-stripes-30 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 0;
+  }
+}
+
+@-moz-keyframes animate-stripes-30 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 0;
+  }
+}
+
+@keyframes animate-stripes-30 {
+  0% {
+    background-position: 0 0;
+  }
+  100% {
+    background-position: 30px 0;
+  }
+}

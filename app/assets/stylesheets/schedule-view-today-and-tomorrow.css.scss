@@ -231,14 +231,7 @@ div.today-and-tomorrow-container div.entity-container div.progress-bar.stripes s
             transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
             transparent 75%, transparent);
 
-  -webkit-animation: animate-stripes 3s linear infinite;
-  -moz-animation: animate-stripes 3s linear infinite;
-}
-
-@-webkit-keyframes animate-stripes {
-  0% {background-position: 0 0;} 100% {background-position: 60px 0;}
-}
-
-@-moz-keyframes animate-stripes {
-  0% {background-position: 0 0;} 100% {background-position: 60px 0;}
+  -webkit-animation: animate-stripes-30 1.5s linear 0s infinite normal;
+  -moz-animation: animate-stripes-30 1.5s linear 0s infinite normal;
+  animation: animate-stripes-30 1.5s linear 0s infinite normal;
 }
