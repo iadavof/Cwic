@@ -21,7 +21,6 @@ gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
-gem 'rails-asset-jqueryui'
 
 # Use the gistyle gem for the Garber Irish Javascript loading implementation
 gem 'gistyle'
