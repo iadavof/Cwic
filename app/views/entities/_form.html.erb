@@ -3,9 +3,9 @@
   <% if @organisation.entity_types.empty? %>
     <p class="no_entity_types_found"><%= t('.no_entity_types_found', {link: link_to_new([@organisation, EntityType])}).html_safe %></p>
   <% else %>
-  <div class="field">
+  <div class="field autosubmit">
     <%= f.label :entity_type %>
-    <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();" }  %>
+    <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
   </div>
     <% if @entity.entity_type.present? %>
     <div class="field">
@@ -23,12 +23,14 @@
       <%= f.label :description %>
       <%= f.text_area :description %>
     </div>
+    <% if @entity.properties.present? %>
     <div class="entity-properties">
       <h2><%= EntityProperty.model_name.human(count: 2) %></h2>
       <%= f.fields_for :properties do |pf| %>
         <%= render partial: 'property_fields', locals: { f: pf } %>
       <% end %>
     </div>
+    <% end %>
     <div class="actions">
       <%= f.submit %>
     </div>
