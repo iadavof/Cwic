@@ -479,6 +479,7 @@ button,
   border-radius: 3px;
   line-height: normal;
   transition: background-color 0.2s;
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 50%);
 }
 
 input[type="submit"]:hover,
@@ -487,6 +488,13 @@ button:hover,
 .button:hover {
   background-color: #555555;
   color: #ffffff;
+}
+
+input[type="submit"]:active,
+input[type="reset"]:active,
+button:active,
+.button:active {
+  background-image: -moz-linear-gradient(bottom, rgba(255,255,255,0.25) 0%, transparent 50%);
 }
 
 input[type="submit"] {
