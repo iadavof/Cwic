@@ -22,7 +22,6 @@ Object.extend = function(destination, source) {
     return destination;
 };
 
-
 IADAscheduleView.prototype.scheduleContainer = null;
 IADAscheduleView.prototype.scheduleObjects = null;
 IADAscheduleView.prototype.selectedEntities = [];
@@ -494,8 +493,14 @@ IADAscheduleView.prototype.addSingleDayBlock = function(dayRowScheduleRow, begin
     newScheduleItem.css('width', + this.dayTimePercentageSpan(begin_time, end_time) + '%');
     newScheduleItem.css('background-color', item.bg_color);
     newScheduleItem.css('color', item.text_color);
-    newScheduleItem.find('p.item-text').text(item.description);
-    newScheduleItem.find('p.item-text').attr('title', item.description);
+
+    var newScheduleItemText = newScheduleItem.find('a.item-text');
+    if(item.show_url) {
+        newScheduleItemText.attr('href', item.show_url);
+    }
+    newScheduleItemText.text(item.description);
+    newScheduleItemText.attr('title', item.description);
+    newScheduleItemText.css('color', item.text_color);
     $(dayRowScheduleRow).find('#scheduleObject_' + schedule_object_id).append(newScheduleItem);
     return newScheduleItem;
 }

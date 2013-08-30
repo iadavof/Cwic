@@ -18,7 +18,7 @@
           <a id="selectAll" class="button"><%=t('.select_all') %></a>
           <a id="selectNone" class="button"><%=t('.select_none') %></a>
         </div>
-        <p class="no_entities_found"><%= t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe %></p>
+        <p class="no_entities_found"><%= t('.no_entities_found', link: link_to_new([@organisation, Entity])).html_safe %></p>
     </div>
     <div class="clearfix">
       <div class="control-container" style="float: right;">
@@ -51,7 +51,6 @@
     <p class="entity-name"></p>
   </div>
 
-
   <div class="day-row" id="dayRowTemplate">
     <div class="day-row-time-parts"></div>
     <div class="day-row-schedule-objects"></div>
@@ -70,8 +69,9 @@
   <div class="schedule-item" id="scheduleItemTemplate">
     <div class="continue left"><i class="icon-arrow-right"></i></div>
     <div class="continue right"><i class="icon-arrow-right"></i></div>
-    <p class="item-text"></p>
+    <a class="item-text"></a>
   </div>
+
   <div class="day-row-schedule-object-item-parts" id="dayRowScheduleObjectItemPartsTemplate">
     <p class="name"></p>
   </div>
