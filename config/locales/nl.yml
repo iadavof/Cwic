@@ -259,7 +259,9 @@ nl:
     form:
       general: 'Algemeen'
       properties: 'Eigenschappen'
+      properties_help: 'Gebruik eigenschappen om kenmerken van een object te tonen, bijvoorbeeld afmetingen of gewicht.'
       options: 'Opties'
+      options_help: 'Gebruik opties om extra keuzes aan het reserveringsformulier toe te voegen voor een bepaalde objectsoort.'
 
   entity_type_icons:
     form:

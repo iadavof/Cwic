@@ -31,6 +31,7 @@
 
         <div id="properties" class="hide">
           <h2><%= EntityTypeProperty.model_name.human(count: 2) %></h2>
+          <%= format_help(t('.properties_help')) %>
           <div class="nested-form" id="entity-type-properties">
             <%= f.fields_for :properties, @entity_type.properties.sort_by(&:index), wrapper: false do |pf| %>
               <%= render partial: 'property_fields', locals: { f: pf } %>
@@ -41,6 +42,7 @@
 
         <div id="options" class="hide">
           <h2><%= EntityTypeOption.model_name.human(count: 2) %></h2>
+          <%= format_help(t('.options_help')) %>
           <div class="nested-form" id="entity-type-options">
             <%= f.fields_for :options, @entity_type.options.sort_by(&:index), wrapper: false do |of| %>
               <%= render partial: 'option_fields', locals: { f: of } %>

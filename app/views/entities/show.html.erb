@@ -11,10 +11,12 @@
   <dd><%= simple_format(@entity.description) %></dd>
 </dl>
 
-<h2><%= EntityProperty.model_name.human(count: 2) %></h2>
-<dl>
-  <%= render @entity.properties %>
-</dl>
+<% if @entity.properties.present? %>
+  <h2><%= EntityProperty.model_name.human(count: 2) %></h2>
+  <dl>
+    <%= render @entity.properties %>
+  </dl>
+<% end %>
 
 <%= button_link_back_to_index([@organisation, Entity]) %>
 <%= button_link_to_edit([@organisation, @entity]) %>
