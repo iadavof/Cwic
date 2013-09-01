@@ -563,8 +563,6 @@ IADAscheduleView.prototype.appendDay = function(day) {
 
 IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
     var currentDate = new Date();
-    currentDate.setHours(currentDate.getHours() + 6);
-    currentDate.setMinutes(currentDate.getMinutes() + 30);
     var firstDaySecond = this.dateToFirstMSec(currentDate);
     var date_row = $('.day-row#' + firstDaySecond);
     this.scheduleContainer.find('.day-axis-row.today:not(#label_' + firstDaySecond + ')').removeClass('today');
