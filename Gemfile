@@ -59,7 +59,7 @@ end
 gem 'rails-i18n'
 
 # Devise for authentication
-gem 'devise', '3.0.2'
+gem 'devise', '~> 3.0.2'
 gem 'devise_invitable', github: 'scambra/devise_invitable'
 gem 'devise-i18n'
 gem 'devise-i18n-views', github: 'mcasimir/devise-i18n-views'

@@ -1,4 +1,3 @@
-<% f.object = f.object.localized %>
 <div class="fields entity-type-option-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
   <div class="view">
     <div class="horizontal-block icon icon-resize-vertical handle" title="<%= t('order_nested_object', classes: EntityTypeOption.model_name.human(count: 2).lcfirst) %>"></div>
@@ -12,6 +11,8 @@
     </div>
     <div class="horizontal-block extra">
       <dl>
+        <dt><%= EntityTypeOption.human_attribute_name(:amount_relevant) %></dt>
+        <dd data-field="amount-relevant"><%= format_bool(f.object.amount_relevant) %></dd>
         <dt><%= EntityTypeOption.human_attribute_name(:default_price) %></dt>
         <dd data-field="default-price"><%= format_text(f.object.default_price) %></dd>
       </dl>
@@ -29,7 +30,11 @@
       <%= f.text_area :description, placeholder: EntityTypeOption.human_attribute_name(:description), title: EntityTypeOption.human_attribute_name(:description), data: { field: 'description' } %>
     </div>
     <div class="horizontal-block extra">
-      <div class="field default-price">
+      <div class="field">
+        <%= f.label :amount_relevant %>
+        <%= f.check_box :amount_relevant, data: { field: 'amount-relevant' } %>
+      </div>
+      <div class="field">
         <%= f.label :default_price %>
         <%= f.text_field :default_price, data: { field: 'default-price' } %>
       </div>
