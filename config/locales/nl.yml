@@ -259,7 +259,9 @@ nl:
     form:
       general: 'Algemeen'
       properties: 'Eigenschappen'
+      properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
       options: 'Opties'
+      options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
 
   entity_type_icons:
     form:

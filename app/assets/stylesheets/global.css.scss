@@ -256,16 +256,54 @@ div {
   }
 }
 
+.ui-widget {
+  font-family: inherit;
+  font-size: 1em;
+}
+
+.ui-widget-content,
+.ui-widget-header {
+  color: inherit;
+}
+
 #notice {
   color: green;
+}
+
+.help {
+  [class^="icon-"], [class*=" icon-"] {
+    &:hover + p {
+      display: block;
+    }
+    font-size: 1.5em;
+    line-height: 130%;
+    margin: 0;
+    color: #17889d;
+    cursor: help;
+  }
+  p {
+    position: absolute;
+    top: 0;
+    left: 2.1em;
+    margin: 0;
+    padding: 0.3em 0.5em;
+    max-width: 40em;
+    display: none;
+    border: 1px solid #17889d;
+    border-radius: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    background: #ffffff;
+    z-index: 1;
+  }
+  display: block;
+  position: relative;
+  margin: 0.5em 0;
+  padding: 0;
 }
 
 .field > .with_errors {
   display: inline-block;
   color: #ff3520;
-  border-bottom: 3px solid #ff3520;
-  padding: 0 0 7px 0;
-  border-radius: 0 0 0 15px;
 }
 
 .field_with_errors {
@@ -441,6 +479,7 @@ button,
   border-radius: 3px;
   line-height: normal;
   transition: background-color 0.2s;
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 50%);
 }
 
 input[type="submit"]:hover,
@@ -449,6 +488,13 @@ button:hover,
 .button:hover {
   background-color: #555555;
   color: #ffffff;
+}
+
+input[type="submit"]:active,
+input[type="reset"]:active,
+button:active,
+.button:active {
+  background-image: -moz-linear-gradient(bottom, rgba(255,255,255,0.25) 0%, transparent 50%);
 }
 
 input[type="submit"] {

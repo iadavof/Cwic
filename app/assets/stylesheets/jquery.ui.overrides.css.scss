@@ -1,0 +1,182 @@
+/* DATEPICKER & TIMEPICKER */
+
+.ui-timepicker .ui-widget-header, 
+.ui-datepicker .ui-widget-header {
+  background: transparent;
+  border: 0 none;
+  border-radius: 0;
+  color: inherit;
+}
+
+.ui-datepicker .ui-widget-header {
+  background: #ffffff;
+  margin: -0.1em -0.1em 0 -0.1em;
+}
+
+.ui-timepicker .ui-state-default, .ui-timepicker .ui-widget-content .ui-state-default, .ui-timepicker .ui-widget-header .ui-state-default,
+.ui-datepicker .ui-state-default, .ui-datepicker .ui-widget-content .ui-state-default, .ui-datepicker .ui-widget-header .ui-state-default {
+  background: #ffffff;
+  color: #ff3520;
+  border-color: #ffffff;
+  font-weight: bold;
+}
+
+.ui-datepicker {
+  width: auto;
+  padding: 0.1em;
+  margin: 0.2em 0;
+}
+
+.ui-datepicker table {
+  font-size: 1em;
+  margin: 0;
+}
+
+.ui-datepicker th {
+  line-height: 2.05em;
+  padding-top: 0;
+  padding-bottom: 0;
+}
+
+.ui-datepicker table thead {
+  border: 0 none;
+  background: transparent;
+}
+
+.ui-datepicker-calendar td a {
+  padding: 0.2em 0.5em;
+  text-align: center;
+}
+
+.ui-datepicker-calendar td {
+  padding: 0.1em;
+}
+
+ui-timepicker-table td {
+  width: auto;
+}
+
+.ui-timepicker .ui-state-active, .ui-timepicker .ui-widget-content .ui-state-active, .ui-timepicker .ui-widget-header .ui-state-active,
+.ui-timepicker .ui-widget-content .ui-timepicker-minutes .ui-state-default.ui-state-active {
+  background: #ff3520;
+  color: #ffffff;
+  border-color: #ff3520;
+  font-weight: bold;
+}
+
+.ui-timepicker .ui-widget-content {
+  color: inherit;
+  border-color: #B5B5B5;
+  border-radius: 0;
+  background: #dddddd;
+}
+
+.ui-timepicker .ui-timepicker-table table {
+  border: 0 none;
+  background: transparent;
+}
+
+.ui-timepicker .ui-timepicker-table table tr:nth-child(2n), 
+.ui-datepicker .ui-datepicker-calendar tr:nth-child(2n) {
+  background: transparent;
+}
+
+.ui-timepicker .ui-timepicker-minutes {
+  background: #ffffff;
+}
+
+.ui-timepicker .ui-widget-content .ui-timepicker-minutes .ui-state-default {
+  background: #dddddd;
+  border-color: #dddddd;
+}
+
+.ui-datepicker {
+  background: #dddddd;
+  border-radius: 0;
+  border-color: #B5B5B5;
+}
+
+.ui-datepicker-calendar {
+  background: #dddddd;
+  border: 0 none;
+}
+
+
+/* TABS */
+
+.ui-tabs {
+  background: transparent;
+  border-radius: 0;
+  border-color: #cccccc;
+  padding: 0;
+}
+
+.ui-tabs .ui-tabs-panel {
+  padding: 1.4em 1.7em;
+}
+
+.ui-tabs .ui-tabs-nav {
+  background: #f7f7f7;
+  border: 0 none;
+  border-bottom: 1px solid #cccccc;
+  border-radius: 0;
+  padding: 0;
+}
+
+.ui-tabs .ui-state-default {
+  background: #dddddd;
+  border: 0 none;
+  color: inherit;
+  border-radius: 0;
+}
+
+.ui-tabs .ui-state-active:after {
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 10px solid #5e5e5e;
+  content: ".";
+  display: block;
+  height: 0;
+  left: 50%;
+  margin-left: -5px;
+  overflow: hidden;
+  position: absolute;
+  top: 100%;
+  width: 0;
+  z-index: 1;
+}
+
+.ui-tabs .ui-state-default a, 
+.ui-tabs .ui-state-hover a {
+  color: inherit;
+}
+
+.ui-tabs .ui-state-hover {
+  background: #cccccc;
+  color: inherit;
+  border: 0 none;
+}
+
+.ui-tabs .ui-tabs-nav li {
+  margin: 0;
+  padding: 0;
+  line-height: normal;
+  border-left: 1px solid #cccccc;
+}
+
+.ui-tabs .ui-tabs-nav li:first-child {
+  border-left: 0 none;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+  padding: 0.4em 0.6em;
+  line-height: 200%;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active {
+  border: 0 none;
+  color: #ffffff;
+  background: #5e5e5e;
+  margin: 0;
+  padding: 0;
+}

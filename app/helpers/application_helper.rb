@@ -27,4 +27,9 @@ module ApplicationHelper
     obj = obj.gsub(/\s/i, ' ')
     content_tag(:span, obj.truncate(100, separator: ' '), title: format_description_title(obj))
   end
+  
+  def format_help(text)
+    text = format_text(text)
+    content_tag(:div, content_tag(:i, '', class: 'icon-info-sign') + content_tag(:p, text), class: 'help')
+  end
 end

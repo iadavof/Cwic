@@ -567,12 +567,16 @@ IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
     var date_row = $('.day-row#' + firstDaySecond);
     this.scheduleContainer.find('.day-axis-row.today:not(#label_' + firstDaySecond + ')').removeClass('today');
     this.scheduleContainer.find('.day-row.today:not(#' + firstDaySecond + ')').removeClass('today');
-    this.scheduleContainer.find('.time-needle').remove();
+    this.scheduleContainer.find('.day-row:not(#' + firstDaySecond + ') .time-needle').remove();
     if(date_row.length != 0) {
         this.scheduleContainer.find('.day-axis .day-axis-row#label_' + firstDaySecond).addClass('today');
         date_row.addClass('today');
-        var needle = $('<div>', {class: 'time-needle', style: 'left: ' + this.dayTimeToPercentage(currentDate.customFormat('#hhh#:#mm#')) + '%;'});
-        date_row.append(needle);
+        if($('.time-needle').length <= 0) {
+          var needle = $('<div>', {class: 'time-needle', title: currentDate.toLocaleTimeString(), style: 'left: ' + this.dayTimeToPercentage(currentDate.customFormat('#hhh#:#mm#')) + '%;'});
+          date_row.append(needle);
+        } else {
+          $('.time-needle').css({left: this.dayTimeToPercentage(currentDate.customFormat('#hhh#:#mm#')) + '%'});
+        }
         var schedule = this;
         setTimeout(function() {schedule.showCurrentDayTimeNeedle();}, 30000);
     }
