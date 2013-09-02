@@ -194,7 +194,7 @@ DEPENDENCIES
   carrierwave
   coffee-rails (~> 4.0.0)
   database_cleaner
-  devise (= 3.0.2)
+  devise (~> 3.0.2)
   devise-i18n
   devise-i18n-views!
   devise_invitable!

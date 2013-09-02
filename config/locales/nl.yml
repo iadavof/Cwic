@@ -131,6 +131,7 @@ nl:
       entity_type_option:
         name: 'Naam'
         description: 'Omschrijving'
+        amount_relevant: 'Vraag aantal?'
         default_price: 'Standaardprijs'
       entity_type/options:
         name: 'Eigenschapnaam'

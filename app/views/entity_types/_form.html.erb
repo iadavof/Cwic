@@ -5,6 +5,7 @@
     <div id="tabs">
       <ul class="nav">
         <li><a href="#general" class="current"><%= t('.general') %></a></li>
+        <li><a href="#periods-and-prices"><%= t('.periods_and_prices') %></a></li>
         <li><a href="#properties"><%= t('.properties') %></a></li>
         <li><a href="#options"><%= t('.options') %></a></li>
       </ul>
@@ -29,6 +30,11 @@
           </div>
         </div>
 
+        <div id="periods-and-prices">
+          <h2><%= t('.periods-and-prices') %></h2>
+
+        </div>
+
         <div id="properties" class="hide">
           <h2><%= EntityTypeProperty.model_name.human(count: 2) %></h2>
           <%= format_help(t('.properties_help')) %>
@@ -44,7 +50,7 @@
           <h2><%= EntityTypeOption.model_name.human(count: 2) %></h2>
           <%= format_help(t('.options_help')) %>
           <div class="nested-form" id="entity-type-options">
-            <%= f.fields_for :options, @entity_type.options.sort_by(&:index), wrapper: false do |of| %>
+            <%= f.fields_for :options, @entity_type.options.sort_by(&:index).map(&:localized), wrapper: false do |of| %>
               <%= render partial: 'option_fields', locals: { f: of } %>
             <% end %>
             <%= f.link_to_add '', :options, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityTypeOption.model_name.human.lcfirst) %>

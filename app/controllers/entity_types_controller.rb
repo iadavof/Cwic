@@ -59,7 +59,7 @@ private
       properties_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :index, :_destroy,
         options_attributes: [:id, :name, :default, :index, :_destroy]
       ],
-      options_attributes: [:id, :name, :description, :default_price, :index, :_destroy]
+      options_attributes: [:id, :name, :description, :amount_relevant, :default_price, :index, :_destroy]
     )
   end
 
