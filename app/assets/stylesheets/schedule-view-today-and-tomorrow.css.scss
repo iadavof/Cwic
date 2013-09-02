@@ -68,19 +68,16 @@ div.today-and-tomorrow-container div.entity-container div.entity-description {
   color: #666;
   border-top: 1px solid #ccc;
   border-left: 1px solid #ccc;
-  max-height: 0px;
+  height: auto;
+  display: none;
   overflow: hidden;
-
-  -moz-transition: 500ms;
-  -ms-transition: 500ms;
-  -o-transition: 500ms;
-  -webkit-transition: 500ms;
-  transition: 500ms;
-
-}
-
-div.today-and-tomorrow-container div.entity-container div.entity-description.opened {
-  max-height: 10000px;
+  /*
+  -moz-transition: max-height 0.5s;
+  -ms-transition: max-height 0.5s;
+  -o-transition: max-height 0.5s;
+  -webkit-transition: max-height 0.5s;
+  transition: max-height 0.5s;
+  */
 }
 
 div.today-and-tomorrow-container div.entity-container div.entity-description p {
@@ -160,7 +157,7 @@ div.today-and-tomorrow-container div.entity-container div.reservation-next p.res
   font-weight: bold;
 }
 
-div.today-and-tomorrow-container div.entity-container div.progress-bar {
+div.today-and-tomorrow-container div.entity-container div.progress-bar-container {
   position: relative;
   background-color: #F7F7F7;
   height: 10px;
@@ -176,7 +173,7 @@ div.today-and-tomorrow-container div.entity-container div.progress-bar {
   line-height: 10px;
 }
 
-div.today-and-tomorrow-container div.entity-container div.progress-bar div.day-separator {
+div.today-and-tomorrow-container div.entity-container div.progress-bar-container div.day-separator {
   display: block;
   height: 100%;
   position: absolute;
@@ -186,7 +183,7 @@ div.today-and-tomorrow-container div.entity-container div.progress-bar div.day-s
   background-color: #444;
 }
 
-div.today-and-tomorrow-container div.entity-container div.progress-bar span {
+div.today-and-tomorrow-container div.entity-container div.progress-bar-container span {
   display: inline-block;
   height: 100%;
   -moz-border-radius: 2px;
@@ -195,43 +192,9 @@ div.today-and-tomorrow-container div.entity-container div.progress-bar span {
   -moz-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
   -webkit-box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
   box-shadow: 0 1px 0 rgba(255, 255, 255, .5) inset;
-        -webkit-transition: width .4s ease-in-out;
-        -moz-transition: width .4s ease-in-out;
-        -ms-transition: width .4s ease-in-out;
-        -o-transition: width .4s ease-in-out;
-        transition: width .4s ease-in-out;
-}
-
-div.today-and-tomorrow-container div.entity-container div.progress-bar.red span {
-  background-color: #FF3520;
-}
-
-div.today-and-tomorrow-container div.entity-container div.progress-bar.stripes span {
-  -webkit-background-size: 30px 30px;
-  -moz-background-size: 30px 30px;
-  background-size: 30px 30px;
-  background-image: -webkit-gradient(linear, left top, right bottom,
-            color-stop(.25, rgba(255, 255, 255, .15)), color-stop(.25, transparent),
-            color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .15)),
-            color-stop(.75, rgba(255, 255, 255, .15)), color-stop(.75, transparent),
-            to(transparent));
-  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-            transparent 75%, transparent);
-  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-            transparent 75%, transparent);
-  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-            transparent 75%, transparent);
-  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-            transparent 75%, transparent);
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, .15) 25%, transparent 25%,
-            transparent 50%, rgba(255, 255, 255, .15) 50%, rgba(255, 255, 255, .15) 75%,
-            transparent 75%, transparent);
-
-  -webkit-animation: animate-stripes-30 1.5s linear 0s infinite normal;
-  -moz-animation: animate-stripes-30 1.5s linear 0s infinite normal;
-  animation: animate-stripes-30 1.5s linear 0s infinite normal;
+        -webkit-transition: width 0.5s ease-in-out;
+        -moz-transition: width 0.5s ease-in-out;
+        -ms-transition: width 0.5s ease-in-out;
+        -o-transition: width 0.5s ease-in-out;
+        transition: width 0.5s ease-in-out;
 }

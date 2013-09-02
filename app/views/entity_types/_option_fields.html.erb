@@ -1,5 +1,5 @@
 <% f.object = f.object.localized %>
-<div class="fields entity-type-option-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
+<div class="fields option-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
   <div class="view">
     <div class="horizontal-block icon icon-resize-vertical handle" title="<%= t('order_nested_object', classes: EntityTypeOption.model_name.human(count: 2).lcfirst) %>"></div>
     <div class="field horizontal-block name">

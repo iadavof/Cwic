@@ -348,7 +348,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
 }
 
 IADAscheduleView.prototype.addTimeAxis = function() {
-    var timeAxis = $(this.scheduleContainer).find('.time-axis')
+    var timeAxis = $(this.scheduleContainer).find('.time-axis');
 
     for(var i = 1; i < 24; i += 1) {
         var hourpart = this.getTemplateClone('hourTimeAxisFrameTemplate');
@@ -546,7 +546,7 @@ IADAscheduleView.prototype.appendDay = function(day) {
     dayAxisDiv.find('div.day-nr p').text(day.name.daynr);
     dayAxisDiv.find('div.month-name p').text(day.name.monthnamesmall);
 
-    $(this.scheduleContainer).find('.day-axis').append(dayAxisDiv);
+    this.scheduleContainer.find('.day-axis').append(dayAxisDiv);
 
     var daydiv = this.getTemplateClone('dayRowTemplate');
     $(daydiv).attr('id', day.date);
@@ -558,7 +558,10 @@ IADAscheduleView.prototype.appendDay = function(day) {
         $(daydiv).find('.day-row-time-parts').append(hourpart);
     }
 
-    $(this.scheduleContainer).find('.schedule-body').append(daydiv);
+    this.scheduleContainer.find('.schedule-body').append(daydiv);
+    
+    var timeAxis = this.scheduleContainer.find('.time-axis');
+    timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.day-axis').outerWidth() + 'px'});
 }
 
 IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
@@ -566,11 +569,11 @@ IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
     var firstDaySecond = this.dateToFirstMSec(currentDate);
     var date_row = $('.day-row#' + firstDaySecond);
     this.scheduleContainer.find('.day-axis-row.today:not(#label_' + firstDaySecond + ')').removeClass('today');
-    this.scheduleContainer.find('.day-row.today:not(#' + firstDaySecond + ')').removeClass('today');
+    this.scheduleContainer.find('.day-row.today:not(#' + firstDaySecond + ')').removeClass('today').removeClass('progress-bar');
     this.scheduleContainer.find('.day-row:not(#' + firstDaySecond + ') .time-needle').remove();
     if(date_row.length != 0) {
         this.scheduleContainer.find('.day-axis .day-axis-row#label_' + firstDaySecond).addClass('today');
-        date_row.addClass('today');
+        date_row.addClass('today').addClass('progress-bar');
         if($('.time-needle').length <= 0) {
           var needle = $('<div>', {class: 'time-needle', title: currentDate.toLocaleTimeString(), style: 'left: ' + this.dayTimeToPercentage(currentDate.customFormat('#hhh#:#mm#')) + '%;'});
           date_row.append(needle);
@@ -653,8 +656,18 @@ IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
 }
 
 IADAscheduleView.prototype.bindEntityInfoControls = function() {
-    this.scheduleContainer.find('p.entity-name').on('click', function() {
-        $(this).siblings('.entity-description').toggleClass('opened');
+    this.scheduleContainer.find('p.entity-name').each(function(){
+      var descriptionHeight;
+      $(this).on('click', function() {
+        if($(this).siblings('.entity-description').hasClass('opened')) {
+          $(this).siblings('.entity-description').animate({height: 0}, {complete: function(){
+            $(this).css({display: 'none', height: 'auto'}).removeClass('opened');
+          }});
+        } else {
+          descriptionHeight = $(this).siblings('.entity-description').height();
+          $(this).siblings('.entity-description').css({height: 0, display: 'block'}).animate({height: descriptionHeight}).addClass('opened');
+        }       
+      });
     });
 }
 

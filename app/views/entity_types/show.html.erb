@@ -6,12 +6,14 @@
   <dt><%= EntityType.human_attribute_name(:name) %></dt>
   <dd><%= @entity_type.name %></dd>
   <dt><%= EntityType.human_attribute_name(:description) %></dt>
-  <dd><%= simple_format(@entity_type.description) %></dd>
+  <dd><%= @entity_type.description %></dd>
 </dl>
 
 <% if @entity_type.properties.present? %>
   <h2><%= EntityTypeProperty.model_name.human(count: 2) %></h2>
-  <%= render @entity_type.properties %>
+  <div id="entity-type-properties">
+    <%= render @entity_type.properties %>
+  </div>
 <% end %>
 
 <%= button_link_back_to_index([@organisation, EntityType]) %>

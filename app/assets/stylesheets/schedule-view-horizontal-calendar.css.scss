@@ -21,7 +21,6 @@ div.horizontal-calendar div.control-container span.tm {
 
 div.horizontal-calendar div.sticky-wrapper {
   margin-bottom: -1px;
-  margin-left: 4%;
 }
 
 div.horizontal-calendar div.time-axis {
@@ -37,10 +36,10 @@ div.horizontal-calendar div.time-axis {
 div.horizontal-calendar div.day-axis {
     position: relative;
     float: left;
-    max-width: 4%;
     height: 100%;
     overflow: hidden;
     padding-top: 5px;
+    padding-right: 20px;
 }
 
 div.horizontal-calendar div.day-axis-row {
@@ -83,8 +82,6 @@ div.horizontal-calendar div.schedule-body div.disabled-overlay {
 
 div.horizontal-calendar div.schedule-body {
   position: relative;
-  float: right;
-  width: 96%;
   overflow: hidden;
   margin-top: 1px;
   padding-top: 5px;
@@ -147,12 +144,6 @@ div.horizontal-calendar div.schedule-body div.day-row div.time-needle:after {
 }
 
 div.horizontal-calendar div.schedule-body div.day-row.today {
-  background-color: #6dbfce;
-  -webkit-animation: animate-stripes-30 1.5s linear 0s infinite normal;
-  -moz-animation: animate-stripes-30 1.5s linear 0s infinite normal;
-  animation: animate-stripes-30 1.5s linear 0s infinite normal;
-  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-size: 30px 30px;
   padding: 7px 0;
   min-height: 76px;
 }

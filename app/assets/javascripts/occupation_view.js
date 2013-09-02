@@ -191,7 +191,7 @@ IADAoccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
 
 IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
     var dayAxis = this.occupationContainer.find('div.day-axis');
-    dayAxis.find('day-axis-frame').remove();
+    dayAxis.find('.day-axis-frame').remove();
     for(var day = 1; day <= maxNr; day += 1) {
         var block = this.getTemplateClone('dayAxisFrameTemplate');
         block.find('p.day').text(day);
@@ -211,19 +211,15 @@ IADAoccupationView.prototype.resizeActions = function() {
         // hide the entity axis and reuse the freed space
         this.occupationContainer.find('.occupation-matrix-block p.percent').hide();
         this.occupationContainer.find('.entity-axis').hide();
-        this.occupationContainer.find('.occupation-matrix-body').css('width', '100%');
         // adjust width of day axis
-        var dayAxis = this.occupationContainer.find('.day-axis')
-        dayAxis.css('margin-left', '0');
-        dayAxis.css('width', '100%');
+        var dayAxisSticky = this.occupationContainer.find('.sticky-wrapper')
+        dayAxisSticky.css('margin-left', '0');
     } else {
         // make room for the entity axis and show it on the left side
-        this.occupationContainer.find('.occupation-matrix-body').css('width', '96%');
         this.occupationContainer.find('.occupation-matrix-block p.percent').show();
         // Adjust the width of the day axis
-        var dayAxis = this.occupationContainer.find('.day-axis')
-        dayAxis.css('margin-left', '4%');
-        dayAxis.css('width', '96%');
+        var dayAxisSticky = this.occupationContainer.find('.sticky-wrapper')
+        dayAxisSticky.css('margin-left', '4%');
         this.occupationContainer.find('.entity-axis').show();
     }
 }
