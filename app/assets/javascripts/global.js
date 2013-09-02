@@ -1,8 +1,6 @@
 APP.init = function() {
   this.global.menuInit();
   this.global.keyboardShortcutsInit();
-
-  $(window.Feedback.init());
 };
 
 APP.global = {

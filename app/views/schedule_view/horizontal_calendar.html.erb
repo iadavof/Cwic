@@ -77,11 +77,7 @@
   </div>
 </div>
 
-<a href="#x" class="overlay" id="new_reservation"></a>
-<div class="popup" id="new_reservation_popup">
-  <%= render 'reservations/form' %>
-  <a class="close" href="#close"></a>
-</div>
+<%= render partial: 'shared/modal', locals: { content: render('reservations/form'), modal_id: 'new_reservation' } %>
 
 <div class="actions">
   <%= button_link_to_new([@organisation, Reservation], {location: '#new_reservation', css_class: 'button new-reservation'}) %>

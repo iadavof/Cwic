@@ -26,5 +26,8 @@
         <%= content_for?(:content) ? yield(:content) : yield %>
       </div>
     </div>
+    <% if user_signed_in? %>
+      <%= render partial: 'feedback_and_screencaps/modal' %>
+    <% end %>
   </body>
 </html>

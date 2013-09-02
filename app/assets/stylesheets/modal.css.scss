@@ -20,7 +20,7 @@
     visibility: visible;
     opacity: 1;
 }
-.popup {
+.modal {
     background-color: #fff;
     border: 1px solid #fff;
     display: inline-block;
@@ -33,6 +33,9 @@
     top: 40%;
     visibility: hidden;
     z-index: 200;
+    overflow: auto;
+    max-width: 80%;
+    max-height: 80%;
 
     -webkit-transform: translate(-50%, -50%);
     -moz-transform: translate(-50%, -50%);
@@ -52,7 +55,7 @@
     -o-transition: opacity .5s, top .5s;
     transition: opacity .5s, top .5s;
 }
-.overlay:target+.popup {
+.overlay:target+.modal {
     top: 50%;
     opacity: 1;
     visibility: visible;
