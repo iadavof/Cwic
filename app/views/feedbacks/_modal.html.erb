@@ -29,6 +29,6 @@
 </div>
 <script type="text/javascript">
   $(document).ready(function() {
-      var feedback = new IADAFeedback({ open_button_id: 'open-feedback-button', backend_url: '<%= feedback_and_screencaps_path %>' });
+      var feedback = new IADAFeedback({ open_button_id: 'open-feedback-button', backend_url: '<%= feedbacks_path(format: :json) %>' });
   });
 </script>

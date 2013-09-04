@@ -1,0 +1,19 @@
+<% content_for :page_title do %>
+<%= show_title(@feedback) %>
+<% end %>
+
+<dl>
+  <dt><%= Feedback.human_attribute_name(:user) %></dt>
+  <dd><%= name_link_to_show(@feedback.user) if @feedback.user.present? %></dd>
+  <dt><%= Feedback.human_attribute_name(:organisation) %></dt>
+  <dd><%= name_link_to_show(@feedback.organisation) if @feedback.organisation.present? %></dd>
+  <dt><%= Feedback.human_attribute_name(:message) %></dt>
+  <dd><%= @feedback.message %></dd>
+  <dt><%= Feedback.human_attribute_name(:specs) %></dt>
+  <dd><%= @feedback.specs %></dd>
+  <dt><%= Feedback.human_attribute_name(:screen_capture) %></dt>
+  <dd><%= link_to(image_tag(@feedback.screen_capture.url, {style: "max-width: 500px; max-height: 500px;"}), @feedback.screen_capture.url) %></dd>
+</dl>
+
+<%= button_link_back_to_index(Feedback) %>
+<%= button_link_to_destroy(@feedback) %>

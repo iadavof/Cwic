@@ -3,6 +3,7 @@ IADAFeedback.prototype.options = null;
 IADAFeedback.prototype.modal = null;
 IADAFeedback.prototype.button = null;
 IADAFeedback.prototype.screenshot = null;
+IADAFeedback.prototype.techInfo = null;
 IADAFeedback.prototype.messageArea = null;
 
 function IADAFeedback(options) {
@@ -125,7 +126,8 @@ IADAFeedback.prototype.generateTechInfo = function() {
     techinfo['Phone'] = session.device.is_phone;
     techinfo['Mobile'] = session.device.is_mobile;
 
-    return this.objectToString(techinfo);
+    this.techInfo =  this.objectToString(techinfo);
+    return this.techInfo;
 }
 
 IADAFeedback.prototype.objectToString = function(obj) {
@@ -143,9 +145,10 @@ IADAFeedback.prototype.sendFeedback = function() {
             type: 'POST',
             url: this.options.backend_url,
             data: {
-                feedback_and_screencap: {
+                feedback: {
                     message: fb.messageArea.val(),
-                    screencap: encodeURIComponent(fb.screenshot),
+                    specs: fb.techInfo,
+                    screen_capture: encodeURIComponent(fb.screenshot),
                 }
 
             }

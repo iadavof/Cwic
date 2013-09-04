@@ -69,3 +69,11 @@ div#new_feedback_popup button.feedback-button {
   float: right;
   margin: 10px;
 }
+
+td.feedback_message p, td.feedback_specs p {
+  height: 50px;
+  width: 300px;
+  overflow: hidden;
+  word-wrap: nowrap;
+  text-overflow: ellipsis;
+}

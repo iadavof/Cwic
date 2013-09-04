@@ -42,6 +42,12 @@ module MenuHelper
     }
     if @admin
       menu[:admin] = {
+        feedback: {
+          index: { url: feedbacks_path },
+        },
+        users: {
+          index: { url: users_path },
+          },
         entity_type_icons: {
           index: { url: entity_type_icons_path },
           new: { url: new_entity_type_icon_path }

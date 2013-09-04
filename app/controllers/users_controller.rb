@@ -1,5 +1,4 @@
 class UsersController < ApplicationController
-  before_action :get_organisation
   before_action :load_resource
   authorize_resource
 
@@ -13,20 +12,8 @@ class UsersController < ApplicationController
     respond_with(@user)
   end
 
-  # GET /users/new
-  def new
-    respond_with(@user)
-  end
-
   # GET /users/1/edit
   def edit
-    respond_with(@user)
-  end
-
-  # POST /users
-  def create
-    @user.attributes = params[:user]
-    @user.save
     respond_with(@user)
   end
 
@@ -46,9 +33,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @users = @organisation.users.accessible_by(current_ability, :index)
-    when 'new', 'create'
-      @user = @organisations.build
+      @users = User.accessible_by(current_ability, :index)
     else
       @user = User.find(params[:id])
     end
@@ -56,14 +41,10 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def user_params
-    params.require(:user).permit(:first_name, :last_name, :infix)
+    params.require(:user).permit(:first_name, :last_name, :infix, :email)
   end
 
   def interpolation_options
     { resource_name: @user.instance_name }
-  end
-
-  def load_forum
-    @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
   end
 end

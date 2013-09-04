@@ -1,4 +1,5 @@
 Cwic::Application.routes.draw do
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   get "home/index"
@@ -6,8 +7,9 @@ Cwic::Application.routes.draw do
 
   devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
   # admin page for managing the entity type icons
+  resources :users, except: [:new]
   resources :entity_type_icons
-  resources :feedback_and_screencaps
+  resources :feedbacks, except: [:new, :edit]
 
   resources :organisations do
     resources :organisation_users, except: :show

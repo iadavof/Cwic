@@ -1,16 +1,21 @@
 <% content_for :page_title do %>
-  <%= index_title(User) %>
+<%= index_title(User) %>
 <% end %>
 
 <% if @users.empty? %>
-  <p><%= t('.empty', default: :empty_objects, classes: User.model_name.human(count: 2).lcfirst) %></p>
+<p><%= t('.empty', default: :empty_objects, classes: User.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <table>
   <thead>
     <tr>
+      <th>#</th>
       <th><%= User.human_attribute_name(:first_name) %></th>
-      <th><%= User.human_attribute_name(:last_name) %></th>
       <th><%= User.human_attribute_name(:infix) %></th>
+      <th><%= User.human_attribute_name(:last_name) %></th>
+      <th><%= User.human_attribute_name(:email) %></th>
+      <th><%= User.human_attribute_name(:sign_in_count) %></th>
+      <th><%= User.human_attribute_name(:created_at) %></th>
+      <th><%= User.human_attribute_name(:last_sign_in_at) %></th>
       <th></th>
     </tr>
   </thead>
@@ -18,9 +23,14 @@
   <tbody>
     <% @users.each do |user| %>
     <tr>
-      <td><%= name_link_to_show(user) %></td>
-      <td><%= user.last_name %></td>
+      <td><%= name_link_to_show(user, {name: user.id.to_s}) %></td>
+      <td><%= user.first_name %></td>
       <td><%= user.infix %></td>
+      <td><%= user.last_name %></td>
+      <td><%= user.email %></td>
+      <td><%= user.sign_in_count %></td>
+      <td><%=l(user.created_at, format: :long) %></td>
+      <td><%=l(user.last_sign_in_at, format: :long) %></td>
       <td class="icons">
         <%= icon_link_to_edit(user) %>
         <%= icon_link_to_destroy(user) %>
@@ -30,5 +40,3 @@
   </tbody>
 </table>
 <% end %>
-
-<%= button_link_to_new(User) %>

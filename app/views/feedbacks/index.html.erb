@@ -1,0 +1,35 @@
+<% content_for :page_title do %>
+<%= index_title(Feedback) %>
+<% end %>
+
+<% if @feedbacks.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: Feedback.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= Feedback.human_attribute_name(:screen_capture) %></th>
+      <th><%= Feedback.human_attribute_name(:user) %></th>
+      <th><%= Feedback.human_attribute_name(:organisation) %></th>
+      <th><%= Feedback.human_attribute_name(:message) %></th>
+      <th><%= Feedback.human_attribute_name(:specs) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @feedbacks.each do |feedback| %>
+    <tr>
+      <td><%= name_link_to_show(feedback, { name: image_tag(feedback.screen_capture.icon.url) }) %></td>
+      <td><%= name_link_to_show(feedback.user) if feedback.user.present? %></td>
+      <td><%= name_link_to_show(feedback.organisation) if feedback.organisation.present? %></td>
+      <td class="feedback_message"><p><%= feedback.message %></p></td>
+      <td class="feedback_specs"><p><%= feedback.specs %></p></td>
+      <td class="icons">
+        <%= icon_link_to_destroy(feedback) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
