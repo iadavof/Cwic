@@ -203,8 +203,9 @@ IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
 
 IADAoccupationView.prototype.resizeActions = function() {
     var newHeight = this.occupationContainer.find('.occupation-matrix-block').first().width();
-    this.occupationContainer.find('.occupation-matrix-row').css('height', newHeight);
-    this.occupationContainer.find('.entity-row').css('height', newHeight);
+    var row = this.occupationContainer.find('.occupation-matrix-row')
+    row.css('height', newHeight);
+    this.occupationContainer.find('.entity-row').css('height', row.outerHeight());
 
     // The percentage notation does not fit anymore, hide it
     if(newHeight < 30) {
