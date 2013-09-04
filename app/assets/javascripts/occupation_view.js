@@ -198,7 +198,9 @@ IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
         block.css('width', blockWidth + '%');
         dayAxis.append(block);
     }
-    dayAxis.sticky({getWidthFrom: '.occupation-matrix-body'});
+    if(!dayAxis.parent().hasClass('sticky-wrapper')) {
+        dayAxis.sticky();
+    }
 }
 
 IADAoccupationView.prototype.resizeActions = function() {
