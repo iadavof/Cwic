@@ -68,7 +68,17 @@ IADAFeedback.prototype.reviewFeedback = function() {
     screenshotImg.show();
 
     var messageSummary = this.modal.find('p#feedback-message-summary');
-    messageSummary.text(this.messageArea.val());
+    var link = messageSummary.find('a');
+    messageSummary.html('');
+    messageSummary.append(link);
+    messageSummary.append(this.messageArea.val());
+
+    this.modal.find('a#edit_feedback_button').on('click', function(e) {
+        e.preventDefault();
+        messageSummary.hide();
+        messageSummary.after(fb.messageArea);
+        return false;
+    });
 
     var techInfo = this.generateTechInfo();
 
@@ -85,9 +95,13 @@ IADAFeedback.prototype.closeFeedback = function() {
 
     this.screenshot = null;
 
+
     window.location.hash = 'close';
 
-    this.modal.find('div.feedback-text').show();
+    this.modal.find('p#feedback-message-summary').show();
+    var textBox = this.modal.find('div.feedback-text');
+    textBox.find('#feedback-intro').after(this.messageArea);
+    textBox.show();
 
 }
 
@@ -99,6 +113,17 @@ IADAFeedback.prototype.generateTechInfo = function() {
     techinfo['Browser'] = session.browser.browser;
     techinfo['Browser version'] = session.browser.version;
     techinfo['Browser os'] = session.browser.os;
+    techinfo['Flash'] = session.plugins.flash;
+    techinfo['Silverlight'] = session.plugins.silverlight;
+    techinfo['Java'] = session.plugins.java;
+    techinfo['Quicktime'] = session.plugins.quicktime;
+    techinfo['Screen Width'] = session.device.screen.width + 'px';
+    techinfo['Screen Height'] = session.device.screen.height + 'px';
+    techinfo['Viewport Width'] = session.device.viewport.width + 'px';
+    techinfo['Viewport Height'] = session.device.viewport.height + 'px';
+    techinfo['Tablet'] = session.device.is_tablet;
+    techinfo['Phone'] = session.device.is_phone;
+    techinfo['Mobile'] = session.device.is_mobile;
 
     return this.objectToString(techinfo);
 }

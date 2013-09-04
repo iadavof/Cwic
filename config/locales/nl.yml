@@ -320,3 +320,18 @@ nl:
       day_occupation: 'Dagbezetting'
       set: 'Stel in'
       current_month: 'Deze maand'
+
+  feedback_and_screencaps:
+    modal:
+      open_feedback: 'Geef ons feedback!'
+      feedback_intro: 'Bent u een fout in het systeem tegengekomen? Of heeft u een suggestie voor verbetering? Vul dan het volgende formulier in.'
+      review_feedback: 'Controleer feedback'
+      technical_info: 'Technische informatie'
+      send: 'Verzenden'
+      next: 'Volgende'
+      edit_feedback: 'Bewerk feedback'
+      feedback_success: 'Bedankt voor uw feedback!'
+      feedback_success_explain: 'Wij hebben uw feedback ontvangen, bedankt voor uw bijdrage.'
+      feedback_error: 'Verzenden feedback mislukt'
+      feedback_success_explain: 'Er is helaas iet misgegaan tijdens het verzenden van de feedback. Probeert u het later nog eens.'
+      close: 'Sluiten'

@@ -14,10 +14,15 @@ div#new_feedback_popup p#feedback-success-explain {
   display: none;
 }
 
+div#new_feedback_popup p#feedback-intro {
+  width: 400px;
+}
+
 div#new_feedback_popup textarea#feedback-message {
   float: left;
   margin-bottom: 10px;
-  max-width: 100%;
+  width: 400px;
+  clear: both;
 
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -28,12 +33,30 @@ div#new_feedback_popup p#feedback-message-summary {
   font-style: italic;
   padding: 10px;
   border: 1px solid #ccc;
+  position: relative;
+  min-height: 20px;
+}
+
+div#new_feedback_popup p#feedback-message-summary a#edit_feedback_button {
+  position: absolute;
+  right: 5px;
+  top: 5px;
+}
+
+
+div#new_feedback_popup div.feedback-tech-info {
+  float: left;
+  width: 200px;
+}
+
+div#new_feedback_popup div.feedback-tech-info h4 {
+  margin: 0;
 }
 
 div#new_feedback_popup img#screenshot_preview {
   display: none;
-  max-width: 500px;
-  max-height: 500px;
+  max-width: 400px;
+  max-height: 400px;
   margin: 10px;
 }
 
