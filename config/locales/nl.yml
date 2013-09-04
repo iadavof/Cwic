@@ -86,6 +86,9 @@ nl:
       entity_type_icon:
         one: 'Objecticoon'
         other: 'Objecticonen'
+      feedback:
+        one: 'Feedback'
+        other: 'Feedback'
     attributes:
       user:
         name: 'Naam'
@@ -93,6 +96,9 @@ nl:
         last_name: 'Achternaam'
         infix: 'Tussenvoegsel'
         email: 'E-mail'
+        sign_in_count: 'Aantal logins'
+        created_at: 'Account aangemaakt'
+        last_sign_in_at: 'Laatste login'
         password: 'Wachtwoord'
         password_confirmation: 'Bevestig wachtwoord'
         remember_me: 'Onthoud mij'
@@ -155,6 +161,12 @@ nl:
         ends_at: 'Eindigt op'
         entity: 'Object'
         organisation_client: 'Klant'
+      feedback:
+        screen_capture: 'Screenshot'
+        user: 'Gebruiker'
+        organisation: 'Organisatie'
+        message: 'Bericht'
+        specs: 'Specificaties'
     errors:
       models:
         user:
@@ -230,6 +242,9 @@ nl:
       occupation: 'Bezetting'
       day_occupation: 'Dagbezetting'
       week_occupation: 'Weekbezetting'
+      entity_type_icons: 'Objecticonen'
+      users: 'Alle gebruikers'
+      feedback: 'Feedback'
 
   shared:
     error_messages:
