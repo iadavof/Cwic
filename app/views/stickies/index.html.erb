@@ -1,0 +1,42 @@
+<% content_for :page_title do %>
+<%= index_title(Sticky) %>
+<% end %>
+
+<% if @stickies.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: Sticky.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= Sticky.human_attribute_name(:stickable) %></th>
+      <th><%= Sticky.human_attribute_name(:user) %></th>
+      <th><%= Sticky.human_attribute_name(:sticky_text) %></th>
+      <th><%= Sticky.human_attribute_name(:pos_x) %></th>
+      <th><%= Sticky.human_attribute_name(:pos_y) %></th>
+      <th><%= Sticky.human_attribute_name(:width) %></th>
+      <th><%= Sticky.human_attribute_name(:height) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @stickies.each do |sticky| %>
+    <tr>
+      <td><%= name_link_to_show(sticky) %></td>
+      <td><%= sticky.user %></td>
+      <td><%= sticky.sticky_text %></td>
+      <td><%= sticky.localized.pos_x %></td>
+      <td><%= sticky.localized.pos_y %></td>
+      <td><%= sticky.localized.width %></td>
+      <td><%= sticky.localized.height %></td>
+      <td class="icons">
+        <%= icon_link_to_edit(sticky) %>
+        <%= icon_link_to_destroy(sticky) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new(Sticky) %>

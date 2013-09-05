@@ -3,6 +3,8 @@ class Reservation < ActiveRecord::Base
   belongs_to :entity
   belongs_to :organisation
 
+  has_many :stickies, as: :stickable, dependent: :destroy
+
   validates :begins_at, presence: true
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :entity, presence: true

@@ -1,0 +1,15 @@
+<script type="text/javascript">
+        // wait for the DOM to be loaded
+        $(document).ready(function() {
+            var stickyNotes = new IADAStickyNotes({backend: '<%= organisation_stickies_path(current_organisation) %>', resource_name: '<%= resource_name %>', resource_id: <%= resource_id %>});
+        });
+</script>
+
+<div id="note-template">
+    <div class="note-head">
+        <div class="new-button note-head-button">+</div>
+        <div class="delete-button note-head-button">&times</div>
+    </div>
+	<textarea></textarea>
+</div>
+<button class="new-sticky">Add Note</button>

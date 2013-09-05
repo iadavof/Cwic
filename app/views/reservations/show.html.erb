@@ -13,6 +13,8 @@
   <dd><%= @reservation.organisation_client.instance_name %></dd>
 </dl>
 
+<%= render partial: 'stickies/js_init', locals: { stickies: @reservation.stickies, resource_name: @reservation.class.name, resource_id: @reservation.id } %>
+
 <%= button_link_back_to_index([@organisation, Reservation]) %>
 <%= button_link_to_edit([@organisation, @reservation]) %>
 <%= button_link_to_destroy([@organisation, @reservation]) %>

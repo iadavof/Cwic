@@ -1,5 +1,6 @@
 Cwic::Application.routes.draw do
 
+
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   get "home/index"
@@ -17,6 +18,10 @@ Cwic::Application.routes.draw do
     match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
     resources :entity_types
     resources :entities
+  
+    resources :stickies
+    match 'stickies/:resource/:resource_id/', controller: 'stickies', action: 'stickies_for', via: 'get', as: 'stickies_for_resource'
+    match 'stickies/:resource/:resource_id/', controller: 'stickies', action: 'create', via: 'post', as: 'new_sticky_for_resource'
 
     # Routes for rendering the schedules
     match '/schedule_view/horizontal_calendar', controller: 'schedule_view', action: 'horizontal_calendar', via: 'get'
