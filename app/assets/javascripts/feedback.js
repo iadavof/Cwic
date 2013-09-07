@@ -34,6 +34,9 @@ IADAFeedback.prototype.openFeedbackModal = function() {
 
     // Bind small close button
     this.modal.find('a.close').on('click', function() { fb.closeFeedback(); });
+    
+    // Bind Overlay action
+   $('a.overlay').on('click', function() { fb.closeFeedback(); });
 
     // message text area
     this.messageArea = this.modal.find('textarea#feedback-message');

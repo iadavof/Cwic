@@ -21,7 +21,7 @@ div#new_feedback_popup p#feedback-intro {
 div#new_feedback_popup textarea#feedback-message {
   float: left;
   margin-bottom: 10px;
-  width: 400px;
+  width: 100%;
   clear: both;
 
   -moz-box-sizing: border-box;
