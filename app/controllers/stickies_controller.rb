@@ -4,32 +4,17 @@ class StickiesController < ApplicationController
 
   respond_to :html, :json
 
-  # GET /stickies
-  def index
-    respond_with(@stickies)
-  end
-
   # GET /stickies_for
   def stickies_for
     respond_with(@stickies)
   end
 
-  # GET /stickies/1
-  def show
-    respond_with(@sticky)
-  end
-
-  # GET /stickies/1/edit
-  def edit
-    respond_with(@sticky)
-  end
-
   # POST /stickies
   def create
-    if params[:resource].present? && params[:resource_id].present?
+    if params[:resource].present? && params[:rid].present?
       resource = params[:resource].classify;
       if resource.present?
-        item = resource.find(params[:resource_id])
+        item = resource.find(params[:rid])
         if item.present?
           @sticky.stickable = item
         end
@@ -55,15 +40,13 @@ class StickiesController < ApplicationController
 private
   def load_resource
     case params[:action]
-    when 'index'
-      @stickies = Sticky.accessible_by(current_ability, :index)
     when 'create'
       @sticky = Sticky.new
     when 'stickies_for'
       @stickies = nil
-      resource = params[:resource].classify;
+      resource = params[:resource];
       if resource.present?
-        item = resource.find(params[:resource_id])
+        item = resource.classify.constantize.find(params[:rid])
         if item.present?
           @stickies = item.stickies
         end

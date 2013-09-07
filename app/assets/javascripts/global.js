@@ -129,3 +129,7 @@ function format_text(text) {
     return text;
   }
 }
+
+window.log = function ( string ) {
+  if ( typeof console == 'object' ) { console.log ( string ) };
+} 

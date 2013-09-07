@@ -19,9 +19,9 @@ Cwic::Application.routes.draw do
     resources :entity_types
     resources :entities
   
-    resources :stickies
-    match 'stickies/:resource/:resource_id/', controller: 'stickies', action: 'stickies_for', via: 'get', as: 'stickies_for_resource'
-    match 'stickies/:resource/:resource_id/', controller: 'stickies', action: 'create', via: 'post', as: 'new_sticky_for_resource'
+    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'stickies_for', via: 'get', as: 'stickies_for_resource'
+    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'create', via: 'post', as: 'new_sticky_for_resource'
+    match 'stickies/:resource/:rid/:id', controller: 'stickies', action: 'update', via: 'post'
 
     # Routes for rendering the schedules
     match '/schedule_view/horizontal_calendar', controller: 'schedule_view', action: 'horizontal_calendar', via: 'get'
