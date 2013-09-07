@@ -3,6 +3,7 @@
 }
 
 .note {
+    position: absolute;
     background-color: #FEF4AC;
     background-image: -ms-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
     background-image: -moz-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
@@ -13,8 +14,6 @@
     box-shadow: 0px 0px 5px 2px #dddddd;
     display: inline-block;
     float: left;
-    margin-top: 10px;
-    margin-right: 10px;
     min-width: 200px;
     min-height: 200px;
     z-index: 10;
@@ -24,35 +23,54 @@
     margin-left: 10px;
 }
 
-.note textarea {
+.note div.note-text {
+    position: relative;
+    width: 100%;
+    height: 90%;
+}
+
+.note div.note-text textarea {
     background-color: transparent;
     border: none;
     font-family: 'Handlee', cursive;
     font-size: 16px;
-    height: 180px;
-    margin: 10px;
-    min-width: 200px;
-    min-height: 180px;
+    margin: 0;
     padding-top: 5px;
-    width: 200px;
+    width: 100%;
+    height: 100%;
+    min-height: 180px;
+    min-width: 200px;
     border-top: 1px solid #ccc;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    resize: none;
 }
 
 .note-head {
-    padding: 15px;
+    position: relative;
+    height: 10%;
+    min-height: 20px;
 }
 
 .note-head-button {
+    position: absolute;
+    left: 10%;
+    top: 50%;
+
+    margin-top: -7.5px;
+    margin-left: -7.5px;
+
     border: solid 1px #cccccc;
     border-radius: 5px;
     color:#cccccc;
     cursor: pointer;
     display: inline-block;
-    height: 20px;
-    margin: 0px 0px;
+    height: 15px;
     text-align: center;
     text-shadow: 1px 1px #ffffff;
-    width: 20px;
+    width: 15px;
+    line-height: 15px;
+    font-size: 15px;
 }
 
 .note-head-button:hover {
@@ -60,10 +78,7 @@
     color:#aaaaaa;
 }
 
-.new-button {
-    float: left;
-}
-
 .delete-button {
-    float: right;
+    left: auto;
+    right: 10%;
 }

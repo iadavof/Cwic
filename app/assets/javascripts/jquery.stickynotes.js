@@ -17,36 +17,19 @@ IADAStickyNotes.prototype.bindControls = function() {
 }
 
 IADAStickyNotes.prototype.newNote = function() {
-	var sn = this;
-    var temp = $("#note-template").html();
-    var note = $("<div class='note'></div>").html(temp);
-	
-    note.css({position: 'absolute', left: '20px', top: '50px'});
+    note = {
+    	note_id: null,
+    	text: 'lablablalblalba',
+    	author: '',
+    	pos_x: 10,
+    	posy: 10,
+    	width: 0,
+    	height: 0,
 
-    // Bind sticky events
-	note.find('div.delete-button').on('click', function(){ sn.deleteNote(this); });
-	var textarea = note.find('textarea');
-	textarea.blur(function(){ sn.afterNoteEdit(); });
-	textarea.autogrow();
-	textarea.resizable({minWidth: parseInt(textarea.css('min-width')), minHeight: parseInt(textarea.css('min-height'))});
-
-
-	note.appendTo("body");
-	//make draggable
-	note.draggable();
-
+    }
+    this.renderNote(note);
 }
 
-note = {
-	note_id: null,
-	text: 'lablablalblalba',
-	author: '',
-	pos_x: 10,
-	posy: 10,
-	width: 0,
-	height: 0,
-
-}
 
 IADAStickyNotes.prototype.renderNote = function(note_json) {
 	var sn = this;
@@ -60,7 +43,6 @@ IADAStickyNotes.prototype.renderNote = function(note_json) {
     	note.addClass('new_note');
     }
 	
-    note.css({ position: 'absolute' });
     if(note_json.pos_x > 0) {
     	note.css('left', note_json.pos_x + '%');
     } else {
@@ -72,25 +54,26 @@ IADAStickyNotes.prototype.renderNote = function(note_json) {
     	note.css('top', '5%');
     }
 
-	var textarea = note.find('textarea');
     
-    if(note_json.width > textarea.css('min-width')) {
-    	textarea.css('width', note_json.width + 'px');
+    if(note_json.width > note.css('min-width')) {
+        note.css('width', note_json.width + 'px');
     }
-    if(note_json.height > textarea.css('min-height')) {
-    	textarea.css('height', note_json.height + 'px');
+    if(note_json.height > note.css('min-height')) {
+        note.css('height', note_json.height + 'px');
     }
 
     // Bind sticky events
-	note.find('div.delete-button').on('click', function(){ sn.deleteNote(this); });
+    note.find('div.delete-button').on('click', function(){ sn.deleteNote(this); });
+	
+    var textarea = note.find('textarea');
 	textarea.on('blur', function(){ sn.afterNoteEdit(); });
-	textarea.autogrow();
-	textarea.resizable({stop: function(event, ui) { sn.afterNoteResize(ui); }, minWidth: parseInt(textarea.css('min-width')), minHeight: parseInt(textarea.css('min-height'))});
+	//textarea.autogrow();
+	
+    note.resizable({stop: function(event, ui) { sn.afterNoteResize(ui); }, minWidth: parseInt(note.css('min-width')), minHeight: parseInt(note.css('min-height'))});
+    //make draggable
+    note.draggable({containment: 'document', stop: function(event, ui) { sn.afterNoteMove(ui); }});
 
-	note.appendTo("body");
-
-	//make draggable
-	note.draggable({stop: function(event, ui) { sn.afterNoteMove(ui); }});
+    note.appendTo("body");
 
 }
 
