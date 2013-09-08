@@ -13,7 +13,7 @@ div.occupation-container div.sticky-wrapper {
   margin-left: 4%;
 }
 
-div.occupation-container div.day-axis {
+div.occupation-container div.top-axis {
   position: relative;
   height: auto;
   background-color: #ffffff;
@@ -22,7 +22,7 @@ div.occupation-container div.day-axis {
   margin-bottom: -1px;
 }
 
-div.occupation-container div.day-axis p.month-name {
+div.occupation-container div.top-axis p.axis-part-name {
   width: 100%;
   text-align: center;
   font-weight: bold;
@@ -30,7 +30,7 @@ div.occupation-container div.day-axis p.month-name {
   margin: 0;
 }
 
-div.occupation-container div.day-axis div.day-axis-frame {
+div.occupation-container div.top-axis div.top-axis-frame {
   position: relative;
   float: left;
   height: 100%;
@@ -60,9 +60,12 @@ div.occupation-container div.entity-axis div.entity-row {
 }
 
 div.occupation-container div.entity-axis div.entity-row img.entity-icon {
-  width: 50%;
+  max-height: 80%;
   margin: 10%;
   border: 4px solid #fff;
+
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 div.occupation-container div.occupation-matrix-body div.entity-row-title p.entity-name {
