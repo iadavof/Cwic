@@ -1,0 +1,40 @@
+<div id="occupation-container">
+</div>
+
+<div id="occupation-templates" style="display:none;">
+
+	<div class="occupation-container" id="occupationContainerTemplate">
+	    <div class="control-container clearfix">
+		    <div style="float: left;">
+		      <a id="previous" class="button"><i class="icon-chevron-left"></i></a>
+		      <a id="current" class="button"><%=t('.current_month') %></a>
+		      <a id="next" class="button"><i class="icon-chevron-right"></i></a>
+		    </div>
+	    <div style="float: right;">
+	    		<%= select_month(Date.today, {field_name: 'current_month' }) %>
+	    		<%= select_year(Date.today, {field_name: 'current_year' }) %>
+        	<a class="button" id="occupationDateUpdate"/><%=t('.set') %></a>
+	    </div>
+	  </div>
+	    <div class="top-axis clearfix">
+	    	<p class="axis-part-name clearfix"></p>
+	    </div>
+	    <div class="entity-axis"></div>
+	    <div class="occupation-matrix-body"></div>
+	</div>
+
+	<div id="entityRowTemplate" class="entity-row">
+	    <img class="entity-icon" />
+	</div>
+
+	<div id="occupationMatrixRowTemplate" class="occupation-matrix-row clearfix">
+	</div>
+
+	<div id="entityRowTitleTemplate" class="entity-row-title clearfix"><p class="entity-name"></p></div>
+
+	<div id="occupationMatrixBlockTemplate" class="occupation-matrix-block">
+		<p class="percent"></p>
+	</div>
+
+	  <div class="top-axis-frame" id="topAxisFrameTemplate"><p class="nr"></p></div>
+</div>
