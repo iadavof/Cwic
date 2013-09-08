@@ -9,6 +9,10 @@ div.occupation-container div.control-container {
   width: 100%;
 }
 
+div.occupation-container div.control-container a#current span {
+  display: none;
+}
+
 div.occupation-container div.sticky-wrapper {
   margin-left: 4%;
 }

@@ -333,8 +333,12 @@ nl:
   occupation:
     day_occupation:
       day_occupation: 'Dagbezetting'
+    week_occupation:
+      week_occupation: 'Weekbezetting'
+    template:
       set: 'Stel in'
       current_month: 'Deze maand'
+      current_year: 'Dit jaar'
 
   feedbacks:
     modal:
