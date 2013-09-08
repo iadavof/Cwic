@@ -234,6 +234,7 @@ IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
     if(!topAxis.parent().hasClass('sticky-wrapper')) {
         topAxis.sticky();
     }
+    this.resizeActions();
 }
 
 IADAoccupationView.prototype.resizeActions = function() {
@@ -241,6 +242,13 @@ IADAoccupationView.prototype.resizeActions = function() {
     var row = this.occupationContainer.find('.occupation-matrix-row')
     row.css('height', newHeight);
     this.occupationContainer.find('.entity-row').css('height', row.outerHeight());
+
+    if(newHeight < 25) {
+        this.occupationContainer.find('div.top-axis-frame:nth-child(odd)').css('visibility', 'hidden');
+    } else {
+        this.occupationContainer.find('div.top-axis-frame').css('visibility', 'visible');
+    }
+
 
     // The percentage notation does not fit anymore, hide it
     if(newHeight < 30) {
