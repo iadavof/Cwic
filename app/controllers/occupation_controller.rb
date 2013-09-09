@@ -1,5 +1,7 @@
 class OccupationController < ApplicationController
 
+	respond_to :html, :json
+
 	def day_occupation
 		render :day_occupation
 	end
@@ -35,7 +37,7 @@ class OccupationController < ApplicationController
 			end
 			render json: { entities: result }, status: :ok
 		else
-			render :json, status: :error
+			render json: {}, status: :error
 		end
 	end
 
@@ -52,7 +54,7 @@ class OccupationController < ApplicationController
 			end
 			render json: { entities: result }, status: :ok
 		else
-			render :json, status: :error
+			render json: {}, status: :error
 		end
 	end
 

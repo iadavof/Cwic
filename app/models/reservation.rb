@@ -14,8 +14,8 @@ class Reservation < ActiveRecord::Base
   attr_accessor :begins_at_date, :begins_at_time, :ends_at_date, :ends_at_time
 
   before_validation :make_begins_at, :make_ends_at
-  after_save :trigger_day_occupation_recalculation
-  after_destroy :trigger_day_occupation_recalculation
+  after_save :trigger_occupation_recalculation
+  after_destroy :trigger_occupation_recalculation
 
   def begins_at_date
     return @begins_at_date if @begins_at_date.present?
@@ -105,7 +105,7 @@ private
     end
   end
 
-  def trigger_day_occupation_recalculation
+  def trigger_occupation_recalculation
     recalculation_dates = []
 
     # Old values
@@ -128,6 +128,7 @@ private
     end
 
     DayOccupation.recalculate_occupations(self.entity, recalculation_dates)
+    WeekOccupation.recalculate_occupations(self.entity, recalculation_dates)
   end
 
   def string_to_datetime(value, format)
