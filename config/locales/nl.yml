@@ -336,7 +336,6 @@ nl:
     week_occupation:
       week_occupation: 'Weekbezetting'
     template:
-      set: 'Stel in'
       current_month: 'Deze maand'
       current_year: 'Dit jaar'
 

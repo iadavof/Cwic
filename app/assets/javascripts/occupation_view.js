@@ -93,11 +93,15 @@ IADAoccupationView.prototype.bindControls = function() {
             } else if(occ.options.view == 'weekOccupation') {
                 occ.currentYear += 1;
             }
-        } else if(this.id == 'occupationDateUpdate') {
-            occ.currentYear = parseInt($('select#date_current_year').val());
-            if(occ.options.view == 'dayOccupation') {
-                occ.currentMonth = parseInt($('select#date_current_month').val());
-            }
+        }
+        occ.updateOccupationView();
+    });
+
+    this.occupationContainer.find('div.control-container select').on('change', function() {
+        console.debug('ble');
+        occ.currentYear = parseInt($('select#date_current_year').val());
+        if(occ.options.view == 'dayOccupation') {
+            occ.currentMonth = parseInt($('select#date_current_month').val());
         }
         occ.updateOccupationView();
     });
