@@ -478,7 +478,9 @@ input[type="submit"],
 input[type="reset"],
 button,
 .button {
+  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   display: inline-block;
+  position: relative;
   width: auto;
   border: 0 none;
   background-color: #666666;
@@ -488,7 +490,7 @@ button,
   cursor: pointer;
   border-radius: 3px;
   line-height: normal;
-  transition: background-color 0.2s;
+  transition: background-color 0.2s ease-in-out;
   background-image: -moz-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 50%);
 }
 
@@ -496,7 +498,7 @@ input[type="submit"]:hover,
 input[type="reset"]:hover,
 button:hover,
 .button:hover {
-  background-color: #555555;
+  background-color: #747474;
   color: #ffffff;
 }
 
@@ -507,12 +509,39 @@ button:active,
   background-image: -moz-linear-gradient(bottom, rgba(255,255,255,0.25) 0%, transparent 50%);
 }
 
-input[type="submit"] {
+input[type="submit"].blue,
+input[type="reset"].blue,
+button.blue,
+.button.blue {
+  background-color: #17889D;
+}
+
+input[type="submit"].blue:hover,
+input[type="reset"].blue:hover,
+button.blue:hover,
+.button.blue:hover {
+  background-color: #3194a5;
+}
+
+input[type="submit"], 
+input[type="reset"].red,
+button.red,
+.button.red {
   background-color: #ff3520;
 }
 
-input[type="submit"]:hover {
-  background-color: #ff4537;
+input[type="submit"]:hover,
+input[type="reset"].red:hover,
+button.red:hover,
+.button.red:hover {
+  background-color: #ff4a37;
+}
+
+#open-feedback-button {
+  font-size: 1em;
+  line-height: 200%;
+  margin: 5px 5px 4px 5px;
+  padding: 0 10px;
 }
 
 label {
