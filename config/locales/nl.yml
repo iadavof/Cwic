@@ -372,3 +372,6 @@ nl:
       feedback_error: 'Verzenden feedback mislukt'
       feedback_error_explain: 'Er is helaas iet misgegaan tijdens het verzenden van de feedback. Probeert u het later nog eens.'
       close: 'Sluiten'
+  stickies:
+    js_init:
+      note_placeholder: 'Wayoo leipe sticky'

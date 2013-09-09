@@ -8,6 +8,7 @@
             		author_id: <%= current_user.id %>,
             		author_name: '<%= current_user.instance_name %>',
             	},
+                placeholder: '<%= t('.note_placeholder') %>',
             });
         });
 </script>
@@ -22,6 +23,7 @@
 <div id="note-template">
     <div class="note-head">
         <p class="author"></p>
+        <p class="created_at"></p>
         <a class="delete-button icon icon-remove"></a>
     </div>
     <div class="note-text"><textarea></textarea></div>

@@ -61,33 +61,12 @@
     z-index: 1;
 }
 
-.note-head-button {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    margin-top: -8.5px;
-    margin-left: 5px;
-    border: solid 1px #cccccc;
-    border-radius: 5px;
-    color:#cccccc;
+a.delete-button {
     cursor: pointer;
-    display: inline-block;
-    height: 15px;
-    text-align: center;
-    text-shadow: 1px 1px #ffffff;
-    width: 15px;
-    line-height: 15px;
-    font-size: 15px;
-}
-
-.note-head-button:hover {
-    border: solid 1px #aaaaaa;
-    color:#aaaaaa;
-}
-
-.delete-button {
-    left: auto;
+    display: block;
+    position: absolute;
     right: 0;
-    margin-left: 0;
+    top: 50%;
+    margin-top: -7.5px;
     margin-right: 5px;
 }

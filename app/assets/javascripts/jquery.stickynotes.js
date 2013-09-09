@@ -5,7 +5,7 @@ IADAStickyNotes.prototype.notes = [];
 IADAStickyNotes.prototype.defaultNote = {
         id: null,
         sticky_text: 'Text',
-        author: {author_id, author_name},
+        author: {author_id: 0, author_name: ''},
         weight: 0,
         created_at: '',
 }
@@ -16,7 +16,7 @@ function IADAStickyNotes(options) {
         container: 'note-container',
         backend_url: 'url to backend',
         current_author: { author_id: 0, author_name: 'Name' },
-        placeholder: 'Text'
+        placeholder: 'Text',
     }, options || {});
 
     this.noteContainer = $('#' + this.options.container);
@@ -75,8 +75,10 @@ IADAStickyNotes.prototype.bindControls = function() {
 IADAStickyNotes.prototype.newNote = function() {
     var note = this.defaultNote;
     note.text = this.options.placeholder;
-    note.user_id = this.options.current_author.author_id;
-    this.renderNote(this.defaultNote);
+    note.author = this.options.current_author;
+    today = new Date();
+    note.created_at = today.customFormat('#DD#-#MM#-#YYYY#');
+    this.renderNote(note);
 }
 
 
@@ -88,15 +90,15 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
     // add id
     if(note_obj.id != null) {
     	note.attr('id', 'note_' + note_json_note.id);
-        note.find('p.author_name').text(note_obj.author.author_name);
-        note.find('p.created_at').text(note_obj.created_at);
     } else {
     	note.addClass('new_note');
-        note.find('p.author').text(this.options.current_author.author_name);
     }
 
+    note.find('p.author').text(note_obj.author.author_name);
+    note.find('p.created_at').text(note_obj.created_at);
+
     // Bind sticky events
-    note.find('div.delete-button').on('click', function(){ sn.deleteNote(this); });
+    note.find('a.delete-button').on('click', function(){ sn.deleteNote(this); });
 
     var textarea = note.find('textarea');
     textarea.val(note_obj.text);
@@ -114,6 +116,12 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
     });
 
     innerNotesContainer.append(note);
+
+    // Focus on new note
+    if(note_obj.id == null) {
+        textarea.focus();
+        textarea.select();
+    }
 
 }
 
