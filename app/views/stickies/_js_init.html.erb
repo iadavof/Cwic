@@ -2,7 +2,8 @@
         // wait for the DOM to be loaded
         $(document).ready(function() {
             var stickyNotes = new IADAStickyNotes({
-            	backend_url: '<%= organisation_stickies_for_resource_path(current_organisation, resource_name, resource_id) %>', 
+                container: 'note-container',
+            	backend_url: '<%= organisation_stickies_for_resource_path(current_organisation, resource_name, resource_id) %>',
             	current_author: {
             		author_id: <%= current_user.id %>,
             		author_name: '<%= current_user.instance_name %>',
@@ -11,11 +12,17 @@
         });
 </script>
 
+<div id="note-container">
+    <div class="control-container clearfix">
+        <button class="new-sticky">Add Note</button>
+    </div>
+    <div class="notes"></div>
+</div>
+
 <div id="note-template">
     <div class="note-head">
-        <div class="new-button note-head-button">+</div>
-        <div class="delete-button note-head-button">&times;</div>
+        <p class="author"></p>
+        <a class="delete-button icon icon-remove"></a>
     </div>
-	<div class="note-text"><textarea></textarea></div>
+    <div class="note-text"><textarea></textarea></div>
 </div>
-<button class="new-sticky">Add Note</button>

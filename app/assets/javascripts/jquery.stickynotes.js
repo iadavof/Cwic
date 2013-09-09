@@ -1,22 +1,25 @@
 IADAStickyNotes.prototype.options = null;
+IADAStickyNotes.prototype.noteContainer = null;
 IADAStickyNotes.prototype.notes = [];
 
 IADAStickyNotes.prototype.defaultNote = {
         id: null,
         sticky_text: 'Text',
-        user_id: 0,
-        pos_x: 10,
-        pos_y: 10,
-        width: 0,
-        height: 0,
+        author: {author_id, author_name},
+        weight: 0,
+        created_at: '',
 }
 
 function IADAStickyNotes(options) {
 
     this.options = Object.extend({
+        container: 'note-container',
         backend_url: 'url to backend',
         current_author: { author_id: 0, author_name: 'Name' },
+        placeholder: 'Text'
     }, options || {});
+
+    this.noteContainer = $('#' + this.options.container);
 
     this.bindControls();
 
@@ -71,6 +74,7 @@ IADAStickyNotes.prototype.bindControls = function() {
 
 IADAStickyNotes.prototype.newNote = function() {
     var note = this.defaultNote;
+    note.text = this.options.placeholder;
     note.user_id = this.options.current_author.author_id;
     this.renderNote(this.defaultNote);
 }
@@ -84,46 +88,33 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
     // add id
     if(note_obj.id != null) {
     	note.attr('id', 'note_' + note_json_note.id);
+        note.find('p.author_name').text(note_obj.author.author_name);
+        note.find('p.created_at').text(note_obj.created_at);
     } else {
     	note.addClass('new_note');
-    }
-	
-    if(note_obj.pos_x > 0) {
-    	note.css('left', note_obj.pos_x + '%');
-    } else {
-    	note.css('left', '5%');
-    }
-    if(note_obj.pos_y > 0) {
-    	note.css('top', note_obj.pos_y + '%');
-    } else {
-    	note.css('top', '5%');
-    }
-
-    
-    if(note_obj.width > note.css('min-width')) {
-        note.css('width', note_obj.width + 'px');
-    }
-    if(note_obj.height > note.css('min-height')) {
-        note.css('height', note_obj.height + 'px');
+        note.find('p.author').text(this.options.current_author.author_name);
     }
 
     // Bind sticky events
     note.find('div.delete-button').on('click', function(){ sn.deleteNote(this); });
-	
+
     var textarea = note.find('textarea');
+    textarea.val(note_obj.text);
 	textarea.on('blur', function(){ sn.afterNoteEdit(); });
-	//textarea.autogrow();
-	
-    note.resizable({stop: function(event, ui) { sn.afterNoteResize(ui); }, minWidth: parseInt(note.css('min-width')), minHeight: parseInt(note.css('min-height'))});
-    //make draggable
-    note.draggable({containment: 'document', stop: function(event, ui) { sn.afterNoteMove(ui); }});
+	textarea.autogrow();
 
-    note.appendTo("body");
+    var innerNotesContainer = this.noteContainer.find('div.notes');
+    innerNotesContainer.sortable({
+        connectWith: ".notes",
+        start: function(e, ui){
+            ui.placeholder.height(ui.item.outerHeight());
+            ui.placeholder.width(ui.item.outerWidth());
+        },
+    placeholder: "ui-state-highlight",
+    });
 
-}
+    innerNotesContainer.append(note);
 
-IADAStickyNotes.prototype.afterNoteResize = function(ui) {
-	console.debug('Update stickynote size');
 }
 
 IADAStickyNotes.prototype.afterNoteMove = function(ui) {
