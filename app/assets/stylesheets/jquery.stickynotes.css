@@ -70,3 +70,12 @@ a.delete-button {
     margin-top: -7.5px;
     margin-right: 5px;
 }
+
+a.save-button {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 5px;
+}
