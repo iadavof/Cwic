@@ -445,7 +445,7 @@ input, textarea, select {
   transition: border-color 0.2s;
 }
 
-input[type="file"], 
+input[type="file"],
 input[type="checkbox"] {
   width: auto;
 }
@@ -636,6 +636,10 @@ button.ui-datepicker-trigger {
   -moz-animation: animate-stripes-30 1.5s linear 0s infinite normal;
   animation: animate-stripes-30 1.5s linear 0s infinite normal;
 }
+
+
+/* Property and option wrapper markup (view and form) */
+/* XXX TODO if we do not use for anything else than entity types, then move this to entity_types.css.scss */
 
 div.property-wrapper,
 div.option-wrapper {

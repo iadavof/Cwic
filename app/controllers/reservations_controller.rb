@@ -24,14 +24,14 @@ class ReservationsController < ApplicationController
 
   # POST /reservations
   def create
-    @reservation.attributes = resource_params
+    @reservation.localized.attributes = resource_params
     @reservation.save
     respond_with(@reservation, location: organisation_reservation_path(@organisation, @reservation))
   end
 
   # PATCH/PUT /reservations/1
   def update
-    @reservation.update_attributes(resource_params)
+    @reservation.localized.update_attributes(resource_params)
     respond_with(@reservation, location: organisation_reservation_path(@organisation, @reservation))
   end
 
@@ -54,7 +54,7 @@ private
   end
 
   def resource_params
-    params.require(:reservation).permit(:begins_at_date, :begins_at_time, :ends_at_date, :ends_at_time, :entity_id, :organisation_client_id)
+    params.require(:reservation).permit(:begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id)
   end
 
   def interpolation_options

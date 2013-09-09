@@ -1,6 +1,6 @@
 GIT
   remote: git://github.com/kreintjes/i18n_alchemy.git
-  revision: a76e885143a948cca18d1933d9c351f23d858b1b
+  revision: c7af70c8e4a078c13b334890dbf70ad57202ac85
   specs:
     i18n_alchemy (0.1.0)
       activesupport (>= 3.0)

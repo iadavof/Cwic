@@ -41,9 +41,9 @@ nl:
     formats:
       default: '%d-%m-%Y'
 
-  time:
+  time_of_day:
     formats:
-      time: '%H:%M'
+      default: '%H:%M'
 
   activerecord:
     models:
@@ -181,6 +181,48 @@ nl:
           attributes:
             begins_at: 'overlapt met een andere reservering welke eindigt op %{other_ends_at}'
             ends_at: 'overlapt met een andere reservering welke begint op %{other_begins_at}'
+  data_types:
+    string:
+      name: 'Regel tekst'
+      description: 'Een veld waarin een regel tekst kan worden opgegeven'
+    text:
+      name: 'Lange tekst'
+      description: 'Een veld waarin meerdere regels tekst kunnen worden opgegeven'
+    integer:
+      name: 'Geheel getal'
+      description: 'Een veld waarin een geheel getal kan worden opgegeven (zonder decimalen)'
+    float:
+      name: 'Decimaal getal'
+      description: 'Een veld waarin een decimaal getal kan worden opgegeven (met een komma om de decimale te scheiden)'
+    boolean:
+      name: 'Ja/nee'
+      description: 'Een checkbox veld om aan te geven of het de eigenschap wel of niet bezit'
+    enum:
+      name: 'Enkele keuze'
+      description: 'Een veld waarbij een enkele keuze moet worden gemaakt uit een aantal (zelf in te stellen) opties'
+    set:
+      name: 'Meerdere keuzes'
+      description: 'Een veld waarbij meerdere items gekozen mogen worden uit een aantal (zelf in te stellen) opties'
+
+  time_units:
+    second:
+      name: 'Seconde'
+    minute:
+      name: 'Minuut'
+    quarter:
+      name: 'Kwartier'
+    half_hour:
+      name: 'Half uur'
+    hour:
+      name: 'Uur'
+    day:
+      name: 'Dag'
+    week:
+      name: 'Week'
+    month:
+      name: 'Maand'
+    year:
+      name: 'Jaar'
 
   errors:
     messages:
@@ -287,29 +329,6 @@ nl:
     form:
       no_entity_types_found: 'Er zijn nog een objectsoorten toegevoegd. %{link} om een object van een bepaald objectsoort aan te kunnen maken.'
 
-  data_types:
-    string:
-      name: 'Regel tekst'
-      description: 'Een veld waarin een regel tekst kan worden opgegeven'
-    text:
-      name: 'Lange tekst'
-      description: 'Een veld waarin meerdere regels tekst kunnen worden opgegeven'
-    integer:
-      name: 'Geheel getal'
-      description: 'Een veld waarin een geheel getal kan worden opgegeven (zonder decimalen)'
-    float:
-      name: 'Decimaal getal'
-      description: 'Een veld waarin een decimaal getal kan worden opgegeven (met een komma om de decimale te scheiden)'
-    boolean:
-      name: 'Ja/nee'
-      description: 'Een checkbox veld om aan te geven of het de eigenschap wel of niet bezit'
-    enum:
-      name: 'Enkele keuze'
-      description: 'Een veld waarbij een enkele keuze moet worden gemaakt uit een aantal (zelf in te stellen) opties'
-    set:
-      name: 'Meerdere keuzes'
-      description: 'Een veld waarbij meerdere items gekozen mogen worden uit een aantal (zelf in te stellen) opties'
-
   schedule_view:
     today_and_tomorrow:
       tomorrow: 'Morgen'
@@ -353,3 +372,6 @@ nl:
       feedback_error: 'Verzenden feedback mislukt'
       feedback_error_explain: 'Er is helaas iet misgegaan tijdens het verzenden van de feedback. Probeert u het later nog eens.'
       close: 'Sluiten'
+  stickies:
+    js_init:
+      note_placeholder: 'Wayoo leipe sticky'

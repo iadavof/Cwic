@@ -34,7 +34,7 @@ IADAFeedback.prototype.openFeedbackModal = function() {
 
     // Bind small close button
     this.modal.find('a.close').on('click', function() { fb.closeFeedback(); });
-    
+
     // Bind Overlay action
    $('a.overlay').on('click', function() { fb.closeFeedback(); });
 
@@ -143,6 +143,9 @@ IADAFeedback.prototype.objectToString = function(obj) {
 
 IADAFeedback.prototype.sendFeedback = function() {
     var fb = this;
+
+    // hide feedback texts
+    fb.modal.find('h3#feedback-success, p#feedback-success-explain, h3#feedback-error, p#feedback-error-explain, div.feedback-status').hide();
 
     $.ajax({
             type: 'POST',

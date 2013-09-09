@@ -1,26 +1,32 @@
+#note-container {
+    position: relative;
+    float: right;
+}
+
+#note-container div.control-container {
+    margin: 10px;
+    min-width: 400px;
+}
+
 #note-template {
     display: none;
 }
 
 .note {
-    position: absolute;
+    position: relative;
     background-color: #FEF4AC;
     background-image: -ms-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
     background-image: -moz-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
     background-image: -o-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FEF4AC), color-stop(1, #F4E183));
     background-image: -webkit-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
-    background-image: linear-gradient(to bottom, #FEF4AC 0%, #F4E183 100%); 
+    background-image: linear-gradient(to bottom, #FEF4AC 0%, #F4E183 100%);
     box-shadow: 0px 0px 5px 2px #dddddd;
-    display: inline-block;
-    float: left;
-    min-width: 200px;
+    display: block;
+    width: 400px;
     min-height: 200px;
     z-index: 10;
-}
-
-.note:first-child {
-    margin-left: 10px;
+    margin: 5px;
 }
 
 .note div.note-text {
@@ -55,33 +61,21 @@
     z-index: 1;
 }
 
-.note-head-button {
-    position: absolute;
-    left: 0;
-    top: 50%;
-    margin-top: -8.5px;
-    margin-left: 5px;
-    border: solid 1px #cccccc;
-    border-radius: 5px;
-    color:#cccccc;
+a.delete-button {
     cursor: pointer;
-    display: inline-block;
-    height: 15px;
-    text-align: center;
-    text-shadow: 1px 1px #ffffff;
-    width: 15px;
-    line-height: 15px;
-    font-size: 15px;
-}
-
-.note-head-button:hover {
-    border: solid 1px #aaaaaa;
-    color:#aaaaaa;
-}
-
-.delete-button {
-    left: auto;
+    display: block;
+    position: absolute;
     right: 0;
-    margin-left: 0;
+    top: 50%;
+    margin-top: -7.5px;
     margin-right: 5px;
+}
+
+a.save-button {
+    cursor: pointer;
+    display: block;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 5px;
 }

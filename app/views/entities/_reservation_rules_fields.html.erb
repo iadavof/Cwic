@@ -1,0 +1,46 @@
+<div class="fields reservation-rule-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
+  <div class="view">
+    <div class="horizontal-block extra">
+      <dl>
+        <dt><%= ReservationRule.human_attribute_name(:period_unit) %></dt>
+        <dd data-field="data-type"><%= f.object.period_unit.try(:human_name) %></dd>
+      </dl>
+    </div>
+    <div class="actions">
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-edit', title: t('edit_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
+      <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: ReservationRule.model_name.human.lcfirst), data: { confirm: t('.destroy_are_you_sure', default: :destroy_are_you_sure) } %>
+    </div>
+  </div>
+  <div class="form">
+    <div class="horizontal-block extra">
+      <div class="field">
+        <%= f.label :active_from %>
+        <%= f.datetime_select :active_from, data: { field: 'active-from' } %>
+      </div>
+      <div class="field">
+        <%= f.label :active_to %>
+        <%= f.datetime_select :active_to, data: { field: 'active-till' } %>
+      </div>
+      <div class="field">
+        <%= f.label :period_unit_id %>
+        <%= f.select :period_unit_id, TimeUnit.common.sort.map { |tu| [tu.human_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'period-unit' } %>
+      </div>
+      <div class="field">
+        <%= f.label :period_amount %>
+        <%= f.number_field :period_amount, data: { field: 'period-amount' } %>
+      </div>
+      <div class="field">
+        <%= f.label :min_periods %>
+        <%= f.number_field :min_periods, data: { field: 'min-periods' } %>
+      </div>
+      <div class="field">
+        <%= f.label :max_periods %>
+        <%= f.number_field :max_periods, data: { field: 'max-periods' } %>
+      </div>
+    </div>
+    <div class="actions">
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-ok', title: t('done_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-remove remove-nested-fields-extra', title: t('remove_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
+    </div>
+  </div>
+</div>

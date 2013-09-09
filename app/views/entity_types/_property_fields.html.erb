@@ -36,7 +36,7 @@
     <div class="horizontal-block extra">
       <div class="field">
         <%= f.label :data_type_id %>
-        <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, :'data-key' => dt.key }] }, { prompt: true }, data: { field: 'data-type' } %>
+        <%= f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, data: { key:  dt.key } }] }, { prompt: true }, data: { field: 'data-type' } %>
       </div>
       <div class="field required">
         <%= f.label :required, title: t('.required_expl') %>
