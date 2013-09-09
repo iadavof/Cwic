@@ -58,6 +58,16 @@
   font-style: italic;
 }
 
+@font-face {
+  font-family: 'ArchitectsDaughter';
+  src: font-url('architectsdaughter-webfont.eot');
+  src: font-url('architectsdaughter-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('architectsdaughter-webfont.woff') format('woff'),
+       font-url('architectsdaughter-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}
+
 html {
   background: #f7f7f7;
 }
