@@ -6,6 +6,7 @@ class EntityType < ActiveRecord::Base
   has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
 
   belongs_to :icon, class_name: 'EntityTypeIcon'
+  belongs_to :organisation
 
   validates :name, presence: true, length: { maximum: 255 }
 

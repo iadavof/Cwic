@@ -1,6 +1,6 @@
 /* DATEPICKER & TIMEPICKER */
 
-.ui-timepicker .ui-widget-header, 
+.ui-timepicker .ui-widget-header,
 .ui-datepicker .ui-widget-header {
   background: transparent;
   border: 0 none;
@@ -76,7 +76,7 @@ ui-timepicker-table td {
   background: transparent;
 }
 
-.ui-timepicker .ui-timepicker-table table tr:nth-child(2n), 
+.ui-timepicker .ui-timepicker-table table tr:nth-child(2n),
 .ui-datepicker .ui-datepicker-calendar tr:nth-child(2n) {
   background: transparent;
 }
@@ -109,6 +109,7 @@ ui-timepicker-table td {
   border-radius: 0;
   border-color: #cccccc;
   padding: 0;
+  margin-bottom: 1em;
 }
 
 .ui-tabs .ui-tabs-panel {
@@ -146,7 +147,7 @@ ui-timepicker-table td {
   z-index: 1;
 }
 
-.ui-tabs .ui-state-default a, 
+.ui-tabs .ui-state-default a,
 .ui-tabs .ui-state-hover a {
   color: inherit;
 }

@@ -17,6 +17,19 @@ DataType.create!([
   { key: 'set', rails_type: 'Array', form_type: 'collection_select_multi' },
 ])
 
+# Create default time periods
+TimeUnit.create!([
+  { key: 'second', common: false, seconds: 1 },
+  { key: 'minute', common: false, seconds: 60 },
+  { key: 'quarter', common: true, seconds: 900 },
+  { key: 'half_hour', common: true, seconds: 1800 },
+  { key: 'hour', common: true, seconds: 3600 },
+  { key: 'day', common: true, seconds: 86400 },
+  { key: 'week', common: true, seconds: 604800 },
+  { key: 'month', common: false, seconds: nil },
+  { key: 'year', common: false, seconds: nil },
+])
+
 # Create default roles
 or1 = OrganisationRole.create!(name: 'Administrator')
 OrganisationRole.create!(name: 'Planner')
@@ -29,3 +42,12 @@ ou1 = OrganisationUser.create!(organisation: o1, user: u1, organisation_role: or
 
 # Create the default entity type icon
 EntityTypeIcon.create!(name: 'Object')
+
+# Create test entity type
+et1 = EntityType.create!(organisation: o1, name: 'Object', description: 'A sample object type to use for test purposes')
+
+# Create test entity
+Entity.create!(organisation: o1, entity_type: et1, name: 'Object 1', description: 'A sample object to use for test purposes')
+
+# Create test client
+OrganisationClient.create!(organistion: o1, first_name: 'Test', last_name: 'Klant', email: 'test@iada.nl')
