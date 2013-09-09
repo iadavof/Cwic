@@ -73,7 +73,7 @@ a.delete-button {
 
 a.save-button {
     cursor: pointer;
-    display: block;
+    display: none;
     position: absolute;
     right: 0;
     bottom: 0;

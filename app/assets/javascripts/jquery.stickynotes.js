@@ -102,7 +102,8 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
 
     var textarea = note.find('textarea');
     textarea.val(note_obj.text);
-	textarea.on('blur', function(){ sn.afterNoteEdit(); });
+    textarea.on('blur', function(){ sn.afterNoteEdit(); });
+	note.find('a.save-button').on('click', function(){ sn.afterNoteEdit(); });
 	textarea.autogrow();
 
     var innerNotesContainer = this.noteContainer.find('div.notes');
@@ -112,7 +113,7 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
             ui.placeholder.height(ui.item.outerHeight());
             ui.placeholder.width(ui.item.outerWidth());
         },
-    placeholder: "ui-state-highlight",
+        placeholder: "ui-state-highlight",
     });
 
     innerNotesContainer.append(note);
@@ -121,6 +122,7 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
     if(note_obj.id == null) {
         textarea.focus();
         textarea.select();
+        note.find('a.save-button').show();
     }
 
 }
@@ -130,6 +132,10 @@ IADAStickyNotes.prototype.afterNoteMove = function(ui) {
 }
 
 IADAStickyNotes.prototype.afterNoteEdit = function() {
+    var note = $(this).parents('div.note');
+    note.find('a.save-button').hide();
+    var textarea = note.find('textarea');
+    //textarea.unfocus();
 	console.debug('Update stickynote text');
 }
 
