@@ -68,7 +68,7 @@ gem 'devise-i18n-views', github: 'mcasimir/devise-i18n-views'
 gem 'cancan'
 
 # Use I18n alchemy gem for easy number (and possibly date) parsing and localization in forms
-gem 'i18n_alchemy', path: '~/rails/gems/i18n_alchemy' #github: 'kreintjes/i18n_alchemy'
+gem 'i18n_alchemy', github: 'kreintjes/i18n_alchemy'
 
 # Responders gem for nice and easy responses after CRUD actions
 gem 'responders'
