@@ -110,7 +110,7 @@ IADAoccupationView.prototype.updateOccupationView = function() {
         this.occupationContainer.find('select#date_current_month').val(this.currentMonth);
         this.occupationContainer.find('select#date_current_year').val(this.currentYear);
         this.occupationContainer.find('div.top-axis p.axis-part-name').text($.datepicker._defaults.monthNames[this.currentMonth-1] + ' ' + this.currentYear);
-    
+
         var daysInMonth = this.daysInMonth();
         var dayBlockWidth = 100.0 / daysInMonth;
 
@@ -147,15 +147,15 @@ IADAoccupationView.prototype.getEntities = function() {
 
 IADAoccupationView.prototype.getPercentages = function() {
     if(this.options.view == 'dayOccupation') {
-        var url = this.options.backend_url + '/day_occupation_percentages';
-        var data = {
-            year: this.currentYear,
-        }
-    } else if(this.options.view == 'weekOccupation') {
-        var url = this.options.backend_url + '/week_occupation_percentages';
+        var url = this.options.backend_url + '/day_occupation_percentages.json';
         var data = {
             year: this.currentYear,
             month: this.currentMonth,
+        }
+    } else if(this.options.view == 'weekOccupation') {
+        var url = this.options.backend_url + '/week_occupation_percentages.json';
+        var data = {
+            year: this.currentYear,
         }
     }
 
