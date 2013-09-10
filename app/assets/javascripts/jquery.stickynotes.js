@@ -1,6 +1,5 @@
 IADAStickyNotes.prototype.options = null;
 IADAStickyNotes.prototype.noteContainer = null;
-IADAStickyNotes.prototype.notes = [];
 
 IADAStickyNotes.prototype.defaultNote = {
         id: null,
@@ -36,8 +35,7 @@ IADAStickyNotes.prototype.getNotes = function() {
             window.log("Error getting notes");
         }).success(function(response) {
             if(response.length > 0) {
-                sn.notes = reponse.stickies;
-                sn.renderNotes();
+                sn.renderNotes(response.stickies);
             }
         });
 
@@ -60,9 +58,9 @@ IADAStickyNotes.prototype.saveNote = function(note_obj) {
     });
 }
 
-IADAStickyNotes.prototype.renderNotes = function() {
-    for(noteNr in this.notes) {
-        current = this.notes[noteNr];
+IADAStickyNotes.prototype.renderNotes = function(notes) {
+    for(noteNr in notes) {
+        current = notes[noteNr];
         this.renderNote(current);
     }
 }
@@ -102,16 +100,19 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
 
     var textarea = note.find('textarea');
     textarea.val(note_obj.text);
-    textarea.on('blur', function(){ sn.afterNoteEdit(); });
-	note.find('a.save-button').on('click', function(){ sn.afterNoteEdit(); });
+    textarea.on('blur', function(){ sn.afterNoteEdit(this); });
+	note.find('a.save-button').on('click', function(){ sn.afterNoteEdit(this); });
 	textarea.autogrow();
 
     var innerNotesContainer = this.noteContainer.find('div.notes');
     innerNotesContainer.sortable({
         connectWith: ".notes",
-        start: function(e, ui){
+        start: function(e, ui) {
             ui.placeholder.height(ui.item.outerHeight());
             ui.placeholder.width(ui.item.outerWidth());
+        },
+        stop: function(e, ui) {
+            sn.afterNoteMove(ui);
         },
         placeholder: "ui-state-highlight",
     });
@@ -131,8 +132,8 @@ IADAStickyNotes.prototype.afterNoteMove = function(ui) {
 	console.debug('Update stickynote position');
 }
 
-IADAStickyNotes.prototype.afterNoteEdit = function() {
-    var note = $(this).parents('div.note');
+IADAStickyNotes.prototype.afterNoteEdit = function(element) {
+    var note = $(element).parents('div.note');
     note.find('a.save-button').hide();
     var textarea = note.find('textarea');
     //textarea.unfocus();
@@ -140,27 +141,5 @@ IADAStickyNotes.prototype.afterNoteEdit = function() {
 }
 
 IADAStickyNotes.prototype.deleteNote = function(element) {
-    $(element).parents(".note").remove();
-}
-
-IADAStickyNotes.prototype.updateNoteInfo = function(note_element, noteid) {
-    for(noteNr in this.notes) {
-        current = this.notes[noteNr];
-        if(current.id == noteid) {
-
-            var notePercentPos = positionToPercentageDocument(note_element.position);
-
-            current.pos_x = notePercentPos.x;
-            current.pos_y = notePercentPos.x;
-            current.width = note_element.width();
-            current.height = note_element.height();
-
-            return current;
-        }
-    }
-    return null;
-}
-
-IADAStickyNotes.prototype.positionToPercentageDocument = function(position) {
-    return {x: position.x.toFixed() / document.width() * 100.0, y: position.y.toFixed() / document.height() * 100.0};
+    $(element).parents("div.note").remove();
 }
