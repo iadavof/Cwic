@@ -3,7 +3,6 @@ class Feedback < ActiveRecord::Base
   belongs_to :user
   belongs_to :organisation
 
-  validates :message
   validates :specs, presence: true
   validates :user, presence: true
   validates :screen_capture, presence: true
