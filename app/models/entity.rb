@@ -5,6 +5,8 @@ class Entity < ActiveRecord::Base
   has_many :day_occupations, dependent: :destroy
   has_many :week_occupations, dependent: :destroy
 
+  has_many :stickies, as: :stickable, dependent: :destroy
+
   belongs_to :entity_type, counter_cache: true
   belongs_to :organisation
 

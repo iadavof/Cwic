@@ -1,6 +1,7 @@
 class OrganisationClient < ActiveRecord::Base
   belongs_to :organisation
   has_many :reservations, dependent: :destroy
+  has_many :stickies, as: :stickable, dependent: :destroy
 
   validates :first_name, presence: true
   validates :last_name, presence: true

@@ -2,54 +2,71 @@ class StickiesController < ApplicationController
   before_action :load_resource
   authorize_resource
 
-  respond_to :html, :json
+  respond_to :json
 
   # GET /stickies_for
   def stickies_for
-    respond_with(@stickies)
+    stickies = []
+    @stickies.each do |st|
+      stickies << st.json_representation
+    end
+    render json: stickies, status: :ok
   end
 
   # POST /stickies
   def create
-    if params[:resource].present? && params[:rid].present?
-      resource = params[:resource].classify;
-      if resource.present?
-        item = resource.find(params[:rid])
-        if item.present?
-          @sticky.stickable = item
-        end
-      end
-    end
     @sticky.localized.attributes = resource_params
+    @sticky.weight = 0
     @sticky.save
-    respond_with(@sticky)
+    respond_with(@organisation, @sticky) do |format|
+      format.json { render json: @sticky.json_representation }
+    end
+  end
+
+  def weight_update
+    @stickies.each do |st|
+      st.weight = params[:new_weight_ids].index(st.id.to_s)
+      st.save
+    end
+    render json: nil, status: :ok
   end
 
   # PATCH/PUT /stickies/1
   def update
     @sticky.localized.update_attributes(resource_params)
-    respond_with(@sticky)
+    respond_with(@organisation, @sticky) do |format|
+      format.json { render json: nil }
+    end
   end
 
   # DELETE /stickies/1
   def destroy
     @sticky.destroy
-    respond_with(@sticky)
+    respond_with(@organisation, @sticky) do |format|
+      format.json { render json: nil }
+    end
   end
 
 private
   def load_resource
     case params[:action]
-    when 'create'
-      @sticky = Sticky.new
-    when 'stickies_for'
-      @stickies = nil
-      resource = params[:resource];
+    when 'weight_update'
+      @stickies = @organisation.stickies.accessible_by(current_ability, :index).find(params[:new_weight_ids]);
+    when 'stickies_for', 'create'
+      @stickies = []
+      item = nil
+      resource = params[:resource]
       if resource.present?
         item = resource.classify.constantize.find(params[:rid])
-        if item.present?
+        if item.present? && item.stickies.present?
           @stickies = item.stickies
         end
+      end
+
+      if params[:action] == 'create' && item
+        @sticky = @organisation.stickies.build
+        @sticky.stickable = item
+        @sticky.user = current_user
       end
     else
       @sticky = Sticky.find(params[:id])
@@ -57,7 +74,7 @@ private
   end
 
   def resource_params
-    params.require(:sticky).permit(:stickable_id, :user_id, :sticky_text, :pos_x, :pos_y, :width, :height)
+    params.require(:sticky).permit(:sticky_text)
   end
 
   def interpolation_options

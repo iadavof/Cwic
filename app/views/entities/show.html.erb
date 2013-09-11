@@ -2,6 +2,8 @@
 <h1><%= show_title(@entity) %></h1>
 <% end %>
 
+<%= render partial: 'stickies/js_init', locals: { stickies: @entity.stickies, resource_name: @entity.class.name, resource_id: @entity.id } %>
+
 <dl>
   <dt><%= Entity.human_attribute_name(:name) %></dt>
   <dd><%= @entity.name %></dd>
