@@ -31,6 +31,10 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def length_for_week(week)
+    week.to_days.map { |day| self.length_for_day(day) }.sum
+  end
+
   def instance_name
     "#{self.class.model_name.human} ##{self.id.to_s}"
   end
@@ -49,7 +53,29 @@ private
     end
   end
 
+  def occupation_recalculation_needed?
+    return self.destroyed? || self.begins_at_was.nil? || self.ends_at.nil? || self.begins_at_was != self.begins_at || self.ends_at_was != self.ends_at
+  end
+
   def trigger_occupation_recalculation
+    # Note: this code could be more optimized for updates (for example, when we move a reservation in the same day, then no recalculations are necessary)
+    # Check if something has changed, if so, perform occupation recalculation.
+    if occupation_recalculation_needed?
+      if self.begins_at_was.present? && self.ends_at_was.present?
+        days = (self.begins_at_was.to_date..self.ends_at_was.to_date)
+        DayOccupation.recalculate_occupations(self.entity, days)
+        WeekOccupation.recalculate_occupations(self.entity, Week.from_date(days.min)..Week.from_date(days.max))
+      end
+
+      unless self.destroyed?
+        days = (self.begins_at.to_date..self.ends_at.to_date)
+        DayOccupation.recalculate_occupations(self.entity, days)
+        WeekOccupation.recalculate_occupations(self.entity, Week.from_date(days.min)..Week.from_date(days.max))
+      end
+    end
+  end
+
+  def trigger_occupation_recalculation_old
     recalculation_dates = []
 
     # Old values
