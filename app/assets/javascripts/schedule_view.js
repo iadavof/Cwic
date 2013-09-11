@@ -69,10 +69,10 @@ IADAscheduleView.prototype.toggleEntity = function(entity_button) {
     var id = parseInt($(entity_button).attr('id').split('_')[1]);
 
     if($(entity_button).hasClass('active')) {
-        $(entity_button).removeClass('active');
+        $(entity_button).removeClass('active').css({'border-color': '', 'border-bottom-color': $(entity_button).attr('data-active-color')});
         this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
     } else {
-        $(entity_button).addClass('active');
+        $(entity_button).addClass('active').css('border-color', $(entity_button).attr('data-active-color'));
         this.selectedEntities.push(id);
     }
 
@@ -86,12 +86,12 @@ IADAscheduleView.prototype.toggleEntity = function(entity_button) {
 IADAscheduleView.prototype.toggleEntities = function(on) {
     schedule = this;
     if(on) {
-        this.scheduleContainer.find('.entity-container .entity-button').addClass('active');
+        this.scheduleContainer.find('.entity-container .entity-button').addClass('active').css('border-color', function() {$(this).attr('data-active-color');});
         this.scheduleContainer.find('.entity-container .entity-button').each(function() {
             schedule.selectedEntities.push(this.id.split('_')[1]);
         });
     } else {
-        this.scheduleContainer.find('.entity-container .entity-button').removeClass('active');
+        this.scheduleContainer.find('.entity-container .entity-button').removeClass('active').css({'border-color': '', 'border-bottom-color': function() {$(this).attr('data-active-color');}});
         this.selectedEntities = [];
     }
 
@@ -324,14 +324,14 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
     for(var entnr in response.entities) {
         var entity = response.entities[entnr];
         var jentity = this.getTemplateClone('entityButtonTemplate');
-        jentity.attr('id', 'entity_'+ entity.id);
+        jentity.attr('id', 'entity_'+ entity.id).css('border-bottom-color', entity.color).attr('data-active-color', entity.color);
         jentity.find('.entity-name').text(entity.name);
-        jentity.find('img.entity-icon').attr('src', entity.icon).css('border-color', entity.color);
+        jentity.find('img.entity-icon').attr('src', entity.icon);
 
         if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
             if(localStorage.previouslySelectedEntities.indexOf(entity.id) > -1) {
                 this.selectedEntities.push(entity.id);
-                jentity.addClass('active');
+                jentity.addClass('active').css('border-color', entity.color);
             }
         }
 
