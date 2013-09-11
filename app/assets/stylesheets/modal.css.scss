@@ -43,11 +43,11 @@
     -o-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 
-    -webkit-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
-    -moz-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
-    -ms-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
-    -o-box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
-    box-shadow: 0 1px 1px 2px rgba(0, 0, 0, 0.4) inset;
+    -webkit-box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.4);
+    -moz-box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.4);
+    -ms-box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.4);
+    -o-box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 1px 5px 1px rgba(0, 0, 0, 0.4);
 
     -webkit-transition: opacity .5s, top .5s;
     -moz-transition: opacity .5s, top .5s;
