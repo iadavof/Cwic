@@ -1,6 +1,9 @@
 APP.init = function() {
   this.global.menuInit();
   this.global.keyboardShortcutsInit();
+
+  // set the upper nprogress bar as the default ajax complete and start handlers
+  this.global.addProgressbarToAjax();
 };
 
 APP.global = {
@@ -14,6 +17,17 @@ APP.global = {
 
     $('#main-menu > li > a').on('click', function() {
       return APP.global.slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
+    });
+  },
+  addProgressbarToAjax : function() {
+    NProgress.configure({ container: $('div#progress-bar-container'), showSpinner: false });
+
+    $( document ).ajaxStart(function() {
+      NProgress.start();
+    });
+
+    $( document ).ajaxComplete(function() {
+      NProgress.done();
     });
   },
   slideSubMenuByMenuItem: function(htmlId, animated) {

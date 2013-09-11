@@ -11,6 +11,7 @@
     <div id="header">
       <%= render "layouts/menu" %>
     </div>
+    <div id="progress-bar-container"></div>
     <h1>
       <!--<i class="icon-info-sign" style="font-size: 0.7em; vertical-align: 4%; margin: 0 0.5em 0 0;"></i>-->
       <%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %>

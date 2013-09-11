@@ -12,7 +12,7 @@
     display: none;
 }
 
-.note {
+div.note {
     position: relative;
     background-color: #FEF4AC;
     background-image: -ms-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
@@ -29,7 +29,7 @@
     margin: 5px;
 }
 
-.note div.note-text {
+div.note div.note-text {
     position: relative;
     padding-top: 2.5em;
     width: 100%;
@@ -38,7 +38,7 @@
     box-sizing: border-box;
 }
 
-.note div.note-text textarea {
+div.note div.note-text textarea {
     background-color: transparent;
     border: 0 none;
     font-family: 'ArchitectsDaughter', cursive;
@@ -53,7 +53,7 @@
     resize: none;
 }
 
-.note-head {
+div.note div.note-head {
     position: absolute;
     min-height: 25px;
     width: 100%;
@@ -61,11 +61,11 @@
     z-index: 1;
 }
 
-.note-head > .inner {
+div.note div.note-head > .inner {
   padding: 0 3em 0 8px;
 }
 
-.note-head .author {
+div.note div.note-head p.author {
   float: left;
   width: 50%;
   margin: 0;
@@ -75,7 +75,7 @@
   text-overflow: ellipsis;
 }
 
-.note-head .created_at {
+div.note div.note-head p.created_at {
   float: left;
   width: 50%;
   text-align: right;
@@ -85,7 +85,7 @@
   text-overflow: ellipsis;
 }
 
-a.delete-button {
+div.note a.delete-button {
     cursor: pointer;
     display: block;
     position: absolute;
@@ -95,7 +95,7 @@ a.delete-button {
     margin-right: 5px;
 }
 
-a.save-button {
+div.note a.save-button {
     cursor: pointer;
     display: none;
     position: absolute;
@@ -104,7 +104,7 @@ a.save-button {
     margin: 5px;
 }
 
-p.saved_notification {
+div.note p.saved_notification {
     display: none;
     position: absolute;
     right: 0;
@@ -114,4 +114,14 @@ p.saved_notification {
     color: #666;
     font-style: italic;
     line-height: 100%;
+}
+
+div.note img.ajax_wait {
+    display: none;
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    margin: 5px;
+    width: 15px;
+    height: 15px;
 }

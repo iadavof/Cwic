@@ -61,6 +61,7 @@ IADAStickyNotes.prototype.saveNote = function(note_element) {
         var url = this.options.backend_url + '/' + note.attr('id').split('_')[1] + '.json';
         var method = 'PATCH';
     }
+    note.find('img.ajax_wait').show();
     $.ajax({
         type: method,
         url: url,
@@ -73,10 +74,11 @@ IADAStickyNotes.prototype.saveNote = function(note_element) {
         window.log("Error saving");
     }).success(function(response) {
         if(new_note && response) {
-            note_element.attr('id', 'note_' + response.id);
-            note_element.find('p.created_at').text(response.created_at);
+            note.attr('id', 'note_' + response.id);
+            note.find('p.created_at').text(response.created_at);
         }
-        note_element.find('p.saved_notification').show();
+        note.find('img.ajax_wait').hide();
+        note.find('p.saved_notification').show();
     });
 }
 

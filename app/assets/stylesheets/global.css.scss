@@ -267,6 +267,11 @@ div {
   }
 }
 
+div#progress-bar-container {
+  width: 100%;
+  position: relative;
+}
+
 .ui-widget {
   font-family: inherit;
   font-size: 1em;
