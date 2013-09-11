@@ -1,3 +1,4 @@
+# Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
 class DayOccupation < ActiveRecord::Base
   include I18n::Alchemy
 
@@ -7,21 +8,28 @@ class DayOccupation < ActiveRecord::Base
   validates :day, presence: true
   validates :occupation, presence: true, numericality: true
 
-  # Note: we use delete_all so destroy callbacks will not be called.
-
   def instance_name
     self.day
   end
 
-  def self.recalculate_occupations(entity, dates)
-    entity.day_occupations.where(day: dates).delete_all
+  # Recalculates all occupations in days range for the given entity
+  def self.recalculate_occupations(entity, days)
+    # Delete all old occupations
+    entity.day_occupations.where(day: days).delete_all
+
+    # Get all potential relevant reservations
+    reservations = entity.reservations.where("begins_at < :max AND ends_at > :min", min: days.min, max: (days.max + 1.day)).to_a
+
+    # Determine new occupations
     occupations = []
-    dates.each do |date|
-      reservations = entity.reservations.where("begins_at < :ends_at AND ends_at > :begins_at", begins_at: date, ends_at: date + 1.day)
-      occupation_length = reservations.map { |r| r.length_for_day(date) }.sum
-      occupation_percent = (occupation_length.to_f / 86400) * 100
-      occupations << { entity: entity, day: date, occupation: occupation_percent } if occupation_percent > 0
+    days.each do |day|
+      matches = reservations.select { |r| r.begins_at < (day + 1.day) && r.ends_at > day } # Get relevant reservations for this day
+      occupation_length = matches.map { |r| r.length_for_day(day) }.sum # Calculate the total time for all reservations on this day
+      occupation_percent = (occupation_length.to_f / 1.day.to_i) * 100 # Translate it to a percentage
+      occupations << DayOccupation.new(entity: entity, day: day, occupation: occupation_percent) if occupation_percent > 0 # And add the row
     end
-    DayOccupation.create(occupations)
+
+    # Finally insert all occupations
+    DayOccupation.import(occupations)
   end
 end

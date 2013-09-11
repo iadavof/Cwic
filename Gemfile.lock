@@ -48,6 +48,8 @@ GEM
       activesupport (= 4.0.0)
       arel (~> 4.0.0)
     activerecord-deprecated_finders (1.0.3)
+    activerecord-import (0.4.1)
+      activerecord (>= 3.0)
     activesupport (4.0.0)
       i18n (~> 0.6, >= 0.6.4)
       minitest (~> 4.2)
@@ -190,6 +192,7 @@ PLATFORMS
   x86-mingw32
 
 DEPENDENCIES
+  activerecord-import
   cancan
   carrierwave
   coffee-rails (~> 4.0.0)
