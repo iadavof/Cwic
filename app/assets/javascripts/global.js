@@ -23,11 +23,11 @@ APP.global = {
     NProgress.configure({ container: $('div#progress-bar-container'), showSpinner: false });
 
     $( document ).ajaxStart(function() {
-      NProgress.start();
+      NProgress.stackPush();
     });
 
     $( document ).ajaxComplete(function() {
-      NProgress.done();
+      NProgress.stackPop();
     });
   },
   slideSubMenuByMenuItem: function(htmlId, animated) {

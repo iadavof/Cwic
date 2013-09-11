@@ -16,6 +16,8 @@
 })(function($) {
   var NProgress = {};
 
+  NProgress.number_processes = 0;
+
   NProgress.version = '0.1.2';
 
   var Settings = NProgress.settings = {
@@ -122,6 +124,20 @@
 
     return this;
   };
+
+  NProgress.stackPush = function() {
+    if(NProgress.number_processes <= 0) {
+      NProgress.start();
+    }
+    NProgress.number_processes += 1;
+  }
+
+  NProgress.stackPop = function() {
+    NProgress.number_processes -= 1;
+    if(NProgress.number_processes <= 0) {
+      NProgress.done();
+    }
+  }
 
   /**
    * Hides the progress bar.
