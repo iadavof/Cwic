@@ -96,7 +96,7 @@ IADAFeedback.prototype.reviewFeedback = function() {
 
 IADAFeedback.prototype.closeFeedback = function() {
     this.modal.children(':not(a.close)').hide();
-    this.modal.children().off('click');
+    this.modal.children(':not(a.close)').off('click');
 
     this.screenshot = null;
 
