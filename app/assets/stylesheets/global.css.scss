@@ -89,6 +89,11 @@ body {
   clear: both;
 }
 
+[class^="icon-"], [class*=" icon-"] {
+  vertical-align: middle;
+  font-size: 14px;
+}
+
 /**
  * Menu
  */
@@ -100,10 +105,6 @@ body {
   background-image: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, transparent 100%);
   color: #ffffff;
   text-align: right;
-}
-
-[class^="icon-"], [class*=" icon-"] {
-  vertical-align: middle;
 }
 
 #menu-bar i[class^="icon-"],
@@ -379,12 +380,14 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   letter-spacing: 0.02em;
   word-spacing: 0.03em;
+  margin: 0.7em 0;
 }
 
 h1 {
   font-family: 'AllerLight', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 2.5em;
   margin-left: 20px;
+  line-height: 120%;
 }
 
 h2 {
@@ -491,7 +494,7 @@ button,
   border-radius: 3px;
   line-height: normal;
   transition: background-color 0.2s ease-in-out;
-  background-image: -moz-linear-gradient(top, rgba(255,255,255,0.25) 0%, transparent 50%);
+  background-image: -moz-linear-gradient(top, rgba(255,255,255,0.2) 0%, transparent 60%);
 }
 
 input[type="submit"]:hover,
@@ -506,7 +509,7 @@ input[type="submit"]:active,
 input[type="reset"]:active,
 button:active,
 .button:active {
-  background-image: -moz-linear-gradient(bottom, rgba(255,255,255,0.25) 0%, transparent 50%);
+  background-image: -moz-linear-gradient(bottom, rgba(255,255,255,0.2) 0%, transparent 60%);
 }
 
 input[type="submit"].blue,
@@ -535,13 +538,6 @@ input[type="reset"].red:hover,
 button.red:hover,
 .button.red:hover {
   background-color: #ff4a37;
-}
-
-#open-feedback-button {
-  font-size: 1em;
-  line-height: 200%;
-  margin: 5px 5px 4px 5px;
-  padding: 0 10px;
 }
 
 label {
