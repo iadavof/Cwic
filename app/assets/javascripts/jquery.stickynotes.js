@@ -101,11 +101,13 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
     var textarea = note.find('textarea');
     textarea.val(note_obj.text);
     textarea.on('blur', function(){ sn.afterNoteEdit(this); });
+    textarea.on('focus', function(){ sn.uponNoteEdit(this); });
 	note.find('a.save-button').on('click', function(){ sn.afterNoteEdit(this); });
 	textarea.autogrow();
 
     var innerNotesContainer = this.noteContainer.find('div.notes');
     innerNotesContainer.sortable({
+        handle: "div.note-head",
         connectWith: ".notes",
         start: function(e, ui) {
             ui.placeholder.height(ui.item.outerHeight());
@@ -123,7 +125,6 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
     if(note_obj.id == null) {
         textarea.focus();
         textarea.select();
-        note.find('a.save-button').show();
     }
 
 }
@@ -134,10 +135,24 @@ IADAStickyNotes.prototype.afterNoteMove = function(ui) {
 
 IADAStickyNotes.prototype.afterNoteEdit = function(element) {
     var note = $(element).parents('div.note');
-    note.find('a.save-button').hide();
-    var textarea = note.find('textarea');
-    //textarea.unfocus();
-	console.debug('Update stickynote text');
+    if(note.hasClass('focus')) {
+        note.find('a.save-button').hide();
+        var textarea = note.find('textarea');
+        textarea.focus();
+        console.debug('Update stickynote text');
+        note.removeClass('focus');
+    }
+}
+
+IADAStickyNotes.prototype.uponNoteEdit = function(element) {
+    var note = $(element).parents('div.note');
+    if(!note.hasClass('focus')) {
+        note.addClass('focus');
+        note.find('a.save-button').show();
+        var textarea = note.find('textarea');
+        textarea.focus();
+    	console.debug('Update stickynote text');
+    }
 }
 
 IADAStickyNotes.prototype.deleteNote = function(element) {
