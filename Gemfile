@@ -80,6 +80,9 @@ gem 'nested_form'
 gem 'mini_magick', github: 'minimagick/minimagick' # Temporary use master branch because of problem with 3.6.0 on Windows (when new version is released switch to that version).
 gem 'carrierwave'
 
+# ActiveRecord Import for multi INSERTs at once
+gem 'activerecord-import'
+
 # Feedback
 #gem 'feedbackandscreencap' # Uitgezet want waardeloze gem, werkt na installatie volgens mij ook zonder gemvermelding.
 

@@ -5,6 +5,8 @@ class Entity < ActiveRecord::Base
   has_many :day_occupations, dependent: :destroy
   has_many :week_occupations, dependent: :destroy
 
+  has_many :stickies, as: :stickable, dependent: :destroy
+
   belongs_to :entity_type, counter_cache: true
   belongs_to :organisation
 
@@ -16,7 +18,7 @@ class Entity < ActiveRecord::Base
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :reservation_rules, allow_destroy: true
 
-  default_scope order('id ASC')
+  default_scope { order('id ASC') }
 
   def instance_name
     self.name

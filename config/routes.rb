@@ -18,10 +18,11 @@ Cwic::Application.routes.draw do
     match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
     resources :entity_types
     resources :entities
-  
+
+    resources :stickies, except: [:show, :create, :new]
+    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch'
     match 'stickies/:resource/:rid/', controller: 'stickies', action: 'stickies_for', via: 'get', as: 'stickies_for_resource'
-    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'create', via: 'post', as: 'new_sticky_for_resource'
-    match 'stickies/:resource/:rid/:id', controller: 'stickies', action: 'update', via: 'post'
+    match 'stickies/:resource/:rid/new', controller: 'stickies', action: 'create', via: 'post', as: 'new_sticky_for_resource'
 
     # Routes for rendering the schedules
     match '/schedule_view/horizontal_calendar', controller: 'schedule_view', action: 'horizontal_calendar', via: 'get'

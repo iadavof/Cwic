@@ -41,6 +41,10 @@ nl:
     formats:
       default: '%d-%m-%Y'
 
+  time:
+    formats:
+      default: '%d-%m-%Y %H:%M'
+
   time_of_day:
     formats:
       default: '%H:%M'
@@ -375,3 +379,4 @@ nl:
   stickies:
     js_init:
       note_placeholder: 'Wayoo leipe sticky'
+      saved: 'Opgeslagen'

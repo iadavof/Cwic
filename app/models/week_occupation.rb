@@ -1,3 +1,4 @@
+# Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
 class WeekOccupation < ActiveRecord::Base
   include I18n::Alchemy
 
@@ -12,35 +13,23 @@ class WeekOccupation < ActiveRecord::Base
     self.week
   end
 
-  def self.recalculate_occupations(entity, dates)
+  # Recalculates all occupations in weeks range for the given entity
+  def self.recalculate_occupations(entity, weeks)
+    # Delete all old occupations
+    entity.week_occupations.where('CONCAT(year, week) BETWEEN :min AND :max', min: weeks.min.to_s, max: weeks.max.to_s).delete_all
+
+    # Get all potential relevant reservations
+    reservations = entity.reservations.where("begins_at < :max AND ends_at > :min", min: weeks.min.to_begin_date, max: (weeks.max.to_end_date + 1.day)).to_a
+
     occupations = []
-    weeks = []
-
-    dates.each do |date|
-      # %V - Week number of the week-based year (01..53), %G - The week-based year
-      week = { number: date.strftime('%V').to_i, year: date.strftime('%G').to_i }
-      unless weeks.include?(week)
-        weeks << week
-      end
-    end
-
     weeks.each do |week|
-      occupation_length = 0
-
-      entity.week_occupations.where('week = :week AND year = :year', week: week[:number], year: week[:year]).delete_all
-
-      start_at = Date.commercial(week[:year], week[:number]);
-      end_at = start_at + 7.days
-      reservations = entity.reservations.where("begins_at < :ends_at AND ends_at > :begins_at", begins_at: start_at, ends_at: end_at)
-
-      while start_at < end_at
-        occupation_length += reservations.map { |r| r.length_for_day(start_at) }.sum
-        start_at += 1.day
-      end
-
-      occupation_percent = (occupation_length.to_f / (86400 * 7)) * 100
-      occupations << { entity: entity, week: week[:number], year: week[:year], occupation: occupation_percent } if occupation_percent > 0
+      matches = reservations.select { |r| r.begins_at < (week.to_end_date + 1.day) && r.ends_at > week.to_begin_date } # Get relevant reservations for this week
+      occupation_length = matches.map { |r| r.length_for_week(week) }.sum # Calculate the total time for all reservations in this week
+      occupation_percent = (occupation_length.to_f / 1.week.to_i) * 100 # Translate it to a percentage
+      occupations << WeekOccupation.new(entity: entity, week: week.week, year: week.year, occupation: occupation_percent) if occupation_percent > 0 # And add the row
     end
-    WeekOccupation.create(occupations)
+
+    # Finally insert all occupations
+    WeekOccupation.import(occupations)
   end
 end
