@@ -350,7 +350,7 @@ div.horizontal-calendar div.entity-container div.entity-button {
   position: relative;
   float: left;
   border: 1px solid #ccc;
-  border-bottom-width: 2px;
+  border-bottom-width: 3px;
   margin: 5px;
   width: 70px;
   cursor: pointer;
@@ -360,7 +360,9 @@ div.horizontal-calendar div.entity-container div.entity-button {
 }
 
 div.horizontal-calendar div.entity-container div.entity-button.active {
-  border-bottom-width: 8px;
+  border-width: 3px;
+  margin-left: 3px;
+  margin-right: 3px;
   box-shadow: 0 1px 3px rgba(0,0,0,0.4);
 }
 
