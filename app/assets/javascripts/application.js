@@ -15,7 +15,7 @@
 //= require jquery.ui.all
 //= require jquery_nested_form
 //= require jquery-minicolors
-//= require jquery.ui.timepicker_edited
+//= require ./libraries/jquery.ui.timepicker_edited
 //= require gistyle
 //= require_tree ./i18n
 //= require_tree .

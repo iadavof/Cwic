@@ -23,3 +23,6 @@
 
 # Image uploads.
 /public/uploads/
+
+# Precompiled assets
+/public/assets
