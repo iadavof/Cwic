@@ -215,11 +215,23 @@ body {
   text-align: center;
 }
 
+html.js #submenu-box {
+  height: 0;
+}
+
 #submenu-box > .submenu {
   display: inline-block;
   text-align: left;
   padding: 10px;
   margin: 0;
+}
+
+html.js #submenu-box > .submenu {
+  display: none;
+}
+
+html.js #submenu-box > .submenu.selected {
+  display: inline-block;
 }
 
 #submenu-box > .submenu > h2 {
@@ -289,7 +301,9 @@ div#progress-bar-container {
 .help {
   [class^="icon-"], [class*=" icon-"] {
     &:hover + p {
-      display: block;
+      opacity: 1;
+      visibility: visible;
+      transition-delay: 0s;
     }
     font-size: 1.5em;
     line-height: 130%;
@@ -304,12 +318,14 @@ div#progress-bar-container {
     margin: 0;
     padding: 0.3em 0.5em;
     max-width: 40em;
-    display: none;
+    opacity: 0;
+    visibility: hidden;
     border: 1px solid #17889d;
     border-radius: 3px;
     box-shadow: 0 1px 3px rgba(0,0,0,0.4);
     background: #ffffff;
     z-index: 1;
+    transition: opacity 0.2s ease-in-out 0s, visibility 0s linear 0.2s;
   }
   display: block;
   position: relative;

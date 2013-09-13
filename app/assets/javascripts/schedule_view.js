@@ -444,7 +444,8 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function() {
             $('.day-row-schedule-object-item-parts').css('height', '30px');
         } else {
             $('.day-row-schedule-object-item-parts').css('height', '20px');
-            $('.day-axis .day-axis-row').height($('.day-row:not(.today)').outerHeight());
+            $('.day-axis .day-axis-row:not(.today)').height($('.day-row:not(.today)').outerHeight());
+            $('.day-axis .day-axis-row.today').height($('.day-row.today').outerHeight());
         }
     }
 }

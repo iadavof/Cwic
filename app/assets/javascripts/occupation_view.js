@@ -98,7 +98,7 @@ IADAoccupationView.prototype.bindControls = function() {
     });
 
     this.occupationContainer.find('div.control-container select').on('change', function() {
-        console.debug('ble');
+        console.log('ble');
         occ.currentYear = parseInt($('select#date_current_year').val());
         if(occ.options.view == 'dayOccupation') {
             occ.currentMonth = parseInt($('select#date_current_month').val());

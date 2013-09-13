@@ -1,10 +1,13 @@
 <!DOCTYPE html>
-<html>
+<html class="no-js">
   <head>
     <title>Cwic | IADA</title>
     <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <script type="text/javascript">
+      (function(h){h.className = h.className.replace('no-js', 'js')})(document.documentElement)
+    </script>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "i18n/translations-#{I18n.locale}" %>
+    <%= javascript_include_tag "i18n/cwic/translations-#{I18n.locale}" %>
     <%= csrf_meta_tags %>
   </head>
   <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>">

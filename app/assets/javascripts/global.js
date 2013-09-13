@@ -10,9 +10,6 @@ APP.global = {
   menuInit: function() {
     var submenuBox = $('#submenu-box');
 
-    $(submenuBox).css({height: 0});
-    $('#submenu-box > .submenu').hide();
-
     this.slideSubMenuByMenuItem($('#main-menu > li.active').first().attr('id'), false);
 
     $('#main-menu > li > a').on('click', function() {
@@ -64,7 +61,7 @@ APP.global = {
           }
         });
         $(submenuBox).animate({height: 0}, duration, 'swing', function() {
-          $(submenus).removeClass('selected').hide();
+          $(submenus).removeClass('selected');
         });
       } else {
         $(menuItems).removeClass('selected');
@@ -83,15 +80,15 @@ APP.global = {
         });
         if ($(submenuBox).height() > 0) { /* Contract expanded submenu first, then expand requested submenu */
           $(submenuBox).animate({height: 0}, duration, 'swing', function() {
-            $(submenus).removeClass('selected').hide();
-            $(relatedSubmenu).addClass('selected').show();
+            $(submenus).removeClass('selected');
+            $(relatedSubmenu).addClass('selected');
             $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function() {
               $(this).css({height: 'auto'});
             });
           });
         } else { /* Expand requested submenu */
-          $(submenus).removeClass('selected').hide();
-          $(relatedSubmenu).addClass('selected').show();
+          $(submenus).removeClass('selected');
+          $(relatedSubmenu).addClass('selected');
           $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function(){
             $(this).css({height: 'auto'});
           });
