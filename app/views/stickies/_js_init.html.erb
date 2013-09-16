@@ -1,37 +1,37 @@
 <script type="text/javascript">
-        // wait for the DOM to be loaded
-        $(document).ready(function() {
-            var stickyNotes = new IADAStickyNotes({
-                container: 'note-container',
-                resource: '<%= resource_name %>',
-                resource_id: <%= resource_id %>,
-            	backend_url: '<%= organisation_stickies_path(current_organisation) %>',
-            	current_author: {
-            		id: <%= current_user.id %>,
-            		name: '<%= current_user.instance_name %>',
-            	},
-                placeholder: '<%= t('.note_placeholder') %>',
-            });
-        });
+  // Wait for the DOM to be loaded
+  $(document).ready(function() {
+    var stickyNotes = new IADAStickyNotes({
+      container: 'note-container',
+      resource: '<%= resource_name %>',
+      resource_id: <%= resource_id %>,
+    	backend_url: '<%= organisation_stickies_path(current_organisation) %>',
+    	current_author: {
+    		id: <%= current_user.id %>,
+    		name: '<%= current_user.instance_name %>',
+    	},
+      placeholder: '<%= t('.note_placeholder') %>',
+    });
+  });
 </script>
 
 <div id="note-container">
-    <div class="control-container clearfix">
-        <button class="new-sticky">Add Note</button>
-    </div>
-    <div class="notes"></div>
+  <div class="control-container clearfix">
+    <button class="new-sticky">Add Note</button>
+  </div>
+  <div class="notes"></div>
 </div>
 
 <div id="note-template">
-    <div class="note-head">
-      <div class="inner clearfix">
-        <p class="author"></p>
-        <p class="created_at"></p>
-        <a class="delete-button icon icon-remove"></a>
-      </div>
+  <div class="note-head">
+    <div class="inner clearfix">
+    <p class="author"></p>
+    <p class="created_at"></p>
+    <a class="delete-button icon icon-remove"></a>
     </div>
-    <div class="note-text"><textarea></textarea></div>
-    <a class="save-button icon icon-ok"></a>
-    <p class="saved_notification"><%=t('.saved') %></p>
-    <img class="ajax_wait" src="/assets/ajax_wait.gif" />
+  </div>
+  <div class="note-text"><textarea></textarea></div>
+  <a class="save-button icon icon-ok"></a>
+  <p class="saved_notification"><%=t('.saved') %></p>
+  <img class="ajax_wait" src="/assets/ajax_wait.gif" />
 </div>

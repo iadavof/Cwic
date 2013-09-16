@@ -276,12 +276,12 @@ IADAscheduleView.prototype.setNewReservationForm = function(item) {
     var reservationForm = $('#new_reservation_popup');
     reservationForm.find('input#begins_at_date').datepicker("setDate", item.begin_date);
     reservationForm.find('input#begins_at_time').timepicker("setTime", item.begin_time);
-    reservationForm.find('input#ends_at_date').datepicker("setDate", item.end_date);
     if(item.end_time == '24:00') {
-        //to next day TODO
-        reservationForm.find('input#ends_at_time').timepicker("setTime", '00:00');
-        reservationForm.find('input#ends_at_date').datepicker("setDate", reservationForm.find('input#ends_at_date').datepicker("getDate", '+1d'));
+        item.end_date.setDate(item.end_date.getDate() + 1); // Increase day by one
+        item.end_time = '00:00'; // And set time to 00:00
     }
+    reservationForm.find('input#ends_at_date').datepicker("setDate", item.end_date);
+    reservationForm.find('input#ends_at_time').timepicker("setTime", item.end_time);
     reservationForm.find('select#reservation_entity_id').val(item.schedule_object_id);
 }
 

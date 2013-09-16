@@ -83,9 +83,6 @@ gem 'carrierwave'
 # ActiveRecord Import for multi INSERTs at once
 gem 'activerecord-import'
 
-# Feedback
-#gem 'feedbackandscreencap' # Uitgezet want waardeloze gem, werkt na installatie volgens mij ook zonder gemvermelding.
-
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
