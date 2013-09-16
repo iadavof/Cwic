@@ -1,5 +1,4 @@
-class OccupationController < ApplicationController
-
+class OccupationViewController < ApplicationController
 	respond_to :html, :json
 
 	def day_occupation

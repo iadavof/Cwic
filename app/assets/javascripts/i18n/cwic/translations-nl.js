@@ -8,5 +8,9 @@ var jsLang = {
   strings: {
     expand_menu: 'Menu uitklappen',
     contract_menu: 'Menu inklappen'
+  },
+  stickies: {
+    placeholder: 'Wayoo leipe sticky',
+    saved: 'Opgeslagen'
   }
 }

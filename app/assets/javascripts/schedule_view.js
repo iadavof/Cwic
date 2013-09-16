@@ -8,11 +8,18 @@ APP.schedule_view = {
     $('#ends_at_time').timepicker(timeOptions);
   },
   horizontal_calendar: function() {
-  new IADAscheduleView({
-    container: 'horizontal-calendar',
-    backend_url: Routes.organisation_schedule_view_index_path($('#horizontal-calendar').data('organisation-id')),
-    view: 'horizontalCalendar'
-  });
+    new IADAscheduleView({
+      container: 'horizontal-calendar',
+      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      view: 'horizontalCalendar'
+    });
+  },
+  today_and_tomorrow: function() {
+    new IADAscheduleView({
+      container: 'today-and-tomorrow-container',
+      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      view: 'todayAndTomorrow'
+    });
   }
 };
 

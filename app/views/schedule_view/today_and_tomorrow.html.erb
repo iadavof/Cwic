@@ -2,11 +2,6 @@
 <%= t('.today_and_tomorrow') %>
 <% end %>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-      var schedule = new IADAscheduleView({container: 'today-and-tomorrow-container', backend_url: '<%= organisation_schedule_view_index_path(@organisation) %>', view: 'todayAndTomorrow'});
-  });
-</script>
 <div id="today-and-tomorrow-container" class="clearfix today-and-tomorrow-container">
   <% if @entity_types.empty? %>
     <p class="no_entities_found"><%= t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe %></p>

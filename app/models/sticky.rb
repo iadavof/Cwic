@@ -7,7 +7,6 @@ class Sticky < ActiveRecord::Base
 
   validates :stickable, presence: true
   validates :user, presence: true
-  validates :sticky_text, presence: true
   validates :weight, numericality: true, allow_nil: true
 
   default_scope { order('weight ASC, created_at DESC'); }
@@ -19,7 +18,7 @@ class Sticky < ActiveRecord::Base
   def json_representation
     {
       id: self.id,
-      author: {id: user.id, name: user.instance_name},
+      author: { id: user.id, name: user.instance_name },
       sticky_text: sticky_text,
       created_at: I18n.l(created_at),
     }
