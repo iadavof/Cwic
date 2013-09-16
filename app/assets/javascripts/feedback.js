@@ -38,6 +38,8 @@ IADAFeedback.prototype.openFeedbackModal = function() {
     // Bind Overlay action
    $('a.overlay').on('click', function() { fb.closeFeedback(); });
 
+   this.modal.append(this.getTemplateClone('feedbackTextTemplate'));
+
     // message text area
     this.messageArea = this.modal.find('textarea#feedback-message');
 
@@ -180,7 +182,7 @@ IADAFeedback.prototype.sendFeedback = function() {
 }
 
 IADAFeedback.prototype.getTemplateClone = function(id) {
-    var newitem = $('#schedule-templates').find('#' + id).clone();
+    var newitem = $('#feedback-templates').find('#' + id).clone();
     newitem.removeAttr('id');
     newitem.show();
     return newitem;

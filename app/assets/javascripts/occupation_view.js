@@ -238,7 +238,7 @@ IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
         topAxis.append(block);
     }
     if(!topAxis.parent().hasClass('sticky-wrapper')) {
-        topAxis.sticky();
+        topAxis.sticky({getWidthFrom: '.occupation-matrix-body'});
     }
     this.resizeActions();
 }
