@@ -10,7 +10,7 @@
     <%= javascript_include_tag "i18n/cwic/translations-#{I18n.locale}" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-user-id="<%= current_user.id %>" data-current-user-name="<%= current_user.instance_name %>" data-current-organisation-id="<%= current_organisation.id %>">
+  <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-user-id="<%= current_user.try(:id) %>" data-current-user-name="<%= current_user.try(:instance_name) %>" data-current-organisation-id="<%= current_organisation.try(:id) %>">
     <div id="header">
       <%= render "layouts/menu" %>
     </div>

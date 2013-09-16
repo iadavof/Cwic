@@ -6,6 +6,7 @@
 //= require jquery_nested_form
 //= require jquery-minicolors
 //= require_directory ./libraries
+//= require turbolinks
 //= require global
 //= require_directory .
 //= require_directory ./i18n

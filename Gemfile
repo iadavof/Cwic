@@ -29,11 +29,7 @@ gem 'gistyle'
 gem 'jquery-minicolors-rails'
 
 # Turbolinks makes following links in your web application faster. Read more: https://github.com/rails/turbolinks
-# [2013-06-10 kevin] Disabled Turoblinks, because it breaks things
-#gem 'turbolinks'
-
-# Let jQuery function with Turbolinks
-#gem 'jquery-turbolinks'
+gem 'turbolinks'
 
 # Build JSON APIs with ease. Read more: https://github.com/rails/jbuilder
 gem 'jbuilder', '~> 1.0.1'

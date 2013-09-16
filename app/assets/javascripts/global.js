@@ -22,6 +22,10 @@ APP.init = function() {
   this.global.addProgressbarToAjax();
 };
 
+$(document).on('page:fetch',   function() { NProgress.stackPush(); });
+$(document).on('page:load',   function() { NProgress.stackPop(); });
+$(document).on('page:restore', function() { NProgress.remove(); });
+
 APP.global = {
   menuInit: function() {
     var submenuBox = $('#submenu-box');
@@ -35,11 +39,11 @@ APP.global = {
   addProgressbarToAjax : function() {
     NProgress.configure({ container: $('div#progress-bar-container'), showSpinner: false });
 
-    $( document ).ajaxStart(function() {
+    $(document).ajaxStart(function() {
       NProgress.stackPush();
     });
 
-    $( document ).ajaxComplete(function() {
+    $(document).ajaxComplete(function() {
       NProgress.stackPop();
     });
   },
