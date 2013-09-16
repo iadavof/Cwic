@@ -11,12 +11,16 @@ div#new_feedback_popup div.feedback-status {
   background-position: center center;
   background-repeat: no-repeat;
 }
-
+div#new_feedback_popup p#creating_screenshot,
 div#new_feedback_popup h3#feedback-error,
 div#new_feedback_popup h3#feedback-success,
 div#new_feedback_popup p#feedback-error-explain,
 div#new_feedback_popup p#feedback-success-explain {
   visibility: hidden;
+}
+
+div#new_feedback_popup p#creating_screenshot {
+  text-align: center;
 }
 
 div#new_feedback_popup p#feedback-intro {
