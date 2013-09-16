@@ -69,10 +69,10 @@ IADAscheduleView.prototype.toggleEntity = function(entity_button) {
     var id = parseInt($(entity_button).attr('id').split('_')[1]);
 
     if($(entity_button).hasClass('active')) {
-        $(entity_button).removeClass('active').css({'border-color': '', 'border-bottom-color': $(entity_button).data('active-color')});
+        $(entity_button).removeClass('active').css({'border-color': '', 'border-bottom-color': $(entity_button).data('entity-color')});
         this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
     } else {
-        $(entity_button).addClass('active').css('border-color', $(entity_button).data('active-color'));
+        $(entity_button).addClass('active').css('border-color', $(entity_button).data('entity-color'));
         this.selectedEntities.push(id);
     }
 
@@ -87,12 +87,12 @@ IADAscheduleView.prototype.toggleEntities = function(on) {
     schedule = this;
     if(on) {
         this.scheduleContainer.find('.entity-container .entity-button').each(function() {
-            $(this).addClass('active').css('border-color', $(this).data('active-color'));
+            $(this).addClass('active').css('border-color', $(this).data('entity-color'));
             schedule.selectedEntities.push(this.id.split('_')[1]);
         });
     } else {
         this.scheduleContainer.find('.entity-container .entity-button').each(function() {
-            $(this).removeClass('active').css({'border-color': '', 'border-bottom-color': $(this).data('active-color')});
+            $(this).removeClass('active').css({'border-color': '', 'border-bottom-color': $(this).data('entity-color')});
         });
         this.selectedEntities = [];
     }
@@ -326,7 +326,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
     for(var entnr in response.entities) {
         var entity = response.entities[entnr];
         var jentity = this.getTemplateClone('entityButtonTemplate');
-        jentity.attr('id', 'entity_'+ entity.id).css('border-bottom-color', entity.color).data('active-color', entity.color);
+        jentity.attr('id', 'entity_'+ entity.id).css('border-bottom-color', entity.color).data('entity-color', entity.color);
         jentity.find('.entity-name').text(entity.name);
         jentity.find('img.entity-icon').attr('src', entity.icon);
 
