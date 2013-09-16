@@ -2,7 +2,7 @@
 <%= show_title(@organisation_client) %>
 <% end %>
 
-<%= render partial: 'stickies/js_init', locals: { stickies: @organisation_client.stickies, resource_name: @organisation_client.class.name, resource_id: @organisation_client.id } %>
+<%= render partial: 'stickies/resource_stickies', locals: { resource: @organisation_client } %>
 
 <dl>
   <dt><%= OrganisationClient.human_attribute_name(:first_name) %></dt>

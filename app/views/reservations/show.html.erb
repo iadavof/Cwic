@@ -2,7 +2,7 @@
 <%= show_title(@reservation) %>
 <% end %>
 
-<%= render partial: 'stickies/js_init', locals: { stickies: @reservation.stickies, resource_name: @reservation.class.name, resource_id: @reservation.id } %>
+<%= render partial: 'stickies/resource_stickies', locals: { resource: @reservation } %>
 
 <dl>
   <dt><%= Reservation.human_attribute_name(:begins_at) %></dt>
