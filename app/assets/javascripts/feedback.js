@@ -178,3 +178,10 @@ IADAFeedback.prototype.sendFeedback = function() {
         });
 
 }
+
+IADAFeedback.prototype.getTemplateClone = function(id) {
+    var newitem = $('#schedule-templates').find('#' + id).clone();
+    newitem.removeAttr('id');
+    newitem.show();
+    return newitem;
+}

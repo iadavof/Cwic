@@ -527,7 +527,7 @@ IADAscheduleView.prototype.dayTimeToPercentage = function(time) {
 }
 
 IADAscheduleView.prototype.getTemplateClone = function(id) {
-    var newitem = $('#schedule-templates').find('#'+id).clone();
+    var newitem = $('#schedule-templates').find('#' + id).clone();
     newitem.removeAttr('id');
     newitem.show();
     return newitem;
