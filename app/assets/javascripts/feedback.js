@@ -66,8 +66,9 @@ IADAFeedback.prototype.takeScreenshot = function() {
 IADAFeedback.prototype.reviewFeedback = function() {
     var fb = this;
 
-    this.modal.children(':not(a.close)').hide();
+    this.modal.children(':not(a.close)').remove();
 
+    this.modal.append(this.getTemplateClone('feedbackReviewTemplate'));
 
     var screenshotImg = this.modal.find('img#screenshot_preview');
     screenshotImg.attr('src', this.screenshot);
@@ -92,23 +93,15 @@ IADAFeedback.prototype.reviewFeedback = function() {
 
     var sendButton = this.modal.find('button#send-feedback');
     sendButton.on('click', function() { fb.sendFeedback(); });
-
-    this.modal.find('div.feedback-review').show();
 }
 
 IADAFeedback.prototype.closeFeedback = function() {
-    this.modal.children(':not(a.close)').hide();
-    this.modal.children(':not(a.close)').off('click');
+    this.modal.children(':not(a.close)').remove();
 
     this.screenshot = null;
 
 
     window.location.hash = 'close';
-
-    this.modal.find('p#feedback-message-summary').show();
-    var textBox = this.modal.find('div.feedback-text');
-    textBox.find('#feedback-intro').after(this.messageArea);
-    textBox.show();
 
 }
 
@@ -147,8 +140,9 @@ IADAFeedback.prototype.objectToString = function(obj) {
 IADAFeedback.prototype.sendFeedback = function() {
     var fb = this;
 
-    // hide feedback texts
-    fb.modal.find('h3#feedback-success, p#feedback-success-explain, h3#feedback-error, p#feedback-error-explain, div.feedback-status').hide();
+    // remove previous page
+    this.modal.children(':not(a.close)').remove();
+    this.modal.append(this.getTemplateClone('feedbackStatusTemplate'));
 
     $.ajax({
             type: 'POST',
@@ -162,18 +156,16 @@ IADAFeedback.prototype.sendFeedback = function() {
 
             }
         }).fail(function(){
-            fb.modal.children(':not(a.close)').hide();
-            fb.modal.find('h3#feedback-error, p#feedback-error-explain, div.feedback-status').show();
+            fb.modal.find("div.feedback-status").css('background-image', 'none');
+            fb.modal.find('h3#feedback-error, p#feedback-error-explain, div.feedback-status').css('visibility', 'visible');
             fb.button.removeAttr('disabled');
 
             var closeButton = fb.modal.find('button#close-feedback');
             closeButton.on('click', function() { fb.closeFeedback(); });
-            closeButton.show();
         }).success(function(response) {
-            fb.modal.children(':not(a.close)').hide();
-            fb.modal.find('h3#feedback-success, p#feedback-success-explain, div.feedback-status').show();
+            fb.modal.find("div.feedback-status").css('background-image', 'none');
+            fb.modal.find('h3#feedback-success, p#feedback-success-explain, div.feedback-status').css('visibility', 'visible');
             fb.button.removeAttr('disabled');
-            fb.messageArea.val('');
             var closeButton = fb.modal.find('button#close-feedback');
             closeButton.on('click', function() { fb.closeFeedback(); });
             closeButton.show();
