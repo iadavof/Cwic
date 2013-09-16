@@ -2,13 +2,7 @@
 <%= t('.horizontal_calendar') %>
 <% end %>
 
-<script type="text/javascript">
-  $(document).ready(function() {
-      var schedule = new IADAscheduleView({container: 'horizontal-calendar', backend_url: '<%= organisation_schedule_view_index_path(@organisation) %>', view: 'horizontalCalendar'});
-  });
-</script>
-
-<div id="horizontal-calendar" class="clearfix"></div>
+<div id="horizontal-calendar" class="clearfix" data-organisation-id="<%= @organisation.id %>"></div>
 
 <div id="schedule-templates" style="display: none;">
   <div class="schedule" id="scheduleContainerTemplate">
