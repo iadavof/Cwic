@@ -2,16 +2,21 @@ div#new_feedback_popup h3 {
   margin: 0;
 }
 
-div.feedback-status, div.feedback-review {
-  display: none;
+div#new_feedback_popup div.feedback-status, div#new_feedback_popup div.feedback-review {
   position: relative;
+}
+
+div#new_feedback_popup div.feedback-status {
+  background-image: image-url('ajax_wait.gif');
+  background-position: center center;
+  background-repeat: no-repeat;
 }
 
 div#new_feedback_popup h3#feedback-error,
 div#new_feedback_popup h3#feedback-success,
 div#new_feedback_popup p#feedback-error-explain,
 div#new_feedback_popup p#feedback-success-explain {
-  display: none;
+  visibility: hidden;
 }
 
 div#new_feedback_popup p#feedback-intro {
@@ -54,7 +59,6 @@ div#new_feedback_popup div.feedback-tech-info h4 {
 }
 
 div#new_feedback_popup img#screenshot_preview {
-  display: none;
   max-width: 400px;
   max-height: 400px;
   margin: 10px;
