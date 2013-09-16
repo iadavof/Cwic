@@ -86,6 +86,8 @@ gem 'activerecord-import'
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
+  # Pry for easy debugging
+  gem 'pry-rails'
 end
 
 group :test, :development do

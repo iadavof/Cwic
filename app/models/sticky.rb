@@ -10,7 +10,7 @@ class Sticky < ActiveRecord::Base
   validates :sticky_text, presence: true
   validates :weight, numericality: true, allow_nil: true
 
-  default_scope order('weight ASC, created_at DESC');
+  default_scope { order('weight ASC, created_at DESC'); }
 
   def instance_name
     "#{self.class.model_name.human} ##{self.id.to_s}"
