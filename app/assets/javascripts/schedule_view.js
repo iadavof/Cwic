@@ -16,9 +16,9 @@ APP.schedule_view = {
   },
   today_and_tomorrow: function() {
     new IADAscheduleView({
-      container: 'horizontal-calendar',
+      container: 'today-and-tomorrow-container',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
-      view: 'horizontalCalendar'
+      view: 'todayAndTomorrow'
     });
   }
 };

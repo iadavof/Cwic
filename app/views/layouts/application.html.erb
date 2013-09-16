@@ -2,15 +2,15 @@
 <html class="no-js">
   <head>
     <title>Cwic | IADA</title>
-    <%= stylesheet_link_tag    "application", media: "all", "data-turbolinks-track" => true %>
+    <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <script type="text/javascript">
-      (function(h){h.className = h.className.replace('no-js', 'js')})(document.documentElement)
+      (function(h) { h.className = h.className.replace('no-js', 'js') })(document.documentElement)
     </script>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
     <%= javascript_include_tag "i18n/cwic/translations-#{I18n.locale}" %>
     <%= csrf_meta_tags %>
   </head>
-  <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-organisation-id="<%= @organisation.id %>">
+  <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-user-id="<%= current_user.id %>" data-current-user-name="<%= current_user.instance_name %>" data-current-organisation-id="<%= current_organisation.id %>">
     <div id="header">
       <%= render "layouts/menu" %>
     </div>

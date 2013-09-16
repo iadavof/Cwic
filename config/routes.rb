@@ -1,6 +1,4 @@
 Cwic::Application.routes.draw do
-
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
   get "home/index"
@@ -20,7 +18,7 @@ Cwic::Application.routes.draw do
     resources :entities
 
     resources :stickies, except: [:show, :create, :new]
-    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch'
+    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch', as: 'edit_sticky_for_resource'
     match 'stickies/:resource/:rid/', controller: 'stickies', action: 'stickies_for', via: 'get', as: 'stickies_for_resource'
     match 'stickies/:resource/:rid/new', controller: 'stickies', action: 'create', via: 'post', as: 'new_sticky_for_resource'
 

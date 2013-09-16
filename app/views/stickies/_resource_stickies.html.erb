@@ -1,21 +1,4 @@
-<script type="text/javascript">
-  // Wait for the DOM to be loaded
-  $(document).ready(function() {
-    var stickyNotes = new IADAStickyNotes({
-      container: 'note-container',
-      resource: '<%= resource_name %>',
-      resource_id: <%= resource_id %>,
-    	backend_url: '<%= organisation_stickies_path(current_organisation) %>',
-    	current_author: {
-    		id: <%= current_user.id %>,
-    		name: '<%= current_user.instance_name %>',
-    	},
-      placeholder: '<%= t('.note_placeholder') %>',
-    });
-  });
-</script>
-
-<div id="note-container">
+<div id="note-container" data-resource-class-name="<%= resource.class.name %>" data-resource-id="<%= resource.id %>">
   <div class="control-container clearfix">
     <button class="new-sticky">Add Note</button>
   </div>

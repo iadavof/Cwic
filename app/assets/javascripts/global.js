@@ -1,8 +1,22 @@
-var current_organisation;
+var current_user, current_organisation;
 APP.init = function() {
-  current_organisation = { id: parseInt($('body').data('current-organisation-id')) };
+  // Load current_user and current_organisation data
+  var body = $('body');
+  current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
+  current_organisation = { id: parseInt(body.data('current-organisation-id')) };
+
+  // Load the menu
   this.global.menuInit();
   this.global.keyboardShortcutsInit();
+
+  // Load the feedback module
+  new IADAFeedback({
+    open_button_id: 'open-feedback-button',
+    backend_url: Routes.feedbacks_path({ format: 'json' })
+  });
+
+  // Load stickies (if #note-container is present)
+  this.stickies.loadStickies();
 
   // set the upper nprogress bar as the default ajax complete and start handlers
   this.global.addProgressbarToAjax();
