@@ -29,6 +29,8 @@ IADAFeedback.prototype.bindOpenFeedbackButton = function() {
 }
 
 IADAFeedback.prototype.openFeedbackModal = function() {
+    var fb = this;
+    window.location.hash = 'new_feedback';
     this.button.attr('disabled', 'disabled');
     this.modal = $('#new_feedback_popup');
 
@@ -38,27 +40,34 @@ IADAFeedback.prototype.openFeedbackModal = function() {
     // Bind Overlay action
    $('a.overlay').on('click', function() { fb.closeFeedback(); });
 
-   this.modal.append(this.getTemplateClone('feedbackTextTemplate'));
+    this.takeScreenshot();
+
+}
+
+IADAFeedback.prototype.renderFeedbackTextInput = function() {
+    this.modal.children(':not(a.close)').remove();
+    this.modal.append(this.getTemplateClone('feedbackTextTemplate'));
 
     // message text area
     this.messageArea = this.modal.find('textarea#feedback-message');
-
-    this.takeScreenshot();
 
     // bind next button
     var fb = this;
     this.modal.find('button#next-feedback').on('click', function() {
         fb.reviewFeedback();
     });
-
-    window.location.hash = 'new_feedback';
 }
 
 IADAFeedback.prototype.takeScreenshot = function() {
     var fb = this;
+
+    this.modal.append(this.getTemplateClone('feedbackStatusTemplate'));
+    this.modal.find('p#creating_screenshot').css('visibility', 'visible');
+
     html2canvas(document.body, {
          onrendered: function(canvas) {
             fb.screenshot = canvas.toDataURL("image/png");
+            fb.renderFeedbackTextInput();
         }
     });
 }

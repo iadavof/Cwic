@@ -128,6 +128,8 @@
   NProgress.stackPush = function() {
     if(NProgress.number_processes <= 0) {
       NProgress.start();
+    } else {
+      NProgress.inc();
     }
     NProgress.number_processes += 1;
   }
@@ -136,6 +138,8 @@
     NProgress.number_processes -= 1;
     if(NProgress.number_processes <= 0) {
       NProgress.done();
+    } else {
+      NProgress.inc();
     }
   }
 

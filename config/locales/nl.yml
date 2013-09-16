@@ -171,6 +171,7 @@ nl:
         organisation: 'Organisatie'
         message: 'Bericht'
         specs: 'Specificaties'
+        creating_screenshot: "Bezig met het maken van een schermafbeelding voor feedback..."
     errors:
       models:
         user:
