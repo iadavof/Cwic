@@ -83,6 +83,9 @@ gem 'carrierwave'
 # ActiveRecord Import for multi INSERTs at once
 gem 'activerecord-import'
 
+# Route functions in JavaScript
+gem 'js-routes'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
