@@ -19,7 +19,7 @@ module MenuHelper
           index: { url: organisation_organisation_clients_path(current_organisation) },
           new: { url: new_organisation_organisation_client_path(current_organisation) }
         },
-        occupation: {
+        occupation_view: {
           day_occupation: { url: organisation_day_occupation_path(current_organisation) },
           week_occupation: { url: organisation_week_occupation_path(current_organisation) }
         }

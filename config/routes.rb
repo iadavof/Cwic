@@ -35,12 +35,12 @@ Cwic::Application.routes.draw do
     match '/schedule_view', controller: 'schedule_view', action: 'index', via: 'get', as: 'schedule_view_index'
 
     # Routes for dayOccupation
-    match '/occupation', controller: 'occupation', action: 'index', via: 'get', as: 'occupation'
-    match '/occupation/entities', controller: 'occupation', action: 'entities', via: 'post', as: 'occupation_entities_json'
-    match '/occupation/day_occupation_percentages', controller: 'occupation', action: 'day_occupation_percentages', via: 'post', as: 'day_occupation_percentages'
-    match '/occupation/week_occupation_percentages', controller: 'occupation', action: 'week_occupation_percentages', via: 'post', as: 'week_occupation_percentages'
-    match '/day_occupation', controller: 'occupation', action: 'day_occupation', via: 'get'
-    match '/week_occupation', controller: 'occupation', action: 'week_occupation', via: 'get'
+    match '/occupation_view', controller: 'occupation_view', action: 'index', via: 'get', as: 'occupation_view'
+    match '/occupation_view/entities', controller: 'occupation_view', action: 'entities', via: 'post', as: 'occupation_view_entities_json'
+    match '/occupation_view/day_occupation_percentages', controller: 'occupation_view', action: 'day_occupation_percentages', via: 'post', as: 'occupation_view_day_occupation_percentages'
+    match '/occupation_view/week_occupation_percentages', controller: 'occupation_view', action: 'week_occupation_percentages', via: 'post', as: 'occupation_view_week_occupation_percentages'
+    match '/day_occupation', controller: 'occupation_view', action: 'day_occupation', via: 'get'
+    match '/week_occupation', controller: 'occupation_view', action: 'week_occupation', via: 'get'
     resources :reservations
     resources :organisation_clients
     resources :entity_type_icons

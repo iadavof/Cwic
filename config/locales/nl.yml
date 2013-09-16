@@ -285,7 +285,7 @@ nl:
       schedule_view: 'Planning'
       today_and_tomorrow: 'Vandaag en morgen'
       horizontal_calendar: 'Horizontale kalender'
-      occupation: 'Bezetting'
+      occupation_view: 'Bezetting'
       day_occupation: 'Dagbezetting'
       week_occupation: 'Weekbezetting'
       entity_type_icons: 'Objecticonen'
@@ -353,7 +353,7 @@ nl:
       select_none: 'Niets selecteren'
       no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'
 
-  occupation:
+  occupation_view:
     day_occupation:
       day_occupation: 'Dagbezetting'
     week_occupation:

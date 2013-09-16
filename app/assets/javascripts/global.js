@@ -1,4 +1,6 @@
+var current_organisation;
 APP.init = function() {
+  current_organisation = { id: parseInt($('body').data('current-organisation-id')) };
   this.global.menuInit();
   this.global.keyboardShortcutsInit();
 
