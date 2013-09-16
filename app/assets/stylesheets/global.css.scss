@@ -68,6 +68,15 @@
   font-style: italic;
 }
 
+#header, #progress-bar-container, h1, #content {
+  transition: -webkit-filter .5s ease-in-out, filter .5s ease-in-out;
+}
+
+html.blur #header, html.blur #progress-bar-container, html.blur h1, html.blur #content {
+  -webkit-filter: blur(10px);
+  filter: blur(10px);
+}
+
 html {
   background: #f7f7f7;
 }

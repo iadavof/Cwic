@@ -29,6 +29,7 @@ IADAFeedback.prototype.bindOpenFeedbackButton = function() {
 }
 
 IADAFeedback.prototype.openFeedbackModal = function() {
+    $('html').addClass('blur');
     var fb = this;
     window.location.hash = 'new_feedback';
     this.button.attr('disabled', 'disabled');
@@ -105,6 +106,7 @@ IADAFeedback.prototype.reviewFeedback = function() {
 }
 
 IADAFeedback.prototype.closeFeedback = function() {
+    $('html').removeClass('blur');
     this.modal.children(':not(a.close)').remove();
 
     this.screenshot = null;

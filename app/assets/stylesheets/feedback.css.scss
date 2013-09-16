@@ -28,9 +28,9 @@ div#new_feedback_popup p#feedback-intro {
 }
 
 div#new_feedback_popup textarea#feedback-message {
-  float: left;
   margin-bottom: 10px;
   width: 100%;
+  max-width: 484px;
   clear: both;
 
   -moz-box-sizing: border-box;
@@ -44,6 +44,7 @@ div#new_feedback_popup p#feedback-message-summary {
   border: 1px solid #ccc;
   position: relative;
   min-height: 20px;
+  max-width: 480px;
 }
 
 div#new_feedback_popup p#feedback-message-summary a#edit_feedback_button {
@@ -54,22 +55,30 @@ div#new_feedback_popup p#feedback-message-summary a#edit_feedback_button {
 
 
 div#new_feedback_popup div.feedback-tech-info {
-  float: left;
-  width: 200px;
+  max-width: 500px;
+  line-height: 110%;
 }
 
 div#new_feedback_popup div.feedback-tech-info h4 {
   margin: 0;
 }
 
-div#new_feedback_popup img#screenshot_preview {
-  max-width: 400px;
-  max-height: 400px;
-  margin: 10px;
+div#new_feedback_popup div.feedback-tech-info #tech-info-summary {
+  font-size: 0.8em;
 }
 
 div#new_feedback_popup img#screenshot_preview {
-  float: left;
+  width: 100%;
+}
+
+div#new_feedback_popup img#screenshot_preview {
+}
+
+div#new_feedback_popup div.feedback-screenshot-wrapper {
+  height: 200px;
+  overflow: auto;
+  max-width: 500px;
+  margin: 20px 0;
 }
 
 div#new_feedback_popup button.feedback-button {

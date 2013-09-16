@@ -1,5 +1,5 @@
 .overlay {
-    background-color: rgba(0, 0, 0, 0.6);
+    background-color: rgba(0, 0, 0, 0.8);
     bottom: 0;
     cursor: default;
     left: 0;
@@ -10,15 +10,16 @@
     visibility: hidden;
     z-index: 199;
 
-    -webkit-transition: opacity .5s;
-    -moz-transition: opacity .5s;
-    -ms-transition: opacity .5s;
-    -o-transition: opacity .5s;
-    transition: opacity .5s;
+    -webkit-transition: opacity .5s ease-in-out 0s, visibility 0s linear .5s;
+    -moz-transition: opacity .5s ease-in-out 0s, visibility 0s linear .5s;
+    -ms-transition: opacity .5s ease-in-out 0s, visibility 0s linear .5s;
+    -o-transition: opacity .5s ease-in-out 0s, visibility 0s linear .5s;
+    transition: opacity .5s ease-in-out 0s, visibility 0s linear .5s;
 }
 .overlay:target {
     visibility: visible;
     opacity: 1;
+    transition-delay: 0s;
 }
 .modal {
     background-color: #fff;

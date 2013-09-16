@@ -13,14 +13,16 @@
 
   <div id="feedbackReviewTemplate" class="feedback-review">
     <h3 id="review-feedback"><%= t('.review_feedback') %></h3>
-    <img id="screenshot_preview" src="" alt="screenshot" />
+    <div class="feedback-screenshot-wrapper">
+      <img id="screenshot_preview" src="" alt="screenshot" />
+    </div>
     <div class="feedback-tech-info">
       <h4><%= t('.technical_info') %></h4>
       <p id="tech-info-summary"></p>
     </div>
     <p id="feedback-message-summary"><a class="icon icon-edit" id="edit_feedback_button" title="<%= t('.edit_feedback') %>" href="#"></a></p>
 
-    <button id="send-feedback" class="feedback-button"><%= t('.send') %></button>
+    <button id="send-feedback" class="feedback-button red"><%= t('.send') %></button>
   </div>
   <div id="feedbackStatusTemplate" class="feedback-status">
     <p id="creating_screenshot"><%=t('.creating_screenshot')%></p>
