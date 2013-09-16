@@ -2,7 +2,7 @@ class ColorValidator < ActiveModel::EachValidator
   COLORS = ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'orange', 'purple', 'red', 'silver', 'teal', 'white', 'yellow']
 
   def validate_each(record, attribute, value)
-    record.errors[attribute] << (options[:message] || default_error_message(value)) unless valid_color?(value)
+    record.errors.add(attributes, (options[:message] || default_error_message(value))) unless valid_color?(value)
   end
 
   def default_error_message(value)

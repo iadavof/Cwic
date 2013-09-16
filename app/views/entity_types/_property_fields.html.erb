@@ -17,8 +17,8 @@
         <dd class="required" data-field="required"><%= format_bool(f.object.required) %></dd>
         <dt class="entity-type-property-options"><%= EntityTypePropertyOption.model_name.human(count: 2) %></dt>
         <dd class="entity-type-property-options" data-field="entity-type-property-options"><%= f.object.options.sort_by(&:index).map(&:name).to_sentence %></dd>
-        <dt><%= EntityTypeProperty.human_attribute_name(:default_value) %></dt>
-        <dd data-field="default-value"><%= format_text(f.object.formatted_default_value) %></dd>
+        <dt class="default-value"><%= EntityTypeProperty.human_attribute_name(:default_value) %></dt>
+        <dd class="default-value" data-field="default-value"><%= format_text(f.object.formatted_default_value) %></dd>
       </dl>
     </div>
     <div class="actions">
@@ -42,7 +42,7 @@
         <%= f.label :required, title: t('.required_expl') %>
         <%= f.check_box :required, data: { field: 'required' } %>
       </div>
-      <div class="field default-value" style="display: none;">
+      <div class="field default-value">
         <%= f.label :default_value %>
         <span class="default-value-formatted-field"></span>
         <%= f.hidden_field :default_value, value: f.object.form_default_value, class: 'default-value-parsed-field' %>

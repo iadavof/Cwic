@@ -1,5 +1,4 @@
 class ScheduleViewController < ApplicationController
-
   def horizontal_calendar
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build

@@ -1,7 +1,5 @@
 # Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
 class WeekOccupation < ActiveRecord::Base
-  include I18n::Alchemy
-
   belongs_to :entity
 
   validates :entity, presence: true
@@ -21,6 +19,7 @@ class WeekOccupation < ActiveRecord::Base
     # Get all potential relevant reservations
     reservations = entity.reservations.where("begins_at < :max AND ends_at > :min", min: weeks.min.to_begin_date, max: (weeks.max.to_end_date + 1.day)).to_a
 
+     # Determine new occupations
     occupations = []
     weeks.each do |week|
       matches = reservations.select { |r| r.begins_at < (week.to_end_date + 1.day) && r.ends_at > week.to_begin_date } # Get relevant reservations for this week

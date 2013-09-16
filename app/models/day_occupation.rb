@@ -1,7 +1,5 @@
 # Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
 class DayOccupation < ActiveRecord::Base
-  include I18n::Alchemy
-
   belongs_to :entity
 
   validates :entity, presence: true

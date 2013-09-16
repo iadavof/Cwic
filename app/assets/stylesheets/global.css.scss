@@ -547,7 +547,7 @@ button.blue:hover,
   background-color: #3194a5;
 }
 
-input[type="submit"], 
+input[type="submit"],
 input[type="reset"].red,
 button.red,
 .button.red {
@@ -689,6 +689,10 @@ div.option-wrapper {
 
   div.extra {
     margin-right: 0;
+  }
+
+  div.extra .default-value {
+    display: none;
   }
 
   div.actions {
