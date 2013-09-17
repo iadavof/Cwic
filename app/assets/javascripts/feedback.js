@@ -168,14 +168,20 @@ IADAFeedback.prototype.sendFeedback = function() {
             }
         }).fail(function(){
             fb.modal.find("div.feedback-status").css('background-image', 'none');
-            fb.modal.find('h3#feedback-error, p#feedback-error-explain, div.feedback-status').css('visibility', 'visible');
+            fb.modal.find("#feedback-success").hide();
+            fb.modal.find("#feedback-success-explain").hide();
+            fb.modal.find("#creating_screenshot").hide();
+            fb.modal.find('#feedback-error, p#feedback-error-explain, div.feedback-status').css('visibility', 'visible');
             fb.button.removeAttr('disabled');
 
             var closeButton = fb.modal.find('button#close-feedback');
             closeButton.on('click', function() { fb.closeFeedback(); });
         }).success(function(response) {
             fb.modal.find("div.feedback-status").css('background-image', 'none');
-            fb.modal.find('h3#feedback-success, p#feedback-success-explain, div.feedback-status').css('visibility', 'visible');
+            fb.modal.find("#feedback-error").hide();
+            fb.modal.find("#feedback-error-explain").hide();
+            fb.modal.find("#creating_screenshot").hide();
+            fb.modal.find('#feedback-success, p#feedback-success-explain, div.feedback-status').css('visibility', 'visible');
             fb.button.removeAttr('disabled');
             var closeButton = fb.modal.find('button#close-feedback');
             closeButton.on('click', function() { fb.closeFeedback(); });

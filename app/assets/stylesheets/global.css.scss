@@ -78,7 +78,7 @@ html.blur #header, html.blur #progress-bar-container, html.blur h1, html.blur #c
 }
 
 html {
-  background: #f7f7f7;
+  background: #eeeeee;
 }
 
 body {
@@ -220,7 +220,7 @@ body {
   overflow: hidden;
   position: relative;
   background: #dddddd;
-  border-bottom: 1px solid #b5b5b5;
+/*  border-bottom: 1px solid #b5b5b5; */
   text-align: center;
 }
 
@@ -230,8 +230,9 @@ html.js #submenu-box {
 
 #submenu-box > .submenu {
   display: inline-block;
+  vertical-align: top;
   text-align: left;
-  padding: 10px;
+  padding: 15px;
   margin: 0;
 }
 
@@ -244,8 +245,7 @@ html.js #submenu-box > .submenu.selected {
 }
 
 #submenu-box > .submenu > h2 {
-  visibility: hidden;
-  height: 1px;
+  display: none;
   padding: 0;
   margin: 0;
 }
@@ -253,6 +253,10 @@ html.js #submenu-box > .submenu.selected {
 #submenu-box > .submenu > .submenu-block {
   float: left;
   margin: 0 15px;
+}
+
+#submenu-box > .submenu > .submenu-block > h3 {
+  margin-top: 5px;
 }
 
 #submenu-box > .submenu > .submenu-block > ul {
@@ -421,23 +425,23 @@ h1 {
 }
 
 h2 {
-  font-size: 1.8em;
-}
-
-h3 {
   font-size: 1.6em;
 }
 
-h4 {
+h3 {
   font-size: 1.4em;
 }
 
+h4 {
+  font-size: 1.3em;
+}
+
 h5 {
-  font-size: 1.3m;
+  font-size: 1.2m;
 }
 
 h6 {
-  font-size: 1.2em;
+  font-size: 1.1em;
 }
 
 img {
@@ -580,10 +584,7 @@ label {
 
 #content {
   margin: 10px;
-}
-
-#content {
-  border: 1px solid #cccccc;
+/*  border: 1px solid #cccccc; */
   background: #ffffff;
 }
 

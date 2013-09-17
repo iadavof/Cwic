@@ -1,4 +1,4 @@
-div#new_feedback_popup h3 {
+div#new_feedback_popup h2 {
   margin: 0;
 }
 
@@ -12,8 +12,8 @@ div#new_feedback_popup div.feedback-status {
   background-repeat: no-repeat;
 }
 div#new_feedback_popup p#creating_screenshot,
-div#new_feedback_popup h3#feedback-error,
-div#new_feedback_popup h3#feedback-success,
+div#new_feedback_popup #feedback-error,
+div#new_feedback_popup #feedback-success,
 div#new_feedback_popup p#feedback-error-explain,
 div#new_feedback_popup p#feedback-success-explain {
   visibility: hidden;
@@ -30,7 +30,7 @@ div#new_feedback_popup p#feedback-intro {
 div#new_feedback_popup textarea#feedback-message {
   margin-bottom: 10px;
   width: 100%;
-  max-width: 484px;
+  max-width: 500px;
   clear: both;
 
   -moz-box-sizing: border-box;
@@ -71,11 +71,8 @@ div#new_feedback_popup img#screenshot_preview {
   width: 100%;
 }
 
-div#new_feedback_popup img#screenshot_preview {
-}
-
 div#new_feedback_popup div.feedback-screenshot-wrapper {
-  height: 200px;
+  max-height: 300px;
   overflow: auto;
   max-width: 500px;
   margin: 20px 0;
