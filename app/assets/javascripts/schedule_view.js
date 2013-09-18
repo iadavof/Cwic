@@ -312,13 +312,13 @@ IADAscheduleView.prototype.itemToBeginEndUnixTimeStamps = function(item) {
 IADAscheduleView.prototype.setNewReservationForm = function(item) {
   var reservationForm = $('#new_reservation_popup');
   reservationForm.find('input#begins_at_date').datepicker("setDate", item.begin_date);
-  reservationForm.find('input#begins_at_time').timepicker("setTime", item.begin_time);
+  reservationForm.find('input#begins_at_tod').timepicker("setTime", item.begin_time);
   if(item.end_time == '24:00') {
     item.end_date.setDate(item.end_date.getDate() + 1); // Increase day by one
     item.end_time = '00:00'; // And set time to 00:00
   }
   reservationForm.find('input#ends_at_date').datepicker("setDate", item.end_date);
-  reservationForm.find('input#ends_at_time').timepicker("setTime", item.end_time);
+  reservationForm.find('input#ends_at_tod').timepicker("setTime", item.end_time);
   reservationForm.find('select#reservation_entity_id').val(item.schedule_object_id);
 }
 
