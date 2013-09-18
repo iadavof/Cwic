@@ -2,6 +2,12 @@ div#new_feedback_popup h2 {
   margin: 0;
 }
 
+div#new_feedback_popup h2 i[class^="icon-"],
+div#new_feedback_popup h2 i[class*=" icon-"] {
+  margin-right: 0.5em;
+  font-size: 1.2em;
+}
+
 div#new_feedback_popup div.feedback-status, div#new_feedback_popup div.feedback-review {
   position: relative;
 }

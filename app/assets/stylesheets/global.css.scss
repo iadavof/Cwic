@@ -68,6 +68,21 @@
   font-style: italic;
 }
 
+[class^="icon-"].red:before,
+[class*=" icon-"].red:before {
+  color: #ff3520;
+}
+
+[class^="icon-"].blue:before,
+[class*=" icon-"].blue:before {
+  color: #17889D;
+}
+
+[class^="icon-"].green:before,
+[class*=" icon-"].green:before {
+  color: #18c13d;
+}
+
 #header, #progress-bar-container, h1, #content {
   transition: -webkit-filter .5s ease-in-out, filter .5s ease-in-out;
 }
