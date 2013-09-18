@@ -57,7 +57,8 @@ ui-timepicker-table td {
 }
 
 .ui-timepicker .ui-state-active, .ui-timepicker .ui-widget-content .ui-state-active, .ui-timepicker .ui-widget-header .ui-state-active,
-.ui-timepicker .ui-widget-content .ui-timepicker-minutes .ui-state-default.ui-state-active {
+.ui-timepicker .ui-widget-content .ui-timepicker-minutes .ui-state-default.ui-state-active,
+.ui-datepicker .ui-datepicker-calendar .ui-state-default.ui-state-active {
   background: #ff3520;
   color: #ffffff;
   border-color: #ff3520;

@@ -333,6 +333,10 @@ nl:
   entities:
     form:
       no_entity_types_found: 'Er zijn nog een objectsoorten toegevoegd. %{link} om een object van een bepaald objectsoort aan te kunnen maken.'
+      general: 'Algemeen'
+      reservation_rules: 'Reserveringsregels'
+      properties: 'Eigenschappen'
+      options: 'Opties'
 
   schedule_view:
     today_and_tomorrow:
