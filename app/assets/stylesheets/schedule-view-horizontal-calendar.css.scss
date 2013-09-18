@@ -250,14 +250,6 @@ div.horizontal-calendar div.schedule-body div.day-row div.day-row-schedule-objec
   font-style: italic;
   color: #444;
   padding: 0 2px;
-
-  -webkit-touch-callout: none;
-  -webkit-user-select: none;
-  -khtml-user-select: none;
-  -moz-user-select: moz-none;
-  -ms-user-select: none;
-  user-select: none;
-
   cursor: default;
 }
 
@@ -336,6 +328,10 @@ div.horizontal-calendar div.entity-container {
   border: 1px solid #ccc;
 }
 
+div.horizontal-calendar div.entity-container > h2 {
+  margin-top: 0;
+}
+
 div.horizontal-calendar div.entity-container p.no_entities_found {
   display: none;
 }
@@ -349,6 +345,7 @@ div.horizontal-calendar div.entity-container div.fast-select {
 div.horizontal-calendar div.entity-container div.entity-button {
   position: relative;
   float: left;
+  background: #ffffff;
   border: 1px solid #ccc;
   border-bottom-width: 3px;
   margin: 5px;

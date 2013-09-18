@@ -30,14 +30,23 @@ div.today-and-tomorrow-container div.entity-container {
   position: relative;
   padding: 0 5px 5px 5px;
   background: #f3f3f3;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+div.today-and-tomorrow-container > div.entity-container {
+  margin: 0 0 1% 1%;
+  width: 32.666%;
   float: left;
-  margin: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+div.today-and-tomorrow-container > div.entity-container:first-child {
+  margin-left: 0;
 }
 
 div.today-and-tomorrow-container div.entity-type-container div.entity-container {
   margin: 10px 0;
-  float: none;
 }
 
 div.today-and-tomorrow-container div.entity-container p {

@@ -72,13 +72,14 @@
   transition: -webkit-filter .5s ease-in-out, filter .5s ease-in-out;
 }
 
-html.blur #header, html.blur #progress-bar-container, html.blur h1, html.blur #content {
+html.with-overlay #header, html.with-overlay #progress-bar-container, html.with-overlay h1, html.with-overlay #content {
   -webkit-filter: blur(10px);
   filter: blur(10px);
 }
 
 html {
   background: #eeeeee;
+  height: 100%;
 }
 
 body {
@@ -88,6 +89,16 @@ body {
   margin: 0;
   padding: 0;
   line-height: 200%;
+  height: 100%;
+}
+
+html.with-overlay {
+  height: 100%;
+}
+
+html.with-overlay body {
+  height: 100%;
+  overflow: hidden;
 }
 
 .clearfix:after {

@@ -42,7 +42,7 @@ module MenuHelper
     }
     if @admin
       menu[:admin] = {
-        feedback: {
+        feedbacks: {
           index: { url: feedbacks_path },
         },
         users: {

@@ -291,7 +291,7 @@ nl:
       week_occupation: 'Weekbezetting'
       entity_type_icons: 'Objecticonen'
       users: 'Alle gebruikers'
-      feedback: 'Feedback'
+      feedbacks: 'Feedback'
 
   shared:
     error_messages:

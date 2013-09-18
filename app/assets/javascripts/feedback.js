@@ -29,7 +29,7 @@ IADAFeedback.prototype.bindOpenFeedbackButton = function() {
 }
 
 IADAFeedback.prototype.openFeedbackModal = function() {
-    $('html').addClass('blur');
+    $('html').addClass('with-overlay');
     var fb = this;
     window.location.hash = 'new_feedback';
     this.button.attr('disabled', 'disabled');
@@ -106,14 +106,10 @@ IADAFeedback.prototype.reviewFeedback = function() {
 }
 
 IADAFeedback.prototype.closeFeedback = function() {
-    $('html').removeClass('blur');
+    $('html').removeClass('with-overlay');
     this.modal.children(':not(a.close)').remove();
-
     this.screenshot = null;
-
-
     window.location.hash = 'close';
-
 }
 
 IADAFeedback.prototype.generateTechInfo = function() {
