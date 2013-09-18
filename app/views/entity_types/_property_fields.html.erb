@@ -15,10 +15,10 @@
         <dd data-field="data-type"><%= f.object.data_type.try(:human_name) %></dd>
         <dt class="required"><%= EntityTypeProperty.human_attribute_name(:required) %></dt>
         <dd class="required" data-field="required"><%= format_bool(f.object.required) %></dd>
-        <dt class="entity-type-property-options"><%= EntityTypePropertyOption.model_name.human(count: 2) %></dt>
-        <dd class="entity-type-property-options" data-field="entity-type-property-options"><%= f.object.options.sort_by(&:index).map(&:name).to_sentence %></dd>
-        <dt class="default-value"><%= EntityTypeProperty.human_attribute_name(:default_value) %></dt>
-        <dd class="default-value" data-field="default-value"><%= format_text(f.object.formatted_default_value) %></dd>
+        <dt class="property-options"><%= EntityTypePropertyOption.model_name.human(count: 2) %></dt>
+        <dd class="property-options" data-field="property-options"><%= f.object.options.sort_by(&:index).map(&:name).to_sentence %></dd>
+        <dt><%= EntityTypeProperty.human_attribute_name(:default_value) %></dt>
+        <dd data-field="default-value"><%= format_text(f.object.formatted_default_value) %></dd>
       </dl>
     </div>
     <div class="actions">
@@ -52,7 +52,7 @@
       <%= link_to '', 'javascript:void(0)', class: 'icon icon-ok', title: t('done_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
       <%= link_to '', 'javascript:void(0)', class: 'icon icon-remove remove-nested-fields-extra', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
     </div>
-    <div class="nested-form entity-type-property-options">
+    <div class="nested-form property-options">
       <h4><%= EntityTypePropertyOption.model_name.human(count: 2) %></h4>
       <table>
         <thead>

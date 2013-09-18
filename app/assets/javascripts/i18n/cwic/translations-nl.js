@@ -6,8 +6,10 @@ var jsLang = {
     admin: 'a',
   },
   strings: {
+    yes: 'Ja',
+    no: 'Nee',
     expand_menu: 'Menu uitklappen',
-    contract_menu: 'Menu inklappen'
+    contract_menu: 'Menu inklappen',
   },
   stickies: {
     placeholder: 'Wayoo leipe sticky',

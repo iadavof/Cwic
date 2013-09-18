@@ -725,7 +725,7 @@ div.option-wrapper {
     margin-left: 2px;
   }
 
-  .entity-type-property-options {
+  .property-options {
     display: none;
   }
 
@@ -801,7 +801,7 @@ div.option-wrapper {
     }
 
     div.extra input,
-    div.extra textare {
+    div.extra textarea {
       width: 120px;
     }
 
@@ -821,7 +821,7 @@ div.option-wrapper {
       margin: 9px 0;
     }
 
-    div.entity-type-property-options {
+    div.property-options {
       border-top: 2px dashed #ccc;
       padding-top: 10px;
 
