@@ -1,4 +1,6 @@
 class Entity < ActiveRecord::Base
+  include I18n::Alchemy
+
   has_many :properties, class_name: 'EntityProperty', dependent: :destroy, inverse_of: :entity
   has_many :reservation_rules, dependent: :destroy, inverse_of: :entity
   has_many :reservations, dependent: :destroy
@@ -11,7 +13,8 @@ class Entity < ActiveRecord::Base
   belongs_to :organisation
 
   validates :name, presence: true, length: { maximum: 255 }
-  validates :entity_type, presence: true
+  validates :entity_type_id, presence: true
+  validates :entity_type, presence: true, if: "entity_type_id.present?"
   validates :organisation, presence: true
   validates :color, color: true
 

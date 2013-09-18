@@ -39,6 +39,10 @@
         <%= f.label :max_periods %>
         <%= f.number_field :max_periods, data: { field: 'max-periods' } %>
       </div>
+      <div class="field">
+        <%= f.label :price %>
+        <%= f.number_field :price, data: { field: 'price' } %>
+      </div>
     </div>
     <div class="actions">
       <%= link_to '', 'javascript:void(0)', class: 'icon icon-ok', title: t('done_nested_object', class: ReservationRule.model_name.human.lcfirst) %>

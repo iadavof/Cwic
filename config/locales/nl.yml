@@ -148,7 +148,7 @@ nl:
         description: 'Omschrijving bij optie'
         default_price: 'Standaardprijs bij optie'
       entity:
-        entity_type: 'Type'
+        entity_type_id: 'Type'
         name: 'Naam'
         description: 'Omschrijving'
         color: 'Kleur'

@@ -25,7 +25,7 @@ class EntitiesController < ApplicationController
   # POST /entities
   def create
     return if check_entity_type_changed('new')
-    @entity.attributes = resource_params
+    @entity.localized.attributes = resource_params
     @entity.save
     respond_with(@organisation, @entity)
   end
@@ -33,7 +33,7 @@ class EntitiesController < ApplicationController
   # PATCH/PUT /entities/1
   def update
     return if check_entity_type_changed('edit')
-    @entity.update_attributes(resource_params)
+    @entity.localized.update_attributes(resource_params)
     respond_with(@organisation, @entity)
   end
 
@@ -56,7 +56,11 @@ private
   end
 
   def resource_params
-    params.require(:entity).permit(:name, :color, :description, :entity_type_id, :organisation_id, properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []])
+    params.require(:entity).permit(
+      :name, :color, :description, :entity_type_id, :organisation_id,
+      properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []],
+      reservation_rules_attributes: [:id, :active_from_date, :active_from_tod, :active_to_date, :active_to_tod, :period_unit_id, :period_amount, :min_periods, :max_periods, :price, :_destroy]
+    )
   end
 
   def interpolation_options

@@ -1,8 +1,6 @@
 class EntityTypeProperty < ActiveRecord::Base
   include I18n::Alchemy
 
-  default_scope { order(:index) }
-
   belongs_to :entity_type
   belongs_to :data_type
 
@@ -30,6 +28,8 @@ class EntityTypeProperty < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
 
   delegate :string?, :integer?, :float?, :cast_value, :parse_value, :has_required?, to: :data_type
+
+  default_scope { order(:index) }
 
   def format_value(value)
     if self.single_option?

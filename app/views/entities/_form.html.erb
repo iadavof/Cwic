@@ -1,25 +1,25 @@
-<%= nested_form_for([@organisation, @entity]) do |f| %>
+<%= nested_form_for([@organisation, @entity.localized]) do |f| %>
   <%= render 'shared/error_messages', target: @entity %>
 
   <% if @organisation.entity_types.empty? %>
   <p class="no_entity_types_found"><%= t('.no_entity_types_found', { link: link_to_new([@organisation, EntityType]) }).html_safe %></p>
   <% else %>
-  <div class="field autosubmit">
-    <%= f.label :entity_type %>
-    <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
-  </div>
   <% if @entity.entity_type.present? %>
   <div id="tabs">
     <ul class="nav">
       <li><a href="#general" class="current"><%= t('.general') %></a></li>
-      <li><a href="#reservation_rules"><%= t('.reservation_rules') %></a></li>
       <% if @entity.properties.present? %>
       <li><a href="#properties"><%= t('.properties') %></a></li>
       <% end %>
+      <li><a href="#reservation_rules"><%= t('.reservation_rules') %></a></li>
     </ul>
 
     <div class="tab-wrap">
       <div id="general">
+        <div class="field autosubmit">
+          <%= f.label :entity_type_id %>
+          <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
+        </div>
         <div class="field">
           <%= f.label :name %>
           <%= f.text_field :name %>
@@ -34,17 +34,6 @@
         </div>
       </div>
 
-      <div id="reservation_rules">
-        <h2><%= t('.reservation_rules') %></h2>
-        <%= format_help(t('.reservation_rules_help')) %>
-          <div class="nested-form" id="entities-reservation-rules">
-            <%= f.fields_for :reservation_rules, wrapper: false do |rrf| %>
-              <%= render partial: 'reservation_rules_fields', locals: { f: rrf } %>
-            <% end %>
-            <%= f.link_to_add '', :reservation_rules, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
-          </div>
-      </div>
-
       <% if @entity.properties.present? %>
       <div id="properties">
         <h2><%= EntityProperty.model_name.human(count: 2) %></h2>
@@ -53,10 +42,26 @@
         <% end %>
       </div>
       <% end %>
+
+      <div id="reservation_rules">
+        <h2><%= t('.reservation_rules') %></h2>
+        <%= format_help(t('.reservation_rules_help')) %>
+          <div class="nested-form" id="entities-reservation-rules">
+            <%= f.fields_for :reservation_rules, @entity.reservation_rules.map(&:localized), wrapper: false do |rrf| %>
+              <%= render partial: 'reservation_rules_fields', locals: { f: rrf } %>
+            <% end %>
+            <%= f.link_to_add '', :reservation_rules, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
+          </div>
+      </div>
     </div>
   </div>
   <div class="actions">
     <%= f.submit %>
+  </div>
+  <% else %>
+  <div class="field autosubmit">
+    <%= f.label :entity_type_id %>
+    <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
   </div>
   <% end %>
   <% end %>
