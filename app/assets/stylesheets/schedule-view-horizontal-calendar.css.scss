@@ -290,8 +290,11 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item {
   height: 100%;
   width: 1px;
   z-index: 1;
+  border-left: 1px solid #ccc;
   background-color: #555;
   overflow: hidden;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.continue {

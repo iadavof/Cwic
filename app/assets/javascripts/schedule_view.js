@@ -262,7 +262,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
 
   this.scheduleContainer.find('.schedule-body').on('mouseup', function(event) {
     // Handle new entry
-    if(newScheduleItem != null && newItem.begin_time < newItem.end_time) {
+    if(newScheduleItem != null && newItem.begin_time < newItem.end_time && !schedule.alreadyTaken(newItem)) {
       schedule.setNewReservationForm(newItem);
       window.location.hash = '#new_reservation';
       $('#new_reservation_popup').find('a.close').on('click', function() {
