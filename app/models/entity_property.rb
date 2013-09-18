@@ -1,5 +1,5 @@
 class EntityProperty < ActiveRecord::Base
-  default_scope { includes(:property_type).order('entity_type_properties.name') }
+  include I18n::Alchemy
 
   belongs_to :entity
   belongs_to :property_type, class_name: 'EntityTypeProperty'
@@ -17,6 +17,8 @@ class EntityProperty < ActiveRecord::Base
   before_validation :parse_value
 
   delegate :required?, :string?, :integer?, :float?, :single_option?, :multiple_options?, to: :property_type
+
+  default_scope { includes(:property_type).order('entity_type_properties.name') }
 
   def set_default_value
     if self.multiple_options?
