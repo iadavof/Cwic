@@ -5,28 +5,32 @@ div.today-and-tomorrow-container {
 div.today-and-tomorrow-container div.entity-type-container {
   display: block;
   float: left;
-  margin: 10px;
-  border: 1px solid #ccc;
+  margin: 0 0 1% 1%;
   padding: 5px;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  width: 32.666%;
+}
+
+div.today-and-tomorrow-container div.entity-type-container:first-child {
+  margin-left: 0;
 }
 
 div.today-and-tomorrow-container div.entity-type-container h2 {
-  width: 85%;
-  margin-left: 5%;
-  display: inline;
+  margin: 0 20px 0 10px;
+  display: inline-block;
 }
 
 div.today-and-tomorrow-container div.entity-type-container img.entity_type_icon {
-  width: 10%;
+  margin: 10px 10px 10px 0;
+  vertical-align: middle;
 }
 
 div.today-and-tomorrow-container div.entity-container {
   position: relative;
-  width: 400px;
-  border: 2px solid #ccc;
-  padding: 0 5px;
-  padding-top: 25px;
-
+  padding: 0 5px 5px 5px;
+  background: #f3f3f3;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.5);
   float: left;
   margin: 15px;
 }
@@ -42,46 +46,31 @@ div.today-and-tomorrow-container div.entity-container p {
 }
 
 div.today-and-tomorrow-container div.entity-container p.entity-name {
-  position: absolute;
-  left: -4px;
-  top: -4px;
+  position: relative;
+  margin: 0 -5px;
   background-color: #DDDDDD;
-  width: auto;
-  display: inline-block;
   padding: 0 5px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
+}
 
-  -webkit-box-shadow: 1px 1px 1px 1px rgba(68, 68, 68, 0.2);
-  box-shadow: 1px 1px 1px 1px rgba(68, 68, 68, 0.2);
+div.today-and-tomorrow-container div.entity-container .updated-info {
+  margin-top: 10px;
 }
 
 div.today-and-tomorrow-container div.entity-container div.entity-description {
-  width: 90%;
-  margin-left: 5%;
-  margin-top: -10px;
+  font-size: 0.86em;
+  border-bottom: 1px solid #bbbbbb;
   margin-bottom: 10px;
-  padding: 0 2.5%;
-  font-style: itallic;
+  margin-top: -1px;
+  padding: 6px 10px 5px 10px;
+  font-style: italic;
   color: #666;
-  border-top: 1px solid #ccc;
-  border-left: 1px solid #ccc;
   height: auto;
   display: none;
   overflow: hidden;
-  /*
-  -moz-transition: max-height 0.5s;
-  -ms-transition: max-height 0.5s;
-  -o-transition: max-height 0.5s;
-  -webkit-transition: max-height 0.5s;
-  transition: max-height 0.5s;
-  */
-}
-
-div.today-and-tomorrow-container div.entity-container div.entity-description p {
-  padding-top: 5px;
 }
 
 div.today-and-tomorrow-container div.entity-container div.reservation-now {
@@ -89,11 +78,8 @@ div.today-and-tomorrow-container div.entity-container div.reservation-now {
 }
 
 div.today-and-tomorrow-container div.entity-container div.reservation-now p.reservation-description {
-  width: 80%;
   margin: 0 auto;
   text-align: center;
-  line-height: 100%;
-
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -103,7 +89,7 @@ div.today-and-tomorrow-container div.entity-container div.reservation-now div.ti
 div.today-and-tomorrow-container div.entity-container div.reservation-now div.date-info {
   position:relative;
   height: 10px;
-  font-size: 80%;
+  font-size: 0.8em;
   line-height: 10px;
 }
 
@@ -141,7 +127,6 @@ div.today-and-tomorrow-container div.entity-container div.reservation-next h4 {
 
 div.today-and-tomorrow-container div.entity-container p.no-reservations {
   text-align: center;
-  color: #ff3520;
   font-size: 100%;
   margin: 5px 0;
 }
@@ -160,16 +145,16 @@ div.today-and-tomorrow-container div.entity-container div.reservation-next p.res
 div.today-and-tomorrow-container div.entity-container div.progress-bar-container {
   position: relative;
   background-color: #F7F7F7;
+  border: 1px solid #999999;
   height: 10px;
   padding: 2px;
-  width: 95%;
-  margin: 5px auto;
+  margin: 5px;
   -moz-border-radius: 2px;
   -webkit-border-radius: 2px;
   border-radius: 2px;
-  -moz-box-shadow: 0 1px 2px #444 inset, 0 1px 0 #888;
-  -webkit-box-shadow: 0 1px 2px #444 inset, 0 1px 0 #888;
-  box-shadow: 0 1px 2px #444 inset, 0 1px 0 #888;
+  -moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) inset;
+  -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) inset;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.6) inset;
   line-height: 10px;
 }
 
@@ -180,7 +165,7 @@ div.today-and-tomorrow-container div.entity-container div.progress-bar-container
   left: 0;
   top: 0;
   width: 1px;
-  background-color: #444;
+  background-color: #aaaaaa;
 }
 
 div.today-and-tomorrow-container div.entity-container div.progress-bar-container span {

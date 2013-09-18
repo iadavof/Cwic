@@ -654,14 +654,16 @@ IADAscheduleView.prototype.bindEntityInfoControls = function() {
   this.scheduleContainer.find('p.entity-name').each(function(){
     var descriptionHeight;
     $(this).on('click', function() {
-    if($(this).siblings('.entity-description').hasClass('opened')) {
-      $(this).siblings('.entity-description').animate({height: 0}, {complete: function(){
-      $(this).css({display: 'none', height: 'auto'}).removeClass('opened');
-      }});
-    } else {
-      descriptionHeight = $(this).siblings('.entity-description').height();
-      $(this).siblings('.entity-description').css({height: 0, display: 'block'}).animate({height: descriptionHeight}).addClass('opened');
-    }
+      if($(this).siblings('.entity-description').hasClass('opened')) {
+        $(this).siblings('.entity-description').animate({height: 0}, {complete: function(){
+          $(this).css({display: 'none', height: 'auto'}).removeClass('opened');
+        }});
+      } else {
+        descriptionHeight = $(this).siblings('.entity-description').outerHeight();
+        $(this).siblings('.entity-description').css({height: 0, display: 'block'}).animate({height: descriptionHeight}, {complete: function() {
+          $(this).css({height: 'auto'});
+        }}).addClass('opened');
+      }
     });
   });
 }
