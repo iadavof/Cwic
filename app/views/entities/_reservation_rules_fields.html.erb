@@ -15,11 +15,13 @@
     <div class="horizontal-block extra">
       <div class="field">
         <%= f.label :active_from %>
-        <%= f.datetime_select :active_from, data: { field: 'active-from' } %>
+        <%= f.text_field :active_from_date, class: 'datepicker-field', data: { field: 'active-from' }  %>
+        <%= f.text_field :active_from_tod, class: 'timepicker-field', data: { field: 'active-from' }  %>
       </div>
       <div class="field">
         <%= f.label :active_to %>
-        <%= f.datetime_select :active_to, data: { field: 'active-till' } %>
+        <%= f.text_field :active_to_date, class: 'datepicker-field', data: { field: 'active-to' }  %>
+        <%= f.text_field :active_to_tod, class: 'timepicker-field', data: { field: 'active-to' }  %>
       </div>
       <div class="field">
         <%= f.label :period_unit_id %>

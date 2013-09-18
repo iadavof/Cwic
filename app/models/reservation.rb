@@ -14,6 +14,7 @@ class Reservation < ActiveRecord::Base
   validate :not_overlapping
 
   split_datetime :begins_at, :ends_at
+
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
