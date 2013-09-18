@@ -20,14 +20,13 @@ class ScheduleViewController < ApplicationController
         start_date = Date.today
         end_date = (Date.today + 2.weeks)
       end
-      result = []
+      result = {}
       entities = @organisation.entities.where(id: entity_ids)
       entities.each do |ent|
         current_reservations = ent.reservations.where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
-        items = []
+        items = {}
         current_reservations.each do |r|
-          items << {
-                    item_id: r.id,
+          items[r.id] = {
                     begin_date: r.begins_at.strftime('%Y-%m-%d'),
                     begin_time: r.begins_at.strftime('%H:%M'),
                     end_date: r.ends_at.strftime('%Y-%m-%d'),
@@ -38,7 +37,7 @@ class ScheduleViewController < ApplicationController
                     show_url: (can?(:show, r) ? organisation_reservation_path(@organisation, r.id) : nil)
                   }
         end
-        result << { schedule_object_id: ent.id, schedule_object_name: ent.instance_name, items: items }
+        result[ent.id]  = { schedule_object_name: ent.instance_name, items: items }
       end
       render json: { begin_date: start_date.strftime('%Y-%m-%d'), end_date: end_date.strftime('%Y-%m-%d'), schedule_objects: result }, status: :ok
     else
