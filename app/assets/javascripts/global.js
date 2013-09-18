@@ -18,8 +18,11 @@ APP.init = function() {
   // Load stickies (if #note-container is present)
   this.stickies.loadStickies();
 
-  // set the upper nprogress bar as the default ajax complete and start handlers
+  // Set the upper nprogress bar as the default ajax complete and start handlers
   this.global.addProgressbarToAjax();
+
+  // Initialize date- and timepicker fields
+  this.global.initializeDateTimePickers();
 };
 
 $(document).on('page:fetch',   function() { NProgress.stackPush(); });
@@ -142,6 +145,14 @@ APP.global = {
     } else {
       return false;
     }
+  },
+  initializeDateTimePickers: function(parent) {
+    if(!parent) {
+      parent = document.body;
+    }
+    $(parent).find('.datepicker-field').datepicker({ showOn: 'both' });
+    $(parent).find('.timepicker-field').timepicker({ showPeriodLabels: false, showOn: 'both' });
+    $(document).on('nested:fieldAdded', function() { APP.global.initializeDateTimePickers(this); });
   }
 };
 

@@ -1,4 +1,5 @@
 class ReservationRule < ActiveRecord::Base
+  include DatetimeSplittable
   include I18n::Alchemy
 
   belongs_to :entity
@@ -12,6 +13,8 @@ class ReservationRule < ActiveRecord::Base
   validates :min_periods, presence: true, numericality: { only_integer: true }
   validates :max_periods, presence: true, numericality: { only_integer: true }
   validates :price, presence: true, numericality: true
+
+  split_datetime :active_from, :active_to
 
   def instance_name
     self.id

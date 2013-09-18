@@ -664,6 +664,17 @@ button.ui-datepicker-trigger {
   animation: animate-stripes-30 1.5s linear 0s infinite normal;
 }
 
+/* Date and timepickers */
+.timepicker-field {
+  width: 40px;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.datepicker-field {
+  width: 80px;
+  margin-right: 5px;
+}
 
 /* Property and option wrapper markup (view and form) */
 /* XXX TODO if we do not use for anything else than entity types, then move this to entity_types.css.scss */
