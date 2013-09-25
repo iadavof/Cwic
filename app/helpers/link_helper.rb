@@ -28,7 +28,7 @@ module LinkHelper
   def link_to_destroy(object, options = {})
     options[:name] ||= t('.to_destroy', default: :to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
     options[:location] ||= object
-    options[:confirm] ||= t('.destroy_are_you_sure', default: :destroy_are_you_sure)
+    options[:confirm] ||= t('.to_destroy_confirm', default: :to_destroy_object_confirm, class: object_class_name(object).lcfirst, name: object_name(object))
     link_to_if(can?(:destroy, relevant_object(object)), options[:name], options[:location], method: :delete, data: { confirm: options[:confirm], action: 'destroy' }, class: options[:css_class], title: options[:title]) {}
   end
 

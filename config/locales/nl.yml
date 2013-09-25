@@ -14,11 +14,11 @@ nl:
   to_show_object: 'Bekijk %{name}'
   to_edit_object: 'Bewerk'
   to_destroy_object: 'Verwijder'
+  to_destroy_object_confirm: 'Weet u zeker dat u %{name} wilt verwijderen?'
   back_to_show_object: 'Terug naar %{name}'
   back_to_index_objects: 'Terug naar lijst met %{classes}'
   icon_to_edit_object: 'Bewerk %{name}'
   icon_to_destroy_object: 'Verwijder %{name}'
-  destroy_are_you_sure: 'Weet u het zeker?'
   to_close_object: 'Sluiten'
   to_open_object: 'Openen'
   icon_to_close_object: 'Sluit %{name}'
@@ -31,6 +31,7 @@ nl:
   include_blank_none: 'Geen'
   prompt_choose: 'Kies...'
   prompt_all_organisations: 'Alle organisaties'
+  are_you_sure: 'Weet u het zeker?'
   unknown_html: '<em>Onbekend</em>'
   none_html: '<em>Geen</em>'
   na_html: '<em>n.v.t.</em>'
@@ -314,8 +315,8 @@ nl:
 
   entity_types:
     still_used_destroy_confirm:
-      one: 'Deze objectsoort wordt nog gebruikt door een object. Weet u zeker dat u door wilt gaan?'
-      other: 'Deze objectsoort wordt nog gebruikt door %{count} objecten. Weet u zeker dat u door wilt gaan?'
+      one: 'Objectsoort %{name} wordt nog gebruikt door een object. Als u de objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
+      other: 'Objectsoort %{name} wordt nog gebruikt door %{count} objecten. Als u de objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
     property_fields:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
       clear: 'Leegmaken'
