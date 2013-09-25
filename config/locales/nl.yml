@@ -333,7 +333,7 @@ nl:
 
   entities:
     form:
-      no_entity_types_found: 'Er zijn nog een objectsoorten toegevoegd. %{link} om een object van een bepaald objectsoort aan te kunnen maken.'
+      no_entity_types_found_html: 'Er zijn nog een objectsoorten toegevoegd. %{link} om een object van een bepaald objectsoort aan te kunnen maken.'
       general: 'Algemeen'
       reservation_rules: 'Reserveringsregels'
       reservation_rules_help: 'Gebruik reserveringsregels om reserveringsmogelijkheden te beperken. Zo kunt u bijvoorbeeld een minimale reserveringsperiode van een week afdwingen.'

@@ -2,7 +2,7 @@
   <%= render 'shared/error_messages', target: @entity %>
 
   <% if @organisation.entity_types.empty? %>
-  <p class="no_entity_types_found"><%= t('.no_entity_types_found', { link: link_to_new([@organisation, EntityType]) }).html_safe %></p>
+  <p class="no_entity_types_found"><%= t('.no_entity_types_found_html', { link: link_to_new([@organisation, EntityType]) }) %></p>
   <% else %>
   <% if @entity.entity_type.present? %>
   <div id="tabs">
@@ -50,7 +50,7 @@
             <%= f.fields_for :reservation_rules, @entity.reservation_rules.map(&:localized), wrapper: false do |rrf| %>
               <%= render partial: 'reservation_rules_fields', locals: { f: rrf } %>
             <% end %>
-            <%= f.link_to_add '', :reservation_rules, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
+            <%= f.link_to_add '', :reservation_rules, model_object: @entity.reservation_rules.build.localized, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
           </div>
       </div>
     </div>
