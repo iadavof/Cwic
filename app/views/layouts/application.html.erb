@@ -12,11 +12,12 @@
   </head>
   <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-user-id="<%= current_user.try(:id) %>" data-current-user-name="<%= current_user.try(:instance_name) %>" data-current-organisation-id="<%= current_organisation.try(:id) %>">
     <div id="header">
+      <% if user_signed_in? %>
       <%= render "layouts/menu" %>
+      <% end %>
     </div>
     <div id="progress-bar-container"></div>
     <h1>
-      <!--<i class="icon-info-sign" style="font-size: 0.7em; vertical-align: 4%; margin: 0 0.5em 0 0;"></i>-->
       <%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %>
     </h1>
     <div id="content">
