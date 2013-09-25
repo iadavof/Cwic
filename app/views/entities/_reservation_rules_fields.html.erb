@@ -8,7 +8,7 @@
     </div>
     <div class="actions">
       <%= link_to '', 'javascript:void(0)', class: 'icon icon-edit', title: t('edit_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
-      <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: ReservationRule.model_name.human.lcfirst), data: { confirm: t('.destroy_are_you_sure', default: :destroy_are_you_sure) } %>
+      <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: ReservationRule.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
     </div>
   </div>
   <div class="form">

@@ -315,8 +315,8 @@ nl:
 
   entity_types:
     still_used_destroy_confirm:
-      one: 'Objectsoort %{name} wordt nog gebruikt door een object. Als u de objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
-      other: 'Objectsoort %{name} wordt nog gebruikt door %{count} objecten. Als u de objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
+      one: 'Objectsoort %{name} wordt nog gebruikt door een object. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
+      other: 'Objectsoort %{name} wordt nog gebruikt door %{count} objecten. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
     property_fields:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
       clear: 'Leegmaken'
