@@ -13,11 +13,6 @@ function IADAFeedback(options) {
         backend_url: 'url to backend',
     }, options || {});
 
-    // check if modal is opened and close if it is
-    if(window.location.hash == '#new_feedback') {
-        window.location.hash = '';
-    }
-
     this.bindOpenFeedbackButton();
 
 }
@@ -29,17 +24,10 @@ IADAFeedback.prototype.bindOpenFeedbackButton = function() {
 }
 
 IADAFeedback.prototype.openFeedbackModal = function() {
-    $('html').addClass('with-overlay');
-    var fb = this;
-    window.location.hash = 'new_feedback';
     this.button.attr('disabled', 'disabled');
-    this.modal = $('#new_feedback_popup');
-
-    // Bind small close button
-    this.modal.find('a.close').on('click', function() { fb.closeFeedback(); });
-
-    // Bind Overlay action
-   $('a.overlay').on('click', function() { fb.closeFeedback(); });
+    this.modal = openModal('new_feedback_popup', this.getTemplateClone('feedbackStatusTemplate'), this.closeFeedback());
+    this.modal.attr('data-html2canvas-ignore', 'true');
+    this.modal.find('p#creating_screenshot').css('visibility', 'visible');
 
     this.takeScreenshot();
 
@@ -61,9 +49,6 @@ IADAFeedback.prototype.renderFeedbackTextInput = function() {
 
 IADAFeedback.prototype.takeScreenshot = function() {
     var fb = this;
-
-    this.modal.append(this.getTemplateClone('feedbackStatusTemplate'));
-    this.modal.find('p#creating_screenshot').css('visibility', 'visible');
 
     html2canvas(document.body, {
          onrendered: function(canvas) {
@@ -106,10 +91,8 @@ IADAFeedback.prototype.reviewFeedback = function() {
 }
 
 IADAFeedback.prototype.closeFeedback = function() {
-    $('html').removeClass('with-overlay');
-    this.modal.children(':not(a.close)').remove();
     this.screenshot = null;
-    window.location.hash = 'close';
+    closeModal();
 }
 
 IADAFeedback.prototype.generateTechInfo = function() {

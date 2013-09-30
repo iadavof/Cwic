@@ -172,6 +172,61 @@ function format_text(text) {
   }
 }
 
+function openModal(modalID, content, closeCallback) {
+
+  var closeCallback = closeCallback || this.closeModal;
+
+  var overlay = $('a.overlay');
+
+  overlay.on('click', closeCallback);
+
+  // open overlay
+  overlay.addClass('opened');
+  $('html').addClass('with-overlay');
+
+
+  var modalDiv = $('div.modal');
+  modalDiv.attr('id', modalID);
+  modalDiv.find('a.close').on('click', closeCallback);
+  // content toevoegen aan modal
+  modalDiv.append(content);
+
+  // modal tonen
+  modalDiv.addClass('opened');
+
+  return modalDiv;
+}
+
+function closeModal(e) {
+
+  if(e != null) {
+    e.preventDefault();
+  }
+
+  var modalDiv = $('div.modal');
+
+  // modal verbergen
+  modalDiv.removeClass('opened');
+
+  modalDiv.children(':not(a.close)').remove();
+
+  modalDiv.removeAttr('id');
+
+  var overlay = $('a.overlay');
+
+  overlay.removeClass('opened');
+  $('html').removeClass('with-overlay');
+
+  // remove events from the overlay
+  overlay.off('click');
+  overlay.find('a.close').off('click');
+
+  if(e != null) {
+    return false;
+  }
+
+}
+
 window.log = function ( string ) {
   if ( typeof console == 'object' ) { console.log ( string ) };
 }

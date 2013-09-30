@@ -2,34 +2,39 @@ module LinkHelper
   # Link helper for default links to scaffold (CRUD) pages
   # Link to object helpers
   def link_to_index(object, options = {})
-    options[:name] ||= t('.to_index', default: :to_index_objects, classes: object_classes_name(object).lcfirst)
-    options[:location] ||= polymorphic_path(object)
-    link_to_if(can?(:index, relevant_object(object)), options[:name], options[:location], class: options[:css_class], data: { action: 'index' }, title: options[:title]) {}
+    name = options.delete(:name) || t('.to_index', default: :to_index_objects, classes: object_classes_name(object).lcfirst)
+    location = options.delete(:location) || polymorphic_path(object)
+    options = options.merge(data: { action: 'index' })
+    link_to_if(can?(:index, relevant_object(object)), name, location, options) {}
   end
 
   def link_to_new(object, options = {})
-    options[:name] ||= t('.to_new', default: :to_new_object, class: object_class_name(object).lcfirst)
-    options[:location] ||= new_polymorphic_path(object)
-    link_to_if(can?(:new, relevant_object(object)), options[:name], options[:location], class: options[:css_class], data: { action: 'new' }, title: options[:title]) {}
+    name =  options.delete(:name) || t('.to_new', default: :to_new_object, class: object_class_name(object).lcfirst)
+    location = options.delete(:location) || new_polymorphic_path(object)
+    options = options.merge(data: { action: 'new' })
+    link_to_if(can?(:new, relevant_object(object)), name, location, options) {}
   end
 
   def link_to_show(object, options = {})
-    options[:name] ||= t('.to_show', default: :to_show_object, class: object_class_name(object).lcfirst, name: object_name(object))
-    options[:location] ||= object
-    link_to_if(can?(:show, relevant_object(object)), options[:name], options[:location], class: options[:css_class], data: { action: 'show' }, title: options[:title])
+    name = options.delete(:name) || t('.to_show', default: :to_show_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    location = options.delete(:location) || object
+    options = options.merge(data: { action: 'show' })
+    link_to_if(can?(:show, relevant_object(object)), name, location, options)
   end
 
   def link_to_edit(object, options = {})
-    options[:name] ||= t('.to_edit', default: :to_edit_object, class: object_class_name(object).lcfirst, name: object_name(object))
-    options[:location] ||= edit_polymorphic_path(object)
-    link_to_if(can?(:edit, relevant_object(object)), options[:name], options[:location], class: options[:css_class], data: { action: 'edit' }, title: options[:title]) {}
+    name = options.delete(:name) || t('.to_edit', default: :to_edit_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    location = options.delete(:location) || edit_polymorphic_path(object)
+    options = options.merge(data: { action: 'edit' })
+    link_to_if(can?(:edit, relevant_object(object)), name, location, options) {}
   end
 
   def link_to_destroy(object, options = {})
-    options[:name] ||= t('.to_destroy', default: :to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
-    options[:location] ||= object
-    options[:confirm] ||= t('.to_destroy_confirm', default: :to_destroy_object_confirm, class: object_class_name(object).lcfirst, name: object_name(object))
-    link_to_if(can?(:destroy, relevant_object(object)), options[:name], options[:location], method: :delete, data: { confirm: options[:confirm], action: 'destroy' }, class: options[:css_class], title: options[:title]) {}
+    name = options.delete(:name) || t('.to_destroy', default: :to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    location = options.delete(:location) || object
+    confirm = options.delete(:confirm) || t('.to_destroy_confirm', default: :to_destroy_object_confirm, class: object_class_name(object).lcfirst, name: object_name(object))
+    options = options.merge(method: :delete, data: { confirm: confirm, action: 'destroy' })
+    link_to_if(can?(:destroy, relevant_object(object)), name, location, options) {}
   end
 
   # Link back to object helpers
@@ -53,52 +58,52 @@ module LinkHelper
   # Icon link to object helpers
   def icon_link_to_edit(object, options = {})
     options[:name] = ''
-    options[:css_class] ||= 'icon icon-edit'
+    options[:class] ||= 'icon icon-edit'
     options[:title] ||= t('.to_edit', default: :icon_to_edit_object, class: object_class_name(object).lcfirst, name: object_name(object))
     link_to_edit(object, options)
   end
 
   def icon_link_to_destroy(object, options = {})
     options[:name] = ''
-    options[:css_class] ||= 'icon icon-remove'
+    options[:class] ||= 'icon icon-remove'
     options[:title] ||= t('.to_destroy', default: :icon_to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
     link_to_destroy(object, options)
   end
 
   # Button link to object helpers
   def button_link_to_index(object, options = {})
-    options[:css_class] ||= 'button'
+    options[:class] ||= 'button'
     link_to_index(object, options)
   end
 
   def button_link_to_new(object, options = {})
-    options[:css_class] ||= 'button'
+    options[:class] ||= 'button'
     link_to_new(object, options)
   end
 
   def button_link_to_show(object, options = {})
-    options[:css_class] ||= 'button'
+    options[:class] ||= 'button'
     link_to_show(object, options)
   end
 
   def button_link_to_edit(object, options = {})
-    options[:css_class] ||= 'button'
+    options[:class] ||= 'button'
     link_to_edit(object, options)
   end
 
   def button_link_to_destroy(object, options = {})
-    options[:css_class] ||= 'button'
+    options[:class] ||= 'button'
     link_to_destroy(object, options)
   end
 
   # Button link back to object helpers
   def button_link_back_to_index(object, options = {})
-    options[:css_class] ||= 'button'
+    options[:class] ||= 'button'
     link_back_to_index(object, options)
   end
 
   def button_link_back_to_show(object, options = {})
-    options[:css_class] ||= 'button'
+    options[:class] ||= 'button'
     link_back_to_show(object, options)
   end
 

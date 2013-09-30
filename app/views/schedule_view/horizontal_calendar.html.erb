@@ -70,9 +70,9 @@
     <p class="name"></p>
   </div>
 </div>
-
-<%= render partial: 'shared/modal', locals: { content: render('reservations/form'), modal_id: 'new_reservation' } %>
-
+<div id="reservation-form-modal-content" style="display: none;">
+  <%= render('reservations/form') %>
+</div>
 <div class="actions">
-  <%= button_link_to_new([@organisation, Reservation], {location: '#new_reservation', css_class: 'button new-reservation'}) %>
+  <%= button_link_to_new([@organisation, Reservation], {location: nil, class: 'button new-reservation', id: 'open-new-reservation-modal-button'}) %>
 </div>
