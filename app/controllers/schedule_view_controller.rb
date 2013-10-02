@@ -25,6 +25,8 @@ class ScheduleViewController < ApplicationController
         items = {}
         current_reservations.each do |r|
           items[r.id] = {
+                    begin_moment: r.begins_at.to_s,
+                    end_moment: r.ends_at.to_s,
                     begin_date: r.begins_at.strftime('%Y-%m-%d'),
                     begin_time: r.begins_at.strftime('%H:%M'),
                     end_date: r.ends_at.strftime('%Y-%m-%d'),

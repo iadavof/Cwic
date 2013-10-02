@@ -10,3 +10,6 @@
 //= require global
 //= require_directory .
 //= require_directory ./i18n
+//= require moment
+//= require moment/en-gb.js
+//= require moment/nl.js
