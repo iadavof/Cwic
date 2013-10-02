@@ -8,12 +8,8 @@ APP.schedule_view = {
 
     $('#open-new-reservation-modal-button').on('click', function(e) {
         e.preventDefault();
-        var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-content').clone().show());
-        var dp = reservationForm.find('.datepicker-template-field').removeClass('datepicker-template-field').addClass('datepicker-field');
-        var tp = reservationForm.find('.timepicker-template-field').removeClass('timepicker-template-field').addClass('timepicker-field');
-
-        dp.datepicker({ showOn: 'both' });
-        tp.timepicker({ showPeriodLabels: false, showOn: 'both' });
+        var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'));
+        APP.global.initializeDateTimePickers(reservationForm);
         return false;
     });
   },
@@ -274,19 +270,14 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
   this.scheduleContainer.find('.schedule-body').on('mouseup', function(event) {
     // Handle new entry
     if(newScheduleItem != null && newItem.begin_time < newItem.end_time && !schedule.alreadyTaken(newItem)) {
-      var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-content').clone().show() ,function() {
+      var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function() {
         if(newScheduleItem != null) {
           newScheduleItem.remove();
           newScheduleItem = null;
         }
         closeModal();
       });
-
-      var dp = reservationForm.find('.datepicker-template-field').removeClass('datepicker-template-field').addClass('datepicker-field');
-      var tp = reservationForm.find('.timepicker-template-field').removeClass('timepicker-template-field').addClass('timepicker-field');
-
-      dp.datepicker({ showOn: 'both' });
-      tp.timepicker({ showPeriodLabels: false, showOn: 'both' });
+      APP.global.initializeDateTimePickers(reservationForm);
       schedule.setNewReservationForm(newItem);
     } else {
       if(newScheduleItem != null) {

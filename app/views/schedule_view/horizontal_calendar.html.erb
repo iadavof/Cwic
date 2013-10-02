@@ -70,9 +70,7 @@
     <p class="name"></p>
   </div>
 </div>
-<div id="reservation-form-modal-content" style="display: none;">
-  <%= render('reservations/form') %>
-</div>
+<%= content_tag(:div, nil, { id: 'reservation-form-modal-blueprint', data: { blueprint: render('reservations/form').to_str }}) %>
 <div class="actions">
   <%= button_link_to_new([@organisation, Reservation], {location: nil, class: 'button new-reservation', id: 'open-new-reservation-modal-button'}) %>
 </div>

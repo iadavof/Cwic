@@ -2,12 +2,10 @@ class ScheduleViewController < ApplicationController
   def horizontal_calendar
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
-    render :horizontal_calendar
   end
 
   def today_and_tomorrow
     @entity_types = @organisation.entity_types.with_entities
-    render :today_and_tomorrow
   end
 
   def index_domain

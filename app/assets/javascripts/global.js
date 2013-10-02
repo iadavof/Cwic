@@ -180,18 +180,18 @@ function openModal(modalID, content, closeCallback) {
 
   overlay.on('click', closeCallback);
 
-  // open overlay
+  // Open overlay
   overlay.addClass('opened');
   $('html').addClass('with-overlay');
-
 
   var modalDiv = $('div.modal');
   modalDiv.attr('id', modalID);
   modalDiv.find('a.close').on('click', closeCallback);
-  // content toevoegen aan modal
+
+  // Content toevoegen aan modal
   modalDiv.append(content);
 
-  // modal tonen
+  // Modal tonen
   modalDiv.addClass('opened');
 
   return modalDiv;
