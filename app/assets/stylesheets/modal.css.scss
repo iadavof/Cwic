@@ -16,7 +16,7 @@
     -o-transition: opacity .5s ease-in-out 0s, visibility 0s linear .5s;
     transition: opacity .5s ease-in-out 0s, visibility 0s linear .5s;
 }
-.overlay:target {
+.overlay.opened {
     visibility: visible;
     opacity: 1;
     transition-delay: 0s;
@@ -54,7 +54,7 @@
     -o-transition: opacity .5s, top .5s;
     transition: opacity .5s, top .5s;
 }
-.overlay:target+.modal {
+.overlay.opened+.modal {
     top: 50%;
     opacity: 1;
     visibility: visible;

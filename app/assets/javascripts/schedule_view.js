@@ -5,6 +5,13 @@ APP.schedule_view = {
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       view: 'horizontalCalendar'
     });
+
+    $('#open-new-reservation-modal-button').on('click', function(e) {
+        e.preventDefault();
+        var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'));
+        APP.global.initializeDateTimePickers(reservationForm);
+        return false;
+    });
   },
   today_and_tomorrow: function() {
     new IADAscheduleView({
@@ -263,14 +270,15 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
   this.scheduleContainer.find('.schedule-body').on('mouseup', function(event) {
     // Handle new entry
     if(newScheduleItem != null && newItem.begin_time < newItem.end_time && !schedule.alreadyTaken(newItem)) {
-      schedule.setNewReservationForm(newItem);
-      window.location.hash = '#new_reservation';
-      $('#new_reservation_popup').find('a.close').on('click', function() {
+      var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function() {
         if(newScheduleItem != null) {
           newScheduleItem.remove();
           newScheduleItem = null;
         }
+        closeModal();
       });
+      APP.global.initializeDateTimePickers(reservationForm);
+      schedule.setNewReservationForm(newItem);
     } else {
       if(newScheduleItem != null) {
         newScheduleItem.remove();
@@ -311,6 +319,7 @@ IADAscheduleView.prototype.itemToBeginEndUnixTimeStamps = function(item) {
 
 IADAscheduleView.prototype.setNewReservationForm = function(item) {
   var reservationForm = $('#new_reservation_popup');
+
   reservationForm.find('input#begins_at_date').datepicker("setDate", item.begin_date);
   reservationForm.find('input#begins_at_tod').timepicker("setTime", item.begin_time);
   if(item.end_time == '24:00') {
