@@ -21,8 +21,8 @@
 # Ignore database.yml.
 /config/database.yml
 
-# Image uploads.
-/public/uploads/
+# Image uploads
+/public/uploads
 
 # Precompiled assets
 /public/assets
