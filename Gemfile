@@ -82,6 +82,9 @@ gem 'activerecord-import'
 # Route functions in JavaScript
 gem 'js-routes'
 
+# Javascript MomentJS for date formatting and alterations
+gem 'momentjs-rails'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
