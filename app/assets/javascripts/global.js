@@ -180,10 +180,6 @@ function openModal(modalID, content, closeCallback) {
 
   overlay.on('click', closeCallback);
 
-  // Open overlay
-  overlay.addClass('opened');
-  $('html').addClass('with-overlay');
-
   var modalDiv = $('div.modal');
   modalDiv.attr('id', modalID);
   modalDiv.find('a.close').on('click', closeCallback);
@@ -191,8 +187,9 @@ function openModal(modalID, content, closeCallback) {
   // Content toevoegen aan modal
   modalDiv.append(content);
 
-  // Modal tonen
-  modalDiv.addClass('opened');
+  // Open overlay
+  window.location.hash = 'modal_overlay';
+  $('html').addClass('with-overlay');
 
   return modalDiv;
 }
@@ -205,18 +202,15 @@ function closeModal(e) {
 
   var modalDiv = $('div.modal');
 
-  // modal verbergen
-  modalDiv.removeClass('opened');
-
   modalDiv.children(':not(a.close)').remove();
 
   modalDiv.removeAttr('id');
 
   var overlay = $('a.overlay');
 
-  overlay.removeClass('opened');
   $('html').removeClass('with-overlay');
-
+  window.location.hash = 'modal_close';
+  
   // remove events from the overlay
   overlay.off('click');
   overlay.find('a.close').off('click');
