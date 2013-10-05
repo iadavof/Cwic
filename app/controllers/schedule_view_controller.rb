@@ -27,10 +27,6 @@ class ScheduleViewController < ApplicationController
           items[r.id] = {
                     begin_moment: r.begins_at.to_s,
                     end_moment: r.ends_at.to_s,
-                    begin_date: r.begins_at.strftime('%Y-%m-%d'),
-                    begin_time: r.begins_at.strftime('%H:%M'),
-                    end_date: r.ends_at.strftime('%Y-%m-%d'),
-                    end_time: r.ends_at.strftime('%H:%M'),
                     bg_color: r.entity.color,
                     text_color: r.entity.text_color,
                     description: r.organisation_client.instance_name,
@@ -90,10 +86,8 @@ class ScheduleViewController < ApplicationController
       if r.present?
         current = {
           item_id: r.id,
-          begin_date: r.begins_at.strftime('%Y-%m-%d'),
-          begin_time: r.begins_at.strftime('%H:%M'),
-          end_date: r.ends_at.strftime('%Y-%m-%d'),
-          end_time: r.ends_at.strftime('%H:%M'),
+          begin_moment: r.begins_at.to_s,
+          end_moment: r.ends_at.to_s,
           description: r.organisation_client.instance_name,
           progress: calculate_current_progress(r),
         }
@@ -117,10 +111,8 @@ class ScheduleViewController < ApplicationController
       reservations.each do |r|
       res << {
                         item_id: r.id,
-                        begin_date: r.begins_at.strftime('%Y-%m-%d'),
-                        begin_time: r.begins_at.strftime('%H:%M'),
-                        end_date: r.ends_at.strftime('%Y-%m-%d'),
-                        end_time: r.ends_at.strftime('%H:%M'),
+                        begin_moment: r.begins_at.to_s,
+                        end_moment: r.ends_at.to_s,
                         description: r.organisation_client.instance_name,
                       }
       end

@@ -612,23 +612,32 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
 
 
   if(entity.current_reservation != null) {
-    reservation = entity.current_reservation;
+    var reservation = entity.current_reservation;
+    var begin_moment = moment(reservation.begin_moment);
+    var end_moment = moment(reservation.end_moment);
+
     var currentInfo = this.getTemplateClone('currentReservationTemplate');
 
     currentInfo.find('.reservation-description').text(reservation.description);
-    currentInfo.find('.begin-time').text(reservation.begin_time);
-    currentInfo.find('.end-time').text(reservation.end_time);
+    currentInfo.find('.begin-time').text(begin_moment.format('HH:mm'));
+    currentInfo.find('.end-time').text(end_moment.format('HH:mm'));
 
-    if(reservation.begin_date != reservation.end_date) {
-      currentInfo.find('.begin-date').text(reservation.begin_date);
-      currentInfo.find('.end-date').text(reservation.end_date);
+    // Check if event is multiple day event
+    if(moment(begin_moment).startOf('day').unix() != moment(end_moment).startOf('day').unix()) {
+      currentInfo.find('.begin-date').text(begin_moment.format('l'));
+      currentInfo.find('.end-date').text(end_moment.format('l'));
       currentInfo.find('.date-info').show();
 
-      for(var daysep_nr in reservation.day_separators) {
-        currentInfo.find('.progress-bar').append($('<div>', {class: 'day-separator', style: 'left: '+ reservation.day_separators[daysep_nr] +'%'}));
+      // Day separators in progress bar, only if it does not fill the whole bar
+      var progressBar = currentInfo.find('.progress-bar');
+      if(reservation.day_separators != null && reservation.day_separators.length < parseInt(progressBar.width()) / 4) {
+        for(var daysep_nr in reservation.day_separators) {
+          progressBar.append($('<div>', {class: 'day-separator', style: 'left: '+ reservation.day_separators[daysep_nr] +'%'}));
+        }
       }
     }
 
+    // Set progressbar
     currentInfo.find('.progress-bar span').css('width', reservation.progress + '%');
 
     parentdiv.append(currentInfo);
@@ -642,7 +651,7 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
 
     for(up_nr in entity.upcoming_reservations.today) {
       var line = this.getTemplateClone('reservationLineTemplate');
-      line.find('span.time').text(entity.upcoming_reservations.today[up_nr].begin_time + ' - ' + entity.upcoming_reservations.today[up_nr].end_time);
+      line.find('span.time').text(moment(entity.upcoming_reservations.today[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.today[up_nr].end_moment)).format('HH:mm');
       line.find('span.description').text(entity.upcoming_reservations.today[up_nr].description);
       nextInfo.append(line);
     }
@@ -651,7 +660,7 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
       nextInfo.append(this.getTemplateClone('tomorrowLineTemplate'));
       for(up_nr in entity.upcoming_reservations.tomorrow) {
         var line = this.getTemplateClone('reservationLineTemplate');
-        line.find('span.time').text(entity.upcoming_reservations.tomorrow[up_nr].begin_time + ' - ' + entity.upcoming_reservations.tomorrow[up_nr].end_time);
+        line.find('span.time').text(moment(entity.upcoming_reservations.tomorrow[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.tomorrow[up_nr].end_moment)).format('HH:mm');
         line.find('span.description').text(entity.upcoming_reservations.tomorrow[up_nr].description);
         nextInfo.append(line);
       }
