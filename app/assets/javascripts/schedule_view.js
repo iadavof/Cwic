@@ -203,15 +203,48 @@ IADAscheduleView.prototype.updateDateDomainControl = function() {
 
 IADAscheduleView.prototype.nearestMomentPoint = function(relX, clickedElement) {
   var dayRowTP = $(clickedElement);
-  var dayClickPos = relX.toFixed() / dayRowTP.width();
-  var minutes = Math.round(dayClickPos * 1440);
+
+  var day = moment(dayRowTP.parents('.day-row').attr('id')).startOf('day');
+
+  if(relX < 0) {
+    // Begin of item is dragged to previous day
+    day.add('days', 1);
+    relX += dayRowTP.width();
+  }
+
+  var dayMousePos = relX.toFixed() / dayRowTP.width();
+  var minutes = Math.round(dayMousePos * 1440);
 
   // Snap to half hours
   minutes = (Math.round(minutes/30) * 30);
 
   var hours = minutes / 60;
   minutes = minutes % 60;
-  return moment(dayRowTP.parents('.day-row').attr('id')).hours(hours).minutes(minutes);
+  return day.hours(hours).minutes(minutes);
+}
+
+IADAscheduleView.prototype.bindDragControls = function() {
+  var currentScheduleItem = null;
+  var schedule = this;
+  this.scheduleContainer.find('schedule-body').on('mousedown', '.day-row-schedule-object-item-parts div.schedule-item', function() {
+    // left click
+    if(event.which == 1 && currentScheduleItem == null) {
+      var scheduleItemClickedDom = $(this);
+      var dayRowTP = scheduleItemClickedDom.parents('div.day-row-schedule-object-item-parts');
+      var offset = dayRowTP.offset();
+      // correct position in schedule-item, because we want to know the begin position of this item.
+      var itemOffset = event.pageX - scheduleItemClickedDom.offset().left;
+      var relX = event.pageX - offset.left - itemOffset;
+      // relX can be negative if item is dragged to previous day.
+      var newMoment = nearestMomentPoint(relX, dayRowTP);
+    }
+  });
+  this.scheduleContainer.find('schedule-body').on('mousemove', '.day-row-schedule-object-item-parts', function() {
+
+  });
+  this.scheduleContainer.find('schedule-body').on('mouseup', '.day-row-schedule-object-item-parts', function() {
+
+  });
 }
 
 IADAscheduleView.prototype.bindNewReservationControls = function() {
