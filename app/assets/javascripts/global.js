@@ -210,7 +210,7 @@ function closeModal(e) {
 
   $('html').removeClass('with-overlay');
   window.location.hash = 'modal_close';
-  
+
   // remove events from the overlay
   overlay.off('click');
   overlay.find('a.close').off('click');

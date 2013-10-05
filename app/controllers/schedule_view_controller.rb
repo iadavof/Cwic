@@ -21,7 +21,7 @@ class ScheduleViewController < ApplicationController
       result = {}
       entities = @organisation.entities.where(id: entity_ids)
       entities.each do |ent|
-        current_reservations = ent.reservations.where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end', start: start_date, end: end_date)
+        current_reservations = ent.reservations.where('ends_at BETWEEN :start AND :end OR begins_at BETWEEN :start AND :end OR (begins_at <= :start AND ends_at >= :end)', start: start_date, end: end_date)
         items = {}
         current_reservations.each do |r|
           items[r.id] = {
