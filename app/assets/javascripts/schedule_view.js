@@ -211,7 +211,6 @@ IADAscheduleView.prototype.nearestMomentPoint = function(relX, clickedElement) {
 
   var hours = minutes / 60;
   minutes = minutes % 60;
-  console.debug(dayRowTP.parents('.day-row').attr('id'));
   return moment(dayRowTP.parents('.day-row').attr('id')).hours(hours).minutes(minutes);
 }
 
@@ -356,7 +355,7 @@ IADAscheduleView.prototype.createSchedule = function() {
   var days = this.getDatesBetween(this.beginDate, this.endDate);
   for(var daynr in days) {
     this.appendDay(days[daynr]);
-    if(moment(days[daynr]).startOf('day') == moment().startOf('day')) {
+    if(moment(days[daynr]).startOf('day').unix() == moment().startOf('day').unix()) {
       this.showCurrentDayTimeNeedle();
     }
   }
@@ -521,8 +520,8 @@ IADAscheduleView.prototype.appendDay = function(dayMoment) {
 }
 
 IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
-  var currentDate = moment().format('YY-MM-DD');
-  var date_row = $('.day-row#' + firstDaySecond);
+  var currentDate = moment().format('YYYY-MM-DD');
+  var date_row = this.scheduleContainer.find('.day-row#' + currentDate);
   this.scheduleContainer.find('.day-axis-row.today:not(#label_' + currentDate + ')').removeClass('today');
   this.scheduleContainer.find('.day-row.today:not(#' + currentDate + ')').removeClass('today').removeClass('progress-bar');
   this.scheduleContainer.find('.day-row:not(#' + currentDate + ') .time-needle').remove();
