@@ -35,21 +35,20 @@ Object.extend = function(destination, source) {
   return destination;
 };
 
-IADAscheduleView.prototype.scheduleContainer = null;
-IADAscheduleView.prototype.scheduleObjects = null;
-IADAscheduleView.prototype.selectedEntities = [];
-IADAscheduleView.prototype.options = null;
-IADAscheduleView.prototype.beginDate = null;
-IADAscheduleView.prototype.endDate = null;
-IADAscheduleView.prototype.needleTimeout = null;
-IADAscheduleView.prototype.currentMode = 'week';
-
 function IADAscheduleView(options) {
   this.options = Object.extend({
     container: 'schedule-container',
     backend_url: 'url to backend',
     view: 'horizontalCalendar'
   }, options || {});
+
+  this.scheduleContainer = null;
+  this.scheduleItems = null;
+  this.selectedEntities = [];
+  this.beginDate = null;
+  this.endDate = null;
+  this.needleTimeout = null;
+  this.currentMode = 'week';
 
   if(this.options.view == 'horizontalCalendar') {
     this.renderHorizontalCalendar();
@@ -194,7 +193,7 @@ IADAscheduleView.prototype.bindControls = function() {
     }
   });
 
-  //this.bindNewReservationControls();
+  this.bindNewReservationControls();
 }
 
 IADAscheduleView.prototype.updateDateDomainControl = function() {
@@ -202,21 +201,34 @@ IADAscheduleView.prototype.updateDateDomainControl = function() {
   this.scheduleContainer.find('#scheduleEndDate').datepicker("setDate", this.endDate.toDate());
 }
 
+IADAscheduleView.prototype.nearestMomentPoint = function(relX, clickedElement) {
+  var dayRowTP = $(clickedElement);
+  var dayClickPos = relX.toFixed() / dayRowTP.width();
+  var minutes = Math.round(dayClickPos * 1440);
+
+  // Snap to half hours
+  minutes = (Math.round(minutes/30) * 30);
+
+  var hours = minutes / 60;
+  minutes = minutes % 60;
+  console.debug(dayRowTP.parents('.day-row').attr('id'));
+  return moment(dayRowTP.parents('.day-row').attr('id')).hours(hours).minutes(minutes);
+}
+
 IADAscheduleView.prototype.bindNewReservationControls = function() {
   var newScheduleItem = null;
-  var newItem = {};
   var schedule = this;
   this.scheduleContainer.find('.schedule-body').on('mousedown', '.day-row-schedule-object-item-parts', function(event) {
     // check if left mouse button, starting a new item and check if not clicked on other reservation
     if(event.which == 1 && newScheduleItem == null && $(event.target).hasClass('day-row-schedule-object-item-parts')) {
-      newScheduleItem = schedule.getTemplateClone('scheduleItemTemplate');
       var offset = $(this).offset();
       var relX = event.pageX - offset.left;
-      newItem.end_date = newItem.begin_date = new Date(parseInt($(this).closest('.day-row').attr('id')));
-      newItem.schedule_object_id = parseInt(event.target.id.split('_')[1]);
-      newItem.end_time = newItem.begin_time = schedule.nearestTimePoint(relX, $(this).width());
-      newScheduleItem.css('left', + schedule.dayTimeToPercentage(newItem.begin_time) + '%');
-      $(this).append(newScheduleItem);
+      var schedule_object_id = $(event.target).data('scheduleObjectID');
+      newScheduleItem = new IADAscheduleViewItem(schedule, schedule_object_id);
+      var nearestMoment = schedule.nearestMomentPoint(relX, this);
+      newScheduleItem.conceptBegin = moment(nearestMoment);
+      newScheduleItem.conceptEnd = moment(nearestMoment);
+      newScheduleItem.render(true); // Render in concept mode
     }
   });
 
@@ -224,76 +236,47 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
     var offset = $(this).offset();
     var relX = event.pageX - offset.left;
     if(newScheduleItem != null) {
-      var changedNewItem = newItem;
-      changedNewItem.end_time = schedule.nearestTimePoint(relX, $(this).width());
-      if(!schedule.alreadyTaken(changedNewItem)) {
-        newScheduleItem.css('width', + schedule.dayTimePercentageSpan(newItem.begin_time, newItem.end_time) + '%');
-        newItem = changedNewItem;
+      newScheduleItem.conceptEnd = schedule.nearestMomentPoint(relX, this);
+      if(newScheduleItem.checkEndAfterBegin(true) && !newScheduleItem.conceptCollidesWithOthers()) {
+        newScheduleItem.rerender(true); // rerender in concept mode
       }
     }
   });
 
   this.scheduleContainer.find('.schedule-body').on('mouseup', function(event) {
     // Handle new entry
-    if(newScheduleItem != null && newItem.begin_time < newItem.end_time && !schedule.alreadyTaken(newItem)) {
-      var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function() {
+    if(newScheduleItem != null && newScheduleItem.checkEndAfterBegin(true) && !newScheduleItem.conceptCollidesWithOthers()) {
+      var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function(e) {
+        e.preventDefault();
         if(newScheduleItem != null) {
-          newScheduleItem.remove();
+          newScheduleItem.removeFromDom();
           newScheduleItem = null;
         }
-        closeModal();
-      });
+        closeModal(e);
+      })
       APP.global.initializeDateTimePickers(reservationForm);
-      schedule.setNewReservationForm(newItem);
+      schedule.setNewReservationForm(newScheduleItem);
     } else {
       if(newScheduleItem != null) {
-        newScheduleItem.remove();
+        newScheduleItem.removeFromDom();
         newScheduleItem = null;
       }
     }
   });
 }
 
-IADAscheduleView.prototype.alreadyTaken = function(newItem) {
-    var objItems = this.scheduleObjects[newItem.schedule_object_id];
-    var itemStamps = this.itemToBeginEndUnixTimeStamps(newItem);
-
-    var found = false;
-
-    if(objItems != null && typeof objItems.items !== 'undefined') {
-      $.each(objItems.items, function(itemId, item) {
-        var collectionItemStamps = schedule.itemToBeginEndUnixTimeStamps(item);
-        if((collectionItemStamps.start < itemStamps.stop || collectionItemStamps.stop < itemStamps.start) && itemStamps.start < collectionItemStamps.stop) {
-          found = true;
-          return false; // Break out of each loop
-        }
-      });
-    }
-
-    return found;
-}
-
-IADAscheduleView.prototype.setNewReservationForm = function(item) {
+IADAscheduleView.prototype.setNewReservationForm = function(newScheduleItem) {
   var reservationForm = $('#new_reservation_popup');
 
-  reservationForm.find('input#begins_at_date').datepicker("setDate", item.begin_date);
-  reservationForm.find('input#begins_at_tod').timepicker("setTime", item.begin_time);
-  if(item.end_time == '24:00') {
-    item.end_date.setDate(item.end_date.getDate() + 1); // Increase day by one
-    item.end_time = '00:00'; // And set time to 00:00
-  }
-  reservationForm.find('input#ends_at_date').datepicker("setDate", item.end_date);
-  reservationForm.find('input#ends_at_tod').timepicker("setTime", item.end_time);
-  reservationForm.find('select#reservation_entity_id').val(item.schedule_object_id);
-}
+  var beginJDate = newScheduleItem.getConceptBegin().toDate();
+  var endJDate = newScheduleItem.getConceptEnd().toDate();
 
-IADAscheduleView.prototype.nearestTimePoint = function(relX, parentWidth) {
-  var steps = 48; // Half hour steps
-  var step = parentWidth / steps;
-  var fullsteps = Math.round(relX / step);
-  var stepMinutes = 24 * 60 / steps;
-  var nearestTimeMinutes = fullsteps * stepMinutes;
-  return ((Math.floor(nearestTimeMinutes / 60) < 10) ? '0' : '') + Math.floor(nearestTimeMinutes / 60) + ':' + ((Math.floor(nearestTimeMinutes % 60) < 10) ? '0' : '') + nearestTimeMinutes % 60;
+  reservationForm.find('input#begins_at_date').datepicker("setDate", beginJDate);
+  reservationForm.find('input#begins_at_tod').timepicker("setTime", beginJDate);
+  reservationForm.find('input#ends_at_date').datepicker("setDate", endJDate);
+  reservationForm.find('input#ends_at_tod').timepicker("setTime", endJDate);
+
+  reservationForm.find('select#reservation_entity_id').val(newScheduleItem.schedule_object_id);
 }
 
 IADAscheduleView.prototype.setDateDomain = function() {
@@ -442,6 +425,7 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function(schobjJSON) {
   $.each(schobjJSON, function(sobjId, sobj) {
     var newSchObjItemParts = schedule.getTemplateClone('dayRowScheduleObjectItemPartsTemplate');
     newSchObjItemParts.addClass('scheduleObject_' + sobjId);
+    newSchObjItemParts.data('scheduleObjectID', sobjId);
     newSchObjItemParts.find('p.name').text(sobj.schedule_object_name);
     $(schedule.scheduleContainer).find('div.day-row div.day-row-schedule-objects').append(newSchObjItemParts);
   });
@@ -463,11 +447,13 @@ IADAscheduleView.prototype.initDayRowScheduleObjectRows = function(schobjJSON) {
 
 IADAscheduleView.prototype.addAllScheduleItems = function(schobjJSON) {
   var schedule = this;
-  this.scheduleObjects = {};
+  this.scheduleItems = {};
   $.each(schobjJSON, function(schedule_object_id, sobj) {
+    schedule.scheduleItems[schedule_object_id] = {};
     $.each(sobj.items, function(itemId, item) {
       var schvi = new IADAscheduleViewItem(schedule, schedule_object_id, itemId);
       schvi.parseFromJSON(item);
+      schedule.scheduleItems[schedule_object_id][itemId] = schvi;
       schvi.render();
     });
   });
@@ -613,7 +599,6 @@ IADAscheduleView.prototype.afterTodayTomorrowUpdateEntity = function(entity_type
   }
 }
 
-
 IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
   if(entity.current_reservation == null && entity.upcoming_reservations.today.length  <= 0 && entity.upcoming_reservations.tomorrow.length <= 0) {
     parentdiv.append(this.getTemplateClone('noReservationsTemplate'));
@@ -681,27 +666,28 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
 
 /////////////////// Schedule Item ///////////////////
 
-IADAscheduleViewItem.prototype.scheduleContainer = null;
-IADAscheduleViewItem.prototype.schedule = null;
-
-IADAscheduleViewItem.prototype.schedule_object_id = null;
-IADAscheduleViewItem.prototype.item_id = null;
-
-IADAscheduleViewItem.prototype.begin = null; // momentjs object
-IADAscheduleViewItem.prototype.end = null; // momentjs object
-
-IADAscheduleViewItem.prototype.bg_color = null;
-IADAscheduleViewItem.prototype.text_color = null;
-IADAscheduleViewItem.prototype.description = null;
-IADAscheduleViewItem.prototype.show_url = null;
-
-IADAscheduleViewItem.prototype.domObjects = [];
-
 function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
   this.schedule = _schedule;
   this.scheduleContainer = _schedule.scheduleContainer;
-  this.schedule_object_id = _schedule_object_id;
-  this.item_id = _item_id;
+  this.schedule_object_id = _schedule_object_id || null;
+  this.item_id = _item_id || null;
+
+  this.begin = null; // momentjs object
+  this.end = null; // momentjs object
+
+  this.conceptBegin = null; // momentjs object
+  this.conceptEnd = null; // momentjs object
+  this.conceptMode = false; // momentjs object
+
+
+  this.bg_color = '#666';
+  this.text_color = '#fff';
+  this.description = '';
+  this.show_url = null;
+
+  this.domObjects = [];
+
+
 }
 
 IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
@@ -731,14 +717,107 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginTime, endTime
   return newScheduleItem;
 }
 
-IADAscheduleViewItem.prototype.render = function() {
-  if(moment(this.begin).startOf('day').unix() == moment(this.end).startOf('day').unix()) {
-    var beginDate = this.begin.format('YYYY-MM-DD');
+IADAscheduleViewItem.prototype.acceptConcept = function() {
+  this.begin = this.conceptBegin;
+  this.end = this.conceptEnd;
+
+  rerender();
+}
+
+IADAscheduleViewItem.prototype.resetConcept = function() {
+  this.conceptBegin = null;
+  this.conceptEnd = null;
+  this.render(); // Render in normal mode
+}
+
+IADAscheduleViewItem.prototype.checkEndAfterBegin = function(concept) {
+  if(concept) {
+    var currBegin = this.getConceptBegin();
+    var currEnd = this.getConceptEnd();
+    return currBegin.unix() < currEnd.unix();
+  } else {
+    var currBegin = this.begin;
+    var currEnd = this.end;
+  }
+  if(currBegin == null || currEnd == null) {
+    return false;
+  }
+  return this.begin.unix() < this.end.unix();
+}
+
+IADAscheduleViewItem.prototype.getConceptBegin = function() {
+  return moment((this.conceptBegin != null) ? this.conceptBegin : this.begin);
+}
+
+IADAscheduleViewItem.prototype.getConceptEnd = function() {
+  return moment((this.conceptEnd != null) ? this.conceptEnd : this.end);
+}
+
+IADAscheduleViewItem.prototype.conceptCollidesWithOthers = function() {
+  var _this = this;
+  var curConceptBegin = this.getConceptBegin();
+  var curConceptEnd = this.getConceptEnd();
+
+  var otherItemsForObject = this.schedule.scheduleItems[this.schedule_object_id];
+
+  var collision = false;
+
+  if(otherItemsForObject != null) {
+    $.each(otherItemsForObject, function(itemId, item) {
+      // exclude self
+      if(_this.item_id != null && itemId == _this.item_id) {
+        return true;
+      }
+      if((item.begin.unix() < curConceptEnd.unix() || item.end.unix() < curConceptBegin.unix()) && curConceptBegin.unix() < item.end.unix()) {
+        collision = true;
+        return false; // Break out of each loop
+      }
+    });
+  }
+
+  return collision;
+}
+
+IADAscheduleViewItem.prototype.conceptCollidesWith = function(moment) {
+  var curConceptBegin = this.getConceptBegin();
+  var curConceptEnd = this.getConceptEnd();
+
+  return (curConceptBegin.unix() <= moment.unix() && curConceptEnd.unix() > moment.unix());
+}
+
+IADAscheduleViewItem.prototype.removeFromDom = function() {
+  for(var nr in this.domObjects) {
+    $(this.domObjects[nr]).remove();
+  }
+  this.domObjects = [];
+}
+
+IADAscheduleViewItem.prototype.rerender = function(concept) {
+  this.removeFromDom();
+  this.render(concept);
+}
+
+IADAscheduleViewItem.prototype.render = function(concept) {
+  this.conceptMode = concept || false;
+  if(this.conceptMode) {
+    var currBegin = this.getConceptBegin();
+    var currEnd = this.getConceptEnd();
+  } else {
+    var currBegin = this.begin;
+    var currEnd = this.end;
+  }
+
+  if(!this.checkEndAfterBegin(concept)) {
+    return;
+  }
+
+  if(moment(currBegin).startOf('day').unix() == moment(currEnd).startOf('day').unix()) {
+    var beginDate = currBegin.format('YYYY-MM-DD');
     var container = $(this.scheduleContainer).find('#' + beginDate + ' div.day-row-schedule-objects div.scheduleObject_' + this.schedule_object_id);
-    var schedulePart = this.renderPart(container, this.begin.format('HH:mm'), this.end.format('HH:mm'));
+    var schedulePart = this.renderPart(container, currBegin.format('HH:mm'), currEnd.format('HH:mm'));
     this.domObjects.push(schedulePart);
   } else {
-    var days = this.schedule.getDatesBetween(this.begin, this.end);
+    var days = this.schedule.getDatesBetween(currBegin, currEnd);
     for(var dayi in days) {
       var container = $(this.scheduleContainer).find('#' + days[dayi].format('YYYY-MM-DD') + ' div.day-row-schedule-objects div.scheduleObject_' + this.schedule_object_id);
       // Check if the container is not present, this means not in current view, so skip
@@ -747,11 +826,11 @@ IADAscheduleViewItem.prototype.render = function() {
       }
       switch(parseInt(dayi)) {
         case 0:
-          var schedulePart = this.renderPart(container, this.begin.format('HH:mm'), '24:00');
+          var schedulePart = this.renderPart(container, currBegin.format('HH:mm'), '24:00');
           schedulePart.find('div.continue.right').show();
           break;
         case days.length - 1:
-          var schedulePart = this.renderPart(container, '00:00', this.end.format('HH:mm'));
+          var schedulePart = this.renderPart(container, '00:00', currEnd.format('HH:mm'));
           schedulePart.find('div.continue.left').show();
           break;
         default:

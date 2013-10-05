@@ -15,9 +15,6 @@ APP.stickies = {
   }
 }
 
-IADAStickyNotes.prototype.options = null;
-IADAStickyNotes.prototype.noteContainer = null;
-
 IADAStickyNotes.prototype.defaultNote = {
   id: null,
   author: { id: 0, name: '' },
