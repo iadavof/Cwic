@@ -133,8 +133,14 @@ IADAscheduleView.prototype.createEntityShowCase = function() {
 
 IADAscheduleView.prototype.bindControls = function() {
   var schedule = this;
-  this.scheduleContainer.find('#scheduleBeginDate').datepicker({showOn: 'both', altField: '#backendBeginDate', altFormat: 'yy-mm-dd'}).datepicker("setDate", this.beginDate.toDate());
-  this.scheduleContainer.find('#scheduleEndDate').datepicker({showOn: 'both', altField: '#backendEndDate', altFormat: 'yy-mm-dd'}).datepicker("setDate", this.endDate.toDate());
+
+  // Bind datepickers on domain selection fields and set current domain
+  this.scheduleContainer.find('#scheduleBeginDate').datepicker({showOn: 'both'});
+  this.scheduleContainer.find('#scheduleEndDate').datepicker({showOn: 'both'});
+
+  this.updateDateDomainControl();
+
+  // Bind set date button
   this.scheduleContainer.find('#scheduleDateUpdate').click(function(){schedule.setDateDomain();});
 
   var navigation = this.scheduleContainer.find('.control-container.navigate');
@@ -144,7 +150,6 @@ IADAscheduleView.prototype.bindControls = function() {
 
     var reference = moment(schedule.beginDate);
     var now = moment();
-    console.debug(reference);
 
     if(this.id == 'dayMode' || this.id == 'weekMode' || this.id == 'monthMode') {
       // Look if we are already in the selected mode and return
@@ -292,20 +297,22 @@ IADAscheduleView.prototype.nearestTimePoint = function(relX, parentWidth) {
 }
 
 IADAscheduleView.prototype.setDateDomain = function() {
-  var container  = $(this.scheduleContainer);
-  var beginDateField = container.find('#backendBeginDate');
-  var endDateField = container.find('#backendEndDate');
+  var beginDateField = this.scheduleContainer.find('#scheduleBeginDate');
+  var endDateField = this.scheduleContainer.find('#scheduleEndDate');
+
+  var newBeginMoment = moment(beginDateField.datepicker('getDate'));
+  var newEndMoment = moment(endDateField.datepicker('getDate'));
 
   // Check if entered endDate is bigger than the entered beginDate
-  if(Date.parse(endDateField.val()) < Date.parse(beginDateField.val())) {
-    this.setErrorField(container.find('#scheduleEndDate'), true);
+  if(moment(newEndMoment).startOf('day').unix() < moment(newBeginMoment).startOf('day').unix()) {
+    this.setErrorField(endDateField, true);
     return;
   } else {
-    this.setErrorField(container.find('#scheduleEndDate'), false);
+    this.setErrorField(endDateField, false);
   }
 
-  this.beginDate = moment(container.find('#backendBeginDate').val());
-  this.endDate = moment(container.find('#backendEndDate').val());
+  this.beginDate = newBeginMoment;
+  this.endDate = newEndMoment;
   this.updateSchedule();
 }
 
@@ -411,6 +418,7 @@ IADAscheduleView.prototype.updateSchedule = function() {
     this.createSchedule();
     this.disabledOverlay();
   }
+  this.updateDateDomainControl();
 }
 
 IADAscheduleView.prototype.disabledOverlay = function() {
@@ -420,6 +428,8 @@ IADAscheduleView.prototype.disabledOverlay = function() {
 IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
   this.beginDate = moment(response.begin_date);
   this.endDate = moment(response.end_date);
+
+  this.updateDateDomainControl();
 
   this.createSchedule();
   this.initDayRowScheduleObjectRows(response.schedule_objects);

@@ -12,11 +12,11 @@ class ScheduleViewController < ApplicationController
     if params[:entity_ids].present?
       entity_ids = params[:entity_ids].split(',')
       if params[:schedule_begin].present? && params[:schedule_end].present?
-        start_date = DateTime.strptime(params[:schedule_begin], "%Y-%m-%d").change({hour: 0, minutes: 0, sec: 0})
-        end_date = DateTime.strptime(params[:schedule_end], "%Y-%m-%d").change({hour: 23, minutes: 59, sec: 59})
+        start_date = DateTime.strptime(params[:schedule_begin], "%Y-%m-%d").beginning_of_day
+        end_date = DateTime.strptime(params[:schedule_end], "%Y-%m-%d").end_of_day
       else
         start_date = Date.today
-        end_date = (Date.today + 2.weeks)
+        end_date = (Date.today + 1.weeks)
       end
       result = {}
       entities = @organisation.entities.where(id: entity_ids)
@@ -35,7 +35,7 @@ class ScheduleViewController < ApplicationController
         end
         result[ent.id]  = { schedule_object_name: ent.instance_name, items: items }
       end
-      render json: { begin_date: start_date.strftime('%Y-%m-%d'), end_date: end_date.strftime('%Y-%m-%d'), schedule_objects: result }, status: :ok
+      render json: { begin_date: start_date.beginning_of_day.to_s, end_date: end_date.end_of_day.to_s, schedule_objects: result }, status: :ok
     else
       render json: { error: 'no entity selected' }, status: :not_found
     end
@@ -100,8 +100,8 @@ class ScheduleViewController < ApplicationController
 
   def today_tomorrow_update_upcoming_reservation(entity)
       upcoming = {
-        today: get_standard_reservation_info_for_scope(Time.now, Time.now.change({hour: 23, minutes: 59, sec: 59}), entity),
-        tomorrow: get_standard_reservation_info_for_scope(Time.now.change({hour: 0, minutes: 0, sec: 0}) + 1.day, Time.now.change({hour: 23, minutes: 59, sec: 59}) + 1.day, entity),
+        today: get_standard_reservation_info_for_scope(Time.now, Time.now.end_of_day, entity),
+        tomorrow: get_standard_reservation_info_for_scope(Time.now.beginning_of_day + 1.day, Time.now.end_of_day + 1.day, entity),
       }
   end
 
@@ -131,7 +131,7 @@ class ScheduleViewController < ApplicationController
 
   def reservation_day_change_at(reservation)
     dateChangeAt = []
-    point = reservation.begins_at.change({hour: 23, minutes: 59, sec: 59})
+    point = reservation.begins_at.end_of_day
     dateChangeAt << point.to_time
 
     while(point + 1.day < reservation.ends_at)
