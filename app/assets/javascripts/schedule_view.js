@@ -362,9 +362,12 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
     var offset = $(this).offset();
     var relX = event.pageX - offset.left;
     if(newScheduleItem != null) {
-      newScheduleItem.conceptEnd = schedule.nearestMomentPoint(relX, this);
-      if(newScheduleItem.checkEndAfterBegin(true) && !newScheduleItem.conceptCollidesWithOthers()) {
-        newScheduleItem.rerender(true); // rerender in concept mode
+      var newEnd = schedule.nearestMomentPoint(relX, this);
+      if(newEnd.unix() != newScheduleItem.conceptEnd.unix()) {
+        newScheduleItem.conceptEnd = newEnd;
+        if(newScheduleItem.checkEndAfterBegin(true) && !newScheduleItem.conceptCollidesWithOthers()) {
+          newScheduleItem.rerender(true); // rerender in concept mode
+        }
       }
     }
   });
