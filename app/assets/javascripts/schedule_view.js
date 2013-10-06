@@ -263,7 +263,7 @@ IADAscheduleView.prototype.bindResizeControls = function() {
 
   this.scheduleContainer.on('mouseup', function(event) {
     if(currentScheduleItem != null) {
-      if(!currentScheduleItem.conceptCollidesWithOthers()) {
+      if(!currentScheduleItem.conceptCollidesWithOthers() && currentScheduleItem.checkEndAfterBegin(true)) {
         currentScheduleItem.acceptConcept();
         schedule.patchScheduleItemBackend(currentScheduleItem);
       } else {
