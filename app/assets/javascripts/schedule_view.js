@@ -195,6 +195,7 @@ IADAscheduleView.prototype.bindControls = function() {
 
   this.bindNewReservationControls();
   this.bindDragControls();
+  this.bindResizeControls();
 }
 
 IADAscheduleView.prototype.updateDateDomainControl = function() {
@@ -224,6 +225,66 @@ IADAscheduleView.prototype.nearestMomentPoint = function(relX, clickedElement) {
   return day.hours(hours).minutes(minutes);
 }
 
+IADAscheduleView.prototype.bindResizeControls = function() {
+  var currentScheduleItem = null;
+  var dayRowTP = null;
+  var side = null;
+  var schedule = this;
+
+  this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.day-row-schedule-object-item-parts div.schedule-item div.resizer span.handle', function(event) {
+    // left click, no drag already started and not on resize handles
+    if(event.which == 1 && currentScheduleItem == null && dayRowTP == null && side == null) {
+      var handle = $(this);
+      side = (handle.parents('div.resizer').hasClass('left') ? 'left' : 'right');
+      var scheduleItemClickedDom = handle.parents('div.schedule-item');
+
+      // Lets get the scheduleItem!
+      dayRowTP = scheduleItemClickedDom.parents('div.day-row-schedule-object-item-parts');
+      currentScheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemClickedDom, dayRowTP);
+    }
+  });
+
+  this.scheduleContainer.on('mousemove', function(event) {
+    if(currentScheduleItem != null && dayRowTP != null && side != null) {
+      var offset = dayRowTP.offset();
+      var relX = event.pageX - offset.left;
+      // relX can be negative if item is dragged to previous day.
+
+      var newMoment = schedule.nearestMomentPoint(relX, dayRowTP);
+
+      currentScheduleItem.resizeConcept(side, newMoment);
+
+      // Glow red if cannot be placed here
+      if(currentScheduleItem.conceptCollidesWithOthers()) {
+        currentScheduleItem.applyErrorGlow();
+      }
+    }
+  });
+
+  this.scheduleContainer.on('mouseup', function(event) {
+    if(currentScheduleItem != null) {
+      if(!currentScheduleItem.conceptCollidesWithOthers()) {
+        currentScheduleItem.acceptConcept();
+        schedule.patchScheduleItemBackend(currentScheduleItem);
+      } else {
+        currentScheduleItem.resetConcept();
+      }
+      currentScheduleItem = null;
+      dayRowTP = null;
+      side = null;
+    }
+  });
+}
+
+IADAscheduleView.prototype.getScheduleItemForDOMObject = function(SchObj, dayRowObj) {
+  var schedule_object_id = dayRowObj.data('scheduleObjectID');
+  var schId = SchObj.data('scheduleItemID');
+  if(schedule_object_id != null && schId != null) {
+    return schedule.scheduleItems[schedule_object_id][schId];
+  }
+  return null;
+}
+
 IADAscheduleView.prototype.bindDragControls = function() {
   var currentScheduleItem = null;
   var dayRowTP = null;
@@ -231,18 +292,13 @@ IADAscheduleView.prototype.bindDragControls = function() {
   var schedule = this;
 
   this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.day-row-schedule-object-item-parts div.schedule-item', function(event) {
-    // left click
-    if(event.which == 1 && currentScheduleItem == null && dayRowTP == null && itemOffset == null) {
+    // left click, no drag already started and not on resize handles
+    if(event.which == 1 && currentScheduleItem == null && dayRowTP == null && itemOffset == null && !$(event.target).hasClass('handle')) {
       var scheduleItemClickedDom = $(this);
 
       // Lets get the scheduleItem!
       dayRowTP = scheduleItemClickedDom.parents('div.day-row-schedule-object-item-parts');
-      var schedule_object_id = dayRowTP.data('scheduleObjectID');
-      var schId = scheduleItemClickedDom.data('scheduleItemID');
-      if(schedule_object_id != null && schId != null) {
-        currentScheduleItem = schedule.scheduleItems[schedule_object_id][schId];
-
-      }
+      currentScheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemClickedDom, dayRowTP);
 
       itemOffset = event.pageX - $(event.target).offset().left;
     }
@@ -265,18 +321,19 @@ IADAscheduleView.prototype.bindDragControls = function() {
       }
     }
   });
+
   this.scheduleContainer.on('mouseup', function() {
-      if(currentScheduleItem != null) {
-        if(!currentScheduleItem.conceptCollidesWithOthers()) {
-          currentScheduleItem.acceptConcept();
-          schedule.patchScheduleItemBackend(currentScheduleItem);
-        } else {
-          currentScheduleItem.resetConcept();
-        }
-        currentScheduleItem = null;
-        dayRowTP = null;
-        itemOffset = null;
+    if(currentScheduleItem != null) {
+      if(!currentScheduleItem.conceptCollidesWithOthers()) {
+        currentScheduleItem.acceptConcept();
+        schedule.patchScheduleItemBackend(currentScheduleItem);
+      } else {
+        currentScheduleItem.resetConcept();
       }
+      currentScheduleItem = null;
+      dayRowTP = null;
+      itemOffset = null;
+    }
   });
 }
 
@@ -809,6 +866,11 @@ IADAscheduleViewItem.prototype.resetConcept = function() {
 }
 
 IADAscheduleViewItem.prototype.moveConceptTo = function(newBeginMoment) {
+  if(newBeginMoment.unix() == this.getConceptBegin().unix()) {
+    // Nothing changed, move on
+    return;
+  }
+
   // Keep the duration of the item
   var duration = this.getConceptEnd().diff(this.getConceptBegin());
 
@@ -816,6 +878,23 @@ IADAscheduleViewItem.prototype.moveConceptTo = function(newBeginMoment) {
   this.conceptEnd = moment(newBeginMoment).add('ms', duration);
 
   this.rerender(true); // Rerender as concept
+}
+
+IADAscheduleViewItem.prototype.resizeConcept = function(side, newMoment) {
+  if(side == 'left') {
+    if(newMoment.unix() == this.getConceptBegin().unix()) {
+      // Nothing changed, move on
+      return;
+    }
+    this.conceptBegin = moment(newMoment);
+  } else {
+    if(newMoment.unix() == this.getConceptEnd().unix()) {
+      // Nothing changed, move on
+      return;
+    }
+    this.conceptEnd = moment(newMoment);
+  }
+  this.rerender(true);
 }
 
 IADAscheduleViewItem.prototype.checkEndAfterBegin = function(concept) {
