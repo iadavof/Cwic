@@ -316,6 +316,42 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.cont
   left: auto;
 }
 
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resizer {
+  position: absolute;
+  height: 100%;
+  width: 15px;
+  display: none;
+}
+
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resizer span {
+  vertical-align: middle;
+  text-align: center;
+  position: absolute;
+  height: 15px;
+  width: 100%;
+  line-height: 15px;
+  margin-top: -7.5px;
+  top: 50%;
+  left: 0;
+  opacity: 0.5;
+}
+
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resizer span:hover {
+  opacity: 1;
+}
+
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resizer.left {
+  left: 0;
+  right: auto;
+  cursor: w-resize;
+}
+
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resizer.right {
+  right: 0;
+  left: auto;
+  cursor: e-resize;
+}
+
 div.horizontal-calendar div.schedule-body div.day-row div.schedule-item a.item-text {
   position: absolute;
   left: 25px;

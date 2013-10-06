@@ -847,6 +847,10 @@ IADAscheduleViewItem.prototype.render = function(concept) {
     var beginDate = currBegin.format('YYYY-MM-DD');
     var container = $(this.scheduleContainer).find('#' + beginDate + ' div.day-row-schedule-objects div.scheduleObject_' + this.schedule_object_id);
     var schedulePart = this.renderPart(container, currBegin.format('HH:mm'), currEnd.format('HH:mm'));
+    if(!concept) {
+      schedulePart.find('div.resizer.left').show();
+      schedulePart.find('div.resizer.right').show();
+    }
     this.domObjects.push(schedulePart);
   } else {
     var days = this.schedule.getDatesBetween(currBegin, currEnd);
@@ -860,10 +864,16 @@ IADAscheduleViewItem.prototype.render = function(concept) {
         case 0:
           var schedulePart = this.renderPart(container, currBegin.format('HH:mm'), '24:00');
           schedulePart.find('div.continue.right').show();
+          if(!concept) {
+            schedulePart.find('div.resizer.left').show();
+          }
           break;
         case days.length - 1:
           var schedulePart = this.renderPart(container, '00:00', currEnd.format('HH:mm'));
           schedulePart.find('div.continue.left').show();
+          if(!concept) {
+            schedulePart.find('div.resizer.right').show();
+          }
           break;
         default:
           var schedulePart = this.renderPart(container, '00:00', '24:00');
