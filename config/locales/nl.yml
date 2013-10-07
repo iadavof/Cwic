@@ -174,6 +174,11 @@ nl:
         specs: 'Specificaties'
         creating_screenshot: "Bezig met het maken van een schermafbeelding voor feedback..."
     errors:
+      messages:
+        date_blank: "datum moet opgegeven zijn"
+        tod_blank: "tijd moet opgegeven zijn"
+        not_a_date: "datum is ongeldig"
+        not_a_tod: "tijd is ongeldig"
       models:
         user:
           attributes:
