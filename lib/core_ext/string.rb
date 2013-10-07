@@ -20,4 +20,8 @@ class String
   def parse_number(type)
     type.new(I18n::Alchemy::NumericParser.parse(self))
   end
+
+  def to_tod
+    self.to_time.to_tod
+  end
 end
