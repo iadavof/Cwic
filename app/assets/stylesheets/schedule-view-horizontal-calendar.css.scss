@@ -8,6 +8,13 @@ div.horizontal-calendar {
   width: 100%;
   min-height: 300px;
   margin: 20px 0;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 div.horizontal-calendar div.control-container {
@@ -31,6 +38,19 @@ div.horizontal-calendar div.time-axis {
   z-index: 10;
   border-bottom: 2px solid #ccc;
   margin-bottom: -1px;
+}
+
+div.horizontal-calendar div.time-axis .ajax-notification-container {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: 2px;
+}
+
+div.horizontal-calendar div.time-axis .ajax-notification-container .ajax-notification {
+  text-align: left;
 }
 
 div.horizontal-calendar div.day-axis {
@@ -283,7 +303,8 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item {
   width: 1px;
   z-index: 1;
   border-left: 1px solid #ccc;
-  background-color: #555;
+  background-color: #999;
+  color: #fff;
   overflow: hidden;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
@@ -362,7 +383,7 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resi
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resizer.right {
-  right: 0;
+  right: -1px; /* Compensate for schedule item border */
   left: auto;
   cursor: e-resize;
 }
