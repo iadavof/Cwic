@@ -383,7 +383,7 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resi
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resizer.right {
-  right: 0;
+  right: -1px; /* Compensate for schedule item border */
   left: auto;
   cursor: e-resize;
 }
