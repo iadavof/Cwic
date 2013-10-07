@@ -7,25 +7,11 @@ GIT
       i18n (~> 0.6)
 
 GIT
-  remote: git://github.com/mcasimir/devise-i18n-views.git
-  revision: 35987ea588c0741c3fcab15ccd8baa07a9a61b39
-  specs:
-    devise-i18n-views (0.2.5)
-
-GIT
   remote: git://github.com/minimagick/minimagick.git
   revision: f7d6d0510afba3fdc36dcf7ba5fe70520622759a
   specs:
     mini_magick (3.6.0)
       subexec (~> 0.2.1)
-
-GIT
-  remote: git://github.com/scambra/devise_invitable.git
-  revision: 7a7cb78f39c68ae5d565289ad1f097d6b76ab433
-  specs:
-    devise_invitable (1.2.1)
-      actionmailer (>= 3.2.6, < 5)
-      devise (~> 3.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -81,6 +67,10 @@ GEM
       railties (>= 3.2.6, < 5)
       warden (~> 1.2.3)
     devise-i18n (0.9.0)
+    devise-i18n-views (0.2.8)
+    devise_invitable (1.2.1)
+      actionmailer (>= 3.2.6, < 5)
+      devise (~> 3.0.0)
     diff-lcs (1.2.4)
     erubis (2.7.0)
     execjs (2.0.0)
@@ -220,8 +210,8 @@ DEPENDENCIES
   database_cleaner
   devise (~> 3.0.2)
   devise-i18n
-  devise-i18n-views!
-  devise_invitable!
+  devise-i18n-views
+  devise_invitable
   factory_girl_rails
   forgery
   gistyle
