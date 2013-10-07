@@ -56,15 +56,15 @@ gem 'rails-i18n'
 
 # Devise for authentication
 gem 'devise', '~> 3.0.2'
-gem 'devise_invitable', github: 'scambra/devise_invitable'
+gem 'devise_invitable'
 gem 'devise-i18n'
-gem 'devise-i18n-views', github: 'mcasimir/devise-i18n-views'
+gem 'devise-i18n-views'
 
 # Use CanCan for access control / authorisation
 gem 'cancan'
 
 # Use I18n alchemy gem for easy number (and possibly date) parsing and localization in forms
-gem 'i18n_alchemy', github: 'kreintjes/i18n_alchemy'
+gem 'i18n_alchemy', github: 'carlosantoniodasilva/i18n_alchemy'
 
 # Responders gem for nice and easy responses after CRUD actions
 gem 'responders'
