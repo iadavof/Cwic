@@ -1,10 +1,10 @@
 GIT
-  remote: git://github.com/kreintjes/i18n_alchemy.git
-  revision: c7af70c8e4a078c13b334890dbf70ad57202ac85
+  remote: git://github.com/carlosantoniodasilva/i18n_alchemy.git
+  revision: d20213234dab7b41a41140f53db2c61d1efcb954
   specs:
     i18n_alchemy (0.1.0)
-      activesupport (>= 3.0)
-      i18n (>= 0.5)
+      activesupport (>= 3.2.0, < 4.1)
+      i18n (~> 0.6)
 
 GIT
   remote: git://github.com/mcasimir/devise-i18n-views.git
