@@ -59,6 +59,26 @@
 }
 
 @font-face {
+  font-family: 'Signika';
+  src: font-url('signika-regular-webfont.eot');
+  src: font-url('signika-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('signika-regular-webfont.woff') format('woff'),
+       font-url('signika-regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: font-url('signika-bold-webfont.eot');
+  src: font-url('signika-bold-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('signika-bold-webfont.woff') format('woff'),
+       font-url('signika-bold-webfont.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
   font-family: 'ArchitectsDaughter';
   src: font-url('architectsdaughter-webfont.eot');
   src: font-url('architectsdaughter-webfont.eot?#iefix') format('embedded-opentype'),

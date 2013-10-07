@@ -1,14 +1,13 @@
-body.controller-real_time_full_screens #header, 
-body.controller-real_time_full_screens h1 {
+body.controller-real_time_full_screens.action-show #header, 
+body.controller-real_time_full_screens.action-show h1 {
   display: none;
 }
 
-body.controller-real_time_full_screens #content {
+body.controller-real_time_full_screens.action-show #content {
   margin: 0;
-  background-color: #eee;
 }
 
-body.controller-real_time_full_screens #content > .inner {
+body.controller-real_time_full_screens.action-show #content > .inner {
   padding: 0;
 }
 
@@ -17,6 +16,7 @@ body.controller-real_time_full_screens #content > .inner {
   display: block;
   padding: 0;
   margin: 0;
+  font-family: 'Signika', sans-serif;
 }
 
 #realtime-list > li {
@@ -43,21 +43,21 @@ body.controller-real_time_full_screens #content > .inner {
 
 #realtime-list > li > .inner .datebox {
   display: table;
-  font-size: 1.8em;
+  font-size: 1.7em;
 }
 
 #realtime-list > li > .inner .datebox.until {
-  margin-top: 10px;
+  margin-top: 0.4em;
 }
 
 #realtime-list > li > .inner .datebox .day {
   display: table-cell;
   vertical-align: middle;
   line-height: 2em;
-  padding: 5px 8px;
+  padding: 0.14em 0.4em;
   text-align: center;
-  background-color: #fff;
-  font-size: 1.3em;
+  background-color: #eee;
+  font-size: 1.4em;
   font-weight: bold;
 }
 
@@ -70,8 +70,8 @@ body.controller-real_time_full_screens #content > .inner {
 #realtime-list > li > .inner .datebox .date {
   display: table-cell;
   vertical-align: middle;
-  padding: 5px 8px;
-  font-size: 1.1em;
+  padding: 0.14em 0.4em;
+  font-size: 1.4em;
   color: #fff;
   background-color: #1a99af;
 }
@@ -83,9 +83,9 @@ body.controller-real_time_full_screens #content > .inner {
 #realtime-list > li > .inner .datebox .time {
   display: table-cell;
   vertical-align: middle;
-  padding: 5px 8px;
-  font-size: 1.1em;
-  background-color: #fff;
+  padding: 0.14em 0.4em;
+  font-size: 1.4em;
+  background-color: #eee;
 }
 
 /*
