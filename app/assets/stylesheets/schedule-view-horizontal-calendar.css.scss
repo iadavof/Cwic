@@ -33,6 +33,19 @@ div.horizontal-calendar div.time-axis {
   margin-bottom: -1px;
 }
 
+div.horizontal-calendar div.time-axis .ajax-notification-container {
+  position: absolute;
+  left: 0;
+  top: 100%;
+  width: 100%;
+  text-align: center;
+  margin-top: 2px;
+}
+
+div.horizontal-calendar div.time-axis .ajax-notification-container .ajax-notification {
+  text-align: left;
+}
+
 div.horizontal-calendar div.day-axis {
     position: relative;
     float: left;

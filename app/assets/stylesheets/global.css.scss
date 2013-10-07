@@ -657,6 +657,14 @@ dd + dt {
   margin-top: 10px;
 }
 
+.ajax-notification {
+  display: inline-block;
+  background-color: #FEF4AC;
+  border: 1px solid #F4E183;
+  padding: 5px 8px;
+  font-size: 0.86em;
+}
+
 button.ui-datepicker-trigger {
   margin-left: 3px;
 }
