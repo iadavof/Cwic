@@ -2,13 +2,92 @@
 <%= show_title(@real_time_full_screen) %>
 <% end %>
 
-<dl>
-  <dt><%= RealTimeFullScreen.human_attribute_name(:name) %></dt>
-  <dd><%= @real_time_full_screen.name %></dd>
-  <dt><%= RealTimeFullScreen.human_attribute_name(:public) %></dt>
-  <dd><%= @real_time_full_screen.public %></dd>
-</dl>
-
-<%= button_link_back_to_index(RealTimeFullScreen) %>
-<%= button_link_to_edit(@real_time_full_screen) %>
-<%= button_link_to_destroy(@real_time_full_screen) %>
+<ul id="realtime-list">
+  <li>
+    <div class="inner clearfix">
+      <div class="reservation-dates clearfix">
+        <div class="datebox from">
+          <div class="day">
+            <span>wo</span>
+          </div>
+          <div class="date">
+            <span>23 november 2013</span>
+          </div>
+          <div class="time">
+            <span>22:00</span>
+          </div>
+        </div>
+        <div class="datebox until">
+          <div class="day">
+            <span>wo</span>
+          </div>
+          <div class="date">
+            <span>23 november 2013</span>
+          </div>
+          <div class="time">
+            <span>22:00</span>
+          </div>
+        </div>
+      </div>
+      <h2>Object 3</h2>
+    </div>
+  </li>
+  <li>
+    <div class="inner clearfix">
+      <div class="reservation-dates clearfix">
+        <div class="datebox from">
+          <div class="day">
+            <span>wo</span>
+          </div>
+          <div class="date">
+            <span>23 november 2013</span>
+          </div>
+          <div class="time">
+            <span>22:00</span>
+          </div>
+        </div>
+        <div class="datebox until">
+          <div class="day">
+            <span>wo</span>
+          </div>
+          <div class="date">
+            <span>23 november 2013</span>
+          </div>
+          <div class="time">
+            <span>22:00</span>
+          </div>
+        </div>
+      </div>
+      <h2>Object 3</h2>
+    </div>
+  </li>
+  <li>
+    <div class="inner clearfix">
+      <div class="reservation-dates clearfix">
+        <div class="datebox from">
+          <div class="day">
+            <span>wo</span>
+          </div>
+          <div class="date">
+            <span>23 november 2013</span>
+          </div>
+          <div class="time">
+            <span>22:00</span>
+          </div>
+        </div>
+        <div class="datebox until">
+          <div class="day">
+            <span>wo</span>
+          </div>
+          <div class="date">
+            <span>23 november 2013</span>
+          </div>
+          <div class="time">
+            <span>22:00</span>
+          </div>
+        </div>
+      </div>
+      <h2>Object 3</h2>
+    </div>
+  </li>
+</ul>

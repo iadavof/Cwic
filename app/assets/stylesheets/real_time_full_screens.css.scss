@@ -1,0 +1,95 @@
+body.controller-real_time_full_screens #header, 
+body.controller-real_time_full_screens h1 {
+  display: none;
+}
+
+body.controller-real_time_full_screens #content {
+  margin: 0;
+  background-color: #eee;
+}
+
+body.controller-real_time_full_screens #content > .inner {
+  padding: 0;
+}
+
+#realtime-list {
+  list-style-type: none;
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+#realtime-list > li {
+  display: block;
+  padding: 0;
+  margin: 0;
+  border-bottom: 1px solid #ccc;
+}
+
+#realtime-list > li > .inner {
+  padding: 20px;
+  border-left: 15px solid #18c13d;
+}
+
+#realtime-list > li > .inner h2 {
+  margin: 0;
+  font-size: 3em;
+  line-height: 150%;
+}
+
+#realtime-list > li > .inner .reservation-dates {
+  float: right;
+}
+
+#realtime-list > li > .inner .datebox {
+  display: table;
+  font-size: 1.8em;
+}
+
+#realtime-list > li > .inner .datebox.until {
+  margin-top: 10px;
+}
+
+#realtime-list > li > .inner .datebox .day {
+  display: table-cell;
+  vertical-align: middle;
+  line-height: 2em;
+  padding: 5px 8px;
+  text-align: center;
+  background-color: #fff;
+  font-size: 1.3em;
+  font-weight: bold;
+}
+
+/*
+#realtime-list > li > .inner .datebox.until .day {
+  background-color: #ddd;
+}
+*/
+
+#realtime-list > li > .inner .datebox .date {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 5px 8px;
+  font-size: 1.1em;
+  color: #fff;
+  background-color: #1a99af;
+}
+
+#realtime-list > li > .inner .datebox.until .date {
+  background-color: #17889D;
+}
+
+#realtime-list > li > .inner .datebox .time {
+  display: table-cell;
+  vertical-align: middle;
+  padding: 5px 8px;
+  font-size: 1.1em;
+  background-color: #fff;
+}
+
+/*
+#realtime-list > li > .inner .datebox.until .time {
+  background-color: #ddd;
+}
+*/
