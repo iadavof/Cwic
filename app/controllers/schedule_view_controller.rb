@@ -15,8 +15,8 @@ class ScheduleViewController < ApplicationController
         start_date = DateTime.strptime(params[:schedule_begin], "%Y-%m-%d").beginning_of_day
         end_date = DateTime.strptime(params[:schedule_end], "%Y-%m-%d").end_of_day
       else
-        start_date = Date.today
-        end_date = (Date.today + 1.weeks)
+        start_date = Date.today.beginning_of_day
+        end_date = (Date.today + 1.weeks).end_of_day
       end
       result = {}
       entities = @organisation.entities.where(id: entity_ids)
@@ -25,8 +25,8 @@ class ScheduleViewController < ApplicationController
         items = {}
         current_reservations.each do |r|
           items[r.id] = {
-                    begin_moment: r.begins_at.to_s,
-                    end_moment: r.ends_at.to_s,
+                    begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
+                    end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
                     bg_color: r.entity.color,
                     text_color: r.entity.text_color,
                     description: r.organisation_client.instance_name,
@@ -35,7 +35,7 @@ class ScheduleViewController < ApplicationController
         end
         result[ent.id]  = { schedule_object_name: ent.instance_name, items: items }
       end
-      render json: { begin_date: start_date.beginning_of_day.to_s, end_date: end_date.end_of_day.to_s, schedule_objects: result }, status: :ok
+      render json: { begin_date: start_date.to_date, end_date: end_date.to_date, schedule_objects: result }, status: :ok
     else
       render json: { error: 'no entity selected' }, status: :not_found
     end
@@ -86,8 +86,8 @@ class ScheduleViewController < ApplicationController
       if r.present?
         current = {
           item_id: r.id,
-          begin_moment: r.begins_at.to_s,
-          end_moment: r.ends_at.to_s,
+          begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
+          end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
           description: r.organisation_client.instance_name,
           progress: calculate_current_progress(r),
         }
@@ -111,8 +111,8 @@ class ScheduleViewController < ApplicationController
       reservations.each do |r|
       res << {
                         item_id: r.id,
-                        begin_moment: r.begins_at.to_s,
-                        end_moment: r.ends_at.to_s,
+                        begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
+                        end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
                         description: r.organisation_client.instance_name,
                       }
       end

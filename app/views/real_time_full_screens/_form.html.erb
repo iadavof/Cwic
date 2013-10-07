@@ -1,0 +1,15 @@
+<%= form_for(@real_time_full_screen) do |f| %>
+  <%= render 'shared/error_messages', target: @real_time_full_screen %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :public %>
+    <%= f.check_box :public %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -8,6 +8,13 @@ div.horizontal-calendar {
   width: 100%;
   min-height: 300px;
   margin: 20px 0;
+
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 }
 
 div.horizontal-calendar div.control-container {
@@ -296,7 +303,8 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item {
   width: 1px;
   z-index: 1;
   border-left: 1px solid #ccc;
-  background-color: #555;
+  background-color: #999;
+  color: #fff;
   overflow: hidden;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
