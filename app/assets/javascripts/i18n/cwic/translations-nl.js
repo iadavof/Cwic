@@ -13,6 +13,13 @@ var jsLang = {
   },
   stickies: {
     placeholder: 'Wayoo leipe sticky',
-    saved: 'Opgeslagen'
+    saved: 'Opgeslagen',
+  },
+  schedule_view: {
+    no_objects: 'Geen objecten geselecteerd.',
+    being_saved: 'Bezig met opslaan...',
+    saving_error: 'Fout tijdens opslaan.',
+    saved: 'Wijzigingen opgeslagen.',
+    undo: 'Ongedaan maken',
   }
 }

@@ -2,6 +2,8 @@ class ReservationsController < ApplicationController
   before_action :load_resource
   authorize_resource
 
+    respond_to :html, :json
+
   # GET /reservations
   def index
     respond_with(@reservations)
@@ -54,7 +56,7 @@ private
   end
 
   def resource_params
-    params.require(:reservation).permit(:begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id)
+    params.require(:reservation).permit(:begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id)
   end
 
   def interpolation_options

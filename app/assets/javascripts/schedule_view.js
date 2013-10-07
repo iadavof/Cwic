@@ -3,6 +3,7 @@ APP.schedule_view = {
     new IADAscheduleView({
       container: 'horizontal-calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       view: 'horizontalCalendar'
     });
 
@@ -49,6 +50,7 @@ function IADAscheduleView(options) {
   this.beginDate = null;
   this.endDate = null;
   this.needleTimeout = null;
+  this.statusMessageTimeout = null;
   this.currentMode = 'week';
 
   if(this.options.view == 'horizontalCalendar') {
@@ -303,7 +305,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
     if(currentScheduleItem != null) {
       if(!currentScheduleItem.conceptCollidesWithOthers() && currentScheduleItem.checkEndAfterBegin(true)) {
         currentScheduleItem.acceptConcept();
-        schedule.patchScheduleItemBackend(currentScheduleItem);
+        schedule.patchScheduleItemBackend(currentScheduleItem, true);
       } else {
         currentScheduleItem.resetConcept();
       }
@@ -317,8 +319,75 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
   });
 }
 
-IADAscheduleView.prototype.patchScheduleItemBackend = function() {
-  // To be implemented
+IADAscheduleView.prototype.showStatusMessage = function(content, ajax_wait, delay) {
+  var notification = this.scheduleContainer.find('.ajax-notification');
+  notification.css('pointer-events', 'auto');
+
+  if(this.statusMessageTimeout != null) {
+    // There is still a status message hide timeout present, clear it
+    clearTimeout(this.statusMessageTimeout);
+  }
+
+  if(ajax_wait) {
+     notification.find('.ajax-wait').show();
+  } else {
+     notification.find('.ajax-wait').hide();
+  }
+
+  notification.find('.message').html(content);
+
+  var currentNotifyHeight = notification.height();
+  notification.css({height: 0, visibility: 'visible'});
+  notification.finish();
+  notification.animate({height: currentNotifyHeight + 'px'}, 200);
+  var schedule = this;
+  if(delay != null && delay > 0) {
+    this.statusMessageTimeout = setTimeout(function() {schedule.hideStatusMessage();}, delay);
+  }
+  return notification;
+}
+
+IADAscheduleView.prototype.hideStatusMessage = function() {
+  var notification = this.scheduleContainer.find('.ajax-notification');
+  notification.finish();
+  notification.animate({height: 0}, 200, function(){
+    $(this).css({visibility: 'hidden', height: 'auto'})
+    // remove message
+    notification.find('.message').html('');
+    notification.find('.ajax-wait').hide();
+    notification.css('pointer-events', 'inherit');
+  });
+
+}
+
+IADAscheduleView.prototype.patchScheduleItemBackend = function(scheduleItem, undo) {
+  var schedule = this;
+
+  // saving status message
+  schedule.showStatusMessage(jsLang.schedule_view.being_saved, true);
+
+  $.ajax({
+    type: 'PATCH',
+    url: this.options.patch_reservation_url  + '/' + scheduleItem.item_id + '.json',
+    data: scheduleItem.railsDataExport(),
+    success: function(response) {
+      if(undo) {
+        var notify = schedule.showStatusMessage(jsLang.schedule_view.saved + ' (<a href="">' + jsLang.schedule_view.undo + '</a>)', false, 10000);
+        notify.find('a').on('click', function(e) {e.preventDefault(); schedule.undoSaveAction(scheduleItem); return false;});
+      } else {
+        schedule.showStatusMessage(jsLang.schedule_view.saved, false, 10000);
+      }
+    },
+    error: function(response) {
+      schedule.hideStatusMessage();
+      schedule.showStatusMessage(jsLang.schedule_view.saving_error, false, 10000);
+    },
+  });
+}
+
+IADAscheduleView.prototype.undoSaveAction = function(scheduleItem) {
+  scheduleItem.undoAcceptConcept();
+  this.patchScheduleItemBackend(scheduleItem);
 }
 
 IADAscheduleView.prototype.bindNewReservationControls = function() {
@@ -517,7 +586,7 @@ IADAscheduleView.prototype.updateSchedule = function() {
 }
 
 IADAscheduleView.prototype.disabledOverlay = function() {
-  this.scheduleContainer.find('.schedule-body').append($('<div></div>', {class: 'disabled-overlay', text: 'Geen objecten geselecteerd.'})); //I18n T TODO
+  this.scheduleContainer.find('.schedule-body').append($('<div></div>', {class: 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
 }
 
 IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
@@ -811,6 +880,14 @@ IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
   this.show_url = newItem.show_url;
 }
 
+IADAscheduleViewItem.prototype.railsDataExport = function() {
+  return {reservation: {
+    reservation_id: this.item_id,
+    begins_at: this.begin.format('YYYY-MM-DD HH:mm'),
+    ends_at: this.end.format('YYYY-MM-DD HH:mm'),
+  }};
+}
+
 IADAscheduleViewItem.prototype.applyErrorGlow = function() {
   $.each(this.domObjects, function(index, item) {
     item.addClass('error-glow');
@@ -842,8 +919,22 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginTime, endTime
 }
 
 IADAscheduleViewItem.prototype.acceptConcept = function() {
+  this.undoBegin = this.begin;
+  this.undoEnd = this.end;
+
   this.begin = this.getConceptBegin();
   this.end = this.getConceptEnd();
+
+  this.rerender();
+}
+
+IADAscheduleViewItem.prototype.undoAcceptConcept = function() {
+  if(this.undoBegin != null) {
+    this.begin = this.undoBegin;
+  }
+  if(this.undoEnd != null) {
+    this.end = this.undoEnd;
+  }
 
   this.rerender();
 }

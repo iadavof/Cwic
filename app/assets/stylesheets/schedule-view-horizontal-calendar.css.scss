@@ -47,10 +47,29 @@ div.horizontal-calendar div.time-axis .ajax-notification-container {
   width: 100%;
   text-align: center;
   margin-top: 2px;
+  pointer-events: none;
 }
 
 div.horizontal-calendar div.time-axis .ajax-notification-container .ajax-notification {
   text-align: left;
+  visibility: hidden;
+}
+
+div.horizontal-calendar div.time-axis .ajax-notification-container .ajax-notification .ajax-wait {
+  position: relative;
+  float: left;
+  height: 25px;
+  width: 25px;
+  background-image: image-url('ajax_wait.gif');
+  background-size: 25px 25px;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
+div.horizontal-calendar div.time-axis .ajax-notification-container .ajax-notification .message {
+  position: relative;
+  float: left;
+  line-height: 25px;
 }
 
 div.horizontal-calendar div.day-axis {

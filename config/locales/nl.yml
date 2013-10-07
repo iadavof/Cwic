@@ -372,6 +372,7 @@ nl:
   feedbacks:
     modal:
       open_feedback: 'Geef ons feedback!'
+      creating_screenshot: 'Schermafbeelding genereren...'
       feedback_intro: 'Bent u een fout in het systeem tegengekomen? Of heeft u een suggestie voor verbetering? Vul dan het volgende formulier in.'
       review_feedback: 'Controleer feedback'
       technical_info: 'Technische informatie'
