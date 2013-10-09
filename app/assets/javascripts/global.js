@@ -80,7 +80,7 @@ APP.global = {
         $(menuItems).children('a').each(function(){
           var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
           if (shortcutKey) {
-            $(this).attr('title', jsLang.strings.expand_menu + ' [Alt+' + shortcutKey + ']');
+            $(this).attr('title', jsLang.global.expand_menu + ' [Alt+' + shortcutKey + ']');
           }
         });
         $(submenuBox).animate({height: 0}, duration, 'swing', function() {
@@ -91,14 +91,14 @@ APP.global = {
         $(menuItems).children('a').each(function(){
           var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
           if (shortcutKey) {
-            $(this).attr('title', jsLang.strings.expand_menu + ' [Alt+' + shortcutKey + ']');
+            $(this).attr('title', jsLang.global.expand_menu + ' [Alt+' + shortcutKey + ']');
           }
         });
         $(menuItem).addClass('selected');
         $(menuItem).children('a').each(function(){
           var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
           if (shortcutKey) {
-            $(this).attr('title', jsLang.strings.contract_menu + ' [Alt+' + shortcutKey + ']');
+            $(this).attr('title', jsLang.global.contract_menu + ' [Alt+' + shortcutKey + ']');
           }
         });
         if ($(submenuBox).height() > 0) { /* Contract expanded submenu first, then expand requested submenu */
@@ -160,13 +160,13 @@ function array_to_sentence(array) {
   if(array.length <= 1) {
     return array
   } else {
-    return array.slice(0, array.length - 1).join(', ') + " en " + array.slice(-1); // XXX TODO internationalization
+    return array.slice(0, array.length - 1).join(', ') + jsLang.global.and + array.slice(-1);
   }
 }
 
 function format_text(text) {
   if(text == '') {
-     return '<em>Geen</em>'; // XXX TODO internationalization
+     return '<em>' + jsLang.global.none + '</em>';
   } else {
     return text;
   }

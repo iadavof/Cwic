@@ -66,7 +66,7 @@ APP.entity_types = {
           var value = (input.val() ? input.find(':selected').text() : '');
         } else if(input.is('input') && input.attr('type') == 'checkbox') {
           // We are dealing with a checkbox field
-          var value = input.is(':checked') ? jsLang.strings.yes : jsLang.strings.no;
+          var value = input.is(':checked') ? jsLang.global.yes : jsLang.global.no;
         } else {
           // We are dealing with a normal field
           var value = input.val();
