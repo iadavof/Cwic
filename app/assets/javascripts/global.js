@@ -173,11 +173,9 @@ function format_text(text) {
 }
 
 function openModal(modalID, content, closeCallback) {
-
   var closeCallback = closeCallback || this.closeModal;
 
   var overlay = $('a.overlay');
-
   overlay.on('click', closeCallback);
 
   var modalDiv = $('div.modal');
@@ -195,15 +193,12 @@ function openModal(modalID, content, closeCallback) {
 }
 
 function closeModal(e) {
-
   if(e != null) {
     e.preventDefault();
   }
 
   var modalDiv = $('div.modal');
-
   modalDiv.children(':not(a.close)').remove();
-
   modalDiv.removeAttr('id');
 
   var overlay = $('a.overlay');
@@ -211,14 +206,13 @@ function closeModal(e) {
   $('html').removeClass('with-overlay');
   window.location.hash = 'modal_close';
 
-  // remove events from the overlay
+  // Remove events from the overlay
   overlay.off('click');
   overlay.find('a.close').off('click');
 
   if(e != null) {
     return false;
   }
-
 }
 
 window.log = function ( string ) {
