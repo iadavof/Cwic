@@ -202,17 +202,19 @@ IADAscheduleView.prototype.bindControls = function() {
 }
 
 IADAscheduleView.prototype.bindTooltipOpenEvent = function() {
-  this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-tooltip', function(openTooltipLink) {
-    var scheduleItem = this.getScheduleItemForDOMObject($(openTooltipLink).find('schedule-item'));
-    $('#tippy').tooltip({
-      content: 'Je moeder is een hoer.',
-      open: function(evt, ui) {
-          var elem = $(this);
-          $.ajax('/echo/html').always(function() {
-              elem.tooltip('option', 'content', 'Ajax call complete');
-           });
-      }
+  var schedule = this;
+  this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-tooltip', function(event) {
+    event.preventDefault();
+    var scheduleItemDOM = $(this).parents('.schedule-item');
+    var dayRowTP = scheduleItemDOM.parents('day-row-schedule-object-item-parts');
+    var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
+
+    // Jquery ui tooltip requires a title to be set, wtf?!
+    scheduleItemDOM.attr('title', '');
+    scheduleItemDOM.tooltip({
+      content: 'Je moeder is een muts.',
     });
+    return false;
   });
 }
 
@@ -262,7 +264,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
 
   this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.day-row-schedule-object-item-parts div.schedule-item', function(event) {
     // left click, no drag already started and not on resize handles
-    if(event.which == 1 && currentScheduleItem == null && !$(event.target).hasClass('open-tooltip')) {
+    if(event.which == 1 && currentScheduleItem == null && $(event.target).closest('a.open-tooltip').length == 0) {
 
       var scheduleItemClickedDom = $(this);
       dayRowTP = scheduleItemClickedDom.parents('div.day-row-schedule-object-item-parts');
