@@ -252,10 +252,11 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
       var offset = dayRowTP.offset();
 
       // Check if drag started on resize handle
-      var handle = $(event.target).parents('div.resizer');
+      var handle = $(event.target).closest('div.resizer');
       if(handle.length != 0) { // resize mode
         side = (handle.hasClass('left') ? 'left' : 'right');
       } else { // drag mode
+
         var relX = event.pageX - offset.left;
         dragStartMoment = schedule.nearestMomentPoint(relX, dayRowTP);
         lastDragMoment = dragStartMoment;
@@ -303,6 +304,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
 
   $('html').on('mouseup', function() {
     if(currentScheduleItem != null) {
+
       if(!currentScheduleItem.conceptCollidesWithOthers() && currentScheduleItem.checkEndAfterBegin(true)) {
         currentScheduleItem.acceptConcept();
         schedule.patchScheduleItemBackend(currentScheduleItem, true);
@@ -424,23 +426,27 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
     }
   });
 
+  var reservationForm = null;
   $('html').on('mouseup', function(event) {
     // Handle new entry
-    if(newScheduleItem != null && newScheduleItem.checkEndAfterBegin(true) && !newScheduleItem.conceptCollidesWithOthers()) {
-      var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function(e) {
-        e.preventDefault();
+    if(reservationForm == null) {
+      if(newScheduleItem != null && newScheduleItem.checkEndAfterBegin(true) && !newScheduleItem.conceptCollidesWithOthers()) {
+        reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function(e) {
+          e.preventDefault();
+          if(newScheduleItem != null) {
+            newScheduleItem.removeFromDom();
+            newScheduleItem = null;
+          }
+          closeModal(e);
+          reservationForm = null;
+        });
+        APP.global.initializeDateTimePickers(reservationForm);
+        schedule.setNewReservationForm(newScheduleItem);
+      } else {
         if(newScheduleItem != null) {
           newScheduleItem.removeFromDom();
           newScheduleItem = null;
         }
-        closeModal(e);
-      })
-      APP.global.initializeDateTimePickers(reservationForm);
-      schedule.setNewReservationForm(newScheduleItem);
-    } else {
-      if(newScheduleItem != null) {
-        newScheduleItem.removeFromDom();
-        newScheduleItem = null;
       }
     }
   });
