@@ -361,12 +361,12 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.cont
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.continue.left {
-  left: 5px;
+  left: 2px;
   right: auto;
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.continue.right {
-  right: 5px;
+  right: 2px;
   left: auto;
 }
 
@@ -408,14 +408,27 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resi
   cursor: e-resize;
 }
 
+div.horizontal-calendar div.schedule-body div.day-row div.schedule-item a.open-tooltip i {
+  position: absolute;
+  left: 20px;
+  top: 50%;
+  height: 30px;
+  margin-top: -15px;
+  line-height: 30px;
+  overflow: hidden;
+  font-size: 1.1sem;
+  text-decoration: none;
+}
+
 div.horizontal-calendar div.schedule-body div.day-row div.schedule-item a.item-text {
   position: absolute;
-  left: 25px;
+  left: 40px;
   top: 50%;
   height: 20px;
   line-height: 20px;
   margin-top: -10px;
   overflow: hidden;
+  text-decoration: none;
 }
 
 div.horizontal-calendar div.entity-container {
