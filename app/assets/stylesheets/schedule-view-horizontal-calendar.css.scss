@@ -376,6 +376,7 @@ div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resi
   width: 15px;
   display: none;
   font-size: 0.8em;
+  z-index: 2;
 }
 
 div.horizontal-calendar div.schedule-body div.day-row div.schedule-item div.resizer span {
