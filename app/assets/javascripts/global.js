@@ -156,7 +156,7 @@ APP.global = {
   }
 };
 
-function array_to_sentence(array) {
+function arrayToSentence(array) {
   if(array.length <= 1) {
     return array
   } else {
@@ -164,7 +164,7 @@ function array_to_sentence(array) {
   }
 }
 
-function format_text(text) {
+function formatText(text) {
   if(text == '') {
      return '<em>' + jsLang.global.none + '</em>';
   } else {
