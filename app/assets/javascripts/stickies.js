@@ -54,7 +54,6 @@ IADAStickyNotes.prototype.getNotes = function() {
 }
 
 IADAStickyNotes.prototype.saveNote = function(note_element) {
-  console.debug(note_element);
   var note = $(note_element);
   var new_note = false;
   var textarea = note.find('textarea');
@@ -83,10 +82,21 @@ IADAStickyNotes.prototype.saveNote = function(note_element) {
   }).success(function(response) {
     if(new_note && response) {
       note.attr('id', 'note_' + response.id);
-      note.find('p.created_at').text(response.created_at);
+      note.find('p.created_at').data('timestamp', response.created_at);
+      note.find('p.created_at').attr('title', moment(response.created_at).format('LLLL'));
     }
     note.find('img.ajax_wait').hide();
     note.find('p.saved_notification').show();
+  });
+}
+
+IADAStickyNotes.prototype.setTimestamps = function() {
+  var timepies = $('div.notes div.note div.note-head p.created_at');
+
+  timepies.each(function() {
+    var p = $(this);
+    var timestamp = moment(p.data('timestamp'));
+    p.text(timestamp.fromNow());
   });
 }
 
@@ -95,6 +105,10 @@ IADAStickyNotes.prototype.renderNotes = function(notes) {
     current = notes[noteNr];
     this.renderNote(current);
   }
+
+  var schedule = this;
+
+  setInterval(function(){ schedule.setTimestamps(); }, 30000);
 }
 
 IADAStickyNotes.prototype.bindControls = function() {
@@ -105,8 +119,8 @@ IADAStickyNotes.prototype.bindControls = function() {
 IADAStickyNotes.prototype.newNote = function() {
   var note = this.defaultNote;
   note.author = this.options.current_author;
-  today = new Date();
-  note.created_at = today.customFormat('#DD#-#MM#-#YYYY#');
+  now = moment();
+  note.created_at = now.format('YYYY-MM-DD HH:mm');
   this.renderNote(note);
 }
 
@@ -125,8 +139,10 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
   }
 
   note.find('p.author').text(note_obj.author.name);
-  note.find('p.created_at').text(note_obj.created_at);
-
+  note.find('p.created_at').data('timestamp', note_obj.created_at);
+  var timestamp = moment(note_obj.created_at);
+  note.find('p.created_at').attr('title', timestamp.format('LLLL'));
+  note.find('p.created_at').text(timestamp.fromNow());
   // Bind sticky events
   note.find('a.delete-button').on('click', function(){ sn.deleteNote(this); });
 
