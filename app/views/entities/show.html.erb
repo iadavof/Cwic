@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-<h1><%= show_title(@entity) %></h1>
+<%= show_title(@entity) %>
 <% end %>
 
 <%= render partial: 'stickies/resource_stickies', locals: { resource: @entity } %>

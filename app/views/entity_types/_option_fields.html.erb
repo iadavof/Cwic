@@ -1,6 +1,6 @@
 <div class="fields option-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
-  <div class="view">
-    <div class="horizontal-block icon icon-resize-vertical handle" title="<%= t('order_nested_object', classes: EntityTypeOption.model_name.human(count: 2).lcfirst) %>"></div>
+  <div class="view clearfix">
+    <div class="horizontal-block icon icon-resize-vertical sort-handle" title="<%= t('order_nested_object', classes: EntityTypeOption.model_name.human(count: 2).lcfirst) %>"></div>
     <div class="field horizontal-block name">
       <div class="label"><%= EntityTypeOption.human_attribute_name(:name) %></div>
       <div class="value" data-field="name"><%= format_text(f.object.name) %></div>
@@ -22,7 +22,7 @@
       <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: EntityTypeOption.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
     </div>
   </div>
-  <div class="form">
+  <div class="form clearfix">
     <div class="field horizontal-block name">
       <%= f.text_field :name, placeholder: EntityTypeOption.human_attribute_name(:name), title: EntityTypeOption.human_attribute_name(:name), data: { field: 'name' } %>
     </div>

@@ -23,7 +23,7 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   display: block;
   padding: 0;
   margin: 0;
-  border-bottom: 1px solid #ccc;
+  border-bottom: 1px solid #aaa;
 }
 
 #realtime-list > li > .inner {
@@ -33,91 +33,179 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 
 #realtime-list > li > .inner h2 {
   margin: 0;
-  font-size: 3em;
+  font-size: 3.5em;
   line-height: 150%;
+}
+
+#realtime-list > li > .inner .object {
+  font-size: 2.5em;
+  margin-top: 0.7em;
+  font-family: SignikaLight;
+}
+
+#realtime-list > li > .inner .availability {
+  font-size: 2em;
+}
+
+#realtime-list > li > .inner .availability strong {
+  font-size: 1.3em;
+  vertical-align: middle;
+  font-weight: bold;
+}
+
+#realtime-list > li > .inner .availability.available {
+  color: #18c13d;
+}
+
+#realtime-list > li > .inner .availability.not-available {
+  color: #ff3520;
 }
 
 #realtime-list > li > .inner .info-container {
   float: right;
-  display: table;
-  border-spacing: 10px 0;
-}
-
-#realtime-list > li > .inner .info-container > .inner {
-  display: table-row;
+  border-spacing: 0;
+  margin: 0;
+  border: 0 none;
+  font-size: 1.4em;
+  position: relative;
+  padding-right: 9em;
 }
 
 #realtime-list > li > .inner .wayfinding {
-  display: table-cell;
+  position: absolute;
+  top: 0;
+  right: 0;
   vertical-align: middle;
-  height: 100%;
-  font-size: 12em;
-  line-height: 1px;
+  font-size: 7.5em;
+  width: 1em;
+  text-align: center;
   background-color: #17889d;
   color: #fff;
+  padding: 0 0.01em;
+  height: 100%;
 }
 
 #realtime-list > li > .inner .wayfinding [class^="symbol-"]:before, 
 #realtime-list > li > .inner .wayfinding [class*=" symbol-"]:before {
-  display: block;
-  position: relative;
-  height: 1px;
-  line-height: 1px;
+  display: inline-block;
+  position: absolute;
+  top: 50%;
+  left: 0;
+  height: 0;
+  text-align: center;
+  line-height: 0;
+  width: 100%;
 }
 
 #realtime-list > li > .inner .reservation-dates {
-  display: table-cell;
+  border-spacing: 0;
+  margin: 0 0 0 20px;
+  padding: 0;
+  border: 0 none;
+  opacity: 0.85;
 }
 
-#realtime-list > li > .inner .datebox {
-  display: table;
-  font-size: 1.7em;
-}
-
-#realtime-list > li > .inner .datebox.until {
-  margin-top: 0.4em;
-}
-
-#realtime-list > li > .inner .datebox .day {
-  display: table-cell;
-  vertical-align: middle;
-  line-height: 2em;
-  padding: 0.14em 0.4em;
-  text-align: center;
+#realtime-list > li > .inner .reservation-dates .datebox {
+  font-size: 1.9em;
   background-color: #eee;
-  font-size: 1.4em;
+}
+
+#realtime-list > li > .inner .reservation-dates .datebox.until {
+
+}
+
+#realtime-list > li > .inner .reservation-dates .datebox td {
+  border-left: 0.17em solid #fff;
+  border-bottom: 0.34em solid #fff;
+  padding: 0 0.3em;
+  line-height: 1.8em;
+  text-align: center;
+  color: #fff;
+}
+
+#realtime-list > li > .inner .reservation-dates .datebox.until td {
+  border-bottom: 0 none;
+}
+
+#realtime-list > li > .inner .reservation-dates .datebox .until, 
+#realtime-list > li > .inner .reservation-dates .datebox .from {
+  background-color: #777;
+}
+
+#realtime-list > li > .inner .reservation-dates .datebox .day {
+  vertical-align: middle;
+  text-align: center;
+  color: #fff;
+  background-color: #18c13d;
   font-weight: bold;
 }
 
-/*
-#realtime-list > li > .inner .datebox.until .day {
-  background-color: #ddd;
+#realtime-list > li > .inner .reservation-dates .datebox.until .day {
+  background-color: #ff3520;
 }
-*/
 
-#realtime-list > li > .inner .datebox .date {
-  display: table-cell;
+#realtime-list > li > .inner .reservation-dates .datebox .date {
   vertical-align: middle;
-  padding: 0.14em 0.4em;
-  font-size: 1.4em;
+  text-align: center;
   color: #fff;
-  background-color: #1a99af;
+  background-color: #18c13d;
 }
 
-#realtime-list > li > .inner .datebox.until .date {
-  background-color: #17889D;
+#realtime-list > li > .inner .reservation-dates .datebox.until .date {
+  background-color: #ff3520;
 }
 
-#realtime-list > li > .inner .datebox .time {
-  display: table-cell;
+#realtime-list > li > .inner .reservation-dates .datebox .time {
   vertical-align: middle;
-  padding: 0.14em 0.4em;
-  font-size: 1.4em;
-  background-color: #eee;
+  text-align: center;
+  color: #fff;
+  background-color: #18c13d;
 }
 
-/*
-#realtime-list > li > .inner .datebox.until .time {
-  background-color: #ddd;
+#realtime-list > li > .inner .reservation-dates .datebox.until .time {
+  background-color: #ff3520;
 }
-*/
+
+@media (max-width: 1200px) {
+  #realtime-list > li > .inner .reservation-dates .datebox .day,
+  #realtime-list > li > .inner .reservation-dates .datebox .day-empty {
+    display: none;
+  }
+  #realtime-list > li > .inner .info-container {
+    font-size: 1.2em;
+  }
+  #realtime-list > li > .inner h2 {
+    font-size: 3em;
+  }
+  #realtime-list > li > .inner .object {
+    font-size: 2.2em;
+  }
+}
+
+@media (max-width: 1024px) {
+  #realtime-list > li > .inner .reservation-dates .datebox .from,
+  #realtime-list > li > .inner .reservation-dates .datebox .until {
+    display: none;
+  }
+  #realtime-list > li > .inner .info-container {
+    font-size: 1.1em;
+  }
+  #realtime-list > li > .inner h2 {
+    font-size: 2.8em;
+  }
+  #realtime-list > li > .inner .object {
+    font-size: 2em;
+  }
+}
+
+@media (max-width: 900px) {
+  #realtime-list > li > .inner .info-container {
+    font-size: 1em;
+  }
+  #realtime-list > li > .inner h2 {
+    font-size: 2.5em;
+  }
+  #realtime-list > li > .inner .object {
+    font-size: 1.9em;
+  }
+}

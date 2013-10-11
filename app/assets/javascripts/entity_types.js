@@ -6,8 +6,8 @@ APP.entity_types = {
     form.find('.option-wrapper').each(function () { APP.entity_types.initializeNestedObjectWrapper($(this)); });
     $('#tabs').tabs({ active: this.determineFirstTab() });
     this.initIconSelector();
-    $('#entity-type-properties').sortable({ placeholder: 'ui-state-highlight', handle: '.handle' });
-    $('#options').sortable({ placeholder: 'ui-state-highlight', handle: '.handle' });
+    $('#entity-type-properties').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
+    $('#options').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
     $(document).on('nested:fieldAdded:properties', function(event) { APP.entity_types.initializePropertyWrapper(event.field); });
     $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.onNestedFieldAddedOptions(event.field); });
   },
@@ -86,7 +86,7 @@ APP.entity_types = {
     propertyWrapper.find('.property-options .clear-default-link').click(function() { APP.entity_types.optionsDefaultUncheckAll(propertyWrapper); });
 
     // Make the options sortable
-    propertyWrapper.find('.property-options .target').sortable({ placeholder: 'ui-state-highlight', handle: '.option-handle' });
+    propertyWrapper.find('.property-options .target').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-option-handle' });
 
     // Initialize data type specific fields
     if(dataTypeField.val()) {
