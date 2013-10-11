@@ -37,8 +37,36 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   line-height: 150%;
 }
 
-#realtime-list > li > .inner .reservation-dates {
+#realtime-list > li > .inner .info-container {
   float: right;
+  display: table;
+  border-spacing: 10px 0;
+}
+
+#realtime-list > li > .inner .info-container > .inner {
+  display: table-row;
+}
+
+#realtime-list > li > .inner .wayfinding {
+  display: table-cell;
+  vertical-align: middle;
+  height: 100%;
+  font-size: 12em;
+  line-height: 1px;
+  background-color: #17889d;
+  color: #fff;
+}
+
+#realtime-list > li > .inner .wayfinding [class^="symbol-"]:before, 
+#realtime-list > li > .inner .wayfinding [class*=" symbol-"]:before {
+  display: block;
+  position: relative;
+  height: 1px;
+  line-height: 1px;
+}
+
+#realtime-list > li > .inner .reservation-dates {
+  display: table-cell;
 }
 
 #realtime-list > li > .inner .datebox {

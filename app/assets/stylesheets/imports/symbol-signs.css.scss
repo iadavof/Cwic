@@ -1,0 +1,59 @@
+@font-face {
+    font-family: 'SymbolSigns';
+    src: font-url('symbol-signs-webfont.eot');
+    src: font-url('symbol-signs-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('symbol-signs-webfont.ttf') format('truetype'),
+         font-url('symbol-signs-webfont.svg#symbol_signsbasis_set') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    -moz-font-feature-settings: "calt=0,liga=0";
+}
+[class^="symbol-"], [class*=" symbol-"] {font-family:'SymbolSigns';background:none;width:auto;height:auto;font-style:normal;line-height:normal;}
+.symbol-no-dogs:before{content:'A'}
+.symbol-bottle:before{content:'B'}
+.symbol-exchange:before{content:'C'}
+.symbol-down:before{content:'D'}
+.symbol-exit:before{content:'E'}
+.symbol-ladies:before{content:'F'}
+.symbol-cloakroom:before{content:'G'}
+.symbol-first-aid-alt:before{content:'H'}
+.symbol-info:before{content:'I'}
+.symbol-phone:before{content:'J'}
+.symbol-parking:before{content:'K'}
+.symbol-left:before{content:'L'}
+.symbol-gentlemen:before{content:'M'}
+.symbol-no-smoking:before{content:'N'}
+.symbol-no-entry:before{content:'O'}
+.symbol-no-entry-alt:before{content:'P'}
+.symbol-info-question:before{content:'Q'}
+.symbol-right:before{content:'R'}
+.symbol-smoking-area:before{content:'S'}
+.symbol-reception:before{content:'T'}
+.symbol-up:before{content:'U'}
+.symbol-info-triangle:before{content:'W'}
+.symbol-down-left:before{content:'X'}
+.symbol-down-right:before{content:'Y'}
+.symbol-cctv:before{content:'a'}
+.symbol-fastfood:before{content:'b'}
+.symbol-coffee:before{content:'c'}
+.symbol-disabled:before{content:'d'}
+.symbol-elevator:before{content:'e'}
+.symbol-fire-hose:before{content:'f'}
+.symbol-mail:before{content:'g'}
+.symbol-locker:before{content:'h'}
+.symbol-info-alt:before{content:'i'}
+.symbol-first-aid:before{content:'j'}
+.symbol-stairs-up-mirror:before{content:'k'}
+.symbol-stairs-up:before{content:'l'}
+.symbol-stairs-down-mirror-stairs:before{content:'m'}
+.symbol-stairs-down:before{content:'n'}
+.symbol-recycling:before{content:'o'}
+.symbol-staff-only:before{content:'p'}
+.symbol-info-question-alt:before{content:'q'}
+.symbol-restaurant:before{content:'r'}
+.symbol-shower:before{content:'s'}
+.symbol-plane:before{content:'t'}
+.symbol-bin:before{content:'u'}
+.symbol-wifi:before{content:'w'}
+.symbol-up-left:before{content:'x'}
+.symbol-up-right:before{content:'y'}
