@@ -5,7 +5,9 @@ var jsLang = {
     settings: 's',
     admin: 'a',
   },
-  strings: {
+  global: {
+    and: ' en ',
+    none: 'Geen',
     yes: 'Ja',
     no: 'Nee',
     expand_menu: 'Menu uitklappen',

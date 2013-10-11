@@ -9,7 +9,6 @@ module DatetimeSplittable
 
       args.each do |attribute|
         required = options[:required] || attribute_required?(attribute)
-        puts attribute_required?(attribute)
         define_method("#{attribute}_date") { self.get_date(attribute) }
         define_method("#{attribute}_tod") { self.get_tod(attribute) }
         define_method("#{attribute}_date=") { |date| self.set_date(attribute, date) }
@@ -28,8 +27,7 @@ module DatetimeSplittable
         validates "#{attribute}_date", date: true, if: "#{attribute}_date.present?"
         validates "#{attribute}_tod", time_of_day: true, if: "#{attribute}_tod.present?"
 
-
-        after_initialize "set_default_#{attribute}", if: "new_record?"
+        after_initialize "set_default_#{attribute}", if: :new_record?
         before_validation "join_#{attribute}"
         after_validation "correct_errors_#{attribute}"
       end
@@ -48,20 +46,20 @@ protected
   def get_date(attribute)
     date = instance_variable_get("@#{attribute}_date")
     time = self.send(attribute)
-    return date if date.present?
+    return date unless date.nil?
     return time.to_date if time.present?
   end
 
   def get_tod(attribute)
     tod = instance_variable_get("@#{attribute}_tod")
     time = self.send(attribute)
-    return tod if tod.present?
-    return time.to_tod if time.present?
+    return tod unless tod.nil?
+    return time.to_time.to_tod if time.present?
   end
 
   def set_date(attribute, date)
     begin
-      date = date.to_date
+      date = (date.present? ? date.to_date : date)
     rescue ArgumentError
     end
     instance_variable_set("@#{attribute}_date", date)
@@ -69,26 +67,30 @@ protected
 
   def set_tod(attribute, tod)
     begin
-      tod = tod.to_tod.utc
+      tod = (tod.present? ? tod.to_tod.utc : tod)
     rescue ArgumentError, NoMethodError
     end
     instance_variable_set("@#{attribute}_tod", tod)
+  end
+
+  def set_date_and_tod(attribute, time)
+    instance_variable_set("@#{attribute}_date", time.to_date)
+    instance_variable_set("@#{attribute}_tod", time.to_tod)
   end
 
   def join_date_and_tod(attribute)
     date = instance_variable_get("@#{attribute}_date")
     tod = instance_variable_get("@#{attribute}_tod")
     if date.is_a?(Date) && tod.is_a?(TimeOfDay)
+      # Only if both are set, create time from them. Otherwise leave the old time standing.
       time = Time.new(date.year, date.month, date.day, tod.hour, tod.min, tod.sec).utc
-    else
-      time = nil
+      self.send("#{attribute}=", time)
     end
-    self.send("#{attribute}=", time)
   end
 
   # Correct errors on date and time field, so everything is nicely displayed
   def correct_errors_date_and_tod(attribute)
-    if(self.errors["#{attribute}_date"].present? || self.errors["#{attribute}_tod"].present?)
+    if self.errors["#{attribute}_date"].present? || self.errors["#{attribute}_tod"].present?
       # Validation of the sub attributes failed:
       self.errors[attribute].clear # Move errors from Clear all errors on the base attribute, since they are probably invalid.
       self.errors.set(attribute, self.errors["#{attribute}_date"] + self.errors["#{attribute}_tod"]) # Copy the errors of the sub attributes to the base attribute.

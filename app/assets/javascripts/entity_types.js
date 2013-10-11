@@ -66,7 +66,7 @@ APP.entity_types = {
           var value = (input.val() ? input.find(':selected').text() : '');
         } else if(input.is('input') && input.attr('type') == 'checkbox') {
           // We are dealing with a checkbox field
-          var value = input.is(':checked') ? jsLang.strings.yes : jsLang.strings.no;
+          var value = input.is(':checked') ? jsLang.global.yes : jsLang.global.no;
         } else {
           // We are dealing with a normal field
           var value = input.val();
@@ -74,7 +74,7 @@ APP.entity_types = {
       } else {
         var value = '';
       }
-      $(this).html(format_text(value));
+      $(this).html(formatText(value));
     });
     wrapper.find('.form').hide();
     wrapper.find('.view').show();
@@ -111,8 +111,8 @@ APP.entity_types = {
           defaultValues.push(name);
         }
       });
-      propertyWrapper.find('.view [data-field="property-options"]').html(format_text(array_to_sentence(options)));
-      propertyWrapper.find('.view [data-field="default-value"]').html(format_text(array_to_sentence(defaultValues)));
+      propertyWrapper.find('.view [data-field="property-options"]').html(formatText(arrayToSentence(options)));
+      propertyWrapper.find('.view [data-field="default-value"]').html(formatText(arrayToSentence(defaultValues)));
     }
   },
   dataTypeChanged: function(propertyWrapper) {

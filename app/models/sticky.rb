@@ -20,7 +20,7 @@ class Sticky < ActiveRecord::Base
       id: self.id,
       author: { id: user.id, name: user.instance_name },
       sticky_text: sticky_text,
-      created_at: I18n.l(created_at),
+      created_at: created_at.strftime('%Y-%m-%d %H:%M'),
     }
   end
 end

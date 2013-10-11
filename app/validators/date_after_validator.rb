@@ -16,6 +16,6 @@ class DateAfterValidator < ActiveModel::EachValidator
       error_options = { formatted_date: I18n.l(date, format: options[:date_error_format]) }
     end
     return if value.nil? || date.nil?
-    record.errors.add(attr_name, error, options.merge(error_options)) if value < date
+    record.errors.add(attr_name, error, options.merge(error_options)) if value <= date
   end
 end

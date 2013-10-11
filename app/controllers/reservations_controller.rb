@@ -2,7 +2,7 @@ class ReservationsController < ApplicationController
   before_action :load_resource
   authorize_resource
 
-    respond_to :html, :json
+  respond_to :html, :json
 
   # GET /reservations
   def index
