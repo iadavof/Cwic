@@ -50,11 +50,11 @@ class ScheduleViewController < ApplicationController
     result = []
     @organisation.entities.each do |e|
       result << {
-                  id: e.id,
-                  icon: e.entity_type.icon.image.icon.url,
-                  name: e.instance_name,
-                  color: e.color,
-                }
+        id: e.id,
+        icon: e.entity_type.icon.image.icon.url,
+        name: e.instance_name,
+        color: e.color,
+      }
     end
     render json: { entities: result }, status: :ok
   end

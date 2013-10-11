@@ -850,7 +850,7 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
 
     for(up_nr in entity.upcoming_reservations.today) {
       var line = this.getTemplateClone('reservationLineTemplate');
-      line.find('span.time').text(moment(entity.upcoming_reservations.today[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.today[up_nr].end_moment)).format('HH:mm');
+      line.find('span.time').text(moment(entity.upcoming_reservations.today[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.today[up_nr].end_moment).format('HH:mm'));
       line.find('span.description').text(entity.upcoming_reservations.today[up_nr].description);
       nextInfo.append(line);
     }
@@ -859,7 +859,7 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
       nextInfo.append(this.getTemplateClone('tomorrowLineTemplate'));
       for(up_nr in entity.upcoming_reservations.tomorrow) {
         var line = this.getTemplateClone('reservationLineTemplate');
-        line.find('span.time').text(moment(entity.upcoming_reservations.tomorrow[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.tomorrow[up_nr].end_moment)).format('HH:mm');
+        line.find('span.time').text(moment(entity.upcoming_reservations.tomorrow[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.tomorrow[up_nr].end_moment).format('HH:mm'));
         line.find('span.description').text(entity.upcoming_reservations.tomorrow[up_nr].description);
         nextInfo.append(line);
       }
