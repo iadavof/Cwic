@@ -27,14 +27,15 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 }
 
 #realtime-list > li > .inner {
-  padding: 20px;
+  padding: 20px 20px 20px 25px;
   border-left: 15px solid #18c13d;
 }
 
 #realtime-list > li > .inner h2 {
   margin: 0;
+  padding: 0;
   font-size: 3.5em;
-  line-height: 150%;
+  line-height: normal;
 }
 
 #realtime-list > li > .inner .object {
@@ -45,6 +46,7 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 
 #realtime-list > li > .inner .availability {
   font-size: 2em;
+  margin-top: 0.15em;
 }
 
 #realtime-list > li > .inner .availability strong {
@@ -63,12 +65,10 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 
 #realtime-list > li > .inner .info-container {
   float: right;
-  border-spacing: 0;
   margin: 0;
-  border: 0 none;
   font-size: 1.4em;
   position: relative;
-  padding-right: 9em;
+  padding-right: 8.5em;
 }
 
 #realtime-list > li > .inner .wayfinding {
@@ -76,12 +76,12 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   top: 0;
   right: 0;
   vertical-align: middle;
-  font-size: 7.5em;
+  font-size: 5em;
   width: 1em;
   text-align: center;
   background-color: #17889d;
   color: #fff;
-  padding: 0 0.01em;
+  padding: 0 0.25em;
   height: 100%;
 }
 
@@ -98,11 +98,11 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 }
 
 #realtime-list > li > .inner .reservation-dates {
+  border: 0 none;
   border-spacing: 0;
   margin: 0 0 0 20px;
   padding: 0;
-  border: 0 none;
-  opacity: 0.85;
+  border-collapse: separate;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox {
@@ -115,12 +115,11 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox td {
-  border-left: 0.17em solid #fff;
-  border-bottom: 0.34em solid #fff;
-  padding: 0 0.3em;
+  padding: 0 0.5em;
   line-height: 1.8em;
   text-align: center;
   color: #fff;
+  border-bottom: 0.3em solid #fff;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox.until td {
@@ -129,19 +128,8 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 
 #realtime-list > li > .inner .reservation-dates .datebox .until, 
 #realtime-list > li > .inner .reservation-dates .datebox .from {
-  background-color: #777;
-}
-
-#realtime-list > li > .inner .reservation-dates .datebox .day {
-  vertical-align: middle;
-  text-align: center;
-  color: #fff;
-  background-color: #18c13d;
-  font-weight: bold;
-}
-
-#realtime-list > li > .inner .reservation-dates .datebox.until .day {
-  background-color: #ff3520;
+  background-color: #999;
+  border-right: 0.3em solid #fff;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox .date {
@@ -155,11 +143,20 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   background-color: #ff3520;
 }
 
+#realtime-list > li > .inner .reservation-dates .datebox .date .day {
+  font-weight: bold;
+}
+
+#realtime-list > li > .inner .reservation-dates .datebox .date .day:after {
+  content: ' ';
+}
+
 #realtime-list > li > .inner .reservation-dates .datebox .time {
   vertical-align: middle;
   text-align: center;
   color: #fff;
   background-color: #18c13d;
+  font-weight: bold;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox.until .time {
@@ -167,18 +164,11 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 }
 
 @media (max-width: 1200px) {
-  #realtime-list > li > .inner .reservation-dates .datebox .day,
-  #realtime-list > li > .inner .reservation-dates .datebox .day-empty {
+  #realtime-list > li > .inner .reservation-dates .datebox .date .day {
     display: none;
   }
-  #realtime-list > li > .inner .info-container {
-    font-size: 1.2em;
-  }
-  #realtime-list > li > .inner h2 {
-    font-size: 3em;
-  }
-  #realtime-list > li > .inner .object {
-    font-size: 2.2em;
+  #realtime-list > li > .inner {
+    font-size: 0.9em;
   }
 }
 
@@ -187,25 +177,13 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   #realtime-list > li > .inner .reservation-dates .datebox .until {
     display: none;
   }
-  #realtime-list > li > .inner .info-container {
-    font-size: 1.1em;
-  }
-  #realtime-list > li > .inner h2 {
-    font-size: 2.8em;
-  }
-  #realtime-list > li > .inner .object {
-    font-size: 2em;
+  #realtime-list > li > .inner {
+    font-size: 0.8em;
   }
 }
 
 @media (max-width: 900px) {
-  #realtime-list > li > .inner .info-container {
-    font-size: 1em;
-  }
-  #realtime-list > li > .inner h2 {
-    font-size: 2.5em;
-  }
-  #realtime-list > li > .inner .object {
-    font-size: 1.9em;
+  #realtime-list > li > .inner {
+    font-size: 0.7em;
   }
 }

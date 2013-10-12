@@ -1,0 +1,25 @@
+@font-face {
+    font-family: 'IADAwayfinding';
+    src: font-url('iada-wayfinding.eot');
+    src: font-url('iada-wayfinding.eot?#iefix') format('embedded-opentype'),
+         font-url('iada-wayfinding.ttf') format('truetype'),
+         font-url('iada-wayfinding.svg#symbol_signsbasis_set') format('svg');
+    font-weight: normal;
+    font-style: normal;
+    -moz-font-feature-settings: "calt=0,liga=0";
+}
+[class^="symbol-"], [class*=" symbol-"] {font-family:'IADAwayfinding';background:none;width:auto;height:auto;font-style:normal;line-height:normal;}
+.symbol-arrow-up:before{content:'a'}
+.symbol-arrow-up-right:before{content:'b'}
+.symbol-arrow-right:before{content:'c'}
+.symbol-arrow-down-right:before{content:'d'}
+.symbol-arrow-down:before{content:'e'}
+.symbol-arrow-down-left:before{content:'f'}
+.symbol-arrow-left:before{content:'g'}
+.symbol-arrow-up-left:before{content:'h'}
+.symbol-stairs-up:before{content:'i'}
+.symbol-stairs-down:before{content:'j'}
+.symbol-escalator-up:before{content:'k'}
+.symbol-escalator-down:before{content:'l'}
+.symbol-elevator-up:before{content:'m'}
+.symbol-elevator-down:before{content:'n'}
