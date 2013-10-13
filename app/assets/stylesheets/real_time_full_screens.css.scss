@@ -23,19 +23,23 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   display: block;
   padding: 0;
   margin: 0;
-  border-bottom: 1px solid #aaa;
+  border-bottom: 2px solid #aaa;
+  border-left: 15px solid #18c13d;
 }
 
 #realtime-list > li > .inner {
-  padding: 20px 20px 20px 25px;
-  border-left: 15px solid #18c13d;
+  padding: 25px 12em 25px 35px;
+  border-left: 15px solid #fff;
+  color: #666;
+  background-color: #fff;
+  position: relative;
 }
 
 #realtime-list > li > .inner h2 {
   margin: 0;
   padding: 0;
   font-size: 3.5em;
-  line-height: normal;
+  line-height: 100%;
 }
 
 #realtime-list > li > .inner .object {
@@ -46,7 +50,10 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 
 #realtime-list > li > .inner .availability {
   font-size: 2em;
-  margin-top: 0.15em;
+  margin-top: 0.6em;
+  display: inline-block;
+  padding: 0.3em 0.5em;
+  border: 3px solid #fff;
 }
 
 #realtime-list > li > .inner .availability strong {
@@ -56,58 +63,69 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 }
 
 #realtime-list > li > .inner .availability.available {
-  color: #18c13d;
+  color: #fff;
+  background-color: #16ad37;
 }
 
 #realtime-list > li > .inner .availability.not-available {
-  color: #ff3520;
+  color: #fff;
+  background-color: #ff3520;
 }
 
 #realtime-list > li > .inner .info-container {
   float: right;
   margin: 0;
   font-size: 1.4em;
-  position: relative;
-  padding-right: 8.5em;
 }
 
 #realtime-list > li > .inner .wayfinding {
+  font-size: 5em;
+  width: 1em;
+  height: 100%;
+  text-align: center;
+  background-color: #e3e3e3;
+  color: #17889d;
+  padding: 0 25px 0 0.25em;
   position: absolute;
   top: 0;
   right: 0;
-  vertical-align: middle;
-  font-size: 5em;
-  width: 1em;
-  text-align: center;
-  background-color: #17889d;
-  color: #fff;
-  padding: 0 0.25em;
-  height: 100%;
 }
 
 #realtime-list > li > .inner .wayfinding [class^="symbol-"]:before, 
 #realtime-list > li > .inner .wayfinding [class*=" symbol-"]:before {
-  display: inline-block;
+  display: block;
   position: absolute;
   top: 50%;
   left: 0;
-  height: 0;
   text-align: center;
+  height: 0;
   line-height: 0;
   width: 100%;
+}
+
+#realtime-list > li > .inner .reservation-dates-wrapper {
+  height: 1.8em;
+  overflow: hidden;
+  font-size: 1.9em;
+  border: 3px solid #fff;
+}
+
+#realtime-list > li > .inner .reservation-dates-wrapper:before {
+  content: ' ';
 }
 
 #realtime-list > li > .inner .reservation-dates {
   border: 0 none;
   border-spacing: 0;
-  margin: 0 0 0 20px;
+  margin: 0;
   padding: 0;
   border-collapse: separate;
+  position: relative;
+  animation: reservation-dates 5s ease-in-out 0s infinite alternate;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox {
-  font-size: 1.9em;
-  background-color: #eee;
+  background-color: #e3e3e3;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox.until {
@@ -118,8 +136,8 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   padding: 0 0.5em;
   line-height: 1.8em;
   text-align: center;
-  color: #fff;
-  border-bottom: 0.3em solid #fff;
+  color: #5f5f5f;
+  white-space: nowrap;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox.until td {
@@ -128,19 +146,38 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 
 #realtime-list > li > .inner .reservation-dates .datebox .until, 
 #realtime-list > li > .inner .reservation-dates .datebox .from {
-  background-color: #999;
-  border-right: 0.3em solid #fff;
+  background-color: #16ad37;
+  border-right: 3px solid #fff;
+  color: #fff;
+}
+
+#realtime-list > li > .inner .reservation-dates .datebox .until [class^="icon-"], 
+#realtime-list > li > .inner .reservation-dates .datebox .until [class*=" icon-"], 
+#realtime-list > li > .inner .reservation-dates .datebox .from [class^="icon-"], 
+#realtime-list > li > .inner .reservation-dates .datebox .from [class*=" icon-"] {
+  font-size: 0.9em;
+  position: relative;
+  bottom: 0.1em;
+}
+
+#realtime-list > li > .inner .reservation-dates .datebox .until {
+  background-color: #ff3520;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox .date {
   vertical-align: middle;
   text-align: center;
   color: #fff;
-  background-color: #18c13d;
+  background-color: #1c9cb2;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox.until .date {
-  background-color: #ff3520;
+  background-color: #1c9cb2;
+}
+
+
+#realtime-list > li > .inner .reservation-dates .datebox.from .date.today {
+  background-color: #16ad37;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox .date .day {
@@ -155,12 +192,13 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   vertical-align: middle;
   text-align: center;
   color: #fff;
-  background-color: #18c13d;
+  background-color: #1c9cb2;
   font-weight: bold;
+  border-left: 3px solid #fff;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox.until .time {
-  background-color: #ff3520;
+  background-color: #1c9cb2;
 }
 
 @media (max-width: 1200px) {
@@ -173,10 +211,6 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 }
 
 @media (max-width: 1024px) {
-  #realtime-list > li > .inner .reservation-dates .datebox .from,
-  #realtime-list > li > .inner .reservation-dates .datebox .until {
-    display: none;
-  }
   #realtime-list > li > .inner {
     font-size: 0.8em;
   }
@@ -185,5 +219,20 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 @media (max-width: 900px) {
   #realtime-list > li > .inner {
     font-size: 0.7em;
+  }
+}
+
+@keyframes reservation-dates {
+  0% {
+    bottom: 0;
+  }
+  40% {
+    bottom: 0;
+  }
+  60% {
+    bottom: 100%;
+  }
+  100% {
+    bottom: 100%;
   }
 }
