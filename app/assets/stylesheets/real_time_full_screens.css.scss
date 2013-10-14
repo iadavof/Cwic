@@ -28,8 +28,7 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 }
 
 #realtime-list > li > .inner {
-  padding: 25px 12em 25px 35px;
-  border-left: 15px solid #fff;
+  padding: 2em 13em 2em 3em;
   color: #666;
   background-color: #fff;
   position: relative;
@@ -85,7 +84,7 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   text-align: center;
   background-color: #e3e3e3;
   color: #17889d;
-  padding: 0 25px 0 0.25em;
+  padding: 0 0.25em;
   position: absolute;
   top: 0;
   right: 0;
@@ -121,7 +120,7 @@ body.controller-real_time_full_screens.action-show #content > .inner {
   padding: 0;
   border-collapse: separate;
   position: relative;
-  animation: reservation-dates 5s ease-in-out 0s infinite alternate;
+  animation: reservation-dates 4s ease-in-out 0s infinite alternate;
 }
 
 #realtime-list > li > .inner .reservation-dates .datebox {
@@ -176,7 +175,8 @@ body.controller-real_time_full_screens.action-show #content > .inner {
 }
 
 
-#realtime-list > li > .inner .reservation-dates .datebox.from .date.today {
+#realtime-list > li > .inner .reservation-dates .datebox.from .date.today, 
+#realtime-list > li > .inner .reservation-dates .datebox.until .date.today {
   background-color: #16ad37;
 }
 

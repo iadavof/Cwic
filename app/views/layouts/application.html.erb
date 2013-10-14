@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html class="no-js">
   <head>
-    <title>Cwic | IADA</title>
+    <title><%= sanitize(content_for?(:page_title) ? yield(:page_title) : t('default_title'), tags: []) %> | Cwic</title>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
     <script type="text/javascript">
       (function(h) { h.className = h.className.replace('no-js', 'js') })(document.documentElement)
