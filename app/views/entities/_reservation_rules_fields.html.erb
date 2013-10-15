@@ -1,9 +1,17 @@
-<div class="fields reservation-rule-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
+<div class="fields nested-object-wrapper reservation-rule-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
   <div class="view">
     <div class="horizontal-block extra">
       <dl>
         <dt><%= ReservationRule.human_attribute_name(:period_unit) %></dt>
-        <dd data-field="data-type"><%= f.object.period_unit.try(:human_name) %></dd>
+        <dd data-field="period-unit"><%= f.object.period_unit.try(:human_name) %></dd>
+        <dt><%= ReservationRule.human_attribute_name(:period_amount) %></dt>
+        <dd data-field="period-amount"><%= f.object.period_amount %></dd>
+        <dt><%= ReservationRule.human_attribute_name(:min_periods) %></dt>
+        <dd data-field="min-periods"><%= f.object.min_periods %></dd>
+        <dt><%= ReservationRule.human_attribute_name(:max_periods) %></dt>
+        <dd data-field="max-periods"><%= f.object.max_periods %></dd>
+        <dt><%= ReservationRule.human_attribute_name(:price) %></dt>
+        <dd data-field="price"><%= f.object.price %></dd>
       </dl>
     </div>
     <div class="actions">
@@ -13,16 +21,6 @@
   </div>
   <div class="form">
     <div class="horizontal-block extra">
-      <div class="field">
-        <%= f.label :active_from %>
-        <%= f.text_field :active_from_date, class: 'datepicker-field', data: { field: 'active-from' }  %>
-        <%= f.text_field :active_from_tod, class: 'timepicker-field', data: { field: 'active-from' }  %>
-      </div>
-      <div class="field">
-        <%= f.label :active_to %>
-        <%= f.text_field :active_to_date, class: 'datepicker-field', data: { field: 'active-to' }  %>
-        <%= f.text_field :active_to_tod, class: 'timepicker-field', data: { field: 'active-to' }  %>
-      </div>
       <div class="field">
         <%= f.label :period_unit_id %>
         <%= f.select :period_unit_id, TimeUnit.common.sort.map { |tu| [tu.human_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'period-unit' } %>

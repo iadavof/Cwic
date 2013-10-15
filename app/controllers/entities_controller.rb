@@ -59,7 +59,7 @@ private
     params.require(:entity).permit(
       :name, :color, :description, :entity_type_id, :organisation_id,
       properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []],
-      reservation_rules_attributes: [:id, :active_from_date, :active_from_tod, :active_to_date, :active_to_tod, :period_unit_id, :period_amount, :min_periods, :max_periods, :price, :_destroy]
+      reservation_rules_attributes: [:id, :period_unit_id, :period_amount, :min_periods, :max_periods, :price, :_destroy]
     )
   end
 

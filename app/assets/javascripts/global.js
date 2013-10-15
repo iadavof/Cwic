@@ -21,12 +21,16 @@ APP.init = function() {
   // Set the upper nprogress bar as the default ajax complete and start handlers
   this.global.addProgressbarToAjax();
 
+  // Initialize tabs
+  this.global.initializeTabs();
+
   // Initialize date- and timepicker fields
   this.global.initializeDateTimePickers();
 };
 
-$(document).on('page:fetch',   function() { NProgress.stackPush(); });
-$(document).on('page:load',   function() { NProgress.stackPop(); });
+// Add progress bar for Turbolink requests
+$(document).on('page:fetch', function() { NProgress.stackPush(); });
+$(document).on('page:load', function() { NProgress.stackPop(); });
 $(document).on('page:restore', function() { NProgress.remove(); });
 
 APP.global = {
@@ -146,6 +150,23 @@ APP.global = {
       return false;
     }
   },
+  initializeTabs: function() {
+    var container = $('#tabs');
+    container.tabs({ active: this.determineFirstTabWithErrors(container) });
+  },
+  determineFirstTabWithErrors: function(container) {
+    // Determines the first tab to open. This is the first tab with errors (if any, else simply open the first tab)
+    var first = 0;
+    container.find('.nav a').each(function(index) {
+      var id = $(this).attr('href'); // Starts with #
+      var tab = container.find(id);
+      if(tab.find('div.field_with_errors').length) {
+        first = index
+        return false; // Break
+      }
+    });
+    return first;
+  },
   initializeDateTimePickers: function(parent) {
     if(!parent) {
       parent = document.body;
@@ -153,6 +174,48 @@ APP.global = {
     $(parent).find('.datepicker-field').datepicker({ showOn: 'both' });
     $(parent).find('.timepicker-field').timepicker({ showPeriodLabels: false, showOn: 'both' });
     $(document).on('nested:fieldAdded', function() { APP.global.initializeDateTimePickers(this); });
+  }
+};
+
+APP.global.nested_objects = {
+  initWrapper: function(wrapper) {
+    wrapper.find('.icon-edit').click(function() { APP.global.nested_objects.editWrapper(wrapper) });
+    wrapper.find('.icon-ok').click(function() { APP.global.nested_objects.finishWrapper(wrapper) });
+
+    // Fix the extra remove link work
+    wrapper.find('.remove-nested-fields-extra').click(function () { $(this).closest('.fields').find('.remove_nested_fields').click(); });
+
+    // If the option is not valid, then show form immediately. New properties are also not valid by default.
+    if(wrapper.attr('data-valid') == 'false') {
+      this.editWrapper(wrapper);
+    }
+  },
+  editWrapper: function(wrapper) {
+    wrapper.find('.view').hide();
+    wrapper.find('.form').show();
+  },
+  finishWrapper: function(wrapper) {
+    // Copy all data from input fields to corresponding containers in view
+    wrapper.find('.view [data-field]').each(function () {
+      var input = wrapper.find('.form [data-field="' + $(this).attr('data-field') + '"]');
+      if(input) {
+        if(input.is('select')) {
+          // We are dealing with a checkbox field
+          var value = (input.val() ? input.find(':selected').text() : '');
+        } else if(input.is('input') && input.attr('type') == 'checkbox') {
+          // We are dealing with a checkbox field
+          var value = input.is(':checked') ? jsLang.global.yes : jsLang.global.no;
+        } else {
+          // We are dealing with a normal field
+          var value = input.val();
+        }
+      } else {
+        var value = '';
+      }
+      $(this).html(formatText(value));
+    });
+    wrapper.find('.form').hide();
+    wrapper.find('.view').show();
   }
 };
 
