@@ -17,6 +17,12 @@ div#new_feedback_popup div.feedback-status {
   background-position: center center;
   background-repeat: no-repeat;
 }
+
+html.backgroundsize.smil div#new_feedback_popup div.feedback-status {
+  background-image: image-url('ajax_wait.svg');
+  background-size: 100px 100px;
+}
+
 div#new_feedback_popup p#creating_screenshot,
 div#new_feedback_popup #feedback-error,
 div#new_feedback_popup #feedback-success,

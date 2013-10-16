@@ -104,6 +104,7 @@ GEM
     method_source (0.8.2)
     mime-types (1.24)
     minitest (4.7.5)
+    modernizr-rails (2.6.2.3)
     momentjs-rails (2.2.1)
       railties (>= 3.1)
     multi_json (1.7.9)
@@ -222,6 +223,7 @@ DEPENDENCIES
   jquery-ui-rails
   js-routes
   mini_magick!
+  modernizr-rails
   momentjs-rails
   nested_form
   pg

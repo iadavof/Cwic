@@ -1,4 +1,5 @@
 //= require jquery
+//= require modernizr
 //= require jquery.ui.all
 //= require jquery_ujs
 //= require gistyle
