@@ -22,6 +22,10 @@ module MenuHelper
         occupation_view: {
           day_occupation: { url: organisation_day_occupation_path(current_organisation) },
           week_occupation: { url: organisation_week_occupation_path(current_organisation) }
+        },
+        real_time_full_screens: {
+          index: { url: real_time_full_screens_path },
+          new: { url: new_real_time_full_screen_path }
         }
       },
       settings: {
