@@ -22,6 +22,9 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
+# Use Modernizr to detect support for new features
+gem 'modernizr-rails'
+
 # Use the gistyle gem for the Garber Irish Javascript loading implementation
 gem 'gistyle'
 
