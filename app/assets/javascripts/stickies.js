@@ -129,7 +129,7 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
   var temp = $("#note-template").html();
   var note = $("<div class='note'></div>").html(temp);
   var textarea = note.find('textarea');
-
+  
   // add id
   if(note_obj.id != null) {
     note.attr('id', 'note_' + note_obj.id);

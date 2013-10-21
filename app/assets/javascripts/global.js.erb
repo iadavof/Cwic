@@ -26,6 +26,11 @@ APP.init = function() {
 
   // Initialize date- and timepicker fields
   this.global.initializeDateTimePickers();
+  
+  // Replace AJAX animation with SVG
+  if(Modernizr.backgroundsize && Modernizr.smil) {
+    $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
+  }
 };
 
 // Add progress bar for Turbolink requests
