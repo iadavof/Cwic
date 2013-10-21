@@ -80,8 +80,14 @@ IADAscheduleView.prototype.renderHorizontalCalendar = function () {
 }
 
 IADAscheduleView.prototype.initScheduleStub = function() {
-  // Set schedule to current week
-  var now = moment();
+  this.scheduleContainer = $('#' + this.options.container);
+  this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
+  this.scheduleContainer.addClass('horizontal-calendar');
+
+  // Set schedule to the selected date or current date
+
+  var now = this.getFocusMoment();
+
   if(this.options.zoom == 'day') {
     this.beginDate = moment(now).startOf('week');
     this.endDate = moment(now).endOf('week');
@@ -89,9 +95,17 @@ IADAscheduleView.prototype.initScheduleStub = function() {
     this.beginDate = moment(now).startOf('month').startOf('week');
     this.endDate = moment(now).endOf('month').endOf('week');
   }
-  this.scheduleContainer = $('#' + this.options.container);
-  this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
-  this.scheduleContainer.addClass('horizontal-calendar');
+}
+
+IADAscheduleView.prototype.getFocusMoment = function() {
+    if(this.scheduleContainer.data('target-year') != '' && this.scheduleContainer.data('target-month') != '' && this.scheduleContainer.data('target-day') != '') {
+    var now = moment([this.scheduleContainer.data('target-year'), this.scheduleContainer.data('target-month'), this.scheduleContainer.data('target-day')]);
+  } else if(this.scheduleContainer.data('target-year') != '' && this.scheduleContainer.data('target-week') != '') {
+    var now = moment(this.scheduleContainer.data('target-year') + '-' + this.scheduleContainer.data('target-week'), 'GGGG-WW');
+  } else {
+    var now = moment();
+  }
+  return now;
 }
 
 IADAscheduleView.prototype.toggleEntity = function(entity_button) {
@@ -182,9 +196,10 @@ IADAscheduleView.prototype.bindControls = function() {
         return;
       }
 
-      // Check if today is in the view, if so, use this as reference.
-      if(moment(schedule.beginDate).startOf('day').unix() < now.unix() && now.unix() < moment(schedule.endDate).endOf('day').unix()) {
-        reference = now;
+      // Check if focus item is in the view, if so, use this as reference.
+      var focus = schedule.getFocusMoment();
+      if(moment(schedule.beginDate).startOf('day').unix() < focus.unix() && focus.unix() < moment(schedule.endDate).endOf('day').unix()) {
+        reference = focus.startOf(schedule.options.zoom);
       }
 
       var newMode = this.id.replace('Mode', '');
@@ -193,7 +208,7 @@ IADAscheduleView.prototype.bindControls = function() {
       newEndDate = moment(reference).endOf(newMode);
       schedule.currentMode = newMode;
     }
-
+    // TODO probleem oplossen met afronden op schedule.options.zoom icm met reference = beginDate van current view, hierdoor gaat het bladeren mis als de eerste dag voor netheid in de vorige maand valt.
     if(this.id == 'previous') {
       reference.subtract(schedule.currentMode + 's', 1);
       newBeginDate = moment(reference).startOf(schedule.currentMode);

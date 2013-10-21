@@ -1,10 +1,19 @@
 class ScheduleViewController < ApplicationController
   def horizontal_calendar_day
+    if params[:year].present? && params[:month].present? && params[:day].present?
+      @year = params[:year].to_i
+      @month = params[:month].to_i
+      @day = params[:day].to_i
+    end
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
   end
 
   def horizontal_calendar_week
+    if params[:year].present? && params[:week].present?
+      @year = params[:year].to_i
+      @week = params[:week].to_i
+    end
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
   end
