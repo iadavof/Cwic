@@ -227,41 +227,14 @@ IADAscheduleView.prototype.bindControls = function() {
 IADAscheduleView.prototype.bindTooltipEvents = function() {
   var schedule = this;
 
-  var tooltipItem = null;
-  var tooltipItemParentOffset = null;
-  this.scheduleContainer.find('.schedule-body').on('mouseenter', 'div.schedule-item', function(event) {
-    tooltipItem = $(this);
-    tooltipItemParentOffset = tooltipItem.parents('.row').offset();
-    var relX = event.pageX - tooltipItemParentOffset.left;
-    tooltipItem.find('a.open-tooltip').css('left', relX + 'px').show();
-  });
-
-  this.scheduleContainer.find('.schedule-body').on('mousemove', 'div.schedule-item', function(event) {
-    if(tooltipItem != null) {
-      var relX = event.pageX - tooltipItemParentOffset.left;
-      tooltipItem.find('a.open-tooltip').css('left', relX + 'px');
-    }
-  });
-
-  this.scheduleContainer.find('.schedule-body').on('mouseleave', 'div.schedule-item', function(event) {
-    if(tooltipItem != null) {
-      tooltipItem.find('a.open-tooltip').hide();
-      tooltipItem = null;
-      tooltipItemParentOffset = null;
-    }
-  });
-
   this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-tooltip', function(event) {
     event.preventDefault();
     var scheduleItemDOM = $(this).parents('.schedule-item');
     var dayRowTP = scheduleItemDOM.parents('row-schedule-object-item-parts');
     var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
 
-    // Jquery ui tooltip requires a title to be set, wtf?!
-    scheduleItemDOM.attr('title', '');
-    scheduleItemDOM.tooltip({
-      content: 'Je moeder is een muts.',
-    });
+    // tooltip
+
     return false;
   });
 }

@@ -476,6 +476,11 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item div.continue
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item div.continue [class^="icon-"],
 div.horizontal-calendar div.schedule-body div.row div.schedule-item div.continue [class*=" icon-"] {
+  font-size: 0.75em;
+}
+
+div.horizontal-calendar div.schedule-body div.row div.schedule-item div.continue [class^="icon-"],
+div.horizontal-calendar div.schedule-body div.row div.schedule-item div.continue [class*=" icon-"] {
   height: 15px;
   line-height: 15px;
   vertical-align: baseline;
@@ -487,7 +492,7 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item div.continue
 }
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item div.continue.right {
-  right: 2px;
+  right: 0;
   left: auto;
 }
 
@@ -531,17 +536,17 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item div.resizer.
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-tooltip {
   position: absolute;
-  display: none;
+  display: block;
   height: 20px;
   width: 20px;
   margin-left: -10px;
-  left: 15px;
-  bottom: 100%;
+  margin-top: -10px;
+  left: 20px;
+  top: 50%;
   line-height: 20px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
-  z-index: 20;
 }
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-tooltip i {
@@ -553,7 +558,7 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-toolt
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item a.item-text {
   position: absolute;
-  left: 20px;
+  left: 40px;
   top: 50%;
   height: 20px;
   line-height: 20px;
