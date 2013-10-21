@@ -86,7 +86,7 @@ gem 'activerecord-import'
 gem 'js-routes'
 
 # Javascript MomentJS for date formatting and alterations
-gem 'momentjs-rails'
+gem 'momentjs-rails', github: 'CUnknown/momentjs-rails'
 
 group :development do
   # Disable messages about assets in development

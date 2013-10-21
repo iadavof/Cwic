@@ -83,10 +83,10 @@ IADAscheduleView.prototype.initScheduleStub = function() {
   var now = moment();
   if(this.options.zoom == 'day') {
     this.beginDate = moment(now).startOf('week');
-    this.endDate = moment(now).endOf('week'); 
+    this.endDate = moment(now).endOf('week');
   } else {
     this.beginDate = moment(now).startOf('month').startOf('week');
-    this.endDate = moment(now).endOf('month').endOf('week'); 
+    this.endDate = moment(now).endOf('month').endOf('week');
   }
   this.scheduleContainer = $('#' + this.options.container);
   this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
@@ -248,15 +248,11 @@ IADAscheduleView.prototype.updateDateDomainControl = function() {
 IADAscheduleView.prototype.nearestMomentPoint = function(relX, clickedElement) {
   var rowTP = $(clickedElement);
 
-  console.debug(rowTP.parents('.row').attr('id'));
-
   if(this.options.zoom == 'day') {
     var beginPoint = moment(rowTP.parents('.row').attr('id')).startOf('day');
   } else {
     var beginPoint = moment(rowTP.parents('.row').attr('id'), 'GGGG-WW').startOf('week');
   }
-
-  console.debug(beginPoint.format('lll'));
 
   if(relX < 0) {
     // Begin of item is dragged to previous day
@@ -594,7 +590,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
       timepart.data('hour', i % 4);
       timepart.data('day', i / 4);
       timepart.find('p.time').text((i * 6) % 24);
-      
+
     }
     $(timeAxis).append(timepart);
   }
@@ -638,8 +634,8 @@ IADAscheduleView.prototype.createScheduleWeek = function() {
 IADAscheduleView.prototype.getWeeksBetween = function(begin, end) {
   var weeks = [];
   var currentMoment = moment(begin).startOf('week');
-  
-  var nrweeks = moment(end).endOf('week').diff(currentMoment, 'weeks'); 
+
+  var nrweeks = moment(end).endOf('week').diff(currentMoment, 'weeks');
 
   for(var weeknr = 0; weeknr <= nrweeks; weeknr++) {
     weeks.push(currentMoment);
