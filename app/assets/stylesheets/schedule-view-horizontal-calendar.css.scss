@@ -81,13 +81,13 @@ div.horizontal-calendar div.left-axis {
     padding-right: 20px;
 }
 
-div.horizontal-calendar div.day-axis-row {
+div.horizontal-calendar div.left-axis-row {
   position: relative;
   height: 62px;
   padding: 1px 0;
 }
 
-div.horizontal-calendar div.day-axis-row > .inner {
+div.horizontal-calendar div.left-axis-row > .inner {
   position: relative;
   height: 50px;
   top: 50%;
@@ -195,16 +195,16 @@ div.horizontal-calendar div.schedule-body div.row.today {
   min-height: 76px;
 }
 
-div.horizontal-calendar div.left-axis div.day-axis-row.today {
+div.horizontal-calendar div.left-axis div.left-axis-row.today {
   color: #17889d;
   height: 76px;
 }
 
-div.horizontal-calendar div.schedule-body div.row:first-child, div.horizontal-calendar div.day-axis div.day-axis-row {
+div.horizontal-calendar div.schedule-body div.row:first-child, div.horizontal-calendar div.left-axis div.left-axis-row {
   margin-top: 3px;
 }
 
-div.horizontal-calendar div.left-axis div.day-axis-row div {
+div.horizontal-calendar div.left-axis div.left-axis-row div {
   position: relative;
   text-align: center;
   width: 100%;
@@ -214,11 +214,12 @@ div.horizontal-calendar div.schedule-body div.row:first-child {
   margin-top: 0;
 }
 
-div.horizontal-calendar div.left-axis div.day-axis-row:first-child {
+div.horizontal-calendar div.left-axis div.left-axis-row:first-child {
   margin-top: -1px;
 }
 
-div.horizontal-calendar div.left-axis div.day-axis-row div.day-name p {
+div.horizontal-calendar div.left-axis div.left-axis-row div.day-name p, 
+div.horizontal-calendar div.left-axis div.left-axis-row div.week-begin p {
   height: 10px;
   width: 100%;
   line-height: 10px;
@@ -226,11 +227,13 @@ div.horizontal-calendar div.left-axis div.day-axis-row div.day-name p {
   font-size: 0.9em;
 }
 
-div.horizontal-calendar div.left-axis div.day-axis-row div.day-name {
+div.horizontal-calendar div.left-axis div.left-axis-row div.day-name,
+div.horizontal-calendar div.left-axis div.left-axis-row div.week-begin {
   height: 10px;
 }
 
-div.horizontal-calendar div.left-axis div.day-axis-row div.month-name p {
+div.horizontal-calendar div.left-axis div.left-axis-row div.month-name p,
+div.horizontal-calendar div.left-axis div.left-axis-row div.week-end p {
   height: 10px;
   width: 100%;
   line-height: 10px;
@@ -238,68 +241,26 @@ div.horizontal-calendar div.left-axis div.day-axis-row div.month-name p {
   font-size: 0.9em;
  }
 
-div.horizontal-calendar div.left-axis div.day-axis-row div.month-name {
+div.horizontal-calendar div.left-axis div.left-axis-row div.month-name,
+div.horizontal-calendar div.left-axis div.left-axis-row div.week-end {
   height: 10px;
 }
 
-div.horizontal-calendar div.left-axis div.day-axis-row div.day-nr p {
+div.horizontal-calendar div.left-axis div.left-axis-row div.day-nr p,
+div.horizontal-calendar div.left-axis div.left-axis-row div.week-nr p {
   height: 30px;
   line-height: 30px;
   font-size: 2.2em;
   width: 100%;
 }
 
-div.horizontal-calendar div.left-axis div.day-axis-row div.day-nr {
+div.horizontal-calendar div.left-axis div.left-axis-row div.day-nr,
+div.horizontal-calendar div.left-axis div.left-axis-row div.week-nr {
   height: 30px;
-}
-
-div.horizontal-calendar div.left-axis div.week-axis-row div {
-  position: relative;
-  text-align: center;
-  width: 100%;
 }
 
 div.horizontal-calendar div.schedule-body div.row:first-child {
   margin-top: 0;
-}
-
-div.horizontal-calendar div.left-axis div.week-axis-row:first-child {
-  margin-top: -1px;
-}
-
-div.horizontal-calendar div.left-axis div.week-axis-row div.week-begin p {
-  height: 10px;
-  width: 100%;
-  line-height: 10px;
-  font-style: italic;
-  font-size: 0.9em;
-}
-
-div.horizontal-calendar div.left-axis div.week-axis-row div.week-begin {
-  height: 10px;
-}
-
-div.horizontal-calendar div.left-axis div.week-axis-row div.week-end p {
-  height: 10px;
-  width: 100%;
-  line-height: 10px;
-  font-style: italic;
-  font-size: 0.9em;
- }
-
-div.horizontal-calendar div.left-axis div.week-axis-row div.week-end {
-  height: 10px;
-}
-
-div.horizontal-calendar div.left-axis div.week-axis-row div.week-nr p {
-  height: 30px;
-  line-height: 30px;
-  font-size: 2.2em;
-  width: 100%;
-}
-
-div.horizontal-calendar div.left-axis div.week-axis-row div.week-nr {
-  height: 30px;
 }
 
 div.horizontal-calendar div.schedule-body div.row div.row-time-parts {
