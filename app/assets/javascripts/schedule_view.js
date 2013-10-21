@@ -609,7 +609,7 @@ IADAscheduleView.prototype.createScheduleDay = function() {
   for(var daynr in days) {
     this.appendDay(days[daynr]);
     if(moment(days[daynr]).startOf('day').unix() == moment().startOf('day').unix()) {
-      this.showCurrentDayTimeNeedle();
+      this.showCurrentTimeNeedle();
     }
   }
   this.scheduleContainer.find('.schedule-body').css('height', 'auto');
@@ -621,7 +621,7 @@ IADAscheduleView.prototype.createScheduleWeek = function() {
   for(var weeknr in weeks) {
     this.appendWeek(weeks[weeknr]);
     if(moment(weeks[weeknr]).startOf('week').unix() == moment().startOf('week').unix()) {
-      this.showCurrentWeekTimeNeedle();
+      this.showCurrentTimeNeedle();
     }
   }
   this.scheduleContainer.find('.schedule-body').css('height', 'auto');
@@ -736,20 +736,14 @@ IADAscheduleView.prototype.addAllScheduleItems = function(schobjJSON) {
   });
 }
 
-IADAscheduleView.prototype.dayTimeToPercentage = function(currentMoment) {
-  return moment(currentMoment).diff(moment(currentMoment).startOf('day'), 'minutes') / 14.4;
+IADAscheduleView.prototype.rowTimeToPercentage = function(currentMoment) {
+  var max = moment(currentMoment).endOf(this.options.zoom).diff(moment(currentMoment).startOf(this.options.zoom));
+  return moment(currentMoment).diff(moment(currentMoment).startOf(this.options.zoom)) / max * 100.0;
 }
 
-IADAscheduleView.prototype.dayTimePercentageSpan = function(beginMoment, endMoment) {
-  return moment(endMoment).diff(beginMoment, 'minutes') / 14.4;
-}
-
-IADAscheduleView.prototype.weekTimeToPercentage = function(currentMoment) {
-  return moment(currentMoment).diff(moment(currentMoment).startOf('week'), 'minutes') / 100.8;
-}
-
-IADAscheduleView.prototype.weekTimePercentageSpan = function(beginMoment, endMoment) {
-  return moment(endMoment).diff(beginMoment, 'minutes') / 100.8;
+IADAscheduleView.prototype.rowTimePercentageSpan = function(beginMoment, endMoment) {
+  var max = moment(beginMoment).endOf(this.options.zoom).diff(moment(beginMoment).startOf(this.options.zoom));
+  return moment(endMoment).diff(beginMoment) / max * 100.0;
 }
 
 IADAscheduleView.prototype.getTemplateClone = function(id) {
@@ -833,8 +827,8 @@ IADAscheduleView.prototype.appendWeek = function(weekMoment) {
   timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
 }
 
-IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
-  var currentDate = moment().format('YYYY-MM-DD');
+IADAscheduleView.prototype.showCurrentTimeNeedle = function() {
+  var currentDate = moment().format((this.options.zoom == 'day') ? 'YYYY-MM-DD' : 'GGGG-WW');
   var date_row = this.scheduleContainer.find('.row#' + currentDate);
   this.scheduleContainer.find('.left-axis-row.today:not(#label_' + currentDate + ')').removeClass('today');
   this.scheduleContainer.find('.row.today:not(#' + currentDate + ')').removeClass('today').removeClass('progress-bar');
@@ -843,34 +837,13 @@ IADAscheduleView.prototype.showCurrentDayTimeNeedle = function() {
     this.scheduleContainer.find('.left-axis .left-axis-row#label_' + currentDate).addClass('today');
     date_row.addClass('today').addClass('progress-bar');
     if(this.scheduleContainer.find('.time-needle').length <= 0) {
-      var needle = $('<div>', {class: 'time-needle', title: moment().toDate().toLocaleString(), style: 'left: ' + this.dayTimeToPercentage(moment()) + '%;'});
+      var needle = $('<div>', {class: 'time-needle', title: moment().toDate().toLocaleString(), style: 'left: ' + this.rowTimeToPercentage(moment()) + '%;'});
       date_row.append(needle);
     } else {
-      this.scheduleContainer.find('.time-needle').css({left: this.dayTimeToPercentage(moment()) + '%'});
+      this.scheduleContainer.find('.time-needle').css({left: this.rowTimeToPercentage(moment()) + '%'});
     }
     var schedule = this;
-    setTimeout(function() {schedule.showCurrentDayTimeNeedle();}, 30000);
-  }
-}
-
-IADAscheduleView.prototype.showCurrentWeekTimeNeedle = function() {
-  var currentWeek = moment().format('GGGG-WW');
-  var date_row = this.scheduleContainer.find('.row#' + currentWeek);
-
-  this.scheduleContainer.find('.left-axis-row.today:not(#label_' + currentWeek + ')').removeClass('today');
-  this.scheduleContainer.find('.row.today:not(#' + currentWeek + ')').removeClass('today').removeClass('progress-bar');
-  this.scheduleContainer.find('.row:not(#' + currentWeek + ') .time-needle').remove();
-  if(date_row.length != 0) {
-    this.scheduleContainer.find('.left-axis .left-axis-row#label_' + currentWeek).addClass('today');
-    date_row.addClass('today').addClass('progress-bar');
-    if(this.scheduleContainer.find('.time-needle').length <= 0) {
-      var needle = $('<div>', {class: 'time-needle', title: moment().toDate().toLocaleString(), style: 'left: ' + this.weekTimeToPercentage(moment()) + '%;'});
-      date_row.append(needle);
-    } else {
-      this.scheduleContainer.find('.time-needle').css({left: this.weekTimeToPercentage(moment()) + '%'});
-    }
-    var schedule = this;
-    setTimeout(function() {schedule.showCurrentWeekTimeNeedle();}, 30000);
+    setTimeout(function() {schedule.showCurrentTimeNeedle();}, 30000);
   }
 }
 
@@ -1050,13 +1023,8 @@ IADAscheduleViewItem.prototype.applyErrorGlow = function() {
 IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMoment) {
   var newScheduleItem = this.schedule.getTemplateClone('scheduleItemTemplate');
 
-  if(this.schedule.options.zoom == 'day') {
-    newScheduleItem.css('left', + this.schedule.dayTimeToPercentage(beginMoment) + '%');
-    newScheduleItem.css('width', + this.schedule.dayTimePercentageSpan(beginMoment, endMoment) + '%');
-  } else {
-    newScheduleItem.css('left', + this.schedule.weekTimeToPercentage(beginMoment) + '%');
-    newScheduleItem.css('width', + this.schedule.weekTimePercentageSpan(beginMoment, endMoment) + '%');
-  }
+  newScheduleItem.css('left', + this.schedule.rowTimeToPercentage(beginMoment) + '%');
+  newScheduleItem.css('width', + this.schedule.rowTimePercentageSpan(beginMoment, endMoment) + '%');
 
   if(this.item_id != null) {
     // not new item, so background color
