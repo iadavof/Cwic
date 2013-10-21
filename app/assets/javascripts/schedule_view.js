@@ -53,6 +53,7 @@ function IADAscheduleView(options) {
     view: 'horizontalCalendar',
     snap_part: '0.5',
     zoom: 'day',
+    min_description_width: 75,
   }, options || {});
 
   this.scheduleContainer = null;
@@ -220,11 +221,36 @@ IADAscheduleView.prototype.bindControls = function() {
 
   this.bindNewReservationControls();
   this.bindDragAndResizeControls();
-  this.bindTooltipOpenEvent();
+  this.bindTooltipEvents();
 }
 
-IADAscheduleView.prototype.bindTooltipOpenEvent = function() {
+IADAscheduleView.prototype.bindTooltipEvents = function() {
   var schedule = this;
+
+  var tooltipItem = null;
+  var tooltipItemParentOffset = null;
+  this.scheduleContainer.find('.schedule-body').on('mouseenter', 'div.schedule-item', function(event) {
+    tooltipItem = $(this);
+    tooltipItemParentOffset = tooltipItem.parents('.row').offset();
+    var relX = event.pageX - tooltipItemParentOffset.left;
+    tooltipItem.find('a.open-tooltip').css('left', relX + 'px').show();
+  });
+
+  this.scheduleContainer.find('.schedule-body').on('mousemove', 'div.schedule-item', function(event) {
+    if(tooltipItem != null) {
+      var relX = event.pageX - tooltipItemParentOffset.left;
+      tooltipItem.find('a.open-tooltip').css('left', relX + 'px');
+    }
+  });
+
+  this.scheduleContainer.find('.schedule-body').on('mouseleave', 'div.schedule-item', function(event) {
+    if(tooltipItem != null) {
+      tooltipItem.find('a.open-tooltip').hide();
+      tooltipItem = null;
+      tooltipItemParentOffset = null;
+    }
+  });
+
   this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-tooltip', function(event) {
     event.preventDefault();
     var scheduleItemDOM = $(this).parents('.schedule-item');
@@ -589,7 +615,19 @@ IADAscheduleView.prototype.addTimeAxis = function() {
       timepart.data('day', i / 4);
       timepart.find('p.time').text((i * 6) % 24);
     }
-    $(timeAxis).append(timepart);
+
+    timeAxis.append(timepart);
+  }
+
+  if(this.options.zoom == 'week') {
+    for(var i = 0; i < 7; i++) {
+      var dayPart = this.getTemplateClone('dayTimeAxisFrameTemplate');
+      dayPart.css('left', (i * 14.285714) + '%');
+      dayPart.find('p.name').text(moment().weekday(i).format('dddd'));
+      timeAxis.append(dayPart);
+    }
+    // adjust height of hour time axis
+    this.scheduleContainer.find('div.time-axis').height(this.scheduleContainer.find('div.time-axis div.day-time-axis-frame').outerHeight());
   }
 
   timeAxis.sticky({getWidthFrom: '.schedule-body'});
@@ -815,6 +853,12 @@ IADAscheduleView.prototype.appendWeek = function(weekMoment) {
     var rowpart = this.getTemplateClone('sixHourTimeFrameTemplate');
     rowpart.data('time', ((i * 6) % 24) + ':00');
     rowpart.data('day', i / 4);
+
+    // zebra striping for week days
+    if(Math.floor(i / 4) % 2 == 0) {
+      rowpart.addClass('even');
+    }
+
     if(i % 4 == 0) {
       rowpart.addClass('end-day');
     }
@@ -1040,9 +1084,18 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
   if(this.show_url) {
     newScheduleItemText.attr('href', this.show_url);
   }
-  newScheduleItemText.text(this.description);
-  newScheduleItemText.attr('title', this.description);
+
+
+  newScheduleItem.attr('title', this.description);
   jschobj.append(newScheduleItem);
+
+  // Width is only known after appending item to dom
+  if(newScheduleItem.width() > this.schedule.options.min_description_width) {
+    newScheduleItemText.text(this.description);
+  } else {
+    newScheduleItemText.hide();
+  }
+
   return newScheduleItem;
 }
 
@@ -1217,8 +1270,10 @@ IADAscheduleViewItem.prototype.render = function(concept) {
     if(parts.length == 1) {
       var schedulePart = this.renderPart(container, currBegin, currEnd);
       if(this.item_id != null) { // Do not show resizers when drawing new item
-        schedulePart.find('div.resizer.left').show();
-        schedulePart.find('div.resizer.right').show();
+        if(schedulePart.width() > 30) {
+          schedulePart.find('div.resizer.left').show();
+          schedulePart.find('div.resizer.right').show();
+        }
       }
     } else {
       switch(parseInt(parti)) {

@@ -104,6 +104,7 @@ div.horizontal-calendar div.time-axis div.six-hour-time-axis-frame {
   left: 2.083333%;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  z-index: 2;
 }
 
 div.horizontal-calendar div.time-axis div.hour-time-axis-frame {
@@ -112,6 +113,36 @@ div.horizontal-calendar div.time-axis div.hour-time-axis-frame {
 
 div.horizontal-calendar div.time-axis div.six-hour-time-axis-frame {
   width: 3.571428%;
+  font-weight: normal;
+  font-size: 0.75em;
+  padding-top: 15px;
+}
+
+div.horizontal-calendar div.time-axis div.day-time-axis-frame {
+  display: block;
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 14.285714%;
+  padding-bottom: 15px;
+}
+
+div.horizontal-calendar div.time-axis div.day-time-axis-frame:nth-child(odd) {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
+
+div.horizontal-calendar div.time-axis div.day-time-axis-frame p.name {
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 1.6em;
+  text-align: center;
+  width: 100%;
+  color: #ddd;
+}
+
+div.horizontal-calendar div.time-axis div.day-time-axis-frame:nth-child(odd) p.name {
+  color: #bbb;
 }
 
 div.horizontal-calendar div.schedule-body div.disabled-overlay {
@@ -387,6 +418,10 @@ div.horizontal-calendar div.schedule-body div.row div.row-time-parts div.six-hou
   border-left: 1px solid #bbb;
 }
 
+div.horizontal-calendar div.schedule-body div.row div.row-time-parts div.six-hour-time-frame.even {
+  background-color: rgba(0, 0, 0, 0.1);
+}
+
 
 div.horizontal-calendar div.schedule-body div.row.today div.row-time-parts div.six-hour-time-frame,
 div.horizontal-calendar div.schedule-body div.row.today div.row-time-parts div.hour-time-frame {
@@ -411,7 +446,6 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item {
   border-left: 1px solid #ccc;
   background-color: #999;
   color: #fff;
-  overflow: hidden;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 
@@ -497,16 +531,17 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item div.resizer.
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-tooltip {
   position: absolute;
-  display: block;
+  display: none;
   height: 20px;
   width: 20px;
-  margin-top: -10px;
+  margin-left: -10px;
   left: 15px;
-  top: 50%;
+  bottom: 100%;
   line-height: 20px;
   text-decoration: none;
   text-align: center;
   cursor: pointer;
+  z-index: 20;
 }
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-tooltip i {
@@ -518,7 +553,7 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-toolt
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item a.item-text {
   position: absolute;
-  left: 40px;
+  left: 20px;
   top: 50%;
   height: 20px;
   line-height: 20px;
