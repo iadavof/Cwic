@@ -62,7 +62,7 @@ function IADAscheduleView(options) {
   this.endDate = null;
   this.needleTimeout = null;
   this.statusMessageTimeout = null;
-  this.currentMode = 'week';
+  this.currentMode = (this.options.zoom == 'day') ? 'week' : 'month';
 
   if(this.options.view == 'horizontalCalendar') {
     this.renderHorizontalCalendar();
@@ -175,7 +175,7 @@ IADAscheduleView.prototype.bindControls = function() {
     var reference = moment(schedule.beginDate);
     var now = moment();
 
-    if(this.id == 'dayMode' || this.id == 'weekMode' || this.id == 'monthMode') {
+    if(this.id == 'dayMode' || this.id == 'weekMode' || this.id == 'monthMode' || this.id == 'yearMode') {
       // Look if we are already in the selected mode and return
       if(schedule.currentMode == this.id + 'Mode') {
         return;
@@ -211,7 +211,7 @@ IADAscheduleView.prototype.bindControls = function() {
     }
 
     if(newBeginDate != null && newEndDate != null) {
-      schedule.beginDate = newBeginDate.endOf(schedule.options.zoom);
+      schedule.beginDate = newBeginDate.startOf(schedule.options.zoom);
       schedule.endDate = newEndDate.endOf(schedule.options.zoom);
       schedule.updateDateDomainControl();
       schedule.updateSchedule();
@@ -490,7 +490,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
           reservationForm = null;
         });
         APP.global.initializeDateTimePickers(reservationForm);
-        schedule.setNewReservationForm(newScheduleItem);
+        schedule.setNewReservationForm(reservationForm, newScheduleItem);
       } else {
         if(newScheduleItem != null) {
           newScheduleItem.removeFromDom();
@@ -501,9 +501,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
   });
 }
 
-IADAscheduleView.prototype.setNewReservationForm = function(newScheduleItem) {
-  var reservationForm = $('#new_reservation_popup');
-
+IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, newScheduleItem) {
   var beginJDate = newScheduleItem.getConceptBegin().toDate();
   var endJDate = newScheduleItem.getConceptEnd().toDate();
 
