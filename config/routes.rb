@@ -17,7 +17,10 @@ Cwic::Application.routes.draw do
     match '/organisation_users/send_invitation', controller: 'organisation_users', action: 'send_invitation', via: 'post'
     match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
     resources :entity_types
-    resources :entities
+
+    resources :entities do
+      resources :reservation_rule_scopes
+    end
 
     resources :stickies, except: [:show, :create, :new]
     match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch', as: 'edit_sticky_for_resource'
@@ -41,6 +44,7 @@ Cwic::Application.routes.draw do
     match '/occupation_view/week_occupation_percentages', controller: 'occupation_view', action: 'week_occupation_percentages', via: 'post', as: 'occupation_view_week_occupation_percentages'
     match '/day_occupation', controller: 'occupation_view', action: 'day_occupation', via: 'get'
     match '/week_occupation', controller: 'occupation_view', action: 'week_occupation', via: 'get'
+
     resources :reservations
     resources :organisation_clients
     resources :entity_type_icons

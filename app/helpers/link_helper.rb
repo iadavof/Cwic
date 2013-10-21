@@ -3,35 +3,40 @@ module LinkHelper
   # Link to object helpers
   def link_to_index(object, options = {})
     name = options.delete(:name) || t('.to_index', default: :to_index_objects, classes: object_classes_name(object).lcfirst)
-    location = options.delete(:location) || polymorphic_path(object)
+    location_query = options.delete(:location_query) || {}
+    location = options.delete(:location) || polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'index' })
     link_to_if(can?(:index, relevant_object(object)), name, location, options) {}
   end
 
   def link_to_new(object, options = {})
     name =  options.delete(:name) || t('.to_new', default: :to_new_object, class: object_class_name(object).lcfirst)
-    location = options.delete(:location) || new_polymorphic_path(object)
+    location_query = options.delete(:location_query) || {}
+    location = options.delete(:location) || new_polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'new' })
     link_to_if(can?(:new, relevant_object(object)), name, location, options) {}
   end
 
   def link_to_show(object, options = {})
     name = options.delete(:name) || t('.to_show', default: :to_show_object, class: object_class_name(object).lcfirst, name: object_name(object))
-    location = options.delete(:location) || object
+    location_query = options.delete(:location_query) || {}
+    location = options.delete(:location) || polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'show' })
     link_to_if(can?(:show, relevant_object(object)), name, location, options)
   end
 
   def link_to_edit(object, options = {})
     name = options.delete(:name) || t('.to_edit', default: :to_edit_object, class: object_class_name(object).lcfirst, name: object_name(object))
-    location = options.delete(:location) || edit_polymorphic_path(object)
+    location_query = options.delete(:location_query) || {}
+    location = options.delete(:location) || edit_polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'edit' })
     link_to_if(can?(:edit, relevant_object(object)), name, location, options) {}
   end
 
   def link_to_destroy(object, options = {})
     name = options.delete(:name) || t('.to_destroy', default: :to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
-    location = options.delete(:location) || object
+    location_query = options.delete(:location_query) || {}
+    location = options.delete(:location) || polymorphic_path(object, location_query)
     confirm = options.delete(:confirm) || t('.to_destroy_confirm', default: :to_destroy_object_confirm, class: object_class_name(object).lcfirst, name: object_name(object))
     options = options.merge(method: :delete, data: { confirm: confirm, action: 'destroy' })
     link_to_if(can?(:destroy, relevant_object(object)), name, location, options) {}
@@ -56,6 +61,13 @@ module LinkHelper
   end
 
   # Icon link to object helpers
+  def icon_link_to_new(object, options = {})
+    options[:name] = ''
+    options[:class] ||= 'icon icon-plus'
+    options[:title] ||= t('.to_new', default: :icon_to_new_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    link_to_new(object, options)
+  end
+
   def icon_link_to_edit(object, options = {})
     options[:name] = ''
     options[:class] ||= 'icon icon-edit'

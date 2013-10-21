@@ -19,15 +19,15 @@ DataType.create!([
 
 # Create default time periods
 TimeUnit.create!([
-  { key: 'second', common: false, seconds: 1 },
-  { key: 'minute', common: false, seconds: 60 },
-  { key: 'quarter', common: true, seconds: 900 },
-  { key: 'half_hour', common: true, seconds: 1800 },
-  { key: 'hour', common: true, seconds: 3600 },
-  { key: 'day', common: true, seconds: 86400 },
-  { key: 'week', common: true, seconds: 604800 },
-  { key: 'month', common: false, seconds: nil },
-  { key: 'year', common: false, seconds: nil },
+  { key: 'second', common: false, seconds: 1.second },
+  { key: 'minute', common: false, seconds: 1.minute },
+  { key: 'quarter', common: true, seconds: 15.minutes },
+  { key: 'half_hour', common: true, seconds: 30.minutes },
+  { key: 'hour', common: true, seconds: 1.hour },
+  { key: 'day', common: true, seconds: 1.day },
+  { key: 'week', common: true, seconds: 1.week },
+  { key: 'month', common: false, seconds: 1.month },
+  { key: 'year', common: false, seconds: 1.year.to_i },
 ])
 
 # Create default roles

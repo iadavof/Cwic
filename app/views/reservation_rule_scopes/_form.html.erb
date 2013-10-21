@@ -1,0 +1,22 @@
+<%= nested_form_for([@organisation, @entity, @reservation_rule_scope.localized]) do |f| %>
+  <%= render 'shared/error_messages', target: @reservation_rule_scope %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :repetition_unit_id %>
+    <%= f.select :repetition_unit_id, TimeUnit.where(key: ['year', 'month', 'week', 'day']).reorder('seconds DESC').map { |tu| [tu.repetition_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'repetition-unit' } %>
+  </div>
+  <div class="nested-form" id="reservation-rule-scope-spans">
+    <%= f.fields_for :spans, wrapper: false do |sf| %>
+      <%= render partial: 'span_fields', locals: { f: sf } %>
+    <% end %>
+  </div>
+  <%= f.link_to_add '', :spans, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScopeSpan.model_name.human.lcfirst) %>
+  <div class="actions">
+    <%= f.hidden_field :parent_id %>
+    <%= f.submit %>
+  </div>
+<% end %>

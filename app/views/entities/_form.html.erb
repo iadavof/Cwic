@@ -46,12 +46,12 @@
       <div id="reservation_rules">
         <h2><%= t('.reservation_rules') %></h2>
         <%= format_help(t('.reservation_rules_help')) %>
-          <div class="nested-form" id="entities-reservation-rules">
-            <%= f.fields_for :reservation_rules, @entity.reservation_rules.map(&:localized), wrapper: false do |rrf| %>
-              <%= render partial: 'reservation_rules_fields', locals: { f: rrf } %>
-            <% end %>
-            <%= f.link_to_add '', :reservation_rules, model_object: @entity.reservation_rules.build.localized, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
-          </div>
+        <div class="nested-form" id="entities-reservation-rule-scopes">
+          <%= f.fields_for :reservation_rule_scopes, wrapper: false do |rrsf| %>
+            <%= render partial: 'reservation_rule_scope_fields', locals: { f: rrsf } %>
+          <% end %>
+        </div>
+        <%= f.link_to_add '', :reservation_rule_scopes, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScope.model_name.human.lcfirst) %>
       </div>
     </div>
   </div>

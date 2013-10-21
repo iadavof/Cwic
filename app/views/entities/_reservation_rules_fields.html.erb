@@ -1,5 +1,16 @@
+<div id="reservation_rules">
+        <h2><%= t('.reservation_rules') %></h2>
+        <%= format_help(t('.reservation_rules_help')) %>
+        <div class="nested-form" id="entities-reservation-rules">
+          <%= f.fields_for :reservation_rules, @entity.reservation_rules.map(&:localized), wrapper: false do |rrf| %>
+            <%= render partial: 'reservation_rules_fields', locals: { f: rrf } %>
+          <% end %>
+        </div>
+        <%= f.link_to_add '', :reservation_rules, model_object: @entity.reservation_rules.build.localized, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRule.model_name.human.lcfirst) %>
+      </div>
+    </div>
 <div class="fields nested-object-wrapper reservation-rule-wrapper" data-valid="<%= f.object.persisted? && f.object.valid? %>">
-  <div class="view">
+  <div class="view clearfix">
     <div class="horizontal-block extra">
       <dl>
         <dt><%= ReservationRule.human_attribute_name(:period_unit) %></dt>
@@ -19,7 +30,7 @@
       <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: ReservationRule.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
     </div>
   </div>
-  <div class="form">
+  <div class="form clearfix">
     <div class="horizontal-block extra">
       <div class="field">
         <%= f.label :period_unit_id %>

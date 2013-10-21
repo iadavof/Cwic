@@ -1,0 +1,17 @@
+<div class="fields nested-object-wrapper reservation-rule-scope-wrapper">
+  <div class="view clearfix">
+    <div class="horizontal-block extra">
+      <dl>
+        <dt><%= ReservationRuleScope.human_attribute_name(:name) %></dt>
+        <dd data-field="name"><%= reservation_rule_scope.name %></dd>
+        <dt><%= ReservationRuleScope.human_attribute_name(:period_unit) %></dt>
+        <dd data-field="repetition-unit"><%= reservation_rule_scope.repetition_unit.try(:human_name) %></dd>
+      </dl>
+    </div>
+    <div class="actions">
+      <%= icon_link_to_new([@organisation, @entity, ReservationRuleScope.new], location_query: { parent_id: reservation_rule_scope }) %>
+      <%= icon_link_to_edit([@organisation, @entity, reservation_rule_scope]) %>
+      <%= icon_link_to_destroy([@organisation, @entity, reservation_rule_scope]) %>
+    </div>
+  </div>
+</div>

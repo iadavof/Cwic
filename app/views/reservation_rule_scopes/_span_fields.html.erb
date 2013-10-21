@@ -1,0 +1,11 @@
+<div class="fields reservation-rule-scope-wrapper">
+   <div class="field">
+    <%= f.label(:active_from) %>
+    <%= f.datetime_select(:active_from) %>
+    <%= f.label(:active_to) %>
+    <%= f.datetime_select(:active_to) %>
+  </div>
+  <div class="actions">
+    <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: ReservationRuleScope.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+  </div>
+</div>

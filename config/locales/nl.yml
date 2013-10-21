@@ -218,22 +218,31 @@ nl:
   time_units:
     second:
       name: 'Seconde'
+      repetition_name: 'Elke seconde'
     minute:
       name: 'Minuut'
+      repetition_name: 'Elke minuut'
     quarter:
       name: 'Kwartier'
+      repetition_name: 'Elk kwartier'
     half_hour:
       name: 'Half uur'
+      repetition_name: 'Elk half uur'
     hour:
       name: 'Uur'
+      repetition_name: 'Elk uur'
     day:
       name: 'Dag'
+      repetition_name: 'Dagelijks'
     week:
       name: 'Week'
+      repetition_name: 'Wekelijks'
     month:
       name: 'Maand'
+      repetition_name: 'Maandelijks'
     year:
       name: 'Jaar'
+      repetition_name: 'Jaarlijks'
 
   errors:
     messages:

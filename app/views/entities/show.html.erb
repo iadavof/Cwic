@@ -20,6 +20,12 @@
   </dl>
 <% end %>
 
+<h2><%= ReservationRule.model_name.human(count: 2) %></h2>
+<dl>
+  <%= render_reservation_rule_scopes(@entity.reservation_rule_scopes.arrange(order: :id)) %>
+  <%= button_link_to_new([@organisation, @entity, ReservationRuleScope]) %>
+</dl>
+
 <%= button_link_back_to_index([@organisation, Entity]) %>
 <%= button_link_to_edit([@organisation, @entity]) %>
 <%= button_link_to_destroy([@organisation, @entity]) %>

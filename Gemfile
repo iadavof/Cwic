@@ -82,6 +82,9 @@ gem 'carrierwave'
 # ActiveRecord Import for multi INSERTs at once
 gem 'activerecord-import'
 
+# Ancestry gem for ActiveRecord tree helpers
+gem 'ancestry'
+
 # Route functions in JavaScript
 gem 'js-routes'
 

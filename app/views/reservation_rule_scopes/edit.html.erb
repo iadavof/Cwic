@@ -1,0 +1,7 @@
+<% content_for :page_title do %>
+<%= edit_title(@reservation_rule_scope) %>
+<% end %>
+
+<%= render 'form' %>
+
+<%= button_link_back_to_show([@organisation, @entity]) %>
