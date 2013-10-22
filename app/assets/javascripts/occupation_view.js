@@ -120,10 +120,11 @@ IADAoccupationView.prototype.bindControls = function() {
 
   this.occupationContainer.on('click', 'div.occupation-matrix-block', function(){
     var block = $(this);
+    var selEntity = block.parents('.occupation-matrix-row').data('entity-id');
     if(occ.options.view == 'dayOccupation') {
-      window.location.href = occ.options.schedule_url + '/' + occ.currentYear + '/' + occ.currentMonth + '/' + block.data('nr');
+      window.location.href = occ.options.schedule_url + '/' + occ.currentYear + '/' + occ.currentMonth + '/' + block.data('nr') + '/entity/' + selEntity;
     } else {
-      window.location.href = occ.options.schedule_url + '/' + occ.currentYear + '/' + block.data('nr');
+      window.location.href = occ.options.schedule_url + '/' + occ.currentYear + '/' + block.data('nr') + '/entity/' + selEntity;
     }
   });
 
@@ -223,6 +224,7 @@ IADAoccupationView.prototype.createRows = function(response) {
 
     var occupationRow = this.getTemplateClone('occupationMatrixRowTemplate');
     occupationRow.attr('id', 'or_' + entity.id);
+    occupationRow.data('entity-id', entity.id);
 
     var titleDiv = this.getTemplateClone('entityRowTitleTemplate');
     titleDiv.find('p.entity-name').text(entity.name);

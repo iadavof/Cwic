@@ -109,13 +109,14 @@ IADAscheduleView.prototype.getFocusMoment = function() {
 }
 
 IADAscheduleView.prototype.toggleEntity = function(entity_button) {
-  var id = parseInt($(entity_button).attr('id').split('_')[1]);
+  var entity_button = $(entity_button);
+  var id = parseInt(entity_button.attr('id').split('_')[1]);
 
-  if($(entity_button).hasClass('active')) {
-    $(entity_button).removeClass('active').css({'border-color': '', 'border-bottom-color': $(entity_button).data('entity-color')});
+  if(entity_button.hasClass('active')) {
+    entity_button.removeClass('active').css({'border-color': '', 'border-bottom-color': entity_button.data('entity-color')});
     this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
   } else {
-    $(entity_button).addClass('active').css('border-color', $(entity_button).data('entity-color'));
+    entity_button.addClass('active').css('border-color', entity_button.data('entity-color'));
     this.selectedEntities.push(id);
   }
 
@@ -558,9 +559,11 @@ IADAscheduleView.prototype.setErrorField =  function(field, error) {
 
 IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
   this.entities = response.entities;
+  var possibleEntities = [];
   for(var entnr in response.entities) {
     var entity = response.entities[entnr];
     var jentity = this.getTemplateClone('entityButtonTemplate');
+    possibleEntities.push(entity.id);
     jentity.attr('id', 'entity_'+ entity.id).css('border-bottom-color', entity.color).data('entity-color', entity.color);
     jentity.find('.entity-name').text(entity.name);
     jentity.find('img.entity-icon').attr('src', entity.icon);
@@ -585,6 +588,20 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
     // Ook de button voor het aanmaken van een nieuwe reservering uitschakelen (hoewel dit eigenlijk een beetje abstractiebreuk is aangezien dit buiten de schedule container zit).
     $('a.button.new-reservation').hide();
   }
+  // Handle entity that is selected by the url
+  if(this.scheduleContainer.data('target-entity') != '' && possibleEntities.indexOf(parseInt(this.scheduleContainer.data('target-entity'))) > -1) {
+    var selEntId = parseInt(this.scheduleContainer.data('target-entity'));
+    this.scheduleContainer.find('.entity-container .entity-button').each(function() {
+      jent = $(this);
+      if(jent.attr('id') == 'entity_' + selEntId) {
+        jent.addClass('active').css('border-color', jent.data('entity-color'));
+      } else {
+        jent.removeClass('active').css({'border-color': '', 'border-bottom-color': jent.data('entity-color')});
+      }
+    });
+    this.selectedEntities = [selEntId];
+  }
+
   this.updateSchedule();
 }
 
