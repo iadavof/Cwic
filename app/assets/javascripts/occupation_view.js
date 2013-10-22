@@ -3,14 +3,16 @@ APP.occupation_view = {
     new IADAoccupationView({
       container: 'occupation-container',
       backend_url: Routes.organisation_occupation_view_path(current_organisation),
-      view: 'dayOccupation'
+      view: 'dayOccupation',
+      schedule_url: Routes.organisation_schedule_view_horizontal_calendar_day_path(current_organisation),
     });
   },
   week_occupation: function() {
     new IADAoccupationView({
       container: 'occupation-container',
       backend_url: Routes.organisation_occupation_view_path(current_organisation),
-      view: 'weekOccupation'
+      view: 'weekOccupation',
+      schedule_url: Routes.organisation_schedule_view_horizontal_calendar_week_path(current_organisation),
     });
   },
 };
@@ -109,13 +111,22 @@ IADAoccupationView.prototype.bindControls = function() {
   });
 
   this.occupationContainer.find('div.control-container select').on('change', function() {
-    console.log('ble');
     occ.currentYear = parseInt($('select#date_current_year').val());
     if(occ.options.view == 'dayOccupation') {
       occ.currentMonth = parseInt($('select#date_current_month').val());
     }
     occ.updateOccupationView();
   });
+
+  this.occupationContainer.on('click', 'div.occupation-matrix-block', function(){
+    var block = $(this);
+    if(occ.options.view == 'dayOccupation') {
+      window.location.href = occ.options.schedule_url + '/' + occ.currentYear + '/' + occ.currentMonth + '/' + block.data('nr');
+    } else {
+      window.location.href = occ.options.schedule_url + '/' + occ.currentYear + '/' + block.data('nr');
+    }
+  });
+
 }
 
 IADAoccupationView.prototype.updateOccupationView = function() {
@@ -142,7 +153,6 @@ IADAoccupationView.prototype.updateOccupationView = function() {
     this.generateMatrixBlocks(weeksInYear, weekBlockWidth);
   }
 
-  //this.fillColorsRandomly();
   this.getPercentages();
 }
 
@@ -233,6 +243,7 @@ IADAoccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
   for(var i = 1; i <= maxNr; i += 1) {
     var block = this.getTemplateClone('occupationMatrixBlockTemplate');
     block.addClass('nr_' + i);
+    block.data('nr', i);
     block.css('width', blockWidth + '%');
     block.css('background-color', zeroPercentColor);
     rows.append(block);
@@ -290,16 +301,6 @@ IADAoccupationView.prototype.bindWindowEvents = function() {
   var occ = this;
   $(window).resize(function() {
     occ.resizeActions();
-  });
-}
-
-IADAoccupationView.prototype.fillColorsRandomly = function() {
-  occ = this;
-  this.occupationContainer.find('.occupation-matrix-block').each(function() {
-    var block = $(this);
-    var percent = Math.random() * 100;
-    block.css('background-color', occ.getColorForPercentage(percent, 0.4));
-    block.find('p.percent').text(Math.round(percent) + '%');
   });
 }
 
