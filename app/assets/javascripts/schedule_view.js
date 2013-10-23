@@ -61,6 +61,8 @@ function IADAscheduleView(options) {
   this.selectedEntities = [];
   this.beginDate = null;
   this.endDate = null;
+  this.navigationReference;
+  this.customDomainLength = null;
   this.needleTimeout = null;
   this.statusMessageTimeout = null;
   this.currentMode = (this.options.zoom == 'day') ? 'week' : 'month';
@@ -85,16 +87,8 @@ IADAscheduleView.prototype.initScheduleStub = function() {
   this.scheduleContainer.addClass('horizontal-calendar');
 
   // Set schedule to the selected date or current date
-
-  var now = this.getFocusMoment();
-
-  if(this.options.zoom == 'day') {
-    this.beginDate = moment(now).startOf('week');
-    this.endDate = moment(now).endOf('week');
-  } else {
-    this.beginDate = moment(now).startOf('month').startOf('week');
-    this.endDate = moment(now).endOf('month').endOf('week');
-  }
+  this.navigationReference = this.getFocusMoment();
+  this.setBeginAndEndFromNavigationReference();
 }
 
 IADAscheduleView.prototype.getFocusMoment = function() {
@@ -106,6 +100,16 @@ IADAscheduleView.prototype.getFocusMoment = function() {
     var now = moment();
   }
   return now;
+}
+
+IADAscheduleView.prototype.setBeginAndEndFromNavigationReference = function() {
+  if(this.currentMode == 'custom' && this.customDomainLength != null) {
+    this.beginDate = moment(this.navigationReference).startOf(this.options.zoom);
+    this.endDate = moment(this.navigationReference).add('days', this.customDomainLength).endOf(this.options.zoom);
+  } else {
+    this.beginDate = moment(this.navigationReference).startOf(this.currentMode).startOf(this.options.zoom);
+    this.endDate = moment(this.navigationReference).endOf(this.currentMode).endOf(this.options.zoom);
+  }
 }
 
 IADAscheduleView.prototype.toggleEntity = function(entity_button) {
@@ -125,6 +129,20 @@ IADAscheduleView.prototype.toggleEntity = function(entity_button) {
   }
 
   this.updateSchedule();
+}
+
+IADAscheduleView.prototype.toggleCustomDomainControls = function() {
+  var customDomainButton = this.scheduleContainer.find('div.control-container.navigate a#customMode');
+  var controlContainer = this.scheduleContainer.find('div.control-container.domain');
+  if(customDomainButton.hasClass('active')) {
+    controlContainer.animate({width: controlContainer.find('div.inner').outerWidth(false) + 'px'}, 300, 'swing', function(){
+      $(this).css('width', 'auto');
+    });
+  } else {
+    controlContainer.animate({width: 0}, 300, 'swing');
+  }
+
+
 }
 
 IADAscheduleView.prototype.toggleEntities = function(on) {
@@ -168,6 +186,10 @@ IADAscheduleView.prototype.createEntityShowCase = function() {
 IADAscheduleView.prototype.bindControls = function() {
   var schedule = this;
 
+  // Set the correct scope button to active
+  this.scheduleContainer.find('div.control-container.navigate a.button#' + this.currentMode + 'Mode').addClass('active');
+
+
   // Bind datepickers on domain selection fields and set current domain
   this.scheduleContainer.find('#scheduleBeginDate').datepicker({showOn: 'both'});
   this.scheduleContainer.find('#scheduleEndDate').datepicker({showOn: 'both'});
@@ -185,54 +207,62 @@ IADAscheduleView.prototype.bindControls = function() {
   }
 
   navigation.find('.button').on('click', function () {
-    var newBeginDate = null;
-    var newEndDate = null;
+    button = $(this);
 
-    var reference = moment(schedule.beginDate);
-    var now = moment();
+    if(button.hasClass('scope')) {
+      button.siblings('.scope').removeClass('active');
+    }
 
-    if(this.id == 'dayMode' || this.id == 'weekMode' || this.id == 'monthMode' || this.id == 'yearMode') {
+    if(this.id == 'dayMode' || this.id == 'weekMode' || this.id == 'monthMode' || this.id == 'yearMode' || this.id == 'customMode') {
+      button.addClass('active');
       // Look if we are already in the selected mode and return
       if(schedule.currentMode == this.id + 'Mode') {
         return;
       }
 
-      // Check if focus item is in the view, if so, use this as reference.
-      var focus = schedule.getFocusMoment();
-      if(moment(schedule.beginDate).startOf('day').unix() < focus.unix() && focus.unix() < moment(schedule.endDate).endOf('day').unix()) {
-        reference = focus.startOf(schedule.options.zoom);
+      if(this.id != 'customMode') {
+        // Remove the custom domain length, because the custom scope is deselected
+        schedule.customDomainLength = null;
       }
+      schedule.toggleCustomDomainControls();
 
       var newMode = this.id.replace('Mode', '');
-
-      newBeginDate = moment(reference).startOf(newMode);
-      newEndDate = moment(reference).endOf(newMode);
       schedule.currentMode = newMode;
     }
-    // TODO probleem oplossen met afronden op schedule.options.zoom icm met reference = beginDate van current view, hierdoor gaat het bladeren mis als de eerste dag voor netheid in de vorige maand valt.
+
     if(this.id == 'previous') {
-      reference.subtract(schedule.currentMode + 's', 1);
-      newBeginDate = moment(reference).startOf(schedule.currentMode);
-      newEndDate = moment(reference).endOf(schedule.currentMode);
+      if(schedule.currentMode == 'custom') {
+        if(schedule.customDomainLength == null) {
+          schedule.customDomainLength = moment(schedule.endDate).diff(schedule.beginDate, 'days');
+        }
+        schedule.navigationReference.subtract('days', schedule.customDomainLength);
+      } else {
+        schedule.navigationReference.subtract(schedule.currentMode + 's', 1);
+      }
     }
 
     if(this.id == 'next') {
-      reference.add(schedule.currentMode + 's', 1);
-      newBeginDate = moment(reference).startOf(schedule.currentMode);
-      newEndDate = moment(reference).endOf(schedule.currentMode);
+      if(schedule.currentMode == 'custom') {
+        if(schedule.customDomainLength == null) {
+          schedule.customDomainLength = moment(schedule.endDate).diff(schedule.beginDate, 'days');
+        }
+        schedule.navigationReference.add('days', schedule.customDomainLength);
+      } else {
+        schedule.navigationReference.add(schedule.currentMode + 's', 1);
+      }
     }
 
     if(this.id == 'current') {
-      newBeginDate = moment(now).startOf(schedule.currentMode);
-      newEndDate = moment(now).endOf(schedule.currentMode);
+      schedule.navigationReference = moment();
     }
 
-    if(newBeginDate != null && newEndDate != null) {
-      schedule.beginDate = newBeginDate.startOf(schedule.options.zoom);
-      schedule.endDate = newEndDate.endOf(schedule.options.zoom);
+    // Nog geen update bij het openen van de custom domain controls
+    if(this.id != 'customMode') {
+      schedule.setBeginAndEndFromNavigationReference();
       schedule.updateDateDomainControl();
       schedule.updateSchedule();
     }
+
   });
 
   this.bindNewReservationControls();
@@ -545,6 +575,11 @@ IADAscheduleView.prototype.setDateDomain = function() {
 
   this.beginDate = newBeginMoment;
   this.endDate = newEndMoment;
+
+  // save the selected domain length for navigation (next and previous)
+  this.customDomainLength = newEndMoment.diff(newBeginMoment, 'days');
+  this.navigationReference = this.beginDate;
+
   this.updateSchedule();
 }
 
