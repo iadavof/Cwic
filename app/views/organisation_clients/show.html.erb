@@ -5,12 +5,8 @@
 <%= render partial: 'stickies/resource_stickies', locals: { resource: @organisation_client } %>
 
 <dl>
-  <dt><%= OrganisationClient.human_attribute_name(:first_name) %></dt>
-  <dd><%= @organisation_client.first_name %></dd>
-  <dt><%= OrganisationClient.human_attribute_name(:infix) %></dt>
-  <dd><%= @organisation_client.infix %></dd>
-  <dt><%= OrganisationClient.human_attribute_name(:last_name) %></dt>
-  <dd><%= @organisation_client.last_name %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:name) %></dt>
+  <dd><%= @organisation_client.first_name %> <%= @organisation_client.infix %> <%= OrganisationClient.human_attribute_name(:last_name) %></dd>
   <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
   <dd><%= @organisation_client.email %></dd>
 </dl>

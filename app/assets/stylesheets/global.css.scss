@@ -749,6 +749,19 @@ div.nested-object-wrapper {
   padding: 10px;
   margin: 10px 0;
   background-color: #fff;
+  overflow: hidden;
+  
+  div.extra {
+    margin-right: 0;
+  }
+  
+  div.extra .default-value {
+    display: none;
+  }
+  
+  .property-options {
+    display: none;
+  }
 
   div.horizontal-block {
     float: left;
@@ -765,6 +778,10 @@ div.nested-object-wrapper {
     cursor: move;
     font-size: 1.8em;
     margin-right: 10px;
+  }
+  
+  div.option-sort-handle {
+    cursor: move;
   }
 
   div.actions {
@@ -791,11 +808,108 @@ div.nested-object-wrapper {
     div.label {
       font-weight: bold;
     }
+    
+    div.description div.value {
+      line-height: 1.2em;
+      max-height: 3.6em;
+      overflow: hidden;
+      text-overflow: ellipsis; /* XXX TODO does not work */
+    }
+    
+    div.extra dl {
+      margin: 0;
+    }
+    
+    div.extra dt {
+      float: left;
+      clear: left;
+      text-align: right;
+      margin: 0;
+      padding-right: 10px;
+    }
+    
+    div.extra dd {
+      float: left;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
   }
 
   div.form {
     display: none;
     position: relative;
     padding-right: 45px;
+    
+    div.name input {
+      width: 140px;
+    }
+    
+    div.description textarea {
+      height: 110px;
+      width: 250px;
+      max-width: 100%;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+    }
+
+    div.extra label {
+      text-align: right;
+      padding-right: 10px;
+    }
+
+    div.extra input,
+    div.extra textarea {
+      width: 140px;
+    }
+
+    div.extra select {
+      width: 160px;
+    }
+
+    div.extra input[type="checkbox"] {
+      width: auto;
+    }
+
+    div.extra textarea {
+      height: 60px;
+    }
+
+    div.extra input[type='checkbox'] {
+      margin: 9px 0;
+    }
+
+    div.property-options {
+      border-top: 2px dashed #ccc;
+      margin-top: 10px;
+      padding-top: 10px;
+      clear: left;
+
+      h4,
+      table {
+        margin: 0 0 10px 0;
+      }
+
+      th {
+        vertical-align: top;
+        line-height: normal;
+      }
+
+      tbody.target tr:nth-child(2n+1) {
+        background-color: #fff;
+      }
+
+      td.default,
+      th.default {
+        text-align: center;
+      }
+
+      th.default a.clear-default-link {
+        display: block;
+        font-size: 7pt;
+        font-weight: normal;
+        font-style: italic;
+      }
+    }
   }
 }
