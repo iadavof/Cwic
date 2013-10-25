@@ -280,9 +280,35 @@ IADAscheduleView.prototype.bindTooltipEvents = function() {
     var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
 
     // tooltip
+    
+    schedule.toggleToolbar(this);
 
     return false;
   });
+}
+
+IADAscheduleView.prototype.toggleToolbar = function(elem) {
+  var schedule = this;
+  var scheduleItems = schedule.scheduleContainer.find('.schedule-item');
+  var timeAxis = schedule.scheduleContainer.find('.time-axis');
+  var toolbar = timeAxis.find('.reservation-controls');
+  var hours = timeAxis.find('.hours');
+  var toolbarHeight = toolbar.find('.inner').outerHeight();
+  var hoursHeight = hours.outerHeight();
+  if(toolbar.hasClass('open')) {
+    schedule.scheduleContainer.find('.schedule-item.open').removeClass('open');
+    scheduleItems.animate({opacity: 1}, 300);
+    toolbar.removeClass('open').animate({height: 0}, 300, function(){
+      timeAxis.parent('.sticky-wrapper').css({height: hoursHeight + 2 + 'px'});
+    });
+  } else {
+    $(elem).parent('.schedule-item').addClass('open');
+    schedule.scheduleContainer.find('.schedule-item:not(.open)').animate({opacity: 0.5}, 300);
+    toolbar.addClass('open').animate({height: toolbarHeight + 'px'}, 300, function() {
+      $(this).css({height: 'auto'});
+      timeAxis.parent('.sticky-wrapper').css({height: timeAxis.outerHeight() + 'px'});
+    });
+  }
 }
 
 IADAscheduleView.prototype.updateDateDomainControl = function() {
@@ -642,6 +668,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
 
 IADAscheduleView.prototype.addTimeAxis = function() {
   var timeAxis = $(this.scheduleContainer).find('.time-axis');
+  var timeAxisHours = $(this.scheduleContainer).find('.time-axis > .hours');
 
   var parts = (this.options.zoom == 'day') ? 24 : 28;
 
@@ -656,7 +683,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
       timepart.find('p.time').text((i * 6) % 24);
     }
 
-    timeAxis.append(timepart);
+    timeAxisHours.append(timepart);
   }
 
   if(this.options.zoom == 'week') {
