@@ -62,6 +62,37 @@ div.horizontal-calendar div.time-axis .reservation-controls {
   height: 0;
 }
 
+div.horizontal-calendar div.time-axis .reservation-controls > .inner {
+  padding: 5px 8px;
+}
+
+div.horizontal-calendar div.time-axis .reservation-controls .toolbar-button {
+  margin: 0 10px;
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 8px;
+  display: inline-block;
+}
+
+div.horizontal-calendar div.time-axis .reservation-controls .toolbar-button:hover {
+  background-color: rgba(0,0,0,0.2);
+}
+
+div.horizontal-calendar div.time-axis .reservation-controls .toolbar-button > i {
+  font-size: 18px;
+  margin-right: 5px;
+}
+
+div.horizontal-calendar div.time-axis .reservation-controls .toolbar-close-button {
+  float: right;
+  font-size: 1em;
+  line-height: 200%;
+  color: #fff;
+  text-decoration: none;
+  padding: 5px 8px;
+}
+
+
 div.horizontal-calendar div.time-axis .ajax-notification-container {
   position: absolute;
   left: 0;

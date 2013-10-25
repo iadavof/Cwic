@@ -272,11 +272,18 @@ IADAscheduleView.prototype.bindControls = function() {
 
 IADAscheduleView.prototype.bindTooltipEvents = function() {
   var schedule = this;
+  schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
+    $(this).attr('data-original-padding-top', $(this).css('padding-top'));
+  });
+  schedule.scheduleContainer.find('.toolbar-close-button').on('click', function() {
+    schedule.toggleToolbar();
+    return false;
+  });
 
   this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-tooltip', function(event) {
     event.preventDefault();
     var scheduleItemDOM = $(this).parents('.schedule-item');
-    var dayRowTP = scheduleItemDOM.parents('row-schedule-object-item-parts');
+    var dayRowTP = scheduleItemDOM.parents('.row-schedule-object-item-parts');
     var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
 
     // tooltip
@@ -297,16 +304,26 @@ IADAscheduleView.prototype.toggleToolbar = function(elem) {
   var hoursHeight = hours.outerHeight();
   if(toolbar.hasClass('open')) {
     schedule.scheduleContainer.find('.schedule-item.open').removeClass('open');
-    scheduleItems.animate({opacity: 1}, 300);
-    toolbar.removeClass('open').animate({height: 0}, 300, function(){
-      timeAxis.parent('.sticky-wrapper').css({height: hoursHeight + 2 + 'px'});
+    $('#schedule-item-opacity-style').remove();
+    scheduleItems.animate({opacity: 1}, 200);
+    toolbar.removeClass('open').animate({height: 0}, 200, function(){
+      schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
+        $(this).animate({'padding-top': $(this).data('original-padding-top')}, 100);
+      });
     });
   } else {
     $(elem).parent('.schedule-item').addClass('open');
-    schedule.scheduleContainer.find('.schedule-item:not(.open)').animate({opacity: 0.5}, 300);
-    toolbar.addClass('open').animate({height: toolbarHeight + 'px'}, 300, function() {
+    schedule.scheduleContainer.find('.schedule-item:not(.open)').animate({opacity: 0.5}, 200);
+    toolbar.addClass('open').animate({height: toolbarHeight + 'px'}, 200, function() {
       $(this).css({height: 'auto'});
-      timeAxis.parent('.sticky-wrapper').css({height: timeAxis.outerHeight() + 'px'});
+      schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
+        $(this).animate({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'}, 100);
+        $(window).on('resize', function() {
+          schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
+            $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'}, 100);
+          });
+        });
+      });
     });
   }
 }
@@ -691,7 +708,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
       var dayPart = this.getTemplateClone('dayTimeAxisFrameTemplate');
       dayPart.css('left', (i * 14.285714) + '%');
       dayPart.find('p.name').text(moment().weekday(i).format('dddd'));
-      timeAxis.append(dayPart);
+      timeAxisHours.append(dayPart);
     }
     // adjust height of hour time axis
     this.scheduleContainer.find('div.time-axis').height(this.scheduleContainer.find('div.time-axis div.day-time-axis-frame').outerHeight());
