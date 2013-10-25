@@ -306,24 +306,23 @@ IADAscheduleView.prototype.toggleToolbar = function(elem) {
     schedule.scheduleContainer.find('.schedule-item.open').removeClass('open');
     $('#schedule-item-opacity-style').remove();
     scheduleItems.animate({opacity: 1}, 200);
-    toolbar.removeClass('open').animate({height: 0}, 200, function(){
-      schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
-        $(this).animate({'padding-top': $(this).data('original-padding-top')}, 100);
-      });
+    schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
+      $(this).animate({'padding-top': $(this).data('original-padding-top')}, 200);
     });
+    toolbar.removeClass('open').animate({height: 0}, 200);
   } else {
     $(elem).parent('.schedule-item').addClass('open');
     schedule.scheduleContainer.find('.schedule-item:not(.open)').animate({opacity: 0.5}, 200);
-    toolbar.addClass('open').animate({height: toolbarHeight + 'px'}, 200, function() {
-      $(this).css({height: 'auto'});
-      schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
-        $(this).animate({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'}, 100);
-        $(window).on('resize', function() {
-          schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
-            $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'}, 100);
-          });
+    schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
+      $(this).animate({'padding-top': parseInt($(this).data('original-padding-top')) + toolbarHeight + 'px'}, 200);
+      $(window).on('resize', function() {
+        schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
+          $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'}, 200);
         });
       });
+    });
+    toolbar.addClass('open').animate({height: toolbarHeight + 'px'}, 200, function() {
+      $(this).css({height: 'auto'});
     });
   }
 }
