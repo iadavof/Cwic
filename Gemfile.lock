@@ -1,4 +1,11 @@
 GIT
+  remote: git://github.com/CUnknown/momentjs-rails.git
+  revision: 5829aad4d42ed8c068c09946c0c9580db67fea4b
+  specs:
+    momentjs-rails (2.3.1)
+      railties (>= 3.1)
+
+GIT
   remote: git://github.com/carlosantoniodasilva/i18n_alchemy.git
   revision: d20213234dab7b41a41140f53db2c61d1efcb954
   specs:
@@ -107,8 +114,6 @@ GEM
     mime-types (1.24)
     minitest (4.7.5)
     modernizr-rails (2.6.2.3)
-    momentjs-rails (2.2.1)
-      railties (>= 3.1)
     multi_json (1.7.9)
     nested_form (0.3.2)
     orm_adapter (0.4.0)
@@ -227,7 +232,7 @@ DEPENDENCIES
   js-routes
   mini_magick!
   modernizr-rails
-  momentjs-rails
+  momentjs-rails!
   nested_form
   pg
   pry-rails

@@ -303,7 +303,8 @@ nl:
       new: 'Nieuw'
       schedule_view: 'Planning'
       today_and_tomorrow: 'Vandaag en morgen'
-      horizontal_calendar: 'Horizontale kalender'
+      horizontal_calendar_day: 'Horizontale dagkalender'
+      horizontal_calendar_week: 'Horizontale weekkalender'
       occupation_view: 'Bezetting'
       day_occupation: 'Dagbezetting'
       week_occupation: 'Weekbezetting'
@@ -366,14 +367,18 @@ nl:
       no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'
       entity_block:
         click_for_description: 'Klik voor de beschrijving'
-    horizontal_calendar:
-      horizontal_calendar: 'Horizontale kalender'
+    horizontal_calendar_day:
+      horizontal_calendar: 'Horizontale dagkalender'
+    horizontal_calendar_week:
+      horizontal_calendar: 'Horizontale weekkalender'
+    horizontal_calendar_js_template:
       set: 'Stel in'
       tm: t/m
       today: 'Vandaag'
       day: 'Dag'
       week: 'Week'
       month: 'Maand'
+      year: 'Jaar'
       select_all: 'Alles selecteren'
       select_none: 'Niets selecteren'
       no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'

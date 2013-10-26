@@ -28,7 +28,12 @@ Cwic::Application.routes.draw do
     match 'stickies/:resource/:rid/new', controller: 'stickies', action: 'create', via: 'post', as: 'new_sticky_for_resource'
 
     # Routes for rendering the schedules
-    match '/schedule_view/horizontal_calendar', controller: 'schedule_view', action: 'horizontal_calendar', via: 'get'
+    match '/schedule_view/horizontal_calendar_day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'
+    match '/schedule_view/horizontal_calendar_day/:year/:month/:day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'
+    match '/schedule_view/horizontal_calendar_day/:year/:month/:day/entity/:entity', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'
+    match '/schedule_view/horizontal_calendar_week', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get'
+    match '/schedule_view/horizontal_calendar_week/:year/:week', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get'
+    match '/schedule_view/horizontal_calendar_week/:year/:week/entity/:entity', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get'
     match '/schedule_view/today_and_tomorrow', controller: 'schedule_view', action: 'today_and_tomorrow', via: 'get'
 
     # JSON routes for schedules

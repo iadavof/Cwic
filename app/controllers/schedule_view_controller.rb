@@ -1,5 +1,23 @@
 class ScheduleViewController < ApplicationController
-  def horizontal_calendar
+  def horizontal_calendar_day
+    if params[:entity].present?
+      @sel_entity = params[:entity].to_i 
+    end
+
+    if params[:year].present? && params[:month].present? && params[:day].present?
+      @year = params[:year].to_i
+      @month = params[:month].to_i
+      @day = params[:day].to_i
+    end
+    # creating new reservation for the option to add one in this view
+    @reservation = @organisation.reservations.build
+  end
+
+  def horizontal_calendar_week
+    if params[:year].present? && params[:week].present?
+      @year = params[:year].to_i
+      @week = params[:week].to_i
+    end
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
   end
@@ -35,7 +53,7 @@ class ScheduleViewController < ApplicationController
             bg_color: r.entity.color,
             text_color: r.entity.text_color,
             description: r.organisation_client.instance_name,
-            show_url: (can?(:show, r) ? organisation_reservation_path(@organisation, r.id) : nil), iets: [begins_at.inspect, ends_at.inspect]
+            client_id: r.organisation_client.id,
           }
         end
         result[ent.id]  = { schedule_object_name: ent.instance_name, items: items }

@@ -23,5 +23,7 @@ var jsLang = {
     saving_error: 'Fout tijdens opslaan.',
     saved: 'Wijzigingen opgeslagen.',
     undo: 'Ongedaan maken',
+    deleting: 'Reservering wordt verwijderd...',
+    deleted: 'Reservering verwijderd.',
   }
 }

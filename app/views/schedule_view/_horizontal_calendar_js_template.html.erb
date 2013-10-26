@@ -1,0 +1,100 @@
+<div id="horizontal-calendar" class="clearfix" data-target-year="<%= @year %>" data-target-week="<%= @week %>" data-target-month="<%= @month %>" data-target-day="<%= @day %>" data-target-entity="<%= @sel_entity %>"></div>
+
+<div id="schedule-templates" style="display: none;">
+  <div class="schedule" id="scheduleContainerTemplate">
+    <div class="entity-container clearfix">
+        <h2><%= Entity.model_name.human(count: 2) %></h2>
+        <div class="fast-select">
+          <a id="selectAll" class="button"><%=t('.select_all') %></a>
+          <a id="selectNone" class="button"><%=t('.select_none') %></a>
+        </div>
+        <p class="no_entities_found"><%= t('.no_entities_found', link: link_to_new([@organisation, Entity])).html_safe %></p>
+    </div>
+    <div class="clearfix">
+      <div class="control-container domain">
+        <div class="inner">
+          <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100;" />
+          <span class="tm"><%=t('.tm') %></span>
+          <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100;" />
+          <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
+        </div>
+      </div>
+      <div class="control-container navigate">
+        <a id="previous" class="button"><i class="icon-chevron-left"></i></a>
+        <a id="current" class="button"><%=t('.today') %></a>
+        <a id="next" class="button"><i class="icon-chevron-right"></i></a>
+        <span style="margin: 0px 10px;"></span>
+        <a id="dayMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.day') %></a>
+        <a id="weekMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.week') %></a>
+        <a id="monthMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.month') %></a>
+        <a id="yearMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.year') %></a>
+        <a id="customMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.custom') %></a>
+      </div>
+    </div>
+    <div class="time-axis clearfix">
+      <div class="ajax-notification-container">
+        <div class="ajax-notification">
+          <div class="ajax-wait"></div>
+          <div class="message"></div>
+        </div>
+      </div>
+      <div class="hours clearfix"></div>
+      <div class="reservation-controls">
+        <div class="inner clearfix">
+            <a href="#" id="description" class="toolbar-button"><i class="icon-info-sign"></i> Beschrijving</a>
+            <a href="#" id="client" class="toolbar-button"><i class="icon-user"></i> Klant</a>
+            <a href="#" id="edit" class="toolbar-button"><i class="icon-edit"></i> Bewerken</a>
+            <a href="#" id="remove" class="toolbar-button"><i class="icon-remove-sign"></i> Verwijderen</a>
+            <a href="#" class="icon-remove toolbar-close-button"></a></div>
+      </div>
+    </div>
+    <div class="left-axis"></div>
+    <div class="schedule-body"></div>
+  </div>
+
+  <div class="hour-time-axis-frame" id="hourTimeAxisFrameTemplate"><p class="time"></p></div>
+  <div class="six-hour-time-axis-frame" id="sixHourTimeAxisFrameTemplate"><p class="time"></p></div>
+  <div class="day-time-axis-frame" id="dayTimeAxisFrameTemplate"><p class="name"></p></div>
+
+  <div class="entity-button" id="entityButtonTemplate">
+    <img class="entity-icon" />
+    <p class="entity-name"></p>
+  </div>
+
+  <div class="row" id="rowTemplate">
+    <div class="row-time-parts"></div>
+    <div class="row-schedule-objects"></div>
+  </div>
+
+  <div class="hour-time-frame" id="hourTimeFrameTemplate"></div>
+  <div class="six-hour-time-frame" id="sixHourTimeFrameTemplate"></div>
+
+ <div class="left-axis-row" id="dayAxisRowTemplate">
+    <div class="inner">
+      <div class="day-name"><p></p></div>
+      <div class="day-nr"><p></p></div>
+      <div class="month-name"><p></p></div>
+    </div>
+  </div>
+
+   <div class="left-axis-row" id="weekAxisRowTemplate">
+    <div class="inner">
+      <div class="week-begin"><p></p></div>
+      <div class="week-nr"><p></p></div>
+      <div class="week-end"><p></p></div>
+    </div>
+  </div>
+
+  <div class="schedule-item" id="scheduleItemTemplate">
+    <div class="continue left"><i class="icon-arrow-right"></i></div>
+    <div class="continue right"><i class="icon-arrow-right"></i></div>
+    <div class="resizer left"><span class="handle">||</span></div>
+    <div class="resizer right"><span class="handle">||</span></div>
+    <a class="open-toolbar"><i class="icon-taskfreak"></i></a>
+    <a class="item-text"></a>
+  </div>
+
+  <div class="row-schedule-object-item-parts" id="rowScheduleObjectItemPartsTemplate">
+    <p class="name"></p>
+  </div>
+</div>
