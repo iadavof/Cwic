@@ -53,7 +53,7 @@ class ScheduleViewController < ApplicationController
             bg_color: r.entity.color,
             text_color: r.entity.text_color,
             description: r.organisation_client.instance_name,
-            show_url: (can?(:show, r) ? organisation_reservation_path(@organisation, r.id) : nil), iets: [begins_at.inspect, ends_at.inspect]
+            client_id: r.organisation_client.id,
           }
         end
         result[ent.id]  = { schedule_object_name: ent.instance_name, items: items }

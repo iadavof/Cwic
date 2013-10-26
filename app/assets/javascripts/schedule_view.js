@@ -4,6 +4,7 @@ APP.schedule_view = {
       container: 'horizontal-calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
+      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation), 
       view: 'horizontalCalendar',
       zoom: 'day',
     });
@@ -20,6 +21,7 @@ APP.schedule_view = {
       container: 'horizontal-calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
+      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation), 
       view: 'horizontalCalendar',
       zoom: 'week',
     });
@@ -50,6 +52,7 @@ function IADAscheduleView(options) {
   this.options = Object.extend({
     container: 'schedule-container',
     backend_url: 'url to backend',
+    patch_reservation_url: 'url to reservations controller',
     view: 'horizontalCalendar',
     snap_part: '0.5',
     zoom: 'day',
@@ -268,11 +271,11 @@ IADAscheduleView.prototype.bindControls = function() {
 
   this.bindNewReservationControls();
   this.bindDragAndResizeControls();
-  this.bindTooltipEvents();
+  this.bindToolbarEvents();
   this.bindOnResize();
 }
 
-IADAscheduleView.prototype.bindTooltipEvents = function() {
+IADAscheduleView.prototype.bindToolbarEvents = function() {
   var schedule = this;
   schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
     $(this).attr('data-original-padding-top', $(this).css('padding-top'));
@@ -296,6 +299,8 @@ IADAscheduleView.prototype.bindTooltipEvents = function() {
 
     return false;
   });
+
+  this.bindToolbarButtonActions();
 }
 
 IADAscheduleView.prototype.closeToolbar = function() {
@@ -1126,6 +1131,63 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
   }
 }
 
+/////////////////// Toolbar buttons ///////////////////
+
+IADAscheduleView.prototype.bindToolbarButtonActions = function() {
+  var schedule = this;
+  this.scheduleContainer.find('div.time-axis div.reservation-controls a.toolbar-button').on('click', function(event){
+    event.preventDefault();
+    var id = $(this).attr('id');
+    switch(id) {
+      case 'description':
+        schedule.informationScheduleItem();
+        break;
+      case 'client':
+        schedule.gotoClientScheduleItem();
+        break;
+      case 'edit':
+        schedule.editScheduleItem();
+        break;
+      case 'remove':
+        schedule.removeScheduleItem();
+        break;
+    }
+    return false;
+  });
+}
+
+IADAscheduleView.prototype.removeScheduleItem = function() {
+  if(this.focussedScheduleItem != null) {
+    var schedule = this;
+    this.showStatusMessage(jsLang.schedule_view.deleting, true);
+    $.ajax({
+      url: schedule.options.patch_reservation_url + '/' + schedule.focussedScheduleItem.item_id + '.json',
+      type: 'DELETE',
+      success: function(result) {
+        schedule.showStatusMessage(jsLang.schedule_view.deleted, false, 5000);
+        schedule.focussedScheduleItem.removeFromDom();
+        delete schedule.scheduleItems[schedule.focussedScheduleItem.schedule_object_id][schedule.focussedScheduleItem.item_id];
+        schedule.closeToolbar();
+      },
+      fail: function() {
+        schedule.showStatusMessage(jsLang.schedule_view.error_deleting, false, 10000);
+      },
+    });
+  }
+}
+
+IADAscheduleView.prototype.editScheduleItem = function() {
+  window.location.href = this.options.patch_reservation_url + '/' + this.focussedScheduleItem.item_id + '/edit';
+}
+
+IADAscheduleView.prototype.informationScheduleItem = function() {
+  window.location.href = this.options.patch_reservation_url + '/' + this.focussedScheduleItem.item_id;
+}
+
+IADAscheduleView.prototype.gotoClientScheduleItem = function() {
+  window.location.href = this.options.organisation_client_url + '/' + this.focussedScheduleItem.client_id;
+}
+
 /////////////////// Schedule Item ///////////////////
 
 function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
@@ -1145,7 +1207,7 @@ function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
   this.bg_color = '#666';
   this.text_color = '#fff';
   this.description = '';
-  this.show_url = null;
+  this.client_id = null;
 
   this.domObjects = [];
 
@@ -1158,7 +1220,7 @@ IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
   this.bg_color = newItem.bg_color;
   this.text_color = newItem.text_color;
   this.description = newItem.description;
-  this.show_url = newItem.show_url;
+  this.client_id = newItem.client_id;
 }
 
 IADAscheduleViewItem.prototype.railsDataExport = function() {
