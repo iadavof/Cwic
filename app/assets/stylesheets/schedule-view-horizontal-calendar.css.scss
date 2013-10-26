@@ -587,7 +587,7 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item div.resizer.
   cursor: e-resize;
 }
 
-div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-tooltip {
+div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-toolbar {
   position: absolute;
   display: block;
   height: 20px;
@@ -602,7 +602,7 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-toolt
   cursor: pointer;
 }
 
-div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-tooltip i {
+div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-toolbar i {
   width: 100%;
   height: 100%;
   overflow: hidden;

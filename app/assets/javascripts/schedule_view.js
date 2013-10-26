@@ -268,6 +268,7 @@ IADAscheduleView.prototype.bindControls = function() {
   this.bindNewReservationControls();
   this.bindDragAndResizeControls();
   this.bindTooltipEvents();
+  this.bindOnResize();
 }
 
 IADAscheduleView.prototype.bindTooltipEvents = function() {
@@ -276,55 +277,57 @@ IADAscheduleView.prototype.bindTooltipEvents = function() {
     $(this).attr('data-original-padding-top', $(this).css('padding-top'));
   });
   schedule.scheduleContainer.find('.toolbar-close-button').on('click', function() {
-    schedule.toggleToolbar();
+    schedule.closeToolbar();
     return false;
   });
 
-  this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-tooltip', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-toolbar', function(event) {
     event.preventDefault();
+    console.debug('klok');
     var scheduleItemDOM = $(this).parents('.schedule-item');
     var dayRowTP = scheduleItemDOM.parents('.row-schedule-object-item-parts');
     var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
-
-    // tooltip
     
-    schedule.toggleToolbar(this);
+    schedule.openToolbar(scheduleItem);
 
     return false;
   });
 }
 
-IADAscheduleView.prototype.toggleToolbar = function(elem) {
-  var schedule = this;
-  var scheduleItems = schedule.scheduleContainer.find('.schedule-item');
-  var timeAxis = schedule.scheduleContainer.find('.time-axis');
-  var toolbar = timeAxis.find('.reservation-controls');
-  var hours = timeAxis.find('.hours');
-  var toolbarHeight = toolbar.find('.inner').outerHeight();
-  var hoursHeight = hours.outerHeight();
-  if(toolbar.hasClass('open')) {
-    schedule.scheduleContainer.find('.schedule-item.open').removeClass('open');
-    $('#schedule-item-opacity-style').remove();
-    scheduleItems.animate({opacity: 1}, 200);
+IADAscheduleView.prototype.closeToolbar = function() {
+    this.removeFocusFromAllScheduleItems();
+    this.updateScheduleItemFocus();
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
       $(this).animate({'padding-top': $(this).data('original-padding-top')}, 200);
     });
-    toolbar.removeClass('open').animate({height: 0}, 200);
-  } else {
-    $(elem).parent('.schedule-item').addClass('open');
-    schedule.scheduleContainer.find('.schedule-item:not(.open)').animate({opacity: 0.5}, 200);
+    this.scheduleContainer.find('div.time-axis div.reservation-controls').removeClass('open').animate({height: 0}, 200);
+}
+
+IADAscheduleView.prototype.openToolbar = function(scheduleItem) {
+  var schedule = this;
+
+  var timeAxis = schedule.scheduleContainer.find('.time-axis');
+  var toolbar = timeAxis.find('div.reservation-controls');
+  var toolbarHeight = toolbar.find('.inner').outerHeight();
+
+  scheduleItem.applyFocus();
+  
+  schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
+    $(this).animate({'padding-top': parseInt($(this).data('original-padding-top')) + toolbarHeight + 'px'}, 200);
+
+  });
+  toolbar.addClass('open').animate({height: toolbarHeight + 'px'}, 200, function() {
+    $(this).css({height: 'auto'});
+  });
+}
+
+IADAscheduleView.prototype.bindOnResize = function() {
+  var schedule = this;
+  $(window).on('resize', function() {
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
-      $(this).animate({'padding-top': parseInt($(this).data('original-padding-top')) + toolbarHeight + 'px'}, 200);
-      $(window).on('resize', function() {
-        schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
-          $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'}, 200);
-        });
-      });
+      $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'});
     });
-    toolbar.addClass('open').animate({height: toolbarHeight + 'px'}, 200, function() {
-      $(this).css({height: 'auto'});
-    });
-  }
+  });
 }
 
 IADAscheduleView.prototype.updateDateDomainControl = function() {
@@ -381,7 +384,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
 
   this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.row-schedule-object-item-parts div.schedule-item', function(event) {
     // left click, no drag already started and not on resize handles
-    if(event.which == 1 && currentScheduleItem == null && $(event.target).closest('a.open-tooltip').length == 0) {
+    if(event.which == 1 && currentScheduleItem == null && $(event.target).closest('a.open-toolbar').length == 0) {
 
       var scheduleItemClickedDom = $(this);
       rowTP = scheduleItemClickedDom.parents('div.row-schedule-object-item-parts');
@@ -804,6 +807,20 @@ IADAscheduleView.prototype.updateSchedule = function() {
 
 IADAscheduleView.prototype.disabledOverlay = function() {
   this.scheduleContainer.find('.schedule-body').append($('<div></div>', {class: 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
+}
+
+IADAscheduleView.prototype.removeFocusFromAllScheduleItems = function() {
+  this.scheduleContainer.find('div.schedule-item.open').removeClass('open');
+}
+
+IADAscheduleView.prototype.updateScheduleItemFocus = function() {
+  // Check if an item is opened
+  if(this.scheduleContainer.find('div.schedule-item.open').length > 0) {
+    this.scheduleContainer.find('div.schedule-item:not(open)').animate({opacity: 0.5}, 200);
+    this.scheduleContainer.find('div.schedule-item.open').animate({opacity: 1}, 200);
+  } else {
+    this.scheduleContainer.find('div.schedule-item').animate({opacity: 1}, 200);
+  }
 }
 
 IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
@@ -1312,6 +1329,14 @@ IADAscheduleViewItem.prototype.removeFromDom = function() {
     $(this.domObjects[nr]).remove();
   }
   this.domObjects = [];
+}
+
+IADAscheduleViewItem.prototype.applyFocus = function() {
+  this.schedule.removeFocusFromAllScheduleItems();
+  $.each(this.domObjects, function(index, item){
+    $(item).addClass('open');
+  });
+  this.schedule.updateScheduleItemFocus();
 }
 
 IADAscheduleViewItem.prototype.rerender = function(concept) {
