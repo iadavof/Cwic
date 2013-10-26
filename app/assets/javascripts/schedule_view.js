@@ -64,6 +64,7 @@ function IADAscheduleView(options) {
   this.navigationReference;
   this.customDomainLength = null;
   this.needleTimeout = null;
+  this.focussedScheduleItem = null;
   this.statusMessageTimeout = null;
   this.currentMode = (this.options.zoom == 'day') ? 'week' : 'month';
 
@@ -283,12 +284,15 @@ IADAscheduleView.prototype.bindTooltipEvents = function() {
 
   this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-toolbar', function(event) {
     event.preventDefault();
-    console.debug('klok');
     var scheduleItemDOM = $(this).parents('.schedule-item');
     var dayRowTP = scheduleItemDOM.parents('.row-schedule-object-item-parts');
     var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
     
-    schedule.openToolbar(scheduleItem);
+    if(schedule.focussedScheduleItem == null) {
+      schedule.openToolbar(scheduleItem);
+    } else {
+      schedule.closeToolbar();
+    }
 
     return false;
   });
@@ -375,6 +379,7 @@ IADAscheduleView.prototype.getScheduleItemForDOMObject = function(SchObj, dayRow
 }
 
 IADAscheduleView.prototype.bindDragAndResizeControls = function() {
+  var schedule = this;
   var currentScheduleItem = null;
   var side = null;
   var rowTP = null;
@@ -387,22 +392,27 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
     if(event.which == 1 && currentScheduleItem == null && $(event.target).closest('a.open-toolbar').length == 0) {
 
       var scheduleItemClickedDom = $(this);
-      rowTP = scheduleItemClickedDom.parents('div.row-schedule-object-item-parts');
-      var offset = rowTP.offset();
 
-      // Check if drag started on resize handle
-      var handle = $(event.target).closest('div.resizer');
-      if(handle.length != 0) { // resize mode
-        side = (handle.hasClass('left') ? 'left' : 'right');
-      } else { // drag mode
+      // Only continue if there is no foccussed item or the focussed item is this item
+      if(schedule.focussedScheduleItem == null || schedule.focussedScheduleItem.item_id == scheduleItemClickedDom.data('scheduleItemID')) {
 
-        var relX = event.pageX - offset.left;
-        dragStartMoment = schedule.nearestMomentPoint(relX, rowTP);
-        lastDragMoment = dragStartMoment;
+        rowTP = scheduleItemClickedDom.parents('div.row-schedule-object-item-parts');
+        var offset = rowTP.offset();
+
+        // Check if drag started on resize handle
+        var handle = $(event.target).closest('div.resizer');
+        if(handle.length != 0) { // resize mode
+          side = (handle.hasClass('left') ? 'left' : 'right');
+        } else { // drag mode
+
+          var relX = event.pageX - offset.left;
+          dragStartMoment = schedule.nearestMomentPoint(relX, rowTP);
+          lastDragMoment = dragStartMoment;
+        }
+
+        // Lets get the scheduleItem!
+        currentScheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemClickedDom, rowTP);
       }
-
-      // Lets get the scheduleItem!
-      currentScheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemClickedDom, rowTP);
     }
   });
 
@@ -811,6 +821,7 @@ IADAscheduleView.prototype.disabledOverlay = function() {
 
 IADAscheduleView.prototype.removeFocusFromAllScheduleItems = function() {
   this.scheduleContainer.find('div.schedule-item.open').removeClass('open');
+  this.focussedScheduleItem = null;
 }
 
 IADAscheduleView.prototype.updateScheduleItemFocus = function() {
@@ -1336,6 +1347,7 @@ IADAscheduleViewItem.prototype.applyFocus = function() {
   $.each(this.domObjects, function(index, item){
     $(item).addClass('open');
   });
+  this.schedule.focussedScheduleItem = this;
   this.schedule.updateScheduleItemFocus();
 }
 
