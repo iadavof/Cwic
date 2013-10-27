@@ -332,6 +332,7 @@ IADAscheduleView.prototype.openToolbar = function(scheduleItem) {
 
 IADAscheduleView.prototype.bindOnResize = function() {
   var schedule = this;
+  var toolbar = schedule.scheduleContainer.find('.time-axis div.reservation-controls');
   $(window).on('resize', function() {
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
       $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'});
@@ -1159,20 +1160,25 @@ IADAscheduleView.prototype.bindToolbarButtonActions = function() {
 IADAscheduleView.prototype.removeScheduleItem = function() {
   if(this.focussedScheduleItem != null) {
     var schedule = this;
-    this.showStatusMessage(jsLang.schedule_view.deleting, true);
-    $.ajax({
-      url: schedule.options.patch_reservation_url + '/' + schedule.focussedScheduleItem.item_id + '.json',
-      type: 'DELETE',
-      success: function(result) {
-        schedule.showStatusMessage(jsLang.schedule_view.deleted, false, 5000);
-        schedule.focussedScheduleItem.removeFromDom();
-        delete schedule.scheduleItems[schedule.focussedScheduleItem.schedule_object_id][schedule.focussedScheduleItem.item_id];
-        schedule.closeToolbar();
-      },
-      fail: function() {
-        schedule.showStatusMessage(jsLang.schedule_view.error_deleting, false, 10000);
-      },
-    });
+    var confirm = window.confirm('Weet u zeker dat u Reservering #' + schedule.focussedScheduleItem.item_id + ' wilt verwijderen? De reservering kan hierna niet worden hersteld.');
+    if (confirm == true) {
+      this.showStatusMessage(jsLang.schedule_view.deleting, true);
+      $.ajax({
+        url: schedule.options.patch_reservation_url + '/' + schedule.focussedScheduleItem.item_id + '.json',
+        type: 'DELETE',
+        success: function(result) {
+          schedule.showStatusMessage(jsLang.schedule_view.deleted, false, 5000);
+          schedule.focussedScheduleItem.removeFromDom();
+          delete schedule.scheduleItems[schedule.focussedScheduleItem.schedule_object_id][schedule.focussedScheduleItem.item_id];
+          schedule.closeToolbar();
+        },
+        fail: function() {
+          schedule.showStatusMessage(jsLang.schedule_view.error_deleting, false, 10000);
+        },
+      });
+    } else {
+      return false;
+    }
   }
 }
 
