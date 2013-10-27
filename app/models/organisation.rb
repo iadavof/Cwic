@@ -7,6 +7,7 @@ class Organisation < ActiveRecord::Base
   has_many :reservations, dependent: :destroy
   has_many :organisation_clients, dependent: :destroy
   has_many :stickies, dependent: :destroy
+  has_many :entity_images, dependent: :destroy
 
   has_many :day_occupations, dependent: :destroy
   has_many :week_occupations, dependent: :destroy
