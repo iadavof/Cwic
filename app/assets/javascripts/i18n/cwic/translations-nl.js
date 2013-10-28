@@ -25,6 +25,6 @@ var jsLang = {
     undo: 'Ongedaan maken',
     deleting: 'Reservering wordt verwijderd...',
     deleted: 'Reservering verwijderd.',
-    delete_confirm: 'Weet u zeker dat u Reservering #%item_id wilt verwijderen? De reservering kan hierna niet worden hersteld.',
+    delete_confirm: 'Weet u zeker dat u Reservering #%{item_id} wilt verwijderen? De reservering kan hierna niet worden hersteld.',
   }
 }

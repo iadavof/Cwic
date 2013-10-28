@@ -1168,7 +1168,7 @@ IADAscheduleView.prototype.bindToolbarButtonActions = function() {
 IADAscheduleView.prototype.removeScheduleItem = function() {
   if(this.focusedScheduleItem != null) {
     var schedule = this;
-    var confirm = window.confirm(function(item_id){var str = jsLang.schedule_view.delete_confirm; return str.replace('%item_id', item_id)}(schedule.focusedScheduleItem.item_id));
+    var confirm = window.confirm(function(item_id){var str = jsLang.schedule_view.delete_confirm; return str.replace('%{item_id}', item_id)}(schedule.focusedScheduleItem.item_id));
     if (confirm == true) {
       this.showStatusMessage(jsLang.schedule_view.deleting, true);
       $.ajax({
