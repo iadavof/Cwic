@@ -742,6 +742,21 @@ button.ui-datepicker-trigger {
   margin-right: 5px;
 }
 
+div.entity-images-container a {
+  position: relative;
+  float: left;
+  border: 1px solid #ccc;
+  margin: 10px;
+  outline: none;
+
+  -webkit-box-shadow:  2px 2px 2px 1px rgba(00, 00, 00, 0.1);  
+  box-shadow:  2px 2px 2px 1px rgba(00, 00, 00, 0.1);
+}
+
+div.entity-images-container a img {
+  border: 5px solid white;
+}
+
 /* Nested object wrapper markup (view and form) */
 div.nested-object-wrapper {
   font-size: 0.9em;

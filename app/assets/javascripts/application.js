@@ -14,4 +14,4 @@
 //= require moment
 //= require moment/en-gb.js
 //= require moment/nl.js
-//= require lightbox
+//= require magnific-popup

@@ -31,9 +31,11 @@
 <h2><%= EntityImage.model_name.human(count: 2) %></h2>
 <dl>
   <% if @entity.all_entity_images.present? %>
+    <div class="entity-images-container clearfix">
     <% @entity.all_entity_images.each do |eimage| %>
-      <%= lightbox_tag(eimage.image.thumb.url, eimage.image.url, eimage.title, 'entity_images') %>
+      <%= link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url) %>
     <% end %>
+    </div>
   <% else %>
     <%= t('.no_entity_images') %>
   <% end %>

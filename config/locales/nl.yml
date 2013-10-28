@@ -82,6 +82,9 @@ nl:
       entity_property:
         one: 'Eigenschap'
         other: 'Eigenschappen'
+      entity_image:
+        one: 'Objectfoto'
+        other: "Objectfoto's"
       reservation:
         one: 'Reservering'
         other: 'Reserveringen'
@@ -156,6 +159,12 @@ nl:
         name: 'Naam'
         description: 'Omschrijving'
         color: 'Kleur'
+      entity_image:
+        title: 'Titel'
+        image: 'Foto'
+        include_entity_type_images: "Voeg foto's van objecttype toe"
+        remote_image_url: 'URL van externe afbeelding'
+        image_from_file: 'Locale afbeelding'
       entity_type_icon:
         name: 'Naam'
         organisation: 'Organisatie'
@@ -345,6 +354,8 @@ nl:
       properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
       options: 'Opties'
       options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
+      images: "Foto's"
+      entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
 
   entity_type_icons:
     form:
@@ -358,6 +369,8 @@ nl:
       reservation_rules_help: 'Gebruik reserveringsregels om reserveringsmogelijkheden in te stellen. Zo kunt u bijvoorbeeld openingstijden instellen, een minimale reserveringsperiode van een week afdwingen of verschillende prijzen rekenen in verschillende seizoenen.'
       properties: 'Eigenschappen'
       options: 'Opties'
+      images: "Foto's"
+      entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
 
   schedule_view:
     today_and_tomorrow:

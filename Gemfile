@@ -79,8 +79,8 @@ gem 'nested_form'
 gem 'mini_magick', github: 'minimagick/minimagick' # Temporary use master branch because of problem with 3.6.0 on Windows (when new version is released switch to that version).
 gem 'carrierwave'
 
-# Image display, tijdelijk repository van iemand die lightbox heeft geupdate naar een versie die werkt met jquery 1.9
-gem 'rubylight', github: 'serene/rubylight'
+# Image galery
+gem 'magnific-popup-rails'
 
 # ActiveRecord Import for multi INSERTs at once
 gem 'activerecord-import'
