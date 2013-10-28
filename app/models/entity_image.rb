@@ -1,4 +1,6 @@
 class EntityImage < ActiveRecord::Base
+  include I18n::Alchemy
+
   belongs_to :entity_imageable, polymorphic: true
   belongs_to :organisation
 
@@ -10,9 +12,16 @@ class EntityImage < ActiveRecord::Base
   validates :entity_imageable_type, presence: true, length: { maximum: 255 }
   validates :organisation_id, presence: true
   validates :organisation, presence: true, if: "organisation_id.present?"
-  validates :image, presence: true, length: { maximum: 255 }
+  validates :image, presence: true
+
+  before_validation :set_organisation
 
   def instance_name
     self.title
+  end
+
+private
+  def set_organisation
+    self.organisation = self.entity_imageable.organisation
   end
 end

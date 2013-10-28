@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class EntityTypeIconUploader < CarrierWave::Uploader::Base
+class EntityImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick
@@ -17,15 +17,10 @@ class EntityTypeIconUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  # Provide a default URL as a default if there hasn't been a file uploaded:
-  def default_url
-    ActionController::Base.helpers.asset_path("fallback/" + [version_name, "entity_type_icon_default.png"].compact.join('_'))
-  end
-
   process :set_content_type
 
   # Process files as they are uploaded:
-  process :resize_to_fit => [500, 500]
+  process :resize_to_limit => [1920, 1080]
   #
   # def scale(width, height)
   #   # do something
@@ -33,23 +28,15 @@ class EntityTypeIconUploader < CarrierWave::Uploader::Base
 
   # Create different versions of your uploaded files:
 
-  version :big_icon do
-     process :resize_to_fit => [200, 200]
-   end
-
-  version :medium_icon do
-     process :resize_to_fit => [100, 100]
-   end
-
-  version :icon do
-     process :resize_to_fit => [50, 50]
+  version :thumb do
+     process :resize_to_fit => [150, 150]
    end
 
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
-  # def extension_white_list
-  #   %w(jpg jpeg gif png)
-  # end
+  def extension_white_list
+    %w(jpg jpeg gif png)
+  end
 
   # Override the filename of the uploaded files:
   # Avoid using model.id or version_name here, see uploader/store.rb for details.

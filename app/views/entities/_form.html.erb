@@ -12,6 +12,7 @@
       <li><a href="#properties"><%= t('.properties') %></a></li>
       <% end %>
       <li><a href="#reservation_rules"><%= t('.reservation_rules') %></a></li>
+      <li><a href="#images"><%= t('.images') %></a></li>
     </ul>
 
     <div class="tab-wrap">
@@ -52,6 +53,21 @@
           <% end %>
         </div>
         <%= f.link_to_add '', :reservation_rule_scopes, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScope.model_name.human.lcfirst) %>
+      </div>
+
+      <div id="images" class="hide">
+        <h2><%= EntityImage.model_name.human(count: 2) %></h2>
+        <%= format_help(t('.entity_images_help')) %>
+        <div class="field">
+          <%= f.label :include_entity_type_images %>
+          <%= f.check_box :include_entity_type_images %>
+        </div>
+        <div class="nested-form" id="entity-images">
+          <%= f.fields_for :entity_images, @entity.entity_images, wrapper: false do |eif| %>
+            <%= render partial: 'entity_image_fields', locals: { f: eif } %>
+          <% end %>
+        </div>
+        <%= f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst) %>
       </div>
     </div>
   </div>

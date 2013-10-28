@@ -1,0 +1,25 @@
+<div class="fields entity_image-wrapper">
+  <div class="field">
+    <%= f.label :title %>
+    <%= f.text_field :title %>
+  </div>
+  <% if f.object.image.present? %>
+  <div class="field">
+    <%= f.label :image %>
+    <div class="entity-type-icon-image">
+      <%= image_tag(f.object.image.thumb.url) %>
+    </div>
+  </div>
+  <% else %>
+  <div class="field">
+    <%= f.label :remote_image_url %>
+    <%= f.text_field :remote_image_url %>
+  </div>
+  <div class="field">
+    <%= f.label :image_from_file %>
+    <%= f.file_field :image %>
+  </div>
+  <% end %>
+  <%= f.hidden_field :image_cache %>
+  <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+</div>

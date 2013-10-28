@@ -94,7 +94,7 @@ private
     if @admin
       params.require(:entity_type_icon).permit(:name, :organisation_id, :image, :image_cache, :remote_image_url, :remove_image)
     else
-      params.require(:entity_type_icon).permit(:name, :image, :remote_image_url, :remove_image)
+      params.require(:entity_type_icon).permit(:name, :image, :image_cache, :remote_image_url, :remove_image)
     end
   end
 

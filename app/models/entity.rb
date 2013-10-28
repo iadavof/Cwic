@@ -21,11 +21,20 @@ class Entity < ActiveRecord::Base
 
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :reservation_rule_scopes, allow_destroy: true
+  accepts_nested_attributes_for :entity_images, allow_destroy: true
 
   default_scope { order('id ASC') }
 
   def instance_name
     self.name
+  end
+
+  def all_entity_images
+    if include_entity_type_images
+      entity_images + entity_type.entity_images
+    else
+      entity_images
+    end
   end
 
   def text_color

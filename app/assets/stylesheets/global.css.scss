@@ -750,15 +750,15 @@ div.nested-object-wrapper {
   margin: 10px 0;
   background-color: #fff;
   overflow: hidden;
-  
+
   div.extra {
     margin-right: 0;
   }
-  
+
   div.extra .default-value {
     display: none;
   }
-  
+
   .property-options {
     display: none;
   }
@@ -779,7 +779,7 @@ div.nested-object-wrapper {
     font-size: 1.8em;
     margin-right: 10px;
   }
-  
+
   div.option-sort-handle {
     cursor: move;
   }
@@ -808,18 +808,18 @@ div.nested-object-wrapper {
     div.label {
       font-weight: bold;
     }
-    
+
     div.description div.value {
       line-height: 1.2em;
       max-height: 3.6em;
       overflow: hidden;
       text-overflow: ellipsis; /* XXX TODO does not work */
     }
-    
+
     div.extra dl {
       margin: 0;
     }
-    
+
     div.extra dt {
       float: left;
       clear: left;
@@ -827,7 +827,7 @@ div.nested-object-wrapper {
       margin: 0;
       padding-right: 10px;
     }
-    
+
     div.extra dd {
       float: left;
       white-space: nowrap;
@@ -840,11 +840,11 @@ div.nested-object-wrapper {
     display: none;
     position: relative;
     padding-right: 45px;
-    
+
     div.name input {
       width: 140px;
     }
-    
+
     div.description textarea {
       height: 110px;
       width: 250px;
