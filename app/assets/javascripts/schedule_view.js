@@ -67,7 +67,7 @@ function IADAscheduleView(options) {
   this.navigationReference;
   this.customDomainLength = null;
   this.needleTimeout = null;
-  this.focussedScheduleItem = null;
+  this.focusedScheduleItem = null;
   this.statusMessageTimeout = null;
   this.currentMode = (this.options.zoom == 'day') ? 'week' : 'month';
 
@@ -291,8 +291,10 @@ IADAscheduleView.prototype.bindToolbarEvents = function() {
     var dayRowTP = scheduleItemDOM.parents('.row-schedule-object-item-parts');
     var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
     
-    if(schedule.focussedScheduleItem == null) {
+    if(schedule.focusedScheduleItem == null) {
       schedule.openToolbar(scheduleItem);
+    } else if (schedule.focusedScheduleItem.item_id != scheduleItem.item_id) {
+      schedule.closeToolbar(function(){schedule.openToolbar(scheduleItem);});
     } else {
       schedule.closeToolbar();
     }
@@ -303,13 +305,13 @@ IADAscheduleView.prototype.bindToolbarEvents = function() {
   this.bindToolbarButtonActions();
 }
 
-IADAscheduleView.prototype.closeToolbar = function() {
+IADAscheduleView.prototype.closeToolbar = function(callback) {
     this.removeFocusFromAllScheduleItems();
     this.updateScheduleItemFocus();
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
       $(this).animate({'padding-top': $(this).data('original-padding-top')}, 200);
     });
-    this.scheduleContainer.find('div.time-axis div.reservation-controls').removeClass('open').animate({height: 0}, 200);
+    this.scheduleContainer.find('div.time-axis div.reservation-controls').removeClass('open').animate({height: 0}, 200, callback);
 }
 
 IADAscheduleView.prototype.openToolbar = function(scheduleItem) {
@@ -400,7 +402,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
       var scheduleItemClickedDom = $(this);
 
       // Only continue if there is no foccussed item or the focussed item is this item
-      if(schedule.focussedScheduleItem == null || schedule.focussedScheduleItem.item_id == scheduleItemClickedDom.data('scheduleItemID')) {
+      if(schedule.focusedScheduleItem == null || schedule.focusedScheduleItem.item_id == scheduleItemClickedDom.data('scheduleItemID')) {
 
         rowTP = scheduleItemClickedDom.parents('div.row-schedule-object-item-parts');
         var offset = rowTP.offset();
@@ -827,16 +829,19 @@ IADAscheduleView.prototype.disabledOverlay = function() {
 
 IADAscheduleView.prototype.removeFocusFromAllScheduleItems = function() {
   this.scheduleContainer.find('div.schedule-item.open').removeClass('open');
-  this.focussedScheduleItem = null;
+  this.focusedScheduleItem = null;
 }
 
 IADAscheduleView.prototype.updateScheduleItemFocus = function() {
   // Check if an item is opened
   if(this.scheduleContainer.find('div.schedule-item.open').length > 0) {
-    this.scheduleContainer.find('div.schedule-item:not(open)').animate({opacity: 0.5}, 200);
+    this.scheduleContainer.find('div.schedule-item:not(.open) .resizer.left, div.schedule-item:not(.open) .resizer.right').css('cursor', 'auto');
+    this.scheduleContainer.find('div.schedule-item:not(.open)').css('cursor', 'auto').animate({opacity: 0.6}, 200);
     this.scheduleContainer.find('div.schedule-item.open').animate({opacity: 1}, 200);
   } else {
-    this.scheduleContainer.find('div.schedule-item').animate({opacity: 1}, 200);
+    this.scheduleContainer.find('div.schedule-item:not(.open) .resizer.left').css('cursor', 'w-resize');
+    this.scheduleContainer.find('div.schedule-item:not(.open) .resizer.right').css('cursor', 'e-resize');
+    this.scheduleContainer.find('div.schedule-item').css('cursor', 'move').animate({opacity: 1}, 200);
   }
 }
 
@@ -1025,7 +1030,7 @@ IADAscheduleView.prototype.bindEntityInfoControls = function() {
           $(this).css({display: 'none', height: 'auto'}).removeClass('opened');
         }});
       } else {
-        descriptionHeight = $(this).siblings('.entity-description').outerHeight();
+        descriptionHeight = $(this).siblings('.entity-description').height();
         $(this).siblings('.entity-description').css({height: 0, display: 'block'}).animate({height: descriptionHeight}, {complete: function() {
           $(this).css({height: 'auto'});
         }}).addClass('opened');
@@ -1158,18 +1163,18 @@ IADAscheduleView.prototype.bindToolbarButtonActions = function() {
 }
 
 IADAscheduleView.prototype.removeScheduleItem = function() {
-  if(this.focussedScheduleItem != null) {
+  if(this.focusedScheduleItem != null) {
     var schedule = this;
-    var confirm = window.confirm('Weet u zeker dat u Reservering #' + schedule.focussedScheduleItem.item_id + ' wilt verwijderen? De reservering kan hierna niet worden hersteld.');
+    var confirm = window.confirm(function(item_id){var str = jsLang.schedule_view.delete_confirm; return str.replace('%item_id', item_id)}(schedule.focusedScheduleItem.item_id));
     if (confirm == true) {
       this.showStatusMessage(jsLang.schedule_view.deleting, true);
       $.ajax({
-        url: schedule.options.patch_reservation_url + '/' + schedule.focussedScheduleItem.item_id + '.json',
+        url: schedule.options.patch_reservation_url + '/' + schedule.focusedScheduleItem.item_id + '.json',
         type: 'DELETE',
         success: function(result) {
           schedule.showStatusMessage(jsLang.schedule_view.deleted, false, 5000);
-          schedule.focussedScheduleItem.removeFromDom();
-          delete schedule.scheduleItems[schedule.focussedScheduleItem.schedule_object_id][schedule.focussedScheduleItem.item_id];
+          schedule.focusedScheduleItem.removeFromDom();
+          delete schedule.scheduleItems[schedule.focusedScheduleItem.schedule_object_id][schedule.focusedScheduleItem.item_id];
           schedule.closeToolbar();
         },
         fail: function() {
@@ -1183,15 +1188,15 @@ IADAscheduleView.prototype.removeScheduleItem = function() {
 }
 
 IADAscheduleView.prototype.editScheduleItem = function() {
-  window.location.href = this.options.patch_reservation_url + '/' + this.focussedScheduleItem.item_id + '/edit';
+  window.location.href = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id + '/edit';
 }
 
 IADAscheduleView.prototype.informationScheduleItem = function() {
-  window.location.href = this.options.patch_reservation_url + '/' + this.focussedScheduleItem.item_id;
+  window.location.href = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id;
 }
 
 IADAscheduleView.prototype.gotoClientScheduleItem = function() {
-  window.location.href = this.options.organisation_client_url + '/' + this.focussedScheduleItem.client_id;
+  window.location.href = this.options.organisation_client_url + '/' + this.focusedScheduleItem.client_id;
 }
 
 /////////////////// Schedule Item ///////////////////
@@ -1415,7 +1420,7 @@ IADAscheduleViewItem.prototype.applyFocus = function() {
   $.each(this.domObjects, function(index, item){
     $(item).addClass('open');
   });
-  this.schedule.focussedScheduleItem = this;
+  this.schedule.focusedScheduleItem = this;
   this.schedule.updateScheduleItemFocus();
 }
 

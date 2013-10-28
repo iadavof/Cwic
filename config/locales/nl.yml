@@ -382,6 +382,10 @@ nl:
       select_all: 'Alles selecteren'
       select_none: 'Niets selecteren'
       no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'
+      description: 'Beschrijving'
+      organisation_client: 'Klant'
+      edit: 'Bewerken'
+      delete: 'Verwijderen'
 
   occupation_view:
     day_occupation:
