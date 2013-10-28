@@ -193,6 +193,9 @@ IADAscheduleView.prototype.bindControls = function() {
   // Set the correct scope button to active
   this.scheduleContainer.find('div.control-container.navigate a.button#' + this.currentMode + 'Mode').addClass('active');
 
+  this.scheduleContainer.find('.schedule-body').on('click', function() {
+    schedule.closeToolbar();
+  });
 
   // Bind datepickers on domain selection fields and set current domain
   this.scheduleContainer.find('#scheduleBeginDate').datepicker({showOn: 'both'});
