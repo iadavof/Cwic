@@ -7,6 +7,7 @@
         <li><a href="#general" class="current"><%= t('.general') %></a></li>
         <li><a href="#properties"><%= t('.properties') %></a></li>
         <li><a href="#options"><%= t('.options') %></a></li>
+        <li><a href="#images"><%= t('.images') %></a></li>
       </ul>
 
       <div class="tab-wrap">
@@ -49,6 +50,17 @@
             <% end %>
           </div>
           <%= f.link_to_add '', :options, data: { target: '#entity-type-options' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityTypeOption.model_name.human.lcfirst) %>
+        </div>
+
+        <div id="images" class="hide">
+          <h2><%= EntityImage.model_name.human(count: 2) %></h2>
+          <%= format_help(t('.entity_images_help')) %>
+          <div class="nested-form" id="entity-images">
+            <%= f.fields_for :entity_images, wrapper: false do |eif| %>
+              <%= render partial: 'entities/entity_image_fields', locals: { f: eif } %>
+            <% end %>
+          </div>
+          <%= f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst) %>
         </div>
       </div>
     </div>

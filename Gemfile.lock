@@ -107,6 +107,7 @@ GEM
       rails (>= 3.2)
     json (1.8.0)
     libv8 (3.16.14.3)
+    magnific-popup-rails (0.9.7)
     mail (2.5.4)
       mime-types (~> 1.16)
       treetop (~> 1.4.8)
@@ -230,6 +231,7 @@ DEPENDENCIES
   jquery-rails
   jquery-ui-rails
   js-routes
+  magnific-popup-rails
   mini_magick!
   modernizr-rails
   momentjs-rails!

@@ -8,7 +8,6 @@
   <% unless @organisation.present? %>
   <div class="field">
     <%= f.label :organisation %>
-    <%#= f.collection_select :organisation_id, Organisation.all.sort, :id, :instance_name, prompt: t('prompt_all_organisations') %>
     <%= select_tag('organisation_id', options_from_collection_for_select(Organisation.all.sort, :id, :instance_name, @entity_type_icon.organisation.present? ? @entity_type_icon.organisation.id : 0), { prompt: t('prompt_all_organisations') }) %>
   </div>
   <% end %>

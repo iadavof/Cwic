@@ -59,7 +59,8 @@ private
       properties_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :index, :_destroy,
         options_attributes: [:id, :name, :default, :index, :_destroy]
       ],
-      options_attributes: [:id, :name, :description, :amount_relevant, :default_price, :index, :_destroy]
+      options_attributes: [:id, :name, :description, :amount_relevant, :default_price, :index, :_destroy],
+      entity_images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy]
     )
   end
 

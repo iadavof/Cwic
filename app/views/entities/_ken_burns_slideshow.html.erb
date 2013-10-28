@@ -1,0 +1,29 @@
+<div class="cb-slideshow-wrapper clearfix">
+  <% animation_duration = 15 + Random.rand(21) %>
+  <% duration = images.count * animation_duration %>
+  <% delay = 0 %>
+  <ul class="cb-slideshow">
+    <% images.shuffle.each do |eimage| %>
+      <li><span style="background-image: url('<%= eimage.image.url %>');webkit-animation: imageAnimation <%= duration %>s linear infinite 0s;-moz-animation: imageAnimation <%= duration %>s linear infinite 0s;-o-animation: imageAnimation <%= duration %>s linear infinite 0s; -ms-animation: imageAnimation <%= duration %>s linear infinite 0s; animation: imageAnimation <%= duration %>s linear infinite 0s; -webkit-animation-delay: <%= delay %>s; -moz-animation-delay: <%= delay %>s; -o-animation-delay: <%= delay %>s;-ms-animation-delay: <%= delay %>s; animation-delay: <%= delay %>s;"</span><div></div></li>
+      <% delay += animation_duration %>
+    <% end %>
+  </ul>
+  <% animation_duration = 15 + Random.rand(11) %>
+  <% duration = images.count * animation_duration %>
+  <% delay = 0 %>
+  <ul class="cb-slideshow small left">
+    <% images.shuffle.each do |eimage| %>
+      <li><span style="background-image: url('<%= eimage.image.url %>');webkit-animation: imageAnimation <%= duration %>s linear infinite 0s;-moz-animation: imageAnimation <%= duration %>s linear infinite 0s;-o-animation: imageAnimation <%= duration %>s linear infinite 0s; -ms-animation: imageAnimation <%= duration %>s linear infinite 0s; animation: imageAnimation <%= duration %>s linear infinite 0s; -webkit-animation-delay: <%= delay %>s; -moz-animation-delay: <%= delay %>s; -o-animation-delay: <%= delay %>s;-ms-animation-delay: <%= delay %>s; animation-delay: <%= delay %>s;"</span><div></div></li>
+      <% delay += animation_duration %>
+    <% end %>
+  </ul>
+  <% animation_duration = 15 + Random.rand(11) %>
+  <% duration = images.count * animation_duration %>
+  <% delay = 0 %>
+  <ul class="cb-slideshow small right">
+    <% images.shuffle.each do |eimage| %>
+      <li><span style="background-image: url('<%= eimage.image.url %>');webkit-animation: imageAnimation <%= duration %>s linear infinite 0s;-moz-animation: imageAnimation <%= duration %>s linear infinite 0s;-o-animation: imageAnimation <%= duration %>s linear infinite 0s; -ms-animation: imageAnimation <%= duration %>s linear infinite 0s; animation: imageAnimation <%= duration %>s linear infinite 0s; -webkit-animation-delay: <%= delay %>s; -moz-animation-delay: <%= delay %>s; -o-animation-delay: <%= delay %>s;-ms-animation-delay: <%= delay %>s; animation-delay: <%= delay %>s;"</span><div></div></li>
+      <% delay += animation_duration %>
+    <% end %>
+  </ul>
+</div>

@@ -13,4 +13,5 @@
  *= require jquery-minicolors
  *= require global
  *= require_directory .
+ *= require magnific-popup
  */

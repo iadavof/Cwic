@@ -1,6 +1,10 @@
 <% content_for :page_title do %>
 <%= show_title(@entity_type) %>
 <% end %>
+<% if @entity_type.entity_images.present? %>
+  <%= render partial: 'entities/ken_burns_slideshow', locals: {images: @entity_type.entity_images} %>
+<% end %>
+<div>
 <%= image_tag(@entity_type.icon.image.medium_icon.url) %></td>
 <dl>
   <dt><%= EntityType.human_attribute_name(:name) %></dt>
@@ -15,6 +19,19 @@
     <%= render @entity_type.properties %>
   </div>
 <% end %>
+
+<h2><%= EntityImage.model_name.human(count: 2) %></h2>
+<dl>
+  <% if @entity_type.entity_images.present? %>
+    <div class="entity-images-container clearfix">
+    <% @entity_type.entity_images.each do |eimage| %>
+      <%= link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url) %>
+    <% end %>
+    </div>
+  <% else %>
+    <%= t('.no_entity_images') %>
+  <% end %>
+</dl>
 
 <%= button_link_back_to_index([@organisation, EntityType]) %>
 <%= button_link_to_edit([@organisation, @entity_type]) %>

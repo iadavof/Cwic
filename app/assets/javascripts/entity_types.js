@@ -11,6 +11,9 @@ APP.entity_types = {
     form.find('.option-wrapper').each(function () { APP.global.nested_objects.initWrapper($(this)); });
     $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.onNestedFieldAddedOptions(event.field); });
     $('#entity-type-options').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
+
+    $('div.entity-images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery:{ enabled:true } });
+
   },
   initIconSelector: function() {
     $(".field.icon-select").on('click', 'label', function() {
