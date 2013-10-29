@@ -13,11 +13,16 @@ class Organisation < ActiveRecord::Base
   has_many :week_occupations, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255 }
-  validates :street, presence: true, length: { maximum: 255 }
-  validates :house_number, presence: true, length: { maximum: 255 }
-  validates :postal_code, presence: true, length: { maximum: 255 }
-  validates :city, presence: true, length: { maximum: 255 }
+  validates :route, presence: true, length: { maximum: 255 }
+  validates :street_number, presence: true, length: { maximum: 255 }
+  validates :locality, presence: true, length: { maximum: 255 }
+  validates :administrative_area_level_2, presence: true, length: { maximum: 255 }
+  validates :administrative_area_level_1, presence: true, length: { maximum: 255 }
   validates :country, presence: true, length: { maximum: 255 }
+  validates :postal_code, presence: true, length: { maximum: 255 }
+  validates :address_type, length: { maximum: 255 }
+  validates :lng, numericality: true
+  validates :lat, numericality: true
 
   def instance_name
     self.name

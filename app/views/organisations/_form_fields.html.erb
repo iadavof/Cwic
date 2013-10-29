@@ -1,0 +1,47 @@
+  <div class="clearfix">
+    <div class="organisation-fields">
+      <div class="field">
+        <%= f.label :name %>
+        <%= f.text_field :name %>
+      </div>
+      <div class="field">
+        <label for="address-picker"><%=t('.address') %></label>
+        <input type="text" id="address-picker"></input>
+      </div>
+      <div class="auto-address-fields">
+        <a href="" class="icon icon-edit" id="edit-auto-address-fields"></a>
+        <div class="field">
+          <%= f.label :route %>
+          <%= f.text_field :route, disabled: true %>
+        </div>
+        <div class="field">
+          <%= f.label :street_number %>
+          <%= f.text_field :street_number, disabled: true %>
+        </div>
+        <div class="field">
+          <%= f.label :locality %>
+          <%= f.text_field :locality, disabled: true %>
+        </div>
+        <div class="field">
+          <%= f.label :administrative_area_level_2 %>
+          <%= f.text_field :administrative_area_level_2, disabled: true %>
+        </div>
+        <div class="field">
+          <%= f.label :administrative_area_level_1 %>
+          <%= f.text_field :administrative_area_level_1, disabled: true %>
+        </div>
+        <div class="field">
+          <%= f.label :postal_code %>
+          <%= f.text_field :postal_code, disabled: true %>
+        </div>
+        <div class="field">
+          <%= f.label :country %>
+          <%= f.text_field :country, disabled: true %>
+        </div>
+      </div>
+      <%= f.hidden_field :address_type %>
+      <%= f.hidden_field :lng %>
+      <%= f.hidden_field :lat %>
+    </div>
+    <div class="address-map" id="address-picker-map"></div>
+  </div>

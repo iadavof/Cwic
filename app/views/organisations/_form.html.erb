@@ -1,31 +1,8 @@
 <%= form_for(@organisation) do |f| %>
   <%= render 'shared/error_messages', target: @organisation %>
-
-  <div class="field">
-    <%= f.label :name %>
-    <%= f.text_field :name %>
-  </div>
-  <div class="field">
-    <%= f.label :street %>
-    <%= f.text_field :street %>
-  </div>
-  <div class="field">
-    <%= f.label :house_number %>
-    <%= f.text_field :house_number %>
-  </div>
-  <div class="field">
-    <%= f.label :postal_code %>
-    <%= f.text_field :postal_code %>
-  </div>
-  <div class="field">
-    <%= f.label :city %>
-    <%= f.text_field :city %>
-  </div>
-  <div class="field">
-    <%= f.label :country %>
-    <%= f.text_field :country %>
-  </div>
+  <%= render partial: 'form_fields' %>
   <div class="actions">
     <%= f.submit %>
   </div>
+
 <% end %>

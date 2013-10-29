@@ -115,10 +115,13 @@ nl:
         remember_me: 'Onthoud mij'
       organisation:
         name: 'Naam'
-        street: 'Straat'
-        house_number: 'Huisnummer'
+        address: 'Adres'
+        route: 'Straat'
+        street_number: 'Huisnummer'
+        locality: 'Plaats'
+        administrative_area_level_2: 'Gemeente'
+        administrative_area_level_1: 'Provincie'
         postal_code: 'Postcode'
-        city: 'Plaats'
         country: 'Land'
       organisation_user:
         user: 'Gebruiker'
@@ -331,6 +334,10 @@ nl:
   home:
     index:
       welcome_html: 'Welkom bij <strong>Cwic</strong>'
+
+  organisations:
+    form_fields:
+      address: 'Adres'
 
   organisation_users:
     index:
