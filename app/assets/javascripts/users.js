@@ -6,6 +6,10 @@ APP.registrations = {
   	$('#address-picker').addresspicker({
 		  reverseGeocode: true,
 		  autocomplete: 'default',
+		  mapOptions: {
+            zoom: 6, 
+            center: new google.maps.LatLng(52.5, 5.75),
+		  },
 		  elements: {
 		      map: '#address-picker-map',
 		      route: '#user_organisations_attributes_0_route',
@@ -20,6 +24,10 @@ APP.registrations = {
 		      type: '#user_organisations_attributes_0_address_type'
 		  },
 	});
+
+	var gmarker = addresspickerMap.addresspicker( "marker");
+	gmarker.setVisible(true);
+	addresspickerMap.addresspicker( "updatePosition");
 
 	$('div.auto-address-fields').on('click', 'a#edit-auto-address-fields', function(e) {
 		e.preventDefault();
