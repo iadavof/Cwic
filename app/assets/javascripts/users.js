@@ -3,7 +3,7 @@ APP.registrations = {
   	this.add_address_picker_to_form();
   },
   add_address_picker_to_form: function() {
-  	$('#address-picker').addresspicker({
+  	var addresspickerMap = $('#address-picker').addresspicker({
 		  reverseGeocode: true,
 		  autocomplete: 'default',
 		  mapOptions: {
