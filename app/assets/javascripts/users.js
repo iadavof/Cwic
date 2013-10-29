@@ -1,5 +1,5 @@
 APP.registrations = {
-  new: function() {
+  init: function() {
   	this.add_address_picker_to_form();
   },
   add_address_picker_to_form: function() {
@@ -23,7 +23,7 @@ APP.registrations = {
 
 	$('div.auto-address-fields').on('click', 'a#edit-auto-address-fields', function(e) {
 		e.preventDefault();
-		$(this).parents('div.auto-address-fields').find('input').removeAttr('disabled');
+		$(this).parents('div.auto-address-fields').find('input').removeAttr('readonly');
 		return false;
 	});
   }

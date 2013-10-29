@@ -12,31 +12,31 @@
         <a href="" class="icon icon-edit" id="edit-auto-address-fields"></a>
         <div class="field">
           <%= f.label :route %>
-          <%= f.text_field :route, disabled: true %>
+          <%= f.text_field :route, readonly: true %>
         </div>
         <div class="field">
           <%= f.label :street_number %>
-          <%= f.text_field :street_number, disabled: true %>
+          <%= f.text_field :street_number, readonly: true %>
         </div>
         <div class="field">
           <%= f.label :locality %>
-          <%= f.text_field :locality, disabled: true %>
+          <%= f.text_field :locality, readonly: true %>
         </div>
         <div class="field">
           <%= f.label :administrative_area_level_2 %>
-          <%= f.text_field :administrative_area_level_2, disabled: true %>
+          <%= f.text_field :administrative_area_level_2, readonly: true %>
         </div>
         <div class="field">
           <%= f.label :administrative_area_level_1 %>
-          <%= f.text_field :administrative_area_level_1, disabled: true %>
+          <%= f.text_field :administrative_area_level_1, readonly: true %>
         </div>
         <div class="field">
           <%= f.label :postal_code %>
-          <%= f.text_field :postal_code, disabled: true %>
+          <%= f.text_field :postal_code, readonly: true %>
         </div>
         <div class="field">
           <%= f.label :country %>
-          <%= f.text_field :country, disabled: true %>
+          <%= f.text_field :country, readonly: true %>
         </div>
       </div>
       <%= f.hidden_field :address_type %>

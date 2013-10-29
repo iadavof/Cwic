@@ -24,6 +24,11 @@ div.auto-address-fields {
 	margin-bottom: 10px;
 }
 
+div.auto-address-fields input[readonly="readonly"]
+{
+    background-color: #eee;
+}
+
 a#edit-auto-address-fields {
 	position: absolute;
 	right: 10px;
