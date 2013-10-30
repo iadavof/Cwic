@@ -6,8 +6,9 @@ APP.registrations = {
   	var addresspickerMap = $('#address-picker').addresspicker({
 		  reverseGeocode: true,
 		  autocomplete: 'default',
+      regionBias: $('body').data('current-locale'),
 		  mapOptions: {
-            zoom: 6, 
+            zoom: 6,
             center: new google.maps.LatLng(52.5, 5.75),
 		  },
 		  elements: {
