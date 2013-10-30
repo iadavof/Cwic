@@ -6,40 +6,61 @@
 <% end %>
 <%= render partial: 'stickies/resource_stickies', locals: { resource: @entity } %>
 
-<dl>
-  <dt><%= Entity.human_attribute_name(:name) %></dt>
-  <dd><%= @entity.name %></dd>
-  <dt><%= Entity.human_attribute_name(:entity_type) %></dt>
-  <dd><%= name_link_to_show([@organisation, @entity.entity_type], title: format_description_title(@entity.entity_type)) %></dd>
-  <dt><%= Entity.human_attribute_name(:description) %></dt>
-  <dd><%= simple_format(@entity.description) %></dd>
-</dl>
-
-<% if @entity.properties.present? %>
-  <h2><%= EntityProperty.model_name.human(count: 2) %></h2>
-  <dl>
-    <%= render @entity.properties %>
-  </dl>
-<% end %>
-
-<h2><%= ReservationRule.model_name.human(count: 2) %></h2>
-<dl>
-  <%= render_reservation_rule_scopes(@entity.reservation_rule_scopes.arrange(order: :id)) %>
-  <%= button_link_to_new([@organisation, @entity, ReservationRuleScope]) %>
-</dl>
-
-<h2><%= EntityImage.model_name.human(count: 2) %></h2>
-<dl>
-  <% if @entity.all_entity_images.present? %>
-    <div class="entity-images-container clearfix">
-    <% @entity.all_entity_images.each do |eimage| %>
-      <%= link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url) %>
+<div id="tabs">
+  <ul class="nav">
+    <li><a href="#general" class="current"><%= t('.general') %></a></li>
+    <% if @entity.properties.present? %>
+    <li><a href="#properties"><%= EntityProperty.model_name.human(count: 2) %></a></li>
     <% end %>
+    <li><a href="#reservation-rules"><%= ReservationRule.model_name.human(count: 2) %></a></li>
+    <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
+  </ul>
+
+  <div class="tab-wrap">
+    <div id="general">
+      <dl>
+        <dt><%= Entity.human_attribute_name(:name) %></dt>
+        <dd><%= @entity.name %></dd>
+        <dt><%= Entity.human_attribute_name(:entity_type) %></dt>
+        <dd><%= name_link_to_show([@organisation, @entity.entity_type], title: format_description_title(@entity.entity_type)) %></dd>
+        <dt><%= Entity.human_attribute_name(:description) %></dt>
+        <dd><%= simple_format(@entity.description) %></dd>
+      </dl>
     </div>
-  <% else %>
-    <%= t('.no_entity_images') %>
-  <% end %>
-</dl>
+
+    <% if @entity.properties.present? %>
+    <div id="properties">
+      <h2><%= EntityProperty.model_name.human(count: 2) %></h2>
+      <dl>
+        <%= render @entity.properties %>
+      </dl>
+    </div>
+    <% end %>
+
+    <div id="reservation-rules">
+      <h2><%= ReservationRule.model_name.human(count: 2) %></h2>
+      <dl>
+        <%= render_reservation_rule_scopes(@entity.reservation_rule_scopes.arrange(order: :id)) %>
+        <%= button_link_to_new([@organisation, @entity, ReservationRuleScope]) %>
+      </dl>
+    </div>
+
+    <div id="entity-images">
+      <h2><%= EntityImage.model_name.human(count: 2) %></h2>
+      <dl>
+        <% if @entity.all_entity_images.present? %>
+          <div class="entity-images-container clearfix">
+          <% @entity.all_entity_images.each do |eimage| %>
+            <%= link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url) %>
+          <% end %>
+          </div>
+        <% else %>
+          <%= t('.no_entity_images') %>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+</div>
 
 <%= button_link_back_to_index([@organisation, Entity]) %>
 <%= button_link_to_edit([@organisation, @entity]) %>

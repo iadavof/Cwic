@@ -111,6 +111,7 @@ ui-timepicker-table td {
   border-color: #cccccc;
   padding: 0;
   margin-bottom: 1em;
+  overflow: hidden;
 }
 
 .ui-tabs .ui-tabs-panel {
@@ -159,6 +160,14 @@ ui-timepicker-table td {
   border: 0 none;
 }
 
+.ui-widget-content.ui-tabs a {
+  color: #ff3520;
+}
+
+.ui-widget-content.ui-tabs a.button {
+  color: #ffffff;
+}
+
 .ui-tabs .ui-tabs-nav li {
   margin: 0;
   padding: 0;
@@ -173,12 +182,16 @@ ui-timepicker-table td {
 .ui-tabs .ui-tabs-nav li a {
   padding: 0.4em 0.6em;
   line-height: 200%;
+  color: inherit;
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
   border: 0 none;
-  color: #ffffff;
   background: #ff3520;
   margin: 0;
   padding: 0;
+}
+
+.ui-tabs .ui-tabs-nav li.ui-tabs-active a {
+  color: #ffffff;
 }

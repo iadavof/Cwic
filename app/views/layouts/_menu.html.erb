@@ -1,3 +1,16 @@
+<div id="search-bar">
+  <div class="inner">
+    <input name="global-search" id="global-search" style="display: inline-block" type="text" placeholder="Zoeken..." />
+    <select name="global-search-type" id="global-search-type">
+      <option value="0">- Alles -</option>
+      <option value="1">Klant</option>
+      <option value="2">Reservering</option>
+      <option value="3">Object</option>
+      <option value="4">Objecttype</option>
+    </select>
+    <a class="button red">Zoeken</a>
+  </div>
+</div>
 <div id="menu-bar" class="clearfix">
   <div id="user-info">
     <a id="current-user" href="#"><i class="icon-user"></i> <%= current_user.instance_name %><%= ' (' + current_organisation.instance_name + ')' if current_organisation.present? %></a>
@@ -5,7 +18,8 @@
       <li><%= link_to(content_tag(:i, '', class: 'icon-off') + ' ' + t('.logout'), destroy_user_session_path, method: :delete) %></li>
     </ul>
   </div>
-    <a id="open-feedback-button" class="button blue" style="float: left;"><%= t('.feedback') %></a>
+  <a id="open-feedback-button" class="button blue"><%= t('.feedback') %></a>
+  <a id="open-search-button" href="#"><i class="icon-search"></i></a>
   <ul id="main-menu">
     <% menu.each_with_index do |(category_name, category_content), index| %>
     <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: (category_matches?(category_name) ? "active" : nil)) do %>

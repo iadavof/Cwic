@@ -4,34 +4,51 @@
 <% if @entity_type.entity_images.present? %>
   <%= render partial: 'entities/ken_burns_slideshow', locals: {images: @entity_type.entity_images} %>
 <% end %>
-<div>
-<%= image_tag(@entity_type.icon.image.medium_icon.url) %></td>
-<dl>
-  <dt><%= EntityType.human_attribute_name(:name) %></dt>
-  <dd><%= @entity_type.name %></dd>
-  <dt><%= EntityType.human_attribute_name(:description) %></dt>
-  <dd><%= @entity_type.description %></dd>
-</dl>
-
-<% if @entity_type.properties.present? %>
-  <h2><%= EntityTypeProperty.model_name.human(count: 2) %></h2>
-  <div id="entity-type-properties">
-    <%= render @entity_type.properties %>
-  </div>
-<% end %>
-
-<h2><%= EntityImage.model_name.human(count: 2) %></h2>
-<dl>
-  <% if @entity_type.entity_images.present? %>
-    <div class="entity-images-container clearfix">
-    <% @entity_type.entity_images.each do |eimage| %>
-      <%= link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url) %>
+<div id="tabs">
+  <ul class="nav">
+    <li><a href="#general" class="current"><%= t('.general') %></a></li>
+    <% if @entity_type.properties.present? %>
+    <li><a href="#properties"><%= EntityTypeProperty.model_name.human(count: 2) %></a></li>
     <% end %>
+    <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
+  </ul>
+  
+  <div class="tab-wrap">
+    <div id="general">
+      <%= image_tag(@entity_type.icon.image.medium_icon.url) %>
+      <dl>
+        <dt><%= EntityType.human_attribute_name(:name) %></dt>
+        <dd><%= @entity_type.name %></dd>
+        <dt><%= EntityType.human_attribute_name(:description) %></dt>
+        <dd><%= @entity_type.description %></dd>
+      </dl>
     </div>
-  <% else %>
-    <%= t('.no_entity_images') %>
-  <% end %>
-</dl>
+
+    <% if @entity_type.properties.present? %>
+    <div id="properties">
+      <h2><%= EntityTypeProperty.model_name.human(count: 2) %></h2>
+      <div id="entity-type-properties">
+        <%= render @entity_type.properties %>
+      </div>
+    </div>
+    <% end %>
+
+    <div id="entity-images">
+      <h2><%= EntityImage.model_name.human(count: 2) %></h2>
+      <dl>
+        <% if @entity_type.entity_images.present? %>
+          <div class="entity-images-container clearfix">
+          <% @entity_type.entity_images.each do |eimage| %>
+            <%= link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url) %>
+          <% end %>
+          </div>
+        <% else %>
+          <%= t('.no_entity_images') %>
+        <% end %>
+      </dl>
+    </div>
+  </div>
+</div>
 
 <%= button_link_back_to_index([@organisation, EntityType]) %>
 <%= button_link_to_edit([@organisation, @entity_type]) %>
