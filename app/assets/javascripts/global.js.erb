@@ -7,6 +7,7 @@ APP.init = function() {
 
   // Load the menu
   this.global.menuInit();
+  this.global.searchBarInit();
   this.global.keyboardShortcutsInit();
 
   // Load the feedback module
@@ -46,6 +47,24 @@ APP.global = {
 
     $('#main-menu > li > a').on('click', function() {
       return APP.global.slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
+    });
+  },
+  searchBarInit: function() {
+    $('#open-search-button').on('click', function() {
+      var searchBar = $('#search-bar');
+      var searchField = $('#global-search');
+      if(!searchBar.hasClass('open')) {
+        $(this).addClass('open');
+        searchBar.addClass('open').animate({height: searchBar.find('.inner').outerHeight() + 'px'}, 200, function() {
+          searchBar.css({height: 'auto'});
+        });
+        searchField.focus();
+      } else {
+        searchField.blur().val('');
+        $(this).removeClass('open');
+        searchBar.removeClass('open').animate({height: 0}, 200);
+      }
+      return false;
     });
   },
   addProgressbarToAjax : function() {

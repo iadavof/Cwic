@@ -164,6 +164,19 @@ html.with-overlay body {
  * Menu
  */
 
+#search-bar {
+  overflow: hidden;
+  background-color: #ffffff;
+}
+
+html.js #search-bar {
+  height: 0;
+}
+ 
+#search-bar > .inner {
+  padding: 5px 10px 5px 10px;
+}
+
 #menu-bar {
   position: relative;
   background: #666666;
@@ -271,6 +284,25 @@ html.with-overlay body {
 
 #user-info:hover #user-menu {
   display: block;
+}
+
+#open-feedback-button {
+  float: left;
+}
+
+#open-search-button {
+  display: inline-block;
+  color: #ffffff;
+  text-decoration: none;
+  padding: 5px 8px;
+  line-height: 100%;
+  border-radius: 0 0 3px 3px;
+  margin-right: 5px;
+}
+
+#open-search-button.open {
+  color: #666666;
+  background-color: #ffffff;
 }
 
 #submenu-box {
@@ -764,7 +796,6 @@ div.nested-object-wrapper {
   padding: 10px;
   margin: 10px 0;
   background-color: #fff;
-  overflow: hidden;
 
   div.extra {
     margin-right: 0;
