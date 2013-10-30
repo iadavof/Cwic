@@ -1,10 +1,10 @@
 require 'spec_helper'
 
-describe "RealTimeFullScreens" do
-  describe "GET /real_time_full_screens" do
+describe "InfoScreens" do
+  describe "GET /info_screens" do
     it "works! (now write some real specs)" do
       # Run the generator again with the --webrat flag if you want to use webrat methods/matchers
-      get real_time_full_screens_path
+      get info_screens_path
       response.status.should be(200)
     end
   end

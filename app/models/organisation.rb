@@ -21,8 +21,8 @@ class Organisation < ActiveRecord::Base
   validates :country, presence: true, length: { maximum: 255 }
   validates :postal_code, presence: true, length: { maximum: 255 }
   validates :address_type, length: { maximum: 255 }
-  validates :lng, numericality: true
-  validates :lat, numericality: true
+  validates :lng, numericality: true, allow_blank: true;
+  validates :lat, numericality: true, allow_blank: true;
 
   def instance_name
     self.name
