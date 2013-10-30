@@ -45,11 +45,11 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @info_screens = InfoScreen.accessible_by(current_ability, :index)
+      @info_screens = @organisation.info_screens.accessible_by(current_ability, :index)
     when 'new', 'create'
-      @info_screen = InfoScreen.new
+      @info_screen = @organisation.info_screens.build
     else
-      @info_screen = InfoScreen.find(params[:id])
+      @info_screen = @organisation.info_screens.find(params[:id])
     end
   end
 
