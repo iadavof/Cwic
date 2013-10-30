@@ -1,0 +1,32 @@
+<% content_for :page_title do %>
+<%= index_title(InfoScreen) %>
+<% end %>
+
+<% if @info_screens.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: InfoScreen.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= InfoScreen.human_attribute_name(:name) %></th>
+      <th><%= InfoScreen.human_attribute_name(:public) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @info_screens.each do |info_screen| %>
+    <tr>
+      <td><%= name_link_to_show([@organisation, info_screen]) %></td>
+      <td><%= format_bool(info_screen.public) %></td>
+      <td class="icons">
+        <%= icon_link_to_edit([@organisation, info_screen]) %>
+        <%= icon_link_to_destroy([@organisation, info_screen]) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new([@organisation, InfoScreen]) %>

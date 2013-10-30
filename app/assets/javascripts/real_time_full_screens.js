@@ -1,4 +1,4 @@
-APP.real_time_full_screens = {
+APP.info_screens = {
   show: function() {
     realtimeFullscreensElemPlacement();
     realtimeFullscreensReservationDatesWidth();

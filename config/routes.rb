@@ -1,5 +1,4 @@
 Cwic::Application.routes.draw do
-  resources :real_time_full_screens
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
@@ -21,6 +20,8 @@ Cwic::Application.routes.draw do
     resources :entities do
       resources :reservation_rule_scopes
     end
+
+    resources :info_screens
 
     resources :stickies, except: [:show, :create, :new]
     match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch', as: 'edit_sticky_for_resource'

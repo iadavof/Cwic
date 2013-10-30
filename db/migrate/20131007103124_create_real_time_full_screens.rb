@@ -1,6 +1,6 @@
-class CreateRealTimeFullScreens < ActiveRecord::Migration
+class CreateInfoScreens < ActiveRecord::Migration
   def change
-    create_table :real_time_full_screens do |t|
+    create_table :info_screens do |t|
       t.string :name
       t.boolean :public
 

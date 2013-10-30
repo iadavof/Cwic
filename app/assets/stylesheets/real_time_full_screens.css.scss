@@ -1,23 +1,23 @@
-body.controller-real_time_full_screens.action-show #header, 
-body.controller-real_time_full_screens.action-show h1 {
+body.controller-info_screens.action-show #header,
+body.controller-info_screens.action-show h1 {
   display: none;
 }
 
-body.controller-real_time_full_screens.action-show #content {
+body.controller-info_screens.action-show #content {
   margin: 0;
   height: 100%;
   width: 100%;
   background-color: #eee;
 }
 
-body.controller-real_time_full_screens.action-show #content > .inner {
+body.controller-info_screens.action-show #content > .inner {
   padding: 0;
   height: 100%;
   width: 100%;
   overflow: hidden;
 }
 
-body.controller-real_time_full_screens.action-show #fullscreen-link {
+body.controller-info_screens.action-show #fullscreen-link {
   position: fixed;
   bottom: 0;
   right: 0;
@@ -30,11 +30,11 @@ body.controller-real_time_full_screens.action-show #fullscreen-link {
   border-radius: 10px 0 0 0;
 }
 
-body.controller-real_time_full_screens.action-show #fullscreen-link:hover {
+body.controller-info_screens.action-show #fullscreen-link:hover {
   opacity: 1;
 }
 
-body.controller-real_time_full_screens.action-show #fullscreen-link i {
+body.controller-info_screens.action-show #fullscreen-link i {
   font-size: 3em;
 }
 
@@ -140,7 +140,7 @@ body.controller-real_time_full_screens.action-show #fullscreen-link i {
   right: 0;
 }
 
-#realtime-list > li > .inner .wayfinding [class^="symbol-"]:before, 
+#realtime-list > li > .inner .wayfinding [class^="symbol-"]:before,
 #realtime-list > li > .inner .wayfinding [class*=" symbol-"]:before {
   display: block;
   position: absolute;
@@ -194,16 +194,16 @@ body.controller-real_time_full_screens.action-show #fullscreen-link i {
   border-bottom: 0 none;
 }
 
-#realtime-list > li > .inner .reservation-dates .datebox .until, 
+#realtime-list > li > .inner .reservation-dates .datebox .until,
 #realtime-list > li > .inner .reservation-dates .datebox .from {
   background-color: #16ad37;
   border-right: 3px solid #fff;
   color: #fff;
 }
 
-#realtime-list > li > .inner .reservation-dates .datebox .until [class^="icon-"], 
-#realtime-list > li > .inner .reservation-dates .datebox .until [class*=" icon-"], 
-#realtime-list > li > .inner .reservation-dates .datebox .from [class^="icon-"], 
+#realtime-list > li > .inner .reservation-dates .datebox .until [class^="icon-"],
+#realtime-list > li > .inner .reservation-dates .datebox .until [class*=" icon-"],
+#realtime-list > li > .inner .reservation-dates .datebox .from [class^="icon-"],
 #realtime-list > li > .inner .reservation-dates .datebox .from [class*=" icon-"] {
   font-size: 0.9em;
   position: relative;
@@ -226,7 +226,7 @@ body.controller-real_time_full_screens.action-show #fullscreen-link i {
 }
 
 
-#realtime-list > li > .inner .reservation-dates .datebox.from .date.today, 
+#realtime-list > li > .inner .reservation-dates .datebox.from .date.today,
 #realtime-list > li > .inner .reservation-dates .datebox.until .date.today {
   background-color: #16ad37;
 }

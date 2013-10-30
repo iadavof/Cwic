@@ -1,20 +1,20 @@
 require 'spec_helper'
 
-describe "real_time_full_screens/index" do
+describe "info_screens/index" do
   before(:each) do
-    assign(:real_time_full_screens, [
-      stub_model(RealTimeFullScreen,
+    assign(:info_screens, [
+      stub_model(InfoScreen,
         :name => "Name",
         :public => false
       ),
-      stub_model(RealTimeFullScreen,
+      stub_model(InfoScreen,
         :name => "Name",
         :public => false
       )
     ])
   end
 
-  it "renders a list of real_time_full_screens" do
+  it "renders a list of info_screens" do
     render
     # Run the generator again with the --webrat flag if you want to use webrat matchers
     assert_select "tr>td", :text => "Name".to_s, :count => 2

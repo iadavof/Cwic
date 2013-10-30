@@ -97,7 +97,7 @@ nl:
       feedback:
         one: 'Feedback'
         other: 'Feedback'
-      real_time_full_screen:
+      info_screen:
         one: 'Informatiescherm'
         other: 'Informatieschermen'
     attributes:
@@ -320,7 +320,7 @@ nl:
       occupation_view: 'Bezetting'
       day_occupation: 'Dagbezetting'
       week_occupation: 'Weekbezetting'
-      real_time_full_screens: 'Informatieschermen'
+      info_screens: 'Informatieschermen'
       entity_type_icons: 'Objecticonen'
       users: 'Alle gebruikers'
       feedbacks: 'Feedback'
