@@ -9,6 +9,20 @@
     <%= f.label :public %>
     <%= f.check_box :public %>
   </div>
+  <div class="field">
+    <%= f.label :add_new_entity_types %>
+    <%= f.check_box :add_new_entity_types %>
+  </div>
+  <h2><%= t('.selected_entity_types') %></h2>
+  <div class="info-screen-entity-types">
+  <% if @info_screen.info_screen_entity_types.present? %>
+    <%= f.fields_for :info_screen_entity_types, @info_screen.info_screen_entity_types do |etf| %>
+      <%= render partial: 'info_screen_entity_type', locals: { f: etf } %>
+    <% end %>
+  <% else %>
+    <%= t('.no_info_screen_entity_type') %>
+  <% end %>
+  </div>
   <div class="actions">
     <%= f.submit %>
   </div>

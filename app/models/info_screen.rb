@@ -3,6 +3,8 @@ class InfoScreen < ActiveRecord::Base
 
   has_many :info_screen_entity_types, dependent: :destroy
 
+  accepts_nested_attributes_for :info_screen_entity_types
+
   def instance_name
     self.name
   end

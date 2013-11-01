@@ -1,10 +1,13 @@
 class EntityType < ActiveRecord::Base
   include I18n::Alchemy
 
+  after_save :create_info_screen_entity_types
+
   has_many :entities, dependent: :destroy
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type
   has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
   has_many :entity_images, as: :entity_imageable, dependent: :destroy
+  has_many :info_screen_entity_types, dependent: :destroy
 
   belongs_to :icon, class_name: 'EntityTypeIcon'
   belongs_to :organisation
@@ -28,5 +31,11 @@ class EntityType < ActiveRecord::Base
 
   def instance_name
     self.name
+  end
+
+  def create_info_screen_entity_types
+    @organisation.info_screens.each do |is|
+      InfoScreenEntityTypes.create(entity_type: self.id, info_screen: is.id, active: info_screens.add_new_entity_types, add_new_entities: info_screens.add_new_entity_types)
+    end
   end
 end

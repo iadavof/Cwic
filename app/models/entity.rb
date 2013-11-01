@@ -1,11 +1,14 @@
 class Entity < ActiveRecord::Base
   include I18n::Alchemy
 
+  after_save :create_info_screen_entities
+
   has_many :properties, class_name: 'EntityProperty', dependent: :destroy, inverse_of: :entity
   has_many :reservation_rule_scopes, dependent: :destroy, inverse_of: :entity
   has_many :reservations, dependent: :destroy
   has_many :day_occupations, dependent: :destroy
   has_many :week_occupations, dependent: :destroy
+  has_many :info_screen_entities, dependent: :destroy
 
   has_many :stickies, as: :stickable, dependent: :destroy
   has_many :entity_images, as: :entity_imageable, dependent: :destroy
@@ -39,5 +42,11 @@ class Entity < ActiveRecord::Base
 
   def text_color
     Cwic::Color.text_color(self.color)
+  end
+
+  def create_info_screen_entities
+    @organisation.info_screens.each do |is|
+        InfoScreenEntities.create(entity: self.id, info_screen_entity_type: InfoScreenEntityTypes.where('entity_id = ?', self.entity_type.id), active: iset.add_new_entities)
+    end
   end
 end

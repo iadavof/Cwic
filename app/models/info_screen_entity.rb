@@ -9,4 +9,8 @@ class InfoScreenEntity < ActiveRecord::Base
   def instance_name
     self.direction_char
   end
+
+  def available
+    self.available.nil? ? entity.available : self.available
+  end
 end

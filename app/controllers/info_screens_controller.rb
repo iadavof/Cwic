@@ -14,6 +14,10 @@ class InfoScreensController < ApplicationController
 
   # GET /info_screens/new
   def new
+    @info_screen.info_screen_entity_types << @organisation.entity_types.map { |et| InfoScreenEntityType.new(entity_type: et) }
+    @info_screen.info_screen_entity_types.each do |iset|
+      iset.info_screen_entities << @organisation.entities.map { |e| InfoScreenEntity.new(entity: e) }
+    end
     respond_with(@info_screen)
   end
 
@@ -42,6 +46,7 @@ class InfoScreensController < ApplicationController
   end
 
 private
+
   def load_resource
     case params[:action]
     when 'index'
@@ -54,7 +59,12 @@ private
   end
 
   def resource_params
-    params.require(:info_screen).permit(:name, :public)
+    params.require(:info_screen).permit(
+      :name, :public, :add_new_entity_types,
+        info_screen_entity_type_attributes: [:add_new_entities, :active,
+          info_screen_entity_attributes: [:direction_char, :active],
+        ],
+      )
   end
 
   def interpolation_options

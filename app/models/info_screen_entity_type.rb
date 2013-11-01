@@ -4,9 +4,10 @@ class InfoScreenEntityType < ActiveRecord::Base
 
   has_many :info_screen_entities, dependent: :destroy
 
-  validates :add_new_entities
   validates :info_screen, presence: true
   validates :entity_type, presence: true
+
+  accepts_nested_attributes_for :info_screen_entities
 
   def instance_name
     self.add_new_entities

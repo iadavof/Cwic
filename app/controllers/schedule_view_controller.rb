@@ -1,7 +1,7 @@
 class ScheduleViewController < ApplicationController
   def horizontal_calendar_day
     if params[:entity].present?
-      @sel_entity = params[:entity].to_i 
+      @sel_entity = params[:entity].to_i
     end
 
     if params[:year].present? && params[:month].present? && params[:day].present?
@@ -114,7 +114,7 @@ class ScheduleViewController < ApplicationController
         description: r.organisation_client.instance_name,
         progress: calculate_current_progress(r),
       }
-      if current[:begin_date] != current[:end_date]
+      if r.begins_at.to_date != r.ends_at.to_date
         current[:day_separators] = reservation_day_change_at(r)
       end
       current
