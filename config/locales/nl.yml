@@ -329,6 +329,10 @@ nl:
       entity_type_icons: 'Objecticonen'
       users: 'Alle gebruikers'
       feedbacks: 'Feedback'
+    search:
+      search_placeholder: 'Zoeken...'
+      search: 'Zoeken'
+      search_all: '- Allemaal -'
 
   shared:
     error_messages:
@@ -447,3 +451,8 @@ nl:
       active: 'Actief'
       scope: 'Scope'
       active_from_to: 'van %{from} tot %{to}'
+
+  search:
+    results:
+      results: 'resultaten'
+      title: 'Resultaten'

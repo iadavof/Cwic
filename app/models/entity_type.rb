@@ -1,4 +1,5 @@
 class EntityType < ActiveRecord::Base
+  include PgSearch
   include I18n::Alchemy
 
   has_many :entities, dependent: :destroy
@@ -16,6 +17,8 @@ class EntityType < ActiveRecord::Base
   accepts_nested_attributes_for :entity_images, allow_destroy: true
 
   scope :with_entities, -> { where('entities_count > 0') }
+
+  multisearchable against: [ :name, :description ]
 
   def icon_with_default
     if self.icon_without_default.nil?

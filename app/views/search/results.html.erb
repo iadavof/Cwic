@@ -1,0 +1,30 @@
+<% content_for :page_title do %>
+<%= t('.title') %>
+<% end %>
+
+<% if @results.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: t('.results')) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= t('.type') %></th>
+      <th><%= t('.name') %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @results.each do |result| %>
+    <tr>
+      <td><%= result.searchable.class.model_name.human %></td>
+      <td><%= name_link_to_show([@organisation, result.searchable]) %></td>
+      <td class="icons">
+        <%= icon_link_to_edit([@organisation, result.searchable]) %>
+        <%= icon_link_to_destroy([@organisation, result.searchable]) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

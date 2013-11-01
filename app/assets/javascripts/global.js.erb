@@ -45,7 +45,7 @@ APP.global = {
   menuInit: function() {
     var submenuBox = $('#submenu-box');
     var contentArea = $('#content-area');
-    
+
     contentArea.css({paddingTop: $('#header').outerHeight(true) + 'px'});
 
     this.slideSubMenuByMenuItem($('#main-menu > li.active').first().attr('id'), false);
@@ -58,20 +58,21 @@ APP.global = {
     $('#open-search-button').on('click', function() {
       var searchBar = $('#search-bar');
       var contentArea = $('#content-area');
-      var searchField = $('#global-search');
+      var searchField = $('#global_search');
       if(!searchBar.hasClass('open')) {
         $(this).addClass('open');
-        $(contentArea).animate({paddingTop: $('#header').outerHeight(true) + searchBar.find('.inner').outerHeight() + 'px'}, 200, 'swing');
-        searchBar.addClass('open').animate({height: searchBar.find('.inner').outerHeight() + 'px'}, 200, function() {
-          searchBar.css({height: 'auto'});
+        $(contentArea).animate({ paddingTop: $('#header').outerHeight(true) + searchBar.find('.inner').outerHeight() + 'px' }, 200, 'swing');
+        searchBar.animate({ height: searchBar.find('.inner').outerHeight() + 'px' }, 200, function() {
+          searchBar.css({ height: 'auto'}).addClass('open');
           $(window).trigger('header-animated');
         });
         searchField.focus();
       } else {
         searchField.blur().val('');
         $(this).removeClass('open');
-        $(contentArea).animate({paddingTop: $('#header').outerHeight(true) - searchBar.find('.inner').outerHeight() + 'px'}, 200, 'swing');
-        searchBar.removeClass('open').animate({height: 0}, 200, function() {
+        $(contentArea).animate({ paddingTop: $('#header').outerHeight(true) - searchBar.find('.inner').outerHeight() + 'px' }, 200, 'swing');
+        searchBar.animate({ height: 0 }, 200, function() {
+          searchBar.removeClass('open');
           $(window).trigger('header-animated');
         });
       }
@@ -299,7 +300,7 @@ function openModal(modalID, content, closeCallback) {
 
   // Modal tonen
   modalDiv.addClass('opened');
-  
+
   return modalDiv;
 }
 
@@ -309,10 +310,10 @@ function closeModal(e) {
   }
 
   var modalDiv = $('div.modal');
-  
+
   // Modal verbergen
   modalDiv.removeClass('opened');
-  
+
   modalDiv.children(':not(a.close)').remove();
   modalDiv.removeAttr('id');
 

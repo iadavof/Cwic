@@ -1,4 +1,5 @@
 class Entity < ActiveRecord::Base
+  include PgSearch
   include I18n::Alchemy
 
   has_many :properties, class_name: 'EntityProperty', dependent: :destroy, inverse_of: :entity
@@ -24,6 +25,9 @@ class Entity < ActiveRecord::Base
   accepts_nested_attributes_for :entity_images, allow_destroy: true
 
   default_scope { order('id ASC') }
+
+  multisearchable against: [ :name, :description ]
+  #pg_search_scope :global_search, against: { name: 'A', description: 'B' }
 
   def instance_name
     self.name

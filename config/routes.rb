@@ -1,5 +1,4 @@
 Cwic::Application.routes.draw do
-
   get "home/index"
   root to: 'home#index'
 
@@ -52,5 +51,7 @@ Cwic::Application.routes.draw do
     resources :reservations
     resources :organisation_clients
     resources :entity_type_icons
+
+    match '/search/results', controller: 'search', action: 'results', via: 'get'
   end
 end

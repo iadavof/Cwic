@@ -1,16 +1,4 @@
-<div id="search-bar">
-  <div class="inner">
-    <input name="global-search" id="global-search" style="display: inline-block" type="text" placeholder="Zoeken..." />
-    <select name="global-search-type" id="global-search-type">
-      <option value="0">- Alles -</option>
-      <option value="1">Klant</option>
-      <option value="2">Reservering</option>
-      <option value="3">Object</option>
-      <option value="4">Objecttype</option>
-    </select>
-    <a class="button red">Zoeken</a>
-  </div>
-</div>
+<%= render 'layouts/search' %>
 <div id="menu-bar" class="clearfix">
   <div id="user-info">
     <a id="current-user" href="#"><i class="icon-user"></i> <%= current_user.instance_name %><%= ' (' + current_organisation.instance_name + ')' if current_organisation.present? %></a>
@@ -24,7 +12,7 @@
     <% menu.each_with_index do |(category_name, category_content), index| %>
     <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: (category_matches?(category_name) ? "active" : nil)) do %>
       <% if category_content[:url].present? # No subitems %>
-        <%= link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url), {data: {shortcut_for: "#{category_name}"}}) %>
+        <%= link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url), { data: { shortcut_for: "#{category_name}" } }) %>
       <% else # With subitems %>
         <%= link_to(t(".#{category_name}"), '#', {data: {shortcut_for: "#{category_name}"}}) %>
       <% end %>
