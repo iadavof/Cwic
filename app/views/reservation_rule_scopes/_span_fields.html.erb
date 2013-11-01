@@ -1,11 +1,65 @@
-<div class="fields reservation-rule-scope-wrapper">
-   <div class="field">
-    <%= f.label(:active_from) %>
-    <%= f.datetime_select(:active_from) %>
-    <%= f.label(:active_to) %>
-    <%= f.datetime_select(:active_to) %>
-  </div>
+<div class="fields span-wrapper">
   <div class="actions">
     <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: ReservationRuleScope.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+  </div>
+  <div class="from">
+    <div class="field year from">
+      <%= f.label(:year_from) %>
+      <%= f.number_field(:year_from) %>
+    </div>
+    <div class="field month from">
+      <%= f.label(:month_from) %>
+      <%= f.select(:month_from, (1..12).map { |m| [t("date.month_names")[m].humanize, m] }, prompt: true) %>
+    </div>
+    <div class="field dom from">
+      <%= f.label(:dom_from) %>
+      <%= f.select(:dom_from, 1..31, prompt: true) %>
+    </div>
+    <div class="field week from">
+      <%= f.label(:week_from) %>
+      <%= f.select(:week_from, 1..52, prompt: true) %>
+    </div>
+    <div class="field dow from">
+      <%= f.label(:dow_from) %>
+      <%= f.select(:dow_from, (1..7).map { |d| [t("date.day_names")[d == 7 ? 0 : d].humanize, d] }, prompt: true) %>
+    </div>
+    <div class="field hour from">
+      <%= f.label(:hour_from) %>
+      <%= f.select(:hour_from, (1..23).map { |h| '%02i' % h }, prompt: true) %>
+    </div>
+    <div class="field minute from">
+      <%= f.label(:minute_from) %>
+      <%= f.select(:minute_from, (1..59).map { |m| '%02i' % m }, prompt: true) %>
+    </div>
+  </div>
+  <div class="to">
+    <div class="field year to">
+      <%= f.label(:year_to) %>
+      <%= f.number_field(:year_to) %>
+    </div>
+    <div class="field month to">
+      <%= f.label(:month_to) %>
+      <%= f.select(:month_to, (1..12).map { |m| [t("date.month_names")[m].humanize, m] }, prompt: true) %>
+    </div>
+    <div class="field dom to">
+      <%= f.label(:dom_to) %>
+      <%= f.select(:dom_to, 1..31, prompt: true) %>
+    </div>
+    <div class="field week to">
+      <%= f.label(:week_to) %>
+      <%= f.select(:week_to, 1..52, prompt: true) %>
+    </div>
+    <div class="field dow to">
+      <%= f.label(:dow_to) %>
+      <%= f.select(:dow_to, (1..7).map { |d| [t("date.day_names")[d == 7 ? 0 : d].humanize, d] }, prompt: true) %>
+    </div>
+    <div class="field hour to">
+      <%= f.label(:hour_to) %>
+      <%= f.select(:hour_to, (1..23).map { |h| '%02i' % h }, prompt: true) %>
+    </div>
+    <div class="field minute to">
+      <%= f.label(:minute_to) %>
+      <%= f.select(:minute_to, (1..59).map { |m| '%02i' % m }, prompt: true) %>
+    </div>
   </div>
 </div>

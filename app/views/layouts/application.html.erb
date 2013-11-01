@@ -14,22 +14,24 @@
       <%= render "layouts/menu" %>
       <% end %>
     </div>
-    <div id="progress-bar-container"></div>
-    <h1>
-      <%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %>
-    </h1>
-    <div id="content">
-      <div class="inner clearfix">
-        <% if notice %>
-          <p id="notice"><%= notice %></p>
-        <% end %>
-        <% if alert %>
-          <p id="alert"><%= alert %></p>
-        <% end %>
-        <%= content_for?(:content) ? yield(:content) : yield %>
+    <div id="content-area">
+      <div id="progress-bar-container"></div>
+      <h1 id="page-title">
+        <%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %>
+      </h1>
+      <div id="content">
+        <div class="inner clearfix">
+          <% if notice %>
+            <p id="notice"><%= notice %></p>
+          <% end %>
+          <% if alert %>
+            <p id="alert"><%= alert %></p>
+          <% end %>
+          <%= content_for?(:content) ? yield(:content) : yield %>
+        </div>
       </div>
     </div>
-      <%= render partial: 'shared/modal' %>
-      <%= render partial: 'feedbacks/modal' %>
+    <%= render partial: 'shared/modal' %>
+    <%= render partial: 'feedbacks/modal' %>
   </body>
 </html>

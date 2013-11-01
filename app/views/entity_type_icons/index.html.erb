@@ -23,7 +23,7 @@
       <td><%= image_tag(entity_type_icon.image.icon.url) %></td>
       <td><%= name_link_to_show(entity_type_icon) %></td>
       <% if @admin %>
-       <td><%= entity_type_icon.organisation.present? ? entity_type_icon.organisation.name : t('prompt_all_organisations') %></td>
+       <td><%= entity_type_icon.organisation.present? ? entity_type_icon.organisation.name : t('all_organisations') %></td>
       <% end %>
       <td class="icons">
         <%= icon_link_to_edit(@organisation.present? ? [@organisation, entity_type_icon] : entity_type_icon) %>

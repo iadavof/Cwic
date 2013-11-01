@@ -1,31 +1,102 @@
-APP.entity_types = {
+APP.reservation_rule_scopes = {
   init: function() {
-    var form = $('form.new_entity_type, form.edit_entity_type');
-    form.submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
-    this.initIconSelector();
+    // Initialize events
+    $('#reservation_rule_scope_repetition_unit_id').change(APP.reservation_rule_scopes.onRepetitionChanged);
+    $('#reservation_rule_scope_span_selector').change(APP.reservation_rule_scopes.onSpanSelectorChanged);
 
-    form.find('.property-wrapper').each(function () { APP.entity_types.initializePropertyWrapper($(this)); })
-    $(document).on('nested:fieldAdded:properties', function(event) { APP.entity_types.initializePropertyWrapper(event.field); });
-    $('#entity-type-properties').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
-
-    form.find('.option-wrapper').each(function () { APP.global.nested_objects.initWrapper($(this)); });
-    $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.onNestedFieldAddedOptions(event.field); });
-    $('#entity-type-options').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
-
-    $('div.entity-images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery: { enabled: true } });
+    this.initializeSpanSelector($(this));
+    this.initializeSpanWrappers($(this));
+    $(document).on('nested:fieldAdded:spans', function(event) { APP.reservation_rule_scopes.initializeSpanWrapper(event.field); });
   },
-  initIconSelector: function() {
-    $(".field.icon-select").on('click', 'label', function() {
-      $(".field.icon-select label").removeClass('active');
-        $(this).addClass('active');
-    });
+  onRepetitionChanged: function() {
+    // (Re)initialize span selector field
+    APP.reservation_rule_scopes.initializeSpanSelector();
+
+    // (Re)initialize all span wrappers
+    APP.reservation_rule_scopes.initializeSpanWrappers();
   },
-  onNestedFieldAddedOptions: function(field) {
-    if(field.hasClass('property-option-wrapper')) {
-      this.initializePropertyOptionWrapper(field);
+  initializeSpanSelector: function() {
+    var repetition = APP.reservation_rule_scopes.getRepetition();
+
+    // Determine options for span selector based on repetition
+    var spanSelectorOptions = APP.reservation_rule_scopes.getSpanSelectorOptions(repetition);
+
+    // Rebuild and show span selector or hide it
+    if(spanSelectorOptions) {
+      APP.util.fillDropdownWithItems($('#reservation_rule_scope_span_selector'), spanSelectorOptions, { prompt: true })
+      $('#reservation-rule-scope-span-selector-wrapper').show();
     } else {
-      APP.global.nested_objects.initWrapper(field);
+      $('#reservation-rule-scope-span-selector-wrapper').hide();
     }
+  },
+  getSpanSelectorOptions: function(repetition) {
+    switch(repetition) {
+      case 'year':
+        return jsLang.reservation_rule_scopes.span_selectors.year;
+      case 'month':
+        return jsLang.reservation_rule_scopes.span_selectors.month;
+      default:
+        return null; // Geen span selector mogelijkheid (bij de repetition worden spans altijd op dezelfde manier opgegeven)
+    }
+  },
+  onSpanSelectorChanged: function() {
+    // (Re)initialize all span wrappers
+    APP.reservation_rule_scopes.initializeSpanWrappers();
+  },
+  initializeSpanWrappers: function() {
+    var form = $('form.new_reservation_rule_scope, form.edit_reservation_rule_scope');
+    form.find('.span-wrapper').each(function () { APP.reservation_rule_scopes.initializeSpanWrapper($(this)); });
+  },
+  initializeSpanWrapper: function(spanWrapper) {
+    repetition = this.getRepetition();
+    spanSelector = this.getSpanSelector();
+
+    // Hide all span fields
+    spanWrapper.find('.field').hide();
+
+    // Rebuild/show repetition unit specific fields
+    var fields = this.getSpanFields(repetition, spanSelector);
+    this.showSpanFields(spanWrapper, fields);
+  },
+  getSpanFields: function(repetition, spanSelector) {
+    switch(repetition) {
+      case 'infinite':
+        return ['year', 'month', 'dom', 'hour', 'minute'];
+      case 'year':
+        switch(spanSelector) {
+          case 'dates':
+            return  ['month', 'dom', 'hour', 'minute'];
+          case 'weeks':
+            return  ['week', 'dow', 'hour', 'minute'];
+          case 'holidays':
+            return  ['holidays'];
+        }
+        break;
+      case 'month':
+        switch(spanSelector) {
+          case 'days':
+            return  ['dom', 'hour', 'minute'];
+          case 'nr_dow_of':
+            return  ['dow', 'hour', 'minute'];
+        }
+        break;
+      case 'week':
+        return  ['dow', 'hour', 'minute'];
+      case 'day':
+        return  ['hour', 'minute'];
+    }
+  },
+  showSpanFields: function(spanWrapper, fields) {
+    for(i in fields) {
+      field = fields[i];
+      spanWrapper.find('.' + field).show();
+    }
+  },
+  getRepetition: function() {
+    return $('#reservation_rule_scope_repetition_unit_id :selected').data('key');
+  },
+  getSpanSelector: function() {
+    return $('#reservation_rule_scope_span_selector').val();
   },
   initializePropertyWrapper: function(propertyWrapper) {
     // Initialize field actions

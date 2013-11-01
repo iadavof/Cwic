@@ -16,6 +16,14 @@ class ReservationRuleScope < ActiveRecord::Base
 
   accepts_nested_attributes_for :spans, allow_destroy: true
 
+  # Gives the valid repetition units for this scope. These are the base repetition units that are 'smaller' than the repetition unit of the parent.
+  def valid_repetition_units
+    base_units = ['infinite', 'year', 'month', 'week', 'day']
+    relation = TimeUnit.where(key: base_units)
+    relation = relation.where('seconds < ?', parent.repetition_unit.seconds) if parent.present?
+    relation.reorder('seconds DESC')
+  end
+
   def instance_name
     self.name
   end

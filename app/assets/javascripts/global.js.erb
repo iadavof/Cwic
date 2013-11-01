@@ -5,16 +5,18 @@ APP.init = function() {
   current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
   current_organisation = { id: parseInt(body.data('current-organisation-id')) };
 
-  // Load the menu
-  this.global.menuInit();
-  this.global.searchBarInit();
-  this.global.keyboardShortcutsInit();
+  if ($('#header:visible').length > 0) {
+    // Load the menu
+    this.global.menuInit();
+    this.global.keyboardShortcutsInit();
+    this.global.searchBarInit();
 
-  // Load the feedback module
-  new IADAFeedback({
-    open_button_id: 'open-feedback-button',
-    backend_url: Routes.feedbacks_path({ format: 'json' })
-  });
+    // Load the feedback module
+    new IADAFeedback({
+      open_button_id: 'open-feedback-button',
+      backend_url: Routes.feedbacks_path({ format: 'json' })
+    });
+  }
 
   // Load stickies (if #note-container is present)
   this.stickies.loadStickies();
@@ -27,7 +29,7 @@ APP.init = function() {
 
   // Initialize date- and timepicker fields
   this.global.initializeDateTimePickers();
-  
+
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
@@ -42,6 +44,9 @@ $(document).on('page:restore', function() { NProgress.remove(); });
 APP.global = {
   menuInit: function() {
     var submenuBox = $('#submenu-box');
+    var contentArea = $('#content-area');
+
+    contentArea.css({paddingTop: $('#header').outerHeight(true) + 'px'});
 
     this.slideSubMenuByMenuItem($('#main-menu > li.active').first().attr('id'), false);
 
@@ -52,17 +57,24 @@ APP.global = {
   searchBarInit: function() {
     $('#open-search-button').on('click', function() {
       var searchBar = $('#search-bar');
-      var searchField = $('#global-search');
+      var contentArea = $('#content-area');
+      var searchField = $('#global_search');
       if(!searchBar.hasClass('open')) {
         $(this).addClass('open');
-        searchBar.addClass('open').animate({height: searchBar.find('.inner').outerHeight() + 'px'}, 200, function() {
-          searchBar.css({height: 'auto'});
+        $(contentArea).animate({ paddingTop: $('#header').outerHeight(true) + searchBar.find('.inner').outerHeight() + 'px' }, 200, 'swing');
+        searchBar.animate({ height: searchBar.find('.inner').outerHeight() + 'px' }, 200, function() {
+          searchBar.css({ height: 'auto'}).addClass('open');
+          $(window).trigger('header-animated');
         });
         searchField.focus();
       } else {
         searchField.blur().val('');
         $(this).removeClass('open');
-        searchBar.removeClass('open').animate({height: 0}, 200);
+        $(contentArea).animate({ paddingTop: $('#header').outerHeight(true) - searchBar.find('.inner').outerHeight() + 'px' }, 200, 'swing');
+        searchBar.animate({ height: 0 }, 200, function() {
+          searchBar.removeClass('open');
+          $(window).trigger('header-animated');
+        });
       }
       return false;
     });
@@ -80,6 +92,7 @@ APP.global = {
   },
   slideSubMenuByMenuItem: function(htmlId, animated) {
     var submenuBox = $('#submenu-box');
+    var contentArea = $('#content-area');
     var menuItem = $('#' + htmlId);
     var relatedSubmenu = $('#submenu-box > .submenu[data-main-menu-relation="' + htmlId + '"]').first();
     var duration = animated ? 250 : 0;
@@ -111,8 +124,10 @@ APP.global = {
             $(this).attr('title', jsLang.global.expand_menu + ' [Alt+' + shortcutKey + ']');
           }
         });
+        $(contentArea).animate({paddingTop: $('#header').outerHeight(true) - submenuBox.outerHeight(false) + 'px'}, duration, 'swing');
         $(submenuBox).animate({height: 0}, duration, 'swing', function() {
           $(submenus).removeClass('selected');
+          $(window).trigger('header-animated');
         });
       } else {
         $(menuItems).removeClass('selected');
@@ -130,18 +145,23 @@ APP.global = {
           }
         });
         if ($(submenuBox).height() > 0) { /* Contract expanded submenu first, then expand requested submenu */
+          $(contentArea).animate({paddingTop: $('#header').outerHeight(true) - submenuBox.outerHeight(false) + 'px'}, duration, 'swing');
           $(submenuBox).animate({height: 0}, duration, 'swing', function() {
             $(submenus).removeClass('selected');
             $(relatedSubmenu).addClass('selected');
-            $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function() {
+            $(contentArea).animate({paddingTop: $('#header').outerHeight(true) + relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing');
+            $(submenuBox).animate({height: relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing', function() {
               $(this).css({height: 'auto'});
+              $(window).trigger('header-animated');
             });
           });
         } else { /* Expand requested submenu */
           $(submenus).removeClass('selected');
           $(relatedSubmenu).addClass('selected');
-          $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function(){
+          $(contentArea).animate({paddingTop: $('#header').outerHeight(true) + relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing');
+          $(submenuBox).animate({height: relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing', function(){
             $(this).css({height: 'auto'});
+            $(window).trigger('header-animated');
           });
         }
       }
@@ -206,8 +226,8 @@ APP.global.nested_objects = {
     wrapper.find('.icon-edit').click(function() { APP.global.nested_objects.editWrapper(wrapper) });
     wrapper.find('.icon-ok').click(function() { APP.global.nested_objects.finishWrapper(wrapper) });
 
-    // Fix the extra remove link work
-    wrapper.find('.remove-nested-fields-extra').click(function () { $(this).closest('.fields').find('.remove_nested_fields').click(); });
+    // Make the extra remove link work
+    wrapper.find('.remove-nested-fields-extra').click(function () { $(this).closest('.fields').find('.remove_nested_fields').first().click(); });
 
     // If the option is not valid, then show form immediately. New properties are also not valid by default.
     if(wrapper.attr('data-valid') == 'false') {
@@ -243,11 +263,13 @@ APP.global.nested_objects = {
   }
 };
 
+// XXX TODO move functions below (for example arrayToSentence) to APP.util
+
 function arrayToSentence(array) {
   if(array.length <= 1) {
     return array
   } else {
-    return array.slice(0, array.length - 1).join(', ') + jsLang.global.and + array.slice(-1);
+    return array.slice(0, array.length - 1).join(', ') + jsLang.global.and_connector + array.slice(-1);
   }
 }
 
@@ -273,8 +295,11 @@ function openModal(modalID, content, closeCallback) {
   modalDiv.append(content);
 
   // Open overlay
-  window.location.hash = 'modal_overlay';
+  overlay.addClass('opened');
   $('html').addClass('with-overlay');
+
+  // Modal tonen
+  modalDiv.addClass('opened');
 
   return modalDiv;
 }
@@ -285,13 +310,18 @@ function closeModal(e) {
   }
 
   var modalDiv = $('div.modal');
+
+  // Modal verbergen
+  modalDiv.removeClass('opened');
+
   modalDiv.children(':not(a.close)').remove();
   modalDiv.removeAttr('id');
 
   var overlay = $('a.overlay');
 
+  // Sluit overlay
+  overlay.removeClass('opened');
   $('html').removeClass('with-overlay');
-  window.location.hash = 'modal_close';
 
   // Remove events from the overlay
   overlay.off('click');

@@ -120,6 +120,10 @@ GEM
     orm_adapter (0.4.0)
     pg (0.16.0)
     pg (0.16.0-x86-mingw32)
+    pg_search (0.7.0)
+      activerecord (>= 3.1)
+      activesupport (>= 3.1)
+      arel
     polyglot (0.3.3)
     pry (0.9.12.2)
       coderay (~> 1.0.5)
@@ -237,6 +241,7 @@ DEPENDENCIES
   momentjs-rails!
   nested_form
   pg
+  pg_search
   pry-rails
   quiet_assets
   rails (= 4.0.0)

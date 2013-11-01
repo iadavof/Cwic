@@ -1,4 +1,5 @@
 class Entity < ActiveRecord::Base
+  include PgSearch
   include I18n::Alchemy
 
   after_save :create_info_screen_entities
@@ -27,6 +28,9 @@ class Entity < ActiveRecord::Base
   accepts_nested_attributes_for :entity_images, allow_destroy: true
 
   default_scope { order('id ASC') }
+
+  multisearchable against: [ :name, :description ]
+  #pg_search_scope :global_search, against: { name: 'A', description: 'B' }
 
   def instance_name
     self.name

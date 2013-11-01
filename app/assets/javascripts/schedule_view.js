@@ -139,11 +139,11 @@ IADAscheduleView.prototype.toggleCustomDomainControls = function() {
   var customDomainButton = this.scheduleContainer.find('div.control-container.navigate a#customMode');
   var controlContainer = this.scheduleContainer.find('div.control-container.domain');
   if(customDomainButton.hasClass('active')) {
-    controlContainer.animate({width: controlContainer.find('div.inner').outerWidth(false) + 'px'}, 300, 'swing', function(){
-      $(this).css('width', 'auto');
+    controlContainer.animate({height: controlContainer.find('div.inner').outerHeight() + 'px'}, 300, 'swing', function(){
+      $(this).css('height', 'auto');
     });
   } else {
-    controlContainer.animate({width: 0}, 300, 'swing');
+    controlContainer.animate({height: 0}, 300, 'swing');
   }
 
 
@@ -707,6 +707,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
 }
 
 IADAscheduleView.prototype.addTimeAxis = function() {
+  var scheduleContainer = $(this.scheduleContainer);
   var timeAxis = $(this.scheduleContainer).find('.time-axis');
   var timeAxisHours = $(this.scheduleContainer).find('.time-axis > .hours');
 
@@ -737,7 +738,10 @@ IADAscheduleView.prototype.addTimeAxis = function() {
     this.scheduleContainer.find('div.time-axis').height(this.scheduleContainer.find('div.time-axis div.day-time-axis-frame').outerHeight());
   }
 
-  timeAxis.sticky({getWidthFrom: '.schedule-body'});
+  timeAxis.sticky({getWidthFrom: '.schedule-body', topSpacing: $('#header').outerHeight(true)});
+  $(window).on('header-animated resize', function() {
+    timeAxis.sticky('update', {topSpacing: $('#header').outerHeight(true)});
+  });
 }
 
 
@@ -1029,14 +1033,14 @@ IADAscheduleView.prototype.bindEntityInfoControls = function() {
     var descriptionHeight;
     $(this).on('click', function() {
       if($(this).siblings('.entity-description').hasClass('opened')) {
-        $(this).siblings('.entity-description').animate({height: 0}, {complete: function(){
+        $(this).siblings('.entity-description').animate({height: 0}, 200, function(){
           $(this).css({display: 'none', height: 'auto'}).removeClass('opened');
-        }});
+        });
       } else {
         descriptionHeight = $(this).siblings('.entity-description').height();
-        $(this).siblings('.entity-description').css({height: 0, display: 'block'}).animate({height: descriptionHeight}, {complete: function() {
+        $(this).siblings('.entity-description').css({height: 0, display: 'block'}).animate({height: descriptionHeight}, 200, function() {
           $(this).css({height: 'auto'});
-        }}).addClass('opened');
+        }).addClass('opened');
       }
     });
   });
