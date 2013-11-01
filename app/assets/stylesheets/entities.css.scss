@@ -1,3 +1,9 @@
 div.nested-scopes {
   margin-left: 1em;
 }
+
+div.reservation-rule-scope {
+  div.actions {
+    float: right;
+  }
+}
