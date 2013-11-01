@@ -225,8 +225,8 @@ APP.global.nested_objects = {
     wrapper.find('.icon-edit').click(function() { APP.global.nested_objects.editWrapper(wrapper) });
     wrapper.find('.icon-ok').click(function() { APP.global.nested_objects.finishWrapper(wrapper) });
 
-    // Fix the extra remove link work
-    wrapper.find('.remove-nested-fields-extra').click(function () { $(this).closest('.fields').find('.remove_nested_fields').click(); });
+    // Make the extra remove link work
+    wrapper.find('.remove-nested-fields-extra').click(function () { $(this).closest('.fields').find('.remove_nested_fields').first().click(); });
 
     // If the option is not valid, then show form immediately. New properties are also not valid by default.
     if(wrapper.attr('data-valid') == 'false') {
