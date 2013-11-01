@@ -29,7 +29,7 @@ APP.init = function() {
 
   // Initialize date- and timepicker fields
   this.global.initializeDateTimePickers();
-  
+
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
@@ -262,11 +262,13 @@ APP.global.nested_objects = {
   }
 };
 
+// XXX TODO move functions below (for example arrayToSentence) to APP.util
+
 function arrayToSentence(array) {
   if(array.length <= 1) {
     return array
   } else {
-    return array.slice(0, array.length - 1).join(', ') + jsLang.global.and + array.slice(-1);
+    return array.slice(0, array.length - 1).join(', ') + jsLang.global.and_connector + array.slice(-1);
   }
 }
 

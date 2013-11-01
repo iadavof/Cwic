@@ -30,7 +30,7 @@ nl:
   done_nested_object: 'Klaar met bewerken'
   include_blank_none: 'Geen'
   prompt_choose: 'Kies...'
-  prompt_all_organisations: 'Alle organisaties'
+  all_organisations: 'Alle organisaties'
   are_you_sure: 'Weet u het zeker?'
   unknown_html: '<em>Onbekend</em>'
   none_html: '<em>Geen</em>'
@@ -171,6 +171,7 @@ nl:
       entity_type_icon:
         name: 'Naam'
         organisation: 'Organisatie'
+        organisation_id: 'Organisatie'
         entity_type_icon_image: 'Icoon'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Locale afbeelding'
@@ -207,6 +208,7 @@ nl:
           attributes:
             begins_at: 'overlapt met een andere reservering welke eindigt op %{other_ends_at}'
             ends_at: 'overlapt met een andere reservering welke begint op %{other_begins_at}'
+
   data_types:
     string:
       name: 'Regel tekst'
@@ -258,6 +260,9 @@ nl:
     year:
       name: 'Jaar'
       repetition_name: 'Jaarlijks'
+    infinite:
+      name: 'Oneindig'
+      repetition_name: 'Geen herhaling'
 
   errors:
     messages:
@@ -436,3 +441,9 @@ nl:
   stickies:
     resource_stickies:
       saved: 'Opgeslagen'
+
+  reservation_rule_scopes:
+    reservation_rule_scope:
+      active: 'Actief'
+      scope: 'Scope'
+      active_from_to: 'van %{from} tot %{to}'

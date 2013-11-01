@@ -6,15 +6,16 @@ var jsLang = {
     admin: 'a',
   },
   global: {
-    and: ' en ',
     none: 'Geen',
+    prompt: 'Selecteer',
     yes: 'Ja',
     no: 'Nee',
+    and_connector: ' en ',
     expand_menu: 'Menu uitklappen',
     contract_menu: 'Menu inklappen',
   },
   stickies: {
-    placeholder: 'Wayoo leipe sticky',
+    placeholder: 'Voer hier uw notitie in...',
     saved: 'Opgeslagen',
   },
   schedule_view: {
@@ -26,5 +27,18 @@ var jsLang = {
     deleting: 'Reservering wordt verwijderd...',
     deleted: 'Reservering verwijderd.',
     delete_confirm: 'Weet u zeker dat u Reservering #%{item_id} wilt verwijderen? De reservering kan hierna niet worden hersteld.',
+  },
+  reservation_rule_scopes: {
+    span_selectors: {
+      year: {
+        'dates': 'Datums',
+        'weeks': 'Weken',
+        'holidays': 'Feestdagen'
+      },
+      month: {
+        'days': 'Dagen',
+        'nr_dow_of': 'De <x>de dag van de maand'
+      }
+    }
   }
 }

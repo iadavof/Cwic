@@ -10,7 +10,7 @@
   <dt><%= EntityTypeIcon.human_attribute_name(:name) %></dt>
   <dd><%= @entity_type_icon.name %></dd>
   <dt><%= EntityTypeIcon.human_attribute_name(:organisation) %></dt>
-  <dd><%= @entity_type_icon.organisation ? @entity_type_icon.organisation.name : t('prompt_all_organisations') %></dd>
+  <dd><%= @entity_type_icon.organisation ? @entity_type_icon.organisation.name : t('all_organisations') %></dd>
 </dl>
 
 <%= button_link_back_to_index(@organisation.present? ? [@organisation, EntityTypeIcon] : EntityTypeIcon) %>
