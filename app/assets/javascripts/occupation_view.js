@@ -263,6 +263,9 @@ IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
   }
   if(!topAxis.parent().hasClass('sticky-wrapper')) {
     topAxis.sticky({getWidthFrom: '.occupation-matrix-body'});
+    $(window).on('header-animated resize', function() {
+      topAxis.sticky('update', {topSpacing: $('#header').outerHeight(true)});
+    });
   }
   this.resizeActions();
 }

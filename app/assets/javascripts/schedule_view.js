@@ -740,7 +740,6 @@ IADAscheduleView.prototype.addTimeAxis = function() {
 
   timeAxis.sticky({getWidthFrom: '.schedule-body', topSpacing: $('#header').outerHeight(true)});
   $(window).on('header-animated resize', function() {
-    scheduleContainer.find('.sticky-wrapper.is-sticky .time-axis').css({top: $('#header').outerHeight(true)});
     timeAxis.sticky('update', {topSpacing: $('#header').outerHeight(true)});
   });
 }

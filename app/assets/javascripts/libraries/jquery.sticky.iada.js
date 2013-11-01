@@ -109,12 +109,18 @@
           });
         });
       },
-      /* IADA: Update method edited, so spacings can be changed */
+      // IADA: Update method edited so options can be changed
       update: function(options) {
-        var o = $.extend(defaults, options);
-        this.each(function(i) {
-          sticked[i]['topSpacing'] = o.topSpacing;
-          sticked[i]['bottomSpacing'] = o.bottomSpacing;
+        this.each(function(index) {
+          var e = $(this);
+          // Search for this element's options object in the sticked array and update it.
+          for (var i = 0; i < sticked.length; i++) {
+            var s = sticked[i];
+            if (s.stickyElement.length == e.length && s.stickyElement.length == s.stickyElement.filter(e).length) {
+              $.extend(sticked[i], options);
+              break;
+            }
+          }
         });
         scroller();
       }

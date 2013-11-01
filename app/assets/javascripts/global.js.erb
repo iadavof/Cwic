@@ -292,9 +292,12 @@ function openModal(modalID, content, closeCallback) {
   modalDiv.append(content);
 
   // Open overlay
-  window.location.hash = 'modal_overlay';
+  overlay.addClass('opened');
   $('html').addClass('with-overlay');
 
+  // Modal tonen
+  modalDiv.addClass('opened');
+  
   return modalDiv;
 }
 
@@ -304,13 +307,18 @@ function closeModal(e) {
   }
 
   var modalDiv = $('div.modal');
+  
+  // Modal verbergen
+  modalDiv.removeClass('opened');
+  
   modalDiv.children(':not(a.close)').remove();
   modalDiv.removeAttr('id');
 
   var overlay = $('a.overlay');
 
+  // Sluit overlay
+  overlay.removeClass('opened');
   $('html').removeClass('with-overlay');
-  window.location.hash = 'modal_close';
 
   // Remove events from the overlay
   overlay.off('click');
