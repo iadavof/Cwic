@@ -109,7 +109,15 @@
           });
         });
       },
-      update: scroller
+      /* IADA: Update method edited, so spacings can be changed */
+      update: function(options) {
+        var o = $.extend(defaults, options);
+        this.each(function(i) {
+          sticked[i]['topSpacing'] = o.topSpacing;
+          sticked[i]['bottomSpacing'] = o.bottomSpacing;
+        });
+        scroller();
+      }
     };
 
   // should be more efficient than using $window.scroll(scroller) and $window.resize(resizer):

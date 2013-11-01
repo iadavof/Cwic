@@ -19,7 +19,10 @@ div.horizontal-calendar {
 
 div.horizontal-calendar div.control-container {
   margin: 20px 0;
-  float: left;
+}
+
+div.horizontal-calendar div.control-container.navigate {
+  margin-bottom: 0;
 }
 
 div.horizontal-calendar div.control-container.navigate a.button.active {
@@ -27,13 +30,14 @@ div.horizontal-calendar div.control-container.navigate a.button.active {
 }
 
 div.horizontal-calendar div.control-container.domain {
-  float: right;
-  width: 0;
+  height: 0;
+  margin-top: 0;
+  padding-top: 10px;
   overflow: hidden;
 }
 
 div.horizontal-calendar div.control-container.domain div.inner {
-  width: 605px;
+
 }
 
 div.horizontal-calendar div.control-container span.tm {
@@ -683,4 +687,42 @@ div.horizontal-calendar div.entity-container div.entity-button p.entity-name {
   font-size: 0.8em;
   line-height: 100%;
   margin-top: -6px;
+}
+
+@media print {
+  body.controller-schedule_view.action-horizontal_calendar_day {
+    #header, 
+    div.horizontal-calendar div.entity-container, 
+    div.actions, 
+    div.control-container, 
+    div.horizontal-calendar div.schedule-body div.row div.time-needle {
+      display: none;
+    }
+    
+    div.horizontal-calendar div.schedule-body div.row div.row-schedule-objects {
+      page-break-inside: avoid;
+    }
+    
+    #page-title {
+      padding: 0;
+    }
+    
+    #content {
+      margin-left: 0;
+      margin-right: 0;
+    }
+    
+    #content > .inner {
+      padding-left: 0;
+      padding-right: 0;
+    }
+    
+    #content-area {
+      padding: 0 !important;
+    }
+    
+    div.horizontal-calendar div.schedule-body div.row.today {
+      background: transparent;
+    }
+  }
 }

@@ -5,16 +5,18 @@ APP.init = function() {
   current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
   current_organisation = { id: parseInt(body.data('current-organisation-id')) };
 
-  // Load the menu
-  this.global.menuInit();
-  this.global.searchBarInit();
-  this.global.keyboardShortcutsInit();
+  if ($('#header:visible').length > 0) {
+    // Load the menu
+    this.global.menuInit();
+    this.global.keyboardShortcutsInit();
+    this.global.searchBarInit();
 
-  // Load the feedback module
-  new IADAFeedback({
-    open_button_id: 'open-feedback-button',
-    backend_url: Routes.feedbacks_path({ format: 'json' })
-  });
+    // Load the feedback module
+    new IADAFeedback({
+      open_button_id: 'open-feedback-button',
+      backend_url: Routes.feedbacks_path({ format: 'json' })
+    });
+  }
 
   // Load stickies (if #note-container is present)
   this.stickies.loadStickies();
@@ -42,6 +44,9 @@ $(document).on('page:restore', function() { NProgress.remove(); });
 APP.global = {
   menuInit: function() {
     var submenuBox = $('#submenu-box');
+    var contentArea = $('#content-area');
+    
+    contentArea.css({paddingTop: $('#header').outerHeight(true) + 'px'});
 
     this.slideSubMenuByMenuItem($('#main-menu > li.active').first().attr('id'), false);
 
@@ -52,17 +57,23 @@ APP.global = {
   searchBarInit: function() {
     $('#open-search-button').on('click', function() {
       var searchBar = $('#search-bar');
+      var contentArea = $('#content-area');
       var searchField = $('#global-search');
       if(!searchBar.hasClass('open')) {
         $(this).addClass('open');
+        $(contentArea).animate({paddingTop: $('#header').outerHeight(true) + searchBar.find('.inner').outerHeight() + 'px'}, 200, 'swing');
         searchBar.addClass('open').animate({height: searchBar.find('.inner').outerHeight() + 'px'}, 200, function() {
           searchBar.css({height: 'auto'});
+          $(window).trigger('header-animated');
         });
         searchField.focus();
       } else {
         searchField.blur().val('');
         $(this).removeClass('open');
-        searchBar.removeClass('open').animate({height: 0}, 200);
+        $(contentArea).animate({paddingTop: $('#header').outerHeight(true) - searchBar.find('.inner').outerHeight() + 'px'}, 200, 'swing');
+        searchBar.removeClass('open').animate({height: 0}, 200, function() {
+          $(window).trigger('header-animated');
+        });
       }
       return false;
     });
@@ -80,6 +91,7 @@ APP.global = {
   },
   slideSubMenuByMenuItem: function(htmlId, animated) {
     var submenuBox = $('#submenu-box');
+    var contentArea = $('#content-area');
     var menuItem = $('#' + htmlId);
     var relatedSubmenu = $('#submenu-box > .submenu[data-main-menu-relation="' + htmlId + '"]').first();
     var duration = animated ? 250 : 0;
@@ -111,8 +123,10 @@ APP.global = {
             $(this).attr('title', jsLang.global.expand_menu + ' [Alt+' + shortcutKey + ']');
           }
         });
+        $(contentArea).animate({paddingTop: $('#header').outerHeight(true) - submenuBox.outerHeight(false) + 'px'}, duration, 'swing');
         $(submenuBox).animate({height: 0}, duration, 'swing', function() {
           $(submenus).removeClass('selected');
+          $(window).trigger('header-animated');
         });
       } else {
         $(menuItems).removeClass('selected');
@@ -130,18 +144,23 @@ APP.global = {
           }
         });
         if ($(submenuBox).height() > 0) { /* Contract expanded submenu first, then expand requested submenu */
+          $(contentArea).animate({paddingTop: $('#header').outerHeight(true) - submenuBox.outerHeight(false) + 'px'}, duration, 'swing');
           $(submenuBox).animate({height: 0}, duration, 'swing', function() {
             $(submenus).removeClass('selected');
             $(relatedSubmenu).addClass('selected');
-            $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function() {
+            $(contentArea).animate({paddingTop: $('#header').outerHeight(true) + relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing');
+            $(submenuBox).animate({height: relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing', function() {
               $(this).css({height: 'auto'});
+              $(window).trigger('header-animated');
             });
           });
         } else { /* Expand requested submenu */
           $(submenus).removeClass('selected');
           $(relatedSubmenu).addClass('selected');
-          $(submenuBox).animate({height: relatedSubmenu.outerHeight(false)}, duration, 'swing', function(){
+          $(contentArea).animate({paddingTop: $('#header').outerHeight(true) + relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing');
+          $(submenuBox).animate({height: relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing', function(){
             $(this).css({height: 'auto'});
+            $(window).trigger('header-animated');
           });
         }
       }

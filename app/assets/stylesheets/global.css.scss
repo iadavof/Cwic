@@ -164,6 +164,14 @@ html.with-overlay body {
  * Menu
  */
 
+html.js #header {
+  position: fixed;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+
 #search-bar {
   overflow: hidden;
   background-color: #ffffff;
@@ -374,6 +382,10 @@ html.js #submenu-box > .submenu.selected {
 /**
  * Global
  */
+
+#header {
+  box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+}
 
 div {
   &.field, &.actions {
@@ -772,6 +784,10 @@ button.ui-datepicker-trigger {
 .datepicker-field {
   width: 80px;
   margin-right: 5px;
+}
+
+.ui-datepicker-trigger, .ui-timepicker-trigger {
+  display: none;
 }
 
 div.entity-images-container a {
