@@ -175,6 +175,7 @@ html.js #header {
 #search-bar {
   overflow: hidden;
   background-color: #ffffff;
+  text-align: center;
 }
 
 html.js #search-bar {
@@ -186,7 +187,7 @@ html.js #search-bar.open {
 }
 
 #search-bar > .inner {
-  padding: 5px 10px 5px 10px;
+  padding: 10px;
 }
 
 #menu-bar {
@@ -333,7 +334,7 @@ html.js #submenu-box {
   display: inline-block;
   vertical-align: top;
   text-align: left;
-  padding: 15px;
+  padding: 12px 10px 10px 10px;
   margin: 0;
 }
 
@@ -357,7 +358,8 @@ html.js #submenu-box > .submenu.selected {
 }
 
 #submenu-box > .submenu > .submenu-block > h3 {
-  margin-top: 5px;
+  margin: 0 0 7px 0;
+  font-size: 1.3em;
 }
 
 #submenu-box > .submenu > .submenu-block > ul {
@@ -373,14 +375,21 @@ html.js #submenu-box > .submenu.selected {
 
 #submenu-box > .submenu > .submenu-block > ul > li a {
   display: inline-block;
+  padding: 2px 10px;
+  margin-left: -10px;
+  text-decoration: none;
+  transition: background-color 0.1s;
+}
+
+#submenu-box > .submenu > .submenu-block > ul > li a:hover {
+  background-color: rgba(255,255,255,0.4);
 }
 
 #submenu-box > .submenu > .submenu-block > ul > li.active a {
   background-color: #ff3520;
   color: #ffffff;
   text-decoration: none;
-  padding: 0 8px;
-  border-radius: 3px;
+  padding: 2px 10px;
 }
 
 /**

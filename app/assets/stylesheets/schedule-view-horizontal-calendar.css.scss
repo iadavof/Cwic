@@ -690,13 +690,32 @@ div.horizontal-calendar div.entity-container div.entity-button p.entity-name {
 }
 
 @media print {
-  body.controller-schedule_view.action-horizontal_calendar_day {
+  html {
+    background-color: transparent;
+  }
+  body.controller-schedule_view.action-horizontal_calendar_day, 
+  body.controller-schedule_view.action-horizontal_calendar_week  {
+    color: #000;
+  
     #header, 
     div.horizontal-calendar div.entity-container, 
     div.actions, 
     div.control-container, 
-    div.horizontal-calendar div.schedule-body div.row div.time-needle {
-      display: none;
+    div.horizontal-calendar div.schedule-body div.row div.time-needle,
+    div.horizontal-calendar div.schedule-body div.row div.schedule-item div.resizer,
+    div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-toolbar {
+      display: none !important;
+    }
+    
+    div.horizontal-calendar div.time-axis {
+      width: auto !important;
+      position: relative !important;
+      top: 0 !important;
+      left: 0 !important;
+    }
+    
+    div.horizontal-calendar div.schedule-body div.row div.schedule-item {
+      border: 4px solid #000;
     }
     
     div.horizontal-calendar div.schedule-body div.row div.row-schedule-objects {

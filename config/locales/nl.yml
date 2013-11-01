@@ -416,6 +416,7 @@ nl:
       organisation_client: 'Klant'
       edit: 'Bewerken'
       delete: 'Verwijderen'
+      custom: 'Aangepast'
 
   occupation_view:
     day_occupation:
