@@ -49,8 +49,10 @@ class Entity < ActiveRecord::Base
   end
 
   def create_info_screen_entities
-    @organisation.info_screens.each do |is|
-        InfoScreenEntities.create(entity: self.id, info_screen_entity_type: InfoScreenEntityTypes.where('entity_id = ?', self.entity_type.id), active: iset.add_new_entities)
+    if @organisation.present?
+      @organisation.info_screens.each do |is|
+          InfoScreenEntities.create(entity: self.id, info_screen_entity_type: InfoScreenEntityTypes.where('entity_id = ?', self.entity_type.id), active: iset.add_new_entities)
+      end
     end
   end
 end

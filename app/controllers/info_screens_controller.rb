@@ -2,6 +2,8 @@ class InfoScreensController < ApplicationController
   before_action :load_resource
   authorize_resource
 
+  respond_to :html, :json
+
   # GET /info_screens
   def index
     respond_with(@info_screens)
@@ -10,6 +12,39 @@ class InfoScreensController < ApplicationController
   # GET /info_screens/1
   def show
     respond_with(@info_screen)
+  end
+
+  # GET /info_screens/1/reservations.json
+  def info_screen_reservations
+    result = {}
+    active_ises = @info_screen.info_screen_entity_types.active.info_screen_entities.active
+    active_ises.each do |ise|
+      entity_result = {}
+
+      entity_result.entity_id = ise.entity.id
+      entity_result.entity_name = ise.entity.instance_name
+
+      current_reservations << ise.entities.reservations.where('begins_at <= :update_scope_stop AND ends_at >= :update_scope_start', update_scope_start: Time.now, update_scope_stop: Time.now + 30.minutes).order(:begins_at)
+      
+      current_reservations.each do |r|
+        entity_result.reservations << {
+          id: r.id,
+          color: r.entity.color,
+          begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
+          end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
+          description: r.organisation_client.instance_name,
+        }
+      end
+
+      if ise.direction_char.present?
+        entity_result.direction_char = ise.direction_char
+      end
+      result << entity_result
+    end
+
+    result.sort
+
+    render json: { entities: result }, status: :ok
   end
 
   # GET /info_screens/new
@@ -61,8 +96,8 @@ private
   def resource_params
     params.require(:info_screen).permit(
       :name, :public, :add_new_entity_types,
-        info_screen_entity_type_attributes: [:add_new_entities, :active,
-          info_screen_entity_attributes: [:direction_char, :active],
+        info_screen_entity_types_attributes: [:id, :add_new_entities, :active,
+          info_screen_entities_attributes: [:id, :direction_char, :active],
         ],
       )
   end

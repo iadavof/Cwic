@@ -6,6 +6,8 @@ class InfoScreenEntity < ActiveRecord::Base
   validates :info_screens_entity_type, presence: true
   validates :entity, presence: true
 
+  scope :active, -> { where('active = true') }
+
   def instance_name
     self.direction_char
   end
