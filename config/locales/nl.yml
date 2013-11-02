@@ -123,6 +123,19 @@ nl:
         administrative_area_level_1: 'Provincie'
         postal_code: 'Postcode'
         country: 'Land'
+      organisation_client:
+        name: 'Naam'
+        first_name: 'Voornaam'
+        last_name: 'Achternaam'
+        infix: 'Tussenvoegsel'
+        address: 'Adres'
+        route: 'Straat'
+        street_number: 'Huisnummer'
+        locality: 'Plaats'
+        administrative_area_level_2: 'Gemeente'
+        administrative_area_level_1: 'Provincie'
+        postal_code: 'Postcode'
+        country: 'Land'
       organisation_user:
         user: 'Gebruiker'
         user_email: 'E-mailadres'
@@ -356,6 +369,10 @@ nl:
       resend_invitation: 'Herstuur uitnodiging'
     new_invitation:
       intro: 'Het systeem kent de gebruiker met het e-mailadres "%{email}" niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
+
+  organisation_clients:
+    form:
+      address: 'Adres'
 
   entity_types:
     still_used_destroy_confirm:

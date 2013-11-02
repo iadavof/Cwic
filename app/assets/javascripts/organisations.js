@@ -11,8 +11,9 @@ APP.organisations = {
 		  	autocomplete: 'default',
       		regionBias: $('body').data('current-locale'),
 		  	mapOptions: {
-            	zoom: 6,
+	            zoom: ($('#organisation_lat').val() == '' && $('#organisation_lng').val() == '') ? 6 : 15,
             	center: new google.maps.LatLng(52.5, 5.75),
+            	scrollwheel: true,
 		  	},
 		  	elements: {
 		      map: '#address-picker-map',

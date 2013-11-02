@@ -8,8 +8,9 @@ APP.registrations = {
 		  	autocomplete: 'default',
       		regionBias: $('body').data('current-locale'),
 		  	mapOptions: {
-	            zoom: 6,
+	            zoom: ($('#user_organisations_attributes_0_lat').val() == '' && $('#user_organisations_attributes_0_lng').val() == '') ? 6 : 15,
 	            center: new google.maps.LatLng(52.5, 5.75),
+	            scrollwheel: true,
 			  },
 		  	elements: {
 		      map: '#address-picker-map',

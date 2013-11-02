@@ -9,6 +9,20 @@
   <dd><%= @organisation_client.first_name %> <%= @organisation_client.infix %> <%= OrganisationClient.human_attribute_name(:last_name) %></dd>
   <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
   <dd><%= @organisation_client.email %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:route) %></dt>
+  <dd><%= @organisation.route %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:street_number) %></dt>
+  <dd><%= @organisation.street_number %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:postal_code) %></dt>
+  <dd><%= @organisation.postal_code %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:administrative_area_level_2) %></dt>
+  <dd><%= @organisation.administrative_area_level_2 %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:administrative_area_level_1) %></dt>
+  <dd><%= @organisation.administrative_area_level_1 %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:locality) %></dt>
+  <dd><%= @organisation.locality %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:country) %></dt>
+  <dd><%= @organisation.country %></dd>
 </dl>
 
 <%= button_link_back_to_index([@organisation, OrganisationClient]) %>

@@ -12,6 +12,11 @@
       <th><%= OrganisationClient.human_attribute_name(:infix) %></th>
       <th><%= OrganisationClient.human_attribute_name(:last_name) %></th>
       <th><%= OrganisationClient.human_attribute_name(:email) %></th>
+      <th><%= Organisation.human_attribute_name(:route) %></th>
+      <th><%= Organisation.human_attribute_name(:street_number) %></th>
+      <th><%= Organisation.human_attribute_name(:locality) %></th>
+      <th><%= Organisation.human_attribute_name(:postal_code) %></th>
+      <th><%= Organisation.human_attribute_name(:country) %></th>
       <th></th>
     </tr>
   </thead>
@@ -23,6 +28,11 @@
       <td><%= organisation_client.infix %></td>
       <td><%= organisation_client.last_name %></td>
       <td><%= organisation_client.email %></td>
+      <td><%= organisation_client.route %></td>
+      <td><%= organisation_client.street_number %></td>
+      <td><%= organisation_client.postal_code %></td>
+      <td><%= organisation_client.locality %></td>
+      <td><%= organisation_client.country %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, organisation_client]) %>
       </td>

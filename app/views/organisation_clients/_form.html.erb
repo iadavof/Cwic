@@ -1,23 +1,65 @@
 <%= form_for([@organisation, @organisation_client]) do |f| %>
   <%= render 'shared/error_messages', target: @organisation_client %>
-
-  <div class="field">
-    <%= f.label :first_name %>
-    <%= f.text_field :first_name %>
+  <div class="clearfix">
+    <div class="organisation-client-fields">
+      <div class="field">
+        <%= f.label :first_name %>
+        <%= f.text_field :first_name %>
+      </div>
+      <div class="field">
+        <%= f.label :infix %>
+        <%= f.text_field :infix %>
+      </div>
+      <div class="field">
+        <%= f.label :last_name %>
+        <%= f.text_field :last_name %>
+      </div>
+      <div class="field">
+        <%= f.label :email %>
+        <%= f.email_field :email %>
+      </div>
+      <div class="field">
+        <label for="address-picker"><%=t('.address') %></label>
+        <input type="text" id="address-picker"></input>
+      </div>
+      <div class="auto-address-fields">
+        <a href="" class="icon icon-edit" id="edit-auto-address-fields"></a>
+        <div class="field">
+          <%= f.label :route %>
+          <%= f.text_field :route, readonly: true %>
+        </div>
+        <div class="field">
+          <%= f.label :street_number %>
+          <%= f.text_field :street_number, readonly: true %>
+        </div>
+        <div class="field">
+          <%= f.label :locality %>
+          <%= f.text_field :locality, readonly: true %>
+        </div>
+        <div class="field">
+          <%= f.label :administrative_area_level_2 %>
+          <%= f.text_field :administrative_area_level_2, readonly: true %>
+        </div>
+        <div class="field">
+          <%= f.label :administrative_area_level_1 %>
+          <%= f.text_field :administrative_area_level_1, readonly: true %>
+        </div>
+        <div class="field">
+          <%= f.label :postal_code %>
+          <%= f.text_field :postal_code, readonly: true %>
+        </div>
+        <div class="field">
+          <%= f.label :country %>
+          <%= f.text_field :country, readonly: true %>
+        </div>
+      </div>
+      <%= f.hidden_field :address_type %>
+      <%= f.hidden_field :lng %>
+      <%= f.hidden_field :lat %>
+    </div>
+    <div class="address-map" id="address-picker-map"></div>
   </div>
-  <div class="field">
-    <%= f.label :infix %>
-    <%= f.text_field :infix %>
-  </div>
-  <div class="field">
-    <%= f.label :last_name %>
-    <%= f.text_field :last_name %>
-  </div>
-  <div class="field">
-    <%= f.label :email %>
-    <%= f.email_field :email %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+<div class="actions">
+  <%= f.submit %>
+</div>
 <% end %>
