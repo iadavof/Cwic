@@ -15,7 +15,7 @@ class Users::InvitationsController < Devise::InvitationsController
 
   protected
   def update_resource_params
-    devise_parameter_sanitizer.for(:accept_invitation)
+    devise_parameter_sanitizer.sanitize(:accept_invitation)
   end
 
   def configure_permitted_parameters
