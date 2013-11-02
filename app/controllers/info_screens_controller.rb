@@ -49,9 +49,9 @@ class InfoScreensController < ApplicationController
 
   # GET /info_screens/new
   def new
-    @info_screen.info_screen_entity_types << @organisation.entity_types.map { |et| InfoScreenEntityType.new(entity_type: et) }
+    @info_screen.info_screen_entity_types << @organisation.entity_types.map { |et| InfoScreenEntityType.new(entity_type: et, info_screen: @info_screen) }
     @info_screen.info_screen_entity_types.each do |iset|
-      iset.info_screen_entities << @organisation.entities.map { |e| InfoScreenEntity.new(entity: e) }
+      iset.info_screen_entities << @organisation.entities.where('entity_type_id = ?', iset.entity_type.id).map { |e| InfoScreenEntity.new(entity: e, info_screen_entity_type: iset) }
     end
     respond_with(@info_screen)
   end

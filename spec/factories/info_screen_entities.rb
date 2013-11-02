@@ -3,7 +3,7 @@
 FactoryGirl.define do
   factory :info_screen_entity do
     direction_char "MyString"
-    info_screens_entity_type nil
+    info_screen_entity_type nil
     entity nil
   end
 end
