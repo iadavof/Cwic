@@ -1,5 +1,6 @@
 <div class="info-screen-entity fields">
   <h4><%= f.object.entity.instance_name %></h4>
+  <%= f.hidden_field :entity_id %>
   <%= f.check_box :active %>
   <%= f.text_field :direction_char %>
 </div>

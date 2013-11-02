@@ -17,7 +17,7 @@
   <div class="info-screen-entity-types">
   <% if @info_screen.info_screen_entity_types.present? %>
     <%= f.fields_for :info_screen_entity_types, @info_screen.info_screen_entity_types do |etf| %>
-      <%= render partial: 'info_screen_entity_type', locals: { f: etf } %>
+      <%= render partial: 'info_screen_entity_type_fields', locals: { f: etf } %>
     <% end %>
   <% else %>
     <%= t('.no_info_screen_entity_type') %>

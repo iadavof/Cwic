@@ -25,7 +25,7 @@ class InfoScreensController < ApplicationController
       entity_result.entity_name = ise.entity.instance_name
 
       current_reservations << ise.entities.reservations.where('begins_at <= :update_scope_stop AND ends_at >= :update_scope_start', update_scope_start: Time.now, update_scope_stop: Time.now + 30.minutes).order(:begins_at)
-      
+
       current_reservations.each do |r|
         entity_result.reservations << {
           id: r.id,
@@ -49,10 +49,7 @@ class InfoScreensController < ApplicationController
 
   # GET /info_screens/new
   def new
-    @info_screen.info_screen_entity_types << @organisation.entity_types.map { |et| InfoScreenEntityType.new(entity_type: et, info_screen: @info_screen) }
-    @info_screen.info_screen_entity_types.each do |iset|
-      iset.info_screen_entities << @organisation.entities.where('entity_type_id = ?', iset.entity_type.id).map { |e| InfoScreenEntity.new(entity: e, info_screen_entity_type: iset) }
-    end
+    @info_screen.initialize_entity_types_and_entities
     respond_with(@info_screen)
   end
 
@@ -96,8 +93,8 @@ private
   def resource_params
     params.require(:info_screen).permit(
       :name, :public, :add_new_entity_types,
-        info_screen_entity_types_attributes: [:id, :add_new_entities, :active,
-          info_screen_entities_attributes: [:id, :direction_char, :active],
+        info_screen_entity_types_attributes: [:id, :entity_type_id, :add_new_entities, :active,
+          info_screen_entities_attributes: [:id, :entity_id, :direction_char, :active],
         ],
       )
   end

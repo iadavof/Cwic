@@ -1,12 +1,13 @@
 <div class="info-screen-entity-type fields">
   <h3><%= f.object.entity_type.instance_name %></h3>
+  <%= f.hidden_field :entity_type_id %>
   <%= f.check_box :active %>
   <%= f.label :add_new_entities %>
   <%= f.check_box :add_new_entities %>
   <div class="info-screen-entities">
     <% if f.object.info_screen_entities.present? %>
       <%= f.fields_for :info_screen_entities, wrapper: false do |ef| %>
-        <%= render partial: 'info_screen_entity', locals: { f: ef } %>
+        <%= render partial: 'info_screen_entity_fields', locals: { f: ef } %>
       <% end %>
     <% else %>
       <%= t('.no_info_screen_entities') %>
