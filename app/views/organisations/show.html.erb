@@ -5,14 +5,18 @@
 <dl>
   <dt><%= Organisation.human_attribute_name(:name) %></dt>
   <dd><%= @organisation.name %></dd>
-  <dt><%= Organisation.human_attribute_name(:street) %></dt>
-  <dd><%= @organisation.street %></dd>
-  <dt><%= Organisation.human_attribute_name(:house_number) %></dt>
-  <dd><%= @organisation.house_number %></dd>
+  <dt><%= Organisation.human_attribute_name(:route) %></dt>
+  <dd><%= @organisation.route %></dd>
+  <dt><%= Organisation.human_attribute_name(:street_number) %></dt>
+  <dd><%= @organisation.street_number %></dd>
   <dt><%= Organisation.human_attribute_name(:postal_code) %></dt>
   <dd><%= @organisation.postal_code %></dd>
-  <dt><%= Organisation.human_attribute_name(:city) %></dt>
-  <dd><%= @organisation.city %></dd>
+  <dt><%= Organisation.human_attribute_name(:administrative_area_level_2) %></dt>
+  <dd><%= @organisation.administrative_area_level_2 %></dd>
+  <dt><%= Organisation.human_attribute_name(:administrative_area_level_1) %></dt>
+  <dd><%= @organisation.administrative_area_level_1 %></dd>
+  <dt><%= Organisation.human_attribute_name(:locality) %></dt>
+  <dd><%= @organisation.locality %></dd>
   <dt><%= Organisation.human_attribute_name(:country) %></dt>
   <dd><%= @organisation.country %></dd>
 </dl>

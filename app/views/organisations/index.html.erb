@@ -9,10 +9,10 @@
   <thead>
     <tr>
       <th><%= Organisation.human_attribute_name(:name) %></th>
-      <th><%= Organisation.human_attribute_name(:street) %></th>
-      <th><%= Organisation.human_attribute_name(:house_number) %></th>
+      <th><%= Organisation.human_attribute_name(:route) %></th>
+      <th><%= Organisation.human_attribute_name(:street_number) %></th>
+      <th><%= Organisation.human_attribute_name(:locality) %></th>
       <th><%= Organisation.human_attribute_name(:postal_code) %></th>
-      <th><%= Organisation.human_attribute_name(:city) %></th>
       <th><%= Organisation.human_attribute_name(:country) %></th>
       <th></th>
     </tr>
@@ -22,10 +22,10 @@
     <% @organisations.each do |organisation| %>
     <tr>
       <td><%= name_link_to_show(organisation) %></td>
-      <td><%= organisation.street %></td>
-      <td><%= organisation.house_number %></td>
+      <td><%= organisation.route %></td>
+      <td><%= organisation.street_number %></td>
       <td><%= organisation.postal_code %></td>
-      <td><%= organisation.city %></td>
+      <td><%= organisation.locality %></td>
       <td><%= organisation.country %></td>
       <td class="icons">
         <%= icon_link_to_edit(organisation) %>

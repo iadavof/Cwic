@@ -1,6 +1,6 @@
 <%= form_for(@organisation) do |f| %>
   <%= render 'shared/error_messages', target: @organisation %>
-  <%= render partial: 'form_fields' %>
+  <%= render partial: 'form_fields', locals: { f: f } %>
   <div class="actions">
     <%= f.submit %>
   </div>

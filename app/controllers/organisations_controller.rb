@@ -49,7 +49,7 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def resource_params
-    params.require(:organisation).permit(:name, :route, :street_number, :locality, :administrative_level_2, :administrative_level_1, :country, :postal_code, :address_type, :lng, :lat)
+    params.require(:organisation).permit(:name, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat)
   end
 
   def interpolation_options
