@@ -12,6 +12,10 @@ class InfoScreenEntity < ActiveRecord::Base
     self.direction_char
   end
 
+  def active
+    read_attribute(:active) && info_screen_entity_type.active
+  end
+
   def available
     self.available.nil? ? entity.available : self.available
   end

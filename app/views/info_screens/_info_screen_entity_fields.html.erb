@@ -1,6 +1,26 @@
 <div class="info-screen-entity fields">
-  <h4><%= f.object.entity.instance_name %></h4>
-  <%= f.hidden_field :entity_id %>
-  <%= f.check_box :active %>
-  <%= f.text_field :direction_char %>
+  <h4 class="collapse"><span class="active-sign <%= f.object.info_screen_entity_type.active && f.object.active ? 'active' : '' %>"></span><%= f.object.entity.instance_name %></h4>
+  	<div class="content clearfix">
+  		<%= f.label :active %>
+		<%= f.check_box :active, class: 'info-screen-entity-active' %>
+	  <%= f.hidden_field :entity_id %>  
+	  <div class="direction-chars">
+	  	<%= f.hidden_field :direction_char %>
+	  	<div class="wayfinding <%= f.object.direction_char == '' ? 'active' : '' %>"><i class=""></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-up' ? 'active' : '' %>"><i class="symbol-arrow-up"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-up-right' ? 'active' : '' %>"><i class="symbol-arrow-up-right"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-right' ? 'active' : '' %>"><i class="symbol-arrow-right"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-down-right' ? 'active' : '' %>"><i class="symbol-arrow-down-right"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-down' ? 'active' : '' %>"><i class="symbol-arrow-down"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-down-left' ? 'active' : '' %>"><i class="symbol-arrow-down-left"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-left' ? 'active' : '' %>"><i class="symbol-arrow-left"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-up-left' ? 'active' : '' %>"><i class="symbol-arrow-up-left"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-stairs-up' ? 'active' : '' %>"><i class="symbol-stairs-up"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-stairs-down' ? 'active' : '' %>"><i class="symbol-stairs-down"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-escalator-up' ? 'active' : '' %>"><i class="symbol-escalator-up"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-escalator-down' ? 'active' : '' %>"><i class="symbol-escalator-down"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-elevator-up' ? 'active' : '' %>"><i class="symbol-elevator-up"></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-elevator-down' ? 'active' : '' %>"><i class="symbol-elevator-down"></i></div>
+	  </div>
+	</div>
 </div>

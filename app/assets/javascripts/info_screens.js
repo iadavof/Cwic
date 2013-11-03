@@ -15,13 +15,45 @@ APP.info_screens = {
     });
   },
   edit: function() {
-    App.info_screens.initCollapseThing();
+    APP.info_screens.initCollapseThing();
   },
   new: function() {
-    App.info_screens.initCollapseThing();
+    APP.info_screens.initCollapseThing();
   },
   initCollapseThing: function() {
+    $('input.info-screen-entity-type-active').on('change', function(){
+      var input = $(this);
+      var et = input.parents('div.info-screen-entity-type');
+      if(input.is(':checked')) {
+        et.find('h3 span.active-sign').addClass('active');
+      } else {
+        et.find('h3 span.active-sign').removeClass('active');
+        et.find('div.info-screen-entity').find('h4 span.active-sign').removeClass('active');
+        et.find('div.info-screen-entity input.info-screen-entity-active').prop('checked', false);
+      }
+    });
 
+    $('input.info-screen-entity-active').on('change', function(){
+      var input = $(this);
+      var et = input.parents('div.info-screen-entity-type');
+      if(input.is(':checked')) {
+        et.find('h3 span.active-sign').addClass('active');
+        et.find('input.info-screen-entity-type-active').prop('checked', true);
+        input.parents('div.info-screen-entity').find('h4 span.active-sign').addClass('active');
+      } else {
+        input.parents('div.info-screen-entity').find('h4 span.active-sign').removeClass('active');
+      }
+    });
+
+    $('div.info-screen-entity-type div.info-screen-entity div.direction-chars').on('click', 'div.wayfinding', function(){
+        var item = $(this);
+        item.siblings('div.wayfinding').removeClass('active');
+        item.addClass('active');
+        item.parents('div.direction-chars').find('input').val(item.find('i').attr('class'));
+    });
+
+
+    $(".info-screen-entity-type, .info-screen-entity").collapse({ });
   },
   realtimeFullscreensElemPlacement: function() {
     $('#realtime-list > li > .inner .info-container').each(function(){

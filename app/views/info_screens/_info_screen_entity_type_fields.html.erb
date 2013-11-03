@@ -1,16 +1,20 @@
-<div class="info-screen-entity-type fields">
-  <h3><%= f.object.entity_type.instance_name %></h3>
-  <%= f.hidden_field :entity_type_id %>
-  <%= f.check_box :active %>
-  <%= f.label :add_new_entities %>
-  <%= f.check_box :add_new_entities %>
-  <div class="info-screen-entities">
-    <% if f.object.info_screen_entities.present? %>
-      <%= f.fields_for :info_screen_entities, wrapper: false do |ef| %>
-        <%= render partial: 'info_screen_entity_fields', locals: { f: ef } %>
+<div class="info-screen-entity-type fields" data-collapse>
+  <h3 class="collapse"><span class="active-sign <%= f.object.active ? 'active' : '' %>"></span><%= f.object.entity_type.instance_name %></h3>
+  <div class="content">
+    <%= f.label :active %>
+    <%= f.check_box :active, class: 'info-screen-entity-type-active' %>
+    <%= f.hidden_field :entity_type_id %>
+    <%= f.label :add_new_entities %>
+    <%= f.check_box :add_new_entities %>
+    <h3><%= t('.entities') %></h3>
+    <div class="info-screen-entities">
+      <% if f.object.info_screen_entities.present? %>
+        <%= f.fields_for :info_screen_entities, wrapper: false do |ef| %>
+          <%= render partial: 'info_screen_entity_fields', locals: { f: ef } %>
+        <% end %>
+      <% else %>
+        <%= t('.no_info_screen_entities') %>
       <% end %>
-    <% else %>
-      <%= t('.no_info_screen_entities') %>
-    <% end %>
+    </div>
   </div>
 </div>
