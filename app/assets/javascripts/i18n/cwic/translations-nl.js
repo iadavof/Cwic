@@ -28,6 +28,10 @@ var jsLang = {
     deleted: 'Reservering verwijderd.',
     delete_confirm: 'Weet u zeker dat u Reservering #%{item_id} wilt verwijderen? De reservering kan hierna niet worden hersteld.',
   },
+  info_screen: {
+    pressF11: 'Druk op F11 om volledig scherm te sluiten.',
+    cannotOpenFullscreen: 'Volledig scherm kon niet worden geopend. Klik op OK en druk op de toets F11 om het scherm handmatig te maximaliseren.\n\n',
+  }
   reservation_rule_scopes: {
     span_selectors: {
       year: {
