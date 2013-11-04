@@ -100,6 +100,18 @@ div.horizontal-calendar div.time-axis .reservation-controls .toolbar-close-butto
   padding: 5px 8px;
 }
 
+div.horizontal-calendar div.time-axis .description-bubble {
+  position: absolute;
+  top: 100%;
+  margin-top: 43.6px;
+  left: 0;
+  width: 300px;
+  height: 150px;
+  background-color: #ffffff;
+  border: 2px solid #17889d;
+  display: none;
+}
+
 
 div.horizontal-calendar div.time-axis .ajax-notification-container {
   position: absolute;

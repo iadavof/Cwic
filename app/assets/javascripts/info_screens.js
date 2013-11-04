@@ -4,7 +4,7 @@ APP.info_screens = {
     APP.info_screens.realtimeFullscreensReservationDatesWidth();
     APP.info_screens.clock();
     $('body').append('<a id="fullscreen-link"><i class="icon-resize-full"></i></a>');
-    $('#fullscreen-link').on('click', function() {APP.info_screens.requestFullScreen(document.getElementById('content'));})
+    $('#fullscreen-link').on('click', function() {APP.info_screens.requestFullScreen(document.getElementById('content'));});
     $(window).on('resize', function(){
       APP.info_screens.realtimeFullscreensElemPlacement();
       APP.info_screens.realtimeFullscreensReservationDatesWidth();
