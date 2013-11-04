@@ -1,6 +1,6 @@
 function IADAinfoScreen(options) {
   this.options = Object.extend({
-    container: 'content',
+    container: 'info-screen-container',
     clock_header: true,
     directions: true,
   }, options || {});
@@ -11,10 +11,20 @@ function IADAinfoScreen(options) {
 
 IADAinfoScreen.prototype.init = function() {
   var is = this;
+
+  console.debug(this.options.clock_header, this.options.directions);
+
+  // init clock
   if(this.options.clock_header) {
     this.infoScreenContainer.find('div.info-screen-header').show();
     setInterval(function() { is.updateClock() }, 100);
   }
+
+  this.realtimeFullscreensElemPlacement();
+  this.realtimeFullscreensReservationDatesWidth();
+
+  // fullscreen button
+  this.initFullScreenControls();
 }
 
 IADAinfoScreen.prototype.itemUpdate = function() {
@@ -23,7 +33,7 @@ IADAinfoScreen.prototype.itemUpdate = function() {
 
 IADAinfoScreen.prototype.setOnResize = function() {
   var is = this;
-  $(window).on('resize', function(){
+  $(window).on('resize', function() {
     is.realtimeFullscreensElemPlacement();
     is.realtimeFullscreensReservationDatesWidth();
     if ((screen.height - $(window).height()) < 5) {
@@ -31,6 +41,14 @@ IADAinfoScreen.prototype.setOnResize = function() {
     } else {
       $('#fullscreen-link').show();
     }
+  });
+}
+
+IADAinfoScreen.prototype.initFullScreenControls = function() {
+  var is = this;
+  $('body').append('<a id="fullscreen-link"><i class="icon-resize-full"></i></a>');
+  $('#fullscreen-link').on('click', function() {
+    is.requestFullScreen(document.getElementById('content'));
   });
 }
 

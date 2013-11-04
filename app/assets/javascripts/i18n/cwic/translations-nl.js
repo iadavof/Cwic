@@ -39,7 +39,7 @@ var jsLang = {
   info_screen: {
     pressF11: 'Druk op F11 om volledig scherm te sluiten.',
     cannotOpenFullscreen: 'Volledig scherm kon niet worden geopend. Klik op OK en druk op de toets F11 om het scherm handmatig te maximaliseren.\n\n',
-  }
+  },
   reservation_rule_scopes: {
     span_selectors: {
       year: {
