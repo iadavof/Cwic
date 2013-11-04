@@ -1,10 +1,10 @@
 APP.info_screens = {
   show: function() {
-    APP.info_screens.realtimeFullscreensElemPlacement();
-    APP.info_screens.realtimeFullscreensReservationDatesWidth();
-    APP.info_screens.clock();
-    $('body').append('<a id="fullscreen-link"><i class="icon-resize-full"></i></a>');
-    $('#fullscreen-link').on('click', function() {APP.info_screens.requestFullScreen(document.getElementById('content'));})
+    var fullScreen = new IADAinfoScreen({
+      container: 'content',
+      clock_header: $('#info-screen-container').data('clock-header'),
+      directions: $('#info-screen-container').data('directions'),
+    });
   },
   edit: function() {
     APP.info_screens.initCollapseThing();
