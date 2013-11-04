@@ -1,12 +1,15 @@
 <div class="info-screen-entity fields">
   <h4 class="collapse"><span class="active-sign <%= f.object.info_screen_entity_type.active && f.object.active ? 'active' : '' %>"></span><%= f.object.entity.instance_name %></h4>
   	<div class="content clearfix">
-  		<%= f.label :active %>
-		<%= f.check_box :active, class: 'info-screen-entity-active' %>
-	  <%= f.hidden_field :entity_id %>  
-	  <div class="direction-chars">
+  		<div class="fields">
+  			<%= f.label :active %>
+				<%= f.check_box :active, class: 'info-screen-entity-active' %>
+			</div>
+	  <%= f.hidden_field :entity_id %>
+	  <div class="direction-chars" style="<%= f.object.info_screen_entity_type.info_screen.direction_char_visible ? 'display: block;' : 'display: none;' %>">
+	  	<%= f.label :direction_char, class: 'direction-char-label' %>
 	  	<%= f.hidden_field :direction_char %>
-	  	<div class="wayfinding <%= f.object.direction_char == '' ? 'active' : '' %>"><i class=""></i></div>
+	  	<div class="wayfinding <%= f.object.direction_char.nil? || f.object.direction_char == '' ? 'active' : '' %>"><i class=""></i></div>
 	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-up' ? 'active' : '' %>"><i class="symbol-arrow-up"></i></div>
 	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-up-right' ? 'active' : '' %>"><i class="symbol-arrow-up-right"></i></div>
 	  	<div class="wayfinding <%= f.object.direction_char == 'symbol-arrow-right' ? 'active' : '' %>"><i class="symbol-arrow-right"></i></div>

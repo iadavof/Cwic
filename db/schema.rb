@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131102152105) do
+ActiveRecord::Schema.define(version: 20131104141404) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -186,6 +186,8 @@ ActiveRecord::Schema.define(version: 20131102152105) do
     t.datetime "updated_at"
     t.boolean  "add_new_entity_types"
     t.integer  "organisation_id"
+    t.boolean  "direction_char_visible", default: true
+    t.boolean  "clock_header",           default: true
   end
 
   add_index "info_screens", ["organisation_id"], name: "index_info_screens_on_organisation_id", using: :btree

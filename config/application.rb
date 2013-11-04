@@ -24,6 +24,9 @@ module Cwic
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{config.root}/lib/core_ext)
 
+    # Precompile jquery libraries for the case that CDN is not available
+    config.assets.precompile += ['jquery.js', 'jquery.ui.all.js']
+
     # Load core extensions (only autoloading is not enough, since the String class is already loaded and therefore the core_ext will not be loaded anymore)
     Dir[File.join(Rails.root, 'lib', 'core_ext', '*.rb')].each { |l| require l }
 

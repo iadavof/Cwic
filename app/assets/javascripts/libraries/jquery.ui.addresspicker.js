@@ -5,6 +5,7 @@
  * Dual licensed under the MIT or GPL Version 2 licenses.
  * http://jquery.org/license
  *
+ *
  * Depends:
  *   jquery.ui.core.js
  *   jquery.ui.widget.js
@@ -17,7 +18,6 @@
         appendAddressString: "",
         draggableMarker: true,
         regionBias: null,
-        componentsFilter:'',
         updateCallback: null,
         reverseGeocode: false,
         autocomplete: 'default',
@@ -34,14 +34,14 @@
             street_number: false,
             route: false,
             locality: false,
-						administrative_area_level_2: false,
+            administrative_area_level_2: false,
             administrative_area_level_1: false,
-						country: false,
-						postal_code: false,
+            country: false,
+            postal_code: false,
             type: false
 
         },
-        autocomplete: '' // could be autocomplete: "bootstrap" to use bootstrap typeahead autocomplete instead of jQueryUI
+        autocomplete: {}
     },
 
     marker: function() {
@@ -58,7 +58,7 @@
 
     reloadPosition: function() {
       this.gmarker.setVisible(true);
-      this.gmarker.setPosition(new google.maps.LatLng(this.lat.val, this.lng.val));
+      this.gmarker.setPosition(new google.maps.LatLng(this.lat.val(), this.lng.val()));
       this.gmap.setCenter(this.gmarker.getPosition());
     },
 
@@ -68,20 +68,7 @@
     _mapped: {},
     _create: function() {
       var self = this;
-      this.geocoder = {
-        geocode: function(options, callback)
-        {
-          jQuery.ajax({
-            url: "http://maps.googleapis.com/maps/api/geocode/json?" + jQuery.param(options) + '&sensor=false',
-            type: "GET",
-            success: function(data) {
-              callback(data.results, data.status);
-            }
-          });
-        }
-        //new google.maps.Geocoder();
-      };
-
+      this.geocoder = new google.maps.Geocoder();
       if (this.options.autocomplete === 'bootstrap') {
           this.element.typeahead({
             source: function(query, process) {
@@ -117,10 +104,10 @@
       this.street_number = $(this.options.elements.street_number);
       this.route = $(this.options.elements.route);
       this.locality = $(this.options.elements.locality);
-			this.administrative_area_level_2 = $(this.options.elements.administrative_area_level_2);
-			this.administrative_area_level_1 = $(this.options.elements.administrative_area_level_1);
+      this.administrative_area_level_2 = $(this.options.elements.administrative_area_level_2);
+      this.administrative_area_level_1 = $(this.options.elements.administrative_area_level_1);
       this.country  = $(this.options.elements.country);
-			this.postal_code = $(this.options.elements.postal_code);
+      this.postal_code = $(this.options.elements.postal_code);
       this.type     = $(this.options.elements.type);
       if (this.options.elements.map) {
         this.mapElement = $(this.options.elements.map);
@@ -152,40 +139,40 @@
     },
 
     _addressParts: {street_number: null, route: null, locality: null,
-                    administrative_area_level_2: null, administrative_area_level_1: null,
-                    country: null, postal_code:null, type: null},
+                     administrative_area_level_2: null, administrative_area_level_1: null,
+                     country: null, postal_code:null, type: null},
 
     _updateAddressParts: function(geocodeResult){
 
       parsedResult = this._parseGeocodeResult(geocodeResult);
 
       for (addressPart in this._addressParts){
-        if (this[addressPart] && parsedResult[addressPart] !== false){
+        if (this[addressPart]){
           this[addressPart].val(parsedResult[addressPart]);
-        } else {
-          this[addressPart].val('');
         }
       }
     },
 
     _updateAddressPartsViaReverseGeocode: function(location){
-      this.geocoder.geocode({'latlng': location.lat() + "," + location.lng()}, $.proxy(function(results, status){
-        if (status == google.maps.GeocoderStatus.OK)
+      var latLng = new google.maps.LatLng(location.lat(), location.lng());
 
-          this._updateAddressParts(results[0]);
-          this.element.val(results[0].formatted_address);
-          this.selectedResult = results[0];
+      this.geocoder.geocode({'latLng': latLng}, $.proxy(function(results, status){
+          if (status == google.maps.GeocoderStatus.OK)
 
-          if (this.options.updateCallback) {
-            this.options.updateCallback(this.selectedResult, this._parseGeocodeResult(this.selectedResult));
-          }
-        }, this));
+            this._updateAddressParts(results[0]);
+            this.element.val(results[0].formatted_address);
+            this.selectedResult = results[0];
+
+            if (this.options.updateCallback) {
+              this.options.updateCallback(this.selectedResult, this._parseGeocodeResult(this.selectedResult));
+            }
+          }, this));
     },
 
     _parseGeocodeResult: function(geocodeResult){
 
-      var parsed = {lat: geocodeResult.geometry.location.lat,
-        lng: geocodeResult.geometry.location.lng};
+      var parsed = {lat: geocodeResult.geometry.location.lat(),
+        lng: geocodeResult.geometry.location.lng()};
 
       for (var addressPart in this._addressParts){
         parsed[addressPart] = this._findInfo(geocodeResult, addressPart);
@@ -208,20 +195,12 @@
     _geocode: function(request, response) {
         var address = request.term, self = this;
         this.geocoder.geocode({
-          'address': address + this.options.appendAddressString,
-          'region': this.options.regionBias,
-          'components': this.options.componentsFilter
+            'address': address + this.options.appendAddressString,
+            'region': this.options.regionBias
         }, function(results, status) {
             if (status == google.maps.GeocoderStatus.OK && results) {
                 for (var i = 0; i < results.length; i++) {
-                  result = results[i]
-                  g = result.geometry
-                  g.location = new google.maps.LatLng(g.location.lat, g.location.lng);
-                  g.viewport = new google.maps.LatLngBounds(
-                    new google.maps.LatLng(g.viewport.southwest.lat, g.viewport.southwest.lng),
-                    new google.maps.LatLng(g.viewport.northeast.lat, g.viewport.northeast.lng)
-                  )
-                  result.label =  results[i].formatted_address;
+                    results[i].label =  results[i].formatted_address;
                 };
             }
             response(results);
@@ -243,9 +222,11 @@
       if (!address) {
         return;
       }
+
       if (this.gmarker) {
         this.gmarker.setPosition(address.geometry.location);
         this.gmarker.setVisible(true);
+
         this.gmap.fitBounds(address.geometry.viewport);
       }
 

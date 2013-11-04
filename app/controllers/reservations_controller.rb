@@ -28,19 +28,19 @@ class ReservationsController < ApplicationController
   def create
     @reservation.localized.attributes = resource_params
     @reservation.save
-    respond_with(@reservation, location: organisation_reservation_path(@organisation, @reservation))
+    respond_with(@organisation, @reservation)
   end
 
   # PATCH/PUT /reservations/1
   def update
     @reservation.localized.update_attributes(resource_params)
-    respond_with(@reservation, location: organisation_reservation_path(@organisation, @reservation))
+    respond_with(@organisation, @reservation)
   end
 
   # DELETE /reservations/1
   def destroy
     @reservation.destroy
-    respond_with(@reservation, location: organisation_reservations_path(@organisation))
+    respond_with(@organisation, Reservation)
   end
 
 private

@@ -62,19 +62,19 @@ class InfoScreensController < ApplicationController
   def create
     @info_screen.attributes = resource_params
     @info_screen.save
-    respond_with(@organisation, @info_screen)
+    redirect_to action: "index"
   end
 
   # PATCH/PUT /info_screens/1
   def update
     @info_screen.update_attributes(resource_params)
-    respond_with(@organisation, @info_screen)
+    redirect_to action: "index"
   end
 
   # DELETE /info_screens/1
   def destroy
     @info_screen.destroy
-    respond_with(@organisation, @info_screen)
+    redirect_to action: "index"
   end
 
 private
@@ -92,7 +92,7 @@ private
 
   def resource_params
     params.require(:info_screen).permit(
-      :name, :public, :add_new_entity_types,
+      :name, :public, :add_new_entity_types, :direction_char_visible, :clock_header,
         info_screen_entity_types_attributes: [:id, :entity_type_id, :add_new_entities, :active,
           info_screen_entities_attributes: [:id, :entity_id, :direction_char, :active],
         ],

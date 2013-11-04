@@ -1,9 +1,23 @@
 GIT
+  remote: git://github.com/CUnknown/jquery-ui-rails-cdn.git
+  revision: 4332db13744a9cee6dbe4fcbd99160430563e52a
+  specs:
+    jquery-ui-rails-cdn (0.1.0)
+      jquery-ui-rails
+
+GIT
   remote: git://github.com/CUnknown/momentjs-rails.git
   revision: 37f6b98a0fb599fab462b054675979bfc8c89c0d
   specs:
     momentjs-rails (2.3.1)
       railties (>= 3.1)
+
+GIT
+  remote: git://github.com/archan937/rich_pluralization.git
+  revision: 7c3c32b6c1a379ad5a22aa17532a8a625556e00a
+  specs:
+    rich_pluralization (1.0.6)
+      i18n (>= 0.3.7)
 
 GIT
   remote: git://github.com/carlosantoniodasilva/i18n_alchemy.git
@@ -101,6 +115,8 @@ GEM
     jquery-rails (3.0.4)
       railties (>= 3.0, < 5.0)
       thor (>= 0.14, < 2.0)
+    jquery-rails-cdn (1.0.1)
+      jquery-rails
     jquery-ui-rails (4.1.0)
       railties (>= 3.1.0)
     js-routes (0.9.4)
@@ -235,7 +251,9 @@ DEPENDENCIES
   jbuilder (~> 1.0.1)
   jquery-minicolors-rails
   jquery-rails
+  jquery-rails-cdn
   jquery-ui-rails
+  jquery-ui-rails-cdn!
   js-routes
   magnific-popup-rails
   mini_magick!
@@ -249,6 +267,7 @@ DEPENDENCIES
   rails (= 4.0.1)
   rails-i18n
   responders
+  rich_pluralization!
   rspec-rails
   sass-rails
   sdoc
