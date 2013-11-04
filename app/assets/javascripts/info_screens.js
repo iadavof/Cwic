@@ -2,6 +2,7 @@ APP.info_screens = {
   show: function() {
     APP.info_screens.realtimeFullscreensElemPlacement();
     APP.info_screens.realtimeFullscreensReservationDatesWidth();
+    APP.info_screens.clock();
     $('body').append('<a id="fullscreen-link"><i class="icon-resize-full"></i></a>');
     $('#fullscreen-link').on('click', function() {APP.info_screens.requestFullScreen(document.getElementById('content'));})
     $(window).on('resize', function(){
@@ -99,5 +100,15 @@ APP.info_screens = {
     }
     return false;
   },
-
+  clock: function() {
+    var now = moment();
+    // add a zero in front of numbers<10
+    day=now.format('dd');
+    date=now.format('D MMM YYYY');
+    h=now.format('HH');
+    m=now.format('mm');
+    s=now.format('ss');
+    $('.current-time').html('<span class="current-day">' + day + '</span> <span class="current-date">' + date + '</span> <span class="current-hour">' + h +  '</span>:<span class="current-minute">' + m + '</span><span class="current-second"> ' + s + '</span>');
+    t=setTimeout(function(){APP.info_screens.clock()},100);
+  },
 };
