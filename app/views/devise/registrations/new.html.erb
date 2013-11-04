@@ -1,5 +1,5 @@
 <% content_for :page_title do %>
-  <%= t('.sign_up') %>
+  <%= t('.sign_up', :default => "Sign up") %>
 <% end %>
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
@@ -34,7 +34,8 @@
     <%= render partial: 'organisations/form_fields', locals: {f: organisations} %>
   <% end %>
   <div class="actions">
-    <%= f.submit t('.sign_up') %>
+    <%= f.submit t('.sign_up', :default => "Sign up") %>
   </div>
 <% end %>
+
 <%= render "devise/shared/links" %>
