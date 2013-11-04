@@ -18,9 +18,11 @@ gem 'coffee-rails', '~> 4.0.0'
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
-# Use jquery as the JavaScript library
+# Use jquery as the JavaScript library, by default get them from cdn
 gem 'jquery-rails'
+gem 'jquery-rails-cdn'
 gem 'jquery-ui-rails'
+gem 'jquery-ui-rails-cdn', github: 'CUnknown/jquery-ui-rails-cdn'
 
 # Use Modernizr to detect support for new features
 gem 'modernizr-rails'
@@ -56,6 +58,9 @@ end
 
 # Rails-i18n for standard rails locales
 gem 'rails-i18n'
+
+# Plurailize
+gem 'rich_pluralization', github: 'archan937/rich_pluralization'
 
 # Devise for authentication
 gem 'devise'

@@ -304,15 +304,13 @@ body.controller-info_screens.action-show #fullscreen-link i {
 }
 
 div.info-screen-entity-type {
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   margin: 10px;
-  background-color: #ebebeb;
 }
 
 div.info-screen-entity {
-  border: 1px solid #ccc;
+  border: 2px solid #ccc;
   margin: 10px;
-  background-color: #ebebeb;
 }
 
 div.info-screen-entity-type h3.collapse,
@@ -358,6 +356,10 @@ div.info-screen-entity div.content {
 
 div.info-screen-entity-type div.info-screen-entity div.direction-chars {
   float: right;
+}
+
+div.info-screen-entity-type div.info-screen-entity div.direction-chars label.direction-char-label {
+  display: block;
 }
 
 div.info-screen-entity-type div.info-screen-entity .wayfinding {

@@ -13,6 +13,14 @@
     <%= f.label :add_new_entity_types %>
     <%= f.check_box :add_new_entity_types %>
   </div>
+  <div class="field">
+    <%= f.label :clock_header %>
+    <%= f.check_box :clock_header %>
+  </div>
+  <div class="field">
+    <%= f.label :direction_char_visible %>
+    <%= f.check_box :direction_char_visible, id: 'direction_char_visible' %>
+  </div>
   <h2><%= t('.selected_entity_types') %></h2>
   <div class="info-screen-entity-types">
   <% if @info_screen.info_screen_entity_types.present? %>

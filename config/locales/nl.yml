@@ -100,6 +100,12 @@ nl:
       info_screen:
         one: 'Informatiescherm'
         other: 'Informatieschermen'
+      info_screen_entity:
+        one: 'Object'
+        other: 'Objecten'
+      info_screen_entity_type:
+        one: 'Objecttype'
+        other: 'Objecttypen'
     attributes:
       user:
         name: 'Naam'
@@ -171,7 +177,7 @@ nl:
         description: 'Omschrijving bij optie'
         default_price: 'Standaardprijs bij optie'
       entity:
-        entity_type_id: 'Type'
+        entity_type: 'Type'
         name: 'Naam'
         description: 'Omschrijving'
         color: 'Kleur'
@@ -202,6 +208,18 @@ nl:
         message: 'Bericht'
         specs: 'Specificaties'
         creating_screenshot: "Bezig met het maken van een schermafbeelding voor feedback..."
+      info_screen:
+        name: 'Naam'
+        public: 'Publiek'
+        add_new_entity_types: 'Nieuwe objecttypen toevoegen'
+        direction_char_visible: 'Toon wegwijzers'
+        clock_header: 'Toon klok bovenaan'
+      info_screen_entity_type:
+        active: 'Actief'
+        add_new_entities: 'Nieuwe objecten toevoegen'
+      info_screen_entity:
+        active: 'Actief'
+        direction_char: 'Wegwijzer'
     errors:
       messages:
         date_blank: "datum moet opgegeven zijn"
@@ -404,6 +422,12 @@ nl:
       options: 'Opties'
       images: "Foto's"
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
+
+  info_screens:
+    form:
+      selected_entity_types: 'Geselecteerde objecttypen'
+    info_screen_entity_type_fields:
+      selected_entities: 'Geselecteerde Objecten'
 
   schedule_view:
     today_and_tomorrow:

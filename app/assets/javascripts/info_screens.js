@@ -33,6 +33,15 @@ APP.info_screens = {
       }
     });
 
+    $('input#direction_char_visible').on('change', function(){
+      var checkbox = $(this);
+      if(checkbox.is(':checked')) {
+        $('div.direction-chars').show();
+      } else {
+        $('div.direction-chars').hide();
+      }
+    });
+
     $('input.info-screen-entity-active').on('change', function(){
       var input = $(this);
       var et = input.parents('div.info-screen-entity-type');
@@ -54,6 +63,8 @@ APP.info_screens = {
 
 
     $(".info-screen-entity-type, .info-screen-entity").collapse({ });
+
+    $("input").trigger("change");
   },
   realtimeFullscreensElemPlacement: function() {
     $('#realtime-list > li > .inner .info-container').each(function(){
