@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.0'
+gem 'rails', '4.0.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -58,7 +58,7 @@ end
 gem 'rails-i18n'
 
 # Devise for authentication
-gem 'devise', '~> 3.0.2'
+gem 'devise'
 gem 'devise_invitable'
 gem 'devise-i18n'
 gem 'devise-i18n-views'

@@ -2,7 +2,6 @@ class EntityType < ActiveRecord::Base
   include PgSearch
   include I18n::Alchemy
 
-  after_save :create_info_screen_entity_types
 
   has_many :entities, dependent: :destroy
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type
@@ -14,6 +13,8 @@ class EntityType < ActiveRecord::Base
   belongs_to :organisation
 
   validates :name, presence: true, length: { maximum: 255 }
+
+  after_save :create_info_screen_entity_types
 
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :options, allow_destroy: true

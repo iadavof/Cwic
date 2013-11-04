@@ -5,7 +5,7 @@
 //= require gistyle
 //= require js-routes
 //= require jquery_nested_form
-//= require jquery-minicolors
+//= require jquery.minicolors
 //= require_directory ./libraries
 //= require turbolinks
 //= require global

@@ -10,7 +10,7 @@
  *
  *= require_self
  *= require jquery.ui.all
- *= require jquery-minicolors
+ *= require jquery.minicolors
  *= require global
  *= require_directory .
  *= require magnific-popup

@@ -2,7 +2,6 @@ class Entity < ActiveRecord::Base
   include PgSearch
   include I18n::Alchemy
 
-  after_save :create_info_screen_entities
 
   has_many :properties, class_name: 'EntityProperty', dependent: :destroy, inverse_of: :entity
   has_many :reservation_rule_scopes, dependent: :destroy, inverse_of: :entity
@@ -22,6 +21,8 @@ class Entity < ActiveRecord::Base
   validates :entity_type, presence: true, if: "entity_type_id.present?"
   validates :organisation, presence: true
   validates :color, color: true
+
+  after_save :create_info_screen_entities
 
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :reservation_rule_scopes, allow_destroy: true
