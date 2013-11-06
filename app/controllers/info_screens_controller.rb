@@ -16,35 +16,35 @@ class InfoScreensController < ApplicationController
 
   # GET /info_screens/1/reservations.json
   def info_screen_reservations
-    result = {}
-    active_ises = @info_screen.info_screen_entity_types.active.info_screen_entities.active
+    result = []
+
+    puts @info_screen.info_screen_entities.inspect
+
+    active_ises = @info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active
+
+    puts active_ises.inspect
+
     active_ises.each do |ise|
-      entity_result = {}
 
-      entity_result.entity_id = ise.entity.id
-      entity_result.entity_name = ise.entity.instance_name
-
-      current_reservations << ise.entities.reservations.where('begins_at <= :update_scope_stop AND ends_at >= :update_scope_start', update_scope_start: Time.now, update_scope_stop: Time.now + 30.minutes).order(:begins_at)
+      current_reservations = ise.entity.reservations.where('begins_at <= :update_scope_stop AND ends_at >= :update_scope_start', update_scope_start: Time.now, update_scope_stop: Time.now + 1.day)
 
       current_reservations.each do |r|
-        entity_result.reservations << {
+        result << {
+          entity_id: r.entity.id,
+          entity_name: r.entity.instance_name,
           id: r.id,
           color: r.entity.color,
           begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
+          begin_unix: r.begins_at.to_i,
           end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
           description: (r.description.present? ? (r.description + ', ') : '') + r.organisation_client.instance_name,
+          direction_char: ise.direction_char
         }
       end
-
-      if ise.direction_char.present?
-        entity_result.direction_char = ise.direction_char
-      end
-      result << entity_result
     end
+    result.sort {|a, b| a[:begin_unix] <=> b[:begin_unix]}
 
-    result.sort
-
-    render json: { entities: result }, status: :ok
+    render json: { reservations: result, settings: info_screen_settings}, status: :ok
   end
 
   # GET /info_screens/new
@@ -104,5 +104,12 @@ private
 
   def interpolation_options
     { resource_name: @info_screen.instance_name }
+  end
+
+  def info_screen_settings
+    {
+      direction_char_visible: @info_screen.direction_char_visible,
+      clock_header: @info_screen.clock_header,
+    }
   end
 end
