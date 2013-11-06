@@ -2,7 +2,7 @@ function IADAinfoScreen(options) {
   this.options = Object.extend({
     container: 'info-screen-container',
     backend_url: 'url to info screen backend',
-    updateTimeout: 1000,
+    updateTimeout: 50000,
   }, options || {});
 
   this.infoScreenContainer = $('#' + this.options.container);
@@ -18,7 +18,6 @@ IADAinfoScreen.prototype.init = function() {
   var is = this;
 
   this.realtimeFullscreensElemPlacement();
-  this.realtimeFullscreensReservationDatesWidth();
 
   // fullscreen button
   this.initFullScreenControls();
@@ -27,20 +26,45 @@ IADAinfoScreen.prototype.init = function() {
   this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);
 }
 
-IADAinfoScreen.prototype.itemUpdate = function(reservations) {
-  var is = this;
-  var list = this.infoScreenContainer.find('#realtime-list');
+IADAinfoScreen.prototype.removeDeletedItems = function(reservations) {
+  var reservationIds = [];
+  $.each(reservations, function(index, item) {
+    reservationIds.push(item.id);
+  });
 
+  var view_reservations = this.infoScreenContainer.find('ul#realtime-list').children('li.infoScreenListItem');
+  view_reservations.each(function(index, item) {
+    var item = $(item);
+    if(!$.inArray(item.attr('id').split('_')[1])) {
+      item.slideUp(300, function(){ $(this).remove(); });
+    }
+  });
+}
+
+IADAinfoScreen.prototype.itemUpdate = function(reservations) {
+  // Remove reservations that do not exist anymore in the reservations
+  this.removeDeletedItems(reservations);
+
+  var is = this;
+  var list = this.infoScreenContainer.find('ul#realtime-list');
   $.each(reservations, function(index, reservation) {
     var newItem = is.createReservationItem(reservation);
-    if(is.infoScreenContainer.find('reservation_' + reservation.id).length > 0) {
-      is.infoScreenContainer.find('reservation_' + reservation.id).replaceWith(newItem);
+
+    // Remove old item if already showed and begin date is not the same
+    var oldItem = is.infoScreenContainer.find('#reservation_' + reservation.id);
+    if(oldItem.length > 0) {
+      if(oldItem.data('begin_unix') != reservation.begin_unix) {
+        oldItem.slideUp(300, function(){ $(this).remove(); });
+      } else {
+        oldItem.replaceWith(newItem);
+      }
     } else {
       var placed = false;
       var view_reservations = list.children('li.infoScreenListItem');
       view_reservations.each(function(index, item) {
-        if(reservation.begin_unix > item.data('begin_unix')) {
-          item.prepend(newItem);
+        var item = $(item);
+        if(reservation.begin_unix < item.data('begin_unix')) {
+          item.before(newItem);
           placed = true;
           return false;
         }
@@ -63,25 +87,27 @@ IADAinfoScreen.prototype.createReservationItem = function(reservation) {
   var from = item.find('div.reservation-dates-wrapper table.reservation-dates tr.datebox.from');
   if(moment().isSame(res_begin_moment, 'day')) {
     from.find('td.date').addClass('today');
-    from.find('td.date span').text(jsLang.info_screen.today);
+    from.find('td.date span.day-full').text(jsLang.info_screen.today);
   } else {
     from.find('td.date span.day').text(res_begin_moment.format('dd'));
     from.find('td.date span.day-full').text(res_begin_moment.format('D MMM YYYY'));
   }
-  from.find('td.time span').text(res_begin_moment).find('HH:mm');
+  from.find('td.time span').text(res_begin_moment.format('HH:mm'));
 
   var until = item.find('div.reservation-dates-wrapper table.reservation-dates tr.datebox.until');
   if(moment().isSame(res_end_moment, 'day')) {
     until.find('td.date').addClass('today');
-    until.find('td.date span').text(jsLang.info_screen.today);
+    until.find('td.date span.day-full').text(jsLang.info_screen.today);
   } else {
     until.find('td.date span.day').text(res_end_moment.format('dd'));
     until.find('td.date span.day-full').text(res_end_moment.format('D MMM YYYY'));
   }
-  until.find('td.time span').text(res_end_moment).find('HH:mm');
+  until.find('td.time span').text(res_end_moment.format('HH:mm'));
 
   item.find('h2').text(reservation.description);
   item.find('div.object').text(reservation.entity_name);
+
+  item.css('border-left-color', reservation.color);
 
   var availabilityDiv = item.find('div.availability');
   if(reservation.availability != null) {
@@ -93,12 +119,11 @@ IADAinfoScreen.prototype.createReservationItem = function(reservation) {
       availabilityDiv.addClass('available');
       availabilityDiv.html((reservation.availability == 1) ? jsLang.info_screen.one_available : str_replace(jsLang.info_screen.more_available, '%nr', '<strong>' + reservation.availability) + '</strong>');
     }
-
   }
 
 
   var wayfinding = item.find('div.wayfinding');
-  if(this.previousSettings.direction_char) {
+  if(this.previousSettings.direction_char_visible) {
     wayfinding.show();
     if(reservation.direction_char != null) {
       wayfinding.find('i').attr('class', reservation.direction_char)
@@ -106,6 +131,8 @@ IADAinfoScreen.prototype.createReservationItem = function(reservation) {
   } else {
     wayfinding.hide();
   }
+
+  return item;
 
 }
 
@@ -164,27 +191,6 @@ IADAinfoScreen.prototype.realtimeFullscreensElemPlacement = function() {
   $('#realtime-list > li > .inner .info-container').each(function(){
     $(this).css('margin-top', ($(this).parent().height() / 2) - ($(this).height() / 2) + 'px');
   });
-}
-
-IADAinfoScreen.prototype.realtimeFullscreensReservationDatesWidth = function() {
-  var reservationDatesGreatestWidth = { icon: 0, date: 0, time: 0 };
-  $('#realtime-list > li > .inner .reservation-dates').each(function(){
-    $(this).find('.datebox .from, .datebox .until').css('width', 'auto');
-    if($(this).find('.datebox .from').first().width() > reservationDatesGreatestWidth['icon']) {
-      reservationDatesGreatestWidth['icon'] = $(this).find('.datebox .from').first().width();
-    }
-    $(this).find('.datebox .date').css('width', 'auto');
-    if($(this).find('.datebox .date').first().width() > reservationDatesGreatestWidth['date']) {
-      reservationDatesGreatestWidth['date'] = $(this).find('.datebox .date').first().width();
-    }
-    $(this).find('.datebox .tim                                                                                                                                                                                                                                       e').css('width', 'auto');
-    if($(this).find('.datebox .time').first().width() > reservationDatesGreatestWidth['time']) {
-      reservationDatesGreatestWidth['time'] = $(this).find('.datebox .time').first().width();
-    }
-  });
-  this.infoScreenContainer.find('#realtime-list > li > .inner .reservation-dates .datebox .from, #realtime-list > li > .inner .reservation-dates .datebox .until').css('width', reservationDatesGreatestWidth['icon'] + 'px');
-  this.infoScreenContainer.find('#realtime-list > li > .inner .reservation-dates .datebox .date').css('width', reservationDatesGreatestWidth['date'] + 'px');
-  this.infoScreenContainer.find('#realtime-list > li > .inner .reservation-dates .datebox .time').css('width', reservationDatesGreatestWidth['time'] + 'px');
 }
 
 IADAinfoScreen.prototype.requestFullScreen = function(el) {

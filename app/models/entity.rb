@@ -22,7 +22,7 @@ class Entity < ActiveRecord::Base
   validates :organisation, presence: true
   validates :color, color: true
 
-  after_save :create_info_screen_entities
+  after_create :create_info_screen_entities
 
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :reservation_rule_scopes, allow_destroy: true
@@ -50,10 +50,9 @@ class Entity < ActiveRecord::Base
   end
 
   def create_info_screen_entities
-    if @organisation.present?
-      @organisation.info_screens.each do |is|
-          InfoScreenEntities.create(entity: self.id, info_screen_entity_type: InfoScreenEntityTypes.where('entity_id = ?', self.entity_type.id), active: iset.add_new_entities)
-      end
+    self.organisation.info_screens.each do |is|
+      iset = InfoScreenEntityType.where('entity_type_id = ? AND info_screen_id = ?', self.entity_type.id, is.id).first;
+      InfoScreenEntity.create(entity: self, info_screen_entity_type: iset, active: iset.add_new_entities)
     end
   end
 end
