@@ -160,6 +160,33 @@ html.with-overlay body {
   font-size: 14px;
 }
 
+#logo-container {
+  background-color: #ffffff;
+  padding: 20px;
+  display: none;
+}
+
+.logo {
+  width: 420px;
+  display: block;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+body.controller-sessions.action-new #logo-container {
+  display: block;
+}
+
+body.controller-sessions.action-new #content, 
+body.controller-sessions.action-new #page-title {
+  text-align: center;
+}
+
+body.controller-sessions.action-new #content > .inner {
+  display: inline-block;
+  text-align: left;
+}
+
 /**
  * Menu
  */
@@ -324,6 +351,10 @@ html.js #search-bar.open {
   background: #dddddd;
 /*  border-bottom: 1px solid #b5b5b5; */
   text-align: center;
+  background-image: image-url("logo_transp.png");
+  background-repeat: no-repeat;
+  background-position: 10px center;
+  background-size: 100px auto;
 }
 
 html.js #submenu-box {
