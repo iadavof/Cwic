@@ -31,6 +31,10 @@ var jsLang = {
   info_screen: {
     pressF11: 'Druk op F11 om volledig scherm te sluiten.',
     cannotOpenFullscreen: 'Volledig scherm kon niet worden geopend. Klik op OK en druk op de toets F11 om het scherm handmatig te maximaliseren.\n\n',
+    today: 'vandaag',
+    none_available: 'Geen plaatsen beschikbaar',
+    one_available: 'Nog 1 plaats beschikbaar',
+    more_available: 'Nog %nr plaatsen beschikbaar',
   },
   reservation_rule_scopes: {
     span_selectors: {

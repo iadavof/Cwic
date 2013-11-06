@@ -1,178 +1,55 @@
 <% content_for :page_title do %>
 <%= show_title(@info_screen) %>
 <% end %>
-<div id="info-screen-container" data-directions="<%= @info_screen.direction_char_visible %>" data-clock-header="<%= @info_screen.clock_header %>" >
+<div id="info-screen-container" data-info-screen-id="<%= @info_screen.id %>" >
   <div class="info-screen-header clearfix" style="display: none;">
     <div class="current-time"></div>
   </div>
   <ul id="realtime-list">
-    
+
   </ul>
 </div>
 
 
-<div id="info-screen-templates" style="display: hidden">
-
+<div id="info-screen-templates" style="display: none;">
+  <li id="listItemTemplate" class="infoScreenListItem">
+    <div class="inner clearfix">
+      <div class="info-container clearfix">
+        <div class="inner clearfix">
+          <div class="wayfinding">
+            <i class="symbol-arrow-up"></i>
+          </div>
+          <div class="reservation-dates-wrapper">
+            <table class="reservation-dates">
+              <tr class="datebox from">
+                <td class="from">
+                  <span><i class="icon-time"></i></span>
+                </td>
+                <td class="date">
+                  <span class="day">wo</span><span class="day-full">1 apr 2013</span>
+                </td>
+                <td class="time">
+                  <span>22:00</span>
+                </td>
+              </tr>
+              <tr class="datebox until">
+                <td class="until">
+                  <span><i class="icon-raceflag"></i></span>
+                </td>
+                <td class="date">
+                  <span class="day">wo</span><span class="day-full">2 okt 2013</span>
+                </td>
+                <td class="time">
+                  <span>22:00</span>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+      <h2>Supervette voorstelling</h2>
+      <div class="availability" style="display: none;"></div>
+      <div class="object">Grote zaal</div>
+    </div>
+  </li>
 </div>
-<!--
-
-<li>
-      <div class="inner clearfix">
-        <div class="info-container clearfix">
-          <div class="inner clearfix">
-            <div class="wayfinding">
-              <i class="symbol-arrow-up"></i>
-            </div>
-            <div class="reservation-dates-wrapper">
-              <table class="reservation-dates">
-                <tr class="datebox from">
-                  <td class="from">
-                    <span><i class="icon-time"></i></span>
-                  </td>
-                  <td class="date">
-                    <span class="day">wo</span><span>1 apr 2013</span>
-                  </td>
-                  <td class="time">
-                    <span>22:00</span>
-                  </td>
-                </tr>
-                <tr class="datebox until">
-                  <td class="until">
-                    <span><i class="icon-raceflag"></i></span>
-                  </td>
-                  <td class="date">
-                    <span class="day">wo</span><span>2 okt 2013</span>
-                  </td>
-                  <td class="time">
-                    <span>22:00</span>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-        <h2>Supervette voorstelling</h2>
-        <div class="availability available">Nog <strong>9</strong> plaatsen beschikbaar</div>
-        <div class="object">Grote zaal</div>
-      </div>
-    </li>
-    <li>
-      <div class="inner clearfix">
-        <div class="info-container clearfix">
-          <div class="inner clearfix">
-            <div class="wayfinding">
-              <i class="symbol-escalator-up"></i>
-            </div>
-            <div class="reservation-dates-wrapper">
-              <table class="reservation-dates">
-                <tr class="datebox from">
-                  <td class="from">
-                    <span><i class="icon-time"></i></span>
-                  </td>
-                  <td class="date today">
-                    <span>vandaag</span>
-                  </td>
-                  <td class="time">
-                    <span>22:00</span>
-                  </td>
-                </tr>
-                <tr class="datebox until">
-                  <td class="until">
-                    <span><i class="icon-raceflag"></i></span>
-                  </td>
-                  <td class="date">
-                    <span class="day">wo</span><span>23 nov 2013</span>
-                  </td>
-                  <td class="time">
-                    <span>22:00</span>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-        <h2>Vergadering van een bank</h2>
-        <div class="object">Vergaderzaal</div>
-      </div>
-    </li>
-    <li>
-      <div class="inner clearfix">
-        <div class="info-container clearfix">
-          <div class="inner clearfix">
-            <div class="wayfinding">
-              <i class="symbol-escalator-down"></i>
-            </div>
-            <div class="reservation-dates-wrapper">
-              <table class="reservation-dates">
-                <tr class="datebox from">
-                  <td class="from">
-                    <span><i class="icon-time"></i></span>
-                  </td>
-                  <td class="date">
-                    <span class="day">wo</span><span>1 dec 2013</span>
-                  </td>
-                  <td class="time">
-                    <span>22:00</span>
-                  </td>
-                </tr>
-                <tr class="datebox until">
-                  <td class="until">
-                    <span><i class="icon-raceflag"></i></span>
-                  </td>
-                  <td class="date">
-                    <span class="day">wo</span><span>1 dec 2013</span>
-                  </td>
-                  <td class="time">
-                    <span>23:00</span>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-        <h2>Pianoles</h2>
-        <div class="object">Zaal 1</div>
-      </div>
-    </li>
-    <li>
-      <div class="inner clearfix">
-        <div class="info-container clearfix">
-          <div class="inner">
-            <div class="wayfinding">
-              <i class="symbol-elevator-up"></i>
-            </div>
-            <div class="reservation-dates-wrapper">
-              <table class="reservation-dates">
-                <tr class="datebox from">
-                  <td class="from">
-                    <span><i class="icon-time"></i></span>
-                  </td>
-                  <td class="date today">
-                    <span>vandaag</span>
-                  </td>
-                  <td class="time">
-                    <span>22:00</span>
-                  </td>
-                </tr>
-                <tr class="datebox until">
-                  <td class="until">
-                    <span><i class="icon-raceflag"></i></span>
-                  </td>
-                  <td class="date today">
-                    <span>vandaag</span>
-                  </td>
-                  <td class="time">
-                    <span>23:00</span>
-                  </td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-        <h2>Borrel</h2>
-        <div class="availability not-available">Geen plaatsen beschikbaar</div>
-        <div class="object">Foyer</div>
-      </div>
-    </li>
-
--->
