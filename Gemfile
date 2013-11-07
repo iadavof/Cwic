@@ -102,6 +102,9 @@ gem 'momentjs-rails', github: 'CUnknown/momentjs-rails'
 # PG_Search for easy text search and global searching
 gem 'pg_search'
 
+# Websockets so we could create push notifications
+gem 'websocket-rails'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'

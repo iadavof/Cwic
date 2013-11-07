@@ -13,3 +13,4 @@
 //= require moment/en-gb.js
 //= require moment/nl.js
 //= require magnific-popup
+//= require websocket_rails/main
