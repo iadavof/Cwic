@@ -108,6 +108,9 @@ gem 'pg_search', '~> 0.7.0' # Locked on minor version, because we use custom sea
 # Pagination
 gem 'kaminari'
 
+# Websockets so we could create push notifications
+gem 'websocket-rails'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
