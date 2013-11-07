@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= index_title(Feedback) %>
-<% end %>
+<% content_for :page_title do %><%= index_title(Feedback) %><% end %>
 
 <% if @feedbacks.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Feedback.model_name.human(count: 2).lcfirst) %></p>

@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= edit_title(@organisation_user) %>
-<% end %>
+<% content_for :page_title do %><%= edit_title(@organisation_user) %><% end %>
 
 <%= form_for([@organisation, @organisation_user]) do |f| %>
   <%= render 'shared/error_messages', target: @organisation_user %>

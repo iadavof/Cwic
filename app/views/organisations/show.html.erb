@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-  <%= show_title(@organisation) %>
-<% end %>
+<% content_for :page_title do %><%= show_title(@organisation) %><% end %>
 
 <dl>
   <dt><%= Organisation.human_attribute_name(:name) %></dt>

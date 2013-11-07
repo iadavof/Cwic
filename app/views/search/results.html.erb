@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= t('.title') %>
-<% end %>
+<% content_for :page_title do %><%= t('.title') %><% end %>
 
 <% if @results.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: t('.results')) %></p>

@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= index_title(Entity) %>
-<% end %>
+<% content_for :page_title do %><%= index_title(Entity) %><% end %>
 
 <% if @entities.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Entity.model_name.human(count: 2).lcfirst) %></p>

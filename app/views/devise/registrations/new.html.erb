@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-  <%= t('.sign_up', :default => "Sign up") %>
-<% end %>
+<% content_for :page_title do %><%= t('.sign_up', :default => "Sign up") %><% end %>
 <%= form_for(resource, :as => resource_name, :url => registration_path(resource_name)) do |f| %>
   <%= devise_error_messages! %>
   <h2><%= t('.your_info') %></h2>

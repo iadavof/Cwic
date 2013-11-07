@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-  <%= index_title(Organisation) %>
-<% end %>
+<% content_for :page_title do %><%= index_title(Organisation) %><% end %>
 
 <% if @organisations.empty? %>
   <p><%= t('.empty', default: :empty_objects, classes: Organisation.model_name.human(count: 2).lcfirst) %></p>

@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-  <%= t('.sign_in', :default => "Sign in") %>
-<% end %>
+<% content_for :page_title do %><%= t('.sign_in', :default => "Sign in") %><% end %>
 <%= form_for(resource, :as => resource_name, :url => session_path(resource_name)) do |f| %>
   <div class="field">
     <%= f.label :email %>

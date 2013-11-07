@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= index_title(Sticky) %>
-<% end %>
+<% content_for :page_title do %><%= index_title(Sticky) %><% end %>
 
 <% if @stickies.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Sticky.model_name.human(count: 2).lcfirst) %></p>

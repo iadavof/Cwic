@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-  <%= t "devise.invitations.new.header" %>
-<% end %>
+<% content_for :page_title do %><%= t "devise.invitations.new.header" %><% end %>
 
 <%= form_for resource, :as => resource_name, :url => invitation_path(resource_name), :html => {:method => :post} do |f| %>
   <%= devise_error_messages! %>

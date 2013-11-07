@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= show_title(@entity) %>
-<% end %>
+<% content_for :page_title do %><%= show_title(@entity) %><% end %>
 <% if @entity.all_entity_images.present? %>
 <%= render partial: 'entities/ken_burns_slideshow', locals: {images: @entity.all_entity_images} %>
 <% end %>

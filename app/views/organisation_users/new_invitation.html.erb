@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-  <%= t('devise.invitations.new.header') %>
-<% end %>
+<% content_for :page_title do %><%= t('devise.invitations.new.header') %><% end %>
 
 <%= form_for(@user, url: { action: 'send_invitation' }) do |f| %>
   <p><%= t('.intro', email: @user.email) %></p>

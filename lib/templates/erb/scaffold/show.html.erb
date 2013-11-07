@@ -1,6 +1,4 @@
-<%% content_for :page_title do %>
-<%%= show_title(@<%= singular_table_name %>) %>
-<%% end %>
+<%% content_for :page_title do %><%%= show_title(@<%= singular_table_name %>) %><%% end %>
 
 <dl>
 <% attributes.reject(&:password_digest?).each do |attribute| -%>

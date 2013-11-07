@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= index_title(ReservationRuleScope) %>
-<% end %>
+<% content_for :page_title do %><%= index_title(ReservationRuleScope) %><% end %>
 
 <% if @reservation_rule_scopes.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: ReservationRuleScope.model_name.human(count: 2).lcfirst) %></p>

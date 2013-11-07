@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= index_title(EntityTypeIcon) %>
-<% end %>
+<% content_for :page_title do %><%= index_title(EntityTypeIcon) %><% end %>
 
 <% if @entity_type_icons.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: EntityTypeIcon.model_name.human(count: 2).lcfirst) %></p>

@@ -1,6 +1,4 @@
-<% content_for :page_title do %>
-<%= show_title(@organisation_client) %>
-<% end %>
+<% content_for :page_title do %><%= show_title(@organisation_client) %><% end %>
 
 <%= render partial: 'stickies/resource_stickies', locals: { resource: @organisation_client } %>
 
