@@ -2,6 +2,8 @@ function IADAinfoScreen(options) {
   this.options = Object.extend({
     container: 'info-screen-container',
     backend_url: 'url to info screen backend',
+    websocket_url: 'url to websocket',
+    organisation_id: 0,
     updateTimeout: 50000,
   }, options || {});
 
@@ -14,6 +16,15 @@ function IADAinfoScreen(options) {
   this.init();
 }
 
+IADAinfoScreen.prototype.initWebSocket = function() {
+  var is = this;
+  var dispatcher = new WebSocketRails(this.options.websocket_url);
+  // open reservations_channel for organisation
+  var channel = dispatcher.subscribe('reservations_' + this.options.organisation_id);
+
+  channel.bind('save', function() { is.getInfoScreenItems(); });
+}
+
 IADAinfoScreen.prototype.init = function() {
   var is = this;
 
@@ -23,7 +34,10 @@ IADAinfoScreen.prototype.init = function() {
   this.initFullScreenControls();
 
   this.getInfoScreenItems();
-  this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);
+
+  this.initWebSocket();
+
+  //this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);
 }
 
 IADAinfoScreen.prototype.removeDeletedItems = function(reservations) {
@@ -35,7 +49,7 @@ IADAinfoScreen.prototype.removeDeletedItems = function(reservations) {
   var view_reservations = this.infoScreenContainer.find('ul#realtime-list').children('li.infoScreenListItem');
   view_reservations.each(function(index, item) {
     var item = $(item);
-    if(!$.inArray(item.attr('id').split('_')[1])) {
+    if($.inArray(parseInt(item.attr('id').split('_')[1]), reservationIds) < 0) {
       item.slideUp(300, function(){ $(this).remove(); });
     }
   });
