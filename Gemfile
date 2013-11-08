@@ -54,7 +54,7 @@ end
 # gem 'capistrano', group: :development
 
 # Use debugger
-# gem 'debugger', group: [:development, :test]
+gem 'debugger', group: [:development, :test]
 
 # Rails-i18n for standard rails locales
 gem 'rails-i18n'
