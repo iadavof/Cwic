@@ -22,7 +22,6 @@ class OrganisationUsersController < ApplicationController
     # Enable user lookup by email
     @organisation_user.by_email = true
     @organisation_user.attributes = resource_params
-    puts @organisation_user.errors.inspect
     if @organisation_user.valid? && @organisation_user.user.nil?
       # Organisation user is valid, but user could not be found: render the invitation form for the new user. No need to save the organisation user, this will be done after the invitation is sent (and the user is created).
       @user = User.new

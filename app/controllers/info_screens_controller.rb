@@ -18,11 +18,7 @@ class InfoScreensController < ApplicationController
   def info_screen_reservations
     result = []
 
-    puts @info_screen.info_screen_entities.inspect
-
     active_ises = @info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active
-
-    puts active_ises.inspect
 
     active_ises.each do |ise|
 
