@@ -40,7 +40,6 @@ class EntityTypeIconsController < ApplicationController
   # PATCH/PUT /entity_type_icons/1
   def update
     @entity_type_icon.update_attributes(resource_params)
-    puts @admin.inspect
     if @admin
       if params[:organisation_id] == ""
         @entity_type_icon.organisation = nil
