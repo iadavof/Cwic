@@ -12,7 +12,9 @@
   </head>
   <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-user-id="<%= current_user.try(:id) %>" data-current-user-name="<%= current_user.try(:instance_name) %>" data-current-organisation-id="<%= current_organisation.try(:id) %>" data-current-locale="<%= I18n.locale %>">
     <div id="logo-container">
-      <img src="<%= asset_path('logo.png') %>" class="logo" />
+      <div id="logo-container-inner">
+        <img src="<%= asset_path('logo.png') %>" class="logo" />
+      </div>
     </div>
     <div id="header">
       <% if user_signed_in? %>
