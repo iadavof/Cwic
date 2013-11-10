@@ -108,6 +108,16 @@
   font-style: italic;
 }
 
+::-moz-selection {
+  background-color: #1c9cb2;
+  color: #ffffff;
+}
+
+::selection {
+  background-color: #1c9cb2;
+  color: #ffffff;
+}
+
 [class^="icon-"].red:before,
 [class*=" icon-"].red:before {
   color: #ff3520;
@@ -203,6 +213,8 @@ html.js #header {
   overflow: hidden;
   background-color: #ffffff;
   text-align: center;
+  position: relative;
+  z-index: 2;
 }
 
 html.js #search-bar {
@@ -619,7 +631,7 @@ a > img {
   text-decoration: none;
 }
 
-input, textarea, select {
+input, textarea, select, .dropdown {
   font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   border: 1px solid #cccccc;
