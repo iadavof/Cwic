@@ -17,7 +17,7 @@
   </div>
   <div class="field">
     <%= f.label :organisation_client %>
-    <%= f.collection_select :organisation_client_id, @organisation.organisation_clients.sort, :id, :instance_name, prompt: t('prompt_choose') %>
+    <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
   </div>
   <div class="actions">
     <%= f.submit %>

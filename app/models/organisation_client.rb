@@ -20,8 +20,9 @@ class OrganisationClient < ActiveRecord::Base
   validates :lat, numericality: true, allow_blank: true;
 
   pg_global_search against: { first_name: 'A', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B' }, associated_against: { stickies: { sticky_text: 'C' } }
+  pg_search_scope :autocomplete_search, against: { first_name: 'A', last_name: 'A', locality: 'B' }, using: { tsearch: { prefix: true } }
 
   def instance_name
-    self.first_name + ' ' + (self.infix.present? ? self.infix + ' ' : '') + self.last_name
+    self.first_name + ' ' + (self.infix.present? ? self.infix + ' ' : '') + self.last_name + ', ' + self.locality
   end
 end

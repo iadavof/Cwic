@@ -13,3 +13,5 @@
 //= require moment/en-gb.js
 //= require moment/nl.js
 //= require magnific-popup
+//= require select2
+//= require select2_locale_nl

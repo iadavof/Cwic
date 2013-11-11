@@ -14,4 +14,5 @@
  *= require global
  *= require_directory .
  *= require magnific-popup
+ *= require select2
  */
