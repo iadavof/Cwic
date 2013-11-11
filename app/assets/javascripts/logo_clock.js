@@ -4,7 +4,7 @@ function IADAlogoClock(options) {
   }, options || {});
 
   this.clockContainer = $('#' + this.options.container);
-  
+
   var lc = this;
 
   $(window).on('resize', function() {lc.createFace();});
@@ -21,24 +21,26 @@ IADAlogoClock.prototype.createFace = function() {
   // remove old face
   this.clockContainer.find('div.face').remove();
 
-  var radius = this.clockContainer.width() / 10;
+  if(this.clockContainer.width() > 300) {
+    var radius = this.clockContainer.width() / 10;
 
-  var face = $('<div>', {class: 'face'});
-  face.css({
-    position: 'absolute',
-    backgroundColor: 'white',
-    left: '21.5%',
-    top: '48%',
-    marginTop: -radius + 'px',
-    marginLeft: -radius + 'px',
-    borderRadius: radius + 'px',
-    zIndex: 5,
-    width: 2*radius,
-    height: 2*radius,
-  });
+    var face = $('<div>', {class: 'face'});
+    face.css({
+      position: 'absolute',
+      backgroundColor: 'white',
+      left: '21.5%',
+      top: '48%',
+      marginTop: -radius + 'px',
+      marginLeft: -radius + 'px',
+      borderRadius: radius + 'px',
+      zIndex: 5,
+      width: 2*radius,
+      height: 2*radius,
+    });
 
-  this.clockContainer.append(face);
-  this.createArms(face);
+    this.clockContainer.append(face);
+    this.createArms(face);
+  }
 }
 
 IADAlogoClock.prototype.createArms = function(face) {
@@ -62,15 +64,15 @@ IADAlogoClock.prototype.createArms = function(face) {
     left: '50%',
     top: '50%',
     '-webkit-transform-origin' : 'center 5%',
-     '-moz-transform-origin' : 'center 5%',  
-      '-ms-transform-origin' : 'center 5%',  
-       '-o-transform-origin' : 'center 5%',  
+     '-moz-transform-origin' : 'center 5%',
+      '-ms-transform-origin' : 'center 5%',
+       '-o-transform-origin' : 'center 5%',
           'transform-origin' : 'center 5%',
   });
 
   this.minuteArm.css({
     position: 'absolute',
-    backgroundColor: '#FE2035',
+    backgroundColor: '#FE3520',
     height: armHeight,
     width: armWidth,
     marginLeft: -armWidth/2 + 'px',
@@ -80,9 +82,9 @@ IADAlogoClock.prototype.createArms = function(face) {
     left: '50%',
     top: '50%',
     '-webkit-transform-origin' : 'center 5%',
-     '-moz-transform-origin' : 'center 5%',  
-      '-ms-transform-origin' : 'center 5%',  
-       '-o-transform-origin' : 'center 5%',  
+     '-moz-transform-origin' : 'center 5%',
+      '-ms-transform-origin' : 'center 5%',
+       '-o-transform-origin' : 'center 5%',
           'transform-origin' : 'center 5%',
   });
 
@@ -101,19 +103,19 @@ IADAlogoClock.prototype.setCurrentTime = function() {
 
   this.hourArm.css({
   '-webkit-transform' : 'rotate('+hourDeg+'deg)',
-     '-moz-transform' : 'rotate('+hourDeg+'deg)',  
-      '-ms-transform' : 'rotate('+hourDeg+'deg)',  
-       '-o-transform' : 'rotate('+hourDeg+'deg)',  
-          'transform' : 'rotate('+hourDeg+'deg)',  
+     '-moz-transform' : 'rotate('+hourDeg+'deg)',
+      '-ms-transform' : 'rotate('+hourDeg+'deg)',
+       '-o-transform' : 'rotate('+hourDeg+'deg)',
+          'transform' : 'rotate('+hourDeg+'deg)',
                'zoom' : 1
     });
 
   this.minuteArm.css({
   '-webkit-transform' : 'rotate('+minuteDeg+'deg)',
-     '-moz-transform' : 'rotate('+minuteDeg+'deg)',  
-      '-ms-transform' : 'rotate('+minuteDeg+'deg)',  
-       '-o-transform' : 'rotate('+minuteDeg+'deg)',  
-          'transform' : 'rotate('+minuteDeg+'deg)',  
+     '-moz-transform' : 'rotate('+minuteDeg+'deg)',
+      '-ms-transform' : 'rotate('+minuteDeg+'deg)',
+       '-o-transform' : 'rotate('+minuteDeg+'deg)',
+          'transform' : 'rotate('+minuteDeg+'deg)',
                'zoom' : 1
     });
 
