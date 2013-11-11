@@ -7,7 +7,7 @@
     </ul>
   </div>
   <a id="open-feedback-button" class="button blue"><%= t('.feedback') %></a>
-  <a id="open-search-button" href="#"<% if params[:global_search].present? %><%= ' class=open' %><% end %>><i class="icon-search"></i></a>
+  <%= content_tag(:a, content_tag(:i, nil, class: 'icon-search'), id: 'open-search-button', class: (controller_name == 'search' ? 'open' : nil)) %>
   <ul id="main-menu">
     <% menu.each_with_index do |(category_name, category_content), index| %>
     <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: (category_matches?(category_name) ? "active" : nil)) do %>

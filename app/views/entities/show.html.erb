@@ -1,7 +1,9 @@
 <% content_for :page_title do %><%= show_title(@entity) %><% end %>
+
 <% if @entity.all_entity_images.present? %>
-<%= render partial: 'entities/ken_burns_slideshow', locals: {images: @entity.all_entity_images} %>
+<%= render partial: 'entities/ken_burns_slideshow', locals: { images: @entity.all_entity_images } %>
 <% end %>
+
 <%= render partial: 'stickies/resource_stickies', locals: { resource: @entity } %>
 
 <div id="tabs">

@@ -1,7 +1,7 @@
 source 'https://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '4.0.1'
+gem 'rails', '~> 4.0.1'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -62,11 +62,11 @@ gem 'rails-i18n'
 # Plurailize
 gem 'rich_pluralization', github: 'archan937/rich_pluralization'
 
-# Devise for authentication
-gem 'devise'
-gem 'devise_invitable'
-gem 'devise-i18n'
-gem 'devise-i18n-views'
+# Devise for authentication. Gems are locked on minor versions, because we use custom Devise functionality and views.
+gem 'devise', '~> 3.1.1'
+gem 'devise_invitable', '~> 1.3.0'
+gem 'devise-i18n', '~> 0.10.0'
+gem 'devise-i18n-views', '~> 0.2.8'
 
 # Use CanCan for access control / authorisation
 gem 'cancan'
@@ -100,7 +100,7 @@ gem 'js-routes'
 gem 'momentjs-rails', github: 'CUnknown/momentjs-rails'
 
 # PG_Search for easy text search and global searching
-gem 'pg_search'
+gem 'pg_search', '~> 0.7.0' # Locked on minor version, because we use custom search functionality (see lib/core_ext/pg_search.rb).
 
 group :development do
   # Disable messages about assets in development

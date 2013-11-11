@@ -2,7 +2,6 @@ class EntityType < ActiveRecord::Base
   include PgSearch
   include I18n::Alchemy
 
-
   has_many :entities, dependent: :destroy
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type
   has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
@@ -22,7 +21,7 @@ class EntityType < ActiveRecord::Base
 
   scope :with_entities, -> { where('entities_count > 0') }
 
-  multisearchable against: [ :name, :description ]
+  pg_global_search against: { name: 'A', description: 'B' }
 
   def icon_with_default
     if self.icon_without_default.nil?

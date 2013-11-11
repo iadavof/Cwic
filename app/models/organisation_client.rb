@@ -19,7 +19,7 @@ class OrganisationClient < ActiveRecord::Base
   validates :lng, numericality: true, allow_blank: true;
   validates :lat, numericality: true, allow_blank: true;
 
-  multisearchable against: [ :first_name, :last_name, ]
+  pg_global_search against: { first_name: 'A', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B' }, associated_against: { stickies: { sticky_text: 'C' } }
 
   def instance_name
     self.first_name + ' ' + (self.infix.present? ? self.infix + ' ' : '') + self.last_name

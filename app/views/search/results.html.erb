@@ -8,6 +8,7 @@
     <tr>
       <th><%= t('.type') %></th>
       <th><%= t('.name') %></th>
+      <th><%= t('.rank') %></th>
       <th></th>
     </tr>
   </thead>
@@ -15,11 +16,12 @@
   <tbody>
     <% @results.each do |result| %>
     <tr>
-      <td><%= result.searchable.class.model_name.human %></td>
-      <td><%= name_link_to_show([@organisation, result.searchable]) %></td>
+      <td><%= result.class.model_name.human %></td>
+      <td><%= name_link_to_show([@organisation, result]) %></td>
+      <td><%= result.pg_search_rank %></td>
       <td class="icons">
-        <%= icon_link_to_edit([@organisation, result.searchable]) %>
-        <%= icon_link_to_destroy([@organisation, result.searchable]) %>
+        <%= icon_link_to_edit([@organisation, result]) %>
+        <%= icon_link_to_destroy([@organisation, result]) %>
       </td>
     </tr>
     <% end %>
