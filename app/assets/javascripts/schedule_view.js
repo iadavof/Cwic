@@ -4,7 +4,7 @@ APP.schedule_view = {
       container: 'horizontal-calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
-      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation), 
+      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
       zoom: 'day',
     });
@@ -21,7 +21,7 @@ APP.schedule_view = {
       container: 'horizontal-calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
-      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation), 
+      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
       zoom: 'week',
     });
@@ -293,7 +293,7 @@ IADAscheduleView.prototype.bindToolbarEvents = function() {
     var scheduleItemDOM = $(this).parents('.schedule-item');
     var dayRowTP = scheduleItemDOM.parents('.row-schedule-object-item-parts');
     var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
-    
+
     if(schedule.focusedScheduleItem == null) {
       schedule.openToolbar(scheduleItem);
     } else if (schedule.focusedScheduleItem.item_id != scheduleItem.item_id) {
@@ -325,7 +325,7 @@ IADAscheduleView.prototype.openToolbar = function(scheduleItem) {
   var toolbarHeight = toolbar.find('.inner').outerHeight();
 
   scheduleItem.applyFocus();
-  
+
   schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
     $(this).animate({'padding-top': parseInt($(this).data('original-padding-top')) + toolbarHeight + 'px'}, 200);
 
@@ -620,6 +620,7 @@ IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, new
   reservationForm.find('input#begins_at_tod').timepicker("setTime", beginJDate);
   reservationForm.find('input#ends_at_date').datepicker("setDate", endJDate);
   reservationForm.find('input#ends_at_tod').timepicker("setTime", endJDate);
+  APP.reservations.organisation_client_dropdown();
 
   reservationForm.find('select#reservation_entity_id').val(newScheduleItem.schedule_object_id);
 }

@@ -2,7 +2,6 @@ class Entity < ActiveRecord::Base
   include PgSearch
   include I18n::Alchemy
 
-
   has_many :properties, class_name: 'EntityProperty', dependent: :destroy, inverse_of: :entity
   has_many :reservation_rule_scopes, dependent: :destroy, inverse_of: :entity
   has_many :reservations, dependent: :destroy
@@ -30,8 +29,7 @@ class Entity < ActiveRecord::Base
 
   default_scope { order('id ASC') }
 
-  multisearchable against: [ :name, :description ]
-  #pg_search_scope :global_search, against: { name: 'A', description: 'B' }
+  pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
 
   def instance_name
     self.name

@@ -49,6 +49,7 @@ Cwic::Application.routes.draw do
     match '/week_occupation', controller: 'occupation_view', action: 'week_occupation', via: 'get'
 
     resources :reservations
+    match '/organisation_clients/search', controller: 'organisation_clients', action: 'search', via: 'get', as: 'search_organisation_client'
     resources :organisation_clients
     resources :entity_type_icons
 
