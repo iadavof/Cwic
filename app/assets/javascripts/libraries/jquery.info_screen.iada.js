@@ -21,9 +21,9 @@ IADAinfoScreen.prototype.initWebSocket = function() {
   var is = this;
   var dispatcher = new WebSocketRails(this.options.websocket_url);
   // open reservations_channel for organisation
-  var channel = dispatcher.subscribe('reservations_' + this.options.organisation_id);
+  var channel = dispatcher.subscribe('infoscreens_' + this.options.organisation_id);
 
-  channel.bind('save', function() { is.getInfoScreenItems(); });
+  channel.bind('update', function() { is.getInfoScreenItems(); });
 }
 
 IADAinfoScreen.prototype.init = function() {
