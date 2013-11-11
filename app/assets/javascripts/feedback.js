@@ -98,22 +98,20 @@ IADAFeedback.prototype.closeFeedback = function() {
 IADAFeedback.prototype.generateTechInfo = function() {
     var techinfo = {};
 
-    var session = window.session;
-
-    techinfo['Browser'] = session.browser.browser;
-    techinfo['Browser version'] = session.browser.version;
-    techinfo['Browser os'] = session.browser.os;
-    techinfo['Flash'] = session.plugins.flash;
-    techinfo['Silverlight'] = session.plugins.silverlight;
-    techinfo['Java'] = session.plugins.java;
-    techinfo['Quicktime'] = session.plugins.quicktime;
-    techinfo['Screen Width'] = session.device.screen.width + 'px';
-    techinfo['Screen Height'] = session.device.screen.height + 'px';
-    techinfo['Viewport Width'] = session.device.viewport.width + 'px';
-    techinfo['Viewport Height'] = session.device.viewport.height + 'px';
-    techinfo['Tablet'] = session.device.is_tablet;
-    techinfo['Phone'] = session.device.is_phone;
-    techinfo['Mobile'] = session.device.is_mobile;
+    techinfo['Browser'] = '';
+    techinfo['Browser version'] = '';
+    techinfo['Browser os'] = '';
+    techinfo['Flash'] = '';
+    techinfo['Silverlight'] = '';
+    techinfo['Java'] = '';
+    techinfo['Quicktime'] = '';
+    techinfo['Screen Width'] = '' + 'px';
+    techinfo['Screen Height'] = '' + 'px';
+    techinfo['Viewport Width'] = '' + 'px';
+    techinfo['Viewport Height'] = '' + 'px';
+    techinfo['Tablet'] = '';
+    techinfo['Phone'] = '';
+    techinfo['Mobile'] = '';
 
     this.techInfo =  this.objectToString(techinfo);
     return this.techInfo;

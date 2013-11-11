@@ -1,11 +1,7 @@
-APP.global.replaceControls = {
-  init: function() {
-    APP.global.replaceControls.dropdowns();
-  },
-  dropdowns: function() {
-    var dropdowns = $('select:not([multiple])');
-    dropdowns.each(function() {
-      var dropdown = $(this);
+(function($) {
+  var controls = {
+    makeDropdown: function(elem) {
+      var dropdown = $(elem);
       var options = dropdown.find('option');
       var defaultOption = dropdown.find('option:selected');
       var dropdownReplacement = $('<div class="dropdown" data-id="' + dropdown.attr('id') + '" data-name="' + dropdown.attr('name') + '"><div class="dropdown-current-option">' + defaultOption.text() + '</div><div class="dropdown-options"><div class="dropdown-current-option">' + defaultOption.text() + '</div></div></div>');
@@ -52,7 +48,15 @@ APP.global.replaceControls = {
           dropdownReplacement.removeClass('open');
         }
       });
-      dropdown.addClass('replaced').css({height: 0, width: 0, border: '0 none', padding: 0, margin: 0, visibility: 'hidden'}).after(dropdownReplacement);
-    });
-  },
-};
+      dropdown.addClass('replaced').hide().after(dropdownReplacement);
+    },
+  };
+  $.fn.extend({
+    cwicDropdown: function() {
+      var elems = $(this).filter('select:not([multiple])');
+      return elems.each(function(i,e) {
+        controls.makeDropdown(e);
+      });
+    },
+  });
+})(jQuery);

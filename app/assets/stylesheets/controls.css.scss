@@ -10,12 +10,15 @@
 
 .dropdown.autosubmit-busy .dropdown-current-option:before {
   content: '.';
+  color: #fff;
   background-image: image-url("ajax_wait.svg");
   background-size: 100% 100%;
   background-repeat: no-repeat;
   width: 20px;
   height: 20px;
   margin-top: -10px;
+  transform: none;
+  transition: none;
 }
 
 .dropdown ::-moz-selection {

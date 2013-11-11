@@ -34,7 +34,7 @@ APP.init = function() {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
   }
-  this.global.replaceControls.init(); // function defined in controls.js
+  $('select:not([multiple], .select2)').cwicDropdown();
 };
 
 // Add progress bar for Turbolink requests
@@ -64,7 +64,7 @@ APP.global = {
         $(this).addClass('open');
         $(contentArea).animate({ paddingTop: $('#header').outerHeight(true) + searchBar.find('.inner').outerHeight() + 'px' }, 200, 'swing');
         searchBar.animate({ height: searchBar.find('.inner').outerHeight() + 'px' }, 200, function() {
-          searchBar.css({ height: 'auto', overflow: 'visible'}).addClass('open');
+          searchBar.css({ height: 'auto'}).addClass('open');
           $(window).trigger('header-animated');
         });
         searchField.focus();
@@ -72,7 +72,6 @@ APP.global = {
         searchField.blur().val('');
         $(this).removeClass('open');
         $(contentArea).animate({ paddingTop: $('#header').outerHeight(true) - searchBar.find('.inner').outerHeight() + 'px' }, 200, 'swing');
-        searchBar.css({overflow: ''});
         searchBar.animate({ height: 0 }, 200, function() {
           searchBar.removeClass('open');
           $(window).trigger('header-animated');
