@@ -40,5 +40,8 @@ var jsLang = {
         'nr_dow_of': 'De <x>de dag van de maand'
       }
     }
+  },
+  reservations: {
+    select_client_placeholder: 'Selecteer een klant'
   }
 }
