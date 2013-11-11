@@ -72,7 +72,7 @@ IADAlogoClock.prototype.createArms = function(face) {
 
   this.minuteArm.css({
     position: 'absolute',
-    backgroundColor: '#FE3520',
+    backgroundColor: '#FE2035',
     height: armHeight,
     width: armWidth,
     marginLeft: -armWidth/2 + 'px',
