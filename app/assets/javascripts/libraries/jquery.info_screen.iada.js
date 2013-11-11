@@ -12,6 +12,7 @@ function IADAinfoScreen(options) {
 
   this.clockInterval = null;
   this.infoScreenUpdateInterval = null;
+  this.overdueRemoveInterval = null;
 
   this.init();
 }
@@ -37,7 +38,8 @@ IADAinfoScreen.prototype.init = function() {
 
   this.initWebSocket();
 
-  //this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);
+  this.overdueRemoveInterval = setInterval(function() { is.eatOverdueItems(); }, 20000);
+  this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);
 }
 
 IADAinfoScreen.prototype.removeDeletedItems = function(reservations) {
@@ -68,7 +70,7 @@ IADAinfoScreen.prototype.itemUpdate = function(reservations) {
     var oldItem = is.infoScreenContainer.find('#reservation_' + reservation.id);
     if(oldItem.length > 0) {
       if(oldItem.data('begin_unix') != reservation.begin_unix) {
-        oldItem.slideUp(300, function(){ $(this).remove(); });
+        oldItem.slideUp(300, function() { $(this).remove(); });
       } else {
         oldItem.replaceWith(newItem);
       }
@@ -91,6 +93,20 @@ IADAinfoScreen.prototype.itemUpdate = function(reservations) {
   });
 }
 
+IADAinfoScreen.prototype.eatOverdueItems = function() {
+  var view_reservations = this.infoScreenContainer.find('ul#realtime-list').children('li.infoScreenListItem');
+  var currentTime = moment().unix();
+
+  view_reservations.each(function(index, item) {
+    var item = $(item);
+    if(item.data('end_unix') > currentTime) {
+      return false;
+    } else {
+      item.slideUp(300, function() { $(this).remove(); });
+    }
+  });
+}
+
 IADAinfoScreen.prototype.createReservationItem = function(reservation) {
   var item = this.getTemplateClone('listItemTemplate');
   item.attr('id', 'reservation_' + reservation.id);
@@ -98,6 +114,7 @@ IADAinfoScreen.prototype.createReservationItem = function(reservation) {
   var res_end_moment = moment(reservation.end_moment);
 
   item.data('begin_unix', reservation.begin_unix);
+  item.data('end_unix', reservation.end_unix);
   var from = item.find('div.reservation-dates-wrapper table.reservation-dates tr.datebox.from');
   if(moment().isSame(res_begin_moment, 'day')) {
     from.find('td.date').addClass('today');

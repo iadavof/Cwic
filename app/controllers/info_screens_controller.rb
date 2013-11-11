@@ -32,6 +32,7 @@ class InfoScreensController < ApplicationController
           color: r.entity.color,
           begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
           begin_unix: r.begins_at.to_i,
+          end_unix: r.ends_at.to_i,
           end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
           description: (r.description.present? ? (r.description + ', ') : '') + r.organisation_client.instance_name,
           direction_char: ise.direction_char
