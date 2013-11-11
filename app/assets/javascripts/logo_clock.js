@@ -7,11 +7,11 @@ function IADAlogoClock(options) {
 
   var lc = this;
 
-  $(window).on('resize', function() {lc.createFace();});
-  this.createFace();
-
   this.hourArm = null;
   this.minuteArm = null;
+  
+  $(window).on('resize', function() {lc.createFace();});
+  this.createFace();
 
 
   setInterval(function(){ lc.setCurrentTime(); }, 30000);
@@ -54,7 +54,7 @@ IADAlogoClock.prototype.createArms = function(face) {
 
   this.hourArm.css({
     position: 'absolute',
-    backgroundColor: '#FE2035',
+    backgroundColor: '#ff3520',
     height: armHeight/1.5,
     width: armWidth,
     marginLeft: -armWidth/2 + 'px',
@@ -63,16 +63,16 @@ IADAlogoClock.prototype.createArms = function(face) {
     zIndex: 5,
     left: '50%',
     top: '50%',
-    '-webkit-transform-origin' : 'center 5%',
-     '-moz-transform-origin' : 'center 5%',
-      '-ms-transform-origin' : 'center 5%',
-       '-o-transform-origin' : 'center 5%',
-          'transform-origin' : 'center 5%',
+    '-webkit-transform-origin' : 'center ' + armWidth/2 + 'px',
+     '-moz-transform-origin' : 'center ' + armWidth/2 + 'px',
+      '-ms-transform-origin' : 'center ' + armWidth/2 + 'px',
+       '-o-transform-origin' : 'center ' + armWidth/2 + 'px',
+          'transform-origin' : 'center ' + armWidth/2 + 'px',
   });
 
   this.minuteArm.css({
     position: 'absolute',
-    backgroundColor: '#FE2035',
+    backgroundColor: '#ff3520',
     height: armHeight,
     width: armWidth,
     marginLeft: -armWidth/2 + 'px',

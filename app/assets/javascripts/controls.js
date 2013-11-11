@@ -4,7 +4,7 @@
       var dropdown = $(elem);
       var options = dropdown.find('option');
       var defaultOption = dropdown.find('option:selected');
-      var dropdownReplacement = $('<div class="dropdown" data-id="' + dropdown.attr('id') + '" data-name="' + dropdown.attr('name') + '"><div class="dropdown-current-option">' + defaultOption.text() + '</div><div class="dropdown-options"><div class="dropdown-current-option">' + defaultOption.text() + '</div></div></div>');
+      var dropdownReplacement = $('<div class="dropdown" data-name="' + dropdown.attr('name') + '"><div class="dropdown-current-option">' + defaultOption.text() + '</div><div class="dropdown-options"><div class="dropdown-current-option">' + defaultOption.text() + '</div></div></div>');
       dropdown.on('change keyup click', function() {
         var selectedOption = $(this).find('option:selected');
         dropdownReplacement.find('.dropdown-current-option').text(selectedOption.text());
