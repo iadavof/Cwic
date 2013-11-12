@@ -34,13 +34,21 @@ APP.init = function() {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
   }
-  $('select:not([multiple], .select2)').cwicDropdown();
 };
 
 // Add progress bar for Turbolink requests
 $(document).on('page:fetch', function() { NProgress.stackPush(); });
 $(document).on('page:load', function() { NProgress.stackPop(); });
 $(document).on('page:restore', function() { NProgress.remove(); });
+
+// Replace dropdowns when the DOM is fully loaded...
+$(document).ready(function() {
+  $('select:not([multiple], .select2, .replaced)').cwicDropdown();
+});
+// ...also if the page is loaded using Turbolinks
+$(document).on('page:load', function() {
+  $('select:not([multiple], .select2, .replaced)').cwicDropdown();
+});
 
 APP.global = {
   menuInit: function() {

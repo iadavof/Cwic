@@ -71,7 +71,7 @@ IADAoccupationView.prototype.bindControls = function() {
   var occ = this;
 
   if(this.options.view == 'weekOccupation') {
-    this.occupationContainer.find('select#date_current_month, .dropdown[data-id=date_current_month]').hide();
+    this.occupationContainer.find('select#date_current_month, select#date_current_month + .dropdown').hide();
     this.occupationContainer.find('div.control-container a#current span.year').show();
   } else {
     this.occupationContainer.find('div.control-container a#current span.month').show();
