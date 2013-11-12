@@ -1,3 +1,12 @@
+// Replace dropdowns when the DOM is fully loaded...
+$(document).ready(function() {
+  $('select:not([multiple], .select2, .replaced)').cwicDropdown();
+});
+// ...even if the page is loaded using Turbolinks
+$(document).on('page:load', function() {
+  $('select:not([multiple], .select2, .replaced)').cwicDropdown();
+});
+
 (function($) {
   var cwic_controls = {
     makeDropdown: function(dropdown) {
@@ -51,17 +60,14 @@
           var optionReplacement = $(this);
           dropdown.val(optionReplacement.data('value')).trigger('change');
           optionReplacement.parent('.dropdown-options').siblings('.dropdown-current-option').text(dropdown.find('option:selected').text());
-          optionReplacement.siblings('.dropdown-option').removeClass('selected');
-          optionReplacement.addClass('selected');
+          optionReplacement.addClass('selected').siblings('.dropdown-option').removeClass('selected');
           dropdownReplacement.removeClass('open');
         });
       });
       
       /* Close dropdown when there's a click event outside dropdown */
       $(document).on('click', function(e) {
-        if($(e.target).is(dropdownReplacement.find('div').add(dropdownReplacement))) {
-          return;
-        } else {
+        if(!$(e.target).is(dropdownReplacement.children().add(dropdownReplacement))) {
           dropdownReplacement.removeClass('open');
         }
       });

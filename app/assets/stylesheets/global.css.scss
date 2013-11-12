@@ -649,6 +649,12 @@ input, textarea, select, .dropdown {
   padding: 8px;
   width: 15em;
   transition: border-color 0.2s;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.minicolors-theme-default .minicolors-input {
+  height: auto;
 }
 
 input[type="file"],

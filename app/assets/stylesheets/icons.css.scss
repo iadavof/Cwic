@@ -13,31 +13,7 @@
     @extend .icon-chevron-down;
     &:before {
       @extend [class^="icon-"];
-      display: block;
-      font-size: 10px;
-      line-height: 10px;
-      height: 10px;
-      position: absolute;
-      top: 50%;
-      right: 8px;
-      margin-top: -5px;
-      z-index: 5;
-      transition: transform 0.3s;
     }
-    &:hover:before {
-      color: #1c9cb2;
-    }
-  }
-  /*
-  .dropdown-options .dropdown-current-option {
-    @extend .icon-chevron-up;
-  }
-  */
-  .dropdown-options:hover .dropdown-current-option:before {
-    color: #1c9cb2;
-  }
-  &.open .dropdown-current-option:before {
-    transform: rotate(-180deg);
   }
 }
 
