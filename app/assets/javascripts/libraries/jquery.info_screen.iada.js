@@ -4,7 +4,7 @@ function IADAinfoScreen(options) {
     backend_url: 'url to info screen backend',
     websocket_url: 'url to websocket',
     organisation_id: 0,
-    updateTimeout: 50000,
+    updateTimeout: 3600000,
   }, options || {});
 
   this.infoScreenContainer = $('#' + this.options.container);
@@ -57,7 +57,26 @@ IADAinfoScreen.prototype.removeDeletedItems = function(reservations) {
   });
 }
 
+IADAinfoScreen.prototype.reservationAnimation = function(on) {
+  var tables = this.infoScreenContainer.find('table.reservation-dates');
+  tables.each(function(index, item) {
+    var table = $(item);
+    if(on && !table.hasClass('animating')) {
+      table.addClass('animating');
+    } else {
+      table.removeClass('animating');
+      // -> triggering reflow /* The actual magic */
+      // without this it wouldn't work. Try uncommenting the line and the transition won't be retriggered.
+      table.offsetWidth = tables.offsetWidth;
+    }
+  });
+}
+
 IADAinfoScreen.prototype.itemUpdate = function(reservations) {
+
+  // Stop the reservation table animations
+  this.reservationAnimation(false);
+
   // Remove reservations that do not exist anymore in the reservations
   this.removeDeletedItems(reservations);
 
@@ -68,29 +87,33 @@ IADAinfoScreen.prototype.itemUpdate = function(reservations) {
 
     // Remove old item if already showed and begin date is not the same
     var oldItem = is.infoScreenContainer.find('#reservation_' + reservation.id);
+    var placed = false;
     if(oldItem.length > 0) {
       if(oldItem.data('begin_unix') != reservation.begin_unix) {
         oldItem.slideUp(300, function() { $(this).remove(); });
       } else {
         oldItem.replaceWith(newItem);
-      }
-    } else {
-      var placed = false;
-      var view_reservations = list.children('li.infoScreenListItem');
-      view_reservations.each(function(index, item) {
-        var item = $(item);
-        if(reservation.begin_unix < item.data('begin_unix')) {
-          item.before(newItem);
-          placed = true;
-          return false;
-        }
-      });
-      if(!placed) {
-        // append at the end
-        list.append(newItem);
+        placed = true;
       }
     }
+    var view_reservations = list.children('li.infoScreenListItem');
+    view_reservations.each(function(index, item) {
+      var item = $(item);
+      if(reservation.begin_unix < item.data('begin_unix')) {
+        item.before(newItem);
+        item.slideDown(300);
+        placed = true;
+        return false;
+      }
+    });
+    if(!placed) {
+      // append at the end
+      list.append(newItem);
+      newItem.slideDown(300);
+    }
   });
+
+  this.reservationAnimation(true);
 }
 
 IADAinfoScreen.prototype.eatOverdueItems = function() {
