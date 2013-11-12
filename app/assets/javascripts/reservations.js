@@ -15,6 +15,7 @@ APP.reservations = {
             var text = $(element).data('prev-selected') || '';
             return callback({id: id, text: text });
         },
+        placeholder: jsLang.reservations.select_client_placeholder,
         minimumInputLength: 1,
         width: 'resolve',
         ajax: {
