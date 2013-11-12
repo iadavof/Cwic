@@ -222,6 +222,10 @@ body.controller-info_screens.action-show #fullscreen-link i {
   padding: 0;
   border-collapse: separate;
   position: relative;
+
+}
+
+#realtime-list > li > .inner .reservation-dates.animating {
   -webkit-animation: reservation-dates 4s ease-in-out 0s infinite alternate;
   animation: reservation-dates 4s ease-in-out 0s infinite alternate;
 }
