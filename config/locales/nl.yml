@@ -507,4 +507,4 @@ nl:
   search:
     results:
       results: 'resultaten'
-      title: 'Resultaten'
+      title: 'Resultaten: %{count}'
