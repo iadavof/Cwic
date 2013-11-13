@@ -52,7 +52,7 @@ class ScheduleViewController < ApplicationController
             end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
             bg_color: r.entity.color,
             text_color: r.entity.text_color,
-            description: r.organisation_client.instance_name,
+            description: r.instance_name + (r.description.present? ? (' : ' + r.description) : '') + ', ' + r.organisation_client.instance_name,
             client_id: r.organisation_client.id,
           }
         end
@@ -111,7 +111,7 @@ class ScheduleViewController < ApplicationController
         item_id: r.id,
         begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
         end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
-        description: r.organisation_client.instance_name,
+        description: r.instance_name + (r.description.present? ? (' : ' + r.description) : '') + ', ' + r.organisation_client.instance_name,
         progress: calculate_current_progress(r),
       }
       if r.begins_at.to_date != r.ends_at.to_date
@@ -136,7 +136,7 @@ class ScheduleViewController < ApplicationController
       item_id: r.id,
       begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
       end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
-      description: r.organisation_client.instance_name,
+      description: r.instance_name + (r.description.present? ? (' : ' + r.description) : '') + ', ' + r.organisation_client.instance_name,
     }
     end
     res

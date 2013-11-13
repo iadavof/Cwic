@@ -202,6 +202,7 @@ nl:
         begins_at: 'Begint op'
         ends_at: 'Eindigt op'
         entity: 'Object'
+        description: 'Beschrijving'
         organisation_client: 'Klant'
       feedback:
         screen_capture: 'Screenshot'

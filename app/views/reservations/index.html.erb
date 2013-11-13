@@ -15,10 +15,11 @@
   <thead>
     <tr>
       <th><%= Reservation.human_attribute_name(:id) %></th>
+      <th><%= Reservation.human_attribute_name(:description) %></th>
+      <th><%= Reservation.human_attribute_name(:organisation_client) %></th>
+      <th><%= Reservation.human_attribute_name(:entity) %></th>
       <th><%= Reservation.human_attribute_name(:begins_at) %></th>
       <th><%= Reservation.human_attribute_name(:ends_at) %></th>
-      <th><%= Reservation.human_attribute_name(:entity) %></th>
-      <th><%= Reservation.human_attribute_name(:organisation_client) %></th>
       <th></th>
     </tr>
   </thead>
@@ -27,10 +28,11 @@
     <% @reservations.sort{|a,b| b.id <=> a.id}.each do |reservation| %>
     <tr>
       <td><%= name_link_to_show([@organisation, reservation]) %></td>
+      <td><%= reservation.description %></td>
+      <td><%= reservation.organisation_client.instance_name %></td>
+      <td><%= reservation.entity.instance_name %></td>
       <td><%= l(reservation.begins_at, format: :long) %></td>
       <td><%= l(reservation.ends_at, format: :long) %></td>
-      <td><%= reservation.entity.instance_name %></td>
-      <td><%= reservation.organisation_client.instance_name %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, reservation]) %>
         <%= icon_link_to_destroy([@organisation, reservation]) %>
