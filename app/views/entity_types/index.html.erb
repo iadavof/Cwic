@@ -3,6 +3,7 @@
 <% if @entity_types.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: EntityType.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @entity_types %>
 <table>
   <thead>
     <tr>
@@ -27,6 +28,7 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @entity_types %>
 <% end %>
 
 <%= button_link_to_new([@organisation, EntityType]) %>

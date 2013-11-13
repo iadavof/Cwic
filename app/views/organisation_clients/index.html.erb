@@ -3,17 +3,16 @@
 <% if @organisation_clients.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: OrganisationClient.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @organisation_clients %>
 <table>
   <thead>
     <tr>
-      <th><%= OrganisationClient.human_attribute_name(:first_name) %></th>
-      <th><%= OrganisationClient.human_attribute_name(:infix) %></th>
-      <th><%= OrganisationClient.human_attribute_name(:last_name) %></th>
+      <th><%= OrganisationClient.human_attribute_name(:name) %></th>
       <th><%= OrganisationClient.human_attribute_name(:email) %></th>
       <th><%= Organisation.human_attribute_name(:route) %></th>
       <th><%= Organisation.human_attribute_name(:street_number) %></th>
-      <th><%= Organisation.human_attribute_name(:locality) %></th>
       <th><%= Organisation.human_attribute_name(:postal_code) %></th>
+      <th><%= Organisation.human_attribute_name(:locality) %></th>
       <th><%= Organisation.human_attribute_name(:country) %></th>
       <th></th>
     </tr>
@@ -23,8 +22,6 @@
     <% @organisation_clients.each do |organisation_client| %>
     <tr>
       <td><%= name_link_to_show([@organisation, organisation_client]) %></td>
-      <td><%= organisation_client.infix %></td>
-      <td><%= organisation_client.last_name %></td>
       <td><%= organisation_client.email %></td>
       <td><%= organisation_client.route %></td>
       <td><%= organisation_client.street_number %></td>
@@ -38,6 +35,7 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @organisation_clients %>
 <% end %>
 
 <%= button_link_to_new([@organisation, OrganisationClient]) %>

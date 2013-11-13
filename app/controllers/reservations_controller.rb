@@ -47,7 +47,7 @@ private
   def load_resource
     case params[:action]
     when 'index', 'index_domain'
-      @reservations = @organisation.reservations.accessible_by(current_ability, :index)
+      @reservations = @organisation.reservations.accessible_by(current_ability, :index).page params[:page]
     when 'new', 'create'
       @reservation = @organisation.reservations.build
     else

@@ -105,6 +105,9 @@ gem "select2-rails"
 # PG_Search for easy text search and global searching
 gem 'pg_search', '~> 0.7.0' # Locked on minor version, because we use custom search functionality (see lib/core_ext/pg_search.rb).
 
+# Pagination
+gem 'kaminari'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'

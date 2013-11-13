@@ -3,6 +3,7 @@
 <% if @organisation_users.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: OrganisationUser.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @organisation_users %>
 <table>
   <thead>
     <tr>
@@ -29,6 +30,7 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @organisation_users %>
 <% end %>
 
 <%= button_link_to_new([@organisation, OrganisationUser]) %>

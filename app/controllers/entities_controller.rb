@@ -47,7 +47,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @entities = @organisation.entities.accessible_by(current_ability, :index)
+      @entities = @organisation.entities.accessible_by(current_ability, :index).page(params[:page])
     when 'new', 'create'
       @entity = @organisation.entities.build
     else

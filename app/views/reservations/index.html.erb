@@ -3,6 +3,7 @@
 <% if @reservations.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @reservations %>
 <table>
   <thead>
     <tr>
@@ -31,6 +32,7 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @reservations %>
 <% end %>
 
 <%= button_link_to_new([@organisation, Reservation]) %>

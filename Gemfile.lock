@@ -122,6 +122,9 @@ GEM
     js-routes (0.9.4)
       rails (>= 3.2)
     json (1.8.1)
+    kaminari (0.14.1)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     libv8 (3.16.14.3)
     magnific-popup-rails (0.9.7)
     mail (2.5.4)
@@ -257,6 +260,7 @@ DEPENDENCIES
   jquery-ui-rails
   jquery-ui-rails-cdn!
   js-routes
+  kaminari
   magnific-popup-rails
   mini_magick!
   modernizr-rails
