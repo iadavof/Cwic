@@ -96,22 +96,37 @@ IADAFeedback.prototype.closeFeedback = function() {
 }
 
 IADAFeedback.prototype.generateTechInfo = function() {
+    var is_tablet = !!navigator.userAgent.match(/(iPad|SCH-I800|xoom|kindle)/i);
+    var is_phone = !is_tablet && !!navigator.userAgent.match(/(iPhone|iPod|blackberry|android 0.5|htc|lg|midp|mmp|mobile|nokia|opera mini|palm|pocket|psp|sgh|smartphone|symbian|treo mini|Playstation Portable|SonyEricsson|Samsung|MobileExplorer|PalmSource|Benq|Windows Phone|Windows Mobile|IEMobile|Windows CE|Nintendo Wii)/i);
+    var viewport_x = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
+    var viewport_y = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    
+    var check_plugin = function(name){
+      if (navigator.plugins){
+        var plugin, i = 0, length = navigator.plugins.length;
+        for (; i < length; i++ ){
+          plugin = navigator.plugins[i];
+          if (plugin && plugin.name && plugin.name.toLowerCase().indexOf(name) !== -1){
+            return true;
+          } }
+        return false;
+      } return false;
+    };
+    
     var techinfo = {};
 
-    techinfo['Browser'] = '';
-    techinfo['Browser version'] = '';
-    techinfo['Browser os'] = '';
-    techinfo['Flash'] = '';
-    techinfo['Silverlight'] = '';
-    techinfo['Java'] = '';
-    techinfo['Quicktime'] = '';
-    techinfo['Screen Width'] = '' + 'px';
-    techinfo['Screen Height'] = '' + 'px';
-    techinfo['Viewport Width'] = '' + 'px';
-    techinfo['Viewport Height'] = '' + 'px';
-    techinfo['Tablet'] = '';
-    techinfo['Phone'] = '';
-    techinfo['Mobile'] = '';
+    techinfo['User-Agent'] = navigator.userAgent ? navigator.userAgent : 'N/A';
+    techinfo['Flash'] = check_plugin('flash');
+    techinfo['Silverlight'] = check_plugin('silverlight');
+    techinfo['Java'] = check_plugin('java');
+    techinfo['Quicktime'] = check_plugin('quicktime');
+    techinfo['Screen Width'] = window.screen.width ? window.screen.width + 'px' : 'N/A';
+    techinfo['Screen Height'] = window.screen.height ? window.screen.height + 'px' : 'N/A';
+    techinfo['Viewport Width'] = viewport_x ? viewport_x + 'px' : 'N/A';
+    techinfo['Viewport Height'] =  viewport_y ? viewport_y + 'px' : 'N/A';
+    techinfo['Tablet'] = is_tablet ? true : false;
+    techinfo['Phone'] = is_phone ? true : false;
+    techinfo['Mobile'] = is_tablet || is_phone ? true : false;
 
     this.techInfo =  this.objectToString(techinfo);
     return this.techInfo;
