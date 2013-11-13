@@ -22,12 +22,14 @@ class OrganisationClient < ActiveRecord::Base
 
   pg_global_search against: { first_name: 'A', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B' }, associated_against: { stickies: { sticky_text: 'C' } }
 
+  default_scope { order(:first_name, :last_name, :locality) }
+
   # Search OrganisationClients for autocomplete. Finds all clients for which one of the columns matches the query. Multiple query words limit the results.
   def self.autocomplete_search(query)
     rel = query.split(' ').inject(self) do |relation, subquery|
       subquery = subquery.gsub(/[^a-zA-Z0-9]/, '') + '%' # Remove all punctuation marks from the query and add % wildcard
       relation.where('first_name ILIKE :subquery OR last_name ILIKE :subquery OR locality ILIKE :subquery', subquery: subquery)
-    end.order(updated_at: :desc)
+    end.reorder(updated_at: :desc)
   end
 
   def instance_name

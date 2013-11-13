@@ -19,7 +19,8 @@ class SearchController < ApplicationController
     # Sort and paginate
     @count = results.count
     results = results.sort_by { |res| res[:rank] }.reverse # Sort by the rank
-    results = results.slice(0, 10) # TODO Perform some real pagination (else this whole setup is pretty much useless)
+    results = Kaminari.paginate_array(results).page(params[:page])
+    @raw_results = results
 
     # Transform results to ids per type
     results_by_type = results.group_by { |res| res[:type] }

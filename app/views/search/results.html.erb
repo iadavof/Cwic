@@ -1,4 +1,4 @@
-<% content_for :page_title do %><%= t('.title') %><% end %>
+<% content_for :page_title do %><%= t('.title', count: @count) %><% end %>
 
 <% if @results.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: t('.results')) %></p>
@@ -27,4 +27,5 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @raw_results %>
 <% end %>
