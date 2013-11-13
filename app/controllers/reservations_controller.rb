@@ -49,8 +49,16 @@ private
     when 'index'
       if params[:mini_search].present?
         @reservations = @organisation.reservations.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
+        # if no results, check if not a page is selected that does not exist
+        unless @reservations.present?
+          @reservations = @organisation.reservations.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(1)
+        end
       else
         @reservations = @organisation.reservations.accessible_by(current_ability, :index).page(params[:page])
+        # if no results, check if not a page is selected that does not exist
+        unless @reservations.present?
+          @reservations = @organisation.reservations.accessible_by(current_ability, :index).page(1)
+        end
       end
     when 'new', 'create'
       @reservation = @organisation.reservations.build

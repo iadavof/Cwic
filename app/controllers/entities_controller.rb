@@ -49,8 +49,16 @@ private
     when 'index'
       if params[:mini_search].present?
         @entities = @organisation.entities.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
+        # if no results, check if not a page is selected that does not exist
+        unless @entities.present?
+          @entities = @organisation.entities.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(1)
+        end
       else
         @entities = @organisation.entities.accessible_by(current_ability, :index).page(params[:page])
+        # if no results, check if not a page is selected that does not exist
+        unless @entities.present?
+          @entities = @organisation.entities.accessible_by(current_ability, :index).page(1)
+        end
       end
     when 'new', 'create'
       @entity = @organisation.entities.build
