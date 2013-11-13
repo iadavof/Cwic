@@ -116,14 +116,15 @@ IADAFeedback.prototype.generateTechInfo = function() {
     var techinfo = {};
 
     techinfo['User-Agent'] = navigator.userAgent ? navigator.userAgent : 'N/A';
-    techinfo['Flash'] = check_plugin('flash');
-    techinfo['Silverlight'] = check_plugin('silverlight');
-    techinfo['Java'] = check_plugin('java');
-    techinfo['Quicktime'] = check_plugin('quicktime');
     techinfo['Screen Width'] = window.screen.width ? window.screen.width + 'px' : 'N/A';
     techinfo['Screen Height'] = window.screen.height ? window.screen.height + 'px' : 'N/A';
     techinfo['Viewport Width'] = viewport_x ? viewport_x + 'px' : 'N/A';
     techinfo['Viewport Height'] =  viewport_y ? viewport_y + 'px' : 'N/A';
+    techinfo['Cookies Enabled'] = typeof(navigator.cookieEnabled) != 'undefined' ? navigator.cookieEnabled : 'N/A';
+    techinfo['Flash'] = check_plugin('flash');
+    techinfo['Silverlight'] = check_plugin('silverlight');
+    techinfo['Java'] = check_plugin('java');
+    techinfo['Quicktime'] = check_plugin('quicktime');
     techinfo['Tablet'] = is_tablet ? true : false;
     techinfo['Phone'] = is_phone ? true : false;
     techinfo['Mobile'] = is_tablet || is_phone ? true : false;
