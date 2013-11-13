@@ -53,7 +53,11 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @organisation_clients = @organisation.organisation_clients.accessible_by(current_ability, :index).page(params[:page])
+      if params[:mini_search].present?
+        @organisation_clients = @organisation.organisation_clients.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
+      else
+        @organisation_clients = @organisation.organisation_clients.accessible_by(current_ability, :index).page(params[:page])
+      end
     when 'search'
       @organisation_clients = @organisation.organisation_clients.autocomplete_search(params[:q]).accessible_by(current_ability, :index)
     when 'new', 'create'

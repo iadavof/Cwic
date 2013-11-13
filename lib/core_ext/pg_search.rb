@@ -36,7 +36,7 @@ module PgSearch
     end
 
     def pg_global_search(options)
-      default_options = {}
+      default_options = { using: { tsearch: { prefix: true, normalization: 1 } } }
       options = default_options.merge(options)
       pg_search_scope :global_search, options
     end

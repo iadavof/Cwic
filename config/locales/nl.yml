@@ -368,6 +368,7 @@ nl:
       search_all: '- Allemaal -'
     mini_search:
       search_reservation_placeholder: 'Reservering zoeken...'
+      search_organisationclient_placeholder: 'Klant zoeken...'
       search: 'Zoeken'
 
   shared:
