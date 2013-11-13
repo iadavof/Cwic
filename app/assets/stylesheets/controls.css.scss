@@ -1,3 +1,16 @@
+.dropdown, cwic-filefield {
+  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-size: 1em;
+  border: 1px solid #cccccc;
+  padding: 8px;
+  margin: 0;
+  width: 15em;
+  transition: border-color 0.2s;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: inherit;
+}
+  
 .dropdown {
   display: inline-block;
   position: relative;
@@ -147,6 +160,50 @@
   line-height: 15px;
   font-size: 15px;
   padding: 0;
+}
+
+.cwic-filefield {
+  display: inline-block;
+  width: 15em;
+  padding: 8px 8px 8px 36px;
+  background-color: #fff;
+  cursor: pointer;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  position: relative;
+  border: 1px solid #ccc;
+  vertical-align: middle;
+  font-size: 1em;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.cwic-filefield:before {
+  display: block;
+  font-size: 20px;
+  line-height: 20px;
+  width: 20px;
+  height: 20px;
+  position: absolute;
+  top: 50%;
+  left: 8px;
+  margin-top: -12px;
+}
+
+.cwic-filefield:after {
+  content: '.';
+  color: #fff;
+  display: inline;
+  font-size: 1em;
+}
+
+.cwic-filefield:hover:before {
+  color: #1c9cb2;
+}
+
+.cwic-filefield.filled:before {
+  color: #18c13d;
 }
 
 .select2-container .select2-choice {

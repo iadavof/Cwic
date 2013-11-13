@@ -421,6 +421,7 @@ html.js #search-bar.open {
   line-height: 100%;
   border-radius: 0 0 3px 3px;
   margin-right: 5px;
+  vertical-align: top;
 }
 
 #open-search-button.open {
@@ -702,15 +703,21 @@ a > img {
   text-decoration: none;
 }
 
-input, textarea, select, .dropdown {
+input, textarea, select {
   font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   border: 1px solid #cccccc;
   padding: 8px;
+  margin: 0;
   width: 15em;
   transition: border-color 0.2s;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  color: inherit;
+}
+
+input, textarea {
+  color: #222;
 }
 
 .minicolors-theme-default .minicolors-input {

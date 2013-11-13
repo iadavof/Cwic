@@ -17,15 +17,22 @@
   }
 }
 
-.select2-container .select2-choice .select2-arrow {
-  @extend .icon-chevron-down;
+.cwic-checkbox.checked > .inner {
+  @extend .icon-ok;
   &:before {
     @extend [class^="icon-"];
   }
 }
 
-.cwic-checkbox.checked > .inner {
-  @extend .icon-ok;
+.cwic-filefield {
+  @extend .icon-file;
+  &:before {
+    @extend [class^="icon-"];
+  }
+}
+
+.select2-container .select2-choice .select2-arrow {
+  @extend .icon-chevron-down;
   &:before {
     @extend [class^="icon-"];
   }

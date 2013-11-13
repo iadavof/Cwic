@@ -2,17 +2,19 @@
 $(document).ready(function() {
   $('select:not([multiple], .select2, .replaced)').cwicDropdown();
   $(':checkbox').cwicCheckbox();
+  $('input[type=file]').cwicFileField();
 });
 // ...even if the page is loaded using Turbolinks
 $(document).on('page:load', function() {
   $('select:not([multiple], .select2, .replaced)').cwicDropdown();
   $(':checkbox').cwicCheckbox();
+  $('input[type=file]').cwicFileField();
 });
 
 (function($) {
   var cwic_controls = {
     dropdown: {
-      makeDropdown: function(dropdown) {
+      make: function(dropdown) {
         // Generate dropdown and add it to DOM
         var options = dropdown.find('option');
         var defaultOption = dropdown.find('option:selected');
@@ -26,9 +28,9 @@ $(document).on('page:load', function() {
           dropdownReplacement.find('.dropdown-options').append(optionReplacement);
         });
         dropdown.addClass('replaced').hide().after(dropdownReplacement);
-        cwic_controls.dropdown.bindDropdownEvents(dropdown, dropdownReplacement);
+        cwic_controls.dropdown.bindEvents(dropdown, dropdownReplacement);
       },
-      bindDropdownEvents: function(dropdown, dropdownReplacement) {
+      bindEvents: function(dropdown, dropdownReplacement) {
         // Bind events
         
         /* Update dropdown when value of select element changes */
@@ -77,16 +79,16 @@ $(document).on('page:load', function() {
       },
     },
     checkbox: {
-      makeCheckbox: function(checkbox) {
+      make: function(checkbox) {
         var label = $('label[for=' + checkbox.attr('id') + ']');
         var checkboxReplacement = $('<div class="cwic-checkbox" data-name="' + checkbox.attr('name') + '"><div class="inner"></div></div>');
         if (checkbox.is(':checked')) {
           checkboxReplacement.addClass('checked');
         }
         checkbox.addClass('replaced').hide().after(checkboxReplacement);
-        cwic_controls.checkbox.bindCheckboxEvents(checkbox, checkboxReplacement);
+        cwic_controls.checkbox.bindEvents(checkbox, checkboxReplacement);
       },
-      bindCheckboxEvents: function(checkbox, checkboxReplacement) {
+      bindEvents: function(checkbox, checkboxReplacement) {
         checkbox.on('change', function(e) {
           if($(this).is(':checked')) {
             checkboxReplacement.addClass('checked');
@@ -105,19 +107,47 @@ $(document).on('page:load', function() {
         });
       },
     },
+    file_field: {
+      make: function(fileField) {
+        var fileFieldReplacement = $('<div class="cwic-filefield"></div>');
+        if (fileField.val()) {
+          fileFieldReplacement.addClass('filled').text(fileField.val());
+        }
+        fileField.addClass('replaced').hide().after(fileFieldReplacement);
+        cwic_controls.file_field.bindEvents(fileField, fileFieldReplacement);
+      },
+      bindEvents: function(fileField, fileFieldReplacement) {
+        fileField.on('change', function(){
+          if (!fileField.val()) {
+            fileFieldReplacement.removeClass('filled');
+          } else {
+            fileFieldReplacement.addClass('filled').text(fileField.val());
+          }
+        });
+        fileFieldReplacement.on('click', function(e) {
+          fileField.trigger('click');
+        });
+      },
+    },
   };
   
   $.fn.extend({
     cwicDropdown: function() {
       var elems = $(this).filter('select:not([multiple])');
       elems.each(function() {
-        cwic_controls.dropdown.makeDropdown($(this));
+        cwic_controls.dropdown.make($(this));
       });
     },
     cwicCheckbox: function() {
       var elems = $(this).filter(':checkbox');
       elems.each(function() {
-        cwic_controls.checkbox.makeCheckbox($(this));
+        cwic_controls.checkbox.make($(this));
+      });
+    },
+    cwicFileField: function() {
+      var elems = $(this).filter('input[type=file]');
+      elems.each(function() {
+        cwic_controls.file_field.make($(this));
       });
     },
   });
