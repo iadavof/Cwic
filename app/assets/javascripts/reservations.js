@@ -12,7 +12,7 @@ APP.reservations = {
       $('input#organisation_client_select').select2({
         initSelection: function(element, callback) {
             var id = $(element).val();
-            var text = $(element).data('prev-selected') || '';
+            var text = $(element).data('prev-selected') || jsLang.reservations.select_client_placeholder;
             return callback({id: id, text: text });
         },
         placeholder: jsLang.reservations.select_client_placeholder,

@@ -3,6 +3,7 @@
 <% if @entity_type_icons.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: EntityTypeIcon.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @entity_type_icons %>
 <table>
   <thead>
     <tr>
@@ -31,6 +32,7 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @entity_type_icons %>
 <% end %>
 
 <%= button_link_to_new(@organisation.present? ? [@organisation, EntityTypeIcon] : EntityTypeIcon) %>

@@ -487,6 +487,7 @@ nl:
   stickies:
     resource_stickies:
       saved: 'Opgeslagen'
+      add_note: 'Notitie toevoegen'
 
   reservation_rule_scopes:
     reservation_rule_scope:

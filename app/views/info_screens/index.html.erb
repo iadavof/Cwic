@@ -3,6 +3,7 @@
 <% if @info_screens.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: InfoScreen.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @info_screens %>
 <table>
   <thead>
     <tr>
@@ -25,6 +26,7 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @info_screens %>
 <% end %>
 
 <%= button_link_to_new([@organisation, InfoScreen]) %>

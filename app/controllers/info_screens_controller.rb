@@ -82,7 +82,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @info_screens = @organisation.info_screens.accessible_by(current_ability, :index)
+      @info_screens = @organisation.info_screens.accessible_by(current_ability, :index).page(params[:page])
     when 'new', 'create'
       @info_screen = @organisation.info_screens.build
     else

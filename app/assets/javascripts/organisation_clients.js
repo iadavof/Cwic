@@ -5,6 +5,9 @@ APP.organisation_clients = {
 	new: function() {
 		APP.organisation_clients.add_address_picker_to_form();
 	},
+	create: function() {
+		APP.organisation_clients.add_address_picker_to_form();
+	},
 	add_address_picker_to_form: function() {
   		var addresspickerMap = $('#address-picker').addresspicker({
 		  	reverseGeocode: true,
