@@ -17,7 +17,6 @@
       top: 50%;
       right: 8px;
       margin-top: -5px;
-      z-index: 5;
       transition: transform 0.3s;
     }
     &:hover:before {
@@ -29,6 +28,21 @@
   }
   &.open .dropdown-current-option:before {
     transform: rotate(-180deg);
+  }
+}
+
+.select2-container .select2-choice .select2-arrow {
+  color: inherit;
+  &:before {
+    display: block;
+    font-size: 10px;
+    line-height: 10px;
+    height: 10px;
+    position: absolute;
+    top: 50%;
+    right: 8px;
+    margin-top: -5px;
+    transition: transform 0.3s;
   }
 }
 
@@ -104,4 +118,159 @@
 .dropdown .dropdown-option.selected {
   background-color: #1c9cb2;
   color: #fff;
+}
+
+.cwic-checkbox {
+  display: inline-block;
+  padding: 9px 0;
+  vertical-align: middle;
+}
+
+.cwic-checkbox > .inner {
+  width: 15px;
+  height: 15px;
+  border: 1px solid #bbb;
+  cursor: pointer;
+  background-color: #fff;
+  position: relative;
+}
+
+.cwic-checkbox.checked > .inner:before {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-left: -6px;
+  margin-top: -13px;
+  color: #1c9cb2;
+  height: 15px;
+  width: 15px;
+  line-height: 15px;
+  font-size: 15px;
+  padding: 0;
+}
+
+.select2-container .select2-choice {
+  background: #fff;
+  color: inherit;
+  border-radius: 0;
+  border: 1px solid #ccc;
+  height: auto;
+  line-height: normal;
+  padding: 8px 0 8px 8px;
+}
+
+.select2-default {
+  color: inherit !important;
+}
+
+.select2-container .select2-choice .select2-arrow {
+  background: transparent;
+  width: 26px;
+  border: 0 none;
+  border-radius: 0;
+}
+
+.select2-container .select2-choice .select2-arrow b {
+  display: none;
+}
+
+.select2-dropdown-open .select2-choice .select2-arrow:before {
+  transform: rotate(-180deg);
+}
+
+.select2-dropdown-open .select2-choice, 
+.select2-drop {
+  border-color: #999;
+}
+
+.select2-drop {
+  border-radius: 0;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  color: inherit;
+}
+
+.select2-dropdown-open {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.select2-container-active, .select2-container-active {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+}
+
+.select2-container:hover .select2-choice .select2-arrow:before, 
+.select2-dropdown-open .select2-choice .select2-arrow:before {
+  color: #1c9cb2;
+}
+
+.select2-container-active .select2-choice, .select2-container-active .select2-choices {
+  box-shadow: none;
+  outline: none;
+  border-color: #999;
+}
+
+.select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-selection-limit {
+  background: transparent;
+  font-size: 0.9em;
+}
+
+.select2-container .select2-choice > .select2-chosen {
+  text-align: center;
+}
+
+.select2-search input {
+  background-color: #fff;
+  border-color: #999;
+  linear-gradient: none;
+  -moz-linear-gradient: none;
+  -o-linear-gradient: none;
+  -ms-linear-gradient: none;
+  -webkit-linear-gradient: none;
+  font-family: inherit;
+}
+
+.select2-results {
+  margin: 0;
+  padding: 5px 0 0 0;
+}
+
+.select2-results .select2-highlighted {
+  background: #1c9cb2;
+}
+
+.select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-selection-limit {
+  padding: 0 7px;
+}
+
+.select2-drop.select2-drop-above {
+  border-radius: 0;
+  border-color: #999;
+  box-shadow: 0 -1px 1px rgba(0, 0, 0, 0.4);
+  border-top: 0 none;
+}
+
+.select2-dropdown-open.select2-drop-above .select2-choice, .select2-dropdown-open.select2-drop-above .select2-choices {
+  border-top: 0;
+}
+
+.select2-container.select2-drop-above .select2-choice {
+  border-radius: 0;
+}
+
+.select2-drop.select2-drop-above.select2-drop-active {
+  border-color: #999;
+}
+
+.select2-dropdown-open.select2-drop-above .select2-choice, .select2-dropdown-open.select2-drop-above .select2-choices {
+  background-image: none;
+  border-color: #999;
+}
+
+.select2-search input.select2-active {
+  background-image: image-url('ajax_wait.svg');
+  background-size: 17px 17px;
+  background-repeat: no-repeat;
+  background-position: 99% center;
+  background-position: -webkit-calc(100% - 2px) center;
+  background-position: right 2px center;
+
 }
