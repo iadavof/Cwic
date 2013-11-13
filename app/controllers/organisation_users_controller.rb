@@ -70,6 +70,10 @@ private
     case params[:action]
     when 'index'
       @organisation_users = @organisation.organisation_users.accessible_by(current_ability, :index).page(params[:page])
+      # if no results, check if not a page is selected that does not exist
+      unless @organisation_users.present?
+        @organisation_users = @organisation.organisation_users.accessible_by(current_ability, :index).page(1)
+      end
     when 'new', 'create', 'send_invitation'
       @organisation_user = @organisation.organisation_users.build
     else

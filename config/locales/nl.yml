@@ -202,6 +202,7 @@ nl:
         begins_at: 'Begint op'
         ends_at: 'Eindigt op'
         entity: 'Object'
+        description: 'Beschrijving'
         organisation_client: 'Klant'
       feedback:
         screen_capture: 'Screenshot'
@@ -369,6 +370,8 @@ nl:
     mini_search:
       search_reservation_placeholder: 'Reservering zoeken...'
       search_organisationclient_placeholder: 'Klant zoeken...'
+      search_entity_placeholder: 'Object zoeken...'
+      search_entitytype_placeholder: 'Objectsoort zoeken...'
       search: 'Zoeken'
 
   shared:

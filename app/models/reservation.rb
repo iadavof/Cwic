@@ -20,7 +20,7 @@ class Reservation < ActiveRecord::Base
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
-  pg_global_search associated_against: { organisation_client: { first_name: 'C', last_name: 'C' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
+  pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
 
   def length_for_day(day)
     if day < self.begins_at.to_date || day > self.ends_at.to_date
@@ -49,7 +49,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def instance_name
-    "#{self.class.model_name.human} ##{self.id.to_s}"
+    "R##{self.id.to_s}"
   end
 
 private
