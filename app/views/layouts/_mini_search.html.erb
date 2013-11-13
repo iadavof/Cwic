@@ -1,0 +1,4 @@
+    <%= form_tag(nil, method: :get, class: 'mini-search') do %>
+      <%= text_field_tag(:mini_search, params[:mini_search], placeholder: t('.search_' + current_search_type.to_s.downcase + '_placeholder')) %>
+      <%= submit_tag(t('.search'), class: 'button red') %>
+    <% end %>

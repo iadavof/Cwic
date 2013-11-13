@@ -7,6 +7,8 @@ nl:
   update: 'Update'
   index_objects_html: 'Lijst met <strong>%{classes}</strong>'
   empty_objects: 'Geen %{classes}'
+  empty_for_search: 'Geen %{classes} gevonden voor de zoekopdracht <strong>%{search}</strong>.'
+  remove_search: 'Zoekopdracht verwijderen'
   new_object_html: 'Maak <strong>%{class}</strong> aan'
   show_object_html: '%{class}: <strong>%{name}</strong>'
   edit_object_html: 'Bewerk %{class}: <strong>%{name}</strong>'
@@ -364,6 +366,9 @@ nl:
       search_placeholder: 'Zoeken...'
       search: 'Zoeken'
       search_all: '- Allemaal -'
+    mini_search:
+      search_reservation_placeholder: 'Reservering zoeken...'
+      search: 'Zoeken'
 
   shared:
     error_messages:

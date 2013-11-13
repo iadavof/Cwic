@@ -46,8 +46,12 @@ class ReservationsController < ApplicationController
 private
   def load_resource
     case params[:action]
-    when 'index', 'index_domain'
-      @reservations = @organisation.reservations.accessible_by(current_ability, :index).page params[:page]
+    when 'index'
+      if params[:mini_search].present?
+        @reservations = @organisation.reservations.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
+      else
+        @reservations = @organisation.reservations.accessible_by(current_ability, :index).page(params[:page])
+      end
     when 'new', 'create'
       @reservation = @organisation.reservations.build
     else

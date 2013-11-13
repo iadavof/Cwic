@@ -1,6 +1,13 @@
 <% content_for :page_title do %><%= index_title(Reservation) %><% end %>
 
-<% if @reservations.empty? %>
+<% content_for :mini_search do %>
+  <%= render 'layouts/mini_search', current_search_type: Reservation.model_name %>
+<% end %>
+
+<% if @reservations.empty? && params[:mini_search].present? %>
+<p><%= t('empty_for_search', classes: Reservation.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe %>
+<%= link_to(t('remove_search'), organisation_reservations_path(current_organisation)) %></p>
+<% elsif @reservations.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <%= paginate @reservations %>
