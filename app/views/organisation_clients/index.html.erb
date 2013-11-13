@@ -1,6 +1,13 @@
 <% content_for :page_title do %><%= index_title(OrganisationClient) %><% end %>
 
-<% if @organisation_clients.empty? %>
+<% content_for :mini_search do %>
+  <%= render 'layouts/mini_search', current_search_type: OrganisationClient.model_name %>
+<% end %>
+
+<% if @organisation_clients.empty? && params[:mini_search].present? %>
+<p><%= t('empty_for_search', classes: OrganisationClient.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe %>
+<%= link_to(t('remove_search'), organisation_organisation_clients_path(current_organisation)) %></p>
+<% elsif @organisation_clients.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: OrganisationClient.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <%= paginate @organisation_clients %>
