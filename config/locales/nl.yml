@@ -369,6 +369,8 @@ nl:
     mini_search:
       search_reservation_placeholder: 'Reservering zoeken...'
       search_organisationclient_placeholder: 'Klant zoeken...'
+      search_entity_placeholder: 'Object zoeken...'
+      search_entitytype_placeholder: 'Objectsoort zoeken...'
       search: 'Zoeken'
 
   shared:

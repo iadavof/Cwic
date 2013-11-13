@@ -1,6 +1,13 @@
 <% content_for :page_title do %><%= index_title(Entity) %><% end %>
 
-<% if @entities.empty? %>
+<% content_for :mini_search do %>
+  <%= render 'layouts/mini_search', current_search_type: Entity.model_name %>
+<% end %>
+
+<% if @entities.empty? && params[:mini_search].present? %>
+<p><%= t('empty_for_search', classes: Entity.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe %>
+<%= link_to(t('remove_search'), organisation_entities_path(current_organisation)) %></p>
+<% elsif @entities.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Entity.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <% paginate @entities %>

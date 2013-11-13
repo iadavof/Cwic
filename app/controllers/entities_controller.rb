@@ -47,7 +47,11 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @entities = @organisation.entities.accessible_by(current_ability, :index).page(params[:page])
+      if params[:mini_search].present?
+        @entities = @organisation.entities.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
+      else
+        @entities = @organisation.entities.accessible_by(current_ability, :index).page(params[:page])
+      end
     when 'new', 'create'
       @entity = @organisation.entities.build
     else

@@ -33,7 +33,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @users = User.accessible_by(current_ability, :index)
+      @users = User.accessible_by(current_ability, :index).page(params[:page])
     else
       @user = User.find(params[:id])
     end
