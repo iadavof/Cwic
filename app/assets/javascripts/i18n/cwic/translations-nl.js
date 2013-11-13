@@ -14,6 +14,9 @@ var jsLang = {
     expand_menu: 'Menu uitklappen',
     contract_menu: 'Menu inklappen',
   },
+  controls: {
+    upload_file: 'Bestand uploaden...',
+  },
   stickies: {
     placeholder: 'Voer hier uw notitie in...',
     saved: 'Opgeslagen',
@@ -42,6 +45,6 @@ var jsLang = {
     }
   },
   reservations: {
-    select_client_placeholder: 'Selecteer een klant'
+    select_client_placeholder: 'Selecteer een klant...'
   }
 }

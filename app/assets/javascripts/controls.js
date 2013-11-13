@@ -27,7 +27,7 @@ $(document).on('page:load', function() {
           }
           dropdownReplacement.find('.dropdown-options').append(optionReplacement);
         });
-        dropdown.addClass('replaced').hide().after(dropdownReplacement);
+        dropdown.addClass('replaced').after(dropdownReplacement);
         cwic_controls.dropdown.bindEvents(dropdown, dropdownReplacement);
       },
       bindEvents: function(dropdown, dropdownReplacement) {
@@ -85,7 +85,7 @@ $(document).on('page:load', function() {
         if (checkbox.is(':checked')) {
           checkboxReplacement.addClass('checked');
         }
-        checkbox.addClass('replaced').hide().after(checkboxReplacement);
+        checkbox.addClass('replaced').after(checkboxReplacement);
         cwic_controls.checkbox.bindEvents(checkbox, checkboxReplacement);
       },
       bindEvents: function(checkbox, checkboxReplacement) {
@@ -109,11 +109,11 @@ $(document).on('page:load', function() {
     },
     file_field: {
       make: function(fileField) {
-        var fileFieldReplacement = $('<div class="cwic-filefield"></div>');
+        var fileFieldReplacement = $('<div class="cwic-filefield">' + jsLang.controls.upload_file + '</div>');
         if (fileField.val()) {
           fileFieldReplacement.addClass('filled').text(fileField.val());
         }
-        fileField.addClass('replaced').hide().after(fileFieldReplacement);
+        fileField.addClass('replaced').after(fileFieldReplacement);
         cwic_controls.file_field.bindEvents(fileField, fileFieldReplacement);
       },
       bindEvents: function(fileField, fileFieldReplacement) {

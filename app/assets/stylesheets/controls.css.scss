@@ -1,4 +1,22 @@
-.dropdown, cwic-filefield {
+.replaced,
+select.replaced,
+input[type="checkbox"].replaced {
+  display: none;
+}
+
+input[type="file"].replaced {
+  display: inline-block;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  visibility: hidden;
+  border: 0 none;
+  padding: 0;
+  margin: 0;
+}
+
+.dropdown, .cwic-filefield {
+  position: relative;
   font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   border: 1px solid #cccccc;
@@ -9,15 +27,14 @@
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   color: inherit;
+  line-height: normal;
+  display: inline-block;
+  background-color: #fff;
 }
   
 .dropdown {
-  display: inline-block;
-  position: relative;
-  line-height: normal;
   padding: 0;
   vertical-align: bottom;
-  background-color: #fff;
   text-align: left;
   
   .dropdown-current-option {
@@ -152,8 +169,8 @@
   position: absolute;
   top: 50%;
   left: 50%;
-  margin-left: -6px;
-  margin-top: -13px;
+  margin-left: -0.5em;
+  margin-top: -0.75em;
   color: #1c9cb2;
   height: 15px;
   width: 15px;
@@ -163,20 +180,13 @@
 }
 
 .cwic-filefield {
-  display: inline-block;
-  width: 15em;
-  padding: 8px 8px 8px 36px;
-  background-color: #fff;
+  padding: 8px 8px 8px 34px;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-  position: relative;
-  border: 1px solid #ccc;
   vertical-align: middle;
-  font-size: 1em;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
+  text-align: center;
 }
 
 .cwic-filefield:before {
@@ -187,7 +197,7 @@
   height: 20px;
   position: absolute;
   top: 50%;
-  left: 8px;
+  left: 6px;
   margin-top: -12px;
 }
 
