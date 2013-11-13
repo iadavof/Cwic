@@ -5,7 +5,7 @@
 <% end %>
 
 <% if @entity_types.empty? && params[:mini_search].present? %>
-<p><%= t('empty_for_search', classes: EntityType.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe %>
+<p><%= t('empty_for_search', classes: EntityType.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe %>
 <%= link_to(t('remove_search'), organisation_entity_types_path(current_organisation)) %></p>
 <% elsif @entity_types.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: EntityType.model_name.human(count: 2).lcfirst) %></p>
