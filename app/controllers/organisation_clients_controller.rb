@@ -3,6 +3,7 @@ class OrganisationClientsController < ApplicationController
   authorize_resource
 
   respond_to :html, except: :search
+  respond_to :json, only: :search
 
   # GET /organisation_clients
   def index
@@ -10,9 +11,7 @@ class OrganisationClientsController < ApplicationController
   end
 
   def search
-    respond_with(@organisation_clients) do |format|
-      format.json { render json: @organisation_clients.as_json(only: :id, methods: :instance_name) }
-    end
+    respond_with(@organisation_clients)
   end
 
   # GET /organisation_clients/1
@@ -67,7 +66,7 @@ private
         end
       end
     when 'search'
-      @organisation_clients = @organisation.organisation_clients.autocomplete_search(params[:q]).accessible_by(current_ability, :index)
+      @organisation_clients = @organisation.organisation_clients.autocomplete_search(params[:q]).page(params[:page]).accessible_by(current_ability, :index)
     when 'new', 'create'
       @organisation_client = @organisation.organisation_clients.build
     else

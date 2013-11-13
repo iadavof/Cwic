@@ -1,14 +1,14 @@
 APP.reservations = {
     new: function() {
-      APP.reservations.organisation_client_dropdown();
+      APP.reservations.organisationClientDropdown();
     },
     edit: function() {
-      APP.reservations.organisation_client_dropdown();
+      APP.reservations.organisationClientDropdown();
     },
     create: function() {
-      APP.reservations.organisation_client_dropdown();
+      APP.reservations.organisationClientDropdown();
     },
-    organisation_client_dropdown: function() {
+    organisationClientDropdown: function() {
       $('input#organisation_client_select').select2({
         initSelection: function(element, callback) {
             var id = $(element).val();
@@ -21,15 +21,12 @@ APP.reservations = {
         ajax: {
           url: Routes.organisation_search_organisation_client_path(current_organisation) + '.json',
           dataType: 'json',
-          data: function (term) {
-            return {
-              q: term, // search term
-            };
+          quietMillis: 500,
+          data: function(term, page) {
+            return { q: term, page: page };
           },
-          results: function (data) {
-            return {results: $.map(data, function(item){
-              return { id: item.id, text: item.instance_name}
-            })};
+          results: function(data, page) {
+            return data;
           }
         },
       });

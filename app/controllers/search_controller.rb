@@ -32,11 +32,4 @@ class SearchController < ApplicationController
 
     respond_with(@results)
   end
-
-  def results_old
-    @search_query = params[:global_search]
-    relation = PgSearch.multisearch(@search_query).includes(:searchable).select("ts_headline(pg_search_documents.content, plainto_tsquery(#{ActiveRecord::Base::sanitize(@search_query)}), 'StartSel=<mark>, StopSel=</mark>, MaxWords=15, MinWords=5, ShortWord=3, HighlightAll=FALSE, MaxFragments=5, FragmentDelimiter=\" (...) \"') AS excerpt")
-    relation = relation.where(searchable_type: params[:global_search_type]) if params[:global_search_type].present?
-    @results = relation
-  end
 end
