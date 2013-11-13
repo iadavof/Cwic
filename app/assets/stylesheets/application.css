@@ -11,8 +11,8 @@
  *= require_self
  *= require jquery.ui.all
  *= require jquery.minicolors
+ *= require select2
+ *= require magnific-popup
  *= require global
  *= require_directory .
- *= require magnific-popup
- *= require select2
  */
