@@ -30,7 +30,7 @@ APP.info_screens = {
       } else {
         et.find('h3 span.active-sign').removeClass('active');
         et.find('div.info-screen-entity').find('h4 span.active-sign').removeClass('active');
-        et.find('div.info-screen-entity input.info-screen-entity-active').prop('checked', false);
+        et.find('div.info-screen-entity input.info-screen-entity-active').prop('checked', false).trigger('change');
       }
     });
 
@@ -48,7 +48,7 @@ APP.info_screens = {
       var et = input.parents('div.info-screen-entity-type');
       if(input.is(':checked')) {
         et.find('h3 span.active-sign').addClass('active');
-        et.find('input.info-screen-entity-type-active').prop('checked', true);
+        et.find('input.info-screen-entity-type-active').prop('checked', true).trigger('change');
         input.parents('div.info-screen-entity').find('h4 span.active-sign').addClass('active');
       } else {
         input.parents('div.info-screen-entity').find('h4 span.active-sign').removeClass('active');
