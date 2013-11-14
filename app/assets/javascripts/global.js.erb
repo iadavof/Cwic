@@ -1,5 +1,7 @@
 var current_user, current_organisation;
 APP.init = function() {
+  this.global.detectBodyChanges();
+
   // Load current_user and current_organisation data
   var body = $('body');
   current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
@@ -42,6 +44,33 @@ $(document).on('page:load', function() { NProgress.stackPop(); });
 $(document).on('page:restore', function() { NProgress.remove(); });
 
 APP.global = {
+  detectBodyChanges: function() {
+    var observeDOM = (function(){
+        var MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
+            eventListenerSupported = window.addEventListener;
+
+        return function(obj, callback){
+            if( MutationObserver ){
+                // define a new observer
+                var obs = new MutationObserver(function(mutations, observer){
+                    if( mutations[0].addedNodes.length || mutations[0].removedNodes.length )
+                        callback();
+                });
+                // have the observer observe foo for changes in children
+                obs.observe( obj, { childList:true, subtree:true });
+            }
+            else if( eventListenerSupported ){
+                obj.addEventListener('DOMNodeInserted', callback, false);
+                obj.addEventListener('DOMNodeRemoved', callback, false);
+            }
+        }
+    })();
+
+    observeDOM( document.body ,function(){ 
+        $(document).trigger('thisIsADifferentBody');
+        console.log('Body changed');
+    });
+  },
   menuInit: function() {
     var submenuBox = $('#submenu-box');
     var contentArea = $('#content-area');

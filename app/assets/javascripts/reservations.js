@@ -1,5 +1,5 @@
 APP.reservations = {
-    new: function() {
+    'new': function() {
       APP.reservations.organisationClientDropdown();
     },
     edit: function() {

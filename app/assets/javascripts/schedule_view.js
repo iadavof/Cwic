@@ -655,7 +655,7 @@ IADAscheduleView.prototype.setErrorField =  function(field, error) {
     field.unwrap();
   }
   if(error) {
-    field.wrap($('<div>', {class: 'field_with_errors'}));
+    field.wrap($('<div>', {'class': 'field_with_errors'}));
   }
 }
 
@@ -832,7 +832,7 @@ IADAscheduleView.prototype.updateSchedule = function() {
 }
 
 IADAscheduleView.prototype.disabledOverlay = function() {
-  this.scheduleContainer.find('.schedule-body').append($('<div></div>', {class: 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
+  this.scheduleContainer.find('.schedule-body').append($('<div></div>', {'class': 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
 }
 
 IADAscheduleView.prototype.removeFocusFromAllScheduleItems = function() {
@@ -1011,7 +1011,7 @@ IADAscheduleView.prototype.showCurrentTimeNeedle = function() {
     this.scheduleContainer.find('.left-axis .left-axis-row#label_' + currentDate).addClass('today');
     date_row.addClass('today').addClass('progress-bar');
     if(this.scheduleContainer.find('.time-needle').length <= 0) {
-      var needle = $('<div>', {class: 'time-needle', title: moment().toDate().toLocaleString(), style: 'left: ' + this.rowTimeToPercentage(moment()) + '%;'});
+      var needle = $('<div>', {'class': 'time-needle', title: moment().toDate().toLocaleString(), style: 'left: ' + this.rowTimeToPercentage(moment()) + '%;'});
       date_row.append(needle);
     } else {
       this.scheduleContainer.find('.time-needle').css({left: this.rowTimeToPercentage(moment()) + '%'});
@@ -1108,7 +1108,7 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
       var progressBar = currentInfo.find('.progress-bar');
       if(reservation.day_separators != null && reservation.day_separators.length < parseInt(progressBar.width()) / 4) {
         for(var daysep_nr in reservation.day_separators) {
-          progressBar.append($('<div>', {class: 'day-separator', style: 'left: '+ reservation.day_separators[daysep_nr] +'%'}));
+          progressBar.append($('<div>', {'class': 'day-separator', style: 'left: '+ reservation.day_separators[daysep_nr] +'%'}));
         }
       }
     }
@@ -1118,7 +1118,7 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
 
     parentdiv.append(currentInfo);
     if(entity.upcoming_reservations.today.length  > 0 || entity.upcoming_reservations.tomorrow.length  > 0) {
-      parentdiv.append($('<div>', {class: 'reservation-separator'}));
+      parentdiv.append($('<div>', {'class': 'reservation-separator'}));
     }
   }
 

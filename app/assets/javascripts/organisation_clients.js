@@ -2,7 +2,7 @@ APP.organisation_clients = {
 	edit: function() {
 		APP.organisation_clients.add_address_picker_to_form();
 	},
-	new: function() {
+	'new': function() {
 		APP.organisation_clients.add_address_picker_to_form();
 	},
 	create: function() {

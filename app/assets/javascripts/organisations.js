@@ -2,7 +2,7 @@ APP.organisations = {
 	edit: function() {
 		APP.organisations.add_address_picker_to_form();
 	},
-	new: function() {
+	'new': function() {
 		APP.organisations.add_address_picker_to_form();
 	},
 	add_address_picker_to_form: function() {

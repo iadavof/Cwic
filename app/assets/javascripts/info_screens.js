@@ -18,7 +18,7 @@ APP.info_screens = {
   edit: function() {
     APP.info_screens.initCollapseThing();
   },
-  new: function() {
+  'new': function() {
     APP.info_screens.initCollapseThing();
   },
   initCollapseThing: function() {

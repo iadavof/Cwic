@@ -218,6 +218,7 @@ input[type="file"].replaced {
 
 .select2-container .select2-choice {
   background: #fff;
+  filter: none;
   color: inherit;
   border-radius: 0;
   border: 1px solid #ccc;
@@ -232,6 +233,7 @@ input[type="file"].replaced {
 
 .select2-container .select2-choice .select2-arrow {
   background: transparent;
+  filter: none;
   width: 26px;
   border: 0 none;
   border-radius: 0;
@@ -277,6 +279,7 @@ input[type="file"].replaced {
 
 .select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-selection-limit {
   background: transparent;
+  filter: none;
   font-size: 0.9em;
 }
 
@@ -285,13 +288,9 @@ input[type="file"].replaced {
 }
 
 .select2-search input {
-  background-color: #fff;
+  background: image-url("select2.png") no-repeat scroll 100% -22px #fff;
+  filter: none;
   border-color: #999;
-  linear-gradient: none;
-  -moz-linear-gradient: none;
-  -o-linear-gradient: none;
-  -ms-linear-gradient: none;
-  -webkit-linear-gradient: none;
   font-family: inherit;
 }
 
@@ -302,6 +301,7 @@ input[type="file"].replaced {
 
 .select2-results .select2-highlighted {
   background: #1c9cb2;
+  filter: none;
 }
 
 .select2-results .select2-no-results, .select2-results .select2-searching, .select2-results .select2-selection-limit {
@@ -329,6 +329,7 @@ input[type="file"].replaced {
 
 .select2-dropdown-open.select2-drop-above .select2-choice, .select2-dropdown-open.select2-drop-above .select2-choices {
   background-image: none;
+  filter: none;
   border-color: #999;
 }
 
@@ -339,5 +340,5 @@ input[type="file"].replaced {
   background-position: 99% center;
   background-position: -webkit-calc(100% - 2px) center;
   background-position: right 2px center;
-
+  filter: none;
 }

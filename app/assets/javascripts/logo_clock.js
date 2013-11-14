@@ -24,7 +24,7 @@ IADAlogoClock.prototype.createFace = function() {
   if(this.clockContainer.width() > 300) {
     var radius = this.clockContainer.width() / 10;
 
-    var face = $('<div>', {class: 'face'});
+    var face = $('<div>', {'class': 'face'});
     face.css({
       position: 'absolute',
       backgroundColor: 'white',

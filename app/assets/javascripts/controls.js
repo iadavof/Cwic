@@ -1,14 +1,16 @@
-// Replace dropdowns when the DOM is fully loaded...
+APP.global.replaceControls = function() {
+  $('select:not(.select2)').cwicDropdown();
+  $(':checkbox').cwicCheckbox();
+  $('input[type=file]').cwicFileField();
+}
+
+// Replace controls when the DOM is fully loaded
 $(document).ready(function() {
-  $('select:not([multiple], .select2, .replaced)').cwicDropdown();
-  $(':checkbox').cwicCheckbox();
-  $('input[type=file]').cwicFileField();
-});
-// ...even if the page is loaded using Turbolinks
-$(document).on('page:load', function() {
-  $('select:not([multiple], .select2, .replaced)').cwicDropdown();
-  $(':checkbox').cwicCheckbox();
-  $('input[type=file]').cwicFileField();
+  APP.global.replaceControls();
+  // Replace controls when a page is loaded using Turbolinks and when DOM nodes are added to the document body or its children
+  $(document).on('page:load thisIsADifferentBody', function() {
+    APP.global.replaceControls();
+  });
 });
 
 (function($) {
@@ -133,19 +135,19 @@ $(document).on('page:load', function() {
   
   $.fn.extend({
     cwicDropdown: function() {
-      var elems = $(this).filter('select:not([multiple])');
+      var elems = $(this).filter('select:not([multiple], .replaced)');
       elems.each(function() {
         cwic_controls.dropdown.make($(this));
       });
     },
     cwicCheckbox: function() {
-      var elems = $(this).filter(':checkbox');
+      var elems = $(this).filter(':checkbox:not(.replaced)');
       elems.each(function() {
         cwic_controls.checkbox.make($(this));
       });
     },
     cwicFileField: function() {
-      var elems = $(this).filter('input[type=file]');
+      var elems = $(this).filter('input[type=file]:not(.replaced)');
       elems.each(function() {
         cwic_controls.file_field.make($(this));
       });

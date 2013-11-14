@@ -40,7 +40,7 @@ APP.registrations = {
 }
 
 APP.sessions = {
-	new: function() {
+	'new': function() {
 		var logoClock = new IADAlogoClock({container: 'logo-container-inner'});
 	},
 }
