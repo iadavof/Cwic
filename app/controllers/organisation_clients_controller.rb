@@ -11,6 +11,10 @@ class OrganisationClientsController < ApplicationController
   end
 
   def autocomplete_search
+    # IMPROVEMENT: Kaminari performs two queries: one for total number of results and one to get results in scope.
+    # This means the search is performed twice, making it unnecessary slow.
+    # PostgreSQL has a feature to return the number of results without performing an extra query.
+    # Maybe we could look into this some day. Or maybe we could remove pagination again (and just use a limit), to speed up things a little.
     respond_with(@organisation_clients)
   end
 

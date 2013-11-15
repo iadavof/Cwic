@@ -1,0 +1,9 @@
+<div class="result">
+  <h3>
+    <%= result.class.model_name.human %>: <%= name_link_to_show([@organisation, result]) %>
+    <%= icon_link_to_edit([@organisation, result]) %>
+    <%= icon_link_to_destroy([@organisation, result]) %>
+  </h3>
+  <%= render "#{result.class.name.underscore}_result", result: result %>
+  <p>Rank: <%= result.pg_search_rank %></p>
+</div>

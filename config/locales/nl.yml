@@ -337,6 +337,16 @@ nl:
       next: 'Volgende'
       truncate: '...'
 
+  helpers:
+    page_entries_info:
+      one_page:
+        display_entries:
+          zero: "Geen %{entry_name} gevonden"
+          one: "%{entry_name} <strong>1</strong> van <strong>%{count}</strong> wordt weergeven"
+          other: "%{entry_name} <strong>1</strong> tot en met <strong>%{count}</strong> van <strong>%{count}</strong> worden weergeven"
+      more_pages:
+        display_entries: "%{entry_name} <strong>%{first}</strong> tot en met <strong>%{last}</strong> van <strong>%{total}</strong> worden weergeven"
+
   layouts:
     menu:
       logout: 'Uitloggen'
@@ -507,4 +517,5 @@ nl:
   search:
     results:
       results: 'resultaten'
-      title: 'Resultaten: %{count}'
+      title: 'Resultaten'
+      item: 'Item'
