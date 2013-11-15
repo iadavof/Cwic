@@ -19,7 +19,7 @@ APP.reservations = {
         minimumInputLength: 1,
         width: 'resolve',
         ajax: {
-          url: Routes.organisation_search_organisation_client_path(current_organisation) + '.json',
+          url: Routes.organisation_organisation_clients_autocomplete_search_path(current_organisation, { format: 'json' }),
           dataType: 'json',
           quietMillis: 500,
           data: function(term, page) {
