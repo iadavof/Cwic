@@ -1,15 +1,12 @@
-<% content_for :page_title do %><%= t('.title') %><% end %>
+<% content_for :page_title do %><%= t('.title_html', query: @query) %><% end %>
 
 <% if @results.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: t('.results')) %></p>
 <% else %>
-<h2>WE HEBBEN RESULATEN ENZO!!!! \o/</h2>
 
 <div id="results">
   <%= render partial: 'result', collection: @results %>
 </div>
-
-<hr />
 
 <p>
   <%= page_entries_info(@raw_results, entry_name: t('.item')) %>

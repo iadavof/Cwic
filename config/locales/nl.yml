@@ -517,5 +517,5 @@ nl:
   search:
     results:
       results: 'resultaten'
-      title: 'Resultaten'
+      title_html: 'Resultaten voor <strong>%{query}</strong>'
       item: 'Item'

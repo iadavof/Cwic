@@ -10,6 +10,18 @@ body.controller-info_screens.action-show #content {
   background-color: #eee;
 }
 
+body.controller-info_screens.action-show {
+  padding: 0;
+  margin: 0;
+}
+
+body.controller-info_screens.action-show #content-area {
+  overflow: visible;
+  height: auto !important;
+  margin: 0 !important;
+  padding: 0;
+}
+
 body.controller-info_screens.action-show #content > .inner {
   padding: 0;
   height: 100%;

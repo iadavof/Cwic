@@ -22,18 +22,20 @@
       <% end %>
     </div>
     <div id="content-area">
-      <div id="progress-bar-container"></div>
-      <%= content_for?(:mini_search) ? yield(:mini_search) : '' %>
-      <h1 id="page-title"><%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %></h1>
-      <div id="content">
-        <div class="inner clearfix">
-          <% if notice %>
-            <p id="notice"><%= notice %></p>
-          <% end %>
-          <% if alert %>
-            <p id="alert"><%= alert %></p>
-          <% end %>
-          <%= content_for?(:content) ? yield(:content) : yield %>
+      <div class="inner">
+        <div id="progress-bar-container"></div>
+        <%= content_for?(:mini_search) ? yield(:mini_search) : '' %>
+        <h1 id="page-title"><%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %></h1>
+        <div id="content">
+          <div class="inner clearfix">
+            <% if notice %>
+              <p id="notice"><%= notice %></p>
+            <% end %>
+            <% if alert %>
+              <p id="alert"><%= alert %></p>
+            <% end %>
+            <%= content_for?(:content) ? yield(:content) : yield %>
+          </div>
         </div>
       </div>
     </div>

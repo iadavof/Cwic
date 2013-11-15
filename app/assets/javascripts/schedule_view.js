@@ -739,10 +739,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
     this.scheduleContainer.find('div.time-axis').height(this.scheduleContainer.find('div.time-axis div.day-time-axis-frame').outerHeight());
   }
 
-  timeAxis.sticky({getWidthFrom: '.schedule-body', topSpacing: $('#header').outerHeight(true)});
-  $(window).on('header-animated resize', function() {
-    timeAxis.sticky('update', {topSpacing: $('#header').outerHeight(true)});
-  });
+  timeAxis.cwicSticky();
 }
 
 

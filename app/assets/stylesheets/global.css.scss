@@ -148,6 +148,12 @@ body {
   height: 100%;
 }
 
+html.js body {
+  padding-top: 0.01px;
+  margin-top: -0.01px;
+  overflow: hidden;
+}
+
 html.with-overlay {
   height: 100%;
 }
@@ -261,14 +267,6 @@ body.controller-sessions.action-new #content > .inner {
 /**
  * Menu
  */
-
-html.js #header {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 198;
-}
 
 form.mini-search {
   float: right;
@@ -513,6 +511,9 @@ html.js #submenu-box > .submenu.selected {
 
 #header {
   box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  margin-bottom: 3px;
+  position: relative;
+  z-index: 198;
 }
 
 div {
@@ -822,6 +823,14 @@ label {
   padding: 9px 5px 9px 0;
   line-height: normal;
   vertical-align: top;
+}
+
+#content-area {
+  overflow: auto !important;
+}
+
+#content-area > .inner {
+  position: relative;
 }
 
 #content {

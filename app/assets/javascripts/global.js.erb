@@ -7,6 +7,8 @@ APP.init = function() {
   current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
   current_organisation = { id: parseInt(body.data('current-organisation-id')) };
 
+  this.global.contentAreaResizeInit();
+
   if ($('#header:visible').length > 0) {
     // Load the menu
     this.global.menuInit();
@@ -71,11 +73,14 @@ APP.global = {
         console.log('Body changed');
     });
   },
+  contentAreaResizeInit: function() {
+    $('#content-area').css({height: ($('body').height() - $('#header').outerHeight(true)) + 'px'});
+    $(window).on('resize', function() {
+      $('#content-area').css({height: ($('body').height() - $('#header').outerHeight(true)) + 'px'});
+    });
+  },
   menuInit: function() {
     var submenuBox = $('#submenu-box');
-    var contentArea = $('#content-area');
-
-    contentArea.css({paddingTop: $('#header').outerHeight(true) + 'px'});
 
     this.slideSubMenuByMenuItem($('#main-menu > li.active').first().attr('id'), false);
 
@@ -90,7 +95,7 @@ APP.global = {
       var searchField = $('#global_search');
       if(!searchBar.hasClass('open')) {
         $(this).addClass('open');
-        $(contentArea).animate({ paddingTop: $('#header').outerHeight(true) + searchBar.find('.inner').outerHeight() + 'px' }, 200, 'swing');
+        $(contentArea).animate({height: ($('body').height() - $('#header').outerHeight(true) - searchBar.find('.inner').outerHeight()) + 'px'}, 200, 'swing');
         searchBar.animate({ height: searchBar.find('.inner').outerHeight() + 'px' }, 200, function() {
           searchBar.css({ height: 'auto'}).addClass('open');
           $(window).trigger('header-animated');
@@ -99,7 +104,7 @@ APP.global = {
       } else {
         searchField.blur().val('');
         $(this).removeClass('open');
-        $(contentArea).animate({ paddingTop: $('#header').outerHeight(true) - searchBar.find('.inner').outerHeight() + 'px' }, 200, 'swing');
+        $(contentArea).animate({height: ($('body').height() - $('#header').outerHeight(true) + searchBar.find('.inner').outerHeight()) + 'px'}, 200, 'swing');
         searchBar.animate({ height: 0 }, 200, function() {
           searchBar.removeClass('open');
           $(window).trigger('header-animated');
@@ -153,7 +158,7 @@ APP.global = {
             $(this).attr('title', jsLang.global.expand_menu + ' [Alt+' + shortcutKey + ']');
           }
         });
-        $(contentArea).animate({paddingTop: $('#header').outerHeight(true) - submenuBox.outerHeight(false) + 'px'}, duration, 'swing');
+        $(contentArea).animate({height: ($('body').height() - $('#header').outerHeight(true) + submenuBox.outerHeight(false)) + 'px'}, duration, 'swing');
         $(submenuBox).animate({height: 0}, duration, 'swing', function() {
           $(submenus).removeClass('selected');
           $(window).trigger('header-animated');
@@ -174,11 +179,11 @@ APP.global = {
           }
         });
         if ($(submenuBox).height() > 0) { /* Contract expanded submenu first, then expand requested submenu */
-          $(contentArea).animate({paddingTop: $('#header').outerHeight(true) - submenuBox.outerHeight(false) + 'px'}, duration, 'swing');
+          $(contentArea).animate({height: ($('body').height() - $('#header').outerHeight(true) + submenuBox.outerHeight(false)) + 'px'}, duration, 'swing');
           $(submenuBox).animate({height: 0}, duration, 'swing', function() {
             $(submenus).removeClass('selected');
             $(relatedSubmenu).addClass('selected');
-            $(contentArea).animate({paddingTop: $('#header').outerHeight(true) + relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing');
+            $(contentArea).animate({height: ($('body').height() - $('#header').outerHeight(true) - relatedSubmenu.outerHeight(false)) + 'px'}, duration, 'swing');
             $(submenuBox).animate({height: relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing', function() {
               $(this).css({height: 'auto'});
               $(window).trigger('header-animated');
@@ -187,7 +192,7 @@ APP.global = {
         } else { /* Expand requested submenu */
           $(submenus).removeClass('selected');
           $(relatedSubmenu).addClass('selected');
-          $(contentArea).animate({paddingTop: $('#header').outerHeight(true) + relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing');
+          $(contentArea).animate({height: ($('body').height() - $('#header').outerHeight(true) - relatedSubmenu.outerHeight(false)) + 'px'}, duration, 'swing');
           $(submenuBox).animate({height: relatedSubmenu.outerHeight(false) + 'px'}, duration, 'swing', function(){
             $(this).css({height: 'auto'});
             $(window).trigger('header-animated');
