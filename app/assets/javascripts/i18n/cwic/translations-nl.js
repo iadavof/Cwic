@@ -15,7 +15,12 @@ var jsLang = {
     contract_menu: 'Menu inklappen',
   },
   controls: {
-    upload_file: 'Bestand uploaden...',
+    dropdown: {
+      choose_item: 'Kies...',
+    },
+    file_field: {
+      upload_file: 'Bestand uploaden...',
+    },
   },
   stickies: {
     placeholder: 'Voer hier uw notitie in...',
@@ -29,12 +34,12 @@ var jsLang = {
     undo: 'Ongedaan maken',
     deleting: 'Reservering wordt verwijderd...',
     deleted: 'Reservering verwijderd.',
-    delete_confirm: 'Weet u zeker dat u Reservering #%{item_id} wilt verwijderen? De reservering kan hierna niet worden hersteld.',
+    delete_confirm: 'Weet u zeker dat u de reservering met reserveringsnummer R#%{item_id} wilt verwijderen? De reservering kan hierna niet worden hersteld.',
   },
   reservation_rule_scopes: {
     span_selectors: {
       year: {
-        'dates': 'Datums',
+        'dates': 'Data',
         'weeks': 'Weken',
         'holidays': 'Feestdagen'
       },

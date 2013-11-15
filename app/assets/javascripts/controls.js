@@ -20,10 +20,10 @@ $(document).ready(function() {
         // Generate dropdown and add it to DOM
         var options = dropdown.find('option');
         var defaultOption = dropdown.find('option:selected');
-        var dropdownReplacement = $('<div class="dropdown" data-name="' + dropdown.attr('name') + '"><div class="dropdown-current-option">' + defaultOption.text() + '</div><div class="dropdown-options"><div class="dropdown-current-option">' + defaultOption.text() + '</div></div></div>');
-        options.each(function() {
+        var dropdownReplacement = $('<div class="dropdown" data-name="' + dropdown.attr('name') + '"><div class="dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div><div class="dropdown-options"><div class="dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div></div></div>');
+        options.each(function(i) {
           var option = $(this);
-          var optionReplacement = $('<div class="dropdown-option" data-value="' + option.attr('value') + '">' + option.text() + '</div>');
+          var optionReplacement = $('<div class="dropdown-option" data-value="' + option.attr('value') + '">' + (option.text() || '...') + '</div>');
           if (optionReplacement.data('value') == defaultOption.val()) {
             optionReplacement.addClass('selected');
           }
@@ -36,23 +36,23 @@ $(document).ready(function() {
         // Bind events
         
         /* Update dropdown when value of select element changes */
-        dropdown.on('change keyup click', function(e) {
+        dropdown.on('change.cwicDropdown keyup.cwicDropdown click.cwicDropdown', function(e) {
           var selectedOption = $(this).find('option:selected');
-          dropdownReplacement.find('.dropdown-current-option').text(selectedOption.text());
+          dropdownReplacement.find('.dropdown-current-option').text((selectedOption.text() || '...'));
           dropdownReplacement.find('.dropdown-option').removeClass('selected');
           dropdownReplacement.find('.dropdown-option[data-value=' + selectedOption.val() + ']').addClass('selected');
         });
         
         /* Add class to autosubmit dropdowns on change */
         if (dropdown.is('.autosubmit')) {
-          dropdown.on('change', function(e) {
+          dropdown.on('change.cwicDropdown', function(e) {
             dropdownReplacement.addClass('autosubmit-busy');
           });
         }
         
         /* Open dropdown on click */
         dropdownReplacement.find('.dropdown-current-option').each(function() {
-          $(this).on('click', function(e) {
+          $(this).on('click.cwicDropdown', function(e) {
             if(dropdownReplacement.hasClass('open')) {
               dropdownReplacement.removeClass('open');
             } else {
@@ -63,26 +63,35 @@ $(document).ready(function() {
         
         /* Update select element when dropdown option is clicked */
         dropdownReplacement.find('.dropdown-option').each(function() {
-          $(this).on('click', function(e) {
+          $(this).on('click.cwicDropdown', function(e) {
             var optionReplacement = $(this);
             dropdown.val(optionReplacement.data('value')).trigger('change');
-            optionReplacement.parent('.dropdown-options').siblings('.dropdown-current-option').text(dropdown.find('option:selected').text());
+            optionReplacement.parent('.dropdown-options').siblings('.dropdown-current-option').text(dropdown.find('option:selected').text() || '...');
             optionReplacement.addClass('selected').siblings('.dropdown-option').removeClass('selected');
             dropdownReplacement.removeClass('open');
           });
         });
         
         /* Close dropdown when there's a click event outside dropdown */
-        $(document).on('click', function(e) {
+        $(document).on('click.cwicDropdown', function(e) {
           if(!$(e.target).is(dropdownReplacement.children().add(dropdownReplacement))) {
             dropdownReplacement.removeClass('open');
+          }
+        });
+        
+        /* Remove dropdown if select element is removed */
+        $(document).on('thisIsADifferentBody.cwicDropdown', function(e) {
+          if (dropdown.length < 1) {
+            dropdownReplacement.remove();
+          } else if (dropdown.is(':not(select:not([multiple]))')) {
+            dropdownReplacement.remove();
+            dropdown.off('.cwicDropdown').removeClass('replaced');
           }
         });
       },
     },
     checkbox: {
       make: function(checkbox) {
-        var label = $('label[for=' + checkbox.attr('id') + ']');
         var checkboxReplacement = $('<div class="cwic-checkbox" data-name="' + checkbox.attr('name') + '"><div class="inner"></div></div>');
         if (checkbox.is(':checked')) {
           checkboxReplacement.addClass('checked');
@@ -91,14 +100,14 @@ $(document).ready(function() {
         cwic_controls.checkbox.bindEvents(checkbox, checkboxReplacement);
       },
       bindEvents: function(checkbox, checkboxReplacement) {
-        checkbox.on('change', function(e) {
+        checkbox.on('change.cwicCheckbox', function(e) {
           if($(this).is(':checked')) {
             checkboxReplacement.addClass('checked');
           } else {
             checkboxReplacement.removeClass('checked');
           }
         });
-        checkboxReplacement.on('click', function(e) {
+        checkboxReplacement.on('click.cwicCheckbox', function(e) {
           if($(this).hasClass('checked')) {
             checkbox.prop('checked', false).trigger('change');
             $(this).removeClass('checked');
@@ -107,11 +116,19 @@ $(document).ready(function() {
             $(this).addClass('checked');
           }
         });
+        $(document).on('thisIsADifferentBody.cwicCheckbox', function(e) {
+          if (checkbox.length < 1) {
+            checkboxReplacement.remove();
+          } else if (checkbox.is(':not(:checkbox)')) {
+            checkboxReplacement.remove();
+            checkbox.off('.cwicCheckbox').removeClass('replaced');
+          }
+        });
       },
     },
     file_field: {
       make: function(fileField) {
-        var fileFieldReplacement = $('<div class="cwic-filefield">' + jsLang.controls.upload_file + '</div>');
+        var fileFieldReplacement = $('<div class="cwic-filefield">' + jsLang.controls.file_field.upload_file + '</div>');
         if (fileField.val()) {
           fileFieldReplacement.addClass('filled').text(fileField.val());
         }
@@ -119,15 +136,23 @@ $(document).ready(function() {
         cwic_controls.file_field.bindEvents(fileField, fileFieldReplacement);
       },
       bindEvents: function(fileField, fileFieldReplacement) {
-        fileField.on('change', function(){
+        fileField.on('change.cwicFileField', function(){
           if (!fileField.val()) {
             fileFieldReplacement.removeClass('filled');
           } else {
             fileFieldReplacement.addClass('filled').text(fileField.val());
           }
         });
-        fileFieldReplacement.on('click', function(e) {
+        fileFieldReplacement.on('click.cwicFileField', function(e) {
           fileField.trigger('click');
+        });
+        $(document).on('thisIsADifferentBody.cwicCheckbox', function(e) {
+          if (fileField.length < 1) {
+            fileFieldReplacement.remove();
+          } else if (fileField.is(':not(input[type=file])')) {
+            fileFieldReplacement.remove();
+            fileField.off('.cwicFileField').removeClass('replaced');
+          }
         });
       },
     },
