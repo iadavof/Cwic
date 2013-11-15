@@ -22,6 +22,12 @@
       $(window).on('resize.cwic_sticky header-animated.cwic_sticky', function(e) {
         cwic_sticky.updateCss(container, stickyContainer);
       });
+      $(window).on('header-start-animation', function(e) {
+        stickyContainer.css({visibility: 'hidden'});
+      });
+      $(window).on('header-animated', function(e) {
+        stickyContainer.css({visibility: 'visible'});
+      });
     },
     makeSticky: function(container, stickyContainer) {
       container.css({visibility: 'hidden'});

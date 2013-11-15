@@ -92,6 +92,7 @@ APP.global = {
   },
   searchBarInit: function() {
     $('#open-search-button').on('click', function() {
+      $(window).trigger('header-start-animation');
       var searchBar = $('#search-bar');
       var contentArea = $('#content-area');
       var searchField = $('#global_search');
@@ -138,6 +139,7 @@ APP.global = {
     } else if (!htmlId || relatedSubmenu.length == 0 || menuItem.length == 0) {
       return true;
     } else {
+      $(window).trigger('header-start-animation');
       var menuItems = $('#main-menu > li');
       var submenus = $('#submenu-box > .submenu');
 
