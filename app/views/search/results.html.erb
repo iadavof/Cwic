@@ -1,31 +1,18 @@
-<% content_for :page_title do %><%= t('.title', count: @count) %><% end %>
+<% content_for :page_title do %><%= t('.title') %><% end %>
 
 <% if @results.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: t('.results')) %></p>
 <% else %>
-<table>
-  <thead>
-    <tr>
-      <th><%= t('.type') %></th>
-      <th><%= t('.name') %></th>
-      <th><%= t('.rank') %></th>
-      <th></th>
-    </tr>
-  </thead>
+<h2>WE HEBBEN RESULATEN ENZO!!!! \o/</h2>
 
-  <tbody>
-    <% @results.each do |result| %>
-    <tr>
-      <td><%= result.class.model_name.human %></td>
-      <td><%= name_link_to_show([@organisation, result]) %></td>
-      <td><%= result.pg_search_rank %></td>
-      <td class="icons">
-        <%= icon_link_to_edit([@organisation, result]) %>
-        <%= icon_link_to_destroy([@organisation, result]) %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
-<%= paginate @raw_results %>
+<div id="results">
+  <%= render partial: 'result', collection: @results %>
+</div>
+
+<hr />
+
+<p>
+  <%= page_entries_info(@raw_results, entry_name: t('.item')) %>
+  <%= paginate(@raw_results) %>
+</p>
 <% end %>

@@ -2,15 +2,19 @@ class OrganisationClientsController < ApplicationController
   before_action :load_resource
   authorize_resource
 
-  respond_to :html, except: :search
-  respond_to :json, only: :search
+  respond_to :html, except: :autocomplete_search
+  respond_to :json, only: :autocomplete_search
 
   # GET /organisation_clients
   def index
     respond_with(@organisation_clients)
   end
 
-  def search
+  def autocomplete_search
+    # IMPROVEMENT: Kaminari performs two queries: one for total number of results and one to get results in scope.
+    # This means the search is performed twice, making it unnecessary slow.
+    # PostgreSQL has a feature to return the number of results without performing an extra query.
+    # Maybe we could look into this some day. Or maybe we could remove pagination again (and just use a limit), to speed up things a little.
     respond_with(@organisation_clients)
   end
 
@@ -65,7 +69,7 @@ private
           @organisation_clients = @organisation.organisation_clients.accessible_by(current_ability, :index).page(1)
         end
       end
-    when 'search'
+    when 'autocomplete_search'
       @organisation_clients = @organisation.organisation_clients.autocomplete_search(params[:q]).page(params[:page]).accessible_by(current_ability, :index)
     when 'new', 'create'
       @organisation_client = @organisation.organisation_clients.build

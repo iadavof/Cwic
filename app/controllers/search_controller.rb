@@ -8,6 +8,7 @@ class SearchController < ApplicationController
     types = (params[:global_search_type].present? && SEARCHABLE.include?(params[:global_search_type].constantize)) ? [params[:global_search_type].constantize] : SEARCHABLE
 
     # Determine matching object ids
+    # IMPROVEMENT: rewrite this to use UNION query, instead of x separate queries and then combining the results.
     results = []
     types.each do |t|
       rel = t.global_search(@query) # Apply search query using global search to every searchable type
@@ -19,6 +20,7 @@ class SearchController < ApplicationController
     # Sort and paginate
     @count = results.count
     results = results.sort_by { |res| res[:rank] }.reverse # Sort by the rank
+    # IMPROVEMENT: store sorted raw results in session, so we do not need to perform search queries again when going to the next page. This could speed up page browsing dramatically.
     results = Kaminari.paginate_array(results).page(params[:page])
     @raw_results = results
 
