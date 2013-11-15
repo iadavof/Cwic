@@ -8,7 +8,7 @@ APP.global.replaceControls = function() {
 $(document).ready(function() {
   APP.global.replaceControls();
   // Replace controls when a page is loaded using Turbolinks and when DOM nodes are added to the document body or its children
-  $(document).on('page:load thisIsADifferentBody', function() {
+  $(document).on('page:load', function() {
     APP.global.replaceControls();
   });
 });

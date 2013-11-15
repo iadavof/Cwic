@@ -1,6 +1,6 @@
 var current_user, current_organisation;
 APP.init = function() {
-  this.global.detectBodyChanges();
+  /*this.global.detectBodyChanges();*/
 
   // Load current_user and current_organisation data
   var body = $('body');
@@ -46,6 +46,7 @@ $(document).on('page:load', function() { NProgress.stackPop(); });
 $(document).on('page:restore', function() { NProgress.remove(); });
 
 APP.global = {
+  /*
   detectBodyChanges: function() {
     var observeDOM = (function(){
         var MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
@@ -73,6 +74,7 @@ APP.global = {
         console.log('Body changed');
     });
   },
+  */
   contentAreaResizeInit: function() {
     $('#content-area').css({height: ($('body').height() - $('#header').outerHeight(true)) + 'px'});
     $(window).on('resize', function() {
