@@ -20,10 +20,10 @@
       <% if user_signed_in? %>
       <%= render "layouts/menu" %>
       <% end %>
+      <div id="progress-bar-container"></div>
     </div>
     <div id="content-area">
       <div class="inner">
-        <div id="progress-bar-container"></div>
         <%= content_for?(:mini_search) ? yield(:mini_search) : '' %>
         <h1 id="page-title"><%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %></h1>
         <div id="content">
