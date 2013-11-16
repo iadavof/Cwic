@@ -1193,15 +1193,30 @@ IADAscheduleView.prototype.removeScheduleItem = function() {
 }
 
 IADAscheduleView.prototype.editScheduleItem = function() {
-  window.location.href = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id + '/edit';
+  var path = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id + '/edit';
+  if (typeof(Turbolinks) != 'undefined') {
+    Turbolinks.visit(path);
+  } else {
+    window.location.href = path;
+  }
 }
 
 IADAscheduleView.prototype.informationScheduleItem = function() {
-  window.location.href = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id;
+  var path = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id;;
+  if (typeof(Turbolinks) != 'undefined') {
+    Turbolinks.visit(path);
+  } else {
+    window.location.href = path;
+  }
 }
 
 IADAscheduleView.prototype.gotoClientScheduleItem = function() {
-  window.location.href = this.options.organisation_client_url + '/' + this.focusedScheduleItem.client_id;
+  var path = this.options.organisation_client_url + '/' + this.focusedScheduleItem.client_id;
+  if (typeof(Turbolinks) != 'undefined') {
+    Turbolinks.visit(path);
+  } else {
+    window.location.href = path;
+  }
 }
 
 /////////////////// Schedule Item ///////////////////

@@ -10,13 +10,13 @@
     },
     bindEvents: function(container, substituteContainer) {
       $('#content-area').on('scroll.cwic_sticky', function(e) {
-        var headerHeight = parseFloat($('#header').outerHeight(true));
+        var viewportOffset = parseFloat($(this).offset().top);
         var containerOffset = parseFloat(container.offset().top);
         var substituteContainerOffset = parseFloat(substituteContainer.offset().top);
-        if (substituteContainer.css('display') == 'none' && (containerOffset < headerHeight)) {
+        if (substituteContainer.css('display') == 'none' && (containerOffset < viewportOffset)) {
            cwic_sticky.makeSticky(container, substituteContainer);
         }
-        if (substituteContainer.css('display') != 'none' && substituteContainerOffset >= headerHeight) {
+        if (substituteContainer.css('display') != 'none' && substituteContainerOffset >= viewportOffset) {
           cwic_sticky.destroySticky(container, substituteContainer);
         }
       });
@@ -31,17 +31,18 @@
       });
     },
     makeSticky: function(container, substituteContainer) {
-      substituteContainer.css({display: 'block'}).attr('style', container.attr('style'));
+      container.data('style', container.attr('style'));
+      substituteContainer.attr('style', container.attr('style')).css({display: 'block'});
       cwic_sticky.updateCss(container, substituteContainer);
     },
     destroySticky: function(container, substituteContainer) {
-      container.removeAttr('style').attr('style', substituteContainer.attr('style')).css({height: ''});
+      container.attr('style', container.data('style'));
       substituteContainer.hide();
     },
     updateCss: function(container, substituteContainer) {
       if (substituteContainer.css('display') != 'none') {
         substituteContainer.css({height: container.height() + 'px'});
-        container.css({position: 'fixed', marginLeft: 0, width: substituteContainer.width(), left: substituteContainer.offset().left + 'px', top: $('#header').outerHeight(true) + 'px'});
+        container.css({position: 'fixed', marginLeft: 0, width: substituteContainer.width(), left: substituteContainer.offset().left + 'px', top: parseInt($('#content-area').offset().top) + 'px'});
       }
     },
   };
