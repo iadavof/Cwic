@@ -2,7 +2,7 @@
   var cwic_sticky = {
     init: function(sticky) {
       var container = $('<div class="cwic-sticky-container"></div>');
-      sticky.after(container);
+      sticky.addClass('cwic-sticky').after(container);
       sticky.appendTo(container);
       var substituteContainer = $('<div class="cwic-sticky-container clone"></div>');
       substituteContainer.insertAfter(container).hide();
@@ -23,11 +23,17 @@
       $(window).on('resize.cwic_sticky header-animated.cwic_sticky', function(e) {
         cwic_sticky.updateCss(container, substituteContainer);
       });
-      $(window).on('header-start-animation', function(e) {
+      $(window).on('header-start-animation.cwic_sticky', function(e) {
         container.css({visibility: 'hidden'});
       });
-      $(window).on('header-animated', function(e) {
+      $(window).on('header-animated.cwic_sticky', function(e) {
         container.css({visibility: 'visible'});
+      });
+      $(document).on('page:before-change.cwic_sticky', function() {
+        cwic_sticky.destroySticky(container, substituteContainer);
+      });
+      $(window).on('beforeunload.cwic_sticky', function() {
+        cwic_sticky.destroySticky(container, substituteContainer);
       });
     },
     makeSticky: function(container, substituteContainer) {
@@ -49,7 +55,7 @@
   
   $.fn.extend({
     cwicSticky: function() {
-      var elems = $(this);
+      var elems = $(this).not('.cwic-sticky');
       elems.each(function() {
         cwic_sticky.init($(this));
       });
