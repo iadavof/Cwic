@@ -111,6 +111,9 @@ gem 'kaminari'
 # Websockets so we could create push notifications
 gem 'websocket-rails'
 
+# Websockets so we could create push notifications
+gem 'websocket-rails'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'

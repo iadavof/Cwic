@@ -1,5 +1,5 @@
 <% content_for :page_title do %><%= show_title(@info_screen) %><% end %>
-<div id="info-screen-container" data-info-screen-id="<%= @info_screen.id %>" data-websocket="<%= request.host %>:<%= request.port %>/websocket">
+<div id="info-screen-container" data-info-screen-id="<%= @info_screen.id %>" data-organisation-id="<%= current_organisation.id %>">
   <div class="info-screen-header clearfix" style="display: none;">
     <div class="current-time"></div>
   </div>
