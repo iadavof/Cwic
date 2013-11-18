@@ -207,12 +207,12 @@ html.js body[data-current-user-id=''] {
   overflow: visible;
 }
 
-html.js body[data-current-user-id=''] #content,
-html.js body[data-current-user-id=''] #page-title {
+body[data-current-user-id=''] #content,
+body[data-current-user-id=''] #page-title {
   text-align: center;
 }
 
-html.js body[data-current-user-id=''] #content > .inner {
+body[data-current-user-id=''] #content > .inner {
   display: inline-block;
   text-align: left;
 }
