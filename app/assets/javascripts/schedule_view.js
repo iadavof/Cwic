@@ -620,9 +620,14 @@ IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, new
   reservationForm.find('input#begins_at_tod').timepicker("setTime", beginJDate);
   reservationForm.find('input#ends_at_date').datepicker("setDate", endJDate);
   reservationForm.find('input#ends_at_tod').timepicker("setTime", endJDate);
-  APP.reservations.organisation_client_dropdown();
+
+  reservationForm.find('select').cwicDropdown();
+
+  APP.reservations.organisationClientDropdown();
 
   reservationForm.find('select#reservation_entity_id').val(newScheduleItem.schedule_object_id);
+
+  reservationForm.find('select').trigger('change');
 }
 
 IADAscheduleView.prototype.setDateDomain = function() {

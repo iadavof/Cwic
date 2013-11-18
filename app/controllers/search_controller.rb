@@ -7,32 +7,56 @@ class SearchController < ApplicationController
     # Determine the object types to search in
     types = (params[:global_search_type].present? && SEARCHABLE.include?(params[:global_search_type].constantize)) ? [params[:global_search_type].constantize] : SEARCHABLE
 
-    # Determine matching object ids
-    # IMPROVEMENT: rewrite this to use UNION query, instead of x separate queries and then combining the results.
-    results = []
-    types.each do |t|
-      rel = t.global_search(@query) # Apply search query using global search to every searchable type
-      rel = rel.where(organisation: @organisation) # Only for items within the organisation
-      rel = rel.pluck(:id, t.global_search_scope_options(@query).rank_sql) # Get only the ids of the objects + their rank (to order)
-      results += rel.map { |res| { type: t, id: res.first, rank: res.second } } # Refactor results to hash which contains type, id and rank. All needed to retrieve objects and/or order the results.
+    # Get search key or generate a new one
+    @search_key = (params[:search_key].present? ? params[:search_key] : generate_search_key())
+    puts get_cache_key(@search_key)
+    # Get the raw results
+    results = Rails.cache.fetch(get_cache_key(@search_key), expires_in: 5.minutes) do
+      # Determine matching object ids. First build the query parts
+      sql_parts = []
+      types.each do |t|
+        rel = t.global_search(@query) # Apply search query using global search to every searchable type
+        rel = rel.where(organisation: @organisation) # Only for items within the organisation
+        rel = rel.except(:select).select("'#{t.to_s}' AS type", "#{t.table_name}.id", t.global_search_scope_options(@query).rank_sql)
+        sql_parts << rel.to_sql
+      end
+
+      # Combine the query parts into a large, sorted UNION query
+      sql = "(" + sql_parts.join(") UNION (") + ") ORDER BY pg_search_rank DESC"
+
+      # Execute the query
+      results = ActiveRecord::Base.connection.select_rows(sql)
+
+      # Map the retrieved results to hashes of type, id and rank.
+      results.map { |res| { type: res.first.to_s, id: res.second.to_i, rank: res.third.to_f } }
     end
 
-    # Sort and paginate
-    @count = results.count
-    results = results.sort_by { |res| res[:rank] }.reverse # Sort by the rank
-    # IMPROVEMENT: store sorted raw results in session, so we do not need to perform search queries again when going to the next page. This could speed up page browsing dramatically.
+    # Paginate the results
     results = Kaminari.paginate_array(results).page(params[:page])
     @raw_results = results
 
-    # Transform results to ids per type
+    # Transform the results subset to ids per type
     results_by_type = results.group_by { |res| res[:type] }
 
-    # Retrieve objects in this set
-    objects = Hash[results_by_type.map { |type, results| [type, type.find(results.map { |res| res[:id] }).index_by { |res| res[:id] }] }]
+    # Retrieve objects in this subset
+    objects = Hash[results_by_type.map { |type, results| [type, type.constantize.find(results.map { |res| res[:id] }).index_by { |res| res[:id] }] }]
 
     # Map result ids to objects
     @results = results.map { |res| objects[res[:type]][res[:id]].tap { |o| o.pg_search_rank = res[:rank] } }
 
     respond_with(@results)
+  end
+
+private
+  def generate_search_key
+    # Generate new unique search key
+    begin
+      search_key = rand(10000)
+    end while Rails.cache.exist?(get_cache_key(search_key))
+    search_key
+  end
+
+  def get_cache_key(search_key)
+    "search_results_#{request.session_options[:id]}_#{search_key}"
   end
 end
