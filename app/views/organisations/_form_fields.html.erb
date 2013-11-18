@@ -5,43 +5,43 @@
         <%= f.text_field :name %>
       </div>
       <div class="field">
-        <label for="address-picker"><%=t('.address') %></label>
-        <input type="text" id="address-picker"></input>
+        <label for="addresspicker"><%=t('.address') %></label>
+        <input type="text" id="addresspicker"/>
       </div>
       <div class="auto-address-fields">
         <a href="" class="icon icon-edit" id="edit-auto-address-fields"></a>
         <div class="field">
           <%= f.label :route %>
-          <%= f.text_field :route, readonly: true %>
+          <%= f.text_field :route, readonly: true, class: "addresspicker-route" %>
         </div>
         <div class="field">
           <%= f.label :street_number %>
-          <%= f.text_field :street_number, readonly: true %>
+          <%= f.text_field :street_number, readonly: true, class: "addresspicker-street-number" %>
         </div>
         <div class="field">
           <%= f.label :locality %>
-          <%= f.text_field :locality, readonly: true %>
+          <%= f.text_field :locality, readonly: true, class: "addresspicker-locality" %>
         </div>
         <div class="field">
           <%= f.label :administrative_area_level_2 %>
-          <%= f.text_field :administrative_area_level_2, readonly: true %>
+          <%= f.text_field :administrative_area_level_2, readonly: true, class: "addresspicker-administrative-area-level-2" %>
         </div>
         <div class="field">
           <%= f.label :administrative_area_level_1 %>
-          <%= f.text_field :administrative_area_level_1, readonly: true %>
+          <%= f.text_field :administrative_area_level_1, readonly: true, class: "addresspicker-administrative-area-level-1" %>
         </div>
         <div class="field">
           <%= f.label :postal_code %>
-          <%= f.text_field :postal_code, readonly: true %>
+          <%= f.text_field :postal_code, readonly: true, class: "addresspicker-postal-code" %>
         </div>
         <div class="field">
           <%= f.label :country %>
-          <%= f.text_field :country, readonly: true %>
+          <%= f.text_field :country, readonly: true, class: "addresspicker-country" %>
         </div>
       </div>
-      <%= f.hidden_field :address_type %>
-      <%= f.hidden_field :lng %>
-      <%= f.hidden_field :lat %>
+      <%= f.hidden_field :address_type, class: "addresspicker-address-type" %>
+      <%= f.hidden_field :lng, class: "addresspicker-lng" %>
+      <%= f.hidden_field :lat, class: "addresspicker-lat" %>
     </div>
-    <div class="address-map" id="address-picker-map"></div>
+    <div class="address-map" id="addresspicker-map"></div>
   </div>

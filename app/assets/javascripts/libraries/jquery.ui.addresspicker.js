@@ -50,6 +50,10 @@
         return this.gmarker;
       },
 
+      getMap: function() {
+        return this.gmap;
+      },
+
       map: function() {
         return this.gmap;
       },

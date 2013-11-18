@@ -408,7 +408,7 @@ nl:
       intro: 'Het systeem kent de gebruiker met het e-mailadres "%{email}" niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
 
   organisation_clients:
-    form:
+    form_fields:
       address: 'Adres'
 
   entity_types:

@@ -1,6 +1,6 @@
 <%= form_for([@organisation, @organisation_client]) do |f| %>
   <%= render 'shared/error_messages', target: @organisation_client %>
-  <%= render 'form_fields' %>
+  <%= render 'form_fields', f: f %>
 <div class="actions">
   <%= f.submit %>
 </div>

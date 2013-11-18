@@ -1,18 +1,18 @@
 APP.reservations = {
     'new': function() {
       APP.reservations.organisationClientDropdown();
+      APP.organisation_clients.addAddressPickerToForm();
       APP.reservations.bindSelectClientRadioButtons();
-      APP.reservations.addAddressPickerToForm();
     },
     edit: function() {
       APP.reservations.organisationClientDropdown();
+      APP.organisation_clients.addAddressPickerToForm();
       APP.reservations.bindSelectClientRadioButtons();
-      APP.reservations.addAddressPickerToForm();
     },
     create: function() {
       APP.reservations.organisationClientDropdown();
+      APP.organisation_clients.addAddressPickerToForm();
       APP.reservations.bindSelectClientRadioButtons();
-      APP.reservations.addAddressPickerToForm();
     },
     bindSelectClientRadioButtons: function() {
       $(':radio[name="organisation_client_type"]').on('change', function() {
@@ -20,50 +20,20 @@ APP.reservations = {
           if($(this).val() == 'new') {
             $('div.existing_organisation_client').hide();
             $('div.new_organisation_client').show();
-            console.debug($('#address-picker').addresspicker('map'));
-            google.maps.event.trigger($('#address-picker').addresspicker('map'), 'resize');
-            $('#address-picker').addresspicker("updatePosition");
-            $('#address-picker').addresspicker("reloadPosition");
+            $('#addresspicker').addresspicker("updatePosition");
+            google.maps.event.trigger($('#addresspicker').addresspicker('getMap'), 'resize');
+            $('#addresspicker').addresspicker("reloadPosition");
           } else if($(this).val() == 'existing') {
             $('div.new_organisation_client').hide();
             $('div.existing_organisation_client').show();
           }
         }
       });
-    },
-    addAddressPickerToForm: function() {
-      var addresspickerMap = $('#address-picker').addresspicker({
-        reverseGeocode: true,
-        autocomplete: 'default',
-          regionBias: $('body').data('current-locale'),
-        mapOptions: {
-              zoom: ($('#reservation_organisation_client_attributes_lat').val() == '' && $('#reservation_organisation_client_attributes_lng').val() == '') ? 6 : 15,
-              center: new google.maps.LatLng(52.5, 5.75),
-              scrollwheel: true,
-        },
-        elements: {
-          map: '#address-picker-map',
-          route: '#reservation_organisation_client_attributes_route',
-          street_number: '#reservation_organisation_client_attributes_street_number',
-          locality: '#reservation_organisation_client_attributes_locality',
-          administrative_area_level_2: '#reservation_organisation_client_attributes_administrative_area_level_2',
-          administrative_area_level_1: '#reservation_organisation_client_attributes_administrative_area_level_1',
-          postal_code: '#reservation_organisation_client_attributes_postal_code',
-          country: '#reservation_organisation_client_attributes_country',
-          lat: '#reservation_organisation_client_attributes_lat',
-          lng: '#reservation_organisation_client_attributes_lng',
-          type: '#reservation_organisation_client_attributes_address_type'
-        },
-      });
+      $(':radio[name="organisation_client_type"]').trigger('change');
 
-      var gmarker = addresspickerMap.addresspicker( "marker");
-      gmarker.setVisible(true);
-      addresspickerMap.addresspicker("updatePosition");
-
-      $('div.auto-address-fields').on('click', 'a#edit-auto-address-fields', function(e) {
-        e.preventDefault();
-        $(this).parents('div.auto-address-fields').find('input').removeAttr('readonly');
-        return false;
+      // Also perform onchange on radio buttons when client section is opened, for some reason only works with timeout
+      $('div.organisation_client h4.collapse').on('click', function() {
+        setTimeout(function(){$(':radio[name="organisation_client_type"]').trigger('change')}, 100);
       });
     },
     organisationClientDropdown: function() {
