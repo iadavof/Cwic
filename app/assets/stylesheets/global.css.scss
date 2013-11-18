@@ -241,7 +241,7 @@ body[data-current-user-id=''] #content > .inner {
   margin-left: 0;
 }
 
-.pagination > span.gap, 
+.pagination > span.gap,
 .pagination > span.current,
 .pagination > span a {
   padding: 9px 12px;
@@ -582,6 +582,11 @@ div#progress-bar-container {
   position: relative;
   margin: 0.5em 0;
   padding: 0;
+}
+
+/* add required field asterisk */
+label.required:after {
+    content: " *";
 }
 
 .field > .with_errors {
