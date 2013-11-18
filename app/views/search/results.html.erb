@@ -10,6 +10,6 @@
 
 <p>
   <%= page_entries_info(@raw_results, entry_name: t('.item')) %>
-  <%= paginate(@raw_results) %>
+  <%= paginate(@raw_results, params: { search_key: @search_key }) %>
 </p>
 <% end %>
