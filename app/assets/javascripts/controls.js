@@ -1,5 +1,5 @@
 APP.global.replaceControls = function() {
-  $('select:not(.select2)').cwicDropdown();
+  $('select').cwicDropdown();
   $(':checkbox').cwicCheckbox();
   $('input[type=file]').cwicFileField();
 }
@@ -78,16 +78,15 @@ $(document).ready(function() {
             dropdownReplacement.removeClass('open');
           }
         });
-        
-        /* Remove dropdown if select element is removed */
-        $(document).on('thisIsADifferentBody.cwicDropdown', function(e) {
-          if (dropdown.length < 1) {
-            dropdownReplacement.remove();
-          } else if (dropdown.is(':not(select:not([multiple]))')) {
-            dropdownReplacement.remove();
-            dropdown.off('.cwicDropdown').removeClass('replaced');
-          }
-        });
+      },
+      destroy: function(dropdown) {
+        var dropdownReplacement = $(dropdown).next('.dropdown');
+        dropdownReplacement.remove();
+        dropdown.off('.cwicDropdown').removeClass('replaced');
+      },
+      remake: function(dropdown) {
+        cwic_controls.dropdown.destroy(dropdown);
+        cwic_controls.dropdown.make(dropdown);
       },
     },
     checkbox: {
@@ -159,11 +158,28 @@ $(document).ready(function() {
   };
   
   $.fn.extend({
-    cwicDropdown: function() {
-      var elems = $(this).filter('select:not([multiple], .replaced)');
-      elems.each(function() {
-        cwic_controls.dropdown.make($(this));
-      });
+    cwicDropdown: function(operation) {
+      var elems = $(this).filter('select:not([multiple], .select2)');
+      switch(operation)
+      {
+      case 'destroy':
+        elems = elems.filter('.replaced');
+        elems.each(function() {
+          cwic_controls.dropdown.destroy($(this));
+        });
+        break;
+      case 'remake':
+        elems = elems.filter('.replaced');
+        elems.each(function() {
+          cwic_controls.dropdown.remake($(this));
+        });
+        break;
+      default:
+        elems = elems.filter(':not(.replaced)');
+        elems.each(function() {
+          cwic_controls.dropdown.make($(this));
+        });
+      }
     },
     cwicCheckbox: function() {
       var elems = $(this).filter(':checkbox:not(.replaced)');

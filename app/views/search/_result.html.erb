@@ -1,4 +1,4 @@
-<div class="result">
+<div class="result-<%= result.class.name.underscore.dasherize %>">
   <h3>
     <%= result.class.model_name.human %>: <%= name_link_to_show([@organisation, result]) %>
     <%= icon_link_to_edit([@organisation, result]) %>

@@ -15,3 +15,4 @@
 //= require magnific-popup
 //= require select2
 //= require select2_locale_nl
+//= require websocket_rails/main

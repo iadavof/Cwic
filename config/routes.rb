@@ -19,6 +19,7 @@ Cwic::Application.routes.draw do
     end
 
     resources :info_screens
+    match 'info_screens/:id/reservations', controller: 'info_screens', action: 'info_screen_reservations', via: 'get', as: 'info_screen_reservations'
 
     resources :stickies, except: [:show, :create, :new]
     match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch', as: 'edit_sticky_for_resource'
