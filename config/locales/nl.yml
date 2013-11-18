@@ -442,6 +442,12 @@ nl:
       images: "Foto's"
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
 
+  reservations:
+    form:
+      organisation_client_type: 'Soort klant'
+      existing_organisation_client: 'Bestaande klant'
+      new_organisation_client: 'Nieuwe Klant'
+
   info_screens:
     form:
       selected_entity_types: 'Geselecteerde objecttypen'

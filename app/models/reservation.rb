@@ -17,6 +17,8 @@ class Reservation < ActiveRecord::Base
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
 
+  accepts_nested_attributes_for :organisation_client
+
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 

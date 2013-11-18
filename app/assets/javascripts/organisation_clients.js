@@ -1,14 +1,14 @@
 APP.organisation_clients = {
 	edit: function() {
-		APP.organisation_clients.add_address_picker_to_form();
+		APP.organisation_clients.addAddressPickerToForm();
 	},
 	'new': function() {
-		APP.organisation_clients.add_address_picker_to_form();
+		APP.organisation_clients.addAddressPickerToForm();
 	},
 	create: function() {
-		APP.organisation_clients.add_address_picker_to_form();
+		APP.organisation_clients.addAddressPickerToForm();
 	},
-	add_address_picker_to_form: function() {
+	addAddressPickerToForm: function() {
   		var addresspickerMap = $('#address-picker').addresspicker({
 		  	reverseGeocode: true,
 		  	autocomplete: 'default',
@@ -42,5 +42,5 @@ APP.organisation_clients = {
 			$(this).parents('div.auto-address-fields').find('input').removeAttr('readonly');
 			return false;
 		});
-  	},
+  },
 }

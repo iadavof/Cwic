@@ -1,0 +1,30 @@
+<%= form_for([@organisation, @reservation.localized]) do |f| %>
+  <%= render 'shared/error_messages', target: @reservation %>
+
+  <div class="field">
+    <%= f.label :description %>
+    <%= f.text_field :description %>
+  </div>
+  <div class="field">
+    <%= f.label :begins_at %>
+    <%= f.text_field :begins_at_date, id: 'begins_at_date', class: 'datepicker-field' %>
+    <%= f.text_field :begins_at_tod, id: 'begins_at_tod', class: 'timepicker-field' %>
+  </div>
+  <div class="field">
+    <%= f.label :ends_at %>
+    <%= f.text_field :ends_at_date, id: 'ends_at_date', class: 'datepicker-field' %>
+    <%= f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field' %>
+  </div>
+  <div class="field">
+    <%= f.label :entity %>
+    <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
+  </div>
+  <div class="field">
+    <%= f.label :organisation_client %>
+    <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
+    <a id="new_organisation_client_link"><%= t('.new_organisation_client')%></a>
+  </div>
+  <div class="actions">
+    <%= f.submit %><%= f.submit t('.full_form'), :name => "full" %>
+  </div>
+<% end %>

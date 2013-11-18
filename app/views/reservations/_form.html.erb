@@ -1,4 +1,4 @@
-<%= form_for([@organisation, @reservation.localized]) do |f| %>
+<%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
   <%= render 'shared/error_messages', target: @reservation %>
 
   <div class="field">
@@ -19,9 +19,28 @@
     <%= f.label :entity %>
     <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
   </div>
-  <div class="field">
-    <%= f.label :organisation_client %>
-    <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
+  <div class="organisation_client" data-collapse="" >
+    <h4 class="collapse" <% if @focus == 'new_client' %> class="open" <% end %> ><%= OrganisationClient.model_name.human(count: 1) %></h4>
+    <div class="content clearfix">
+      <div class="organisation_client_new_existing">
+        <div class="field">
+            <label for="organisation_client_type"><%= t('.organisation_client_type') %></label>
+            <%= radio_button_tag 'organisation_client_type', 'existing', true %><%= t('.existing_organisation_client') %>
+            <%= radio_button_tag 'organisation_client_type', 'new' %><%= t('.new_organisation_client') %>
+        </div>
+      </div>
+      <div class="existing_organisation_client" <% if @focus == 'new_client' %>style="display: none;"<% end %>>
+        <div class="field">
+          <%= f.label :organisation_client %>
+          <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
+        </div>
+      </div>
+      <div class="new_organisation_client" <% if @focus != 'new_client' %>style="display: none;"<% end %>>
+        <%= f.fields_for :organisation_client, @reservation.organisation_client, wrapper: false do |ocf| %>
+          <%= render partial: 'organisation_clients/form_fields', locals: { f: ocf } %>
+        <% end %>
+      </div>
+    </div>
   </div>
   <div class="actions">
     <%= f.submit %>

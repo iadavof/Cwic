@@ -16,17 +16,40 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
+    if @reservation.organisation_client.nil?
+      @reservation.build_organisation_client
+    end
     respond_with(@reservation)
   end
 
   # GET /reservations/1/edit
   def edit
+    if @reservation.organisation_client.nil?
+      @reservation.build_organisation_client
+    end
     respond_with(@reservation)
   end
 
   # POST /reservations
   def create
+    if params[:organisation_client_type].present?
+      if params[:organisation_client_type] == 'new'
+        params[:reservation].delete(:organisation_client_id)
+      else
+        params[:reservation].delete(:organisation_client_attributes)
+      end
+    end
+
     @reservation.localized.attributes = resource_params
+
+    if params[:full].present?
+      return render action: :new
+    elsif params[:full_new_client]
+      @focus = 'new_client'
+      return render action: :new
+    end
+
+
     @reservation.save
     respond_with(@organisation, @reservation)
   end
@@ -68,7 +91,8 @@ private
   end
 
   def resource_params
-    params.require(:reservation).permit(:description, :begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id)
+    params.require(:reservation).permit(:description, :begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id,
+    organisation_client_attributes: [:first_name, :infix, :last_name, :email, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat])
   end
 
   def interpolation_options

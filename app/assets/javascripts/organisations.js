@@ -1,11 +1,11 @@
 APP.organisations = {
 	edit: function() {
-		APP.organisations.add_address_picker_to_form();
+		APP.organisations.addAddressPickerToForm();
 	},
 	'new': function() {
-		APP.organisations.add_address_picker_to_form();
+		APP.organisations.addAddressPickerToForm();
 	},
-	add_address_picker_to_form: function() {
+	addAddressPickerToForm: function() {
   		var addresspickerMap = $('#address-picker').addresspicker({
 		  	reverseGeocode: true,
 		  	autocomplete: 'default',
