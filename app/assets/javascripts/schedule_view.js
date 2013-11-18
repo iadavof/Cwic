@@ -626,6 +626,8 @@ IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, new
   APP.reservations.organisationClientDropdown();
 
   reservationForm.find('select#reservation_entity_id').val(newScheduleItem.schedule_object_id);
+
+  reservationForm.find('select').trigger('change');
 }
 
 IADAscheduleView.prototype.setDateDomain = function() {
