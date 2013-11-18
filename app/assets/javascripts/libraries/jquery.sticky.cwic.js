@@ -4,7 +4,7 @@
       var container = $('<div class="cwic-sticky-container"></div>');
       sticky.addClass('cwic-sticky').after(container);
       sticky.appendTo(container);
-      var substituteContainer = $('<div class="cwic-sticky-container clone"></div>');
+      var substituteContainer = container.clone();
       substituteContainer.insertAfter(container).hide();
       cwic_sticky.bindEvents(container, substituteContainer);
     },
@@ -38,7 +38,7 @@
     },
     makeSticky: function(container, substituteContainer) {
       container.data('style', container.attr('style'));
-      substituteContainer.attr('style', container.attr('style')).css({display: 'block'});
+      substituteContainer.attr('style', container.attr('style')).css({display: '', visibility: 'hidden'});
       cwic_sticky.updateCss(container, substituteContainer);
     },
     destroySticky: function(container, substituteContainer) {
@@ -47,7 +47,6 @@
     },
     updateCss: function(container, substituteContainer) {
       if (substituteContainer.css('display') != 'none') {
-        substituteContainer.css({height: container.height() + 'px'});
         container.css({position: 'fixed', marginLeft: 0, width: substituteContainer.width(), left: substituteContainer.offset().left + 'px', top: parseInt($('#content-area').offset().top) + 'px'});
       }
     },

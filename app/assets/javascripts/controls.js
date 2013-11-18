@@ -1,5 +1,5 @@
 APP.global.replaceControls = function() {
-  $('select:not(.select2)').cwicDropdown();
+  $('select').cwicDropdown();
   $(':checkbox').cwicCheckbox();
   $('input[type=file]').cwicFileField();
 }
@@ -160,7 +160,7 @@ $(document).ready(function() {
   
   $.fn.extend({
     cwicDropdown: function() {
-      var elems = $(this).filter('select:not([multiple], .replaced)');
+      var elems = $(this).filter('select:not([multiple], .replaced, .select2)');
       elems.each(function() {
         cwic_controls.dropdown.make($(this));
       });
