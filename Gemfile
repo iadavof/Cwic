@@ -22,7 +22,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'jquery-rails-cdn'
 gem 'jquery-ui-rails'
-gem 'jquery-ui-rails-cdn', github: 'CUnknown/jquery-ui-rails-cdn'
+gem 'jquery-ui-rails-cdn'
 
 # Use Modernizr to detect support for new features
 gem 'modernizr-rails'
@@ -109,10 +109,7 @@ gem 'pg_search', '~> 0.7.0' # Locked on minor version, because we use custom sea
 gem 'kaminari'
 
 # Websockets so we could create push notifications
-gem 'websocket-rails'
-
-# Websockets so we could create push notifications
-gem 'websocket-rails'
+gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom websocket-rails gem because the standard version is not Windows comptabile.
 
 group :development do
   # Disable messages about assets in development
