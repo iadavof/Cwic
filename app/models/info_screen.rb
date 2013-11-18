@@ -7,6 +7,8 @@ class InfoScreen < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 255 }
 
   accepts_nested_attributes_for :info_screen_entity_types
+  after_save :trigger_update_infoscreens
+
 
   def instance_name
     self.name
@@ -19,5 +21,9 @@ class InfoScreen < ActiveRecord::Base
       iset.info_screen_entities << et.entities.map { |e| InfoScreenEntity.new(entity: e) }
       iset
     end
+  end
+
+  def trigger_update_infoscreens
+    WebsocketRails[('infoscreens_' + self.organisation.id.to_s).to_sym].trigger 'update'
   end
 end
