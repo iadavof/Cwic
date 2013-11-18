@@ -195,16 +195,24 @@ html.with-overlay body {
   width: 100%;
 }
 
-body.controller-sessions.action-new #logo-container {
+body[data-current-user-id=''] #logo-container {
   display: block;
 }
 
-body.controller-sessions.action-new #content,
-body.controller-sessions.action-new #page-title {
+html.js body[data-current-user-id=''] #content-area {
+  position: static;
+}
+
+html.js body[data-current-user-id=''] {
+  overflow: visible;
+}
+
+body[data-current-user-id=''] #content,
+body[data-current-user-id=''] #page-title {
   text-align: center;
 }
 
-body.controller-sessions.action-new #content > .inner {
+body[data-current-user-id=''] #content > .inner {
   display: inline-block;
   text-align: left;
 }
@@ -233,7 +241,7 @@ body.controller-sessions.action-new #content > .inner {
   margin-left: 0;
 }
 
-.pagination > span.gap, 
+.pagination > span.gap,
 .pagination > span.current,
 .pagination > span a {
   padding: 9px 12px;
@@ -574,6 +582,11 @@ div#progress-bar-container {
   position: relative;
   margin: 0.5em 0;
   padding: 0;
+}
+
+/* add required field asterisk */
+label.required:after {
+    content: " *";
 }
 
 .field > .with_errors {
