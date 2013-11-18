@@ -28,6 +28,9 @@ Cwic::Application.configure do
   # [2013-06-10 kevin] Disables assets debug for better development performance
   config.assets.debug = false
 
+  # [2013-11-8] Delete Rack::Lock, this was needed for some reason to fix the internal server error which occured when using the websocket-rails
+  config.middleware.delete Rack::Lock
+
   # Precompile assets (needed for js-routes)
   config.assets.initialize_on_precompile = true
 

@@ -18,6 +18,8 @@ class Reservation < ActiveRecord::Base
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
 
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
+  after_save :trigger_update_infoscreens
+  after_destroy :trigger_update_infoscreens
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
@@ -85,6 +87,10 @@ private
       DayOccupation.recalculate_occupations(self.entity, days)
       WeekOccupation.recalculate_occupations(self.entity, Week.from_date(days.min)..Week.from_date(days.max))
     end
+  end
+
+  def trigger_update_infoscreens
+    WebsocketRails[('infoscreens_' + self.organisation.id.to_s).to_sym].trigger 'update'
   end
 
   # Converts a period (begins datetime to ends datetime range) to a days (dates) range

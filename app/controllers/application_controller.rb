@@ -5,6 +5,7 @@ class ApplicationController < ActionController::Base
   before_action { @admin = true }
   check_authorization unless :devise_controller?
 
+  before_action :set_locale
   before_action :load_organisation
 
   self.responder = ApplicationResponder
@@ -20,6 +21,10 @@ class ApplicationController < ActionController::Base
 
   def load_organisation
     @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
   end
 
   def current_organisation
