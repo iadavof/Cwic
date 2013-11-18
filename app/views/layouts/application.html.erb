@@ -11,11 +11,13 @@
     <%= csrf_meta_tags %>
   </head>
   <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-user-id="<%= current_user.try(:id) %>" data-current-user-name="<%= current_user.try(:instance_name) %>" data-current-organisation-id="<%= current_organisation.try(:id) %>" data-current-locale="<%= I18n.locale %>">
+    <% if !user_signed_in? %>
     <div id="logo-container">
       <div id="logo-container-inner">
         <img src="<%= asset_path('logo.png') %>" class="logo" />
       </div>
     </div>
+    <% end %>
     <div id="header">
       <% if user_signed_in? %>
       <%= render "layouts/menu" %>
