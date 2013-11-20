@@ -7,7 +7,8 @@ APP.reservations = {
     edit: function() {
       APP.reservations.organisationClientDropdown();
       APP.organisation_clients.addAddressPickerToForm();
-      APP.reservations.bindSelectClientRadioButtons();
+      // Hide organisation client selection
+      $('div.organisation_client_new_existing').hide();
     },
     create: function() {
       APP.reservations.organisationClientDropdown();
@@ -30,11 +31,6 @@ APP.reservations = {
         }
       });
       $(':radio[name="organisation_client_type"]').trigger('change');
-
-      // Also perform onchange on radio buttons when client section is opened, for some reason only works with timeout
-      $('div.organisation_client h4.collapse').on('click', function() {
-        setTimeout(function(){$(':radio[name="organisation_client_type"]').trigger('change')}, 100);
-      });
     },
     organisationClientDropdown: function() {
       $('input#organisation_client_select').select2({
