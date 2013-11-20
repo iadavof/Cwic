@@ -16,18 +16,11 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    @focus = 'existing_client'
-    if @reservation.organisation_client.nil?
-      @reservation.build_organisation_client
-    end
     respond_with(@reservation)
   end
 
   # GET /reservations/1/edit
   def edit
-    if @reservation.organisation_client.nil?
-      @reservation.build_organisation_client
-    end
     respond_with(@reservation)
   end
 
@@ -48,9 +41,11 @@ class ReservationsController < ApplicationController
     @reservation.organisation_client.lng = resource_params[:organisation_client_attributes][:lng] if resource_params[:organisation_client_attributes].present?
 
     if params[:full].present?
+      @reservation.build_organisation_client
       return render action: :new
     elsif params[:full_new_client]
       @focus = 'new_client'
+      @reservation.build_organisation_client
       return render action: :new
     end
 

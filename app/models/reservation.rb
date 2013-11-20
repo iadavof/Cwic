@@ -19,6 +19,7 @@ class Reservation < ActiveRecord::Base
 
   accepts_nested_attributes_for :organisation_client
 
+  before_validation :check_reservation_organisation
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_infoscreens
   after_destroy :trigger_update_infoscreens
@@ -104,5 +105,11 @@ private
       to -= 1.day
     end
     from..to
+  end
+
+  def check_reservation_organisation
+    unless self.organisation_client.organisation.present?
+      self.organisation_client.organisation = self.organisation
+    end
   end
 end
