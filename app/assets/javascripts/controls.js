@@ -115,6 +115,15 @@ $(document).ready(function() {
           }
         });
       },
+      destroy: function(radioButton) {
+        var radioButtonReplacement = radioButton.next('.cwic-radio-button');
+        radioButtonReplacement.remove();
+        radioButton.off('.cwicRadioButton').removeClass('replaced');
+      },
+      remake: function(radioButton) {
+        cwic_controls.radio_button.destroy(radioButton);
+        cwic_controls.radio_button.make(radioButton);
+      },
     },
     checkbox: {
       make: function(checkbox) {
@@ -143,6 +152,15 @@ $(document).ready(function() {
           }
         });
       },
+      destroy: function(checkbox) {
+        var checkboxReplacement = checkbox.next('.cwic-checkbox');
+        checkboxReplacement.remove();
+        checkbox.off('.cwicCheckbox').removeClass('replaced');
+      },
+      remake: function(checkbox) {
+        cwic_controls.checkbox.destroy(checkbox);
+        cwic_controls.checkbox.make(checkbox);
+      },
     },
     file_field: {
       make: function(fileField) {
@@ -164,6 +182,15 @@ $(document).ready(function() {
         fileFieldReplacement.on('click.cwicFileField', function(e) {
           fileField.trigger('click');
         });
+      },
+      destroy: function(fileField) {
+        var fileFieldReplacement = fileField.next('.cwic-filefield');
+        fileFieldReplacement.remove();
+        fileField.off('.cwicFileField').removeClass('replaced');
+      },
+      remake: function(fileField) {
+        cwic_controls.file_field.destroy(fileField);
+        cwic_controls.file_field.make(fileField);
       },
     },
   };
@@ -192,23 +219,74 @@ $(document).ready(function() {
         });
       }
     },
-    cwicRadioButton: function() {
-      var elems = $(this).filter(':radio:not(.replaced)');
-      elems.each(function() {
-        cwic_controls.radio_button.make($(this));
-      });
+    cwicRadioButton: function(operation) {      
+      var elems = $(this).filter(':radio');
+      switch(operation)
+      {
+      case 'destroy':
+        elems = elems.filter('.replaced');
+        elems.each(function() {
+          cwic_controls.radio_button.destroy($(this));
+        });
+        break;
+      case 'remake':
+        elems = elems.filter('.replaced');
+        elems.each(function() {
+          cwic_controls.radio_button.remake($(this));
+        });
+        break;
+      default:
+        elems = elems.filter(':not(.replaced)');
+        elems.each(function() {
+          cwic_controls.radio_button.make($(this));
+        });
+      }
     },
-    cwicCheckbox: function() {
-      var elems = $(this).filter(':checkbox:not(.replaced)');
-      elems.each(function() {
-        cwic_controls.checkbox.make($(this));
-      });
+    cwicCheckbox: function(operation) {
+      var elems = $(this).filter(':checkbox');
+      switch(operation)
+      {
+      case 'destroy':
+        elems = elems.filter('.replaced');
+        elems.each(function() {
+          cwic_controls.checkbox.destroy($(this));
+        });
+        break;
+      case 'remake':
+        elems = elems.filter('.replaced');
+        elems.each(function() {
+          cwic_controls.checkbox.remake($(this));
+        });
+        break;
+      default:
+        elems = elems.filter(':not(.replaced)');
+        elems.each(function() {
+          cwic_controls.checkbox.make($(this));
+        });
+      }
     },
-    cwicFileField: function() {
-      var elems = $(this).filter('input[type=file]:not(.replaced)');
-      elems.each(function() {
-        cwic_controls.file_field.make($(this));
-      });
+    cwicFileField: function(operation) {     
+      var elems = $(this).filter('input[type=file]');
+      switch(operation)
+      {
+      case 'destroy':
+        elems = elems.filter('.replaced');
+        elems.each(function() {
+          cwic_controls.file_field.destroy($(this));
+        });
+        break;
+      case 'remake':
+        elems = elems.filter('.replaced');
+        elems.each(function() {
+          cwic_controls.file_field.remake($(this));
+        });
+        break;
+      default:
+        elems = elems.filter(':not(.replaced)');
+        elems.each(function() {
+          cwic_controls.file_field.make($(this));
+        });
+      }
     },
   });
 })(jQuery);

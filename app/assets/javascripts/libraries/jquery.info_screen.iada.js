@@ -235,7 +235,7 @@ IADAinfoScreen.prototype.setOnResize = function() {
 
 IADAinfoScreen.prototype.initFullScreenControls = function() {
   var is = this;
-  $('body').append($('<a>', {id: 'fullscreen-link'}).html($('<i>', {class:'icon-resize-full'})));
+  $('body').append($('<a>', {id: 'fullscreen-link'}).html($('<i>', {'class':'icon-resize-full'})));
   $('#fullscreen-link').on('click', function() {
     is.requestFullScreen(document.getElementById('content'));
   });
