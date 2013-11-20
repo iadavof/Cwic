@@ -18,7 +18,7 @@
     </div>
     <div class="field holiday from">
       <%= f.label(:holiday_from) %>
-      <%= f.select(:holiday_from, Holidays.between(Date.today.beginning_of_year, Date.today.end_of_year, I18n.locale)) %>
+      <%= f.select(:holiday_from, Holidays.between(Date.today.beginning_of_year, Date.today.end_of_year, I18n.locale).map { |h| [h[:name], h[:key]] }, prompt: true) %>
     </div>
     <div class="field week from">
       <%= f.label(:week_from) %>
@@ -55,13 +55,17 @@
       <%= f.label(:year_to) %>
       <%= f.number_field(:year_to) %>
     </div>
+    <div class="field holiday to">
+      <%= f.label(:holiday_to) %>
+      <%= f.select(:holiday_to, Holidays.between(Date.today.beginning_of_year, Date.today.end_of_year, I18n.locale).map { |h| [h[:name], h[:key]] }, prompt: true) %>
+    </div>
     <div class="field week to">
       <%= f.label(:week_to) %>
       <%= f.select(:week_to, 1..52, prompt: true) %>
     </div>
-    <div class="field nrom from">
-      <%= f.label(:nrom_from) %>
-      <%= f.select(:nrom_from, 1..5, prompt: true) %>
+    <div class="field nrom to">
+      <%= f.label(:nrom_to) %>
+      <%= f.select(:nrom_to, (1..5).map { |nr| nr.to_words(ordinal: true).ucfirst }, prompt: true) %>
     </div>
     <div class="field dow to">
       <%= f.label(:dow_to) %>
