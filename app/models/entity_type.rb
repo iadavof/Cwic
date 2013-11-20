@@ -37,9 +37,9 @@ class EntityType < ActiveRecord::Base
   end
 
   def create_info_screen_entity_types
-    if @organisation.present?
-      @organisation.info_screens.each do |is|
-        InfoScreenEntityTypes.create(entity_type: self.id, info_screen: is.id, active: info_screens.add_new_entity_types, add_new_entities: info_screens.add_new_entity_types)
+    if self.organisation.present?
+      self.organisation.info_screens.each do |is|
+        InfoScreenEntityType.create(entity_type: self, info_screen: is, active: is.add_new_entity_types, add_new_entities: is.add_new_entity_types)
       end
     end
   end

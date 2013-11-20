@@ -446,7 +446,10 @@ nl:
     form:
       organisation_client_type: 'Soort klant'
       existing_organisation_client: 'Bestaande klant'
-      new_organisation_client: 'Nieuwe Klant'
+      new_organisation_client: 'Nieuwe klant'
+    modal_form:
+      new_organisation_client: 'Nieuwe klant'
+      full_form: 'Meer opties'
 
   info_screens:
     form:

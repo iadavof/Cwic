@@ -16,17 +16,11 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
-    if @reservation.organisation_client.nil?
-      @reservation.build_organisation_client
-    end
     respond_with(@reservation)
   end
 
   # GET /reservations/1/edit
   def edit
-    if @reservation.organisation_client.nil?
-      @reservation.build_organisation_client
-    end
     respond_with(@reservation)
   end
 
@@ -34,21 +28,26 @@ class ReservationsController < ApplicationController
   def create
     if params[:organisation_client_type].present?
       if params[:organisation_client_type] == 'new'
+        @focus = 'new_client'
         params[:reservation].delete(:organisation_client_id)
       else
+        @focus = 'existing_client'
         params[:reservation].delete(:organisation_client_attributes)
       end
     end
 
     @reservation.localized.attributes = resource_params
+    @reservation.organisation_client.lat = resource_params[:organisation_client_attributes][:lat] if resource_params[:organisation_client_attributes].present?
+    @reservation.organisation_client.lng = resource_params[:organisation_client_attributes][:lng] if resource_params[:organisation_client_attributes].present?
 
     if params[:full].present?
+      @reservation.build_organisation_client
       return render action: :new
     elsif params[:full_new_client]
       @focus = 'new_client'
+      @reservation.build_organisation_client
       return render action: :new
     end
-
 
     @reservation.save
     respond_with(@organisation, @reservation)
@@ -57,6 +56,8 @@ class ReservationsController < ApplicationController
   # PATCH/PUT /reservations/1
   def update
     @reservation.localized.update_attributes(resource_params)
+    @reservation.organisation_client.lat = resource_params[:organisation_client_attributes][:lat] if resource_params[:organisation_client_attributes].present?
+    @reservation.organisation_client.lng = resource_params[:organisation_client_attributes][:lng] if resource_params[:organisation_client_attributes].present?
     respond_with(@organisation, @reservation)
   end
 
