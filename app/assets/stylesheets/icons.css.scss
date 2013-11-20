@@ -8,8 +8,8 @@
  font-size: inherit;
 }
 
-.dropdown {
-  .dropdown-current-option {
+.cwic-dropdown {
+  .cwic-dropdown-current-option {
     @extend .icon-chevron-down;
     &:before {
       @extend [class^="icon-"];
