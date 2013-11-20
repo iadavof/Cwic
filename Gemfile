@@ -111,11 +111,11 @@ gem 'kaminari'
 # Websockets so we could create push notifications
 gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom websocket-rails gem because the standard version is not Windows comptabile.
 
-# Holidays gem to determine the dates of holidays
-gem 'holidays', path: '~/rails/gems/holidays' # github: 'kreintjes/holidays' # Custom holidays gem with extra holidays
+# Holidays gem to determine the dates of holidays. Custom gem to add keys and kings day
+gem 'holidays', github: 'kreintjes/holidays' #path: '~/rails/gems/holidays'github: 'kreintjes/holidays'
 
-# Translate numbers to words (and ordinal forms)
-gem 'numbers_and_words', path: '~/rails/gems/numbers_and_words'
+# Translate numbers to words (and ordinal forms). Custom gem to add ordinal support for dutch locale.
+gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' #path: '~/rails/gems/numbers_and_words'
 
 group :development do
   # Disable messages about assets in development
