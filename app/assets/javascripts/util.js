@@ -11,7 +11,7 @@ APP.util = {
     for(key in items) {
       $(new Option(items[key], key)).appendTo(dropdown);
     }
-    dropdown.cwicDropdown('remake');
+    dropdown.cwicControl('recreate');
   },
   // XXX TODO docs
   getTranslationsForArray: function(array, library) {
