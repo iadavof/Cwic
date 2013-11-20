@@ -164,14 +164,6 @@ $(document).ready(function() {
         fileFieldReplacement.on('click.cwicFileField', function(e) {
           fileField.trigger('click');
         });
-        $(document).on('thisIsADifferentBody.cwicCheckbox', function(e) {
-          if (fileField.length < 1) {
-            fileFieldReplacement.remove();
-          } else if (fileField.is(':not(input[type=file])')) {
-            fileFieldReplacement.remove();
-            fileField.off('.cwicFileField').removeClass('replaced');
-          }
-        });
       },
     },
   };
