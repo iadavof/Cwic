@@ -22,7 +22,9 @@
   <div class="field">
     <%= f.label :organisation_client %>
     <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
-    <a id="new_organisation_client_link"><%= t('.new_organisation_client')%></a>
+    <div style="text-align: right;">
+      <a href="" id="new_organisation_client_link"><%= t('.new_organisation_client')%></a>
+    </div>
   </div>
   <div class="actions">
     <%= f.submit %><%= f.submit t('.full_form'), :name => "full" %>

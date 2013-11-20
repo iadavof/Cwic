@@ -19,14 +19,14 @@
     <%= f.label :entity %>
     <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
   </div>
-  <div class="organisation_client" data-collapse="" >
-    <h4 class="collapse" <% if @focus == 'new_client' %> class="open" <% end %> ><%= OrganisationClient.model_name.human(count: 1) %></h4>
+  <div class="collapse-options organisation_client" data-collapse="" >
+    <h3 class="collapse" <% if @focus == 'new_client' %> class="open" <% end %> ><%= OrganisationClient.model_name.human(count: 1) %></h3>
     <div class="content clearfix">
       <div class="organisation_client_new_existing">
         <div class="field">
             <label for="organisation_client_type"><%= t('.organisation_client_type') %></label>
-            <%= radio_button_tag 'organisation_client_type', 'existing', true %><%= t('.existing_organisation_client') %>
-            <%= radio_button_tag 'organisation_client_type', 'new' %><%= t('.new_organisation_client') %>
+            <%= radio_button_tag 'organisation_client_type', 'existing', @focus == 'existing_client' %><%= t('.existing_organisation_client') %>
+            <%= radio_button_tag 'organisation_client_type', 'new', @focus == 'new_client' %><%= t('.new_organisation_client') %>
         </div>
       </div>
       <div class="existing_organisation_client" <% if @focus == 'new_client' %>style="display: none;"<% end %>>

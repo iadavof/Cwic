@@ -16,6 +16,7 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
+    @focus = 'existing_client'
     if @reservation.organisation_client.nil?
       @reservation.build_organisation_client
     end
@@ -34,13 +35,17 @@ class ReservationsController < ApplicationController
   def create
     if params[:organisation_client_type].present?
       if params[:organisation_client_type] == 'new'
+        @focus = 'new_client'
         params[:reservation].delete(:organisation_client_id)
       else
+        @focus = 'existing_client'
         params[:reservation].delete(:organisation_client_attributes)
       end
     end
 
     @reservation.localized.attributes = resource_params
+    @reservation.organisation_client.lat = resource_params[:organisation_client_attributes][:lat] if resource_params[:organisation_client_attributes].present?
+    @reservation.organisation_client.lng = resource_params[:organisation_client_attributes][:lng] if resource_params[:organisation_client_attributes].present?
 
     if params[:full].present?
       return render action: :new
@@ -49,7 +54,6 @@ class ReservationsController < ApplicationController
       return render action: :new
     end
 
-
     @reservation.save
     respond_with(@organisation, @reservation)
   end
@@ -57,6 +61,8 @@ class ReservationsController < ApplicationController
   # PATCH/PUT /reservations/1
   def update
     @reservation.localized.update_attributes(resource_params)
+    @reservation.organisation_client.lat = resource_params[:organisation_client_attributes][:lat] if resource_params[:organisation_client_attributes].present?
+    @reservation.organisation_client.lng = resource_params[:organisation_client_attributes][:lng] if resource_params[:organisation_client_attributes].present?
     respond_with(@organisation, @reservation)
   end
 
