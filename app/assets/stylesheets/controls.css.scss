@@ -1,5 +1,6 @@
 .replaced,
 select.replaced,
+input[type="radio"].replaced,
 input[type="checkbox"].replaced {
   display: none;
 }
@@ -150,10 +151,6 @@ input[type="file"].replaced {
   color: #fff;
 }
 
-.cwic-checkbox > .inner {
-  border-radius: 3px;
-}
-
 .cwic-checkbox,
 .cwic-radio-button {
   display: inline-block;
@@ -165,7 +162,7 @@ input[type="file"].replaced {
 .cwic-radio-button > .inner {
   width: 14px;
   height: 14px;
-  border: 1px solid #aaa;
+  border: 1px solid #b8b8b8;
   cursor: pointer;
   background-color: #fff;
   position: relative;

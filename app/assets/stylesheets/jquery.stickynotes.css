@@ -1,6 +1,7 @@
 #note-container {
-    position: relative;
-    float: right;
+    position: absolute;
+    right: 0;
+    width: 420px;
 }
 
 #note-container div.control-container {
