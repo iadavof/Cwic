@@ -105,11 +105,17 @@ gem "select2-rails"
 # PG_Search for easy text search and global searching
 gem 'pg_search', '~> 0.7.0' # Locked on minor version, because we use custom search functionality (see lib/core_ext/pg_search.rb).
 
-# Pagination
+# Easy pagination (and unfortunately unefficient due to unnecessary queries)
 gem 'kaminari'
 
 # Websockets so we could create push notifications
 gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom websocket-rails gem because the standard version is not Windows comptabile.
+
+# Holidays gem to determine the dates of holidays
+gem 'holidays', path: '~/rails/gems/holidays' # github: 'kreintjes/holidays' # Custom holidays gem with extra holidays
+
+# Translate numbers to words (and ordinal forms)
+gem 'numbers_and_words', path: '~/rails/gems/numbers_and_words'
 
 group :development do
   # Disable messages about assets in development

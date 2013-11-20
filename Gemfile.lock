@@ -40,6 +40,18 @@ GIT
     mini_magick (3.6.0)
       subexec (~> 0.2.1)
 
+PATH
+  remote: ~/rails/gems/holidays
+  specs:
+    holidays (1.0.5)
+
+PATH
+  remote: ~/rails/gems/numbers_and_words
+  specs:
+    numbers_and_words (0.10.1)
+      activesupport
+      i18n
+
 GEM
   remote: https://rubygems.org/
   specs:
@@ -285,6 +297,7 @@ DEPENDENCIES
   factory_girl_rails
   forgery
   gistyle
+  holidays!
   i18n_alchemy!
   jbuilder
   jquery-minicolors-rails
@@ -299,6 +312,7 @@ DEPENDENCIES
   modernizr-rails
   momentjs-rails!
   nested_form
+  numbers_and_words!
   pg
   pg_search (~> 0.7.0)
   pry-rails

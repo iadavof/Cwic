@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131113160051) do
+ActiveRecord::Schema.define(version: 20131120114245) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -274,6 +274,10 @@ ActiveRecord::Schema.define(version: 20131113160051) do
     t.integer  "dow_to"
     t.integer  "hour_to"
     t.integer  "minute_to"
+    t.string   "holiday_from"
+    t.integer  "nrom_from"
+    t.string   "holiday_to"
+    t.integer  "nrom_to"
   end
 
   add_index "reservation_rule_scope_spans", ["scope_id"], name: "index_reservation_rule_scope_spans_on_scope_id", using: :btree

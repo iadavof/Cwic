@@ -15,6 +15,7 @@ class ReservationRuleScopesController < ApplicationController
 
   # GET /reservation_rule_scopes/new
   def new
+    @reservation_rule_scope.spans.build
     respond_with(@organisation, @entity, @reservation_rule_scope)
   end
 
