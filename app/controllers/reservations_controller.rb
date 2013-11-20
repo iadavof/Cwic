@@ -16,6 +16,9 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/new
   def new
+    if @reservation.organisation_client.nil?
+      @reservation.build_organisation_client
+    end
     respond_with(@reservation)
   end
 
@@ -26,6 +29,7 @@ class ReservationsController < ApplicationController
 
   # POST /reservations
   def create
+    sdflkasdj
     if params[:organisation_client_type].present?
       if params[:organisation_client_type] == 'new'
         @focus = 'new_client'

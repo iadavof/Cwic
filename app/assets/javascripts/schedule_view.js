@@ -631,7 +631,7 @@ IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, new
   reservationForm.find('a#new_organisation_client_link'). on('click', function(e){
     e.preventDefault();
     // Change the name of the submit button and submit by clicking it
-    reservationForm.find('input[type="submit"]').attr('name', 'full_new_client').click();
+    reservationForm.find('input[name="full"]').attr('name', 'full_new_client').click();
     return false;
   });
 
