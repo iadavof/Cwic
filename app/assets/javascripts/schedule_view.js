@@ -602,6 +602,8 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
         });
         APP.global.initializeDateTimePickers(reservationForm);
         schedule.setNewReservationForm(reservationForm, newScheduleItem);
+        newScheduleItem.removeFromDom();
+        newScheduleItem = null;
       } else {
         if(newScheduleItem != null) {
           newScheduleItem.removeFromDom();
@@ -613,6 +615,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
 }
 
 IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, newScheduleItem) {
+  var schedule = this;
   var beginJDate = newScheduleItem.getConceptBegin().toDate();
   var endJDate = newScheduleItem.getConceptEnd().toDate();
 
@@ -634,6 +637,8 @@ IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, new
     reservationForm.find('input[name="full"]').attr('name', 'full_new_client').click();
     return false;
   });
+
+  reservationForm.find('input[name="commit"]').on('click', function(e){ e.preventDefault(); schedule.createScheduleItem(reservationForm, newScheduleItem); return false; });
 
   reservationForm.find('select').trigger('change');
 }
@@ -1203,6 +1208,37 @@ IADAscheduleView.prototype.removeScheduleItem = function() {
       return false;
     }
   }
+}
+
+IADAscheduleView.prototype.createScheduleItem = function(reservationForm) {
+  var reservationForm = $(reservationForm);
+  $.ajax({
+        url: schedule.options.patch_reservation_url + '.json',
+        type: 'POST',
+        data: {
+          reservation: {
+            description: reservationForm.find('input[name="reservation[description]"]').val(),
+            begins_at_date: reservationForm.find('input[name="reservation[begins_at_date]"]').val(),
+            begins_at_tod: reservationForm.find('input[name="reservation[begins_at_tod]"]').val(),
+            ends_at_date: reservationForm.find('input[name="reservation[ends_at_date]"]').val(),
+            ends_at_tod: reservationForm.find('input[name="reservation[ends_at_tod]"]').val(),
+            entity_id: reservationForm.find('select[name="reservation[entity_id]"]').val(),
+            organisation_client_id: reservationForm.find('input[name="reservation[organisation_client_id]"]').val(),
+          },
+          organisation_id: this.options.organisation_id,
+        },
+        success: function(result) {
+          returnedScheduleItem = new IADAscheduleViewItem(schedule, result.entity_id);
+          schedule.scheduleItems[result.entity_id][result.id] = returnedScheduleItem;
+          returnedScheduleItem.parseFromJSON(result);
+          returnedScheduleItem.render();
+          closeModal();
+        },
+        fail: function(data) {
+          console.log(data);
+        },
+      });
+
 }
 
 IADAscheduleView.prototype.editScheduleItem = function() {

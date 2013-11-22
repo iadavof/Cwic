@@ -29,7 +29,6 @@ class ReservationsController < ApplicationController
 
   # POST /reservations
   def create
-    sdflkasdj
     if params[:organisation_client_type].present?
       if params[:organisation_client_type] == 'new'
         @focus = 'new_client'

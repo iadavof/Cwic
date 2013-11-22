@@ -108,7 +108,7 @@ private
   end
 
   def check_reservation_organisation
-    unless self.organisation_client.organisation.present?
+    if self.organisation_client.present? && self.organisation_client.organisation.nil?
       self.organisation_client.organisation = self.organisation
     end
   end

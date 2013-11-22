@@ -1,0 +1,1 @@
+json.partial! 'schedule_view', reservation: @reservation

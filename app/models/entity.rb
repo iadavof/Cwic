@@ -47,6 +47,15 @@ class Entity < ActiveRecord::Base
     Cwic::Color.text_color(self.color)
   end
 
+  def get_current_reservations(begin_date, end_date)
+    # Get all the reservations (items) in the scope of begin_date to end_date.
+    # However, we want to get the reservations directly before and after the scope as well to check for collisions in the schedule view. If there are no reservations found, then simply use the given date.
+    begins_at = self.reservations.where('ends_at < :begin', begin: begin_date).order(:ends_at).first.try(:begins_at) || begin_date
+    ends_at = self.reservations.where('begins_at > :end', end: end_date).order(:begins_at).first.try(:ends_at) || end_date
+    # Use inclusive comparison to include the two reservations above as well
+    self.reservations.where('begins_at <= :end AND ends_at >= :begin', begin: begins_at, end: ends_at)
+  end
+
   def create_info_screen_entities
     self.organisation.info_screens.each do |is|
       iset = InfoScreenEntityType.where('entity_type_id = ? AND info_screen_id = ?', self.entity_type.id, is.id).first;

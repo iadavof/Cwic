@@ -111,6 +111,9 @@ gem 'kaminari'
 # Websockets so we could create push notifications
 gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom websocket-rails gem because the standard version is not Windows comptabile.
 
+# Organisation of the seeds
+gem 'seedbank'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
@@ -128,6 +131,7 @@ group :test, :development do
 
   # The forgery fake data generator (useful for testing)
   gem 'forgery'
+
 end
 
 group :test do
