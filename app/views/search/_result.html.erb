@@ -1,8 +1,10 @@
-<div class="result-<%= result.class.name.underscore.dasherize %>">
-  <h3>
-    <%= result.class.model_name.human %>: <%= name_link_to_show([@organisation, result]) %>
-    <%= icon_link_to_edit([@organisation, result]) %>
-  </h3>
-  <%= render "#{result.class.name.underscore}_result", result: result %>
-  <p>Rank: <%= result.pg_search_rank %></p>
+<div class="result result-<%= result.class.name.underscore.dasherize %>">
+  <div class="inner">
+    <h3>
+      <%= result.class.model_name.human %>: <%= name_link_to_show([@organisation, result]) %>
+      <%= icon_link_to_edit([@organisation, result]) %>
+    </h3>
+    <%= render "#{result.class.name.underscore}_result", result: result %>
+  </div>
+  <div class="rank"><div class="inner" style="width: <%= result.pg_search_rank * 100 %>%;"></div></div>
 </div>
