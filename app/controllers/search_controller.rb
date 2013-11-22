@@ -9,7 +9,7 @@ class SearchController < ApplicationController
 
     # Get search key or generate a new one
     @search_key = (params[:search_key].present? ? params[:search_key] : generate_search_key())
-    puts get_cache_key(@search_key)
+
     # Get the raw results
     results = Rails.cache.fetch(get_cache_key(@search_key), expires_in: 5.minutes) do
       # Determine matching object ids. First build the query parts
@@ -18,11 +18,12 @@ class SearchController < ApplicationController
         rel = t.global_search(@query) # Apply search query using global search to every searchable type
         rel = rel.where(organisation: @organisation) # Only for items within the organisation
         rel = rel.except(:select).select("'#{t.to_s}' AS type", "#{t.table_name}.id", t.global_search_scope_options(@query).rank_sql)
+        rel = rel.reorder(nil) # Remove orders (default order and pg_search order), because we do this later in the union
         sql_parts << rel.to_sql
       end
 
       # Combine the query parts into a large, sorted UNION query
-      sql = "(" + sql_parts.join(") UNION (") + ") ORDER BY pg_search_rank DESC"
+      sql = "(" + sql_parts.join(") UNION (") + ") ORDER BY pg_search_rank DESC, id ASC"
 
       # Execute the query
       results = ActiveRecord::Base.connection.select_rows(sql)

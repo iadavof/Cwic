@@ -1,14 +1,11 @@
 APP.global.replaceControls = function() {
-  $('select').cwicDropdown();
-  $(':radio').cwicRadioButton();
-  $(':checkbox').cwicCheckbox();
-  $('input[type=file]').cwicFileField();
+  $('select, :radio, :checkbox, :input[type=file]').cwicControl();
 }
 
 // Replace controls when the DOM is fully loaded
 $(document).ready(function() {
   APP.global.replaceControls();
-  // Replace controls when a page is loaded using Turbolinks and when DOM nodes are added to the document body or its children
+  // Replace controls when a page is loaded using Turbolinks
   $(document).on('page:load', function() {
     APP.global.replaceControls();
   });
@@ -17,8 +14,9 @@ $(document).ready(function() {
 (function($) {
   var cwic_controls = {
     dropdown: {
-      make: function(dropdown) {
+      create: function(dropdown) {
         // Generate dropdown and add it to DOM
+        
         var options = dropdown.find('option');
         var defaultOption = dropdown.find('option:selected');
         var dropdownReplacement = $('<div class="cwic-dropdown" data-name="' + dropdown.attr('name') + '"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div><div class="cwic-dropdown-options"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div></div></div>');
@@ -81,17 +79,21 @@ $(document).ready(function() {
         });
       },
       destroy: function(dropdown) {
+        // Destroy the dropdown and unbind events from select element
+        
         var dropdownReplacement = $(dropdown).next('.cwic-dropdown');
         dropdownReplacement.remove();
         dropdown.off('.cwicDropdown').removeClass('replaced');
       },
-      remake: function(dropdown) {
+      recreate: function(dropdown) {
+        // Destroy the dropdown and create it again
+        
         cwic_controls.dropdown.destroy(dropdown);
-        cwic_controls.dropdown.make(dropdown);
+        cwic_controls.dropdown.create(dropdown);
       },
     },
     radio_button: {
-      make: function(radioButton) {
+      create: function(radioButton) {
         var radioButtonReplacement = $('<div class="cwic-radio-button" data-name="' + radioButton.attr('name') + '"><div class="inner"></div></div>');
         if (radioButton.is(':checked')) {
           radioButtonReplacement.addClass('checked');
@@ -115,9 +117,18 @@ $(document).ready(function() {
           }
         });
       },
+      destroy: function(radioButton) {
+        var radioButtonReplacement = radioButton.next('.cwic-radio-button');
+        radioButtonReplacement.remove();
+        radioButton.off('.cwicRadioButton').removeClass('replaced');
+      },
+      recreate: function(radioButton) {
+        cwic_controls.radio_button.destroy(radioButton);
+        cwic_controls.radio_button.create(radioButton);
+      },
     },
     checkbox: {
-      make: function(checkbox) {
+      create: function(checkbox) {
         var checkboxReplacement = $('<div class="cwic-checkbox" data-name="' + checkbox.attr('name') + '"><div class="inner"></div></div>');
         if (checkbox.is(':checked')) {
           checkboxReplacement.addClass('checked');
@@ -143,9 +154,18 @@ $(document).ready(function() {
           }
         });
       },
+      destroy: function(checkbox) {
+        var checkboxReplacement = checkbox.next('.cwic-checkbox');
+        checkboxReplacement.remove();
+        checkbox.off('.cwicCheckbox').removeClass('replaced');
+      },
+      recreate: function(checkbox) {
+        cwic_controls.checkbox.destroy(checkbox);
+        cwic_controls.checkbox.create(checkbox);
+      },
     },
     file_field: {
-      make: function(fileField) {
+      create: function(fileField) {
         var fileFieldReplacement = $('<div class="cwic-filefield">' + jsLang.controls.file_field.upload_file + '</div>');
         if (fileField.val()) {
           fileFieldReplacement.addClass('filled').text(fileField.val());
@@ -165,50 +185,64 @@ $(document).ready(function() {
           fileField.trigger('click');
         });
       },
+      destroy: function(fileField) {
+        var fileFieldReplacement = fileField.next('.cwic-filefield');
+        fileFieldReplacement.remove();
+        fileField.off('.cwicFileField').removeClass('replaced');
+      },
+      recreate: function(fileField) {
+        cwic_controls.file_field.destroy(fileField);
+        cwic_controls.file_field.create(fileField);
+      },
     },
   };
   
   $.fn.extend({
-    cwicDropdown: function(operation) {
-      var elems = $(this).filter('select:not([multiple], .select2)');
+    cwicControl: function(operation) {
       switch(operation)
       {
       case 'destroy':
-        elems = elems.filter('.replaced');
-        elems.each(function() {
+        $(this).filter('select.replaced:not([multiple], .select2)').each(function() {
           cwic_controls.dropdown.destroy($(this));
         });
-        break;
-      case 'remake':
-        elems = elems.filter('.replaced');
-        elems.each(function() {
-          cwic_controls.dropdown.remake($(this));
+        $(this).filter(':radio.replaced').each(function() {
+          cwic_controls.radio_button.destroy($(this));
+        });
+        $(this).filter(':checkbox.replaced').each(function() {
+          cwic_controls.checkbox.destroy($(this));
+        });
+        $(this).filter('input[type=file].replaced').each(function() {
+          cwic_controls.file_field.destroy($(this));
         });
         break;
-      default:
-        elems = elems.filter(':not(.replaced)');
-        elems.each(function() {
-          cwic_controls.dropdown.make($(this));
+      case 'recreate':
+        $(this).filter('select.replaced:not([multiple], .select2)').each(function() {
+          cwic_controls.dropdown.recreate($(this));
+        });
+        $(this).filter(':radio.replaced').each(function() {
+          cwic_controls.radio_button.recreate($(this));
+        });
+        $(this).filter(':checkbox.replaced').each(function() {
+          cwic_controls.checkbox.recreate($(this));
+        });
+        $(this).filter('input[type=file].replaced').each(function() {
+          cwic_controls.file_field.recreate($(this));
+        });
+        break;
+      default:        
+        $(this).filter('select:not(.replaced, [multiple], .select2)').each(function() {
+          cwic_controls.dropdown.create($(this));
+        });
+        $(this).filter(':radio:not(.replaced)').each(function() {
+          cwic_controls.radio_button.create($(this));
+        });
+        $(this).filter(':checkbox:not(.replaced)').each(function() {
+          cwic_controls.checkbox.create($(this));
+        });
+        $(this).filter('input[type=file]:not(.replaced)').each(function() {
+          cwic_controls.file_field.create($(this));
         });
       }
-    },
-    cwicRadioButton: function() {
-      var elems = $(this).filter(':radio:not(.replaced)');
-      elems.each(function() {
-        cwic_controls.radio_button.make($(this));
-      });
-    },
-    cwicCheckbox: function() {
-      var elems = $(this).filter(':checkbox:not(.replaced)');
-      elems.each(function() {
-        cwic_controls.checkbox.make($(this));
-      });
-    },
-    cwicFileField: function() {
-      var elems = $(this).filter('input[type=file]:not(.replaced)');
-      elems.each(function() {
-        cwic_controls.file_field.make($(this));
-      });
     },
   });
 })(jQuery);

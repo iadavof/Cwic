@@ -624,7 +624,7 @@ IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, new
   reservationForm.find('input#ends_at_date').datepicker("setDate", endJDate);
   reservationForm.find('input#ends_at_tod').timepicker("setTime", endJDate);
 
-  reservationForm.find('select').cwicDropdown();
+  reservationForm.find('select').cwicControl();
 
   APP.reservations.organisationClientDropdown();
 

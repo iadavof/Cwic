@@ -13,12 +13,14 @@
     <%= f.label :span_selector %>
     <%= f.select :span_selector, [] %>
   </div>
-  <div class="nested-form" id="reservation-rule-scope-spans">
-    <%= f.fields_for :spans, wrapper: false do |sf| %>
-      <%= render partial: 'span_fields', locals: { f: sf } %>
-    <% end %>
+  <div id="reservation-rule-scope-spans-container" style="display: none;">
+    <div class="nested-form" id="reservation-rule-scope-spans">
+      <%= f.fields_for :spans, wrapper: false do |sf| %>
+        <%= render partial: 'span_fields', locals: { f: sf } %>
+      <% end %>
+    </div>
+    <%= f.link_to_add '', :spans, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScopeSpan.model_name.human.lcfirst) %>
   </div>
-  <%= f.link_to_add '', :spans, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScopeSpan.model_name.human.lcfirst) %>
   <div class="actions">
     <%= f.hidden_field :parent_id %>
     <%= f.submit %>

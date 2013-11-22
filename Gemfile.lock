@@ -21,6 +21,20 @@ GIT
       i18n (~> 0.6)
 
 GIT
+  remote: git://github.com/kreintjes/holidays.git
+  revision: 358af7c861b6601d513d928ba0cc500676c89d42
+  specs:
+    holidays (1.0.5)
+
+GIT
+  remote: git://github.com/kreintjes/numbers_and_words.git
+  revision: c40f4cb926e483624a6e979ab89547e9a374b6d1
+  specs:
+    numbers_and_words (0.10.1)
+      activesupport
+      i18n
+
+GIT
   remote: git://github.com/kreintjes/websocket-rails.git
   revision: 3d7818ea52b4d3448bab3e13afce64b94f30bdd5
   specs:
@@ -286,6 +300,7 @@ DEPENDENCIES
   factory_girl_rails
   forgery
   gistyle
+  holidays!
   i18n_alchemy!
   jbuilder
   jquery-minicolors-rails
@@ -300,6 +315,7 @@ DEPENDENCIES
   modernizr-rails
   momentjs-rails!
   nested_form
+  numbers_and_words!
   pg
   pg_search (~> 0.7.0)
   pry-rails

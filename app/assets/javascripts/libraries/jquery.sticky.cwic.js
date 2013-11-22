@@ -24,7 +24,9 @@
         cwic_sticky.updateCss(container, substituteContainer);
       });
       $(window).on('header-start-animation.cwic_sticky', function(e) {
-        container.css({visibility: 'hidden'});
+        if (substituteContainer.css('display') != 'none') {
+          container.css({visibility: 'hidden'});
+        }
       });
       $(window).on('header-animated.cwic_sticky', function(e) {
         container.css({visibility: 'visible'});

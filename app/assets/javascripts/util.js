@@ -9,9 +9,9 @@ APP.util = {
       $(new Option((typeof options['prompt'] === 'string' ? options['prompt'] : jsLang.global.prompt), null)).appendTo(dropdown);
     }
     for(key in items) {
-      value = items[key];
       $(new Option(items[key], key)).appendTo(dropdown);
     }
+    dropdown.cwicControl('recreate');
   },
   // XXX TODO docs
   getTranslationsForArray: function(array, library) {
