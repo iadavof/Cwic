@@ -24,7 +24,7 @@
           <%= f.label :icon %>
           <div class="field icon-select clearfix">
           <% EntityTypeIcon.where('organisation_id = ? OR organisation_id IS NULL', @organisation).each do |eti| %>
-            <%= f.radio_button :icon_id, eti.id %>
+            <%= f.radio_button :icon_id, eti.id, class: 'nocwic' %>
             <%= f.label "icon_id_#{eti.id}", eti.name, { style: "background-image: url('#{eti.image.icon.url}');", class: (eti.id == @entity_type.icon.id) ? 'active' : ''} %>
           <% end %>
           </div>

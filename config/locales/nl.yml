@@ -358,7 +358,7 @@ nl:
       organisation_clients: 'Klanten'
       organisation_users: 'Gebruikers'
       entity_types: 'Objectsoorten'
-      custom_icons: 'Mijn objecticonen'
+      custom_icons: 'Objecticonen'
       entities: 'Objecten'
       index: 'Lijst'
       new: 'Nieuw'
@@ -397,6 +397,7 @@ nl:
   organisations:
     form_fields:
       address: 'Adres'
+      search_address: 'Adres zoeken...'
 
   organisation_users:
     index:
@@ -410,6 +411,7 @@ nl:
   organisation_clients:
     form_fields:
       address: 'Adres'
+      search_address: 'Adres zoeken...'
 
   entity_types:
     still_used_destroy_confirm:

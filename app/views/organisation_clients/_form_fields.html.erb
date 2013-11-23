@@ -17,8 +17,8 @@
         <%= f.email_field :email %>
       </div>
       <div class="field">
-        <label for="addresspicker"><%=t('.address') %></label>
-        <input type="text" id="addresspicker"/>
+        <label for="addresspicker" class="required"><%=t('.address') %></label>
+        <input type="text" id="addresspicker" placeholder="<%= t('.search_address') %>" />
       </div>
       <div class="auto-address-fields">
         <a href="" class="icon icon-edit" id="edit-auto-address-fields"></a>
