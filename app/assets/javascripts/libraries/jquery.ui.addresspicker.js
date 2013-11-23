@@ -154,7 +154,11 @@
 
         for (addressPart in this._addressParts){
           if (this[addressPart]){
-            this[addressPart].val(parsedResult[addressPart]);
+            if(parsedResult[addressPart]) {
+              this[addressPart].val(parsedResult[addressPart]);
+            } else {
+              this[addressPart].val('');
+            }
           }
         }
       },
