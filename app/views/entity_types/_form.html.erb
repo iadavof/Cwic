@@ -28,6 +28,7 @@
             <%= f.label "icon_id_#{eti.id}", eti.name, { style: "background-image: url('#{eti.image.icon.url}');", class: (eti.id == @entity_type.icon.id) ? 'active' : ''} %>
           <% end %>
           </div>
+          <div><%= link_to(t('.objecticoon toevoegen'), new_organisation_entity_type_icon_path(@organisation)) %></div>
         </div>
 
         <div id="properties" class="hide">
