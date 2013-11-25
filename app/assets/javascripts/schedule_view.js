@@ -577,7 +577,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
       if(newEnd.unix() != newScheduleItem.conceptEnd.unix()) {
         newScheduleItem.conceptEnd = newEnd;
         if(newScheduleItem.checkEndAfterBegin(true)) {
-          newScheduleItem.rerender(true); // rerender in concept mode
+          newScheduleItem.rerender(true); // Rerender in concept mode
           if(newScheduleItem.conceptCollidesWithOthers()) {
             newScheduleItem.applyErrorGlow();
           }
@@ -601,9 +601,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
           reservationForm = null;
         });
         APP.global.initializeDateTimePickers(reservationForm);
-        schedule.setNewReservationForm(reservationForm, newScheduleItem);
-        newScheduleItem.removeFromDom();
-        newScheduleItem = null;
+        schedule.setNewReservationForm(reservationForm, newScheduleItem, function() { newScheduleItem.removeFromDom(); newScheduleItem = null; reservationForm = null; });
       } else {
         if(newScheduleItem != null) {
           newScheduleItem.removeFromDom();
@@ -614,7 +612,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
   });
 }
 
-IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, newScheduleItem) {
+IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, newScheduleItem, resetNewScheduleItem) {
   var schedule = this;
   var beginJDate = newScheduleItem.getConceptBegin().toDate();
   var endJDate = newScheduleItem.getConceptEnd().toDate();
@@ -638,7 +636,7 @@ IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, new
     return false;
   });
 
-  reservationForm.find('input[name="commit"]').on('click', function(e){ e.preventDefault(); schedule.createScheduleItem(reservationForm, newScheduleItem); return false; });
+  reservationForm.find('input[name="commit"]').on('click', function(e){ e.preventDefault(); schedule.createScheduleItem(reservationForm, resetNewScheduleItem); return false; });
 
   reservationForm.find('select').trigger('change');
 }
@@ -1210,35 +1208,39 @@ IADAscheduleView.prototype.removeScheduleItem = function() {
   }
 }
 
-IADAscheduleView.prototype.createScheduleItem = function(reservationForm) {
-  var reservationForm = $(reservationForm);
+IADAscheduleView.prototype.createScheduleItem = function(reservationForm, resetNewScheduleItem) {
+  var jreservationForm = $(reservationForm);
   $.ajax({
-        url: schedule.options.patch_reservation_url + '.json',
-        type: 'POST',
-        data: {
-          reservation: {
-            description: reservationForm.find('input[name="reservation[description]"]').val(),
-            begins_at_date: reservationForm.find('input[name="reservation[begins_at_date]"]').val(),
-            begins_at_tod: reservationForm.find('input[name="reservation[begins_at_tod]"]').val(),
-            ends_at_date: reservationForm.find('input[name="reservation[ends_at_date]"]').val(),
-            ends_at_tod: reservationForm.find('input[name="reservation[ends_at_tod]"]').val(),
-            entity_id: reservationForm.find('select[name="reservation[entity_id]"]').val(),
-            organisation_client_id: reservationForm.find('input[name="reservation[organisation_client_id]"]').val(),
-          },
-          organisation_id: this.options.organisation_id,
-        },
-        success: function(result) {
-          returnedScheduleItem = new IADAscheduleViewItem(schedule, result.entity_id);
-          schedule.scheduleItems[result.entity_id][result.id] = returnedScheduleItem;
-          returnedScheduleItem.parseFromJSON(result);
-          returnedScheduleItem.render();
-          closeModal();
-        },
-        fail: function(data) {
-          console.log(data);
-        },
-      });
+    url: schedule.options.patch_reservation_url + '.json',
+    type: 'POST',
+    data: {
+      reservation: {
+        description: jreservationForm.find('input[name="reservation[description]"]').val(),
+        begins_at_date: jreservationForm.find('input[name="reservation[begins_at_date]"]').val(),
+        begins_at_tod: jreservationForm.find('input[name="reservation[begins_at_tod]"]').val(),
+        ends_at_date: jreservationForm.find('input[name="reservation[ends_at_date]"]').val(),
+        ends_at_tod: jreservationForm.find('input[name="reservation[ends_at_tod]"]').val(),
+        entity_id: jreservationForm.find('select[name="reservation[entity_id]"]').val(),
+        organisation_client_id: jreservationForm.find('input[name="reservation[organisation_client_id]"]').val(),
+      },
+      organisation_id: this.options.organisation_id,
+    },
+    context: schedule,
+    success: function(result) {
+      returnedScheduleItem = new IADAscheduleViewItem(schedule, result.entity_id);
+      schedule.scheduleItems[result.entity_id][result.id] = returnedScheduleItem;
+      returnedScheduleItem.parseFromJSON(result);
 
+      // remove placeholder schedule item
+      resetNewScheduleItem();
+
+      returnedScheduleItem.render();
+      closeModal();
+    },
+    fail: function(data) {
+      console.log(data);
+    },
+  });
 }
 
 IADAscheduleView.prototype.editScheduleItem = function() {
@@ -1284,8 +1286,8 @@ function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
   this.conceptMode = false; // momentjs object
 
 
-  this.bg_color = '#666';
-  this.text_color = '#fff';
+  this.bg_color = null;
+  this.text_color = null;
   this.description = '';
   this.client_id = null;
 
@@ -1295,6 +1297,7 @@ function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
 }
 
 IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
+  this.item_id = newItem.id;
   this.begin = moment(newItem.begin_moment);
   this.end = moment(newItem.end_moment);
   this.bg_color = newItem.bg_color;
@@ -1323,21 +1326,23 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
   newScheduleItem.css('left', + this.schedule.rowTimeToPercentage(beginMoment) + '%');
   newScheduleItem.css('width', + this.schedule.rowTimePercentageSpan(beginMoment, endMoment) + '%');
 
+    if(this.bg_color != null) {
+      newScheduleItem.css('background-color', this.bg_color);
+    }
+    if(this.text_color != null) {
+      newScheduleItem.css('color', this.text_color);
+      newScheduleItem.find('a').css('color', this.text_color);
+    }
+
   if(this.item_id != null) {
-    // not new item, so background color
-    newScheduleItem.css('background-color', this.bg_color);
-    newScheduleItem.css('color', this.text_color);
-    newScheduleItem.find('a').css('color', this.text_color);
+    // not new item, so open tooltip control
+    newScheduleItem.find('a.open-toolbar').show();
   }
 
   // Add scheduleItem ID to DOM object
   newScheduleItem.data('scheduleItemID', this.item_id);
 
   var newScheduleItemText = newScheduleItem.find('a.item-text');
-  if(this.show_url) {
-    newScheduleItemText.attr('href', this.show_url);
-  }
-
 
   newScheduleItem.attr('title', this.description);
   jschobj.append(newScheduleItem);

@@ -517,8 +517,8 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item {
   width: 1px;
   z-index: 1;
   border-left: 1px solid #ccc;
-  background-color: #999;
-  color: #fff;
+  background-color: #BFBFBF;
+  color: #444;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   cursor: move;
@@ -610,7 +610,7 @@ div.horizontal-calendar div.schedule-body div.row div.schedule-item div.resizer.
 
 div.horizontal-calendar div.schedule-body div.row div.schedule-item a.open-toolbar {
   position: absolute;
-  display: block;
+  display: none;
   height: 20px;
   width: 20px;
   margin-left: -10px;
