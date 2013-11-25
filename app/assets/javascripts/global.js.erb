@@ -69,7 +69,7 @@ APP.global = {
         }
     })();
 
-    observeDOM( document.body ,function(){ 
+    observeDOM( document.body ,function(){
         $(document).trigger('thisIsADifferentBody');
         console.log('Body changed');
     });
@@ -329,6 +329,11 @@ function openModal(modalID, content, closeCallback) {
   modalDiv.attr('id', modalID);
   modalDiv.find('a.close').on('click', closeCallback);
 
+  // Also perform close on hitting ESC
+  $(document).on('keyup.escape', function(e) {
+    if (e.keyCode == 27) { closeCallback(e); }
+  });
+
   // Content toevoegen aan modal
   modalDiv.append(content);
 
@@ -364,6 +369,10 @@ function closeModal(e) {
   // Remove events from the overlay
   overlay.off('click');
   overlay.find('a.close').off('click');
+
+  // Remove close event from ESC button
+  $(document).off('keyup.escape');
+
 
   if(e != null) {
     return false;
