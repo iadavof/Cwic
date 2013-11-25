@@ -33,8 +33,7 @@ APP.organisation_clients = {
 		  	},
 		});
 
-		var gmarker = addresspickerMap.addresspicker( "marker");
-		gmarker.setVisible(true);
+		addresspickerMap.addresspicker( "reloadPosition");
 		addresspickerMap.addresspicker( "updatePosition");
 
 		$('div.auto-address-fields').on('click', 'a#edit-auto-address-fields', function(e) {

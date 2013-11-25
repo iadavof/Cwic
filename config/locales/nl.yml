@@ -85,8 +85,8 @@ nl:
         one: 'Eigenschap'
         other: 'Eigenschappen'
       entity_image:
-        one: 'Objectfoto'
-        other: "Objectfoto's"
+        one: 'Foto'
+        other: "Foto's"
       reservation:
         one: 'Reservering'
         other: 'Reserveringen'

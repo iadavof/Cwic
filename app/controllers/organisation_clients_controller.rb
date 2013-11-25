@@ -25,6 +25,9 @@ class OrganisationClientsController < ApplicationController
 
   # GET /organisation_clients/new
   def new
+    @organisation_client.lat = @organisation.lat
+    @organisation_client.lng = @organisation.lng
+
     respond_with(@organisation_client)
   end
 

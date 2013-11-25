@@ -1,5 +1,8 @@
 <%= form_for([@organisation, @reservation.localized]) do |f| %>
-  <%= render 'shared/error_messages', target: @reservation %>
+  <div id="error-explanation" style="display: none; width: auto;">
+    <ul>
+    </ul>
+  </div>
 
   <div class="field">
     <%= f.label :description %>

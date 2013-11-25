@@ -25,7 +25,7 @@
   </thead>
 
   <tbody>
-    <% @reservations.sort{|a,b| b.id <=> a.id}.each do |reservation| %>
+    <% @reservations.each do |reservation| %>
     <tr>
       <td><%= name_link_to_show([@organisation, reservation]) %></td>
       <td><%= reservation.description %></td>

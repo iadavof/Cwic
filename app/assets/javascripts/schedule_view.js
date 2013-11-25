@@ -1226,16 +1226,35 @@ IADAscheduleView.prototype.createScheduleItem = function(reservationForm, resetN
       organisation_id: this.options.organisation_id,
     },
     context: schedule,
-    success: function(result) {
-      returnedScheduleItem = new IADAscheduleViewItem(schedule, result.entity_id);
-      schedule.scheduleItems[result.entity_id][result.id] = returnedScheduleItem;
-      returnedScheduleItem.parseFromJSON(result);
+    complete: function(xhr) {
+      if(xhr.status == 200) {
+        var result = JSON.parse(xhr.responseText);
 
-      // remove placeholder schedule item
-      resetNewScheduleItem();
+        returnedScheduleItem = new IADAscheduleViewItem(schedule, result.entity_id);
+        schedule.scheduleItems[result.entity_id][result.id] = returnedScheduleItem;
+        returnedScheduleItem.parseFromJSON(result);
 
-      returnedScheduleItem.render();
-      closeModal();
+        // remove placeholder schedule item
+        resetNewScheduleItem();
+
+        returnedScheduleItem.render();
+        closeModal();
+      } else if(xhr.status == 422) { // validation error
+        var result = JSON.parse(xhr.responseText);
+        if(typeof result.errors !== 'undefined') {
+          var errorList = jreservationForm.find('div#error-explanation').css('display', 'block').find('ul');
+          errorList.html('');
+          for(index in result.errors) {
+            var item = result.errors[index];
+            if($.isArray(item.messages) && item.messages.length > 0) {
+              jreservationForm.find('label[for="reservation_'+ index +'"]').wrap($('<div>', {class: 'field_with_errors'}));
+              for(itemIndex in item.messages) {
+                errorList.append($('<li>', {text: item.messages[itemIndex]}));
+              }
+            }
+          }
+        }
+      }
     },
     fail: function(data) {
       console.log(data);

@@ -6,25 +6,28 @@ class ReservationsController < ApplicationController
 
   # GET /reservations
   def index
-    respond_with(@reservations)
+    respond_with(@organisation, @reservations)
   end
 
   # GET /reservations/1
   def show
-    respond_with(@reservation)
+    respond_with(@organisation, @reservation)
   end
 
   # GET /reservations/new
   def new
     if @reservation.organisation_client.nil?
       @reservation.build_organisation_client
+      # set map coordinates on coordinates organisation
+      @reservation.organisation_client.lat = @organisation.lat
+      @reservation.organisation_client.lng = @organisation.lng
     end
-    respond_with(@reservation)
+    respond_with(@organisation, @reservation)
   end
 
   # GET /reservations/1/edit
   def edit
-    respond_with(@reservation)
+    respond_with(@organisation, @reservation)
   end
 
   # POST /reservations
@@ -81,10 +84,10 @@ private
           @reservations = @organisation.reservations.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(1)
         end
       else
-        @reservations = @organisation.reservations.accessible_by(current_ability, :index).page(params[:page])
+        @reservations = @organisation.reservations.accessible_by(current_ability, :index).order(id: :desc).page(params[:page])
         # if no results, check if not a page is selected that does not exist
         unless @reservations.present?
-          @reservations = @organisation.reservations.accessible_by(current_ability, :index).page(1)
+          @reservations = @organisation.reservations.accessible_by(current_ability, :index).order(id: :desc).page(1)
         end
       end
     when 'new', 'create'
