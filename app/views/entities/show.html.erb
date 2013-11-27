@@ -20,7 +20,7 @@
     <div id="general">
       <dl>
         <dt><%= Entity.human_attribute_name(:name) %></dt>
-        <dd><%= @entity.name %></dd>
+        <dd><%= @entity.instance_name %></dd>
         <dt><%= Entity.human_attribute_name(:entity_type) %></dt>
         <dd><%= name_link_to_show([@organisation, @entity.entity_type], title: format_description_title(@entity.entity_type)) %></dd>
         <dt><%= Entity.human_attribute_name(:description) %></dt>

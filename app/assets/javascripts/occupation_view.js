@@ -207,8 +207,11 @@ IADAoccupationView.prototype.fillPercentages = function(response) {
     for(var item_nr in percentageItems) {
       var item = percentageItems[item_nr];
       this.occupationContainer.find('.occupation-matrix-row#or_' + entity)
-      .find('.occupation-matrix-block.nr_' + item.nr).css('background-color', this.getColorForPercentage(item.percent, 0.4))
+      .find('.occupation-matrix-block.nr_' + item.nr)
+      .attr('title', jsLang.occupation_view.week + ' ' + item.nr + ': ' + Math.round(item.percent) + '%')
+      .css('background-color', this.getColorForPercentage(item.percent, 0.4))
       .find('p.percent').text(Math.round(item.percent) + '%');
+      this.occupationContainer;
     }
   }
 }
@@ -246,6 +249,7 @@ IADAoccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
     var block = this.getTemplateClone('occupationMatrixBlockTemplate');
     block.addClass('nr_' + i);
     block.data('nr', i);
+    block.attr('title', jsLang.occupation_view.week + ' ' + i + ': 0%');
     block.css('width', blockWidth + '%');
     block.css('background-color', zeroPercentColor);
     rows.append(block);
@@ -286,13 +290,13 @@ IADAoccupationView.prototype.resizeActions = function() {
     this.occupationContainer.find('.occupation-matrix-block p.percent').hide();
     this.occupationContainer.find('.entity-axis').hide();
     // adjust width of day axis
-    var dayAxisSticky = this.occupationContainer.find('.sticky-wrapper')
+    var dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container')
     dayAxisSticky.css('margin-left', '0');
   } else {
     // make room for the entity axis and show it on the left side
     this.occupationContainer.find('.occupation-matrix-block p.percent').show();
     // Adjust the width of the day axis
-    var dayAxisSticky = this.occupationContainer.find('.sticky-wrapper')
+    var dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container')
     dayAxisSticky.css('margin-left', '4%');
     this.occupationContainer.find('.entity-axis').show();
   }

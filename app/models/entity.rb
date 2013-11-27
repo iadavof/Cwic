@@ -15,7 +15,6 @@ class Entity < ActiveRecord::Base
   belongs_to :entity_type, counter_cache: true
   belongs_to :organisation
 
-  validates :name, presence: true, length: { maximum: 255 }
   validates :entity_type_id, presence: true
   validates :entity_type, presence: true, if: "entity_type_id.present?"
   validates :organisation, presence: true
@@ -32,7 +31,15 @@ class Entity < ActiveRecord::Base
   pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
 
   def instance_name
-    self.name
+    self.name.present? ? self.name : self.default_name
+  end
+
+  def default_name
+    if self.entity_type.present? && self.id.present?
+      self.entity_type.name + ' ' + self.id.to_s
+    else
+      ''
+    end
   end
 
   def all_entity_images
