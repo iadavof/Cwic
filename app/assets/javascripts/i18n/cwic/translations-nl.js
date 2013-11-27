@@ -65,6 +65,9 @@ var jsLang = {
       }
     }
   },
+  occupation_view: {
+    week: 'Week',
+  },
   reservations: {
     select_client_placeholder: 'Selecteer een klant...'
   }

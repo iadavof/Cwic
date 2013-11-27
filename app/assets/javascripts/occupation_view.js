@@ -207,8 +207,11 @@ IADAoccupationView.prototype.fillPercentages = function(response) {
     for(var item_nr in percentageItems) {
       var item = percentageItems[item_nr];
       this.occupationContainer.find('.occupation-matrix-row#or_' + entity)
-      .find('.occupation-matrix-block.nr_' + item.nr).css('background-color', this.getColorForPercentage(item.percent, 0.4))
+      .find('.occupation-matrix-block.nr_' + item.nr)
+      .attr('title', jsLang.occupation_view.week + ' ' + item.nr + ': ' + Math.round(item.percent) + '%')
+      .css('background-color', this.getColorForPercentage(item.percent, 0.4))
       .find('p.percent').text(Math.round(item.percent) + '%');
+      this.occupationContainer;
     }
   }
 }
@@ -246,6 +249,7 @@ IADAoccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
     var block = this.getTemplateClone('occupationMatrixBlockTemplate');
     block.addClass('nr_' + i);
     block.data('nr', i);
+    block.attr('title', jsLang.occupation_view.week + ' ' + i + ': 0%');
     block.css('width', blockWidth + '%');
     block.css('background-color', zeroPercentColor);
     rows.append(block);
