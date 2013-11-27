@@ -1,4 +1,7 @@
 <% content_for :page_title do %><%= edit_title(@reservation) %><% end %>
+<% content_for :right_controls do %>
+  <%= render partial: 'reservations/status_controls', locals: { reservation: @reservation } %>
+<% end %>
 
 <%= render 'form' %>
 

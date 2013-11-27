@@ -24,6 +24,7 @@ class Reservation < ActiveRecord::Base
   before_validation { self.description.strip! }
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_infoscreens
+  after_save :check_if_should_nullify_reservation_status
   after_destroy :trigger_update_infoscreens
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
@@ -60,6 +61,16 @@ class Reservation < ActiveRecord::Base
   end
 
 private
+
+  def check_if_should_nullify_reservation_status
+    if self.entity_id_changed?
+      # entity is changed, check if the same reservation status set is applicable
+      if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type
+        self.reservation_status = nil
+      end
+    end
+  end
+
   def not_overlapping
     if entity.present?
       relation = entity.reservations.where.not(id: self.id)

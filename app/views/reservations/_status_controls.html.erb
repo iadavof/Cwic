@@ -1,5 +1,8 @@
-  <div class="status-selector">
-    <% reservation.entity.entity_type.reservation_statuses.reverse.each do |status| %>
-      <%= content_tag(:a, status.name, {class: 'button status-button', style: 'background-color: ' + status.color + '; color: ' + Cwic::Color.text_color(status.color) + ';' + (reservation.reservation_status == status ? 'opacity: 0.8;' : ''), data: {status_id: status.id }} ) %>
-    <% end %>
+  <div class="status-selector" data-reservation-id="<%= reservation.id %>">
+  	<div class="statuses">
+	    <% reservation.entity.entity_type.reservation_statuses.reverse.each do |status| %>
+	      <%= content_tag(:a, status.name, { class: 'button status-button' + (reservation.reservation_status == status ? ' active' : ''), style: 'background-color: ' + status.color + '; color: ' + Cwic::Color.text_color(status.color) + ';', data: { :'status-id' => status.id } } ) %>
+	    <% end %>
+	</div>
+    <p class="saved-notification"><%=t('.saved') %></p>
   </div>

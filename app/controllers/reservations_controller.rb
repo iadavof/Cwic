@@ -67,6 +67,16 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, @reservation)
   end
 
+  # PATCH/PUT /reservations/1/update_status
+  def update_status
+    @reservation.reservation_status = @reservation.entity.entity_type.reservation_statuses.find(params[:status_id].to_i)
+    if @reservation.reservation_status.present? && @reservation.save
+      render json: { }, status: :ok
+    else
+      render json: { error: 'no reservation status found' }, status: :not_found
+    end
+  end
+
   # DELETE /reservations/1
   def destroy
     @reservation.destroy

@@ -1,15 +1,32 @@
 div.status-selector {
-  border: 1px solid #ccc;
-  padding: 5px;
-  border-radius: 3px 3px 3px 3px;
-}
 
-div.status-selector a.status-button {
-  background-color: #ccc;
-  color: #444;
-  opacity: 0.2;
-}
+	div.statuses {
+	  border: 1px solid #ccc;
+	  padding: 5px;
+	  border-radius: 3px 3px 3px 3px;
 
-div.status-selector a.status-button:hover {
-  opacity: 1.0;
+		a.status-button {
+		  background-color: #ccc;
+		  color: #444;
+		  opacity: 0.2;
+		}
+
+		a.status-button.active {
+			opacity: 0.7;
+		}
+
+		a.status-button:hover {
+			opacity: 1.0;
+		}
+	}
+
+	p.saved-notification {
+	    margin: 5px;
+	    font-size: 80%;
+	    color: #666;
+	    font-style: italic;
+	    line-height: 100%;
+	    display: none;
+	    float: right;
+	}
 }

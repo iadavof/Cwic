@@ -455,6 +455,8 @@ nl:
       entity_name_example: '4.13B, 9.5, foyer, loft'
 
   reservations:
+    status_controls:
+      saved: 'Opgeslagen'
     form:
       organisation_client_type: 'Soort klant'
       existing_organisation_client: 'Bestaande klant'
