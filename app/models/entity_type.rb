@@ -5,19 +5,22 @@ class EntityType < ActiveRecord::Base
   has_many :entities, dependent: :destroy
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type
   has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
-  has_many :entity_images, as: :entity_imageable, dependent: :destroy
+  has_many :entity_images, as: :entity_imageable, dependent: :destroy, inverse_of: :entity_imageable
+  has_many :reservation_statuses, dependent: :destroy, inverse_of: :entity_type
   has_many :info_screen_entity_types, dependent: :destroy
 
   belongs_to :icon, class_name: 'EntityTypeIcon'
   belongs_to :organisation
 
   validates :name, presence: true, length: { maximum: 255 }
+  #validates :reservation_statuses, presence: true
 
   after_save :create_info_screen_entity_types
 
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :options, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
+  accepts_nested_attributes_for :reservation_statuses, allow_destroy: true
 
   scope :with_entities, -> { where('entities_count > 0') }
 
@@ -42,5 +45,13 @@ class EntityType < ActiveRecord::Base
         InfoScreenEntityType.create(entity_type: self, info_screen: is, active: is.add_new_entity_types, add_new_entities: is.add_new_entity_types)
       end
     end
+  end
+
+  def add_default_entity_type_reservation_statuses
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849')
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49')
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D')
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520')
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393')
   end
 end

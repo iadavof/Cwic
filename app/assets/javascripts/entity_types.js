@@ -4,15 +4,27 @@ APP.entity_types = {
     form.submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
     this.initIconSelector();
 
-    form.find('.property-wrapper').each(function () { APP.entity_types.initializePropertyWrapper($(this)); })
-    $(document).on('nested:fieldAdded:properties', function(event) { APP.entity_types.initializePropertyWrapper(event.field); });
+    form.find('.property-wrapper').each(function () { APP.entity_types.initPropertyWrapper($(this)); })
+    $(document).on('nested:fieldAdded:properties', function(event) { APP.entity_types.initPropertyWrapper(event.field); });
     $('#entity-type-properties').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
 
     form.find('.option-wrapper').each(function () { APP.global.nested_objects.initWrapper($(this)); });
     $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.onNestedFieldAddedOptions(event.field); });
     $('#entity-type-options').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
 
+    APP.entity_types.initReservationStatusSort();
+    form.find('.reservation-status-wrapper').each(function () { APP.entity_types.initReservationStatusWrapper($(this)); });
+    $(document).on('nested:fieldAdded:reservation_statuses', function(event) { APP.entity_types.initReservationStatusWrapper(event.field); });
+
     $('div.entity-images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery: { enabled: true } });
+  },
+  initReservationStatusSort: function() {
+    $('ul#entity-type-reservation-statuses').sortable({
+      placeholder: "ui-state-highlight",
+    });
+  },
+  initReservationStatusWrapper: function(reservationStatusWrapper) {
+    reservationStatusWrapper.find('.reservation_status_color').minicolors();
   },
   initIconSelector: function() {
     $(".field.icon-select").on('click', 'label', function() {
@@ -22,12 +34,12 @@ APP.entity_types = {
   },
   onNestedFieldAddedOptions: function(field) {
     if(field.hasClass('property-option-wrapper')) {
-      this.initializePropertyOptionWrapper(field);
+      this.initPropertyOptionWrapper(field);
     } else {
       APP.global.nested_objects.initWrapper(field);
     }
   },
-  initializePropertyWrapper: function(propertyWrapper) {
+  initPropertyWrapper: function(propertyWrapper) {
     // Initialize field actions
     var dataTypeField = propertyWrapper.find('select[data-field="data-type"]')
     dataTypeField.change(function () { APP.entity_types.dataTypeChanged(propertyWrapper); });
@@ -85,7 +97,7 @@ APP.entity_types = {
     switch(dataType) {
       case 'enum':
       case 'set':
-        options.find('.property-option-wrapper').each(function () { APP.entity_types.initializePropertyOptionWrapper($(this)); });
+        options.find('.property-option-wrapper').each(function () { APP.entity_types.initPropertyOptionWrapper($(this)); });
         if(options.find('.target').children().length == 0) {
           options.find('.add_nested_fields').click(); // Make sure there is already one row added (we always want to add at least one option, and else it looks ugly)
         }
@@ -132,7 +144,7 @@ APP.entity_types = {
       formattedField.val(field.val());
     }
   },
-  initializePropertyOptionWrapper: function(propertyOptionWrapper) {
+  initPropertyOptionWrapper: function(propertyOptionWrapper) {
     var propertyWrapper = propertyOptionWrapper.closest('.property-wrapper');
 
     // Swap the newly created field to the right spot
@@ -158,7 +170,7 @@ APP.entity_types = {
       }
     }
   },
-  initializePropertyOptionClearLink: function() {
+  initPropertyOptionClearLink: function() {
     // Add the action to the clear button
     propertyOptionWrapper.find('.default-field')
         .attr('type', 'radio')
@@ -181,7 +193,7 @@ APP.entity_types = {
         $(this).find('.index-field').val(index);
       });
     });
-    $(form).find('.option-wrapper').each(function(index) {
+    $(form).find('.option-wrapper, .reservation-status-wrapper').each(function(index) {
       $(this).find('.index-field').val(index);
     });
   }

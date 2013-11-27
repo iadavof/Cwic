@@ -7,6 +7,7 @@
         <li><a href="#general" class="current"><%= t('.general') %></a></li>
         <li><a href="#properties"><%= t('.properties') %></a></li>
         <li><a href="#options"><%= t('.options') %></a></li>
+        <li><a href="#reservation_statuses"><%= t('.reservation_statuses') %></a></li>
         <li><a href="#images"><%= t('.images') %></a></li>
       </ul>
 
@@ -43,6 +44,17 @@
             <% end %>
           </div>
           <%= f.link_to_add '', :properties, data: { target: '#entity-type-properties' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
+        </div>
+
+        <div id="reservation_statuses" class="hide">
+          <h2><%= ReservationStatus.model_name.human(count: 2) %></h2>
+          <%= format_help(t('.reservation_status_help')) %>
+          <ul class="nested-form" id="entity-type-reservation-statuses">
+            <%= f.fields_for :reservation_statuses, @entity_type.reservation_statuses.sort_by(&:index), wrapper: false do |rsf| %>
+              <%= render partial: 'reservation_status_fields', locals: { f: rsf } %>
+            <% end %>
+          </ul>
+          <%= f.link_to_add '', :reservation_statuses, data: { target: '#entity-type-reservation-statuses' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationStatus.model_name.human.lcfirst) %>
         </div>
 
         <div id="options" class="hide">

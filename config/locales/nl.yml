@@ -109,6 +109,9 @@ nl:
       info_screen_entity_type:
         one: 'Objecttype'
         other: 'Objecttypen'
+      reservation_status:
+        one: 'Reservering status'
+        other: 'Reservering statusen'
     attributes:
       user:
         name: 'Naam'
@@ -224,6 +227,9 @@ nl:
       info_screen_entity:
         active: 'Actief'
         direction_char: 'Wegwijzer'
+      reservation_status:
+        name: 'Naam'
+        color: 'Kleur'
     errors:
       messages:
         date_blank: "datum moet opgegeven zijn"
@@ -430,6 +436,7 @@ nl:
       images: "Foto's"
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
+      reservation_statuses: 'Reservering statusen'
 
   entity_type_icons:
     form:
@@ -535,3 +542,11 @@ nl:
       results: 'resultaten'
       title_html: 'Resultaten voor <strong>%{query}</strong>'
       item: 'Item'
+
+  reservation_statuses:
+    default:
+      concept: 'Concept'
+      definitive: 'Definitief'
+      ready: 'Gereed'
+      canceled: 'Geannuleerd'
+      not_used: 'Niet gebruikt'

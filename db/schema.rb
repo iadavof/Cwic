@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131120114245) do
+ActiveRecord::Schema.define(version: 20131127133726) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -309,6 +309,17 @@ ActiveRecord::Schema.define(version: 20131120114245) do
   add_index "reservation_rules", ["entity_id"], name: "index_reservation_rules_on_entity_id", using: :btree
   add_index "reservation_rules", ["period_unit_id"], name: "index_reservation_rules_on_period_unit_id", using: :btree
 
+  create_table "reservation_statuses", force: true do |t|
+    t.string   "name"
+    t.integer  "index"
+    t.string   "color"
+    t.integer  "entity_type_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reservation_statuses", ["entity_type_id"], name: "index_reservation_statuses_on_entity_type_id", using: :btree
+
   create_table "reservations", force: true do |t|
     t.datetime "begins_at"
     t.datetime "ends_at"
@@ -318,11 +329,13 @@ ActiveRecord::Schema.define(version: 20131120114245) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
+    t.integer  "reservation_status_id"
   end
 
   add_index "reservations", ["entity_id"], name: "index_reservations_on_entity_id", using: :btree
   add_index "reservations", ["organisation_client_id"], name: "index_reservations_on_organisation_client_id", using: :btree
   add_index "reservations", ["organisation_id"], name: "index_reservations_on_organisation_id", using: :btree
+  add_index "reservations", ["reservation_status_id"], name: "index_reservations_on_reservation_status_id", using: :btree
 
   create_table "stickies", force: true do |t|
     t.integer  "stickable_id"

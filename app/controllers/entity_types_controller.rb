@@ -14,6 +14,7 @@ class EntityTypesController < ApplicationController
 
   # GET /entity_types/new
   def new
+    @entity_type.add_default_entity_type_reservation_statuses if @entity_type.reservation_statuses.empty?
     respond_with(@entity_type)
   end
 
@@ -72,7 +73,8 @@ private
         options_attributes: [:id, :name, :default, :index, :_destroy]
       ],
       options_attributes: [:id, :name, :description, :amount_relevant, :default_price, :index, :_destroy],
-      entity_images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy]
+      entity_images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
+      reservation_statuses_attributes: [:id, :name, :color, :index, :_destroy],
     )
   end
 

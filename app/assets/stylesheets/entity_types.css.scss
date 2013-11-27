@@ -33,6 +33,27 @@ div#entity-type-form {
     margin-bottom: 1em;
   }
 
+  ul#entity-type-reservation-statuses {
+    list-style-type: none;
+
+    li {
+      margin: 1em;
+      display: block;
+      background-color: #fff;
+
+      div.inner {
+        border: 2px solid #ccc;
+        display: inline-block;
+
+        div.field {
+          margin: 1em;
+          float: left;
+        }
+      }
+
+    }
+  }
+
   /* Property and option wrapper markup (view and form) */
   div.property-wrapper,
   div.option-wrapper {

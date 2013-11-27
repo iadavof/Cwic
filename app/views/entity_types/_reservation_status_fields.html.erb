@@ -1,0 +1,16 @@
+<li class="fields nested-object-wrapper reservation-status-wrapper clearfix">
+  <div class="inner">
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name %>
+    </div>
+      <div class="field">
+      <%= f.label :color %>
+      <%= f.text_field :color, class: 'reservation_status_color', autocomplete: :off %>
+    </div>
+    <div class="field">
+      <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: ReservationStatus.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+    </div>
+    <%= f.hidden_field :index, class: 'index-field' %>
+  </div>
+</li>
