@@ -286,13 +286,13 @@ IADAoccupationView.prototype.resizeActions = function() {
     this.occupationContainer.find('.occupation-matrix-block p.percent').hide();
     this.occupationContainer.find('.entity-axis').hide();
     // adjust width of day axis
-    var dayAxisSticky = this.occupationContainer.find('.sticky-wrapper')
+    var dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container')
     dayAxisSticky.css('margin-left', '0');
   } else {
     // make room for the entity axis and show it on the left side
     this.occupationContainer.find('.occupation-matrix-block p.percent').show();
     // Adjust the width of the day axis
-    var dayAxisSticky = this.occupationContainer.find('.sticky-wrapper')
+    var dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container')
     dayAxisSticky.css('margin-left', '4%');
     this.occupationContainer.find('.entity-axis').show();
   }

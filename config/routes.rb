@@ -1,4 +1,6 @@
 Cwic::Application.routes.draw do
+  resources :reservation_statuses
+
   get "home/index"
   root to: 'home#index'
 
