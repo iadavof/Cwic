@@ -53,9 +53,6 @@ end
 # Use Capistrano for deployment
 # gem 'capistrano', group: :development
 
-# Use debugger
-gem 'debugger', group: [:development, :test]
-
 # Rails-i18n for standard rails locales
 gem 'rails-i18n'
 
@@ -81,7 +78,7 @@ gem 'responders'
 gem 'nested_form'
 
 # Image uploads
-gem 'mini_magick', github: 'minimagick/minimagick' # Temporary use master branch because of problem with 3.6.0 on Windows (when new version is released switch to that version).
+gem 'mini_magick'
 gem 'carrierwave'
 
 # Image galery
@@ -97,7 +94,7 @@ gem 'ancestry'
 gem 'js-routes'
 
 # Javascript MomentJS for date formatting and alterations
-gem 'momentjs-rails', github: 'CUnknown/momentjs-rails'
+gem 'momentjs-rails'
 
 # search in selects
 gem "select2-rails"
@@ -138,6 +135,8 @@ group :test, :development do
   # The forgery fake data generator (useful for testing)
   gem 'forgery'
 
+  # The debugger gem
+  gem 'debugger'
 end
 
 group :test do

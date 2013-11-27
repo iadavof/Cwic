@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/CUnknown/momentjs-rails.git
-  revision: 37f6b98a0fb599fab462b054675979bfc8c89c0d
-  specs:
-    momentjs-rails (2.3.1)
-      railties (>= 3.1)
-
-GIT
   remote: git://github.com/archan937/rich_pluralization.git
   revision: 7c3c32b6c1a379ad5a22aa17532a8a625556e00a
   specs:
@@ -46,13 +39,6 @@ GIT
       redis
       redis-objects
       thin
-
-GIT
-  remote: git://github.com/minimagick/minimagick.git
-  revision: 62a4c49466244a792b9bb0b668061bd5b64e8021
-  specs:
-    mini_magick (3.6.0)
-      subexec (~> 0.2.1)
 
 GEM
   remote: http://rubygems.org/
@@ -170,8 +156,12 @@ GEM
       treetop (~> 1.4.8)
     method_source (0.8.2)
     mime-types (1.25)
+    mini_magick (3.7.0)
+      subexec (~> 0.2.1)
     minitest (4.7.5)
     modernizr-rails (2.6.2.3)
+    momentjs-rails (2.4.0)
+      railties (>= 3.1)
     multi_json (1.8.2)
     nested_form (0.3.2)
     orm_adapter (0.4.0)
@@ -311,9 +301,9 @@ DEPENDENCIES
   js-routes
   kaminari
   magnific-popup-rails
-  mini_magick!
+  mini_magick
   modernizr-rails
-  momentjs-rails!
+  momentjs-rails
   nested_form
   numbers_and_words!
   pg
