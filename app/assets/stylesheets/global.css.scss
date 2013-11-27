@@ -609,6 +609,17 @@ label.required:after {
   border: 2px solid #ff3520;
 }
 
+div.field-with-example-wrapper {
+  display: inline-block;
+}
+
+div.field-with-example-wrapper p {
+  font-size: 70%;
+  font-style: italic;
+  margin: 0;
+  padding: 0;
+}
+
 #error-explanation {
   display: inline-block;
   padding: 10px;

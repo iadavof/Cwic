@@ -15,7 +15,10 @@
           <h2><%= t('.general') %></h2>
           <div class="field">
             <%= f.label :name %>
-            <%= f.text_field :name %>
+              <div class="field-with-example-wrapper">
+              <%= f.text_field :name %>
+              <p><%= t('for_example') + ': ' + t('.entity_type_name_example') %></p>
+            </div>
           </div>
           <div class="field">
             <%= f.label :description %>

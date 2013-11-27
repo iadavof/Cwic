@@ -39,6 +39,7 @@ nl:
   na_html: '<em>n.v.t.</em>'
   'true': 'Ja'
   'false': 'Nee'
+  for_example: 'Bijv.'
 
   date:
     formats:
@@ -428,6 +429,7 @@ nl:
       options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
       images: "Foto's"
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
+      entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
 
   entity_type_icons:
     form:
@@ -443,12 +445,14 @@ nl:
       options: 'Opties'
       images: "Foto's"
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
+      entity_name_example: '4.13B, 9.5, foyer, loft'
 
   reservations:
     form:
       organisation_client_type: 'Soort klant'
       existing_organisation_client: 'Bestaande klant'
       new_organisation_client: 'Nieuwe klant'
+      reservation_description_example: 'tekenles, receptie, bloemschikken enz.'
     modal_form:
       new_organisation_client: 'Nieuwe klant'
       full_form: 'Meer opties'
@@ -456,6 +460,7 @@ nl:
   info_screens:
     form:
       selected_entity_types: 'Geselecteerde objecttypen'
+      info_screen_name_example: 'scherm bij voordeur, directie, beamerscherm foyer enz.'
     info_screen_entity_type_fields:
       selected_entities: 'Geselecteerde Objecten'
 
