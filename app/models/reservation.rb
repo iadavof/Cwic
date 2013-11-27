@@ -6,6 +6,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :organisation_client
   belongs_to :entity
   belongs_to :organisation
+  belongs_to :reservation_status
   has_many :stickies, as: :stickable, dependent: :destroy
 
   validates :begins_at, presence: true

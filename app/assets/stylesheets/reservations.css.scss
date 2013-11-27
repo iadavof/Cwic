@@ -1,0 +1,15 @@
+div.status-selector {
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 3px 3px 3px 3px;
+}
+
+div.status-selector a.status-button {
+  background-color: #ccc;
+  color: #444;
+  opacity: 0.2;
+}
+
+div.status-selector a.status-button:hover {
+  opacity: 1.0;
+}

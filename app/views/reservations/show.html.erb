@@ -1,5 +1,7 @@
 <% content_for :page_title do %><%= show_title(@reservation) %><% end %>
-
+<% content_for :right_controls do %>
+  <%= render partial: 'reservations/status_controls', locals: { reservation: @reservation } %>
+<% end %>
 <%= render partial: 'stickies/resource_stickies', locals: { resource: @reservation } %>
 
 <dl>
@@ -8,9 +10,9 @@
   <dt><%= Reservation.human_attribute_name(:ends_at) %></dt>
   <dd><%=l(@reservation.ends_at, format: :long) %></dd>
   <dt><%= Reservation.human_attribute_name(:entity) %></dt>
-  <dd><%= @reservation.entity.instance_name %></dd>
+  <dd><%= link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity)) %></dd>
   <dt><%= Reservation.human_attribute_name(:organisation_client) %></dt>
-  <dd><%= @reservation.organisation_client.instance_name %></dd>
+  <dd><%= link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client)) %></dd>
 </dl>
 
 
