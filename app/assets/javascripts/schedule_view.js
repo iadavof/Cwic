@@ -342,6 +342,14 @@ IADAscheduleView.prototype.bindOnResize = function() {
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
       $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'});
     });
+
+    // Revisit the schedule item layouts
+    for(var schobji in schedule.scheduleItems) {
+      for(var schii in schedule.scheduleItems[schobji]) {
+        schedule.scheduleItems[schobji][schii].rerender();
+      }
+    }
+
   });
 }
 
@@ -400,7 +408,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
 
   this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.row-schedule-object-item-parts div.schedule-item', function(event) {
     // left click, no drag already started and not on resize handles
-    if(event.which == 1 && currentScheduleItem == null && $(event.target).closest('a.open-toolbar').length == 0) {
+    if(currentScheduleItem == null && $(event.target).closest('a.open-toolbar').length == 0) {
 
       var scheduleItemClickedDom = $(this);
 
@@ -463,7 +471,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
   });
 
   $('html').on('pointerup', function(event) {
-    if(event.which == 1 && currentScheduleItem != null) {
+    if(currentScheduleItem != null) {
 
       if(!currentScheduleItem.conceptCollidesWithOthers() && currentScheduleItem.checkEndAfterBegin(true) && currentScheduleItem.conceptDiffersWithOriginal()) {
         currentScheduleItem.acceptConcept();
@@ -478,6 +486,15 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
       rowTP = null;
       dragStartMoment = null;
     }
+  });
+
+  $('html').on('pointercancel', function(event) {
+    currentScheduleItem.resetConcept();
+    currentScheduleItem = null;
+    side = null;
+    itemOffset = null;
+    rowTP = null;
+    dragStartMoment = null;
   });
 }
 
@@ -557,7 +574,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
   var schedule = this;
   this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.row-schedule-object-item-parts', function(event) {
     // check if left mouse button, starting a new item and check if not clicked on other reservation
-    if(event.which == 1 && newScheduleItem == null && $(event.target).hasClass('row-schedule-object-item-parts')) {
+    if(newScheduleItem == null && $(event.target).hasClass('row-schedule-object-item-parts')) {
       var offset = $(this).offset();
       var relX = event.pageX - offset.left;
       var schedule_object_id = $(event.target).data('scheduleObjectID');
@@ -608,6 +625,13 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
           newScheduleItem = null;
         }
       }
+    }
+  });
+
+  $('html').on('pointercancel', function(event) {
+    if(newScheduleItem != null) {
+      newScheduleItem.removeFromDom();
+      newScheduleItem = null;
     }
   });
 }
@@ -1353,23 +1377,28 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
       newScheduleItem.find('a').css('color', this.text_color);
     }
 
-  if(this.item_id != null) {
-    // not new item, so open tooltip control
-    newScheduleItem.find('a.open-toolbar').show();
-  }
 
   // Add scheduleItem ID to DOM object
   newScheduleItem.data('scheduleItemID', this.item_id);
 
-  var newScheduleItemText = newScheduleItem.find('a.item-text');
-
   newScheduleItem.attr('title', this.description);
   jschobj.append(newScheduleItem);
 
-  // Width is only known after appending item to dom
-  if(newScheduleItem.width() > this.schedule.options.min_description_width) {
-    newScheduleItemText.text(this.description);
+  var schWidth = newScheduleItem.width();
+  var newScheduleItemText = newScheduleItem.find('a.item-text');
+
+  if(schWidth > this.schedule.options.min_description_width) {
+    newScheduleItem.text(this.description);
+  } else if(schWidth > 30) {
+    if(this.item_id != null) {
+      // not new item, so open tooltip control
+      newScheduleItem.find('a.open-toolbar').show();
+    }
   } else {
+    // let the open toolbar link be the whole schedule item, remove the icon
+    if(this.item_id != null) {
+      newScheduleItem.find('a.open-toolbar').show().html('').css({ width: '100%', height: '100%', left: 0, top: 0, margin: 0 });
+    }
     newScheduleItemText.hide();
   }
 
