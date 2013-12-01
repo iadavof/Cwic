@@ -21,6 +21,7 @@ APP.entity_types = {
   initReservationStatusSort: function() {
     $('ul#entity-type-reservation-statuses').sortable({
       placeholder: "ui-state-highlight",
+      handle: "div.sort-handle",
     });
   },
   initReservationStatusWrapper: function(reservationStatusWrapper) {

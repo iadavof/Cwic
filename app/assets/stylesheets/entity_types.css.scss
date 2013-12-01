@@ -45,6 +45,14 @@ div#entity-type-form {
         border: 2px solid #ccc;
         display: inline-block;
 
+        div.sort-handle {
+          float: left;
+          cursor: move;
+          font-size: 1.8em;
+          margin: 15px;
+          vertical-align: top;
+        }
+
         div.field {
           margin: 1em;
           float: left;
