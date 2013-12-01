@@ -1,7 +1,7 @@
 class ScheduleViewController < ApplicationController
 
-  respond_to :html, except: :index_domain
-  respond_to :json, only: :index_domain
+  respond_to :html, except: [:index_domain, :entities]
+  respond_to :json, only: [:index_domain, :entities]
 
   def horizontal_calendar_day
     if params[:entity].present?
@@ -48,16 +48,8 @@ class ScheduleViewController < ApplicationController
   end
 
   def entities
-    result = []
-    @organisation.entities.each do |e|
-      result << {
-        id: e.id,
-        icon: e.entity_type.icon.image.icon.url,
-        name: e.instance_name,
-        color: e.color,
-      }
-    end
-    render json: { entities: result }, status: :ok
+    @entity_types = @organisation.entity_types.where('entities_count > 0')
+    respond_with(@entity_types)
   end
 
   def today_tomorrow_update

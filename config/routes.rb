@@ -39,7 +39,7 @@ Cwic::Application.routes.draw do
 
     # JSON routes for schedules
     match '/schedule_view/index_domain', controller: 'schedule_view', action: 'index_domain', via: 'post', as: 'reservations_domain_json'
-    match '/schedule_view/entities', controller: 'schedule_view', action: 'entities', via: 'post', as: 'schedule_entities_json'
+    match '/schedule_view/entities', controller: 'schedule_view', action: 'entities', via: 'get', as: 'schedule_entities_json'
     match '/schedule_view/today_tomorrow_update', controller: 'schedule_view', action: 'today_tomorrow_update', via: 'get', as: 'today_tomorrow_update_json'
     match '/schedule_view', controller: 'schedule_view', action: 'index', via: 'get', as: 'schedule_view_index'
 

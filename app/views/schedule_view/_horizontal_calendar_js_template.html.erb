@@ -8,6 +8,17 @@
           <a id="selectAll" class="button"><%=t('.select_all') %></a>
           <a id="selectNone" class="button"><%=t('.select_none') %></a>
         </div>
+
+        <div id="entity-showcase-tabs">
+          <ul class="nav">
+          </ul>
+          
+          <div class="tab-wrap clearfix">
+            
+          </div>
+        </div>
+
+
         <p class="no_entities_found"><%= t('.no_entities_found', link: link_to_new([@organisation, Entity])).html_safe %></p>
     </div>
     <div class="clearfix">

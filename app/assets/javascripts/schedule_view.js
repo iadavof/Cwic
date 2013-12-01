@@ -177,11 +177,8 @@ IADAscheduleView.prototype.createEntityShowCase = function() {
   this.scheduleContainer.find('.entity-container a#selectNone').on('click', function(e){e.preventDefault(); schedule.toggleEntities(false); return false;});
 
   $.ajax({
-    type: 'POST',
+    type: 'GET',
     url: this.options.backend_url  + '/entities',
-    data: {
-
-    }
   }).success(function(response) {
     schedule.afterEntitiesLoad(response);
   });
@@ -700,36 +697,57 @@ IADAscheduleView.prototype.setErrorField =  function(field, error) {
 }
 
 IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
-  this.entities = response.entities;
   var possibleEntities = [];
-  for(var entnr in response.entities) {
-    var entity = response.entities[entnr];
-    var jentity = this.getTemplateClone('entityButtonTemplate');
-    possibleEntities.push(entity.id);
-    jentity.attr('id', 'entity_'+ entity.id).css('border-bottom-color', entity.color).data('entity-color', entity.color);
-    jentity.find('.entity-name').text(entity.name);
-    jentity.find('img.entity-icon').attr('src', entity.icon);
+  var tabContainer = this.scheduleContainer.find('.entity-container div#entity-showcase-tabs');
 
-    if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
-      if(localStorage.previouslySelectedEntities.indexOf(entity.id) > -1) {
-        this.selectedEntities.push(entity.id);
-        jentity.addClass('active').css('border-color', entity.color);
-      }
-    }
-
-    var schedule = this;
-    jentity.on('click', function() {schedule.toggleEntity(this);});
-
-    $(this.scheduleContainer).find('.entity-container').append(jentity);
-
-  }
-  if(response.entities.length <= 0) {
+  if(response.entity_types.length <= 0) {
     this.scheduleContainer.find('.entity-container p.no_entities_found').show();
     this.scheduleContainer.find('.entity-container div.fast-select').hide();
+    tabContainer.hide();
 
     // Ook de button voor het aanmaken van een nieuwe reservering uitschakelen (hoewel dit eigenlijk een beetje abstractiebreuk is aangezien dit buiten de schedule container zit).
     $('a.button.new-reservation').hide();
   }
+  for(var ent_nr in response.entity_types) {
+    var ent_type = response.entity_types[ent_nr];
+    // Creat tab for entity_type
+    var ent_type_tab_id = 'entity_type_' + ent_type.id;
+
+    var navLink = $('<li><a href="#' + ent_type_tab_id + '">'+ ent_type.name +'</a></li>');
+    tabContainer.find('ul.nav').append(navLink);
+
+    currentTabContent = $('<div>', { id: ent_type_tab_id });
+    tabContainer.find('div.tab-wrap').append(currentTabContent);
+
+    for(var entnr in ent_type.entities) {
+      var entity = ent_type.entities[entnr];
+      var jentity = this.getTemplateClone('entityButtonTemplate');
+      possibleEntities.push(entity.id);
+      jentity.attr('id', 'entity_'+ entity.id).css('border-bottom-color', entity.color).data('entity-color', entity.color);
+      jentity.find('.entity-name').text(entity.name);
+      jentity.find('img.entity-icon').attr('src', entity.icon);
+
+      if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
+        if(localStorage.previouslySelectedEntities.indexOf(entity.id) > -1) {
+          this.selectedEntities.push(entity.id);
+          jentity.addClass('active').css('border-color', entity.color);
+        }
+      }
+
+      var schedule = this;
+      jentity.on('click', function() {schedule.toggleEntity(this);});
+
+      // Add item to current entity type tab
+      currentTabContent.append(jentity);
+    }
+  }
+  // Open first tab
+  tabContainer.find('ul.nav li').first().addClass('current');
+  
+  // Initialize entity showcase tabs
+  tabContainer.tabs();
+
+
   // Handle entity that is selected by the url
   if(this.scheduleContainer.data('target-entity') != '' && possibleEntities.indexOf(parseInt(this.scheduleContainer.data('target-entity'))) > -1) {
     var selEntId = parseInt(this.scheduleContainer.data('target-entity'));
