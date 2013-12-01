@@ -95,14 +95,13 @@ IADAscheduleView.prototype.renderHorizontalCalendar = function () {
   this.initScheduleStub();
   this.createEntityShowCase();
   this.bindControls();
-  this.addTimeAxis();
+  this.addHorizontalViewTimeAxis();
 }
 
 IADAscheduleView.prototype.renderVerticalCalendar = function() {
   this.initScheduleStub();
   this.createEntityShowCase();
   this.bindControls();
-  this.addTimeAxis();
 }
 
 IADAscheduleView.prototype.initScheduleStub = function() {
@@ -336,13 +335,13 @@ IADAscheduleView.prototype.closeToolbar = function(callback) {
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
       $(this).animate({'padding-top': $(this).data('original-padding-top')}, 200);
     });
-    this.scheduleContainer.find('div.time-axis div.reservation-controls').removeClass('open').animate({height: 0}, 200, callback);
+    this.scheduleContainer.find('div.top-axis div.reservation-controls').removeClass('open').animate({height: 0}, 200, callback);
 }
 
 IADAscheduleView.prototype.openToolbar = function(scheduleItem) {
   var schedule = this;
 
-  var timeAxis = schedule.scheduleContainer.find('.time-axis');
+  var timeAxis = schedule.scheduleContainer.find('.top-axis');
   var toolbar = timeAxis.find('div.reservation-controls');
   var toolbarHeight = toolbar.find('.inner').outerHeight();
 
@@ -359,7 +358,7 @@ IADAscheduleView.prototype.openToolbar = function(scheduleItem) {
 
 IADAscheduleView.prototype.bindOnResize = function() {
   var schedule = this;
-  var toolbar = schedule.scheduleContainer.find('.time-axis div.reservation-controls');
+  var toolbar = schedule.scheduleContainer.find('.top-axis div.reservation-controls');
   $(window).on('resize', function() {
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
       $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'});
@@ -790,10 +789,10 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
   this.updateSchedule();
 }
 
-IADAscheduleView.prototype.addTimeAxis = function() {
+IADAscheduleView.prototype.addHorizontalViewTimeAxis = function() {
   var scheduleContainer = $(this.scheduleContainer);
-  var timeAxis = $(this.scheduleContainer).find('.time-axis');
-  var timeAxisHours = $(this.scheduleContainer).find('.time-axis > .hours');
+  var timeAxis = $(this.scheduleContainer).find('.top-axis');
+  var timeAxisHours = $(this.scheduleContainer).find('.top-axis > .axis-parts');
 
   var parts = (this.options.zoom == 'day') ? 24 : 28;
 
@@ -801,7 +800,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
     if(this.options.zoom == 'day') {
       var timepart = this.getTemplateClone('hourTimeAxisFrameTemplate');
       timepart.data('hour', i).find('p.time').text(i);
-    } else if(this.options.view == 'horizontalCalendar') {
+    } else {
       var timepart = this.getTemplateClone('sixHourTimeAxisFrameTemplate');
       timepart.data('hour', i % 4);
       timepart.data('day', i / 4);
@@ -819,7 +818,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
       timeAxisHours.append(dayPart);
     }
     // adjust height of hour time axis
-    this.scheduleContainer.find('div.time-axis').height(this.scheduleContainer.find('div.time-axis div.day-time-axis-frame').outerHeight());
+    this.scheduleContainer.find('div.top-axis').height(this.scheduleContainer.find('div.top-axis div.day-time-axis-frame').outerHeight());
   }
 
   timeAxis.cwicSticky();
@@ -827,18 +826,46 @@ IADAscheduleView.prototype.addTimeAxis = function() {
 
 
 IADAscheduleView.prototype.createSchedule = function() {
-  if(this.options.zoom == 'day') {
-    this.createScheduleDay();
-  } else {
-    this.createScheduleWeek();
+  if(this.options.view == 'horizontalCalendar') {
+    if(this.options.zoom == 'day') {
+      this.createScheduleDay();
+    } else {
+      this.createScheduleWeek();
+    }
+  } else if(this.options.view == 'verticalCalendar') {
+    this.createVerticalSchedule();
   }
+}
+
+IADAscheduleView.prototype.createVerticalSchedule = function() {
+
+  var axis = this.scheduleContainer.find('div.left-axis');
+  for(var i = 1; i < 24; i += 1) {
+    var hourpart = this.getTemplateClone('timeAxisRowTemplate');
+    hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
+    hourpart.find('div.time').text((i < 10 ? '0' + i : i) + ':00');
+    axis.append(hourpart);
+  }
+
+  var days = this.getDatesBetween(this.beginDate, this.endDate, true);
+  var nrOfDays = days.length;
+  var dayWidth = 100.0 / nrOfDays;
+  for(var daynr in days) {
+    this.appendVerticalDay(days[daynr], dayWidth);
+    if(moment(days[daynr]).isSame(moment(), 'day')) {
+      this.showVerticalCurrentTimeNeedle();
+    }
+  }
+
+  this.scheduleContainer.find('div.top-axis').cwicSticky();
+  this.scheduleContainer.find('.schedule-body').css('height', 'auto');
 }
 
 IADAscheduleView.prototype.createScheduleDay = function() {
   var days = this.getDatesBetween(this.beginDate, this.endDate, true);
   for(var daynr in days) {
     this.appendDay(days[daynr]);
-    if(moment(days[daynr]).startOf('day').unix() == moment().startOf('day').unix()) {
+    if(moment(days[daynr]).isSame(moment(), 'day')) {
       this.showCurrentTimeNeedle();
     }
   }
@@ -850,7 +877,7 @@ IADAscheduleView.prototype.createScheduleWeek = function() {
   var weeks = this.getWeeksBetween(this.beginDate, this.endDate);
   for(var weeknr in weeks) {
     this.appendWeek(weeks[weeknr]);
-    if(moment(weeks[weeknr]).startOf('week').unix() == moment().startOf('week').unix()) {
+    if(moment(weeks[weeknr]).isSame(moment(), 'week')) {
       this.showCurrentTimeNeedle();
     }
   }
@@ -1032,7 +1059,7 @@ IADAscheduleView.prototype.appendDay = function(dayMoment) {
   this.scheduleContainer.find('.left-axis').append(dayAxisDiv);
 
   var row = this.getTemplateClone('rowTemplate');
-  $(row).attr('id', dayMoment.format('YYYY-MM-DD'));
+  row.attr('id', dayMoment.format('YYYY-MM-DD'));
 
   for(var i = 0; i < 24; i += 1) {
     var hourpart = this.getTemplateClone('hourTimeFrameTemplate');
@@ -1043,8 +1070,30 @@ IADAscheduleView.prototype.appendDay = function(dayMoment) {
 
   this.scheduleContainer.find('.schedule-body').append(row);
 
-  var timeAxis = this.scheduleContainer.find('.time-axis');
+  var timeAxis = this.scheduleContainer.find('.top-axis');
   timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
+}
+
+IADAscheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
+  var topAxis = this.scheduleContainer.find('.top-axis > div.axis-parts');
+
+  var dayPart = this.getTemplateClone('verticalDayTimeAxisFrameTemplate');
+  dayPart.css('width', dayWidth + '%');
+  dayPart.find('p.name').text(dayMoment.format('dddd'));
+  topAxis.append(dayPart);
+
+  var column = this.getTemplateClone('columnTemplate');
+  column.attr('id', dayMoment.format('YYYY-MM-DD'));
+
+  column.css({ width: dayWidth + '%' });
+
+  for(var i = 0; i < 24; i += 1) {
+    var hourpart = this.getTemplateClone('verticalHourTimeFrameTemplate');
+    hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
+    column.find('.column-time-parts').append(hourpart);
+  }
+
+  this.scheduleContainer.find('.schedule-body').append(column);
 }
 
 IADAscheduleView.prototype.appendWeek = function(weekMoment) {
@@ -1077,7 +1126,7 @@ IADAscheduleView.prototype.appendWeek = function(weekMoment) {
 
   this.scheduleContainer.find('.schedule-body').append(row);
 
-  var timeAxis = this.scheduleContainer.find('.time-axis');
+  var timeAxis = this.scheduleContainer.find('.top-axis');
   timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
 }
 
@@ -1100,6 +1149,10 @@ IADAscheduleView.prototype.showCurrentTimeNeedle = function() {
     setTimeout(function() {schedule.showCurrentTimeNeedle();}, 30000);
   }
 }
+
+IADAscheduleView.prototype.showVerticalCurrentTimeNeedle = function() {
+
+} 
 
 IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
   this.scheduleContainer = $('#' + this.options.container);
@@ -1229,7 +1282,7 @@ IADAscheduleView.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
 
 IADAscheduleView.prototype.bindToolbarButtonActions = function() {
   var schedule = this;
-  this.scheduleContainer.find('div.time-axis div.reservation-controls a.toolbar-button').on('click', function(event){
+  this.scheduleContainer.find('div.top-axis div.reservation-controls a.toolbar-button').on('click', function(event){
     event.preventDefault();
     var id = $(this).attr('id');
     switch(id) {

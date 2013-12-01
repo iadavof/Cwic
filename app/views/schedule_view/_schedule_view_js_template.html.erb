@@ -42,14 +42,14 @@
         </div>
       </div>
     </div>
-    <div class="time-axis clearfix">
+    <div class="top-axis clearfix">
       <div class="ajax-notification-container">
         <div class="ajax-notification">
           <div class="ajax-wait"></div>
           <div class="message"></div>
         </div>
       </div>
-      <div class="hours clearfix"></div>
+      <div class="axis-parts clearfix"></div>
       <div class="reservation-controls">
         <div class="inner clearfix">
           <a href="#" id="description" class="toolbar-button"><i class="icon-info-sign"></i> <%= t('.description') %></a>
@@ -68,6 +68,7 @@
   <div class="hour-time-axis-frame" id="hourTimeAxisFrameTemplate"><p class="time"></p></div>
   <div class="six-hour-time-axis-frame" id="sixHourTimeAxisFrameTemplate"><p class="time"></p></div>
   <div class="day-time-axis-frame" id="dayTimeAxisFrameTemplate"><p class="name"></p></div>
+  <div class="vertical-day-time-axis-frame" id="verticalDayTimeAxisFrameTemplate"><p class="name"></p></div>
 
   <div class="entity-button" id="entityButtonTemplate">
     <img class="entity-icon" />
@@ -79,7 +80,13 @@
     <div class="row-schedule-objects"></div>
   </div>
 
+  <div class="column" id="columnTemplate">
+    <div class="column-time-parts"></div>
+    <div class="column-schedule-objects"></div>
+  </div>
+
   <div class="hour-time-frame" id="hourTimeFrameTemplate"></div>
+  <div class="vertical-hour-time-frame" id="verticalHourTimeFrameTemplate"></div>
   <div class="six-hour-time-frame" id="sixHourTimeFrameTemplate"></div>
 
  <div class="left-axis-row" id="dayAxisRowTemplate">
@@ -90,11 +97,17 @@
     </div>
   </div>
 
-   <div class="left-axis-row" id="weekAxisRowTemplate">
+  <div class="left-axis-row" id="weekAxisRowTemplate">
     <div class="inner">
       <div class="week-begin"><p></p></div>
       <div class="week-nr"><p></p></div>
       <div class="week-end"><p></p></div>
+    </div>
+  </div>
+
+  <div class="time-axis-row" id="timeAxisRowTemplate">
+    <div class="inner">
+      <div class="time"></div>
     </div>
   </div>
 

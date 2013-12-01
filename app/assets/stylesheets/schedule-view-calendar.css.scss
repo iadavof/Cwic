@@ -48,7 +48,7 @@ div.calendar div.cwic-sticky-container {
   margin-bottom: -1px;
 }
 
-div.calendar div.time-axis {
+div.calendar div.top-axis {
   position: relative;
   width: 100%;
   height: auto;
@@ -58,7 +58,7 @@ div.calendar div.time-axis {
   margin-bottom: -1px;
 }
 
-div.calendar div.time-axis .reservation-controls {
+div.calendar div.top-axis .reservation-controls {
   position: absolute;
   top: 100%;
   left: 0;
@@ -70,11 +70,11 @@ div.calendar div.time-axis .reservation-controls {
   height: 0;
 }
 
-div.calendar div.time-axis .reservation-controls > .inner {
+div.calendar div.top-axis .reservation-controls > .inner {
   padding: 5px 8px;
 }
 
-div.calendar div.time-axis .reservation-controls .toolbar-button {
+div.calendar div.top-axis .reservation-controls .toolbar-button {
   margin: 0 5px;
   color: #fff;
   text-decoration: none;
@@ -82,16 +82,16 @@ div.calendar div.time-axis .reservation-controls .toolbar-button {
   display: inline-block;
 }
 
-div.calendar div.time-axis .reservation-controls .toolbar-button:hover {
+div.calendar div.top-axis .reservation-controls .toolbar-button:hover {
   background-color: rgba(0,0,0,0.2);
 }
 
-div.calendar div.time-axis .reservation-controls .toolbar-button > i {
+div.calendar div.top-axis .reservation-controls .toolbar-button > i {
   font-size: 18px;
   margin-right: 5px;
 }
 
-div.calendar div.time-axis .reservation-controls .toolbar-close-button {
+div.calendar div.top-axis .reservation-controls .toolbar-close-button {
   float: right;
   font-size: 1em;
   line-height: 200%;
@@ -100,7 +100,7 @@ div.calendar div.time-axis .reservation-controls .toolbar-close-button {
   padding: 5px 8px;
 }
 
-div.calendar div.time-axis .description-bubble {
+div.calendar div.top-axis .description-bubble {
   position: absolute;
   top: 100%;
   margin-top: 43.6px;
@@ -113,7 +113,7 @@ div.calendar div.time-axis .description-bubble {
 }
 
 
-div.calendar div.time-axis .ajax-notification-container {
+div.calendar div.top-axis .ajax-notification-container {
   position: absolute;
   left: 0;
   top: 100%;
@@ -123,12 +123,12 @@ div.calendar div.time-axis .ajax-notification-container {
   pointer-events: none;
 }
 
-div.calendar div.time-axis .ajax-notification-container .ajax-notification {
+div.calendar div.top-axis .ajax-notification-container .ajax-notification {
   text-align: left;
   visibility: hidden;
 }
 
-div.calendar div.time-axis .ajax-notification-container .ajax-notification .ajax-wait {
+div.calendar div.top-axis .ajax-notification-container .ajax-notification .ajax-wait {
   position: relative;
   float: left;
   height: 25px;
@@ -139,7 +139,7 @@ div.calendar div.time-axis .ajax-notification-container .ajax-notification .ajax
   background-repeat: no-repeat;
 }
 
-div.calendar div.time-axis .ajax-notification-container .ajax-notification .message {
+div.calendar div.top-axis .ajax-notification-container .ajax-notification .message {
   position: relative;
   float: left;
   line-height: 25px;
@@ -167,8 +167,8 @@ div.calendar div.left-axis-row > .inner {
   margin-top: -25px;
 }
 
-div.calendar div.time-axis div.hour-time-axis-frame,
-div.calendar div.time-axis div.six-hour-time-axis-frame {
+div.calendar div.top-axis div.hour-time-axis-frame,
+div.calendar div.top-axis div.six-hour-time-axis-frame {
   position: relative;
   float: left;
   height: 100%;
@@ -180,18 +180,18 @@ div.calendar div.time-axis div.six-hour-time-axis-frame {
   z-index: 2;
 }
 
-div.calendar div.time-axis div.hour-time-axis-frame {
+div.calendar div.top-axis div.hour-time-axis-frame {
   width: 4.166666%;
 }
 
-div.calendar div.time-axis div.six-hour-time-axis-frame {
+div.calendar div.top-axis div.six-hour-time-axis-frame {
   width: 3.571428%;
   font-weight: normal;
   font-size: 0.75em;
   padding-top: 15px;
 }
 
-div.calendar div.time-axis div.day-time-axis-frame {
+div.calendar div.top-axis div.day-time-axis-frame {
   display: block;
   position: absolute;
   left: 0;
@@ -200,12 +200,22 @@ div.calendar div.time-axis div.day-time-axis-frame {
   padding-bottom: 15px;
 }
 
-div.calendar div.time-axis div.day-time-axis-frame:nth-child(odd) {
+div.calendar div.top-axis div.vertical-day-time-axis-frame {
+  display: block;
+  position: relative;
+  float: left;
+  padding-bottom: 15px;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+div.calendar div.top-axis div.vertical-day-time-axis-frame, 
+div.calendar div.top-axis div.day-time-axis-frame:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
-
-div.calendar div.time-axis div.day-time-axis-frame p.name {
+div.calendar div.top-axis div.vertical-day-time-axis-frame,
+div.calendar div.top-axis div.day-time-axis-frame p.name {
   margin: 0 auto;
   font-weight: bold;
   font-size: 1.6em;
@@ -214,7 +224,8 @@ div.calendar div.time-axis div.day-time-axis-frame p.name {
   color: #ddd;
 }
 
-div.calendar div.time-axis div.day-time-axis-frame:nth-child(odd) p.name {
+div.calendar div.top-axis div.vertical-day-time-axis-frame,
+div.calendar div.top-axis div.day-time-axis-frame:nth-child(odd) p.name {
   color: #bbb;
 }
 
@@ -246,6 +257,19 @@ div.calendar div.schedule-body div.row {
   margin: 5px 0;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+}
+
+div.calendar div.schedule-body div.column {
+  position: relative;
+  height: 100%;
+  float: left;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+div.calendar div.schedule-body div.column:nth-child(even) {
+  background-color: rgba(0, 0, 0, 0.1);
 }
 
 div.calendar div.schedule-body div.row.today {
@@ -297,6 +321,15 @@ div.calendar div.schedule-body div.row div.time-needle:after {
 div.calendar div.schedule-body div.row.today {
   padding: 7px 0;
   min-height: 76px;
+}
+
+div.calendar div.left-axis div.time-axis-row {
+  height: 40px;
+  line-height: 40px;
+}
+
+div.calendar div.left-axis div.time-axis-row:first-child {
+  margin-top: 20px;
 }
 
 div.calendar div.left-axis div.left-axis-row.today {
@@ -420,7 +453,8 @@ div.calendar div.schedule-body div.row:first-child {
   margin-top: 0;
 }
 
-div.calendar div.schedule-body div.row div.row-time-parts {
+div.calendar div.schedule-body div.row div.row-time-parts,
+div.calendar div.schedule-body div.row div.column-time-parts {
   position: absolute;
   left: 0;
   top: 0;
@@ -478,6 +512,15 @@ div.calendar div.schedule-body div.row div.row-time-parts div.hour-time-frame {
   width: 4.166666%;
   height: 100%;
   border-left: 1px solid #ccc;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+div.calendar div.schedule-body div.column div.column-time-parts div.vertical-hour-time-frame {
+  position: relative;
+  width: 100%;
+  height: 40px;
+  border-top: 1px solid #ccc;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
@@ -721,7 +764,7 @@ div.calendar div.entity-container div.entity-button p.entity-name {
       display: none !important;
     }
 
-    div.calendar div.time-axis {
+    div.calendar div.top-axis {
       width: auto !important;
       position: relative !important;
       top: 0 !important;
