@@ -15,6 +15,8 @@ class ScheduleViewController < ApplicationController
     end
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
+    @title = I18n.t('schedule_view.horizontal_schedule_day');
+    render 'schedule_view'
   end
 
   def horizontal_calendar_week
@@ -24,6 +26,19 @@ class ScheduleViewController < ApplicationController
     end
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
+    @title = I18n.t('schedule_view.horizontal_schedule_week');
+    render 'schedule_view'
+  end
+
+  def vertical_calendar_week
+    if params[:year].present? && params[:week].present?
+      @year = params[:year].to_i
+      @week = params[:week].to_i
+    end
+    # creating new reservation for the option to add one in this view
+    @reservation = @organisation.reservations.build
+    @title = I18n.t('schedule_view.vertical_schedule_week');
+    render 'schedule_view'
   end
 
   def today_and_tomorrow

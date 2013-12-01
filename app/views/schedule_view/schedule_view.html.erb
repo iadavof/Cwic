@@ -1,6 +1,6 @@
-<% content_for :page_title do %><%= t('.horizontal_calendar') %><% end %>
+<% content_for :page_title do %><%= @title %><% end %>
 
-<%= render partial: 'schedule_view/horizontal_calendar_js_template' %>
+<%= render partial: 'schedule_view/schedule_view_js_template' %>
 
 <%= content_tag(:div, nil, { id: 'reservation-form-modal-blueprint', data: { blueprint: render('reservations/modal_form').to_str }}) %>
 <div class="actions">

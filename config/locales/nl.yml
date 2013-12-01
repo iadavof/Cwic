@@ -40,6 +40,7 @@ nl:
   'true': 'Ja'
   'false': 'Nee'
   for_example: 'Bijv.'
+  default_title: 'Titel'
 
   date:
     formats:
@@ -482,11 +483,10 @@ nl:
       entity_block:
         click_for_description: 'Klik voor de omschrijving'
         no_description: 'Geen omschrijving'
-    horizontal_calendar_day:
-      horizontal_calendar: 'Horizontale dagkalender'
-    horizontal_calendar_week:
-      horizontal_calendar: 'Horizontale weekkalender'
-    horizontal_calendar_js_template:
+    horizontal_schedule_day: 'Horizontale dagkalender'
+    horizontal_schedule_week: 'Horizontale weekkalender'
+    vertical_schedule_week: 'Verticale weekkalender'
+    schedule_view_js_template:
       set: 'Stel in'
       tm: t/m
       today: 'Vandaag'

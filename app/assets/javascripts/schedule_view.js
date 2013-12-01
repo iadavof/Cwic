@@ -1,7 +1,7 @@
 APP.schedule_view = {
   horizontal_calendar_day: function() {
     new IADAscheduleView({
-      container: 'horizontal-calendar',
+      container: 'calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
@@ -18,11 +18,21 @@ APP.schedule_view = {
   },
   horizontal_calendar_week: function() {
     new IADAscheduleView({
-      container: 'horizontal-calendar',
+      container: 'calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
+      zoom: 'week',
+    });
+  },
+  vertical_calendar_week: function() {
+    new IADAscheduleView({
+      container: 'calendar',
+      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
+      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
+      view: 'verticalCalendar',
       zoom: 'week',
     });
   },
@@ -69,10 +79,13 @@ function IADAscheduleView(options) {
   this.needleTimeout = null;
   this.focusedScheduleItem = null;
   this.statusMessageTimeout = null;
-  this.currentMode = (this.options.zoom == 'day') ? 'week' : 'month';
 
   if(this.options.view == 'horizontalCalendar') {
+    this.currentMode = (this.options.zoom == 'day') ? 'week' : 'month';
     this.renderHorizontalCalendar();
+  } else if(this.options.view == 'verticalCalendar') {
+    this.currentMode = 'week';
+    this.renderVerticalCalendar();
   } else if(this.options.view == 'todayAndTomorrow') {
     this.renderTodayAndTomorrow();
   }
@@ -85,10 +98,19 @@ IADAscheduleView.prototype.renderHorizontalCalendar = function () {
   this.addTimeAxis();
 }
 
+IADAscheduleView.prototype.renderVerticalCalendar = function() {
+  this.initScheduleStub();
+  this.createEntityShowCase();
+  this.bindControls();
+  this.addTimeAxis();
+}
+
 IADAscheduleView.prototype.initScheduleStub = function() {
   this.scheduleContainer = $('#' + this.options.container);
   this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
-  this.scheduleContainer.addClass('horizontal-calendar');
+  if(this.options.view == 'horizontalCalendar' || this.options.view == 'verticalCalendar') {
+    this.scheduleContainer.addClass('calendar');
+  }
 
   // Set schedule to the selected date or current date
   this.navigationReference = this.getFocusMoment();
@@ -203,8 +225,11 @@ IADAscheduleView.prototype.bindControls = function() {
   // Bind set date button
   this.scheduleContainer.find('#scheduleDateUpdate').click(function(){schedule.setDateDomain();});
 
+
   var navigation = this.scheduleContainer.find('.control-container.navigate');
-  if(this.options.zoom == 'day') {
+  if(this.options.view == 'verticalCalendar') { // We do not want schopes in the vertical calendar, it will always be week
+    navigation.find('.button.scope').remove();
+  } else if(this.options.zoom == 'day') {
     navigation.find('.button#yearMode').remove();
   } else {
     navigation.find('.button#dayMode').remove();
@@ -776,7 +801,7 @@ IADAscheduleView.prototype.addTimeAxis = function() {
     if(this.options.zoom == 'day') {
       var timepart = this.getTemplateClone('hourTimeAxisFrameTemplate');
       timepart.data('hour', i).find('p.time').text(i);
-    } else {
+    } else if(this.options.view == 'horizontalCalendar') {
       var timepart = this.getTemplateClone('sixHourTimeAxisFrameTemplate');
       timepart.data('hour', i % 4);
       timepart.data('day', i / 4);
