@@ -63,7 +63,7 @@ class Reservation < ActiveRecord::Base
 private
 
   def check_if_should_nillify_reservation_status
-    if self.entity_id_changed?
+    if self.entity_id_was.present? && self.entity_id_changed?
       # entity is changed, check if the same reservation status set is applicable
       if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type
         self.reservation_status = nil

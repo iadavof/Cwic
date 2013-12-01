@@ -743,7 +743,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
   }
   // Open first tab
   tabContainer.find('ul.nav li').first().addClass('current');
-  
+
   // Initialize entity showcase tabs
   tabContainer.tabs();
 
@@ -1403,10 +1403,10 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
   jschobj.append(newScheduleItem);
 
   var schWidth = newScheduleItem.width();
-  var newScheduleItemText = newScheduleItem.find('a.item-text');
+  var newScheduleItemText = newScheduleItem.find('p.item-text');
 
   if(schWidth > this.schedule.options.min_description_width) {
-    newScheduleItem.text(this.description);
+    newScheduleItemText.text(this.description);
   } else if(schWidth > 30) {
     if(this.item_id != null) {
       // not new item, so open tooltip control
