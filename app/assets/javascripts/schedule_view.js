@@ -1407,7 +1407,8 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
 
   if(schWidth > this.schedule.options.min_description_width) {
     newScheduleItemText.text(this.description);
-  } else if(schWidth > 30) {
+  }
+  if(schWidth > 30) {
     if(this.item_id != null) {
       // not new item, so open tooltip control
       newScheduleItem.find('a.open-toolbar').show();
