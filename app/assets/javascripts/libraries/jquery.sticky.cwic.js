@@ -44,7 +44,11 @@
       cwic_sticky.updateCss(container, substituteContainer);
     },
     destroySticky: function(container, substituteContainer) {
-      container.attr('style', container.data('style'));
+      if (container.data('style')) {
+        container.attr('style', container.data('style'));
+      } else {
+        container.removeAttr('style');
+      }
       substituteContainer.hide();
     },
     updateCss: function(container, substituteContainer) {
