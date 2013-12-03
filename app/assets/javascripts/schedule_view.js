@@ -102,6 +102,7 @@ IADAscheduleView.prototype.renderVerticalCalendar = function() {
   this.initScheduleStub();
   this.createEntityShowCase();
   this.bindControls();
+  this.addVerticalViewTimeAxis();
 }
 
 IADAscheduleView.prototype.initScheduleStub = function() {
@@ -143,10 +144,22 @@ IADAscheduleView.prototype.toggleEntity = function(entity_button) {
 
   if(entity_button.hasClass('active')) {
     entity_button.removeClass('active').css({'border-color': '', 'border-bottom-color': entity_button.data('entity-color')});
-    this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
+    if(this.options.view == 'horizontalCalendar') {
+      // Remove this item from the selected set
+      this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
+    } else if(this.options.view == 'verticalCalendar') {
+      // Only one entity can be selected so reset selection
+      this.selectedEntities = [];
+    }
   } else {
     entity_button.addClass('active').css('border-color', entity_button.data('entity-color'));
-    this.selectedEntities.push(id);
+    if(this.options.view == 'horizontalCalendar') {
+      // Add this item to the selection
+      this.selectedEntities.push(id);
+    } else if(this.options.view == 'verticalCalendar') {
+      // Only one entity can be selected
+      this.selectedEntities = [id];
+    }
   }
 
   if(typeof(Storage) !== 'undefined') {
@@ -194,8 +207,13 @@ IADAscheduleView.prototype.toggleEntities = function(on) {
 IADAscheduleView.prototype.createEntityShowCase = function() {
   var schedule = this;
 
-  this.scheduleContainer.find('.entity-container a#selectAll').on('click', function(e){e.preventDefault(); schedule.toggleEntities(true); return false;});
-  this.scheduleContainer.find('.entity-container a#selectNone').on('click', function(e){e.preventDefault(); schedule.toggleEntities(false); return false;});
+  if(this.options.view == 'horizontalCalendar') {
+    this.scheduleContainer.find('.entity-container a#selectAll').on('click', function(e){e.preventDefault(); schedule.toggleEntities(true); return false;});
+    this.scheduleContainer.find('.entity-container a#selectNone').on('click', function(e){e.preventDefault(); schedule.toggleEntities(false); return false;});
+  } else if(this.options.view == 'verticalCalendar') {
+    this.scheduleContainer.find('.entity-container a#selectAll').hide()
+    this.scheduleContainer.find('.entity-container a#selectNone').hide();
+  }
 
   $.ajax({
     type: 'GET',
@@ -762,6 +780,10 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
       jentity.find('img.entity-icon').attr('src', entity.icon);
 
       if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
+        if(this.options.view == 'verticalCalendar' && localStorage.previouslySelectedEntities instanceof Array) {
+          // Only one selected entity possible, in case
+          localStorage.previouslySelectedEntities = [localStorage.previouslySelectedEntities.pop()];
+        }
         if(localStorage.previouslySelectedEntities.indexOf(entity.id) > -1) {
           this.selectedEntities.push(entity.id);
           jentity.addClass('active').css('border-color', entity.color);
@@ -797,6 +819,16 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
   }
 
   this.updateSchedule();
+}
+
+IADAscheduleView.prototype.addVerticalViewTimeAxis = function() {
+  var axis = this.scheduleContainer.find('div.left-axis');
+  for(var i = 1; i < 24; i += 1) {
+    var hourpart = this.getTemplateClone('timeAxisRowTemplate');
+    hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
+    hourpart.find('div.time').text((i < 10 ? '0' + i : i) + ':00');
+    axis.append(hourpart);
+  }
 }
 
 IADAscheduleView.prototype.addHorizontalViewTimeAxis = function() {
@@ -848,14 +880,6 @@ IADAscheduleView.prototype.createSchedule = function() {
 }
 
 IADAscheduleView.prototype.createVerticalSchedule = function() {
-
-  var axis = this.scheduleContainer.find('div.left-axis');
-  for(var i = 1; i < 24; i += 1) {
-    var hourpart = this.getTemplateClone('timeAxisRowTemplate');
-    hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
-    hourpart.find('div.time').text((i < 10 ? '0' + i : i) + ':00');
-    axis.append(hourpart);
-  }
 
   var days = this.getDatesBetween(this.beginDate, this.endDate, true);
   var nrOfDays = days.length;
@@ -933,7 +957,11 @@ IADAscheduleView.prototype.clearSchedule = function() {
   var scheduleBody = this.scheduleContainer.find('.schedule-body');
   scheduleBody.css('height', scheduleBody.height());
   scheduleBody.html('');
-  this.scheduleContainer.find('.left-axis').html('');
+  if(this.options.view == 'horizontalCalendar') {
+    this.scheduleContainer.find('.left-axis').html('');
+  } else if(this.options.view == 'verticalCalendar') {
+    this.scheduleContainer.find('.top-axis > .axis-parts').html('');
+  }
 }
 
 IADAscheduleView.prototype.updateSchedule = function() {
@@ -1090,6 +1118,7 @@ IADAscheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
   var dayPart = this.getTemplateClone('verticalDayTimeAxisFrameTemplate');
   dayPart.css('width', dayWidth + '%');
   dayPart.find('p.name').text(dayMoment.format('dddd'));
+  dayPart.find('p.date').text(dayMoment.format('ll'));
   topAxis.append(dayPart);
 
   var column = this.getTemplateClone('columnTemplate');

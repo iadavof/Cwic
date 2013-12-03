@@ -204,7 +204,7 @@ div.calendar div.top-axis div.vertical-day-time-axis-frame {
   display: block;
   position: relative;
   float: left;
-  padding-bottom: 15px;
+  padding-bottom: 5px;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
 }
@@ -212,6 +212,14 @@ div.calendar div.top-axis div.vertical-day-time-axis-frame {
 div.calendar div.top-axis div.vertical-day-time-axis-frame:nth-child(odd),
 div.calendar div.top-axis div.day-time-axis-frame:nth-child(odd) {
   background-color: rgba(0, 0, 0, 0.1);
+}
+
+div.calendar div.top-axis div.vertical-day-time-axis-frame p.date {
+  margin: 0 auto;
+  font-weight: bold;
+  font-size: 0.7em;
+  text-align: center;
+  width: 100%; 
 }
 
 div.calendar div.top-axis div.vertical-day-time-axis-frame,
