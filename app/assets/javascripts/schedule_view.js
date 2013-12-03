@@ -26,7 +26,7 @@ APP.schedule_view = {
       zoom: 'week',
     });
   },
-  vertical_calendar_week: function() {
+  vertical_calendar_day: function() {
     new IADAscheduleView({
       container: 'calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
@@ -244,9 +244,7 @@ IADAscheduleView.prototype.bindControls = function() {
 
 
   var navigation = this.scheduleContainer.find('.control-container.navigate');
-  if(this.options.view == 'verticalCalendar') { // We do not want schopes in the vertical calendar, it will always be week
-    navigation.find('.button.scope').remove();
-  } else if(this.options.zoom == 'day') {
+  if(this.options.zoom == 'day') {
     navigation.find('.button#yearMode').remove();
   } else {
     navigation.find('.button#dayMode').remove();
@@ -330,7 +328,7 @@ IADAscheduleView.prototype.bindToolbarEvents = function() {
   this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-item a.open-toolbar', function(event) {
     event.preventDefault();
     var scheduleItemDOM = $(this).parents('.schedule-item');
-    var dayRowTP = scheduleItemDOM.parents('.row-schedule-object-item-parts');
+    var dayRowTP = scheduleItemDOM.parents('.schedule-object-item-parts');
     var scheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemDOM, dayRowTP);
 
     if(schedule.focusedScheduleItem == null) {
@@ -456,7 +454,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
   var schedule = this;
   var lastDragMoment = null;
 
-  this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.row-schedule-object-item-parts div.schedule-item', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.schedule-object-item-parts div.schedule-item', function(event) {
     // left click, no drag already started and not on resize handles
     if(currentScheduleItem == null && $(event.target).closest('a.open-toolbar').length == 0) {
 
@@ -465,13 +463,13 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
       // Only continue if there is no foccussed item or the focussed item is this item
       if(schedule.focusedScheduleItem == null || schedule.focusedScheduleItem.item_id == scheduleItemClickedDom.data('scheduleItemID')) {
 
-        containerTP = scheduleItemClickedDom.parents('div.row-schedule-object-item-parts');
+        containerTP = scheduleItemClickedDom.parents('div.schedule-object-item-parts');
 
 
         // Check if drag started on resize handle
         var handle = $(event.target).closest('div.resizer');
         if(handle.length != 0) { // resize mode
-          side = (handle.hasClass('left') ? 'left' : 'right');
+          side = (handle.hasClass('left') || handle.hasClass('top') ? 'backwards' : 'forwards');
         } else { // drag mode
 
           var rel = schedule.getPointerRel(event, containerTP);
@@ -488,10 +486,10 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
   this.scheduleContainer.on('pointermove', function(event) {
     if(currentScheduleItem != null) {
       var scheduleItemClickedDom = $(event.target);
-      if(scheduleItemClickedDom.hasClass('row-schedule-object-item-parts')) {
+      if(scheduleItemClickedDom.hasClass('schedule-object-item-parts')) {
         var newRow = scheduleItemClickedDom;
       } else {
-        var newRow = scheduleItemClickedDom.parents('div.row-schedule-object-item-parts');
+        var newRow = scheduleItemClickedDom.parents('div.schedule-object-item-parts');
       }
 
       if(newRow.length > 0) {
@@ -621,9 +619,9 @@ IADAscheduleView.prototype.undoSaveAction = function(scheduleItem) {
 IADAscheduleView.prototype.bindNewReservationControls = function() {
   var newScheduleItem = null;
   var schedule = this;
-  this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.row-schedule-object-item-parts', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.schedule-object-item-parts', function(event) {
     // check if left mouse button, starting a new item and check if not clicked on other reservation
-    if(newScheduleItem == null && $(event.target).hasClass('row-schedule-object-item-parts')) {
+    if(newScheduleItem == null && $(event.target).hasClass('schedule-object-item-parts')) {
       var offset = $(this).offset();
       var relX = event.pageX - offset.left;
       var schedule_object_id = $(event.target).data('scheduleObjectID');
@@ -635,7 +633,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
     }
   });
 
-  this.scheduleContainer.find('.schedule-body').on('pointermove', 'div.row-schedule-object-item-parts', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('pointermove', 'div.schedule-object-item-parts', function(event) {
     var offset = $(this).offset();
     var relX = event.pageX - offset.left;
     if(newScheduleItem != null) {
@@ -1005,32 +1003,34 @@ IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
   this.updateDateDomainControl();
 
   this.createSchedule();
-  this.initDayRowScheduleObjectRows(response.schedule_objects);
+  this.initScheduleObjectContainers(response.schedule_objects);
   this.addAllScheduleItems(response.schedule_objects);
 }
 
-IADAscheduleView.prototype.initDayRowScheduleObjectRows = function(schobjJSON) {
+IADAscheduleView.prototype.initScheduleObjectContainers = function(schobjJSON) {
   var schedule = this;
   // Add schedule object container divs to the DOM
   $.each(schobjJSON, function(sobjId, sobj) {
-    var newSchObjItemParts = schedule.getTemplateClone('rowScheduleObjectItemPartsTemplate');
+    var newSchObjItemParts = schedule.getTemplateClone('scheduleObjectItemPartsTemplate');
     newSchObjItemParts.addClass('scheduleObject_' + sobjId);
     newSchObjItemParts.data('scheduleObjectID', sobjId);
     newSchObjItemParts.find('p.name').text(sobj.schedule_object_name);
-    $(schedule.scheduleContainer).find('div.row div.schedule-objects').append(newSchObjItemParts);
+    $(schedule.scheduleContainer).find('div.row div.schedule-objects, div.column div.schedule-objects').append(newSchObjItemParts);
   });
 
-  // Adjust height of object rows based on the number of objects that are being selected.
-  var schobjSize = $.size(schobjJSON);
-  if(schobjSize != null) {
-    if(schobjSize == 1) {
-      this.scheduleContainer.find('.row-schedule-object-item-parts').css('height', '60px');
-    } else if(schobjSize == 2) {
-      this.scheduleContainer.find('.row-schedule-object-item-parts').css('height', '30px');
-    } else {
-      this.scheduleContainer.find('.row-schedule-object-item-parts').css('height', '20px');
-      this.scheduleContainer.find('.left-axis .left-axis-row:not(.today)').height(this.scheduleContainer.find('.row:not(.today)').outerHeight());
-      this.scheduleContainer.find('.left-axis .left-axis-row.today').height(this.scheduleContainer.find('.row.today').outerHeight());
+  if(this.options.view == 'horizontalCalendar') {
+    // Adjust height of object rows based on the number of objects that are being selected.
+    var schobjSize = $.size(schobjJSON);
+    if(schobjSize != null) {
+      if(schobjSize == 1) {
+        this.scheduleContainer.find('.schedule-object-item-parts').css('height', '60px');
+      } else if(schobjSize == 2) {
+        this.scheduleContainer.find('.schedule-object-item-parts').css('height', '30px');
+      } else {
+        this.scheduleContainer.find('.schedule-object-item-parts').css('height', '20px');
+        this.scheduleContainer.find('.left-axis .left-axis-row:not(.today)').height(this.scheduleContainer.find('.row:not(.today)').outerHeight());
+        this.scheduleContainer.find('.left-axis .left-axis-row.today').height(this.scheduleContainer.find('.row.today').outerHeight());
+      }
     }
   }
 }
@@ -1505,7 +1505,7 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
     newScheduleItem.css('left', + this.schedule.timeToPercentage(beginMoment) + '%');
     newScheduleItem.css('width', + this.schedule.timePercentageSpan(beginMoment, endMoment) + '%');
   } else if(this.schedule.options.view == 'verticalCalendar') {
-    newScheduleItem.css('top', + this.schedule.tmeToPercentage(beginMoment) + '%');
+    newScheduleItem.css('top', + this.schedule.timeToPercentage(beginMoment) + '%');
     newScheduleItem.css('height', + this.schedule.timePercentageSpan(beginMoment, endMoment) + '%');
   }
 
@@ -1595,7 +1595,7 @@ IADAscheduleViewItem.prototype.applyTimeDiffConcept = function(milliseconds) {
 }
 
 IADAscheduleViewItem.prototype.resizeConcept = function(side, newMoment) {
-  if(side == 'left') {
+  if(side == 'backwards') {
     if(newMoment.unix() == this.getConceptBegin().unix()) {
       // Nothing changed, move on
       return;
@@ -1736,7 +1736,7 @@ IADAscheduleViewItem.prototype.render = function(concept) {
   }
   for(var parti in parts) {
     var part = parts[parti];
-    if(this.schedule.options.view == 'horizontalCalendar' && this.schedule.options.zoom == 'day') {
+    if(this.schedule.options.zoom == 'day') {
       var container = this.scheduleContainer.find('#' + part.format('YYYY-MM-DD') + ' div.schedule-objects div.scheduleObject_' + this.schedule_object_id);
     } else {
       var container = this.scheduleContainer.find('#' + part.format('GGGG-WW') + ' div.schedule-objects div.scheduleObject_' + this.schedule_object_id);

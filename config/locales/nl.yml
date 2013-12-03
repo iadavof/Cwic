@@ -485,7 +485,7 @@ nl:
         no_description: 'Geen omschrijving'
     horizontal_schedule_day: 'Horizontale dagkalender'
     horizontal_schedule_week: 'Horizontale weekkalender'
-    vertical_schedule_week: 'Verticale weekkalender'
+    vertical_schedule_day: 'Verticale dagkalender'
     schedule_view_js_template:
       set: 'Stel in'
       tm: t/m

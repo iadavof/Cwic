@@ -30,14 +30,14 @@ class ScheduleViewController < ApplicationController
     render 'schedule_view'
   end
 
-  def vertical_calendar_week
+  def vertical_calendar_day
     if params[:year].present? && params[:week].present?
       @year = params[:year].to_i
       @week = params[:week].to_i
     end
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
-    @title = I18n.t('schedule_view.vertical_schedule_week');
+    @title = I18n.t('schedule_view.vertical_schedule_day');
     render 'schedule_view'
   end
 
