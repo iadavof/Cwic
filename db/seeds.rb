@@ -38,7 +38,7 @@ OrganisationRole.create!(name: 'Viewer')
 
 # Create test administrator user
 u1 = User.create!(first_name: 'Admin', last_name: 'IADA', email: 'admin@iada.nl', password: 'cwictest', confirmed_at: DateTime.now)
-o1 = Organisation.create!(name: 'IADA', route: 'Stationsplein', street_number: '13-22', administrative_area_level_1: 'Gelderland', administrative_area_level_2: 'Nijmegen', postal_code: '6512 AB', locality: 'Nijmegen', country: 'Netherlands')
+o1 = Organisation.create!(name: 'IADA', route: 'Stationsplein', street_number: '13-22', administrative_area_level_1: 'Gelderland', administrative_area_level_2: 'Nijmegen', postal_code: '6512 AB', locality: 'Nijmegen', country: 'Netherlands', lat: 51.8430002, lng: 5.85445019999997)
 ou1 = OrganisationUser.create!(organisation: o1, user: u1, organisation_role: or1)
 
 # Create the default entity type icon
@@ -51,4 +51,4 @@ et1 = EntityType.create!(organisation: o1, name: 'Object', description: 'A sampl
 Entity.create!(organisation: o1, entity_type: et1, name: 'Object 1', description: 'A sample object to use for test purposes')
 
 # Create test client
-OrganisationClient.create!(organisation: o1, first_name: 'Test', last_name: 'Klant', email: 'test@iada.nl', route: 'Stationsplein', street_number: '13-22', administrative_area_level_1: 'Gelderland', administrative_area_level_2: 'Nijmegen', postal_code: '6512 AB', locality: 'Nijmegen', country: 'Netherlands')
+OrganisationClient.create!(organisation: o1, first_name: 'Test', last_name: 'Klant', email: 'test@iada.nl', route: 'Stationsplein', street_number: '13-22', administrative_area_level_1: 'Gelderland', administrative_area_level_2: 'Nijmegen', postal_code: '6512 AB', locality: 'Nijmegen', country: 'Netherlands', lat: 51.8430002, lng: 5.85445019999997)
