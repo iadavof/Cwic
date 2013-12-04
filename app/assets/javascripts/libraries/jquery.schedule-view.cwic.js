@@ -684,7 +684,14 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
         plusOneButton.data('hours', focusMoment.hours());
         plusOneButton.data('minutes', focusMoment.minutes());
         
-        plusOneButton.css({ top: schedule.timeToPercentage(moment(focusMoment).subtract(30, 'minutes')) + '%' });
+        if(schedule.options.view == 'horizontalCalendar' && schedule.options.zoom == 'day') {
+          plusOneButton.css({ left: schedule.timeToPercentage(moment(focusMoment).subtract(30, 'minutes')) + '%' });
+        } else if(schedule.options.view == 'horizontalCalendar' && schedule.options.zoom == 'week') {
+          plusOneButton.css({ left: schedule.timeToPercentage(moment(focusMoment).subtract(180, 'minutes')) + '%' });
+          plusOneButton.addClass('week');
+        } else {
+          plusOneButton.css({ top: schedule.timeToPercentage(moment(focusMoment).subtract(30, 'minutes')) + '%' });
+        }
 
         container.append(plusOneButton);
 
@@ -711,10 +718,18 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
         thisMoment.minutes(plusOneButton.data('minutes'));
 
         var newScheduleItem = new IADAscheduleViewItem(schedule, schedule_object_id);
-        newScheduleItem.conceptBegin = moment(thisMoment).subtract(30, 'minutes');
-        newScheduleItem.conceptEnd = moment(thisMoment).add(30, 'minutes');
+        if(schedule.options.zoom = 'day') {
+          // one hour
+          newScheduleItem.conceptBegin = moment(thisMoment).subtract(30, 'minutes');
+          newScheduleItem.conceptEnd = moment(thisMoment).add(30, 'minutes');
+        } else {
+          // 6 hours
+          newScheduleItem.conceptBegin = moment(thisMoment).subtract(180, 'minutes');
+          newScheduleItem.conceptEnd = moment(thisMoment).add(180, 'minutes');
+          
+        }
 
-        var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function(e) {
+        var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'), function(e) {
           e.preventDefault();
           if(plusOneButton != null) {
             plusOneButton.remove();

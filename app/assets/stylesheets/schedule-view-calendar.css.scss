@@ -341,6 +341,21 @@ div.calendar div.schedule-body div.row div.time-needle {
   margin-left: -4px;
 }
 
+div.calendar div.schedule-body div.row div.schedule-plus-one-button {
+  position: absolute;
+  left: 0;
+  top: 0;
+  height: 100%;
+  background-color: #1C5EAF;
+  color: white;
+  opacity: 0.7;
+  width: 4.166667%;
+}
+
+div.calendar div.schedule-body div.row div.schedule-plus-one-button.week {
+  width: 3.571429%;
+}
+
 div.calendar div.schedule-body div.column div.schedule-plus-one-button {
   position: absolute;
   left: 0;
@@ -353,6 +368,7 @@ div.calendar div.schedule-body div.column div.schedule-plus-one-button {
   opacity: 0.7;
 }
 
+div.calendar div.schedule-body div.row div.schedule-plus-one-button span,
 div.calendar div.schedule-body div.column div.schedule-plus-one-button span {
   width: 25px;
   height: 25px;
