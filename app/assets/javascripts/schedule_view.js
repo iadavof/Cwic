@@ -507,6 +507,16 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
 
         // Lets get the scheduleItem!
         currentScheduleItem = schedule.getScheduleItemForDOMObject(scheduleItemClickedDom, containerTP);
+
+        // Bind esc key
+        $(document).on('keyup.escape_new_reservation', function(e) {
+          currentScheduleItem.resetConcept();
+          currentScheduleItem = null;
+          side = null;
+          rowTP = null;
+          dragStartMoment = null;
+          $(document).off('keyup.escape_new_reservation');
+        });
       }
     }
   });
@@ -560,6 +570,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
       containerTP = null;
       dragStartMoment = null;
     }
+    $(document).off('keyup.escape_new_reservation');
   });
 
   $('html').on('pointercancel', function(event) {
@@ -568,6 +579,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
     side = null;
     rowTP = null;
     dragStartMoment = null;
+    $(document).off('keyup.escape_new_reservation');
   });
 }
 
@@ -655,6 +667,18 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
       newScheduleItem.conceptBegin = moment(nearestMoment);
       newScheduleItem.conceptEnd = moment(nearestMoment);
       newScheduleItem.render(true); // Render in concept mode
+
+      // Bind esc key
+      $(document).on('keyup.escape_new_reservation', function(e) {
+        if (e.keyCode == 27) {
+          if(newScheduleItem != null) {
+            newScheduleItem.removeFromDom();
+            newScheduleItem = null;
+          }
+        }
+        $(document).off('keyup.escape_new_reservation');
+      });
+
     }
   });
 
@@ -697,6 +721,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
         }
       }
     }
+    $(document).off('keyup.escape_new_reservation');
   });
 
   $('html').on('pointercancel', function(event) {
@@ -704,6 +729,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
       newScheduleItem.removeFromDom();
       newScheduleItem = null;
     }
+    $(document).off('keyup.escape_new_reservation');
   });
 }
 
