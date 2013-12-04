@@ -144,29 +144,57 @@ IADAscheduleView.prototype.toggleEntity = function(entity_button) {
 
   if(entity_button.hasClass('active')) {
     entity_button.removeClass('active').css({'border-color': '', 'border-bottom-color': entity_button.data('entity-color')});
-    if(this.options.view == 'horizontalCalendar') {
-      // Remove this item from the selected set
-      this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
-    } else if(this.options.view == 'verticalCalendar') {
-      // Only one entity can be selected so reset selection
-      this.selectedEntities = [];
-    }
+    this.removeSelectedEntity(id);
   } else {
+    if (this.options.view == "verticalCalendar") {
+      // Only one item at once, first disable all
+      this.toggleEntities(false);
+    }
     entity_button.addClass('active').css('border-color', entity_button.data('entity-color'));
-    if(this.options.view == 'horizontalCalendar') {
+    this.addSelectedEntity(id);
+  }
+
+  this.updateSchedule();
+}
+
+IADAscheduleView.prototype.addSelectedEntity = function(id) {
+  if(this.options.view == 'horizontalCalendar') {
       // Add this item to the selection
       this.selectedEntities.push(id);
     } else if(this.options.view == 'verticalCalendar') {
       // Only one entity can be selected
       this.selectedEntities = [id];
     }
-  }
+  // Update the local storage
+  this.setLocalStorageEntities(this.selectedEntities);
+}
 
+IADAscheduleView.prototype.clearSelectedEntities = function() {
+  this.selectedEntities = [];
+  this.setLocalStorageEntities(this.selectedEntities);
+}
+
+IADAscheduleView.prototype.removeSelectedEntity = function(id) {
+  this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
+  // Update the local storage
+  this.setLocalStorageEntities(this.selectedEntities);
+}
+
+IADAscheduleView.prototype.getEntitiesFromLocalStorage = function() {
+  if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
+    if(this.options.view == 'verticalCalendar' && localStorage.previouslySelectedEntities.length > 0) {
+      // Only one selected entity possible, in case
+      localStorage.previouslySelectedEntities = [localStorage.previouslySelectedEntities[localStorage.previouslySelectedEntities.length - 1]];
+    }
+    return localStorage.previouslySelectedEntities;
+  }
+  return [];
+}
+
+IADAscheduleView.prototype.setLocalStorageEntities = function() {
   if(typeof(Storage) !== 'undefined') {
     localStorage.previouslySelectedEntities = this.selectedEntities;
   }
-
-  this.updateSchedule();
 }
 
 IADAscheduleView.prototype.toggleCustomDomainControls = function() {
@@ -184,21 +212,19 @@ IADAscheduleView.prototype.toggleCustomDomainControls = function() {
 }
 
 IADAscheduleView.prototype.toggleEntities = function(on) {
+  // This function is only used in horizontal calendar mode where more entity items can be selected at once
+
   schedule = this;
   if(on) {
     this.scheduleContainer.find('.entity-container .entity-button').each(function() {
       $(this).addClass('active').css('border-color', $(this).data('entity-color'));
-      schedule.selectedEntities.push(this.id.split('_')[1]);
+      schedule.addSelectedEntity(this.id.split('_')[1]);
     });
   } else {
     this.scheduleContainer.find('.entity-container .entity-button').each(function() {
       $(this).removeClass('active').css({'border-color': '', 'border-bottom-color': $(this).data('entity-color')});
     });
-    this.selectedEntities = [];
-  }
-
-  if(typeof(Storage) !== 'undefined') {
-    localStorage.previouslySelectedEntities = this.selectedEntities;
+    this.clearSelectedEntities();
   }
 
   this.updateSchedule();
@@ -777,15 +803,11 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
       jentity.find('.entity-name').text(entity.name);
       jentity.find('img.entity-icon').attr('src', entity.icon);
 
-      if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
-        if(this.options.view == 'verticalCalendar' && localStorage.previouslySelectedEntities instanceof Array) {
-          // Only one selected entity possible, in case
-          localStorage.previouslySelectedEntities = [localStorage.previouslySelectedEntities.pop()];
-        }
-        if(localStorage.previouslySelectedEntities.indexOf(entity.id) > -1) {
-          this.selectedEntities.push(entity.id);
-          jentity.addClass('active').css('border-color', entity.color);
-        }
+      var locStorEntities = this.getEntitiesFromLocalStorage();
+
+      if(locStorEntities.indexOf(entity.id) > -1) {
+        this.selectedEntities.push(entity.id);
+        jentity.addClass('active').css('border-color', entity.color);
       }
 
       var schedule = this;
