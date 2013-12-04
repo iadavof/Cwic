@@ -614,8 +614,8 @@ IADAscheduleView.prototype.showStatusMessage = function(content, ajax_wait, dela
 IADAscheduleView.prototype.hideStatusMessage = function() {
   var notification = this.scheduleContainer.find('.ajax-notification');
   notification.finish();
-  notification.animate({height: 0}, 200, function(){
-    $(this).css({visibility: 'hidden', height: 'auto'})
+  notification.animate({ height: 0 }, 200, function() {
+    $(this).css({ visibility: 'hidden', height: 'auto' })
     // remove message
     notification.find('.message').html('');
     notification.find('.ajax-wait').hide();
@@ -1234,6 +1234,7 @@ IADAscheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
   dayPart.css('width', dayWidth + '%');
 
   // store the date in header item
+  dayPart.attr('id', 'label_' + dayMoment.format('YYYY-MM-DD'));
   dayPart.data('date', dayMoment.format('YYYY-MM-DD'));
 
   dayPart.find('p.name').attr('title',dayMoment.format('dddd'));
@@ -1310,7 +1311,23 @@ IADAscheduleView.prototype.showCurrentTimeNeedle = function() {
 }
 
 IADAscheduleView.prototype.showVerticalCurrentTimeNeedle = function() {
-
+  var currentDate = moment().format((this.options.zoom == 'day') ? 'YYYY-MM-DD' : 'GGGG-WW');
+  var date_column = this.scheduleContainer.find('.column#' + currentDate);
+  this.scheduleContainer.find('.top-axis div.vertical-day-time-axis-frame.today:not(#label_' + currentDate + ')').removeClass('today');
+  this.scheduleContainer.find('.column.today:not(#' + currentDate + ')').removeClass('today').removeClass('progress-bar');
+  this.scheduleContainer.find('.column:not(#' + currentDate + ') .time-needle').remove();
+  if(date_column.length != 0) {
+    this.scheduleContainer.find('.top-axis div.vertical-day-time-axis-frame#label_' + currentDate).addClass('today');
+    date_column.addClass('today').addClass('progress-bar');
+    if(this.scheduleContainer.find('.time-needle').length <= 0) {
+      var needle = $('<div>', {'class': 'time-needle', title: moment().toDate().toLocaleString(), style: 'top: ' + this.timeToPercentage(moment()) + '%;'});
+      date_column.append(needle);
+    } else {
+      this.scheduleContainer.find('.time-needle').css({top: this.timeToPercentage(moment()) + '%'});
+    }
+    var schedule = this;
+    setTimeout(function() {schedule.showVerticalCurrentTimeNeedle();}, 30000);
+  }
 }
 
 IADAscheduleView.prototype.renderTodayAndTomorrow = function() {
