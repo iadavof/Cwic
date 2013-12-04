@@ -680,9 +680,10 @@ div.calendar div.schedule-body div.row div.schedule-item {
 div.calendar div.schedule-body div.column div.schedule-item {
   left: 0;
   top: 0;
-  width: 100%;
+  width: 98%;
   height: 1px;
   overflow: hidden;
+  margin: 1%;
 }
 
 div.calendar div.schedule-body div.row div.schedule-item.error-glow,

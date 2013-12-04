@@ -422,7 +422,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
   var schedule = this;
   var lastDragMoment = null;
 
-  this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.schedule-object-item-parts div.schedule-item', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.schedule-object-item-parts div.schedule-item', function(event) {
     // left click, no drag already started and not on resize handles
     if(currentScheduleItem == null && $(event.target).closest('a.open-toolbar').length == 0) {
 
@@ -460,7 +460,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
     }
   });
 
-  this.scheduleContainer.on('pointermove', function(event) {
+  this.scheduleContainer.on('mousemove', function(event) {
     if(currentScheduleItem != null) {
       var scheduleItemClickedDom = $(event.target);
       if(scheduleItemClickedDom.hasClass('schedule-object-item-parts')) {
@@ -494,7 +494,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
     }
   });
 
-  $('html').on('pointerup', function(event) {
+  $('html').on('mouseup', function(event) {
     if(currentScheduleItem != null) {
 
       if(!currentScheduleItem.conceptCollidesWithOthers() && currentScheduleItem.checkEndAfterBegin(true) && currentScheduleItem.conceptDiffersWithOriginal()) {
@@ -512,7 +512,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
     $(document).off('keyup.escape_new_reservation');
   });
 
-  $('html').on('pointercancel', function(event) {
+  $('html').on('mousecancel', function(event) {
     currentScheduleItem.resetConcept();
     currentScheduleItem = null;
     side = null;
@@ -596,7 +596,7 @@ IADAscheduleView.prototype.undoSaveAction = function(scheduleItem) {
 IADAscheduleView.prototype.bindNewReservationControls = function() {
   var newScheduleItem = null;
   var schedule = this;
-  this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.schedule-object-item-parts', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.schedule-object-item-parts', function(event) {
     // check if left mouse button, starting a new item and check if not clicked on other reservation
     if(newScheduleItem == null && $(event.target).hasClass('schedule-object-item-parts')) {
       rel = schedule.getPointerRel(event, this);
@@ -621,7 +621,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
     }
   });
 
-  this.scheduleContainer.find('.schedule-body').on('pointermove', 'div.schedule-object-item-parts', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('mousemove', 'div.schedule-object-item-parts', function(event) {
     var rel = schedule.getPointerRel(event, this);
     if(newScheduleItem != null) {
       var newEnd = schedule.nearestMomentPoint(rel, this);
@@ -638,7 +638,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
   });
 
   var reservationForm = null;
-  $('html').on('pointerup', function(event) {
+  $('html').on('mouseup', function(event) {
     // Handle new entry
     if(reservationForm == null) {
       if(newScheduleItem != null && newScheduleItem.checkEndAfterBegin(true) && !newScheduleItem.conceptCollidesWithOthers()) {
@@ -663,7 +663,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
     $(document).off('keyup.escape_new_reservation');
   });
 
-  $('html').on('pointercancel', function(event) {
+  $('html').on('mousecancel', function(event) {
     if(newScheduleItem != null) {
       newScheduleItem.removeFromDom();
       newScheduleItem = null;
