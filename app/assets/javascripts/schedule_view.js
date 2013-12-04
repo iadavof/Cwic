@@ -40,6 +40,8 @@ APP.schedule_view = {
     new IADAtodayAndTomorrow({
       container: 'today-and-tomorrow-container',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      websocket_url: window.location.host + Routes.websocket_path(),
+      organisation_id: $('#today-and-tomorrow-container').data('organisation-id'),
     });
   }
 };

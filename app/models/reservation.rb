@@ -23,9 +23,9 @@ class Reservation < ActiveRecord::Base
   before_validation :check_reservation_organisation
   before_validation { self.description.strip! }
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
-  after_save :trigger_update_infoscreens
+  after_save :trigger_update_websockets
   before_save :check_if_should_nillify_reservation_status
-  after_destroy :trigger_update_infoscreens
+  after_destroy :trigger_update_websockets
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
@@ -105,8 +105,9 @@ private
     end
   end
 
-  def trigger_update_infoscreens
+  def trigger_update_websockets
     WebsocketRails[('infoscreens_' + self.organisation.id.to_s).to_sym].trigger 'update'
+    WebsocketRails[('todayandtomorrows_' + self.organisation.id.to_s).to_sym].trigger 'update'
   end
 
   # Converts a period (begins datetime to ends datetime range) to a days (dates) range

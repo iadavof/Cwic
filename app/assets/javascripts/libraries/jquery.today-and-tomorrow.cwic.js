@@ -2,6 +2,8 @@ function IADAtodayAndTomorrow(options) {
   this.options = Object.extend({
     container: 'schedule-container',
     backend_url: 'url to backend',
+    organisation_id: 0,
+    websocket_url: 'url to websocket',
   }, options || {});
 
   this.renderTodayAndTomorrow();
@@ -10,9 +12,19 @@ function IADAtodayAndTomorrow(options) {
 IADAtodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   this.scheduleContainer = $('#' + this.options.container);
   this.bindEntityInfoControls();
+  this.initWebSocket();
   this.updateTodayTomorrowView();
   var schedule = this;
-  setInterval(function() {schedule.updateTodayTomorrowView();}, 180000);
+  setInterval(function() {schedule.updateTodayTomorrowView();}, 300000);
+}
+
+IADAtodayAndTomorrow.prototype.initWebSocket = function() {
+  var tat = this;
+  var dispatcher = new WebSocketRails(this.options.websocket_url);
+  // open reservations_channel for organisation
+  var channel = dispatcher.subscribe('todayandtomorrows_' + this.options.organisation_id);
+
+  channel.bind('update', function() { tat.updateTodayTomorrowView(); });
 }
 
 IADAtodayAndTomorrow.prototype.bindEntityInfoControls = function() {
@@ -34,7 +46,7 @@ IADAtodayAndTomorrow.prototype.bindEntityInfoControls = function() {
 }
 
 IADAtodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
-  var schedule = this;
+  var tat = this;
   $.ajax({
     type: 'GET',
     url: this.options.backend_url  + '/today_tomorrow_update',
@@ -42,7 +54,7 @@ IADAtodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
 
     }
   }).success(function(response) {
-    schedule.afterTodayTomorrowUpdate(response);
+    tat.afterTodayTomorrowUpdate(response);
   });
 }
 
