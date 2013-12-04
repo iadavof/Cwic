@@ -406,13 +406,16 @@ IADAscheduleView.prototype.bindOnResize = function() {
       $(this).css({'padding-top': parseInt($(this).data('original-padding-top')) + toolbar.outerHeight() + 'px'});
     });
 
-    // Revisit the schedule item layouts
-    for(var schobji in schedule.scheduleItems) {
-      for(var schii in schedule.scheduleItems[schobji]) {
-        schedule.scheduleItems[schobji][schii].rerender();
+    if(schedule.options.view == 'horizontalCalendar') {
+      // Revisit the schedule item layouts
+      for(var schobji in schedule.scheduleItems) {
+        for(var schii in schedule.scheduleItems[schobji]) {
+          schedule.scheduleItems[schobji][schii].rerender();
+        }
       }
     }
 
+    schedule.setTopAxisTexts();
   });
 }
 
@@ -463,7 +466,7 @@ IADAscheduleView.prototype.getScheduleItemForDOMObject = function(SchObj, dayRow
 }
 
 IADAscheduleView.prototype.getPointerRel = function(event, container) {
-  var offset = container.offset();
+  var offset = $(container).offset();
   if(this.options.view == 'horizontalCalendar') {
     return event.pageX - offset.left;
   } else if(this.options.view == 'verticalCalendar') {
@@ -490,7 +493,6 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
       if(schedule.focusedScheduleItem == null || schedule.focusedScheduleItem.item_id == scheduleItemClickedDom.data('scheduleItemID')) {
 
         containerTP = scheduleItemClickedDom.parents('div.schedule-object-item-parts');
-
 
         // Check if drag started on resize handle
         var handle = $(event.target).closest('div.resizer');
@@ -555,7 +557,6 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
       // Reset drag vars
       currentScheduleItem = null;
       side = null;
-      itemOffset = null;
       containerTP = null;
       dragStartMoment = null;
     }
@@ -565,7 +566,6 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
     currentScheduleItem.resetConcept();
     currentScheduleItem = null;
     side = null;
-    itemOffset = null;
     rowTP = null;
     dragStartMoment = null;
   });
@@ -648,11 +648,10 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
   this.scheduleContainer.find('.schedule-body').on('pointerdown', 'div.schedule-object-item-parts', function(event) {
     // check if left mouse button, starting a new item and check if not clicked on other reservation
     if(newScheduleItem == null && $(event.target).hasClass('schedule-object-item-parts')) {
-      var offset = $(this).offset();
-      var relX = event.pageX - offset.left;
+      rel = schedule.getPointerRel(event, this);
       var schedule_object_id = $(event.target).data('scheduleObjectID');
       newScheduleItem = new IADAscheduleViewItem(schedule, schedule_object_id);
-      var nearestMoment = schedule.nearestMomentPoint(relX, this);
+      var nearestMoment = schedule.nearestMomentPoint(rel, this);
       newScheduleItem.conceptBegin = moment(nearestMoment);
       newScheduleItem.conceptEnd = moment(nearestMoment);
       newScheduleItem.render(true); // Render in concept mode
@@ -660,10 +659,9 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
   });
 
   this.scheduleContainer.find('.schedule-body').on('pointermove', 'div.schedule-object-item-parts', function(event) {
-    var offset = $(this).offset();
-    var relX = event.pageX - offset.left;
+    var rel = schedule.getPointerRel(event, this);
     if(newScheduleItem != null) {
-      var newEnd = schedule.nearestMomentPoint(relX, this);
+      var newEnd = schedule.nearestMomentPoint(rel, this);
       if(newEnd.unix() != newScheduleItem.conceptEnd.unix()) {
         newScheduleItem.conceptEnd = newEnd;
         if(newScheduleItem.checkEndAfterBegin(true)) {
@@ -842,7 +840,11 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
 }
 
 IADAscheduleView.prototype.addVerticalViewTimeAxis = function() {
+  // Add time in left axis
+
   var axis = this.scheduleContainer.find('div.left-axis');
+  // We also use this function to update the schedule on resize, so clearing the old items
+  axis.find('div.time').html('');
   for(var i = 1; i < 24; i += 1) {
     var hourpart = this.getTemplateClone('timeAxisRowTemplate');
     hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
@@ -852,6 +854,8 @@ IADAscheduleView.prototype.addVerticalViewTimeAxis = function() {
 }
 
 IADAscheduleView.prototype.addHorizontalViewTimeAxis = function() {
+  // Add time in top axis
+
   var scheduleContainer = $(this.scheduleContainer);
   var timeAxis = $(this.scheduleContainer).find('.top-axis');
   var timeAxisHours = $(this.scheduleContainer).find('.top-axis > .axis-parts');
@@ -876,9 +880,13 @@ IADAscheduleView.prototype.addHorizontalViewTimeAxis = function() {
     for(var i = 0; i < 7; i++) {
       var dayPart = this.getTemplateClone('dayTimeAxisFrameTemplate');
       dayPart.css('left', (i * 14.285714) + '%');
-      dayPart.find('p.name').text(moment().weekday(i).format('dddd'));
+      dayPart.data('date', moment().weekday(i));
       timeAxisHours.append(dayPart);
     }
+
+    // Set the header day texts
+    this.setTopAxisTexts();
+
     // adjust height of hour time axis
     this.scheduleContainer.find('div.top-axis').height(this.scheduleContainer.find('div.top-axis div.day-time-axis-frame').outerHeight());
   }
@@ -910,6 +918,9 @@ IADAscheduleView.prototype.createVerticalSchedule = function() {
       this.showVerticalCurrentTimeNeedle();
     }
   }
+
+  this.setTopAxisTexts();
+
   this.scheduleContainer.find('div.top-axis').cwicSticky();
   this.scheduleContainer.find('div.top-axis').parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
   this.scheduleContainer.find('.schedule-body').css('height', 'auto');
@@ -1134,13 +1145,74 @@ IADAscheduleView.prototype.appendDay = function(dayMoment) {
   timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
 }
 
+IADAscheduleView.prototype.renderTopAxis = function(dayWidth) {
+  // dayWidth is only used for vertical Calendar
+
+  if(this.options.view == 'horizontalCalendar' && this.options.zoom == 'day') {
+
+  } else if(this.options.view == 'verticalCalendar') {
+
+  }
+}
+
+IADAscheduleView.prototype.setTopAxisTexts = function() {
+  topAxis = this.scheduleContainer.find('div.top-axis');
+  if(this.options.view == 'verticalCalendar') {
+    var parts = topAxis.find('div.axis-parts div.vertical-day-time-axis-frame');
+
+    parts.each(function() {
+      var part = $(this);
+      var width = part.width();
+      var partMoment = moment(part.data('date'));
+
+      if(width < 50) {
+        part.find('p.name').text(partMoment.format('dd'));
+        part.find('p.date').text(partMoment.format('D'));
+      } else if( width <= 80) {
+        part.find('p.name').text(partMoment.format('dd'));
+        part.find('p.date').text(partMoment.format('Do'));
+      } else if( width <= 120) {
+        part.find('p.name').text(partMoment.format('dd'));
+        part.find('p.date').text(partMoment.format('D MMM'));
+      } else if(width <= 150) {
+        part.find('p.name').text(partMoment.format('dddd'));
+        part.find('p.date').text(partMoment.format('ll'));
+      } else {
+        part.find('p.name').text(partMoment.format('dddd'));
+        part.find('p.date').text(partMoment.format('LL'));
+      }
+
+    });
+
+  } else if(this.options.view == 'horizontalCalendar' && this.options.zoom == 'week') {
+    var parts = topAxis.find('div.axis-parts div.day-time-axis-frame');
+    parts.each(function() {
+      var part = $(this);
+      var width = part.width();
+      var partMoment = moment(part.data('date'));
+
+      if( width <= 120) {
+        part.find('p.name').text(partMoment.format('dd'));
+      } else {
+        part.find('p.name').text(partMoment.format('dddd'));
+      }
+
+    });
+  }
+}
+
 IADAscheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
   var topAxis = this.scheduleContainer.find('.top-axis > div.axis-parts');
 
   var dayPart = this.getTemplateClone('verticalDayTimeAxisFrameTemplate');
   dayPart.css('width', dayWidth + '%');
-  dayPart.find('p.name').text(dayMoment.format('dddd'));
-  dayPart.find('p.date').text(dayMoment.format('ll'));
+
+  // store the date in header item
+  dayPart.data('date', dayMoment.format('YYYY-MM-DD'));
+
+  dayPart.find('p.name').attr('title',dayMoment.format('dddd'));
+  dayPart.find('p.date').attr('title',dayMoment.format('ll'));
+
   topAxis.append(dayPart);
 
   var column = this.getTemplateClone('columnTemplate');
@@ -1533,6 +1605,8 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
 
     if(this.bg_color != null) {
       newScheduleItem.css('background-color', this.bg_color);
+    } else {
+      newScheduleItem.addClass('concept');
     }
     if(this.text_color != null) {
       newScheduleItem.css('color', this.text_color);
@@ -1547,12 +1621,13 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
   jschobj.append(newScheduleItem);
 
   var schWidth = newScheduleItem.width();
+  var schHeight = newScheduleItem.height();
   var newScheduleItemText = newScheduleItem.find('p.item-text');
 
   if(schWidth > this.schedule.options.min_description_width) {
     newScheduleItemText.text(this.description);
   }
-  if(schWidth > 30) {
+  if((this.schedule.options.view == 'horizontalCalendar' && schWidth > 30) || (this.schedule.options.view == 'verticalCalendar' && schHeight > 30)) {
     if(this.item_id != null) {
       // not new item, so open tooltip control
       newScheduleItem.find('a.open-toolbar').show();
@@ -1716,10 +1791,10 @@ IADAscheduleViewItem.prototype.rerender = function(concept) {
 
 IADAscheduleViewItem.prototype.showResizers = function(schedulePart, back, forward) {
   var schedulePart = $(schedulePart);
-  if(this.schedule.options.view == 'horizontalCalendar') {
+  if(this.schedule.options.view == 'horizontalCalendar' && schedulePart.width() > 30) {
     back ? schedulePart.find('div.resizer.left').show() : schedulePart.find('div.resizer.left').hide();
     forward ? schedulePart.find('div.resizer.right').show() : schedulePart.find('div.resizer.right').hide();
-  } else if (this.schedule.options.view == 'verticalCalendar') {
+  } else if (this.schedule.options.view == 'verticalCalendar' && schedulePart.height() > 30) {
     back ? schedulePart.find('div.resizer.top').show() : schedulePart.find('div.resizer.top').hide();
     forward ? schedulePart.find('div.resizer.bottom').show() : schedulePart.find('div.resizer.bottom').hide();
   }
@@ -1770,9 +1845,7 @@ IADAscheduleViewItem.prototype.render = function(concept) {
     if(parts.length == 1) {
       var schedulePart = this.renderPart(container, currBegin, currEnd);
       if(this.item_id != null) { // Do not show resizers when drawing new item
-        if(schedulePart.width() > 30) {
-          this.showResizers(schedulePart, true, true);
-        }
+        this.showResizers(schedulePart, true, true);
       }
     } else {
       switch(parseInt(parti)) {
