@@ -374,6 +374,7 @@ nl:
       today_and_tomorrow: 'Vandaag en morgen'
       horizontal_calendar_day: 'Horizontale dagkalender'
       horizontal_calendar_week: 'Horizontale weekkalender'
+      vertical_calendar_day: 'Verticale kalender'
       occupation_view: 'Bezetting'
       day_occupation: 'Dagbezetting'
       week_occupation: 'Weekbezetting'

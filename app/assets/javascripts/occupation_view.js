@@ -17,19 +17,6 @@ APP.occupation_view = {
   },
 };
 
-Object.extend = function(destination, source) {
-  for(var property in source) {
-    if(source.hasOwnProperty(property)) {
-      if( destination[property] != null && typeof destination[property] == 'object') {
-        destination[property] = Object.extend(destination[property], source[property])
-      } else {
-        destination[property] = source[property];
-      }
-    }
-  }
-  return destination;
-};
-
 IADAoccupationView.prototype.options = null;
 IADAoccupationView.prototype.currentMonth = 0;
 IADAoccupationView.prototype.currentYear = 0;
