@@ -296,6 +296,28 @@ div.calendar div.schedule-body div.column:nth-child(even) {
   background-color: rgba(0, 0, 0, 0.1);
 }
 
+div.calendar div.schedule-body div.column:nth-child(even).today {
+  /* TODO: dit is een kopie van .progress-bar in global.css.scss. Misschien ooit netter maken? */
+  background-color: #6DBFCE;
+  -webkit-background-size: 30px 30px;
+  -moz-background-size: 30px 30px;
+  background-size: 30px 30px;
+  background-image: -webkit-gradient(linear, left top, right bottom,
+            color-stop(0.25, rgba(255, 255, 255, 0.3)), color-stop(0.25, transparent),
+            color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.3)),
+            color-stop(0.75, rgba(255, 255, 255, 0.3)), color-stop(0.75, transparent),
+            to(transparent));
+  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+
+  -webkit-animation: animate-stripes-30 1.5s linear 0s infinite normal;
+  -moz-animation: animate-stripes-30 1.5s linear 0s infinite normal;
+  animation: animate-stripes-30 1.5s linear 0s infinite normal;
+}
+
 div.calendar div.schedule-body div.row.today,
 div.calendar div.schedule-body div.column.today {
   border-color: #aaaaaa;
