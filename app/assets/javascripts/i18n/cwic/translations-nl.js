@@ -27,6 +27,7 @@ var jsLang = {
     saved: 'Opgeslagen',
   },
   schedule_view: {
+    status_unknown: 'Status onbekend',
     no_objects: 'Geen objecten geselecteerd.',
     being_saved: 'Bezig met opslaan...',
     saving_error: 'Fout tijdens opslaan.',

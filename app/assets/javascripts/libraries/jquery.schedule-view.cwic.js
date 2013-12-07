@@ -1501,6 +1501,8 @@ function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
   this.description = '';
   this.client_id = null;
 
+  this.status = null;
+
   this.domObjects = [];
 
 
@@ -1514,6 +1516,14 @@ IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
   this.text_color = newItem.text_color;
   this.description = newItem.description;
   this.client_id = newItem.client_id;
+
+  if(newItem.status) {
+    this.status  = { 
+                      bg_color: newItem.status.bg_color,
+                      text_color: newItem.status.text_color,
+                      name: newItem.status.name,
+                    }
+  }
 }
 
 IADAscheduleViewItem.prototype.railsDataExport = function() {
@@ -1551,6 +1561,12 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
       newScheduleItem.find('a').css('color', this.text_color);
     }
 
+    if(this.status != null) {
+      newScheduleItem.find('div.status').attr('title', this.status.name).css({backgroundColor: this.status.bg_color, color: this.status.color }).find('span').text(this.status.name.substring(0,1));  
+    } else {
+      newScheduleItem.find('div.status').attr('title', jsLang.schedule_view.status_unknown);
+    }
+
 
   // Add scheduleItem ID to DOM object
   newScheduleItem.data('scheduleItemID', this.item_id);
@@ -1565,6 +1581,10 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
   if(schWidth > this.schedule.options.min_description_width) {
     newScheduleItemText.text(this.description);
   }
+  if(schWidth > 50) {
+    newScheduleItem.find('div.status').show();
+  }
+
   if((this.schedule.options.view == 'horizontalCalendar' && schWidth > 30) || (this.schedule.options.view == 'verticalCalendar' && schHeight > 30)) {
     if(this.item_id != null) {
       // not new item, so open tooltip control
