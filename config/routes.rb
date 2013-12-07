@@ -30,13 +30,14 @@ Cwic::Application.routes.draw do
 
     # Routes for rendering the schedules
     match '/schedule_view/horizontal_calendar_day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'
+    match '/schedule_view/horizontal_calendar_day/entity/:entity/:year/:month/:day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'
     match '/schedule_view/horizontal_calendar_day/:year/:month/:day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'
-    match '/schedule_view/horizontal_calendar_day/:year/:month/:day/entity/:entity', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'
     match '/schedule_view/horizontal_calendar_week', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get'
+    match '/schedule_view/horizontal_calendar_week/entity/:entity/:year/:week', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get'
     match '/schedule_view/horizontal_calendar_week/:year/:week', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get'
     match '/schedule_view/vertical_calendar_day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get'
-    match '/schedule_view/vertical/:year/:week', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get'
-    match '/schedule_view/vertical/:year/:week/entity/:entity', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get'
+    match '/schedule_view/vertical_calendar_day/entity/:entity/:year/:month/:day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get'
+    match '/schedule_view/vertical_calendar_day/:year/:month/:day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get'
     match '/schedule_view/today_and_tomorrow', controller: 'schedule_view', action: 'today_and_tomorrow', via: 'get'
 
     # JSON routes for schedules

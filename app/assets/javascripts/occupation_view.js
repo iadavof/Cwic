@@ -109,9 +109,9 @@ IADAoccupationView.prototype.bindControls = function() {
     var block = $(this);
     var selEntity = block.parents('.occupation-matrix-row').data('entity-id');
     if(occ.options.view == 'dayOccupation') {
-      window.location.href = occ.options.schedule_url + '/' + occ.currentYear + '/' + occ.currentMonth + '/' + block.data('nr') + '/entity/' + selEntity;
+      window.location.href = occ.options.schedule_url + '/entity/' + selEntity + '/' + occ.currentYear + '/' + occ.currentMonth + '/' + block.data('nr');
     } else {
-      window.location.href = occ.options.schedule_url + '/' + occ.currentYear + '/' + block.data('nr') + '/entity/' + selEntity;
+      window.location.href = occ.options.schedule_url + '/entity/' + selEntity + '/' + occ.currentYear + '/' + block.data('nr');
     }
   });
 

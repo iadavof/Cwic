@@ -4,15 +4,9 @@ class ScheduleViewController < ApplicationController
   respond_to :json, only: [:index_domain, :entities]
 
   def horizontal_calendar_day
-    if params[:entity].present?
-      @sel_entity = params[:entity].to_i
-    end
+    get_selected_entity_from_url
+    get_selected_day_from_url
 
-    if params[:year].present? && params[:month].present? && params[:day].present?
-      @year = params[:year].to_i
-      @month = params[:month].to_i
-      @day = params[:day].to_i
-    end
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
     @title = I18n.t('schedule_view.horizontal_schedule_day');
@@ -20,10 +14,9 @@ class ScheduleViewController < ApplicationController
   end
 
   def horizontal_calendar_week
-    if params[:year].present? && params[:week].present?
-      @year = params[:year].to_i
-      @week = params[:week].to_i
-    end
+    get_selected_entity_from_url
+    get_selected_week_from_url
+
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
     @title = I18n.t('schedule_view.horizontal_schedule_week');
@@ -31,10 +24,9 @@ class ScheduleViewController < ApplicationController
   end
 
   def vertical_calendar_day
-    if params[:year].present? && params[:week].present?
-      @year = params[:year].to_i
-      @week = params[:week].to_i
-    end
+    get_selected_entity_from_url
+    get_selected_day_from_url
+    
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
     @title = I18n.t('schedule_view.vertical_schedule_day');
@@ -152,5 +144,26 @@ class ScheduleViewController < ApplicationController
       dateChangeAt << point.to_time
     end
     dateChangeAt.map { |p| time_point_to_reservation_progress(reservation, p) }
+  end
+
+  def get_selected_entity_from_url
+    if params[:entity].present?
+      @sel_entity = params[:entity].to_i
+    end
+  end
+
+  def get_selected_day_from_url
+    if params[:year].present? && params[:month].present? && params[:day].present?
+      @year = params[:year].to_i
+      @month = params[:month].to_i
+      @day = params[:day].to_i
+    end
+  end
+
+  def get_selected_week_from_url
+    if params[:year].present? && params[:week].present?
+      @year = params[:year].to_i
+      @week = params[:week].to_i
+    end
   end
 end

@@ -57,12 +57,14 @@ IADAscheduleView.prototype.initScheduleStub = function() {
 }
 
 IADAscheduleView.prototype.getFocusMoment = function() {
-    if(this.scheduleContainer.data('target-year') != '' && this.scheduleContainer.data('target-month') != '' && this.scheduleContainer.data('target-day') != '') {
-    var now = moment(this.scheduleContainer.data('target-year') + '-' + this.scheduleContainer.data('target-month') + '-' + this.scheduleContainer.data('target-day'));
+  var now = moment().startOf('day');
+  if(this.scheduleContainer.data('target-year') != '' && this.scheduleContainer.data('target-month') != '' && this.scheduleContainer.data('target-day') != '') {
+    now.year(parseInt(this.scheduleContainer.data('target-year')));
+    now.month(parseInt(this.scheduleContainer.data('target-month')) - 1);
+    now.date(parseInt(this.scheduleContainer.data('target-day')));
   } else if(this.scheduleContainer.data('target-year') != '' && this.scheduleContainer.data('target-week') != '') {
-    var now = moment(this.scheduleContainer.data('target-year') + '-' + this.scheduleContainer.data('target-week'), 'GGGG-WW');
-  } else {
-    var now = moment();
+    now.isoWeekYear(parseInt(this.scheduleContainer.data('target-year')));
+    now.isoWeek(parseInt(this.scheduleContainer.data('target-week')));
   }
   return now;
 }
