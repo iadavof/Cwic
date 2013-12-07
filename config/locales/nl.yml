@@ -151,6 +151,8 @@ nl:
         administrative_area_level_1: 'Provincie'
         postal_code: 'Postcode'
         country: 'Land'
+        phone: 'Telefoon'
+        mobile_phone: 'Mobiele tel.'
       organisation_user:
         user: 'Gebruiker'
         user_email: 'E-mailadres'
@@ -547,6 +549,12 @@ nl:
       results: 'resultaten'
       title_html: 'Resultaten voor <strong>%{query}</strong>'
       item: 'Item'
+    organisation_client_result:
+      past_reservations: 'Eerdere reserveringen'
+      upcomming_reservations: 'Aankomende reserveringen'
+      ago: 'geleden'
+      now: 'Nu'
+      in_about: 'over'
 
   reservation_statuses:
     default:

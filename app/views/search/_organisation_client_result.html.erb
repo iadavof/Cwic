@@ -1,3 +1,38 @@
 <div class="result-icon">
   <i class="icon-user"></i>
 </div>
+<div class="info clearfix">
+	<div class="column">
+			<table><tbody>
+			  <tr><th><%= OrganisationClient.human_attribute_name(:name) %></th><td><%= result.first_name + (result.infix.present? ? result.infix + ' ' : ' ') + result.last_name %></td></tr>
+			  <tr><th><%= OrganisationClient.human_attribute_name(:email) %></th><td><a href="mailto:<%= result.email %>"><%= result.email %></a></td></tr>
+			  <tr><th><%= OrganisationClient.human_attribute_name(:phone) %></th><td><a href="tel:<%= result.phone %>"><%= result.phone %></a></td></tr>
+			  <tr><th><%= OrganisationClient.human_attribute_name(:mobile_phone) %></th><td><a href="tel:<%= result.mobile_phone %>"><%= result.mobile_phone %></a></td></tr>
+			  <tr><td colspan="2"><%= result.route %> <%= result.street_number %></td></tr>
+			  <tr><td colspan="2"><%= result.postal_code %> <%= result.locality %></td></tr>
+			  <tr><td colspan="2"><%= result.country %></td></tr>
+			</tbody></table>
+	</div>
+	<div class="column">
+		<h4><%= t('.upcomming_reservations') %></h4>
+		<% if result.upcomming_reservations(3).empty? %>
+			<p><%= t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst) %></p>
+		<% else %>
+				<% result.upcomming_reservations(3).each do |res| %>
+					<dt title="<%= I18n.l(res.begins_at, format: :long) %>"><%= res.begins_at <= Time.now ? t('now') : t('.in_about') + ' ' + distance_of_time_in_words_to_now(res.begins_at) %></dt>
+					<dd><%= res.entity.entity_type.instance_name %> <%= name_link_to_show([@organisation, res.entity]) %> : <%= res.description %></dd>
+			<% end %>
+		<% end %>
+	</div>
+	<div class="column">
+		<h4><%= t('.past_reservations') %></h4>
+		<% if result.past_reservations(3).empty? %>
+			<p><%= t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst) %></p>
+		<% else %>
+				<% result.past_reservations(3).each do |res| %>
+					<dt title="<%= I18n.l(res.ends_at, format: :long) %>"><%= time_ago_in_words(res.ends_at) + ' ' + t('.ago') %></dt>
+					<dd><%= res.entity.entity_type.instance_name %> <%= name_link_to_show([@organisation, res.entity]) %> : <%= res.description%></dd>
+			<% end %>
+		<% end %>
+	</div>
+</div>

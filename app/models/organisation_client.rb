@@ -36,4 +36,12 @@ class OrganisationClient < ActiveRecord::Base
   def instance_name
     "#{first_name} #{infix.present? ? infix + ' ' : ''} #{last_name}, #{locality}"
   end
+
+  def upcomming_reservations(limit)
+    self.reservations.where('ends_at >= :now', now: Time.now).order(:ends_at).limit(limit);
+  end
+
+  def past_reservations(limit)
+    self.reservations.where('begins_at <= :now AND ends_at <= :now', now: Time.now).order(ends_at: :desc).limit(limit);
+  end
 end
