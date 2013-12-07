@@ -1,6 +1,9 @@
 <div class="result-icon">
   <i class="icon-time"></i>
 </div>
+<div class="extra-controls">
+	<%= render partial: 'reservations/status_controls', locals: { reservation: result, extra_css_class: 'mini' } %>
+</div>
 <div class="info clearfix">
 	<div class="column">
 		column 1

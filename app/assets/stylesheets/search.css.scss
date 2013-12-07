@@ -22,6 +22,12 @@
   float: right;
 }
 
+.result > .inner div.extra-controls {
+  position: absolute;
+  top: 5px;
+  right: 50px;
+}
+
 .result .result-icon {
   position: absolute;
   top: 0px;

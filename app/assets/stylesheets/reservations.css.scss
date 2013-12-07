@@ -30,3 +30,14 @@ div.status-selector {
 	    float: right;
 	}
 }
+
+div.status-selector.mini {
+	div.statuses {
+		padding: 2px;
+		border: none;
+	}
+
+	a.status-button {
+		padding: 4px 5px;
+	}
+}
