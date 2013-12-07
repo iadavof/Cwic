@@ -1,4 +1,4 @@
-  <div class="status-selector <%= extra_css_class %>" data-reservation-id="<%= reservation.id %>">
+  <div class="status-selector <%= extra_css_class if defined? extra_css_class %>" data-reservation-id="<%= reservation.id %>">
   	<div class="statuses">
 	    <% reservation.entity.entity_type.reservation_statuses.order(:index).each do |status| %>
 	      <%= content_tag(:a, status.name, { class: 'button status-button' + (reservation.reservation_status == status ? ' active' : ''), style: 'background-color: ' + status.color + '; color: ' + Cwic::Color.text_color(status.color) + ';', data: { :'status-id' => status.id } } ) %>
