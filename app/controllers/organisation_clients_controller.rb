@@ -82,7 +82,7 @@ private
   end
 
   def resource_params
-    params.require(:organisation_client).permit(:first_name, :infix, :last_name, :email, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat)
+    params.require(:organisation_client).permit(:first_name, :infix, :last_name, :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat)
   end
 
   def interpolation_options

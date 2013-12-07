@@ -21,6 +21,8 @@
       <th><%= Organisation.human_attribute_name(:postal_code) %></th>
       <th><%= Organisation.human_attribute_name(:locality) %></th>
       <th><%= Organisation.human_attribute_name(:country) %></th>
+      <th><%= Organisation.human_attribute_name(:phone) %></th>
+      <th><%= Organisation.human_attribute_name(:mobile_phone) %></th>
       <th></th>
     </tr>
   </thead>
@@ -35,6 +37,8 @@
       <td><%= organisation_client.postal_code %></td>
       <td><%= organisation_client.locality %></td>
       <td><%= organisation_client.country %></td>
+      <td><%= organisation_client.phone %></td>
+      <td><%= organisation_client.mobile_phone %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, organisation_client]) %>
       </td>

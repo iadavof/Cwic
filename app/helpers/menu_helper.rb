@@ -51,6 +51,9 @@ module MenuHelper
         feedbacks: {
           index: { url: feedbacks_path },
         },
+        organisations: {
+          index: { url: organisations_path},
+        },
         users: {
           index: { url: users_path },
           },

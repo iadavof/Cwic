@@ -3,6 +3,7 @@
 <% if @organisations.empty? %>
   <p><%= t('.empty', default: :empty_objects, classes: Organisation.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @organisations %>
 <table>
   <thead>
     <tr>
@@ -12,6 +13,8 @@
       <th><%= Organisation.human_attribute_name(:locality) %></th>
       <th><%= Organisation.human_attribute_name(:postal_code) %></th>
       <th><%= Organisation.human_attribute_name(:country) %></th>
+      <th><%= Organisation.human_attribute_name(:phone_general) %></th>
+      <th><%= Organisation.human_attribute_name(:phone_reservations) %></th>
       <th></th>
     </tr>
   </thead>
@@ -25,6 +28,8 @@
       <td><%= organisation.postal_code %></td>
       <td><%= organisation.locality %></td>
       <td><%= organisation.country %></td>
+      <td><%= organisation.phone_general %></td>
+      <td><%= organisation.phone_reservations %></td>
       <td class="icons">
         <%= icon_link_to_edit(organisation) %>
         <%= icon_link_to_destroy(organisation) %>
@@ -33,6 +38,7 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @organisations %>
 <% end %>
 
 <%= button_link_to_new(Organisation) %>

@@ -21,7 +21,7 @@ class OrganisationClient < ActiveRecord::Base
   validates :lng, numericality: true, allow_blank: true;
   validates :lat, numericality: true, allow_blank: true;
 
-  pg_global_search against: { first_name: 'A', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B' }, associated_against: { stickies: { sticky_text: 'C' } }
+  pg_global_search against: { first_name: 'A', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
 
   default_scope { order(:first_name, :last_name, :locality) }
 

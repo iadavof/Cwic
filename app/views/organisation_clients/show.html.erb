@@ -21,6 +21,10 @@
   <dd><%= @organisation_client.locality %></dd>
   <dt><%= OrganisationClient.human_attribute_name(:country) %></dt>
   <dd><%= @organisation_client.country %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:phone) %></dt>
+  <dd><%= @organisation_client.phone %></dd>
+  <dt><%= OrganisationClient.human_attribute_name(:mobile_phone) %></dt>
+  <dd><%= @organisation_client.mobile_phone %></dd>
 </dl>
 
 <%= button_link_back_to_index([@organisation, OrganisationClient]) %>

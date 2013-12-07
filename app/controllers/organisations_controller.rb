@@ -39,7 +39,11 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @organisations = Organisation.accessible_by(current_ability, :index)
+      @organisations = Organisation.accessible_by(current_ability, :index).page(params[:page])
+      # if no results, check if not a page is selected that does not exist
+      unless @organisations.present?
+        @organisations = Organisation.accessible_by(current_ability, :index).page(1)
+      end
     when 'new', 'create'
       @organisation = Organisation.new
     else
@@ -49,7 +53,7 @@ private
 
   # Only allow a trusted parameter "white list" through.
   def resource_params
-    params.require(:organisation).permit(:name, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat)
+    params.require(:organisation).permit(:name, :phone_general, :phone_reservations, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat)
   end
 
   def interpolation_options

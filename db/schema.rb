@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131127133726) do
+ActiveRecord::Schema.define(version: 20131207155642) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -210,6 +210,8 @@ ActiveRecord::Schema.define(version: 20131127133726) do
     t.string   "address_type"
     t.float    "lat"
     t.float    "lng"
+    t.string   "phone"
+    t.string   "mobile_phone"
   end
 
   add_index "organisation_clients", ["organisation_id"], name: "index_organisation_clients_on_organisation_id", using: :btree
@@ -246,6 +248,8 @@ ActiveRecord::Schema.define(version: 20131127133726) do
     t.string   "address_type"
     t.float    "lat"
     t.float    "lng"
+    t.string   "phone_general"
+    t.string   "phone_reservations"
   end
 
   create_table "pg_search_documents", force: true do |t|

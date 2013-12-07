@@ -17,6 +17,10 @@
   <dd><%= @organisation.locality %></dd>
   <dt><%= Organisation.human_attribute_name(:country) %></dt>
   <dd><%= @organisation.country %></dd>
+  <dt><%= Organisation.human_attribute_name(:phone_general) %></dt>
+  <dd><%= @organisation.phone_general %></dd>
+  <dt><%= Organisation.human_attribute_name(:phone_reservations) %></dt>
+  <dd><%= @organisation.phone_reservations %></dd>
 </dl>
 
 <%= button_link_back_to_index(Organisation) %>

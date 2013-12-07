@@ -136,6 +136,8 @@ nl:
         administrative_area_level_1: 'Provincie'
         postal_code: 'Postcode'
         country: 'Land'
+        phone_general: 'Tel. algemeen'
+        phone_reservations: 'Tel. reserveringen'
       organisation_client:
         name: 'Naam'
         first_name: 'Voornaam'
