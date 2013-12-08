@@ -22,6 +22,9 @@ APP.init = function() {
     });
   }
 
+  // Replace default confirm box with our confirm
+  this.global.replaceConfirmBox();
+
   // Load stickies (if #note-container is present)
   this.stickies.loadStickies();
 
@@ -205,6 +208,38 @@ APP.global = {
       }
       return false;
     }
+  },
+  replaceConfirmBox: function() {
+    $.rails.allowAction = function(link) {
+      if(!$(link).attr('data-confirm')) {
+        return true;
+      }
+      APP.global.createConfirmBox(link);
+      return false;
+    };
+    $.rails.confirmed = function(link) {
+      var link = $(link);
+      link.removeAttr('data-confirm');
+      link.trigger('click.rails');
+    };
+  },
+  createConfirmBox: function(link) {
+    var link = $(link);
+    var message = link.attr('data-confirm');
+
+    var content = $('<div>');
+
+    content.append($('<p>', { text: message, class: 'confirm-question' }));
+
+    var notOkButton = $('<a>', {class: 'button', text: jsLang.global.no });
+    var okButton = $('<a>', {class: 'button red', text: jsLang.global.yes });
+    okButton.on('click', function(){ closeModal(); $.rails.confirmed(link); });
+    notOkButton.on('click', function(){ closeModal(); });
+
+    content.append(okButton);
+    content.append(notOkButton);
+
+    openModal('confirm', content);
   },
   keyboardShortcutsInit: function() {
     $(document).keydown(function(event) {
