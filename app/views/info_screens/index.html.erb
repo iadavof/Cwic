@@ -9,6 +9,9 @@
     <tr>
       <th><%= InfoScreen.human_attribute_name(:name) %></th>
       <th><%= InfoScreen.human_attribute_name(:public) %></th>
+      <th><%= InfoScreen.human_attribute_name(:active_entities) %></th>
+      <th><%= InfoScreen.human_attribute_name(:clock_header) %></th>
+      <th><%= InfoScreen.human_attribute_name(:direction_char_visible) %></th>
       <th></th>
     </tr>
   </thead>
@@ -18,6 +21,9 @@
     <tr>
       <td><%= name_link_to_show([@organisation, info_screen]) %></td>
       <td><%= format_bool(info_screen.public) %></td>
+      <td><%= info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active.map(&:instance_name).join(', ') %></td>
+      <td><%= format_bool(info_screen.clock_header) %></td>
+      <td><%= format_bool(info_screen.direction_char_visible) %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, info_screen]) %>
         <%= icon_link_to_destroy([@organisation, info_screen]) %>

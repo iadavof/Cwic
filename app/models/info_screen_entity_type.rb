@@ -12,6 +12,6 @@ class InfoScreenEntityType < ActiveRecord::Base
   scope :active, -> { where('active = true') }
 
   def instance_name
-    self.add_new_entities
+    self.entity_type.instance_name
   end
 end

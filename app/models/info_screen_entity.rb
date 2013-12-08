@@ -9,7 +9,7 @@ class InfoScreenEntity < ActiveRecord::Base
   scope :active, -> { where("#{self.table_name}.active = true") }
 
   def instance_name
-    self.direction_char
+    self.entity.instance_name
   end
 
   def active
