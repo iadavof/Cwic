@@ -1562,7 +1562,7 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
     }
 
     if(this.status != null) {
-      newScheduleItem.find('div.status').attr('title', this.status.name).css({backgroundColor: this.status.bg_color, color: this.status.color }).find('span').text(this.status.name.substring(0,1));  
+      newScheduleItem.find('div.status').attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color, borderColor: this.status.text_color }).find('span').text(this.status.name.substring(0,1));  
     } else {
       newScheduleItem.find('div.status').attr('title', jsLang.schedule_view.status_unknown);
     }
