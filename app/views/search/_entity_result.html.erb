@@ -1,3 +1,6 @@
+<h3>
+  <%= result.class.model_name.human %>: <%= name_link_to_show([@organisation, result]) %>
+</h3>
 <div class="result-icon" style="background-color:<%= result.color %>;">
   <i class="icon-shapes" style="color:<%= Cwic::Color.text_color(result.color) %>;"></i>
 </div>

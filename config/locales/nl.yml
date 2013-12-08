@@ -555,6 +555,8 @@ nl:
       ago: 'geleden'
       now: 'Nu'
       in_about: 'over'
+    reservation_result:
+      options: 'Opties'
 
   reservation_statuses:
     default:
