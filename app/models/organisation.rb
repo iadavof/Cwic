@@ -9,8 +9,6 @@ class Organisation < ActiveRecord::Base
   has_many :stickies, dependent: :destroy
   has_many :entity_images, dependent: :destroy
   has_many :info_screens, dependent: :destroy
-  has_many :day_occupations, dependent: :destroy
-  has_many :week_occupations, dependent: :destroy
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :route, presence: true, length: { maximum: 255 }

@@ -22,6 +22,12 @@ class OrganisationsController < ApplicationController
     respond_with(@organisation)
   end
 
+  # DELETE /organisations/1
+  def destroy
+    @organisation.destroy
+    respond_with(Organisation)
+  end
+
   # POST /organisations
   def create
     @organisation.attributes = resource_params
