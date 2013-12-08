@@ -36,10 +36,11 @@ APP.reservations = {
       });
       $(':radio[name="organisation_client_type"]').trigger('change');
     },
-    bindStatusSelectorControls: function() {
+    bindStatusSelectorControls: function(changedCallback) {
       $('div.status-selector').on('click', 'a', function() {
-        var new_status_id = $(this).data('status-id');
-        var selectorDiv = $(this).parents('div.status-selector');
+        var button = $(this);
+        var new_status_id = button.data('status-id');
+        var selectorDiv = button.parents('div.status-selector');
 
         selectorDiv.find('a').removeClass('active');
         $(this).addClass('active');
@@ -53,6 +54,10 @@ APP.reservations = {
         }).success(function(response) {
           selectorDiv.find('p.saved-notification').show();
           setTimeout(function() { selectorDiv.find('p.saved-notification').hide(); }, 5000);
+
+          if(changedCallback != null) {
+            changedCallback(button);
+          }
         });
 
       });
