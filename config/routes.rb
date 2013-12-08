@@ -57,7 +57,9 @@ Cwic::Application.routes.draw do
     match 'reservations/:id/update_status', controller: 'reservations', action: 'update_status', via: 'patch', as: 'reservations_update_status'
     resources :reservations
     match '/organisation_clients/autocomplete_search', controller: 'organisation_clients', action: 'autocomplete_search', via: 'get'
-    resources :organisation_clients
+    resources :organisation_clients do
+        resources :reservations
+    end
     resources :entity_type_icons
 
     match '/search/results', controller: 'search', action: 'results', via: 'get'

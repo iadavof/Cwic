@@ -1,4 +1,4 @@
-<% content_for :page_title do %><%= index_title(Reservation) %><% end %>
+<% content_for :page_title do %><%= @organisation_client.present? ? index_title_of(Reservation, @organisation_client.instance_name).html_safe : index_title(Reservation).html_safe %><% end %>
 
 <% content_for :mini_search do %>
   <%= render 'layouts/mini_search', current_search_type: Reservation.model_name %>
@@ -6,47 +6,12 @@
 
 <% if @reservations.empty? && params[:mini_search].present? %>
 <p><%= t('empty_for_search', classes: Reservation.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe %>
-<%= link_to(t('remove_search'), organisation_reservations_path(current_organisation)) %></p>
+<%= link_to(t('remove_search'), @organisation_client.present? ? organisation_organisation_client_reservations_path(current_organisation, @organisation_client) : organisation_reservations_path(current_organisation)) %></p>
 <% elsif @reservations.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <%= paginate @reservations %>
-<table>
-  <thead>
-    <tr>
-      <th><%= Reservation.human_attribute_name(:status) %></th>
-      <th><%= Reservation.human_attribute_name(:id) %></th>
-      <th><%= Reservation.human_attribute_name(:description) %></th>
-      <th><%= Reservation.human_attribute_name(:organisation_client) %></th>
-      <th><%= Reservation.human_attribute_name(:entity) %></th>
-      <th><%= Reservation.human_attribute_name(:begins_at) %></th>
-      <th><%= Reservation.human_attribute_name(:ends_at) %></th>
-      <th></th>
-    </tr>
-  </thead>
-
-  <tbody>
-    <% @reservations.each do |reservation| %>
-    <tr>
-      <% if reservation.reservation_status.present? %>
-      <td style="opacity: 0.7; background-color: <%= reservation.reservation_status.color %>; color: <%= Cwic::Color.text_color(reservation.reservation_status.color) %>;"><%= reservation.reservation_status.name %></td>
-      <% else %>
-        <td></td>
-      <% end %>
-      <td><%= name_link_to_show([@organisation, reservation]) %></td>
-      <td><%= reservation.description %></td>
-      <td><%= reservation.organisation_client.instance_name %></td>
-      <td><%= reservation.entity.instance_name %></td>
-      <td><%= l(reservation.begins_at, format: :long) %></td>
-      <td><%= l(reservation.ends_at, format: :long) %></td>
-      <td class="icons">
-        <%= icon_link_to_edit([@organisation, reservation]) %>
-        <%= icon_link_to_destroy([@organisation, reservation]) %>
-      </td>
-    </tr>
-    <% end %>
-  </tbody>
-</table>
+<%= render partial: 'reservations/table', locals: { reservations: @reservations } %>
 <%= paginate @reservations %>
 <% end %>
 

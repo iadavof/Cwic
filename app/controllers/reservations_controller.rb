@@ -87,17 +87,27 @@ private
   def load_resource
     case params[:action]
     when 'index'
+      if params[:organisation_client_id].present?
+        @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id])
+      end
+
+      if @organisation_client.present?
+        rel = @organisation_client.reservations
+      else
+        rel = @organisation.reservations
+      end
+
       if params[:mini_search].present?
-        @reservations = @organisation.reservations.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
+        @reservations = rel.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
         # if no results, check if not a page is selected that does not exist
         unless @reservations.present?
-          @reservations = @organisation.reservations.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(1)
+          @reservations = rel.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(1)
         end
       else
-        @reservations = @organisation.reservations.accessible_by(current_ability, :index).order(id: :desc).page(params[:page])
+        @reservations = rel.accessible_by(current_ability, :index).order(id: :desc).page(params[:page])
         # if no results, check if not a page is selected that does not exist
         unless @reservations.present?
-          @reservations = @organisation.reservations.accessible_by(current_ability, :index).order(id: :desc).page(1)
+          @reservations = rel.accessible_by(current_ability, :index).order(id: :desc).page(1)
         end
       end
     when 'new', 'create'

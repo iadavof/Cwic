@@ -1,0 +1,36 @@
+<table>
+  <thead>
+    <tr>
+      <th><%= Reservation.human_attribute_name(:status) %></th>
+      <th><%= Reservation.human_attribute_name(:id) %></th>
+      <th><%= Reservation.human_attribute_name(:description) %></th>
+      <th><%= Reservation.human_attribute_name(:organisation_client) %></th>
+      <th><%= Reservation.human_attribute_name(:entity) %></th>
+      <th><%= Reservation.human_attribute_name(:begins_at) %></th>
+      <th><%= Reservation.human_attribute_name(:ends_at) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% reservations.each do |reservation| %>
+    <tr>
+      <% if reservation.reservation_status.present? %>
+      <td style="opacity: 0.7; background-color: <%= reservation.reservation_status.color %>; color: <%= Cwic::Color.text_color(reservation.reservation_status.color) %>;"><%= reservation.reservation_status.name %></td>
+      <% else %>
+        <td></td>
+      <% end %>
+      <td><%= name_link_to_show([@organisation, reservation]) %></td>
+      <td><%= reservation.description %></td>
+      <td><%= reservation.organisation_client.instance_name %></td>
+      <td><%= reservation.entity.instance_name %></td>
+      <td><%= l(reservation.begins_at, format: :long) %></td>
+      <td><%= l(reservation.ends_at, format: :long) %></td>
+      <td class="icons">
+        <%= icon_link_to_edit([@organisation, reservation]) %>
+        <%= icon_link_to_destroy([@organisation, reservation]) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
