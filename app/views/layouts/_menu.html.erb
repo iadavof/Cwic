@@ -3,7 +3,10 @@
   <div id="user-info">
     <a id="current-user" href="#"><i class="icon-user"></i> <%= current_user.instance_name %><%= ' (' + current_organisation.instance_name + ')' if current_organisation.present? %></a>
     <ul id="user-menu">
-      <li><%= link_to(content_tag(:i, '', class: 'icon-off') + ' ' + t('.logout'), destroy_user_session_path, method: :delete) %></li>
+      <% current_user.organisations.each do |org| %>
+        <li><%= link_to(content_tag(:i, '', class: current_organisation == org ? 'icon icon-ok' : 'icon') + ' ' + org.instance_name, set_organisation_path(org))%></li>
+      <% end %>
+      <li><%= link_to(content_tag(:i, '', class: 'icon icon-off') + ' ' + t('.logout'), destroy_user_session_path, method: :delete) %></li>
     </ul>
   </div>
   <a id="open-feedback-button" class="button blue"><%= t('.feedback') %></a>

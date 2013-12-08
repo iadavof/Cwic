@@ -1,5 +1,4 @@
 Cwic::Application.routes.draw do
-  resources :reservation_statuses
 
   get "home/index"
   root to: 'home#index'
@@ -10,6 +9,7 @@ Cwic::Application.routes.draw do
   resources :entity_type_icons # admin page for managing the entity type icons
   resources :feedbacks, except: [:new, :edit]
 
+  match '/set_organisation/:organisation_id/', controller: 'application', action: 'set_organisation', via: 'get', as: 'set_organisation'
   resources :organisations do
     resources :organisation_users, except: :show
     match '/organisation_users/send_invitation', controller: 'organisation_users', action: 'send_invitation', via: 'post'

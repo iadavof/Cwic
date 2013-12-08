@@ -1581,7 +1581,7 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
   if(schWidth > this.schedule.options.min_description_width) {
     newScheduleItemText.text(this.description);
   }
-  if(schWidth > 50) {
+  if(schWidth > 50 && this.item_id != null) {
     newScheduleItem.find('div.status').show();
   }
 

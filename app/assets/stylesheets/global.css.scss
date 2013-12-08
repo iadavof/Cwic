@@ -366,6 +366,11 @@ html.js #search-bar.open {
   text-decoration: none;
 }
 
+#user-menu > li > a > i.icon {
+  width: 20px;
+  display: inline-block;
+}
+
 #main-menu > li > a .shortcut-highlight {
   text-decoration: underline;
 }

@@ -23,12 +23,22 @@ class ApplicationController < ActionController::Base
     @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
   end
 
+  def set_organisation
+    sel_organisation = current_user.organisations.find(params[:organisation_id]);
+    if sel_organisation.present?
+      session[:current_organisation_id] = sel_organisation.id
+      @current_organisation = sel_organisation
+    end
+    redirect_to :root
+  end
+
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
   end
 
   def current_organisation
-    @current_organisation ||= current_user.organisations.first if current_user.present? # XXX TODO this should return the currently selected organisation
+    @current_organisation ||= current_user.organisations.find(session[:current_organisation_id]) if current_user.present? && session[:current_organisation_id].present?
+    @current_organisation ||= current_user.organisations.first if current_user.present?
   end
   helper_method :current_organisation
 
