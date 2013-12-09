@@ -1,3 +1,5 @@
+I18n.locale = :nl
+
 u1 = User.where('first_name = :fname AND last_name = :lname', fname: 'Admin', lname: 'IADA').first;
 o1 = Organisation.create!(name: 'Maldensteijn', route: 'Kerkplein', street_number: '8a', administrative_area_level_1: 'Gelderland', administrative_area_level_2: 'Heumen', postal_code: '6581 AC', locality: 'Malden', country: 'Netherlands', lat: 51.7808067, lng: 5.850443799999994)
 ou1 = OrganisationUser.create!(organisation: o1, user: u1, organisation_role: OrganisationRole.first)

@@ -21,7 +21,7 @@
 			<dl>
 				<% result.upcomming_reservations(3).each do |res| %>
 					<dt title="<%= I18n.l(res.begins_at, format: :long) %>"><%= res.begins_at <= Time.now ? t('now') : t('.in_about') + ' ' + distance_of_time_in_words_to_now(res.begins_at) %></dt>
-					<dd><%= res.entity.entity_type.instance_name %> <%= name_link_to_show([@organisation, res.entity]) %> : <%= name_link_to_show([@organisation, res]) %> <%= res.description %></dd>
+					<dd><%= name_link_to_show([@organisation, res.entity], name: res.entity.full_instance_name) %> : <%= name_link_to_show([@organisation, res]) %> <%= res.description %></dd>
 				<% end %>
 			</dl>
 		<% end %>
@@ -34,7 +34,7 @@
 			<dl>
 				<% result.past_reservations(3).each do |res| %>
 					<dt title="<%= I18n.l(res.ends_at, format: :long) %>"><%= time_ago_in_words(res.ends_at) + ' ' + t('.ago') %></dt>
-					<dd><%= res.entity.entity_type.instance_name %> <%= name_link_to_show([@organisation, res.entity]) %> : <%= name_link_to_show([@organisation, res]) %> <%= res.description%></dd>
+					<dd><%= name_link_to_show([@organisation, res.entity], name: res.entity.full_instance_name) %> : <%= name_link_to_show([@organisation, res]) %> <%= res.description%></dd>
 				<% end %>
 			</dl>
 		<% end %>
