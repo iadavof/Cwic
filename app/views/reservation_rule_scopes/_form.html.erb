@@ -11,7 +11,7 @@
   </div>
   <div class="field" id="reservation-rule-scope-span-selector-wrapper">
     <%= f.label :span_selector %>
-    <%= f.select :span_selector, [] %>
+    <%= f.select :span_selector, [],  {}, data: { :'previous-value' => f.object.span_selector } %>
   </div>
   <div id="reservation-rule-scope-spans-container" style="display: none;">
     <div class="nested-form" id="reservation-rule-scope-spans">

@@ -18,7 +18,7 @@
     </div>
     <div class="field holiday from">
       <%= f.label(:holiday_from) %>
-      <%= f.select(:holiday_from, Holidays.between(Date.today.beginning_of_year, Date.today.end_of_year, I18n.locale).map { |h| [h[:name], h[:key]] }, prompt: true) %>
+      <%= f.select(:holiday_from, f.object.relevant_holidays.map { |h| [h[:name], h[:key]] }, prompt: true) %>
     </div>
     <div class="field week from">
       <%= f.label(:week_from) %>
@@ -34,11 +34,11 @@
     </div>
     <div class="field hour from">
       <%= f.label(:hour_from) %>
-      <%= f.select(:hour_from, (1..23).map { |h| '%02i' % h }, prompt: true) %>
+      <%= f.select(:hour_from, (0..23).map { |h| ['%02i' % h, h] }, prompt: true) %>
     </div>
     <div class="field minute from">
       <%= f.label(:minute_from) %>
-      <%= f.select(:minute_from, (1..59).map { |m| '%02i' % m }, prompt: true) %>
+      <%= f.select(:minute_from, (0..59).map { |m| ['%02i' % m, m] }, prompt: true) %>
     </div>
   </div>
   <div class="to">
@@ -57,7 +57,7 @@
     </div>
     <div class="field holiday to">
       <%= f.label(:holiday_to) %>
-      <%= f.select(:holiday_to, Holidays.between(Date.today.beginning_of_year, Date.today.end_of_year, I18n.locale).map { |h| [h[:name], h[:key]] }, prompt: true) %>
+      <%= f.select(:holiday_to, f.object.relevant_holidays.map { |h| [h[:name], h[:key]] }, prompt: true) %>
     </div>
     <div class="field week to">
       <%= f.label(:week_to) %>
@@ -73,11 +73,11 @@
     </div>
     <div class="field hour to">
       <%= f.label(:hour_to) %>
-      <%= f.select(:hour_to, (1..23).map { |h| '%02i' % h }, prompt: true) %>
+      <%= f.select(:hour_to, (0..23).map { |h| ['%02i' % h, h] }, prompt: true) %>
     </div>
     <div class="field minute to">
       <%= f.label(:minute_to) %>
-      <%= f.select(:minute_to, (1..59).map { |m| '%02i' % m }, prompt: true) %>
+      <%= f.select(:minute_to, (0..59).map { |m| ['%02i' % m, m] }, prompt: true) %>
     </div>
   </div>
 </div>

@@ -11,6 +11,7 @@ APP.util = {
     for(key in items) {
       $(new Option(items[key], key)).appendTo(dropdown);
     }
+    dropdown.val(dropdown.data('previous-value'));
     dropdown.cwicControl('recreate');
   },
   // XXX TODO docs

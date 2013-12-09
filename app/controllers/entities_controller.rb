@@ -84,6 +84,7 @@ private
   def check_entity_type_changed(template)
     return false unless params[:entity_type_changed].present?
     @entity.entity_type_id = resource_params[:entity_type_id]
+    @entity.color = Cwic::Color.random_hex_color
     build_properties if @entity.entity_type.present?
     render template
     true
