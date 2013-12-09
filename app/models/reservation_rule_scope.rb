@@ -4,7 +4,6 @@ class ReservationRuleScope < ActiveRecord::Base
   belongs_to :entity
   belongs_to :repetition_unit, class_name: 'TimeUnit'
   has_many :spans, class_name: 'ReservationRuleScopeSpan', dependent: :destroy, inverse_of: :scope, foreign_key: 'scope_id'
-  #has_many :childs, class_name: 'ReservationRuleScope', as: :parent
 
   validates :entity_id, presence: true
   validates :entity, presence: true, if: "entity_id.present?"

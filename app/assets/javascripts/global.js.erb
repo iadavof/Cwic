@@ -34,8 +34,8 @@ APP.init = function() {
   // Initialize tabs
   this.global.initializeTabs();
 
-  // Initialize date- and timepicker fields
-  this.global.initializeDateTimePickers();
+  // Initialize special form fields, such as date- and timepickers, special Cwic Controls (select, checkbox, ...)
+  this.global.initializeFormFields();
 
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
@@ -284,13 +284,14 @@ APP.global = {
     });
     return first;
   },
-  initializeDateTimePickers: function(parent) {
+  initializeFormFields: function(parent) {
     if(!parent) {
       parent = document.body;
     }
+    $(parent).find('select, :radio, :checkbox, input[type=file]').cwicControl();
     $(parent).find('.datepicker-field').datepicker({ showOn: 'both' });
     $(parent).find('.timepicker-field').timepicker({ showPeriodLabels: false, showOn: 'both' });
-    $(document).on('nested:fieldAdded', function() { APP.global.initializeDateTimePickers(this); });
+    $(document).on('nested:fieldAdded', function() { APP.global.initializeFormFields(this); });
   }
 };
 

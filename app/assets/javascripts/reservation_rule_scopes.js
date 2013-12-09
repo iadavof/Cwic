@@ -18,8 +18,6 @@ APP.reservation_rule_scopes = {
   initializeSpanSelector: function() {
     var repetition = APP.reservation_rule_scopes.getRepetition();
 
-    console.debug(repetition);
-
     // Determine options for span selector based on repetition
     var spanSelectorOptions = APP.reservation_rule_scopes.getSpanSelectorOptions(repetition);
 
@@ -59,6 +57,12 @@ APP.reservation_rule_scopes = {
     }
   },
   initializeSpanWrapper: function(spanWrapper, fields) {
+    if(typeof fields === 'undefined') {
+      var repetition = this.getRepetition();
+      var spanSelector = this.getSpanSelector();
+      fields = this.getSpanFields(repetition, spanSelector);
+    }
+
     // Hide all span fields
     spanWrapper.find('.field').hide();
 

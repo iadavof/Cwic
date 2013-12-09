@@ -23,6 +23,8 @@ class ReservationRuleScopeSpan < ActiveRecord::Base
   validates :hour_to, numericality: { only_integer: true }, allow_nil: true
   validates :minute_to, numericality: { only_integer: true }, allow_nil: true
 
+  normalize_attributes :holiday_from, :holiday_to
+
   def relevant_holidays
     Holidays.between(Date.today.beginning_of_year, Date.today.end_of_year, I18n.locale)
   end
