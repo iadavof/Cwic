@@ -73,6 +73,7 @@ GEM
       activerecord (>= 3.0.0)
     arel (4.0.1)
     atomic (1.1.14)
+    attribute_normalizer (1.1.0)
     bcrypt-ruby (3.1.2)
     bcrypt-ruby (3.1.2-x86-mingw32)
     builder (3.1.4)
@@ -278,6 +279,7 @@ PLATFORMS
 DEPENDENCIES
   activerecord-import
   ancestry
+  attribute_normalizer
   cancan
   carrierwave
   coffee-rails (~> 4.0.0)

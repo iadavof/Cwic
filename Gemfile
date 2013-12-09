@@ -117,6 +117,9 @@ gem 'holidays', github: 'kreintjes/holidays' #path: '~/rails/gems/holidays'githu
 # Translate numbers to words (and ordinal forms). Custom gem to add ordinal support for dutch locale.
 gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' #path: '~/rails/gems/numbers_and_words'
 
+# Attribute normalizer to normalize/cleanup attribute values (for instance change blanks to nils)
+gem 'attribute_normalizer'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'

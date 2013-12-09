@@ -20,8 +20,9 @@ class Reservation < ActiveRecord::Base
 
   accepts_nested_attributes_for :organisation_client
 
+  normalize_attributes :description
+
   before_validation :check_reservation_organisation
-  before_validation { self.description.strip! }
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_websockets
   before_save :check_if_should_nillify_reservation_status

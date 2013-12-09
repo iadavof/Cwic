@@ -62,7 +62,7 @@ var jsLang = {
       },
       month: {
         'days': 'Dagen',
-        'nr_dow_of': 'De <x>de dag van de maand'
+        'nr_dow_of': 'Weekdag x van de maand'
       }
     }
   },
