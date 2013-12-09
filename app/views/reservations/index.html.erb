@@ -1,17 +1,17 @@
 <% content_for :page_title do %><%= @organisation_client.present? ? index_title_of(Reservation, @organisation_client.instance_name).html_safe : index_title(Reservation).html_safe %><% end %>
 
 <% content_for :mini_search do %>
-  <%= render 'layouts/mini_search', current_search_type: Reservation.model_name %>
+  <%= render 'layouts/mini_search', current_search_type: Reservation.model_name, include_date: true %>
 <% end %>
-
+  <%= filter_summary(@organisation_client, params[:date_domain_from], params[:date_domain_to]).html_safe %>
 <% if @reservations.empty? && params[:mini_search].present? %>
-<p><%= t('empty_for_search', classes: Reservation.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe %>
+<p><%= t('empty_for_search', classes: Reservation.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe %>
 <%= link_to(t('remove_search'), @organisation_client.present? ? organisation_organisation_client_reservations_path(current_organisation, @organisation_client) : organisation_reservations_path(current_organisation)) %></p>
 <% elsif @reservations.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <%= paginate @reservations %>
-<%= render partial: 'reservations/table', locals: { reservations: @reservations } %>
+<%= render partial: 'reservations/table', locals: { reservations: @reservations, include_date: true } %>
 <%= paginate @reservations %>
 <% end %>
 

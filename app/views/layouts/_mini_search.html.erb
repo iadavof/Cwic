@@ -1,4 +1,25 @@
-    <%= form_tag(nil, method: :get, class: 'mini-search') do %>
+    <%= form_tag(nil, method: :get, class: 'mini-search' + ((defined? include_date && include_date) ? ' with-date' : '')) do %>
+
+      <% if defined? include_date && include_date %>
+        <% if(params[:date_domain_from].present?) %>
+          <div class="field-with-clear">
+            <%= text_field_tag(:date_domain_from, params[:date_domain_from], placeholder: t('.date_domain_from_placeholder'), id: 'date_domain_from', class: 'datepicker-field') %>
+            <span>X</span>
+          </div>
+          <% else %>
+            <%= text_field_tag(:date_domain_from, '', placeholder: t('.date_domain_from_placeholder'), id: 'date_domain_from', class: 'datepicker-field') %>
+        <% end %>
+
+       <% if(params[:date_domain_to].present?) %>
+          <div class="field-with-clear">
+            <%= text_field_tag(:date_domain_to, params[:date_domain_to], placeholder: t('.date_domain_to_placeholder'), id: 'date_domain_to', class: 'datepicker-field') %>
+            <span>X</span>
+          </div>
+          <% else %>
+            <%= text_field_tag(:date_domain_to, '', placeholder: t('.date_domain_to_placeholder'), id: 'date_domain_to', class: 'datepicker-field') %>
+        <% end %>
+      <% end %>
+
       <%= text_field_tag(:mini_search, params[:mini_search], placeholder: t('.search_' + current_search_type.to_s.downcase + '_placeholder')) %>
       <%= submit_tag(t('.search'), class: 'button red') %>
     <% end %>

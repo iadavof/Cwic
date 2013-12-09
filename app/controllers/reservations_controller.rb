@@ -1,4 +1,5 @@
 class ReservationsController < ApplicationController
+  before_action :load_organisation_client
   before_action :load_resource
   authorize_resource
 
@@ -87,33 +88,49 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      if params[:organisation_client_id].present?
-        @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id])
-      end
-
       if @organisation_client.present?
-        rel = @organisation_client.reservations
+        reservations = @organisation_client.reservations
       else
-        rel = @organisation.reservations
+        reservations = @organisation.reservations
       end
+      reservations = apply_date_domain(reservations)
+      reservations = apply_search_query(reservations)
 
-      if params[:mini_search].present?
-        @reservations = rel.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
-        # if no results, check if not a page is selected that does not exist
-        unless @reservations.present?
-          @reservations = rel.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(1)
-        end
-      else
-        @reservations = rel.accessible_by(current_ability, :index).order(id: :desc).page(params[:page])
-        # if no results, check if not a page is selected that does not exist
-        unless @reservations.present?
-          @reservations = rel.accessible_by(current_ability, :index).order(id: :desc).page(1)
-        end
+      @reservations = reservations.accessible_by(current_ability, :index).order(id: :desc).page(params[:page])
+      # if no results, check if not a page is selected that does not exist
+      unless @reservations.present?
+        @reservations = reservations.accessible_by(current_ability, :index).order(id: :desc).page(1)
       end
     when 'new', 'create'
       @reservation = @organisation.reservations.build
     else
       @reservation = @organisation.reservations.find(params[:id])
+    end
+  end
+
+  def apply_search_query(reservations)
+    if params[:mini_search].present?
+      reservations.global_search(params[:mini_search])
+    else
+      reservations
+    end
+  end
+
+  def apply_date_domain(reservations)
+    if params[:date_domain_from].present? && params[:date_domain_to].present?
+      reservations.where('begins_at <= :end AND ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.translate('date.formats.default')).beginning_of_day, end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
+    elsif params[:date_domain_from].present?
+      reservations.where('ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.translate('date.formats.default')).beginning_of_day)
+    elsif params[:date_domain_to].present?
+      reservations.where('begins_at <= :end', end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
+    else
+      reservations
+    end
+  end
+
+  def load_organisation_client
+    if params[:organisation_client_id].present?
+      @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id])
     end
   end
 
