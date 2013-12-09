@@ -37,8 +37,14 @@ class ApplicationController < ActionController::Base
   end
 
   def current_organisation
-    @current_organisation ||= current_user.organisations.find(session[:current_organisation_id]) if current_user.present? && session[:current_organisation_id].present?
-    @current_organisation ||= current_user.organisations.first if current_user.present?
+    if @current_organisation.nil? && current_user.present?
+      if session[:current_organisation_id].present? && (selected_organisation = current_user.organisations.where(id: session[:current_organisation_id]).first)
+        @current_organisation = selected_organisation
+      else
+        @current_organisation = current_user.organisations.first
+      end
+    end
+    @current_organisation
   end
   helper_method :current_organisation
 

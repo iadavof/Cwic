@@ -192,8 +192,9 @@ nl:
         description: 'Omschrijving bij optie'
         default_price: 'Standaardprijs bij optie'
       entity:
-        entity_type: 'Type'
+        entity_type: 'Objecttype'
         name: 'Naam'
+        frontend_name: 'Publieke naam'
         description: 'Omschrijving'
         color: 'Kleur'
       entity_image:
@@ -227,6 +228,7 @@ nl:
       info_screen:
         name: 'Naam'
         public: 'Publiek'
+        show_reservation_number: 'Reserveringsnr. tonen'
         active_entities: 'Actieve objecten'
         add_new_entity_types: 'Nieuwe objecttypen toevoegen'
         direction_char_visible: 'Toon wegwijzers'

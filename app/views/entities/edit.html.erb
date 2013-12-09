@@ -1,4 +1,4 @@
-<% content_for :page_title do %><%= edit_title(@entity) %><% end %>
+<% content_for :page_title do %><%= t('.title_html', default: :edit_object_html, class: @entity.class.model_name.human, name: @entity.instance_name + ' (' + @entity.entity_type.instance_name + ')') %><% end %>
 
 <%= render 'form' %>
 

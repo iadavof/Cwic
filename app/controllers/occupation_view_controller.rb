@@ -15,7 +15,7 @@ class OccupationViewController < ApplicationController
 	  result << {
 	              id: e.id,
 	              icon: e.entity_type.icon.image.icon.url,
-	              name: e.instance_name,
+	              name: e.full_instance_name,
 	              color: e.color,
 	            }
 	end

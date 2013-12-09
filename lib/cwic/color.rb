@@ -19,6 +19,16 @@ module Cwic::Color
       (br1-br2).abs
     end
 
+    def random_hex_color
+      r = rand(255).to_s(16)
+      g = rand(255).to_s(16)
+      b = rand(255).to_s(16)
+
+      r, g, b = [r, g, b].map { |s| if s.size == 1 then '0' + s else s end }
+
+      '#' + r + g + b
+    end
+
      def hex_to_rgb(color)
       color = color[1..7] if color[0] == '#'
       color.scan(/../).map { |c| c.to_i(16) }

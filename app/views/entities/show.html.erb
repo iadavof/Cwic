@@ -1,4 +1,4 @@
-<% content_for :page_title do %><%= show_title(@entity) %><% end %>
+<% content_for :page_title do %><%= t('.title_html', default: :show_object_html, class: @entity.class.model_name.human, name: @entity.instance_name + ' (' + @entity.entity_type.instance_name + ')') %><% end %>
 
 <% if @entity.all_entity_images.present? %>
 <%= render partial: 'entities/ken_burns_slideshow', locals: { images: @entity.all_entity_images } %>
@@ -21,6 +21,8 @@
       <dl>
         <dt><%= Entity.human_attribute_name(:name) %></dt>
         <dd><%= @entity.instance_name %></dd>
+        <dt><%= Entity.human_attribute_name(:frontend_name) %></dt>
+        <dd><%= @entity.frontend_name %></dd>
         <dt><%= Entity.human_attribute_name(:entity_type) %></dt>
         <dd><%= name_link_to_show([@organisation, @entity.entity_type], title: format_description_title(@entity.entity_type)) %></dd>
         <dt><%= Entity.human_attribute_name(:description) %></dt>

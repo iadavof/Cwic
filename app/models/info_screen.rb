@@ -9,7 +9,6 @@ class InfoScreen < ActiveRecord::Base
   accepts_nested_attributes_for :info_screen_entity_types
   after_save :trigger_update_infoscreens
 
-
   def instance_name
     self.name
   end

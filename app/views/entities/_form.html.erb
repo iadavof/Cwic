@@ -18,13 +18,20 @@
     <div class="tab-wrap">
       <div id="general">
         <div class="field autosubmit">
-          <%= f.label :entity_type_id %>
+          <%= f.label :entity_type %>
           <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
         </div>
         <div class="field">
           <%= f.label :name %>
         <div class="field-with-example-wrapper">
             <%= f.text_field :name, placeholder: @entity.default_name %>
+          <p><%= t('for_example') + ': ' + t('.entity_name_example') %></p>
+        </div>
+        </div>
+        <div class="field">
+          <%= f.label :frontend_name %>
+        <div class="field-with-example-wrapper">
+            <%= f.text_field :frontend_name, placeholder: @entity.instance_name %>
           <p><%= t('for_example') + ': ' + t('.entity_name_example') %></p>
         </div>
         </div>

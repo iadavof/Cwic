@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20131207155642) do
+ActiveRecord::Schema.define(version: 20131209140403) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -43,6 +43,7 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.datetime "updated_at"
     t.string   "color",                                default: "#18c13d"
     t.boolean  "include_entity_type_images",           default: true
+    t.string   "frontend_name"
   end
 
   add_index "entities", ["entity_type_id"], name: "index_entities_on_entity_type_id", using: :btree
@@ -185,9 +186,10 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "add_new_entity_types"
-    t.integer  "organisation_id",        limit: 8
-    t.boolean  "direction_char_visible",           default: true
-    t.boolean  "clock_header",                     default: true
+    t.integer  "organisation_id",         limit: 8
+    t.boolean  "direction_char_visible",            default: true
+    t.boolean  "clock_header",                      default: true
+    t.boolean  "show_reservation_number",           default: false
   end
 
   add_index "info_screens", ["organisation_id"], name: "index_info_screens_on_organisation_id", using: :btree
