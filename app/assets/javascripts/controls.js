@@ -1,22 +1,9 @@
-APP.global.replaceControls = function() {
-  $('select, :radio, :checkbox, :input[type=file]').cwicControl();
-}
-
-// Replace controls when the DOM is fully loaded
-$(document).ready(function() {
-  APP.global.replaceControls();
-  // Replace controls when a page is loaded using Turbolinks
-  $(document).on('page:load', function() {
-    APP.global.replaceControls();
-  });
-});
-
 (function($) {
   var cwic_controls = {
     dropdown: {
       create: function(dropdown) {
         // Generate dropdown and add it to DOM
-        
+
         var options = dropdown.find('option');
         var defaultOption = dropdown.find('option:selected');
         var dropdownReplacement = $('<div class="cwic-dropdown" data-name="' + dropdown.attr('name') + '"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div><div class="cwic-dropdown-options"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div></div></div>');
@@ -33,7 +20,7 @@ $(document).ready(function() {
       },
       bindEvents: function(dropdown, dropdownReplacement) {
         // Bind events
-        
+
         /* Update dropdown when value of select element changes */
         dropdown.on('change.cwicDropdown keyup.cwicDropdown click.cwicDropdown', function(e) {
           var selectedOption = $(this).find('option:selected');
@@ -41,14 +28,14 @@ $(document).ready(function() {
           dropdownReplacement.find('.cwic-dropdown-option').removeClass('selected');
           dropdownReplacement.find('.cwic-dropdown-option[data-value=' + selectedOption.val() + ']').addClass('selected');
         });
-        
+
         /* Add class to autosubmit dropdowns on change */
         if (dropdown.is('.autosubmit')) {
           dropdown.on('change.cwicDropdown', function(e) {
             dropdownReplacement.addClass('autosubmit-busy');
           });
         }
-        
+
         /* Open dropdown on click */
         dropdownReplacement.find('.cwic-dropdown-current-option').each(function() {
           $(this).on('click.cwicDropdown', function(e) {
@@ -59,7 +46,7 @@ $(document).ready(function() {
             }
           });
         });
-        
+
         /* Update select element when dropdown option is clicked */
         dropdownReplacement.find('.cwic-dropdown-option').each(function() {
           $(this).on('click.cwicDropdown', function(e) {
@@ -70,7 +57,7 @@ $(document).ready(function() {
             dropdownReplacement.removeClass('open');
           });
         });
-        
+
         /* Close dropdown when there's a click event outside dropdown */
         $(document).on('click.cwicDropdown', function(e) {
           if(!$(e.target).is(dropdownReplacement.children().add(dropdownReplacement))) {
@@ -80,14 +67,14 @@ $(document).ready(function() {
       },
       destroy: function(dropdown) {
         // Destroy the dropdown and unbind events from select element
-        
+
         var dropdownReplacement = $(dropdown).next('.cwic-dropdown');
         dropdownReplacement.remove();
         dropdown.off('.cwicDropdown').removeClass('replaced');
       },
       recreate: function(dropdown) {
         // Destroy the dropdown and create it again
-        
+
         cwic_controls.dropdown.destroy(dropdown);
         cwic_controls.dropdown.create(dropdown);
       },
@@ -196,7 +183,7 @@ $(document).ready(function() {
       },
     },
   };
-  
+
   $.fn.extend({
     cwicControl: function(operation) {
       switch(operation)
@@ -229,7 +216,7 @@ $(document).ready(function() {
           cwic_controls.file_field.recreate($(this));
         });
         break;
-      default:        
+      default:
         $(this).filter('select:not(.replaced, [multiple], .select2, .nocwic)').each(function() {
           cwic_controls.dropdown.create($(this));
         });
