@@ -41,14 +41,9 @@ ActiveRecord::Schema.define(version: 20131209140403) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-<<<<<<< HEAD
-    t.string   "color",                      default: "#18c13d"
-    t.boolean  "include_entity_type_images", default: true
-    t.string   "frontend_name"
-=======
     t.string   "color",                                default: "#18c13d"
     t.boolean  "include_entity_type_images",           default: true
->>>>>>> a305807c94e937ac0ce6f847a8476c92466959de
+    t.string   "frontend_name"
   end
 
   add_index "entities", ["entity_type_id"], name: "index_entities_on_entity_type_id", using: :btree
@@ -191,16 +186,10 @@ ActiveRecord::Schema.define(version: 20131209140403) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "add_new_entity_types"
-<<<<<<< HEAD
-    t.integer  "organisation_id"
-    t.boolean  "direction_char_visible",  default: true
-    t.boolean  "clock_header",            default: true
-    t.boolean  "show_reservation_number", default: false
-=======
-    t.integer  "organisation_id",        limit: 8
-    t.boolean  "direction_char_visible",           default: true
-    t.boolean  "clock_header",                     default: true
->>>>>>> a305807c94e937ac0ce6f847a8476c92466959de
+    t.integer  "organisation_id",         limit: 8
+    t.boolean  "direction_char_visible",            default: true
+    t.boolean  "clock_header",                      default: true
+    t.boolean  "show_reservation_number",           default: false
   end
 
   add_index "info_screens", ["organisation_id"], name: "index_info_screens_on_organisation_id", using: :btree
