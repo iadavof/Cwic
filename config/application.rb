@@ -1,6 +1,7 @@
 require File.expand_path('../boot', __FILE__)
-
 require 'rails/all'
+
+I18n.config.enforce_available_locales = true # Set enforce_available_locales to prevent deprecation warning. Do this here to prevent gems from beating us to it.
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -17,7 +18,7 @@ module Cwic
     config.time_zone = 'Amsterdam'
 
     # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+    # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]\
     config.i18n.default_locale = :nl
 
     # Custom directories with classes and modules you want to be autoloadable.
