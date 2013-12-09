@@ -65,10 +65,10 @@ APP.reservations = {
         var domainToMoment = moment(domainTo.datepicker('getDate'));
 
         if(domainFromMoment.unix() >= domainToMoment.unix()) {
-          if(domainTo.parent().hasClass('field_with_errors')) {
-            domainTo.unwrap();
+          if(domainTo.parents('div.field-with-clear').parent().hasClass('field_with_errors')) {
+            domainTo.parents('div.field-with-clear').unwrap();
           }
-          domainTo.wrap($('<div>', {'class': 'field_with_errors'}));
+          domainTo.parents('div.field-with-clear').wrap($('<div>', {'class': 'field_with_errors'}));
         } else {
           form.off('submit.date-domain');
           form.submit();

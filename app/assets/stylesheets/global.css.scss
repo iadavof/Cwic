@@ -786,6 +786,16 @@ div.field-with-clear span {
   background-image: -moz-linear-gradient(top, rgba(255,255,255,0.2) 0%, transparent 60%);
 }
 
+.field_with_errors > div.field-with-clear > input {
+  border: 2px solid #ff3520;
+  border-right: none;
+}
+
+.field_with_errors > div.field-with-clear > span {
+  border: 2px solid #ff3520;
+  border-left: none;
+}
+
 div.field-with-clear span:hover {
   background-color: #ff4a37;
 }
