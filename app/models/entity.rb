@@ -20,6 +20,7 @@ class Entity < ActiveRecord::Base
   validates :organisation, presence: true
   validates :color, color: true
 
+  after_initialize :set_initial_color, if: :new_record?
   after_create :create_info_screen_entities
 
   accepts_nested_attributes_for :properties, allow_destroy: true
@@ -71,6 +72,10 @@ class Entity < ActiveRecord::Base
     end
     # Use inclusive comparison to include the two reservations above as well
     self.reservations.where('begins_at <= :end AND ends_at >= :begin', begin: begins_at, end: ends_at)
+  end
+
+  def set_initial_color
+    self.color = Cwic::Color.random_hex_color
   end
 
   def create_info_screen_entities
