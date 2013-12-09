@@ -881,8 +881,9 @@ div.calendar div.schedule-body div.row div.schedule-item div.status {
   left: 30px;
   width: 15px;
   height: 100%;
-  border-left: 1px solid black;
-  border-right: 1px solid black;
+  border-left: 1px solid #222;
+  border-right: 1px solid #222;
+  color: #222;
   background-color: #ccc;
   display: none;
 }
@@ -893,7 +894,8 @@ div.calendar div.schedule-body div.column div.schedule-item div.status {
   top: 15px;
   width: 15px;
   height: 15px;
-  border: 1px solid black;
+  border: 1px solid #222;
+  color: #222;
   background-color: #ccc;
 }
 

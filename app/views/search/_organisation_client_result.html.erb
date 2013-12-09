@@ -11,10 +11,6 @@
 			  <tr><th><%= OrganisationClient.human_attribute_name(:email) %></th><td><a href="mailto:<%= result.email %>"><%= result.email %></a></td></tr>
 			  <tr><th><%= OrganisationClient.human_attribute_name(:phone) %></th><td><a href="tel:<%= result.phone %>"><%= result.phone %></a></td></tr>
 			  <tr><th><%= OrganisationClient.human_attribute_name(:mobile_phone) %></th><td><a href="tel:<%= result.mobile_phone %>"><%= result.mobile_phone %></a></td></tr>
-			  <tr><th colspan="2"><%= OrganisationClient.human_attribute_name(:address) %></th></tr>
-			  <tr><td colspan="2"><%= result.route %> <%= result.street_number %></td></tr>
-			  <tr><td colspan="2"><%= result.postal_code %> <%= result.locality %></td></tr>
-			  <tr><td colspan="2"><%= result.country %></td></tr>
 			</tbody></table>
 	</div>
 	<div class="column">

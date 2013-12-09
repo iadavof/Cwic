@@ -112,8 +112,8 @@ nl:
         one: 'Objecttype'
         other: 'Objecttypen'
       reservation_status:
-        one: 'Reservering status'
-        other: 'Reservering statusen'
+        one: 'Reserveringsstatus'
+        other: 'Reserveringsstatussen'
       reservation_rule:
         one: 'Reserveringsregel'
         other: 'Reserveringsregels'

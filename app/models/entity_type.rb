@@ -48,10 +48,10 @@ class EntityType < ActiveRecord::Base
   end
 
   def add_default_entity_type_reservation_statuses
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849')
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49')
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D')
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520')
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393')
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0)
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3)
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
   end
 end
