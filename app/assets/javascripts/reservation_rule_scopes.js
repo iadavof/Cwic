@@ -18,6 +18,8 @@ APP.reservation_rule_scopes = {
   initializeSpanSelector: function() {
     var repetition = APP.reservation_rule_scopes.getRepetition();
 
+    console.debug(repetition);
+
     // Determine options for span selector based on repetition
     var spanSelectorOptions = APP.reservation_rule_scopes.getSpanSelectorOptions(repetition);
 

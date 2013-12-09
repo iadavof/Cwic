@@ -25,7 +25,7 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   end
 
   create_table "day_occupations", force: true do |t|
-    t.integer  "entity_id"
+    t.integer  "entity_id",  limit: 8
     t.date     "day"
     t.float    "occupation"
     t.datetime "created_at"
@@ -35,14 +35,14 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   add_index "day_occupations", ["entity_id"], name: "index_day_occupations_on_entity_id", using: :btree
 
   create_table "entities", force: true do |t|
-    t.integer  "organisation_id"
-    t.integer  "entity_type_id"
+    t.integer  "organisation_id",            limit: 8
+    t.integer  "entity_type_id",             limit: 8
     t.string   "name"
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "color",                      default: "#18c13d"
-    t.boolean  "include_entity_type_images", default: true
+    t.string   "color",                                default: "#18c13d"
+    t.boolean  "include_entity_type_images",           default: true
   end
 
   add_index "entities", ["entity_type_id"], name: "index_entities_on_entity_type_id", using: :btree
@@ -50,9 +50,9 @@ ActiveRecord::Schema.define(version: 20131207155642) do
 
   create_table "entity_images", force: true do |t|
     t.string   "title"
-    t.integer  "entity_imageable_id"
+    t.integer  "entity_imageable_id",   limit: 8
     t.string   "entity_imageable_type"
-    t.integer  "organisation_id"
+    t.integer  "organisation_id",       limit: 8
     t.string   "image"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -62,8 +62,8 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   add_index "entity_images", ["organisation_id"], name: "index_entity_images_on_organisation_id", using: :btree
 
   create_table "entity_properties", force: true do |t|
-    t.integer  "entity_id"
-    t.integer  "property_type_id"
+    t.integer  "entity_id",        limit: 8
+    t.integer  "property_type_id", limit: 8
     t.text     "value"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -82,7 +82,7 @@ ActiveRecord::Schema.define(version: 20131207155642) do
 
   create_table "entity_type_icons", force: true do |t|
     t.string   "name"
-    t.integer  "organisation_id"
+    t.integer  "organisation_id", limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "image"
@@ -91,40 +91,40 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   add_index "entity_type_icons", ["organisation_id"], name: "index_entity_type_icons_on_organisation_id", using: :btree
 
   create_table "entity_type_options", force: true do |t|
-    t.integer  "entity_type_id"
+    t.integer  "entity_type_id",  limit: 8
     t.string   "name"
     t.text     "description"
-    t.decimal  "default_price",   precision: 16, scale: 2, default: 0.0
+    t.decimal  "default_price",             precision: 16, scale: 2, default: 0.0
     t.integer  "index"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.boolean  "amount_relevant",                          default: false
+    t.boolean  "amount_relevant",                                    default: false
   end
 
   add_index "entity_type_options", ["entity_type_id"], name: "index_entity_type_options_on_entity_type_id", using: :btree
 
   create_table "entity_type_properties", force: true do |t|
-    t.integer  "entity_type_id"
+    t.integer  "entity_type_id", limit: 8
     t.string   "name"
     t.text     "description"
-    t.integer  "data_type_id"
+    t.integer  "data_type_id",   limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.text     "default_value"
-    t.boolean  "required",       default: false
-    t.integer  "index",          default: 0
+    t.boolean  "required",                 default: false
+    t.integer  "index",                    default: 0
   end
 
   add_index "entity_type_properties", ["data_type_id"], name: "index_entity_type_properties_on_data_type_id", using: :btree
   add_index "entity_type_properties", ["entity_type_id"], name: "index_entity_type_properties_on_entity_type_id", using: :btree
 
   create_table "entity_type_property_options", force: true do |t|
-    t.integer  "entity_type_property_id"
+    t.integer  "entity_type_property_id", limit: 8
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "default"
-    t.integer  "index",                   default: 0
+    t.integer  "index",                             default: 0
   end
 
   add_index "entity_type_property_options", ["entity_type_property_id"], name: "index_entity_type_property_options_on_entity_type_property_id", using: :btree
@@ -134,9 +134,9 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "organisation_id"
-    t.integer  "entities_count",  default: 0, null: false
-    t.integer  "icon_id"
+    t.integer  "organisation_id", limit: 8
+    t.integer  "entities_count",            default: 0, null: false
+    t.integer  "icon_id",         limit: 8
   end
 
   add_index "entity_types", ["icon_id"], name: "index_entity_types_on_icon_id", using: :btree
@@ -148,8 +148,8 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.string   "screen_capture"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.integer  "user_id"
-    t.integer  "organisation_id"
+    t.integer  "user_id",         limit: 8
+    t.integer  "organisation_id", limit: 8
   end
 
   add_index "feedbacks", ["organisation_id"], name: "index_feedbacks_on_organisation_id", using: :btree
@@ -157,8 +157,8 @@ ActiveRecord::Schema.define(version: 20131207155642) do
 
   create_table "info_screen_entities", force: true do |t|
     t.string   "direction_char"
-    t.integer  "info_screen_entity_type_id"
-    t.integer  "entity_id"
+    t.integer  "info_screen_entity_type_id", limit: 8
+    t.integer  "entity_id",                  limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active"
@@ -169,8 +169,8 @@ ActiveRecord::Schema.define(version: 20131207155642) do
 
   create_table "info_screen_entity_types", force: true do |t|
     t.boolean  "add_new_entities"
-    t.integer  "info_screen_id"
-    t.integer  "entity_type_id"
+    t.integer  "info_screen_id",   limit: 8
+    t.integer  "entity_type_id",   limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "active"
@@ -185,9 +185,9 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "add_new_entity_types"
-    t.integer  "organisation_id"
-    t.boolean  "direction_char_visible", default: true
-    t.boolean  "clock_header",           default: true
+    t.integer  "organisation_id",        limit: 8
+    t.boolean  "direction_char_visible",           default: true
+    t.boolean  "clock_header",                     default: true
   end
 
   add_index "info_screens", ["organisation_id"], name: "index_info_screens_on_organisation_id", using: :btree
@@ -197,7 +197,7 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.string   "infix"
     t.string   "last_name"
     t.string   "email"
-    t.integer  "organisation_id"
+    t.integer  "organisation_id",             limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "route"
@@ -223,9 +223,9 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   end
 
   create_table "organisation_users", force: true do |t|
-    t.integer  "organisation_id"
-    t.integer  "user_id"
-    t.integer  "organisation_role_id"
+    t.integer  "organisation_id",      limit: 8
+    t.integer  "user_id",              limit: 8
+    t.integer  "organisation_role_id", limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -261,7 +261,7 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   end
 
   create_table "reservation_rule_scope_spans", force: true do |t|
-    t.integer  "scope_id"
+    t.integer  "scope_id",     limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "year_from"
@@ -287,9 +287,9 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   add_index "reservation_rule_scope_spans", ["scope_id"], name: "index_reservation_rule_scope_spans_on_scope_id", using: :btree
 
   create_table "reservation_rule_scopes", force: true do |t|
-    t.integer  "entity_id"
+    t.integer  "entity_id",          limit: 8
     t.string   "name"
-    t.integer  "repetition_unit_id"
+    t.integer  "repetition_unit_id", limit: 8
     t.string   "ancestry"
     t.datetime "created_at"
     t.datetime "updated_at"
@@ -300,12 +300,12 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   add_index "reservation_rule_scopes", ["repetition_unit_id"], name: "index_reservation_rule_scopes_on_repetition_unit_id", using: :btree
 
   create_table "reservation_rules", force: true do |t|
-    t.integer  "entity_id"
-    t.integer  "period_unit_id"
-    t.integer  "period_amount",                           default: 1
-    t.integer  "min_periods",                             default: 1
+    t.integer  "entity_id",      limit: 8
+    t.integer  "period_unit_id", limit: 8
+    t.integer  "period_amount",                                     default: 1
+    t.integer  "min_periods",                                       default: 1
     t.integer  "max_periods"
-    t.decimal  "price",          precision: 16, scale: 2, default: 0.0
+    t.decimal  "price",                    precision: 16, scale: 2, default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -317,7 +317,7 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.string   "name"
     t.integer  "index"
     t.string   "color"
-    t.integer  "entity_type_id"
+    t.integer  "entity_type_id", limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -327,13 +327,13 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   create_table "reservations", force: true do |t|
     t.datetime "begins_at"
     t.datetime "ends_at"
-    t.integer  "entity_id"
-    t.integer  "organisation_id"
-    t.integer  "organisation_client_id"
+    t.integer  "entity_id",              limit: 8
+    t.integer  "organisation_id",        limit: 8
+    t.integer  "organisation_client_id", limit: 8
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
-    t.integer  "reservation_status_id"
+    t.integer  "reservation_status_id",  limit: 8
   end
 
   add_index "reservations", ["entity_id"], name: "index_reservations_on_entity_id", using: :btree
@@ -342,13 +342,13 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   add_index "reservations", ["reservation_status_id"], name: "index_reservations_on_reservation_status_id", using: :btree
 
   create_table "stickies", force: true do |t|
-    t.integer  "stickable_id"
-    t.integer  "user_id"
+    t.integer  "stickable_id",    limit: 8
+    t.integer  "user_id",         limit: 8
     t.text     "sticky_text"
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "stickable_type"
-    t.integer  "organisation_id"
+    t.integer  "organisation_id", limit: 8
     t.integer  "weight"
   end
 
@@ -370,12 +370,12 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.string   "infix"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "email",                  default: "", null: false
-    t.string   "encrypted_password",     default: ""
+    t.string   "email",                            default: "", null: false
+    t.string   "encrypted_password",               default: ""
     t.string   "reset_password_token"
     t.datetime "reset_password_sent_at"
     t.datetime "remember_created_at"
-    t.integer  "sign_in_count",          default: 0
+    t.integer  "sign_in_count",                    default: 0
     t.datetime "current_sign_in_at"
     t.datetime "last_sign_in_at"
     t.string   "current_sign_in_ip"
@@ -389,8 +389,8 @@ ActiveRecord::Schema.define(version: 20131207155642) do
     t.datetime "invitation_sent_at"
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
-    t.integer  "invited_by_id"
-    t.string   "invited_by_type"
+    t.integer  "invited_by_id",          limit: 8
+    t.string   "invited_by_type",        limit: 8
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -399,7 +399,7 @@ ActiveRecord::Schema.define(version: 20131207155642) do
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
   create_table "week_occupations", force: true do |t|
-    t.integer  "entity_id"
+    t.integer  "entity_id",  limit: 8
     t.integer  "week"
     t.integer  "year"
     t.float    "occupation"
