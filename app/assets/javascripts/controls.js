@@ -10,7 +10,7 @@
         options.each(function(i) {
           var option = $(this);
           var optionReplacement = $('<div class="cwic-dropdown-option" data-value="' + option.attr('value') + '">' + (option.text() || '...') + '</div>');
-          if (optionReplacement.data('value') == defaultOption.val()) {
+          if (optionReplacement.data('value') === defaultOption.val()) {
             optionReplacement.addClass('selected');
           }
           dropdownReplacement.find('.cwic-dropdown-options').append(optionReplacement);
