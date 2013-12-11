@@ -33,10 +33,10 @@ class Reservation < ActiveRecord::Base
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
 
 
-  scope :blocking, joins(:reservation_status).where('reservation_status.blocking = true');
-  scope :non_blocking, joins(:reservation_status).where('reservation_status.blocking = false');
-  scope :info_boards, joins(:reservation_status).where('reservation_status.info_boards = true');
-  scope :billable, joins(:reservation_status).where('reservation_status.billable = true');
+  scope :blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = true') }
+  scope :non_blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = false') }
+  scope :info_boards,  -> { joins(:reservation_status).where('reservation_statuses.info_boards = true') }
+  scope :billable, -> { joins(:reservation_status).where('reservation_statuses.billable = true') }
 
   def length_for_day(day)
     if day < self.begins_at.to_date || day > self.ends_at.to_date

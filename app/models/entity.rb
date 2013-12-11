@@ -77,7 +77,7 @@ class Entity < ActiveRecord::Base
   end
 
   def get_info_board_reservations(begins_at, ends_at)
-    self.reservations.where('begins_at <= :end AND ends_at >= :begin', begin: begins_at, end: ends_at).info_board
+    self.reservations.where('begins_at <= :end AND ends_at >= :begin', begin: begins_at, end: ends_at).info_boards
   end
 
   def set_initial_color
