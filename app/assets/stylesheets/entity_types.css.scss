@@ -33,32 +33,58 @@ div#entity-type-form {
     margin-bottom: 1em;
   }
 
-  ul#entity-type-reservation-statuses {
-    list-style-type: none;
-
-    li {
-      margin: 1em;
-      display: block;
-      background-color: #fff;
-
-      div.inner {
-        border: 2px solid #ccc;
-        display: inline-block;
-
-        div.sort-handle {
-          float: left;
-          cursor: move;
-          font-size: 1.8em;
-          margin: 15px;
-          vertical-align: top;
-        }
-
-        div.field {
-          margin: 1em;
-          float: left;
-        }
+  div#reservation-statuses {
+  
+    div.reservation-status-header {
+      div {
+        float: left;
+        font-weight: bold;
+        width: 5em;
+        margin: 0 0.5em;
+        text-align: center;
       }
+      div.name {
+        margin: 0 0 0 120px;
+        width: 15em;
+      }
+      div.color {
+        margin: 0 0 0 2em;
+        width: 8em;
+      }
+    }
 
+    ul#entity-type-reservation-statuses {
+      list-style-type: none;
+
+
+      li {
+        margin: 1em;
+        display: block;
+        background-color: #fff;
+
+        div.inner {
+          border: 2px solid #ccc;
+          display: inline-block;
+
+          div.sort-handle {
+            float: left;
+            cursor: move;
+            font-size: 1.8em;
+            margin: 15px;
+            vertical-align: top;
+          }
+
+          div.field {
+            margin: 1em;
+            float: left;
+          }
+
+          div.field.bool {
+            margin: 1em 2em;
+          }
+        }
+
+      }
     }
   }
 

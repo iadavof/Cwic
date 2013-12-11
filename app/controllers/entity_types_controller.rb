@@ -74,7 +74,7 @@ private
       ],
       options_attributes: [:id, :name, :description, :amount_relevant, :default_price, :index, :_destroy],
       entity_images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
-      reservation_statuses_attributes: [:id, :name, :color, :index, :_destroy],
+      reservation_statuses_attributes: [:id, :name, :color, :index, :blocking, :info_boards, :billable, :_destroy],
     )
   end
 

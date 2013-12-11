@@ -1067,12 +1067,11 @@ IADAscheduleView.prototype.updateScheduleItemFocus = function() {
   // Check if an item is opened
   if(this.scheduleContainer.find('div.schedule-item.open').length > 0) {
     this.scheduleContainer.find('div.schedule-item:not(.open) .resizer.left, div.schedule-item:not(.open) .resizer.right').css('cursor', 'auto');
-    this.scheduleContainer.find('div.schedule-item:not(.open)').css('cursor', 'auto').animate({opacity: 0.6}, 200);
-    this.scheduleContainer.find('div.schedule-item.open').animate({opacity: 1}, 200);
+    this.scheduleContainer.find('div.schedule-item:not(.open)').css('cursor', 'auto').addClass('closed');
   } else {
     this.scheduleContainer.find('div.schedule-item:not(.open) .resizer.left').css('cursor', 'w-resize');
     this.scheduleContainer.find('div.schedule-item:not(.open) .resizer.right').css('cursor', 'e-resize');
-    this.scheduleContainer.find('div.schedule-item').css('cursor', 'move').animate({opacity: 1}, 200);
+    this.scheduleContainer.find('div.schedule-item').css('cursor', 'move').removeClass('closed');
   }
 }
 
@@ -1453,6 +1452,25 @@ IADAscheduleView.prototype.createScheduleItem = function(reservationForm, resetN
   });
 }
 
+IADAscheduleView.prototype.checkUnhideNonBlockingItems = function(schedule_object_id) {
+  var schedule = this;
+  var otherItemsForObject = this.scheduleItems[schedule_object_id];
+
+  if(otherItemsForObject != null) {
+    $.each(otherItemsForObject, function(itemId, item) {
+      if(item.hidden) {
+        // If item collides with blocking item, we do not need it anymore, remove it 
+        if(item.conceptCollidesWithOthers()) {
+          item.removeFromDom();
+          delete schedule.scheduleItems[item.schedule_object_id][itemId];
+        } else { // Show item again
+          item.setVisibilityDom(true);
+        }
+      }
+    });
+  }
+}
+
 IADAscheduleView.prototype.editScheduleItem = function() {
   var path = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id + '/edit';
   if (typeof(Turbolinks) != 'undefined') {
@@ -1488,6 +1506,8 @@ function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
   this.schedule_object_id = _schedule_object_id || null;
   this.item_id = _item_id || null;
 
+  this.hidden = false;
+
   this.begin = null; // momentjs object
   this.end = null; // momentjs object
 
@@ -1498,6 +1518,7 @@ function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
 
   this.bg_color = null;
   this.text_color = null;
+  this.blocking = true;
   this.description = '';
   this.client_id = null;
 
@@ -1516,6 +1537,7 @@ IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
   this.text_color = newItem.text_color;
   this.description = newItem.description;
   this.client_id = newItem.client_id;
+  this.blocking = newItem.blocking;
 
   if(newItem.status) {
     this.status  = {
@@ -1559,6 +1581,10 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
     if(this.text_color != null) {
       newScheduleItem.css('color', this.text_color);
       newScheduleItem.find('a').css('color', this.text_color);
+    }
+
+    if(!this.blocking) {
+      newScheduleItem.addClass('hidden');
     }
 
     if(this.status != null) {
@@ -1608,6 +1634,8 @@ IADAscheduleViewItem.prototype.acceptConcept = function() {
   this.begin = this.getConceptBegin();
   this.end = this.getConceptEnd();
 
+  this.schedule.checkUnhideNonBlockingItems(this.schedule_object_id);
+
   this.rerender();
 }
 
@@ -1625,6 +1653,9 @@ IADAscheduleViewItem.prototype.undoAcceptConcept = function() {
 IADAscheduleViewItem.prototype.resetConcept = function() {
   this.conceptBegin = null;
   this.conceptEnd = null;
+
+  this.schedule.checkUnhideNonBlockingItems(this.schedule_object_id);
+
   this.rerender(); // Rerender in normal mode
 }
 
@@ -1710,8 +1741,14 @@ IADAscheduleViewItem.prototype.conceptCollidesWithOthers = function() {
         return true;
       }
       if((item.begin.unix() < curConceptEnd.unix() || item.end.unix() < curConceptBegin.unix()) && curConceptBegin.unix() < item.end.unix()) {
-        collision = true;
-        return false; // Break out of each loop
+        if(item.blocking) {
+          collision = true;
+          return false; // Break out of each loop
+        } else {
+          item.setVisibilityDom(false);
+          return true;
+        }
+
       }
     });
   }
@@ -1731,6 +1768,17 @@ IADAscheduleViewItem.prototype.removeFromDom = function() {
     $(this.domObjects[nr]).remove();
   }
   this.domObjects = [];
+}
+
+IADAscheduleViewItem.prototype.setVisibilityDom = function(visible) {
+  this.hidden = !visible;
+  for(var nr in this.domObjects) {
+    if(visible) {
+      $(this.domObjects[nr]).show();
+    } else {
+      $(this.domObjects[nr]).hide();
+    }
+  }
 }
 
 IADAscheduleViewItem.prototype.applyFocus = function() {

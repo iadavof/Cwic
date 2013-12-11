@@ -14,6 +14,7 @@ class Reservation < ActiveRecord::Base
   validates :entity, presence: true
   validates :organisation_client, presence: true
   validate :not_overlapping
+  validates :reservation_status, presence: true
 
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
@@ -25,11 +26,17 @@ class Reservation < ActiveRecord::Base
   before_validation :check_reservation_organisation
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_websockets
-  before_save :check_if_should_nillify_reservation_status
+  before_validation :check_if_should_update_reservation_status
   after_destroy :trigger_update_websockets
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
+
+
+  scope :blocking, joins(:reservation_status).where('reservation_status.blocking = true');
+  scope :non_blocking, joins(:reservation_status).where('reservation_status.blocking = false');
+  scope :info_boards, joins(:reservation_status).where('reservation_status.info_boards = true');
+  scope :billable, joins(:reservation_status).where('reservation_status.billable = true');
 
   def length_for_day(day)
     if day < self.begins_at.to_date || day > self.ends_at.to_date
@@ -63,18 +70,20 @@ class Reservation < ActiveRecord::Base
 
 private
 
-  def check_if_should_nillify_reservation_status
-    if self.entity_id_was.present? && self.entity_id_changed?
+  def check_if_should_update_reservation_status
+    if self.reservation_status.nil?
+        self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
+    elsif self.entity_id_was.present? && self.entity_id_changed?
       # entity is changed, check if the same reservation status set is applicable
       if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type
-        self.reservation_status = nil
+        self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
       end
     end
   end
 
   def not_overlapping
     if entity.present?
-      relation = entity.reservations.where.not(id: self.id)
+      relation = entity.reservations.joins(:reservation_status).where('reservations.id <> ? AND reservation_statuses.blocking = true', self.id)
       ends_at_overlap = relation.where('begins_at < :ends_at AND :ends_at < ends_at', ends_at: ends_at).first
       begins_at_overlap = relation.where('begins_at < :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
       if ends_at_overlap.present?

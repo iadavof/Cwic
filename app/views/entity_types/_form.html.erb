@@ -7,7 +7,7 @@
         <li><a href="#general" class="current"><%= t('.general') %></a></li>
         <li><a href="#properties"><%= t('.properties') %></a></li>
         <li><a href="#options"><%= t('.options') %></a></li>
-        <li><a href="#reservation_statuses"><%= t('.reservation_statuses') %></a></li>
+        <li><a href="#reservation-statuses"><%= t('.reservation_statuses') %></a></li>
         <li><a href="#images"><%= t('.images') %></a></li>
       </ul>
 
@@ -46,9 +46,16 @@
           <%= f.link_to_add '', :properties, data: { target: '#entity-type-properties' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
         </div>
 
-        <div id="reservation_statuses" class="hide">
+        <div id="reservation-statuses" class="hide">
           <h2><%= ReservationStatus.model_name.human(count: 2) %></h2>
           <%= format_help(t('.reservation_status_help')) %>
+          <div class="reservation-status-header clearfix">
+            <div class="name"><%= ReservationStatus.human_attribute_name(:name) %></div>
+            <div class="color"><%= ReservationStatus.human_attribute_name(:color) %></div>
+            <div><%= ReservationStatus.human_attribute_name(:blocking) %></div>
+            <div><%= ReservationStatus.human_attribute_name(:info_boards) %></div>
+            <div><%= ReservationStatus.human_attribute_name(:billable) %></div>
+          </div>
           <ul class="nested-form" id="entity-type-reservation-statuses">
             <%= f.fields_for :reservation_statuses, @entity_type.reservation_statuses.sort_by(&:index), wrapper: false do |rsf| %>
               <%= render partial: 'reservation_status_fields', locals: { f: rsf } %>

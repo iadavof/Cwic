@@ -698,6 +698,7 @@ div.calendar div.schedule-body div.column div.schedule-item {
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   cursor: move;
+  opacity: 1;
 
   -webkit-touch-callout: none;
   -webkit-user-select: none;
@@ -705,11 +706,27 @@ div.calendar div.schedule-body div.column div.schedule-item {
   -moz-user-select: none;
   -ms-user-select: none;
   user-select: none;
+
+  -webkit-transition: opacity 300ms ease-in-out;
+  -moz-transition: opacity 300ms ease-in-out;
+  -ms-transition: opacity 300ms ease-in-out;
+  -o-transition: opacity 300ms ease-in-out;
+  transition: opacity 300ms ease-in-out;
+}
+
+div.calendar div.schedule-body div.row div.schedule-item.closed,
+div.calendar div.schedule-body div.column div.schedule-item.closed {
+  opacity: 0.6;
 }
 
 div.calendar div.schedule-body div.row div.schedule-item.concept,
 div.calendar div.schedule-body div.column div.schedule-item.concept {
   opacity: 0.5;
+}
+
+div.calendar div.schedule-body div.row div.schedule-item.hidden,
+div.calendar div.schedule-body div.column div.schedule-item.hidden {
+  opacity: 0.4;
 }
 
 div.calendar div.schedule-body div.row div.schedule-item {
