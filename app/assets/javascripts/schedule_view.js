@@ -12,7 +12,7 @@ APP.schedule_view = {
     $('#open-new-reservation-modal-button').on('click', function(e) {
         e.preventDefault();
         var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'));
-        APP.global.initializeDateTimePickers(reservationForm);
+        APP.global.initializeSpecialFormFields(reservationForm);
         return false;
     });
   },

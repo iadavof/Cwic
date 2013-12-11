@@ -653,7 +653,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
           closeModal(e);
           reservationForm = null;
         });
-        APP.global.initializeDateTimePickers(reservationForm);
+        APP.global.initializeSpecialFormFields(reservationForm);
         schedule.setNewReservationForm(reservationForm, newScheduleItem, function() { newScheduleItem.removeFromDom(); newScheduleItem = null; reservationForm = null; });
       } else {
         if(newScheduleItem != null) {
@@ -685,7 +685,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
 
         plusOneButton.data('hours', focusMoment.hours());
         plusOneButton.data('minutes', focusMoment.minutes());
-        
+
         if(schedule.options.view == 'horizontalCalendar' && schedule.options.zoom == 'day') {
           plusOneButton.css({ left: schedule.timeToPercentage(moment(focusMoment).subtract(30, 'minutes')) + '%' });
         } else if(schedule.options.view == 'horizontalCalendar' && schedule.options.zoom == 'week') {
@@ -728,7 +728,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
           // 6 hours
           newScheduleItem.conceptBegin = moment(thisMoment).subtract(180, 'minutes');
           newScheduleItem.conceptEnd = moment(thisMoment).add(180, 'minutes');
-          
+
         }
 
         var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'), function(e) {
@@ -740,7 +740,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
           closeModal(e);
           reservationForm = null;
         });
-        APP.global.initializeDateTimePickers(reservationForm);
+        APP.global.initializeSpecialFormFields(reservationForm);
         schedule.setNewReservationForm(reservationForm, newScheduleItem, function() { plusOneButton.remove(); plusOneButton = null; reservationForm = null; });
       }
     });
@@ -1518,7 +1518,7 @@ IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
   this.client_id = newItem.client_id;
 
   if(newItem.status) {
-    this.status  = { 
+    this.status  = {
                       bg_color: newItem.status.bg_color,
                       text_color: newItem.status.text_color,
                       name: newItem.status.name,
@@ -1562,7 +1562,7 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
     }
 
     if(this.status != null) {
-      newScheduleItem.find('div.status').attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color, borderColor: this.status.text_color }).find('span').text(this.status.name.substring(0,1));  
+      newScheduleItem.find('div.status').attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color, borderColor: this.status.text_color }).find('span').text(this.status.name.substring(0,1));
     } else {
       newScheduleItem.find('div.status').attr('title', jsLang.schedule_view.status_unknown);
     }

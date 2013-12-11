@@ -35,7 +35,7 @@ APP.init = function() {
   this.global.initializeTabs();
 
   // Initialize special form fields, such as date- and timepickers, special Cwic Controls (select, checkbox, ...)
-  this.global.initializeFormFields();
+  this.global.initializeSpecialFormFields();
 
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
@@ -284,7 +284,7 @@ APP.global = {
     });
     return first;
   },
-  initializeFormFields: function(parent) {
+  initializeSpecialFormFields: function(parent) {
     if(!parent) {
       parent = document.body;
     }
@@ -305,7 +305,7 @@ APP.global = {
       }
     });
 
-    $(document).on('nested:fieldAdded', function() { APP.global.initializeFormFields(this); });
+    $(document).on('nested:fieldAdded', function() { APP.global.initializeSpecialFormFields(this); });
   }
 };
 
