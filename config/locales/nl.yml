@@ -402,6 +402,8 @@ nl:
       search_organisationclient_placeholder: 'Klant zoeken...'
       search_entity_placeholder: 'Object zoeken...'
       search_entitytype_placeholder: 'Objectsoort zoeken...'
+      date_domain_from_placeholder: 'Vanaf datum...'
+      date_domain_to_placeholder: 'Tot datum...'
       search: 'Zoeken'
 
   shared:
@@ -475,6 +477,14 @@ nl:
       entity_name_example: '4.13B, 9.5, foyer, loft'
 
   reservations:
+    index:
+      reservations_of_from_to: 'De reserveringen van <strong>%{of}</strong> in de periode tussen <strong>%{from}</strong> en <strong>%{to}</strong> worden nu getoond.'
+      reservations_of_from: 'De reserveringen van <strong>%{of}</strong> vanaf <strong>%{from}</strong> worden nu getoond.'
+      reservations_of_to: 'De reserveringen van <strong>%{of}</strong> tot en met <strong>%{to}</strong> worden nu getoond.'
+      reservations_from_to: 'De reserveringen in de periode tussen <strong>%{from}</strong> en <strong>%{to}</strong> worden nu getoond.'
+      reservations_from: 'De reserveringen vanaf <strong>%{from}</strong> worden nu getoond.'
+      reservations_to: 'De reserveringen tot en met <strong>%{to}</strong> worden nu getoond.'
+      reservations_of: 'De reserveringen van <strong>%{of}</strong> worden nu getoond.'
     status_controls:
       saved: 'Opgeslagen'
     form:

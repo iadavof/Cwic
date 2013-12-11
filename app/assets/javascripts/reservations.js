@@ -19,6 +19,9 @@ APP.reservations = {
     show: function() {
       APP.reservations.bindStatusSelectorControls();
     },
+    index: function() {
+      APP.reservations.bindOnSubmitMiniSearch();
+    },
     bindSelectClientRadioButtons: function() {
       $(':radio[name="organisation_client_type"]').on('change', function() {
         if($(this).is(':checked')) {
@@ -35,6 +38,39 @@ APP.reservations = {
         }
       });
       $(':radio[name="organisation_client_type"]').trigger('change');
+    },
+    bindOnSubmitMiniSearch: function() {
+      $('form.mini-search.with-date').on('submit.date-domain', APP.reservations.checkDateAndSubmit);
+    },
+    checkDateAndSubmit: function(e) {
+      if(e) {
+        e.preventDefault();
+      }
+      var form = $(this);
+      var domainFrom = form.find('input#date_domain_from');
+      var domainTo = form.find('input#date_domain_to');
+
+      // If one of both date fields is empty, submit is ok
+      if(domainFrom.val() == '' || domainTo.val() == '') {
+        form.off('submit.date-domain');
+        form.submit();
+        return true;
+      }
+
+      var domainFromMoment = moment(domainFrom.datepicker('getDate'));
+      var domainToMoment = moment(domainTo.datepicker('getDate'));
+
+      if(domainFromMoment.unix() >= domainToMoment.unix()) {
+        if(domainTo.parents('div.field-with-clear').parent().hasClass('field_with_errors')) {
+          domainTo.parents('div.field-with-clear').unwrap();
+        }
+        domainTo.parents('div.field-with-clear').wrap($('<div>', {'class': 'field_with_errors'}));
+      } else {
+        form.off('submit.date-domain');
+        form.submit();
+        return true;
+      }
+      return false;
     },
     bindStatusSelectorControls: function(changedCallback) {
       $('div.status-selector').on('click', 'a', function() {
