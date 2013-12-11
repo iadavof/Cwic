@@ -1,6 +1,6 @@
 <div class="reservation-rule-scope">
   <div class="actions">
-    <%= icon_link_to_new([@organisation, @entity, ReservationRuleScope.new], location_query: { parent_id: reservation_rule_scope }) %>
+    <%= icon_link_to_new([@organisation, @entity, ReservationRuleScope.new], location_query: { parent_id: reservation_rule_scope }) if reservation_rule_scope.can_have_childs? %>
     <%= icon_link_to_edit([@organisation, @entity, reservation_rule_scope]) %>
     <%= icon_link_to_destroy([@organisation, @entity, reservation_rule_scope]) %>
   </div>

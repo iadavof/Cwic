@@ -15,12 +15,26 @@ class ReservationRuleScope < ActiveRecord::Base
 
   accepts_nested_attributes_for :spans, allow_destroy: true
 
-  # Gives the valid repetition units for this scope. These are the base repetition units that are 'smaller' than the repetition unit of the parent.
+  # Keys of available repetition units to choose from when adding a root level scope.
+  # These should be listed in decreasing order of size (time span).
+  AVAILABLE_REPETITION_UNIT_KEYS = ['infinite', 'year', 'month', 'week', 'day']
+
+  # Gives the keys of the valid repetition units for this scope. These are the available repetition units that are 'smaller' than the repetition unit of the parent.
+  def valid_repetition_unit_keys
+    keys = AVAILABLE_REPETITION_UNIT_KEYS
+    if parent.present?
+      keys.drop(keys.index(parent.repetition_unit.key) + 1) # Drop period units up to the parent key
+    else
+      keys # Return all available period units
+    end
+  end
+
+  def can_have_childs?
+    valid_repetition_unit_keys.many? # This scope can have childs if there are at least two valid repetition units for it (one is taken by this scope it self, the other is available for the child)
+  end
+
   def valid_repetition_units
-    base_units = ['infinite', 'year', 'month', 'week', 'day']
-    relation = TimeUnit.where(key: base_units)
-    relation = relation.where('seconds < ?', parent.repetition_unit.seconds) if parent.present?
-    relation.reorder('seconds DESC')
+    TimeUnit.where(key: valid_repetition_unit_keys).reorder(seconds: :desc)
   end
 
   def instance_name
