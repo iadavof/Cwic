@@ -310,10 +310,13 @@ ActiveRecord::Schema.define(version: 20131211164822) do
     t.decimal  "price",                    precision: 16, scale: 2, default: 0.0
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "scope_id",       limit: 8
+    t.boolean  "closed"
   end
 
   add_index "reservation_rules", ["entity_id"], name: "index_reservation_rules_on_entity_id", using: :btree
   add_index "reservation_rules", ["period_unit_id"], name: "index_reservation_rules_on_period_unit_id", using: :btree
+  add_index "reservation_rules", ["scope_id"], name: "index_reservation_rules_on_scope_id", using: :btree
 
   create_table "reservation_statuses", force: true do |t|
     t.string   "name"
