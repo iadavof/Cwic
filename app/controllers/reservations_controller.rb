@@ -23,6 +23,8 @@ class ReservationsController < ApplicationController
       @reservation.organisation_client.lat = @organisation.lat
       @reservation.organisation_client.lng = @organisation.lng
     end
+
+    @reservation.reservation_recurrence_definition = ReservationRecurrenceDefinition.new
     respond_with(@organisation, @reservation)
   end
 
@@ -33,6 +35,9 @@ class ReservationsController < ApplicationController
 
   # POST /reservations
   def create
+    # The tableless record is not persistent so we need to create it again
+    @reservation.reservation_recurrence_definition = ReservationRecurrenceDefinition.new({ reservation: @reservation })
+    
     if params[:organisation_client_type].present?
       if params[:organisation_client_type] == 'new'
         @focus = 'new_client'
@@ -55,6 +60,8 @@ class ReservationsController < ApplicationController
       @reservation.build_organisation_client
       return render action: :new
     end
+
+    handle_recurrence
 
     @reservation.save
     respond_with(@organisation, @reservation)
@@ -85,6 +92,13 @@ class ReservationsController < ApplicationController
   end
 
 private
+  
+  def handle_recurrence
+    @reservation.reservation_recurrence_definition.apply_recurrence
+    # Remove recurrence model such that it will not be saved in the next step
+    @reservation.reservation_recurrence_definition = nil
+  end
+
   def load_resource
     case params[:action]
     when 'index'
@@ -136,7 +150,8 @@ private
 
   def resource_params
     params.require(:reservation).permit(:description, :begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id,
-    organisation_client_attributes: [:first_name, :infix, :last_name, :email, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat])
+    organisation_client_attributes: [:first_name, :infix, :last_name, :email, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat],
+    reservation_recurrence_definition_attributes: [:repeating, :repeating_unit, :repeating_every, :repeating_until, :repeating_instances])
   end
 
   def interpolation_options

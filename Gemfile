@@ -87,6 +87,9 @@ gem 'magnific-popup-rails'
 # ActiveRecord Import for multi INSERTs at once
 gem 'activerecord-import'
 
+# Active model tableless for using tableless models in a nested form
+gem 'activerecord-tableless'
+
 # Ancestry gem for ActiveRecord tree helpers
 gem 'ancestry'
 

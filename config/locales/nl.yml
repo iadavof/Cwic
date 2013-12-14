@@ -218,6 +218,12 @@ nl:
         entity: 'Object'
         description: 'Beschrijving'
         organisation_client: 'Klant'
+      reservation_recurrence_definition:
+        repeating: 'Herhalen...'
+        repeating_unit: 'Herhaald'
+        repeating_every: 'Herhaal iedere'
+        repeating_until: 'Herhalen tot'
+        repeating_instances: 'Na aantal herhalingen'
       feedback:
         screen_capture: 'Screenshot'
         user: 'Gebruiker'
@@ -590,3 +596,10 @@ nl:
       ready: 'Gereed'
       canceled: 'Geannuleerd'
       not_used: 'Niet gebruikt'
+
+  reservation_recurrence_definitions:
+    repetition_units:
+      daily: 'Dagelijks'
+      weekly: 'Wekelijks'
+      monthly: 'Maandelijks'
+      yearly: 'Jaarlijks'
