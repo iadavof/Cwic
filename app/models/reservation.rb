@@ -8,6 +8,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :organisation
   belongs_to :reservation_status
   has_many :stickies, as: :stickable, dependent: :destroy
+  has_one :reservation_recurrence_definition
 
   validates :begins_at, presence: true
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
@@ -20,6 +21,7 @@ class Reservation < ActiveRecord::Base
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
 
   accepts_nested_attributes_for :organisation_client
+  accepts_nested_attributes_for :reservation_recurrence_definition
 
   normalize_attributes :description
 
