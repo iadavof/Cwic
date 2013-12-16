@@ -5,7 +5,8 @@ class FeedbacksController < ApplicationController
   before_action :load_resource
   authorize_resource
 
-  respond_to :html, :json
+  respond_to :html, only: [:index, :show]
+  respond_to :json, only: [:create]
 
   # GET /feedbacks
   def index
