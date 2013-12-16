@@ -4,8 +4,8 @@
 		<%= f.check_box :repeating %>
 	</div>
 	<div  class="field">
-		<%= f.label :repeating_unit %>
-		<%= f.select :repeating_unit, f.object.repetition_units.invert %>
+		<%= f.label :repeating_unit_id %>
+		<%= f.select :repeating_unit_id, f.object.repeating_units.map { |tu| [tu.repetition_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'repeating-unit' } %>
 	</div>
 	<div  class="field">
 		<%= f.label :repeating_every %>

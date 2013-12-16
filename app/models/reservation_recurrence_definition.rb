@@ -9,7 +9,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	column :reservation_id, :references
 
 	column :repeating, :boolean
-	column :repeating_unit, :string
+	column :repeating_unit_id, :integer
 	column :repeating_every, :integer
 	column :repeating_until, :string
 	column :repeating_instances, :integer
@@ -24,13 +24,8 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 
 	end
 
-	def repetition_units
-		{
-			daily: I18n.t('reservation_recurrence_definitions.repetition_units.daily'),
-			weekly: I18n.t('reservation_recurrence_definitions.repetition_units.weekly'),
-			monthly: I18n.t('reservation_recurrence_definitions.repetition_units.monthly'),
-			yearly: I18n.t('reservation_recurrence_definitions.repetition_units.yearly'),
-		}
+	def repeating_units
+		TimeUnit.where(key: [:day, :week, :month, :year])
 	end
 
 	def repetition_every_choises

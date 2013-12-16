@@ -596,10 +596,3 @@ nl:
       ready: 'Gereed'
       canceled: 'Geannuleerd'
       not_used: 'Niet gebruikt'
-
-  reservation_recurrence_definitions:
-    repetition_units:
-      daily: 'Dagelijks'
-      weekly: 'Wekelijks'
-      monthly: 'Maandelijks'
-      yearly: 'Jaarlijks'
