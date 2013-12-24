@@ -41,3 +41,57 @@ div.status-selector.mini {
 		padding: 4px 5px;
 	}
 }
+
+div.recurrence_definition_fields,
+div.recurrence_definition_weekly,
+div.recurrence_definition_monthly {
+	display: none;
+}
+
+div.fields div.repeating_weekdays_selector,
+div.fields div.repeating_monthdays_selector {
+	display: inline-block;
+	max-width: 400px;
+	background-color: #ddd;
+
+	input {
+		display: none;
+	}
+
+	label {
+		width: 10.5%;
+		text-align: center;
+		position: relative;
+		float: left;
+		line-height: 20px;
+		margin: 1%;
+		background-color: #fff;
+		color: #ff3520;
+		font-weight: bold;
+		padding: 8px 0;
+		cursor: pointer;
+
+		-moz-box-sizing: border-box;
+		box-sizing: border-box;
+	}
+
+	label.active {
+		color: #fff;
+		background-color: #ff3520;
+	}
+}
+
+div.fields div.repeating_weekdays_selector {
+	
+	label {
+		width: 31.333333%;
+	}
+}
+
+div.repeating_end_options {
+	display: inline-block;
+}
+
+input#reservation_reservation_recurrence_definition_attributes_repeating_instances {
+	width: 3em;
+}

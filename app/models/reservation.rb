@@ -54,6 +54,10 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def total_length
+    self.ends_at - self.begins_at
+  end
+
   def length_for_week(week)
     week.to_days.map { |day| self.length_for_day(day) }.sum
   end

@@ -5,30 +5,99 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	has_no_table
 
 	belongs_to :reservation
+	belongs_to :repeating_unit, class_name: 'TimeUnit'
 
 	column :reservation_id, :references
 
 	column :repeating, :boolean
-	column :repeating_unit_id, :integer
+	
 	column :repeating_every, :integer
+	column :repeating_weekdays, :array
+	column :repeating_monthdays, :array
+
 	column :repeating_until, :string
 	column :repeating_instances, :integer
 
+	validates :reservation, presence: true
+	validates :reservation_unit, presence: true
+	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }
+	validates :repeating_instances, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
+	validates_date :repeating_until, after: self.reservation.begins_at
 
 	def apply_recurrence
 
 		# If we are not repeating, there is nothing to do
 		if !self.repeating
 			return
+		else
+			schedule = IceCube::Schedule.new(self.reservation.begins_at)
+
+			schedule_rule = IceCube::Rule.new
+
+			if repeating_units.exists?(self.repeating_unit)
+				 schedule_rule.send(self.repeating_unit.repetition_key, self.repeating_every)
+			end
+
+			if self.repeating_unit == :weekly && self.repeating_weekdays.present?
+				schedule_rule.day(self.repeating_weekdays)
+			end
+
+			if self.repeating_unit == :monthly && self.repeating_monthdays.present?
+				schedule_rule.day(self.repeating_monthdays)
+			end
+
+			# Apply constructed schedule rule
+			schedule.add_recurrence_rule schedule_rule
+
+
+			# Get the requested occurences
+			if self.repeating_until.present?
+				recurrences = schedule.occurences DateTime.strptime(self.repeating_until, I18n.t("date.formats.default"))
+			elsif(self.repeating_instances.present?)
+				recurrences = schedule.first(self.repeating_instances)
+			end
+
+			clone_reservation(recurrences)
 		end
 
+	end
+
+	def clone_reservation(recurrences)
+		reservation_length = self.reservation.total_length
+		new_reservations = []
+		recurrences.each do |starts_at|
+			new_reservation = self.reservation.clone
+			new_reservation.begins_at = starts_at
+			new_reservation.ends_at = reservation.begins_at + reservation_length.seconds
+			new_reservations << new_reservation
+		end
+
+		new_reservations.save
 	end
 
 	def repeating_units
 		TimeUnit.where(key: [:day, :week, :month, :year])
 	end
 
-	def repetition_every_choises
+	def repeating_every_choices
 		(1..30).to_a.map { |value| [ value, value ] }
 	end
+
+	def repeating_monthdays_choices
+		(1..31).to_a.map{ |nr| OpenStruct.new(key: nr, value: nr) }
+	end
+
+	def repeating_weekdays_choices
+		current_locale_daynames = I18n.t(:"date.day_names")
+		[
+			OpenStruct.new(key: :monday, human_name: current_locale_daynames[1]),
+			OpenStruct.new(key: :tuesday, human_name: current_locale_daynames[2]),
+			OpenStruct.new(key: :wednesday, human_name: current_locale_daynames[3]),
+			OpenStruct.new(key: :thursday, human_name: current_locale_daynames[4]),
+			OpenStruct.new(key: :friday, human_name: current_locale_daynames[5]),
+			OpenStruct.new(key: :saturday, human_name: current_locale_daynames[6]),
+			OpenStruct.new(key: :sunday, human_name: current_locale_daynames[0]),
+		]
+	end
+
 end

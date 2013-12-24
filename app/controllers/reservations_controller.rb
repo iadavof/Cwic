@@ -132,11 +132,11 @@ private
 
   def apply_date_domain(reservations)
     if params[:date_domain_from].present? && params[:date_domain_to].present?
-      reservations.where('begins_at <= :end AND ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.translate('date.formats.default')).beginning_of_day, end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
+      reservations.where('begins_at <= :end AND ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.t('date.formats.default')).beginning_of_day, end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
     elsif params[:date_domain_from].present?
-      reservations.where('ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.translate('date.formats.default')).beginning_of_day)
+      reservations.where('ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.t('date.formats.default')).beginning_of_day)
     elsif params[:date_domain_to].present?
-      reservations.where('begins_at <= :end', end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
+      reservations.where('begins_at <= :end', end: Date.strptime(params[:date_domain_to], I18n.t('date.formats.default')).end_of_day)
     else
       reservations
     end
