@@ -222,8 +222,11 @@ nl:
         repeating: 'Herhalen...'
         repeating_unit: 'Herhaald'
         repeating_every: 'Herhaal iedere'
-        repeating_until: 'Herhalen tot'
-        repeating_instances: 'Na aantal herhalingen'
+        repeating_end: 'Herhalen tot'
+        repeating_until: 'datum'
+        repeating_instances: 'aantal herhalingen'
+        repeating_weekdays: 'Op weekdagen'
+        repeating_monthdays: 'Dagen van maand'
       feedback:
         screen_capture: 'Screenshot'
         user: 'Gebruiker'
