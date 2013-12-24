@@ -54,6 +54,8 @@ IADAscheduleView.prototype.initScheduleStub = function() {
   // Set schedule to the selected date or current date
   this.navigationReference = this.getFocusMoment();
   this.setBeginAndEndFromNavigationReference();
+
+  this.renderScheduleBodyGrid();
 }
 
 IADAscheduleView.prototype.getFocusMoment = function() {
@@ -966,7 +968,7 @@ IADAscheduleView.prototype.createVerticalSchedule = function() {
 
   this.scheduleContainer.find('div.top-axis').cwicSticky();
   this.scheduleContainer.find('div.top-axis').parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
-  this.scheduleContainer.find('.schedule-body').css('height', 'auto');
+  this.scheduleContainer.find('div.left-axis, div.schedule-body').css('height', '715px');
 }
 
 IADAscheduleView.prototype.createScheduleDay = function() {
@@ -1034,7 +1036,7 @@ IADAscheduleView.prototype.clearSchedule = function() {
   }
   var scheduleBody = this.scheduleContainer.find('.schedule-body');
   scheduleBody.css('height', scheduleBody.height());
-  scheduleBody.html('');
+  scheduleBody.children(':not("div.grid")').remove();
   if(this.options.view == 'horizontalCalendar') {
     this.scheduleContainer.find('.left-axis').html('');
   } else if(this.options.view == 'verticalCalendar') {
@@ -1178,13 +1180,14 @@ IADAscheduleView.prototype.appendDay = function(dayMoment) {
   var row = this.getTemplateClone('rowTemplate');
   row.attr('id', dayMoment.format('YYYY-MM-DD'));
 
+  /*
   for(var i = 0; i < 24; i += 1) {
     var hourpart = this.getTemplateClone('hourTimeFrameTemplate');
     hourpart.attr('id', 'hour_'+ i);
     hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
     $(row).find('.row-time-parts').append(hourpart);
   }
-
+*/
   this.scheduleContainer.find('.schedule-body').append(row);
 
   var timeAxis = this.scheduleContainer.find('.top-axis');
@@ -1267,13 +1270,26 @@ IADAscheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
 
   column.css({ width: dayWidth + '%' });
 
+  /*
   for(var i = 0; i < 24; i += 1) {
     var hourpart = this.getTemplateClone('verticalHourTimeFrameTemplate');
     hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
     column.find('.column-time-parts').append(hourpart);
   }
-
+  */
   this.scheduleContainer.find('.schedule-body').append(column);
+}
+
+IADAscheduleView.prototype.renderScheduleBodyGrid = function() {
+  var grid = this.scheduleContainer.find('div.schedule-body div.grid');
+  var nritems = this.options.zoom == 'day' ? 23 : 27;
+  for(var i = 0; i < nritems; i += 1) {
+    var gridItem = this.getTemplateClone('gridItemTemplate');
+    gridItem.addClass(this.options.view == 'horizontalCalendar' ? 'horizontal' : 'vertical');
+    gridItem.addClass(this.options.zoom);
+    console.debug(gridItem);
+    grid.append(gridItem);
+  }
 }
 
 IADAscheduleView.prototype.appendWeek = function(weekMoment) {
@@ -1287,6 +1303,8 @@ IADAscheduleView.prototype.appendWeek = function(weekMoment) {
 
   var row = this.getTemplateClone('rowTemplate');
   $(row).attr('id', weekMoment.format('GGGG-WW'));
+
+  /*
 
   for(var i = 0; i < 28; i += 1) {
     var rowpart = this.getTemplateClone('sixHourTimeFrameTemplate');
@@ -1304,6 +1322,7 @@ IADAscheduleView.prototype.appendWeek = function(weekMoment) {
     $(row).find('.row-time-parts').append(rowpart);
   }
 
+  */
   this.scheduleContainer.find('.schedule-body').append(row);
 
   var timeAxis = this.scheduleContainer.find('.top-axis');
@@ -1314,11 +1333,11 @@ IADAscheduleView.prototype.showCurrentTimeNeedle = function() {
   var currentDate = moment().format((this.options.zoom == 'day') ? 'YYYY-MM-DD' : 'GGGG-WW');
   var date_row = this.scheduleContainer.find('.row#' + currentDate);
   this.scheduleContainer.find('.left-axis-row.today:not(#label_' + currentDate + ')').removeClass('today');
-  this.scheduleContainer.find('.row.today:not(#' + currentDate + ')').removeClass('today').removeClass('progress-bar');
+  this.scheduleContainer.find('.row.today:not(#' + currentDate + ')').removeClass('today');
   this.scheduleContainer.find('.row:not(#' + currentDate + ') .time-needle').remove();
   if(date_row.length != 0) {
     this.scheduleContainer.find('.left-axis .left-axis-row#label_' + currentDate).addClass('today');
-    date_row.addClass('today').addClass('progress-bar');
+    date_row.addClass('today');
     if(this.scheduleContainer.find('.time-needle').length <= 0) {
       var needle = $('<div>', {'class': 'time-needle', title: moment().toDate().toLocaleString(), style: 'left: ' + this.timeToPercentage(moment()) + '%;'});
       date_row.append(needle);
@@ -1333,11 +1352,11 @@ IADAscheduleView.prototype.showVerticalCurrentTimeNeedle = function() {
   var currentDate = moment().format((this.options.zoom == 'day') ? 'YYYY-MM-DD' : 'GGGG-WW');
   var date_column = this.scheduleContainer.find('.column#' + currentDate);
   this.scheduleContainer.find('.top-axis div.vertical-day-time-axis-frame.today:not(#label_' + currentDate + ')').removeClass('today');
-  this.scheduleContainer.find('.column.today:not(#' + currentDate + ')').removeClass('today').removeClass('progress-bar');
+  this.scheduleContainer.find('.column.today:not(#' + currentDate + ')').removeClass('today');
   this.scheduleContainer.find('.column:not(#' + currentDate + ') .time-needle').remove();
   if(date_column.length != 0) {
     this.scheduleContainer.find('.top-axis div.vertical-day-time-axis-frame#label_' + currentDate).addClass('today');
-    date_column.addClass('today').addClass('progress-bar');
+    date_column.addClass('today');
     if(this.scheduleContainer.find('.time-needle').length <= 0) {
       var needle = $('<div>', {'class': 'time-needle', title: moment().toDate().toLocaleString(), style: 'top: ' + this.timeToPercentage(moment()) + '%;'});
       date_column.append(needle);

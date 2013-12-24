@@ -281,6 +281,7 @@ div.calendar div.schedule-body div.row {
   margin: 5px 0;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  z-index: 2;
 }
 
 div.calendar div.schedule-body div.column {
@@ -290,6 +291,45 @@ div.calendar div.schedule-body div.column {
   border: 1px solid #ccc;
   box-sizing: border-box;
   -moz-box-sizing: border-box;
+  z-index: 2;
+}
+
+div.calendar div.schedule-body div.grid {
+  position: absolute;
+  left: 0;
+  top: 5px;
+  width: 100%;
+  height: 100%;
+
+  z-index: 1;
+}
+
+div.calendar div.schedule-body div.grid div.grid-item {
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+div.calendar div.schedule-body div.grid div.grid-item.vertical {
+  position: relative;
+  width: 100%;
+  height: 4.1666667%;
+  border-bottom: 1px solid #ccc;
+
+}
+
+div.calendar div.schedule-body div.grid div.grid-item.horizontal {
+  height: 100%;
+  position: relative;
+  float: left;
+  border-right: 1px solid #ccc;
+}
+
+div.calendar div.schedule-body div.grid div.grid-item.horizontal.day {
+  width: 4.1666667%;
+}
+
+div.calendar div.schedule-body div.grid div.grid-item.horizontal.week {
+  width: 3.5714286%;
 }
 
 div.calendar div.schedule-body div.column:nth-child(even) {
@@ -312,15 +352,27 @@ div.calendar div.schedule-body div.column:nth-child(even).today {
   background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
   background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-
-  -webkit-animation: animate-stripes-30 1.5s linear 0s infinite normal;
-  -moz-animation: animate-stripes-30 1.5s linear 0s infinite normal;
-  animation: animate-stripes-30 1.5s linear 0s infinite normal;
 }
 
 div.calendar div.schedule-body div.row.today,
 div.calendar div.schedule-body div.column.today {
   border-color: #aaaaaa;
+
+   /* TODO: dit is een kopie van .progress-bar in global.css.scss. Misschien ooit netter maken? */
+  background-color: #6DBFCE;
+  -webkit-background-size: 30px 30px;
+  -moz-background-size: 30px 30px;
+  background-size: 30px 30px;
+  background-image: -webkit-gradient(linear, left top, right bottom,
+            color-stop(0.25, rgba(255, 255, 255, 0.3)), color-stop(0.25, transparent),
+            color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.3)),
+            color-stop(0.75, rgba(255, 255, 255, 0.3)), color-stop(0.75, transparent),
+            to(transparent));
+  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
 }
 
 div.calendar div.schedule-body div.row div.time-needle,
@@ -639,53 +691,6 @@ div.calendar div.schedule-body div.row div.schedule-object-item-parts p.name {
 
 div.calendar div.schedule-body div.row div.schedule-object-item-parts:first-child {
   border-top: 0 none;
-}
-
-div.calendar div.schedule-body div.row div.row-time-parts div.six-hour-time-frame,
-div.calendar div.schedule-body div.row div.row-time-parts div.hour-time-frame {
-  position: relative;
-  float: left;
-  width: 4.166666%;
-  height: 100%;
-  border-left: 1px solid #ccc;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-div.calendar div.schedule-body div.column div.column-time-parts div.vertical-hour-time-frame {
-  position: relative;
-  width: 100%;
-  height: 30px;
-  border-top: 1px solid #ccc;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-div.calendar div.schedule-body div.row div.row-time-parts div.six-hour-time-frame {
-  width: 3.5714286%;
-  border-left: 1px dotted #ccc;
-}
-
-div.calendar div.schedule-body div.row div.row-time-parts div.six-hour-time-frame.end-day {
-  border-left: 1px solid #bbb;
-}
-
-div.calendar div.schedule-body div.row div.row-time-parts div.six-hour-time-frame.even {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-
-div.calendar div.schedule-body div.row.today div.row-time-parts div.six-hour-time-frame,
-div.calendar div.schedule-body div.row.today div.row-time-parts div.hour-time-frame {
-  border-left-color: #aaaaaa;
-}
-div.calendar div.schedule-body div.row.today div.row-time-parts div.six-hour-time-frame.end-day {
-  border-left-color: #999;
-}
-
-div.calendar div.schedule-body div.row div.row-time-parts div.six-hour-time-frame:first-child,
-div.calendar div.schedule-body div.row div.row-time-parts div.hour-time-frame:first-child {
-  border: none;
 }
 
 div.calendar div.schedule-body div.row div.schedule-item,
