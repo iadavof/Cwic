@@ -277,11 +277,9 @@ div.calendar div.schedule-body div.row {
   position: relative;
   width: 100%;
   min-height: 62px;
-  border: 1px solid #ccc;
-  margin: 5px 0;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
   z-index: 2;
+  border-top: 5px solid #fff;
+  border-bottom: 5px solid #fff;
 }
 
 div.calendar div.schedule-body div.column {
@@ -356,7 +354,6 @@ div.calendar div.schedule-body div.column:nth-child(even).today {
 
 div.calendar div.schedule-body div.row.today,
 div.calendar div.schedule-body div.column.today {
-  border-color: #aaaaaa;
 
    /* TODO: dit is een kopie van .progress-bar in global.css.scss. Misschien ooit netter maken? */
   background-color: #6DBFCE;
@@ -489,9 +486,10 @@ div.calendar div.schedule-body div.column div.time-needle:after {
   border-bottom: 3px solid transparent;
 }
 
-div.calendar div.schedule-body div.row.today {
+div.calendar div.schedule-body div.row.today div.schedule-objects {
   padding: 7px 0;
   min-height: 76px;
+  border-color: #aaaaaa;
 }
 
 div.calendar div.left-axis div.time-axis-row {
@@ -513,7 +511,7 @@ div.calendar div.left-axis div.left-axis-row.today {
   height: 76px;
 }
 
-div.calendar div.schedule-body div.row:first-child, div.calendar div.day-axis div.day-axis-row {
+div.calendar div.day-axis div.day-axis-row {
   margin-top: 3px;
 }
 
@@ -577,7 +575,7 @@ div.calendar div.left-axis div.left-axis-row div {
 }
 
 div.calendar div.schedule-body div.row:first-child {
-  margin-top: 0;
+  border-top: none;
 }
 
 div.calendar div.left-axis div.left-axis-row:first-child {
@@ -640,6 +638,9 @@ div.calendar div.schedule-body div.row div.row-time-parts {
 div.calendar div.schedule-body div.row div.schedule-objects {
   position: relative;
   width: 100%;
+  border: 1px solid #ccc;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
 }
 
 div.calendar div.schedule-body div.column div.schedule-object-item-parts,
