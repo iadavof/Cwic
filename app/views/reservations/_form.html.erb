@@ -9,7 +9,7 @@
     </div>
   </div>
   <div class="field">
-    <%= f.label :beeins_at %>
+    <%= f.label :begins_at %>
     <%= f.text_field :begins_at_date, id: 'begins_at_date', class: 'datepicker-field' %>
     <%= f.text_field :begins_at_tod, id: 'begins_at_tod', class: 'timepicker-field' %>
   </div>
@@ -18,8 +18,10 @@
     <%= f.text_field :ends_at_date, id: 'ends_at_date', class: 'datepicker-field' %>
     <%= f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field' %>
   </div>
+  <% if @reservation.new_record? %>
   <%= f.fields_for :reservation_recurrence_definition, @reservation.reservation_recurrence_definition, wrapper: false do |rrdf| %>
     <%= render partial: 'reservation_recurrence_definitions/form_fields', locals: { f: rrdf } %>
+  <% end %>
   <% end %>
   <div class="field">
     <%= f.label :entity %>

@@ -15,6 +15,7 @@ class EntityType < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 255 }
   #validates :reservation_statuses, presence: true
 
+  after_initialize :add_default_entity_type_reservation_statuses, if: :new_record?
   after_save :create_info_screen_entity_types
 
   accepts_nested_attributes_for :properties, allow_destroy: true
