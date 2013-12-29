@@ -15,7 +15,7 @@ class Reservation < ActiveRecord::Base
   validates :entity, presence: true
   validates :organisation_client, presence: true
   validate :not_overlapping
-  validates :reservation_status, presence: true
+  validates :reservation_status, presence: true, if: 'self.entity.present?'
 
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
@@ -33,7 +33,6 @@ class Reservation < ActiveRecord::Base
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
-
 
   scope :blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = true') }
   scope :non_blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = false') }
@@ -77,8 +76,9 @@ class Reservation < ActiveRecord::Base
 private
 
   def check_if_should_update_reservation_status
+    return if self.entity.nil?
     if self.reservation_status.nil?
-        self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
+      self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
     elsif self.entity_id_was.present? && self.entity_id_changed?
       # entity is changed, check if the same reservation status set is applicable
       if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type

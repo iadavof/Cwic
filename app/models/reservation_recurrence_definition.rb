@@ -8,6 +8,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	belongs_to :repeating_unit, class_name: 'TimeUnit'
 
 	column :reservation_id, :references
+	column :repeating_unit_id, :references
 
 	column :repeating, :boolean
 	
@@ -22,7 +23,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	validates :reservation_unit, presence: true
 	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }
 	validates :repeating_instances, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
-	validates_date :repeating_until, after: self.reservation.begins_at
+	#validates_date :repeating_until, after: self.reservation.begins_at
 
 	def apply_recurrence
 
@@ -52,7 +53,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 
 			# Get the requested occurences
 			if self.repeating_until.present?
-				recurrences = schedule.occurences DateTime.strptime(self.repeating_until, I18n.t("date.formats.default"))
+				recurrences = schedule.occurrences DateTime.strptime(self.repeating_until, I18n.t("date.formats.default"))
 			elsif(self.repeating_instances.present?)
 				recurrences = schedule.first(self.repeating_instances)
 			end
@@ -71,8 +72,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 			new_reservation.ends_at = reservation.begins_at + reservation_length.seconds
 			new_reservations << new_reservation
 		end
-
-		new_reservations.save
+		new_reservations.map{ |r| r.save }
 	end
 
 	def repeating_units
