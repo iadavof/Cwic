@@ -151,7 +151,7 @@ private
   def resource_params
     params.require(:reservation).permit(:description, :begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id,
     organisation_client_attributes: [:first_name, :infix, :last_name, :email, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat],
-    reservation_recurrence_definition_attributes: [:repeating, :repeating_unit, :repeating_every, :repeating_until, :repeating_instances])
+    reservation_recurrence_definition_attributes: [:repeating, :repeating_unit_id, :repeating_every, :repeating_weekdays, { :repeating_monthdays => [] }, { :repeating_until => [] }, :repeating_instances])
   end
 
   def interpolation_options

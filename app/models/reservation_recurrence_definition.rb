@@ -20,7 +20,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	column :repeating_instances, :integer
 
 	validates :reservation, presence: true
-	validates :reservation_unit, presence: true
+	#validates :reservation_unit, presence: true
 	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }
 	validates :repeating_instances, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
 	#validates_date :repeating_until, after: self.reservation.begins_at
@@ -33,11 +33,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 		else
 			schedule = IceCube::Schedule.new(self.reservation.begins_at)
 
-			schedule_rule = IceCube::Rule.new
-
-			if repeating_units.exists?(self.repeating_unit)
-				 schedule_rule.send(self.repeating_unit.repetition_key, self.repeating_every)
-			end
+			schedule_rule = IceCube::Rule.send(self.repeating_unit.repetition_key, self.repeating_every)
 
 			if self.repeating_unit == :weekly && self.repeating_weekdays.present?
 				schedule_rule.day(self.repeating_weekdays)
@@ -57,7 +53,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 			elsif(self.repeating_instances.present?)
 				recurrences = schedule.first(self.repeating_instances)
 			end
-
+			puts recurrences.inspect
 			clone_reservation(recurrences)
 		end
 
@@ -67,7 +63,8 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 		reservation_length = self.reservation.total_length
 		new_reservations = []
 		recurrences.each do |starts_at|
-			new_reservation = self.reservation.clone
+			puts starts_at.inspect
+			new_reservation = self.reservation.dup
 			new_reservation.begins_at = starts_at
 			new_reservation.ends_at = reservation.begins_at + reservation_length.seconds
 			new_reservations << new_reservation
