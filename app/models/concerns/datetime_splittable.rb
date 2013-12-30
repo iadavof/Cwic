@@ -13,7 +13,7 @@ module DatetimeSplittable
         define_method("#{attribute}_tod") { self.get_tod(attribute) }
         define_method("#{attribute}_date=") { |date| self.set_date(attribute, date) }
         define_method("#{attribute}_tod=") { |tod| self.set_tod(attribute, tod) }
-        define_method("set_default_#{attribute}") { self.send("#{attribute}=", options[:default]) }
+        define_method("set_default_#{attribute}") { self.send("#{attribute}=", options[:default]) if self.send(attribute).nil? }
         define_method("join_#{attribute}") { self.join_date_and_tod(attribute) }
         define_method("correct_errors_#{attribute}") { self.correct_errors_date_and_tod(attribute) }
 
@@ -85,6 +85,9 @@ protected
       # Only if both are set, create time from them. Otherwise leave the old time standing.
       time = Time.new(date.year, date.month, date.day, tod.hour, tod.min, tod.sec).utc
       self.send("#{attribute}=", time)
+      # We have combine the separate date and tod fields into a time object, so we can unset the separate values.
+      self.send("#{attribute}_date=", nil)
+      self.send("#{attribute}_tod=", nil)
     end
   end
 
