@@ -125,9 +125,7 @@ APP.reservations = {
       });
     },
     bindReservationRecurrenceControls: function() {
-
-
-      $('select#reservation_reservation_recurrence_definition_attributes_repeating_unit').on('change', function(){
+      $('select#reservation_reservation_recurrence_definition_attributes_repeating_unit').on('change', function() {
         var value = $(this).find('option:selected').data('key');
         $('div.recurrence_definition_fields div.recurrence_definition_monthly, div.recurrence_definition_fields div.recurrence_definition_weekly').hide();
         if(value == 'week') {
@@ -137,7 +135,7 @@ APP.reservations = {
         }
       });
 
-      $('input[name="reservation[reservation_recurrence_definition_attributes][repeating]"]').on('change', function(){
+      $('input[name="reservation[reservation_recurrence_definition_attributes][repeating]"]').on('change', function() {
         if($(this).is(':checked')) {
           $('div.recurrence_definition_fields').show();
         } else {
@@ -145,7 +143,7 @@ APP.reservations = {
         }
       });
 
-      $('input[name="repeating_end"]').on('change',function() {
+      $('input[name="repeating_end"]').on('change', function() {
         var value = $(this).val();
         if(value == 'until') {
           $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').val('').hide().trigger('change');

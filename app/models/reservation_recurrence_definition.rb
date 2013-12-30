@@ -1,8 +1,7 @@
 class ReservationRecurrenceDefinition < ActiveRecord::Base
-
 	include I18n::Alchemy
 
-	has_no_table
+	has_no_table database: :pretend_success
 
 	belongs_to :reservation
 	belongs_to :repeating_unit, class_name: 'TimeUnit'
@@ -61,15 +60,19 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 
 	def clone_reservation(recurrences)
 		reservation_length = self.reservation.total_length
+
+		# Remove the first recurrence because this is the original reservation which is already saved
+		recurrences.shift
+
 		new_reservations = []
 		recurrences.each do |starts_at|
-			puts starts_at.inspect
 			new_reservation = self.reservation.dup
 			new_reservation.begins_at = starts_at
-			new_reservation.ends_at = reservation.begins_at + reservation_length.seconds
+			new_reservation.ends_at = starts_at + reservation_length.seconds
 			new_reservations << new_reservation
 		end
-		new_reservations.map{ |r| r.save }
+		
+		new_reservations.map { |r| r.save }
 	end
 
 	def repeating_units
