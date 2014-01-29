@@ -14,7 +14,7 @@
 
   <tbody>
     <% reservations.each do |reservation| %>
-    <tr>
+    <%= content_tag(:tr, class: (local_assigns[:highlight].present? && highlight.include?(reservation)) ?  'highlight' : nil) do %>
       <% if reservation.reservation_status.present? %>
       <td style="opacity: 0.7; background-color: <%= reservation.reservation_status.color %>; color: <%= Cwic::Color.text_color(reservation.reservation_status.color) %>;"><%= reservation.reservation_status.name %></td>
       <% else %>
@@ -30,7 +30,7 @@
         <%= icon_link_to_edit([@organisation, reservation]) %>
         <%= icon_link_to_destroy([@organisation, reservation]) %>
       </td>
-    </tr>
+    <% end %>
     <% end %>
   </tbody>
 </table>

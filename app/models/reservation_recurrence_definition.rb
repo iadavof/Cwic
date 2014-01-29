@@ -24,8 +24,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	validates :repeating_instances, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
 	#validates_date :repeating_until, after: self.reservation.begins_at
 
-	def apply_recurrence
-
+	def generate_recurrences
 		# If we are not repeating, there is nothing to do
 		if !self.repeating
 			return
@@ -48,37 +47,54 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 
 			# Get the requested occurences
 			if self.repeating_until.present?
-				recurrences = schedule.occurrences DateTime.strptime(self.repeating_until, I18n.t("date.formats.default"))
+				recurrence_dates = schedule.occurrences DateTime.strptime(self.repeating_until, I18n.t("date.formats.default"))
 			elsif(self.repeating_instances.present?)
-				recurrences = schedule.first(self.repeating_instances)
+				recurrence_dates = schedule.first(self.repeating_instances)
 			end
-			puts recurrences.inspect
-			unless recurrences.empty?
-				# There are recurernces, set base_reservation for original reservation
-				self.base_reservation = self.id
-				self.save
-				clone_reservation(recurrences)
-			end
-		end
 
+			clone_reservation(recurrence_dates)
+		end
 	end
 
-	def clone_reservation(recurrences)
+	def save_recurrances(recurrences)
+			unless recurrences.empty?
+				# There are recurernces, set base_reservation for original reservation
+				self.reservation.base_reservation = self.reservation
+				self.save
+				recurrences.map { |r| r.save }
+			end
+	end
+
+	def validate_recurrences
+		invalid_recurrences = []
+		recurrences.each do |r|
+			unless recurrences.valid?
+				invalid_recurrences << r
+			end
+		end
+		invalid_recurrences.empty?
+	end
+
+	def apply_recurrence
+		recurrences = generate_recurrences
+	end
+
+	def clone_reservation(recurrence_dates)
 		reservation_length = self.reservation.total_length
 
 		# Remove the first recurrence because this is the original reservation which is already saved
-		recurrences.shift
+		recurrence_dates.shift
 
 		new_reservations = []
-		recurrences.each do |starts_at|
+		recurrence_dates.each do |starts_at|
 			new_reservation = self.reservation.dup
 			new_reservation.begins_at = starts_at
 			new_reservation.ends_at = starts_at + reservation_length.seconds
-			new_reservation.base_reservation = self.reservation.id
+			new_reservation.base_reservation = self.reservation
+			new_reservation.reservation_recurrence_definition = nil
 			new_reservations << new_reservation
 		end
 		
-		new_reservations.map { |r| r.save }
 	end
 
 	def repeating_units

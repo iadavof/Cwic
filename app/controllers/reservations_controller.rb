@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
   before_action :load_organisation_client
   before_action :load_resource
+  before_action :load_recurrences, only: [:show]
   authorize_resource
 
   respond_to :html, :json
@@ -12,7 +13,6 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/1
   def show
-    @recurrences = @reservation.get_recurrences
     respond_with(@organisation, @reservation)
   end
 
@@ -62,6 +62,7 @@ class ReservationsController < ApplicationController
       return render action: :new
     end
     @reservation.save
+    load_recurrences
     respond_with(@organisation, @reservation)
   end
 
@@ -122,6 +123,10 @@ private
     end
   end
 
+  def load_recurrences
+    @recurrences = @reservation.get_recurrences
+  end
+
   def apply_date_domain(reservations)
     if params[:date_domain_from].present? && params[:date_domain_to].present?
       reservations.where('begins_at <= :end AND ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.t('date.formats.default')).beginning_of_day, end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
@@ -142,7 +147,7 @@ private
 
   def resource_params
     params.require(:reservation).permit(:description, :begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id,
-    organisation_client_attributes: [:first_name, :infix, :last_name, :email, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat],
+    organisation_client_attributes: [:first_name, :infix, :last_name, :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat],
     reservation_recurrence_definition_attributes: [:repeating, :repeating_unit_id, :repeating_every, { :repeating_weekdays => [] }, { :repeating_monthdays => [] }, :repeating_end, :repeating_until, :repeating_instances])
   end
 
