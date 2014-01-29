@@ -953,6 +953,11 @@ table tr:nth-child(even) {
   background-color: #f3f3f3;
 }
 
+table tr.highlight {
+  border: 1px solid #1C9CB2;
+  background-color: rgba(109, 191, 206, 0.3);
+}
+
 dl {
   display: block;
   margin: 20px 0;
