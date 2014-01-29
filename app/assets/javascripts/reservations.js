@@ -145,12 +145,17 @@ APP.reservations = {
 
       $('input[name="repeating_end"]').on('change', function() {
         var value = $(this).val();
-        if(value == 'until') {
-          $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').val('').hide().trigger('change');
-          $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').show();
+        if($(this).is(':checked')) {
+          if(value == 'until') {
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').show();
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').val('').hide().trigger('change');
+          } else if(value == 'instances') {
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').show();
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').val('').hide().trigger('change');
+          }
         } else {
-          $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').val('').hide().trigger('change');
-          $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').show();
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').val('').hide().trigger('change');
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').val('').hide().trigger('change');
         }
 
       });
