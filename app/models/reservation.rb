@@ -7,6 +7,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :entity
   belongs_to :organisation
   belongs_to :reservation_status
+  belongs_to :base_reservation, class_name: 'Reservation'
   has_many :stickies, as: :stickable, dependent: :destroy
   has_one :reservation_recurrence_definition
 
@@ -73,6 +74,14 @@ class Reservation < ActiveRecord::Base
 
   def instance_name
     "R##{self.id.to_s}"
+  end
+
+  def get_recurrences
+    if self.base_reservation
+      self.organisation.reservations.where(base_reservation: self.base_reservation)
+    else
+      []
+    end
   end
 
 private

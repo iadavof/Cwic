@@ -12,6 +12,7 @@ class ReservationsController < ApplicationController
 
   # GET /reservations/1
   def show
+    @recurrences = @reservation.get_recurrences
     respond_with(@organisation, @reservation)
   end
 
@@ -60,7 +61,6 @@ class ReservationsController < ApplicationController
       @reservation.build_organisation_client
       return render action: :new
     end
-
     @reservation.save
     respond_with(@organisation, @reservation)
   end
@@ -91,12 +91,6 @@ class ReservationsController < ApplicationController
 
 private
   
-  def handle_recurrence
-    @reservation.reservation_recurrence_definition.apply_recurrence
-    # Remove recurrence model such that it will not be saved in the next step
-    @reservation.reservation_recurrence_definition = nil
-  end
-
   def load_resource
     case params[:action]
     when 'index'

@@ -53,7 +53,12 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 				recurrences = schedule.first(self.repeating_instances)
 			end
 			puts recurrences.inspect
-			clone_reservation(recurrences)
+			unless recurrences.empty?
+				# There are recurernces, set base_reservation for original reservation
+				self.base_reservation = self.id
+				self.save
+				clone_reservation(recurrences)
+			end
 		end
 
 	end
@@ -69,6 +74,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 			new_reservation = self.reservation.dup
 			new_reservation.begins_at = starts_at
 			new_reservation.ends_at = starts_at + reservation_length.seconds
+			new_reservation.base_reservation = self.reservation.id
 			new_reservations << new_reservation
 		end
 		
