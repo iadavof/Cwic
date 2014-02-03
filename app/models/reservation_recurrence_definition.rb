@@ -19,10 +19,8 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	column :repeating_instances, :integer
 
 	validates :reservation, presence: true
-	#validates :reservation_unit, presence: true
-	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }
+	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
 	validates :repeating_instances, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
-	#validates_date :repeating_until, after: self.reservation.begins_at
 
 	def generate_recurrences
 		# If we are not repeating, there is nothing to do
@@ -52,31 +50,30 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 				recurrence_dates = schedule.first(self.repeating_instances)
 			end
 
-			clone_reservation(recurrence_dates)
+			@recurrences = clone_reservation(recurrence_dates)
+			@recurrences
 		end
 	end
 
-	def save_recurrances(recurrences)
-			unless recurrences.empty?
+	def save_recurrances
+			unless @recurrences.empty?
 				# There are recurernces, set base_reservation for original reservation
 				self.reservation.base_reservation = self.reservation
 				self.save
-				recurrences.map { |r| r.save }
+				@recurrences.map { |r| r.save }
 			end
 	end
 
-	def validate_recurrences
+	def check_invalid_recurrences
 		invalid_recurrences = []
-		recurrences.each do |r|
-			unless recurrences.valid?
-				invalid_recurrences << r
+		if @recurrences
+			@recurrences.each do |r|
+				unless r.valid?
+					invalid_recurrences << r
+				end
 			end
 		end
-		invalid_recurrences.empty?
-	end
-
-	def apply_recurrence
-		recurrences = generate_recurrences
+		invalid_recurrences
 	end
 
 	def clone_reservation(recurrence_dates)
@@ -94,7 +91,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 			new_reservation.reservation_recurrence_definition = nil
 			new_reservations << new_reservation
 		end
-		
+		new_reservations
 	end
 
 	def repeating_units

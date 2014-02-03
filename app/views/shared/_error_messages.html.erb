@@ -2,8 +2,6 @@
 <div id="error-explanation">
   <p class="error-head"><%= t('.fix_the_errors', count: target.errors.count) %></p>
   <ul>
-  <% binding.pry %>
-  <%= target.errors.full_messages.inspect %>
   <% target.errors.full_messages.each do |msg| %>
     <li><%= msg %></li>
   <% end %>
