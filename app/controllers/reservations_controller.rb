@@ -62,7 +62,6 @@ class ReservationsController < ApplicationController
       return render action: :new
     end
     @reservation.save
-    load_recurrences
     respond_with(@organisation, @reservation)
   end
 

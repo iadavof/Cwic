@@ -267,10 +267,13 @@ nl:
             user:
               taken: 'bestaat al binnen de organisatie'
         reservation:
-          total_overlap_html: 'Reservering overlapt met een <a href="organisations/%{organisation_id}/reservations/%{reservation_id}">andere reservering</a> die begint op %{other_begins_at} en eindigt op %{other_ends_at}'
+          repetition_overlap_html: 'Herhaling van %{begins_at}: %{ir_message}'
+          total_overlap_html: 'Reservering overlapt met een <a href="%{reservation_url}">andere reservering</a> die begint op %{other_begins_at} en eindigt op %{other_ends_at}'
           attributes:
-            begins_at_html: 'overlapt met een <a href="organisations/%{organisation_id}/reservations/%{reservation_id}">andere reservering</a> welke eindigt op %{other_ends_at}'
-            ends_at_html: 'overlapt met een <a href="organisations/%{organisation_id}/reservations/%{reservation_id}">andere reservering</a> welke begint op %{other_begins_at}'
+            begins_at:
+              begins_at_html: 'overlapt met een <a href="%{reservation_url}">andere reservering</a> welke eindigt op %{other_ends_at}'
+            ends_at:
+              ends_at_html: 'overlapt met een <a href="%{reservation_url}">andere reservering</a> welke begint op %{other_begins_at}'
 
   data_types:
     string:
