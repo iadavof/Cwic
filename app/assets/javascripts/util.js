@@ -22,5 +22,9 @@ APP.util = {
       translations[key] = library.key;
     }
     return translations;
+  },
+  // Escape strings/names for use in jQuery selectors
+  escapeForSelector: function(string) {
+    return string.replace(/(:|\.|\[|\])/g,'\\$1');
   }
 }

@@ -1,7 +1,6 @@
 class ReservationsController < ApplicationController
   before_action :load_organisation_client
   before_action :load_resource
-  before_action :load_recurrences, only: [:show]
   authorize_resource
 
   respond_to :html, :json
@@ -120,10 +119,6 @@ private
     else
       reservations
     end
-  end
-
-  def load_recurrences
-    @recurrences = @reservation.get_recurrences
   end
 
   def apply_date_domain(reservations)

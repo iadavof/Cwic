@@ -138,12 +138,13 @@ APP.reservations = {
       $('input[name="reservation[reservation_recurrence_definition_attributes][repeating]"]').on('change', function() {
         if($(this).is(':checked')) {
           $('div.recurrence_definition_fields').show();
+          $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').trigger('change');
         } else {
           $('div.recurrence_definition_fields').hide();
         }
       });
 
-      $('input[name="repeating_end"]').on('change', function() {
+      $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').on('change', function() {
         var value = $(this).val();
         if($(this).is(':checked')) {
           if(value == 'until') {
@@ -153,11 +154,7 @@ APP.reservations = {
             $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').show();
             $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').val('').hide().trigger('change');
           }
-        } else {
-            $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').val('').hide().trigger('change');
-            $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').val('').hide().trigger('change');
         }
-
       });
 
       $('div.repeating_monthdays_selector, div.repeating_weekdays_selector').on('click', 'label', function() {
@@ -171,7 +168,7 @@ APP.reservations = {
       });
 
       // Setting the values after reload.
-      $('select#reservation_reservation_recurrence_definition_attributes_repeating_unit, input[name="repeating_end"]').trigger('change');
+      $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').trigger('change');
 
       if($('input[name="reservation[reservation_recurrence_definition_attributes][repeating]"]').is(':checked')) {
         $('div.recurrence_definition_fields').show();
