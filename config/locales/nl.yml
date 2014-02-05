@@ -218,6 +218,7 @@ nl:
         entity: 'Object'
         description: 'Beschrijving'
         organisation_client: 'Klant'
+        reservation_recurrence_definition: 'Herhaling:'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
         repeating_unit: 'Herhaald'
@@ -274,6 +275,10 @@ nl:
               begins_at_html: 'overlapt met een <a href="%{reservation_url}">andere reservering</a> welke eindigt op %{other_ends_at}'
             ends_at:
               ends_at_html: 'overlapt met een <a href="%{reservation_url}">andere reservering</a> welke begint op %{other_begins_at}'
+        reservation_recurrence_definition:
+          recurrence_collides_with_itself: 'De ingestelde herhalingen overlappen elkaar.'
+          repeating_end: 'niet opgegeven'
+          repeating_until_before_end: 'voor herhalingsreeks valt voor het einde van de eerste reservering'
 
   data_types:
     string:
@@ -490,6 +495,8 @@ nl:
       entity_name_example: '4.13B, 9.5, foyer, loft'
 
   reservations:
+    show:
+      repetitions: 'Herhalingen'
     index:
       reservations_of_from_to: 'De reserveringen van <strong>%{of}</strong> in de periode tussen <strong>%{from}</strong> en <strong>%{to}</strong> worden nu getoond.'
       reservations_of_from: 'De reserveringen van <strong>%{of}</strong> vanaf <strong>%{from}</strong> worden nu getoond.'

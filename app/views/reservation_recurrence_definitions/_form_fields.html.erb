@@ -28,10 +28,10 @@
 				<%= f.label :repeating_end %>
 				<div class="repeating_end_options clearfix">
 					<div class="field">
-						<%= radio_button_tag('repeating_end', 'until') %><%= label_tag 'repeating_end_until', ReservationRecurrenceDefinition.human_attribute_name(:repeating_until) %><%= f.text_field :repeating_until, class: 'datepicker-field' %>
+						<%= f.radio_button(:repeating_end, :until, checked: true) %><%= f.label :repeating_end_until, ReservationRecurrenceDefinition.human_attribute_name(:repeating_until) %><%= f.text_field :repeating_until, class: 'datepicker-field' %>
 					</div>
 					<div class="field">
-						<%= radio_button_tag('repeating_end', 'instances') %><%= label_tag 'repeating_end_instances', ReservationRecurrenceDefinition.human_attribute_name(:repeating_instances) %><%= f.text_field :repeating_instances %>
+						<%= f.radio_button(:repeating_end, :instances) %><%= f.label :repeating_end_instances, ReservationRecurrenceDefinition.human_attribute_name(:repeating_instances) %><%= f.text_field :repeating_instances %>
 					</div>
 				</div>
 		</div>

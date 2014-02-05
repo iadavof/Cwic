@@ -17,11 +17,7 @@ class ActiveModel::Errors
   def full_messages
     reject { |attribute, message| message == false }.map { |attribute, message| full_message(attribute, message) }
   end
-
-  def full_messages_for(attribute)
-    (get(attribute) || []).reject { |message| message == false }.map { |message| message.html_safe? ? full_message_with_html_safe(attribute, message) : full_message(attribute, message) }
-  end
-
+  
   # Overwrite normalize_message implementation with the Rails 4.1 way so we can add false as message
   def normalize_message(attribute, message, options)
     case message

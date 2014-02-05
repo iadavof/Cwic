@@ -15,12 +15,18 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	column :repeating_weekdays, :array
 	column :repeating_monthdays, :array
 
-	column :repeating_until, :string
+	column :repeating_end, :string
+	column :repeating_until, :datetime
 	column :repeating_instances, :integer
 
 	validates :reservation, presence: true
+	validates :repeating_unit, presence: true
 	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
 	validates :repeating_instances, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
+	validates :repeating_until, timeliness: { type: :date }, allow_blank: true
+	validate :length_not_greater_than_repetition_unit
+	validate :repeating_end_set
+	validate :repeating_end_after_reservation_end
 
 	def generate_recurrences
 		# If we are not repeating, there is nothing to do
@@ -50,16 +56,16 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 				recurrence_dates = schedule.first(self.repeating_instances)
 			end
 
-			@recurrences = clone_reservation(recurrence_dates)
+			@recurrences = clone_reservation(recurrence_dates) if recurrence_dates.present?
 			@recurrences
 		end
 	end
 
-	def save_recurrances
+	def save_recurrences
 			unless @recurrences.empty?
 				# There are recurernces, set base_reservation for original reservation
 				self.reservation.base_reservation = self.reservation
-				self.save
+				self.reservation.save
 				@recurrences.map { |r| r.save }
 			end
 	end
@@ -117,6 +123,29 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 			OpenStruct.new(key: :saturday, human_name: current_locale_daynames[6]),
 			OpenStruct.new(key: :sunday, human_name: current_locale_daynames[0]),
 		]
+	end
+
+	def length_not_greater_than_repetition_unit
+		return unless self.repeating && self.repeating_unit.present?
+		
+		reservation_length = self.reservation.total_length
+		repeating_every = 1 if repeating_every.nil?
+
+		if self.repeating_every * self.repeating_unit.seconds < reservation_length
+			self.errors.add('', I18n.t('.activerecord.errors.models.reservation_recurrence_definition.recurrence_collides_with_itself'))
+		end
+	end
+
+	def repeating_end_set
+		unless self.repeating_until.present? || self.repeating_instances.present?
+			self.errors.add(:repeating_end, I18n.t('.activerecord.errors.models.reservation_recurrence_definition.repeating_end'))
+		end
+	end
+
+	def repeating_end_after_reservation_end
+		if self.repeating_until.present? && self.repeating_until < self.reservation.ends_at
+			self.errors.add(:repeating_until, I18n.t('.activerecord.errors.models.reservation_recurrence_definition.repeating_until_before_end'))
+		end
 	end
 
 end

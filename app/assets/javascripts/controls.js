@@ -26,7 +26,7 @@
           var selectedOption = $(this).find('option:selected');
           dropdownReplacement.find('.cwic-dropdown-current-option').text((selectedOption.text() || '...'));
           dropdownReplacement.find('.cwic-dropdown-option').removeClass('selected');
-          dropdownReplacement.find('.cwic-dropdown-option[data-value=' + selectedOption.val() + ']').addClass('selected');
+          dropdownReplacement.find('.cwic-dropdown-option[data-value=' + APP.util.escapeForSelector(selectedOption.val()) + ']').addClass('selected');
         });
 
         /* Add class to autosubmit dropdowns on change */
@@ -92,7 +92,7 @@
         radioButton.on('change.cwicRadioButton', function(e) {
           if ($(this).is(':checked')) {
             radioButtonReplacement.addClass('checked');
-            $('.cwic-radio-button[data-name=' + radioButtonReplacement.data('name') + ']').not(radioButtonReplacement).removeClass('checked');
+            $('.cwic-radio-button[data-name=' + APP.util.escapeForSelector(radioButtonReplacement.data('name')) + ']').not(radioButtonReplacement).removeClass('checked');
           } else {
             radioButtonReplacement.removeClass('checked');
           }

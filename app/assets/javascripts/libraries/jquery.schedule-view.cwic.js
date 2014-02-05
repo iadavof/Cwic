@@ -1439,7 +1439,7 @@ IADAscheduleView.prototype.createScheduleItem = function(reservationForm, resetN
             if($.isArray(item.messages) && item.messages.length > 0) {
               jreservationForm.find('label[for="reservation_'+ index +'"]').wrap($('<div>', {class: 'field_with_errors'}));
               for(itemIndex in item.messages) {
-                errorList.append($('<li>', {text: item.messages[itemIndex]}));
+                errorList.append($('<li>', { html: item.messages[itemIndex] }));
               }
             }
           }
