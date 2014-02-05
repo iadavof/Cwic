@@ -1,10 +1,6 @@
 # This file should contain all the record creation needed to seed the database with its default values.
 # The data can then be loaded with the rake db:seed (or created alongside the db with db:setup).
-#
-# Examples:
-#
-#   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
-#   Mayor.create(name: 'Emanuel', city: cities.first)
+I18n.locale = :nl
 
 # Create default data types
 DataType.create!([
@@ -19,16 +15,16 @@ DataType.create!([
 
 # Create default time periods
 TimeUnit.create!([
-  { key: 'second', common: false, seconds: 1.second },
-  { key: 'minute', common: false, seconds: 1.minute },
-  { key: 'quarter', common: true, seconds: 15.minutes },
-  { key: 'half_hour', common: true, seconds: 30.minutes },
-  { key: 'hour', common: true, seconds: 1.hour },
-  { key: 'day', common: true, seconds: 1.day },
-  { key: 'week', common: true, seconds: 1.week },
-  { key: 'month', common: false, seconds: 1.month },
-  { key: 'year', common: false, seconds: 1.year.to_i },
-  { key: 'infinite', common: false, seconds: 1.year.to_i + 1}
+  { key: 'second', repetition_key: 'secondly', common: false, seconds: 1.second },
+  { key: 'minute', repetition_key: 'minutely', common: false, seconds: 1.minute },
+  { key: 'quarter', repetition_key: 'quarterly', common: true, seconds: 15.minutes },
+  { key: 'half_hour', repetition_key: 'half_hourly', common: true, seconds: 30.minutes },
+  { key: 'hour', repetition_key: 'hourly', common: true, seconds: 1.hour },
+  { key: 'day', repetition_key: 'daily', common: true, seconds: 1.day },
+  { key: 'week', repetition_key: 'weekly', common: true, seconds: 1.week },
+  { key: 'month', repetition_key: 'monthly', common: false, seconds: 1.month },
+  { key: 'year', repetition_key: 'yearly', common: false, seconds: 1.year.to_i },
+  { key: 'infinite', repetition_key: nil, common: false, seconds: 1.year.to_i + 1}
 ])
 
 # Create default roles

@@ -15,6 +15,11 @@
   <dd><%= link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client)) %></dd>
 </dl>
 
+<% unless @reservation.recurrences.empty? %>
+	<h2><%= t('.repetitions') %></h2>
+	<%= render partial: 'reservations/table', locals: { reservations: @reservation.recurrences, include_date: true, highlight: [@reservation] } %>
+<% end %>
+
 
 <%= button_link_back_to_index([@organisation, Reservation]) %>
 <%= button_link_to_edit([@organisation, @reservation]) %>

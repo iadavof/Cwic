@@ -87,6 +87,9 @@ gem 'magnific-popup-rails'
 # ActiveRecord Import for multi INSERTs at once
 gem 'activerecord-import'
 
+# Active model tableless for using tableless models in a nested form
+gem 'activerecord-tableless'
+
 # Ancestry gem for ActiveRecord tree helpers
 gem 'ancestry'
 
@@ -119,6 +122,12 @@ gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' #path: '~/rails/g
 
 # Attribute normalizer to normalize/cleanup attribute values (for instance change blanks to nils)
 gem 'attribute_normalizer'
+
+# Ice cube gem for easy recurrence rules
+gem 'ice_cube'
+
+# Validator for timeliness of dates
+gem 'validates_timeliness'
 
 group :development do
   # Disable messages about assets in development

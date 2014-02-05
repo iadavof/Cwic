@@ -23,6 +23,8 @@ class ReservationsController < ApplicationController
       @reservation.organisation_client.lat = @organisation.lat
       @reservation.organisation_client.lng = @organisation.lng
     end
+
+    @reservation.reservation_recurrence_definition = ReservationRecurrenceDefinition.new
     respond_with(@organisation, @reservation)
   end
 
@@ -33,6 +35,9 @@ class ReservationsController < ApplicationController
 
   # POST /reservations
   def create
+    # The tableless record is not persistent so we need to create it again
+    @reservation.reservation_recurrence_definition = ReservationRecurrenceDefinition.new(reservation: @reservation)
+    
     if params[:organisation_client_type].present?
       if params[:organisation_client_type] == 'new'
         @focus = 'new_client'
@@ -55,7 +60,6 @@ class ReservationsController < ApplicationController
       @reservation.build_organisation_client
       return render action: :new
     end
-
     @reservation.save
     respond_with(@organisation, @reservation)
   end
@@ -85,6 +89,7 @@ class ReservationsController < ApplicationController
   end
 
 private
+  
   def load_resource
     case params[:action]
     when 'index'
@@ -118,11 +123,11 @@ private
 
   def apply_date_domain(reservations)
     if params[:date_domain_from].present? && params[:date_domain_to].present?
-      reservations.where('begins_at <= :end AND ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.translate('date.formats.default')).beginning_of_day, end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
+      reservations.where('begins_at <= :end AND ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.t('date.formats.default')).beginning_of_day, end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
     elsif params[:date_domain_from].present?
-      reservations.where('ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.translate('date.formats.default')).beginning_of_day)
+      reservations.where('ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.t('date.formats.default')).beginning_of_day)
     elsif params[:date_domain_to].present?
-      reservations.where('begins_at <= :end', end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
+      reservations.where('begins_at <= :end', end: Date.strptime(params[:date_domain_to], I18n.t('date.formats.default')).end_of_day)
     else
       reservations
     end
@@ -136,7 +141,8 @@ private
 
   def resource_params
     params.require(:reservation).permit(:description, :begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id,
-    organisation_client_attributes: [:first_name, :infix, :last_name, :email, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat])
+    organisation_client_attributes: [:first_name, :infix, :last_name, :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat],
+    reservation_recurrence_definition_attributes: [:repeating, :repeating_unit_id, :repeating_every, { :repeating_weekdays => [] }, { :repeating_monthdays => [] }, :repeating_end, :repeating_until, :repeating_instances])
   end
 
   def interpolation_options

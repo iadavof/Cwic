@@ -1,0 +1,39 @@
+<div class="fields reservation-recurrence-definition-wrapper">
+	<div class="field">
+		<%= f.label :repeating %>
+		<%= f.check_box :repeating %>
+	</div>
+	<div class="recurrence_definition_fields">
+		<div  class="field">
+			<%= f.label :repeating_unit %>
+			<%= f.select :repeating_unit_id, f.object.repeating_units.map { |tu| [tu.repetition_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'repeating-unit' } %>
+		</div>
+		<div class="field recurrence_definition_weekly">
+			<%= f.label :repeating_weekdays %>
+			<div class="repeating_weekdays_selector clearfix">
+				<%= f.collection_check_boxes :repeating_weekdays, f.object.repeating_weekdays_choices, :key, :human_name, {}, { class: 'nocwic' } %>
+			</div>
+		</div>
+		<div class="field recurrence_definition_monthly">
+			<%= f.label :repeating_monthdays %>
+			<div class="repeating_monthdays_selector clearfix">
+				<%= f.collection_check_boxes :repeating_monthdays, f.object.repeating_monthdays_choices, :key, :value, {}, { class: 'nocwic' } %>
+			</div>
+		</div>
+		<div  class="field">
+			<%= f.label :repeating_every %>
+			<%= f.select :repeating_every, f.object.repeating_every_choices %>
+		</div>
+			<div  class="field">
+				<%= f.label :repeating_end %>
+				<div class="repeating_end_options clearfix">
+					<div class="field">
+						<%= f.radio_button(:repeating_end, :until, checked: true) %><%= f.label :repeating_end_until, ReservationRecurrenceDefinition.human_attribute_name(:repeating_until) %><%= f.text_field :repeating_until, class: 'datepicker-field' %>
+					</div>
+					<div class="field">
+						<%= f.radio_button(:repeating_end, :instances) %><%= f.label :repeating_end_instances, ReservationRecurrenceDefinition.human_attribute_name(:repeating_instances) %><%= f.text_field :repeating_instances %>
+					</div>
+				</div>
+		</div>
+	</div>
+</div>

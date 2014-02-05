@@ -5,18 +5,10 @@ o1 = Organisation.create!(name: 'Maldensteijn', route: 'Kerkplein', street_numbe
 ou1 = OrganisationUser.create!(organisation: o1, user: u1, organisation_role: OrganisationRole.first)
 
 # Create entity types of Maldensteijn
-et1 = EntityType.new(organisation: o1, name: 'Foyer', description: 'Open ruimte met een bar en luxe zitplaatsen.')
-et1.add_default_entity_type_reservation_statuses
-et1.save!
-et2 = EntityType.new(organisation: o1, name: 'Zaal', description: 'Grote ruimte voor vergaderingen en bijeenkomsten met koffie.')
-et2.add_default_entity_type_reservation_statuses
-et2.save!
-et3 = EntityType.new(organisation: o1, name: 'Kantoorruimte', description: 'Grote ruimte voor vergaderingen en bijeenkomsten met koffie.')
-et3.add_default_entity_type_reservation_statuses
-et3.save!
-et4 = EntityType.new(organisation: o1, name: 'Theaterzaal', description: 'Grote theaterzaal met tribune.')
-et4.add_default_entity_type_reservation_statuses
-et4.save!
+et1 = EntityType.create!(organisation: o1, name: 'Foyer', description: 'Open ruimte met een bar en luxe zitplaatsen.')
+et2 = EntityType.create!(organisation: o1, name: 'Zaal', description: 'Grote ruimte voor vergaderingen en bijeenkomsten met koffie.')
+et3 = EntityType.create!(organisation: o1, name: 'Kantoorruimte', description: 'Grote ruimte voor vergaderingen en bijeenkomsten met koffie.')
+et4 = EntityType.create!(organisation: o1, name: 'Theaterzaal', description: 'Grote theaterzaal met tribune.')
 
 # Create entities of Maldensteijn
 Entity.create!(organisation: o1, entity_type: et1, name: 'Bovenfoyer', description: 'Foyer op de eerste verdieping.')

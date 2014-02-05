@@ -2,36 +2,43 @@ class Reservation < ActiveRecord::Base
   include PgSearch
   include DatetimeSplittable
   include I18n::Alchemy
+  include Rails.application.routes.url_helpers
 
   belongs_to :organisation_client
   belongs_to :entity
   belongs_to :organisation
   belongs_to :reservation_status
+  belongs_to :base_reservation, class_name: 'Reservation'
   has_many :stickies, as: :stickable, dependent: :destroy
+  has_one :reservation_recurrence_definition
 
   validates :begins_at, presence: true
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :entity, presence: true
   validates :organisation_client, presence: true
+  validates :organisation, presence: true
   validate :not_overlapping
-  validates :reservation_status, presence: true
+  validate :recurrences_not_overlapping
+  validates :reservation_status, presence: true, if: 'self.entity.present?'
 
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
 
   accepts_nested_attributes_for :organisation_client
+  accepts_nested_attributes_for :reservation_recurrence_definition
 
   normalize_attributes :description
 
   before_validation :check_reservation_organisation
+  before_validation :check_if_should_update_reservation_status
+  before_validation :generate_recurrences
+  after_create :save_recurrences
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_websockets
-  before_validation :check_if_should_update_reservation_status
   after_destroy :trigger_update_websockets
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
-
 
   scope :blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = true') }
   scope :non_blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = false') }
@@ -52,6 +59,10 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def total_length
+    self.ends_at - self.begins_at
+  end
+
   def length_for_week(week)
     week.to_days.map { |day| self.length_for_day(day) }.sum
   end
@@ -68,11 +79,21 @@ class Reservation < ActiveRecord::Base
     "R##{self.id.to_s}"
   end
 
+  def recurrences
+    @recurrences ||= 
+      if self.base_reservation.present?
+        self.organisation.reservations.where(base_reservation: self.base_reservation).order(:begins_at)
+      else
+        []
+      end
+  end
+
 private
 
   def check_if_should_update_reservation_status
+    return if self.entity.nil?
     if self.reservation_status.nil?
-        self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
+      self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
     elsif self.entity_id_was.present? && self.entity_id_changed?
       # entity is changed, check if the same reservation status set is applicable
       if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type
@@ -81,18 +102,55 @@ private
     end
   end
 
-  def not_overlapping
-    if entity.present?
-      relation = entity.reservations.joins(:reservation_status).where('reservations.id <> ? AND reservation_statuses.blocking = true', self.id)
-      ends_at_overlap = relation.where('begins_at < :ends_at AND :ends_at < ends_at', ends_at: ends_at).first
-      begins_at_overlap = relation.where('begins_at < :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
-      if ends_at_overlap.present?
-        errors.add(:ends_at, I18n.t('activerecord.errors.models.reservation.attributes.ends_at', other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long)))
-      end
-      if begins_at_overlap.present?
-        errors.add(:begins_at, I18n.t('activerecord.errors.models.reservation.attributes.begins_at', other_ends_at: I18n.l(begins_at_overlap.ends_at, format: :long)))
+  def generate_recurrences
+    self.reservation_recurrence_definition.generate_recurrences if self.reservation_recurrence_definition.present? && self.reservation_recurrence_definition.valid?
+  end
+
+  def recurrences_not_overlapping
+    if self.reservation_recurrence_definition.present? && self.reservation_recurrence_definition.repeating
+      invalid_reservations = self.reservation_recurrence_definition.check_invalid_recurrences
+      invalid_reservations.each do |invalid_reservation|
+        invalid_reservation.errors.messages.each do |ir_level, ir_messages|
+          ir_messages.each do |ir_message|
+            if ir_message
+              errors.add(:base, I18n.t('activerecord.errors.models.reservation.repetition_overlap_html', begins_at: I18n.l(invalid_reservation.begins_at, format: :long), ir_message: ir_message).html_safe)
+            end
+          end
+        end
       end
     end
+  end
+
+  def not_overlapping
+    if self.entity.present?
+      relation = self.entity.reservations.joins(:reservation_status).where('reservations.id <> ? AND reservation_statuses.blocking = true', self.id.to_i)
+      total_overlap = relation.where('(:begins_at <= begins_at AND :ends_at >= ends_at) OR (:begins_at >= begins_at AND :ends_at <= ends_at)', begins_at: begins_at, ends_at: ends_at).first
+      if total_overlap.present?
+        # Total overlap means this reservation is completely within another reservation or completely over another reserveration, so we do not know whether it is best to change the begins_at or the ends_at to fix this problem.
+        #errors.add(:base, :total_overlap_html, reservation_url: organisation_reservation_path(total_overlap.organisation, total_overlap), other_begins_at: I18n.l(total_overlap.begins_at, format: :long), other_ends_at: I18n.l(total_overlap.ends_at, format: :long))
+        errors.add(:base, I18n.t('activerecord.errors.models.reservation.total_overlap_html', reservation_url: organisation_reservation_path(total_overlap.organisation, total_overlap), other_begins_at: I18n.l(total_overlap.begins_at, format: :long), other_ends_at: I18n.l(total_overlap.ends_at, format: :long)).html_safe)
+        errors.add(:begins_at, false)
+        errors.add(:ends_at, false)
+      else
+        # No complete overlap, but maybe just the ends_at overlaps
+        ends_at_overlap = relation.where('begins_at < :ends_at AND :ends_at <= ends_at', ends_at: ends_at).first
+        if ends_at_overlap.present?
+          #errors.add(:ends_at, :ends_at_html, reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long))
+          errors.add(:ends_at, I18n.t('activerecord.errors.models.reservation.attributes.ends_at.ends_at_html', reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long)).html_safe)
+        end
+        # Or just the begins_at overlaps
+        begins_at_overlap = relation.where('begins_at <= :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
+        if begins_at_overlap.present?
+          errors.add(:begins_at, I18n.t('activerecord.errors.models.reservation.attributes.begins_at.begins_at_html', reservation_url: organisation_reservation_path(begins_at_overlap.organisation, begins_at_overlap), other_ends_at: I18n.l(begins_at_overlap.ends_at, format: :long)).html_safe)
+        end
+      end
+    end
+  end
+
+  def save_recurrences
+    self.reservation_recurrence_definition.save_recurrences if self.reservation_recurrence_definition.present?
+    # Remove recurrence model such that it will not be saved in the next step
+    self.reservation_recurrence_definition = nil
   end
 
   def occupation_recalculation_needed?

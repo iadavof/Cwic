@@ -3,6 +3,7 @@ APP.reservations = {
       APP.reservations.organisationClientDropdown();
       APP.organisation_clients.addAddressPickerToForm();
       APP.reservations.bindSelectClientRadioButtons();
+      APP.reservations.bindReservationRecurrenceControls();
     },
     edit: function() {
       APP.reservations.organisationClientDropdown();
@@ -10,11 +11,13 @@ APP.reservations = {
       // Hide organisation client selection
       $('div.organisation_client_new_existing').hide();
       APP.reservations.bindStatusSelectorControls();
+      APP.reservations.bindReservationRecurrenceControls();
     },
     create: function() {
       APP.reservations.organisationClientDropdown();
       APP.organisation_clients.addAddressPickerToForm();
       APP.reservations.bindSelectClientRadioButtons();
+      APP.reservations.bindReservationRecurrenceControls();
     },
     show: function() {
       APP.reservations.bindStatusSelectorControls();
@@ -119,6 +122,62 @@ APP.reservations = {
             return data;
           }
         },
+      });
+    },
+    bindReservationRecurrenceControls: function() {
+      $('select#reservation_reservation_recurrence_definition_attributes_repeating_unit').on('change', function() {
+        var value = $(this).find('option:selected').data('key');
+        $('div.recurrence_definition_fields div.recurrence_definition_monthly, div.recurrence_definition_fields div.recurrence_definition_weekly').hide();
+        if(value == 'week') {
+          $('div.recurrence_definition_fields div.recurrence_definition_weekly').show();
+        } else if(value == 'month') {
+          $('div.recurrence_definition_fields div.recurrence_definition_monthly').show();
+        }
+      });
+
+      $('input[name="reservation[reservation_recurrence_definition_attributes][repeating]"]').on('change', function() {
+        if($(this).is(':checked')) {
+          $('div.recurrence_definition_fields').show();
+          $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').trigger('change');
+        } else {
+          $('div.recurrence_definition_fields').hide();
+        }
+      });
+
+      $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').on('change', function() {
+        var value = $(this).val();
+        if($(this).is(':checked')) {
+          if(value == 'until') {
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').show();
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').val('').hide().trigger('change');
+          } else if(value == 'instances') {
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').show();
+            $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').val('').hide().trigger('change');
+          }
+        }
+      });
+
+      $('div.repeating_monthdays_selector, div.repeating_weekdays_selector').on('click', 'label', function() {
+        label = $(this);
+        // Because of the For attribute in the label, the checkbox will change when clicking on the label. We do not need to handle this here
+        if(label.hasClass('active')) {
+          label.removeClass('active');
+        } else {
+          label.addClass('active');
+        }
+      });
+
+      // Setting the values after reload.
+      $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').trigger('change');
+
+      if($('input[name="reservation[reservation_recurrence_definition_attributes][repeating]"]').is(':checked')) {
+        $('div.recurrence_definition_fields').show();
+      }
+
+      $('div.recurrence_definition_fields input[type="checkbox"]').each(function() {
+        if($(this).is(':checked')) {
+          $("label[for='"+$(this).attr('id')+"']").addClass('active');
+        }
       });
     },
 }

@@ -14,7 +14,6 @@ class EntityTypesController < ApplicationController
 
   # GET /entity_types/new
   def new
-    @entity_type.add_default_entity_type_reservation_statuses if @entity_type.reservation_statuses.empty?
     respond_with(@entity_type)
   end
 
