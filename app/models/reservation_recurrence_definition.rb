@@ -137,13 +137,13 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	end
 
 	def repeating_end_set
-		unless self.repeating_until.present? || self.repeating_instances.present?
+		unless !self.repeating || self.repeating_until.present? || self.repeating_instances.present?
 			self.errors.add(:repeating_end, I18n.t('.activerecord.errors.models.reservation_recurrence_definition.repeating_end'))
 		end
 	end
 
 	def repeating_end_after_reservation_end
-		if self.repeating_until.present? && self.repeating_until < self.reservation.ends_at
+		if self.repeating && (self.repeating_until.present? && self.repeating_until < self.reservation.ends_at)
 			self.errors.add(:repeating_until, I18n.t('.activerecord.errors.models.reservation_recurrence_definition.repeating_until_before_end'))
 		end
 	end

@@ -1,0 +1,17 @@
+<% content_for :page_title do %><%= t('multiple_edit.delete') %><% end %>
+<%= form_tag organisation_reservations_multiple_edit_path(@organisation) do %>
+  <%= t('.are_you_sure_you_want_delete') %>
+  <ul>
+    <% @reservations.each do |r| %>
+      <li><%= r.instance_name %></li>
+    <% end %>
+  </ul>
+  <a href="" class="button" onclick="history.go(-1)"><%= t('no') %></a>
+  <%= submit_tag t('yes') %>
+
+  <% @reservations.each do |r| %>
+    <%= hidden_field_tag "reservation_ids[]", r.id %>
+    <%= hidden_field_tag :multiple_edit_action, params[:multiple_edit_action] %>
+  <% end %>
+  <%= hidden_field_tag 'confirm', 'confirm' %>
+<% end %>

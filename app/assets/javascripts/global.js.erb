@@ -37,6 +37,9 @@ APP.init = function() {
   // Initialize special form fields, such as date- and timepickers, special Cwic Controls (select, checkbox, ...)
   this.global.initializeSpecialFormFields();
 
+  // Make select all button on tables work
+  this.global.bindSelectAllCheckboxEvents();
+
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
@@ -78,6 +81,30 @@ APP.global = {
     });
   },
   */
+  bindSelectAllCheckboxEvents: function() {
+    $('input.select-all-checkbox').siblings('div.cwic-checkbox').on('click', function() {
+      var select_all_button = $(this).siblings('input.select-all-checkbox');
+      select_all_button.parents('table').find('input.select-all-child').prop('checked', select_all_button.is(':checked')).trigger('change');
+    });
+
+    $('input.select-all-child').on('change', function() {
+      var select_all_child = $(this);
+      var select_all_childs = select_all_child.parents('table').find('input.select-all-child');
+      var select_all_button = select_all_child.parents('table').find('input.select-all-checkbox');
+ 
+      var all_selected = true;
+      select_all_childs.each(function() {
+        if(!$(this).is(':checked')) {
+          all_selected = false;
+          // We dont need to continue the each loop
+          return false;
+        }
+      });
+
+      select_all_button.prop('checked', all_selected).trigger('change');
+
+    });
+  },
   contentAreaResizeInit: function() {
     $('#content-area').css({top: $('#header').outerHeight(true) + 'px'});
     $(window).on('resize', function() {

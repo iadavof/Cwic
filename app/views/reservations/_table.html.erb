@@ -1,6 +1,8 @@
+<%= form_tag organisation_reservations_multiple_edit_path(@organisation) do %>
 <table>
   <thead>
     <tr>
+      <th><%= check_box_tag 'select_all_reservations', '', false, class: 'select-all-checkbox' %></th>
       <th><%= Reservation.human_attribute_name(:status) %></th>
       <th><%= Reservation.human_attribute_name(:id) %></th>
       <th><%= Reservation.human_attribute_name(:description) %></th>
@@ -15,6 +17,7 @@
   <tbody>
     <% reservations.each do |reservation| %>
     <%= content_tag(:tr, class: (local_assigns[:highlight].present? && highlight.include?(reservation)) ?  'highlight' : nil) do %>
+      <td><%= check_box_tag "reservation_ids[]", reservation.id, false, class: 'select-all-child' %></td>
       <% if reservation.reservation_status.present? %>
       <td style="opacity: 0.7; background-color: <%= reservation.reservation_status.color %>; color: <%= Cwic::Color.text_color(reservation.reservation_status.color) %>;"><%= reservation.reservation_status.name %></td>
       <% else %>
@@ -34,3 +37,8 @@
     <% end %>
   </tbody>
 </table>
+<div class="multiple-edit-controls">
+  <%= select_tag(:multiple_edit_action, options_for_select({ t('multiple_edit.delete') => :delete, t('multiple_edit.edit_description') => :edit_description, t('multiple_edit.edit_begin_end') => :edit_begin_end}), prompt: 'Met geselecteerde...') %>
+  <%= submit_tag t('multiple_edit.apply') %>
+</div>
+<% end %>

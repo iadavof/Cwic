@@ -40,8 +40,15 @@ nl:
   na_html: '<em>n.v.t.</em>'
   'true': 'Ja'
   'false': 'Nee'
+  'yes': 'Ja'
+  'no': 'Nee'
   for_example: 'Bijv.'
   default_title: 'Titel'
+  multiple_edit:
+    delete: 'Verwijderen'
+    edit_description: 'Beschrijving wijzigen'
+    edit_begin_end: 'Begin en eind wijzigen'
+    apply: 'Ga'
 
   date:
     formats:
@@ -410,7 +417,9 @@ nl:
       info_screens: 'Informatieschermen'
       entity_type_icons: 'Objecticonen'
       users: 'Alle gebruikers'
+      feedback: 'Feedback'
       feedbacks: 'Feedback'
+      organisations: 'Organisaties'
     search:
       search_placeholder: 'Zoeken...'
       search: 'Zoeken'
@@ -515,6 +524,9 @@ nl:
     modal_form:
       new_organisation_client: 'Nieuwe klant'
       full_form: 'Meer opties'
+    multiple_edit:
+      delete:
+        are_you_sure_you_want_delete: 'Weet je het zeker dat je onderstaande reserveringen wilt verwijderen?'
 
   info_screens:
     form:

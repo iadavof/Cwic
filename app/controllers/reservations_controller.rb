@@ -64,6 +64,38 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, @reservation)
   end
 
+  # PATCH/PUT /reservations/1/multiple_edit
+  def multiple_edit
+    session[:return_to] ||= request.referer
+    
+    if @reservations.empty?
+      redirect_to session.delete(:return_to)
+      return
+    end
+
+    if params[:confirm] == 'confirm'
+      case params[:multiple_edit_action]
+      when "delete"
+        @reservations.destroy_all
+      when 'edit_description'
+
+      when 'edit_begin_end'
+
+      end
+      redirect_to session.delete(:return_to)
+    else
+      case params[:multiple_edit_action]
+      when "delete"
+        render 'reservations/multiple_edit/delete'
+      when 'edit_description'
+        render 'reservations/multiple_edit/edit_ description'
+      when 'edit_begin_end'
+        render 'reservations/multiple_edit/edit_begin_end'
+      end
+    end
+
+  end
+
   # PATCH/PUT /reservations/1
   def update
     @reservation.localized.update_attributes(resource_params)
@@ -106,6 +138,8 @@ private
       unless @reservations.present?
         @reservations = reservations.accessible_by(current_ability, :index).order(id: :desc).page(1)
       end
+    when 'multiple_edit'
+      @reservations = @organisation.reservations.where(id: params[:reservation_ids])
     when 'new', 'create'
       @reservation = @organisation.reservations.build
     else
