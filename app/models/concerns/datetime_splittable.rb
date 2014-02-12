@@ -67,20 +67,15 @@ protected
 
   def set_tod(attribute, tod)
     begin
-      tod = (tod.present? ? tod.to_tod.utc : tod)
+      tod = (tod.present? ? tod.to_tod : tod)
     rescue ArgumentError, NoMethodError
     end
     instance_variable_set("@#{attribute}_tod", tod)
   end
 
-  def set_date_and_tod(attribute, time)
-    instance_variable_set("@#{attribute}_date", time.to_date)
-    instance_variable_set("@#{attribute}_tod", time.to_tod)
-  end
-
   def join_date_and_tod(attribute)
-    date = instance_variable_get("@#{attribute}_date")
-    tod = instance_variable_get("@#{attribute}_tod")
+    date = get_date(attribute)
+    tod = get_tod(attribute)
     if date.is_a?(Date) && tod.is_a?(TimeOfDay)
       # Only if both are set, create time from them. Otherwise leave the old time standing.
       time = Time.new(date.year, date.month, date.day, tod.hour, tod.min, tod.sec).utc

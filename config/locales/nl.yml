@@ -44,11 +44,12 @@ nl:
   'no': 'Nee'
   for_example: 'Bijv.'
   default_title: 'Titel'
-  multiple_edit:
+  multiple:
     delete: 'Verwijderen'
-    edit_description: 'Beschrijving wijzigen'
-    edit_begin_end: 'Begin en eind wijzigen'
-    apply: 'Ga'
+    edit: 'Bewerken'
+    with_selected: 'met geselecteerde...'
+    save: 'Opslaan'
+    edit_is_applied_to_the_following: 'Aanpassingen worden toegepast op de volgende reserveringen:'
 
   date:
     formats:
@@ -221,6 +222,10 @@ nl:
         value: 'Eigenschap'
       reservation:
         begins_at: 'Begint op'
+        begins_at_tod: 'Begintijd'
+        begins_at_date: 'Begindatum'
+        ends_at_tod: 'Eindtijd'
+        ends_at_date: 'Einddatum'
         ends_at: 'Eindigt op'
         entity: 'Object'
         description: 'Beschrijving'
@@ -231,7 +236,7 @@ nl:
         repeating_unit: 'Herhaald'
         repeating_every: 'Herhaal iedere'
         repeating_end: 'Herhalen tot'
-        repeating_until: 'datum'
+        repeating_until: 'herhaalt tot datum'
         repeating_instances: 'aantal herhalingen'
         repeating_weekdays: 'Op weekdagen'
         repeating_monthdays: 'Dagen van maand'
@@ -275,7 +280,9 @@ nl:
             user:
               taken: 'bestaat al binnen de organisatie'
         reservation:
-          repetition_overlap_html: 'Herhaling van %{begins_at}: %{ir_message}'
+          repetition_error_html: 'Herhaling van %{begins_at}: %{ir_message}'
+          multiple_edit_error_html: 'Reservering R#%{reservation_id}: %{ir_message}'
+          multiple_edit_overlaps: 'De ingevoerde tijden overlappen met elkaar'
           total_overlap_html: 'Reservering overlapt met een <a href="%{reservation_url}">andere reservering</a> die begint op %{other_begins_at} en eindigt op %{other_ends_at}'
           attributes:
             begins_at:
@@ -285,8 +292,10 @@ nl:
         reservation_recurrence_definition:
           recurrence_collides_with_itself: 'De ingestelde herhalingen overlappen elkaar.'
           repeating_end: 'niet opgegeven'
+          attributes:
+            repeating_until:
+              invalid_date: 'ongeldige datum'
           repeating_until_before_end: 'voor herhalingsreeks valt voor het einde van de eerste reservering'
-
   data_types:
     string:
       name: 'Regel tekst'
@@ -506,6 +515,7 @@ nl:
   reservations:
     show:
       repetitions: 'Herhalingen'
+      no_description: '<geen beschrijving>'
     index:
       reservations_of_from_to: 'De reserveringen van <strong>%{of}</strong> in de periode tussen <strong>%{from}</strong> en <strong>%{to}</strong> worden nu getoond.'
       reservations_of_from: 'De reserveringen van <strong>%{of}</strong> vanaf <strong>%{from}</strong> worden nu getoond.'

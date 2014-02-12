@@ -54,8 +54,8 @@ Cwic::Application.routes.draw do
     match '/day_occupation', controller: 'occupation_view', action: 'day_occupation', via: 'get'
     match '/week_occupation', controller: 'occupation_view', action: 'week_occupation', via: 'get'
 
+    match 'reservations/multiple', controller: 'reservations', action: 'multiple', via: 'post', as: 'reservations_multiple'
     match 'reservations/:id/update_status', controller: 'reservations', action: 'update_status', via: 'patch', as: 'reservations_update_status'
-    match 'reservations/multiple_edit', controller: 'reservations', action: 'multiple_edit', via: 'post', as: 'reservations_multiple_edit'
     resources :reservations
     match '/organisation_clients/autocomplete_search', controller: 'organisation_clients', action: 'autocomplete_search', via: 'get'
     resources :organisation_clients do

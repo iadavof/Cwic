@@ -1,0 +1,16 @@
+<% content_for :page_title do %><%= t('multiple.delete') %><% end %>
+<%= form_tag organisation_reservations_multiple_path(@organisation) do %>
+  <%= t('.are_you_sure_you_want_delete') %>
+  <ul>
+    <% @reservations.each do |r| %>
+      <li><%= r.one_line_summary %></li>
+    <% end %>
+  </ul>
+  <a href="<%= @return_url %>" class="button"><%= t('no') %></a>
+  <%= submit_tag t('yes'), name: 'delete' %>
+
+  <% @reservations.each do |r| %>
+    <%= hidden_field_tag "reservation_ids[]", r.id %>
+  <% end %>
+  <%= hidden_field_tag 'confirm', 'confirm' %>
+<% end %>

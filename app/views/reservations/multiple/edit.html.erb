@@ -1,0 +1,19 @@
+<% content_for :page_title do %><%= t('multiple.edit') %><% end %>
+<%= form_for @reservation.localized, url: organisation_reservations_multiple_path(@organisation) do |f| %>
+  <%= t('multiple.edit_is_applied_to_the_following') %>
+  <ul>
+    <% @reservations.each do |r| %>
+      <li><%= r.one_line_summary %></li>
+    <% end %>
+  </ul>
+
+  <%= render 'reservations/multiple/form', f: f %>
+
+  <% @reservations.each do |r| %>
+    <%= hidden_field_tag 'reservation_ids[]', r.id %>
+  <% end %>
+  <%= hidden_field_tag 'process', 'process' %>
+
+  <a href="<%= @return_url %>" class="button"><%= t('back') %></a>
+  <%= f.submit t('multiple.save'), name: 'edit' %>
+<% end %>

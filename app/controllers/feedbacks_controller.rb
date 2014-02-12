@@ -28,7 +28,6 @@ class FeedbacksController < ApplicationController
     tempfile = Tempfile.new("fileupload")
     tempfile.binmode
     # Get the file and decode it with base64 then write it to the tempfile
-    puts URI::unescape(Base64.decode64(URI::unescape(screen_capture_params)[22..-1])).inspect
     tempfile.write(Base64.decode64(URI::unescape(screen_capture_params)[22..-1]))
     tempfile.close
     # Create a new uploaded file

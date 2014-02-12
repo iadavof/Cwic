@@ -44,6 +44,11 @@ APP.init = function() {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
   }
+
+  // For new, edit, create and update actions also execute form JavaScript
+  if($.inArray(body.data('action'), ['new', 'edit', 'create', 'update']) > -1) {
+    GIStyle.exec(body.data('controller'), 'form');
+  }
 };
 
 // Add progress bar for Turbolink requests

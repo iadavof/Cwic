@@ -64,43 +64,21 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, @reservation)
   end
 
-  # PATCH/PUT /reservations/1/multiple_edit
-  def multiple_edit
+  # PATCH/PUT /reservations/1/multiple
+  def multiple
     session[:return_to] ||= request.referer
-    
+    @return_url = session[:return_to]
+      # Check if nothing is selected
     if @reservations.empty?
       redirect_to session.delete(:return_to)
       return
     end
-
-    if params[:confirm] == 'confirm'
-      case params[:multiple_edit_action]
-      when "delete"
-        @reservations.destroy_all
-      when 'edit_description'
-
-      when 'edit_begin_end'
-
-      end
-      redirect_to session.delete(:return_to)
-    else
-      case params[:multiple_edit_action]
-      when "delete"
-        render 'reservations/multiple_edit/delete'
-      when 'edit_description'
-        render 'reservations/multiple_edit/edit_ description'
-      when 'edit_begin_end'
-        render 'reservations/multiple_edit/edit_begin_end'
-      end
-    end
-
+    send multiple_action
   end
 
   # PATCH/PUT /reservations/1
   def update
     @reservation.localized.update_attributes(resource_params)
-    @reservation.organisation_client.lat = resource_params[:organisation_client_attributes][:lat] if resource_params[:organisation_client_attributes].present?
-    @reservation.organisation_client.lng = resource_params[:organisation_client_attributes][:lng] if resource_params[:organisation_client_attributes].present?
     respond_with(@organisation, @reservation)
   end
 
@@ -120,8 +98,119 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, Reservation)
   end
 
+protected
+
+def multiple_action
+  # check if a parameter key edit or delete is defined, this is the name of the submit button that is clicked
+  action = %w(edit delete).detect {|action| params[action] }
+  "multiple_#{action}"
+end
+
+def multiple_edit
+  # handle edit
+  attributes = [:description, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity, :organisation_client]
+  if params[:process] == 'process'
+    @reservation = Reservation.new
+    @reservation.localized.update_attributes(resource_params)
+
+    # Remove the validation errors from form_reservation because we dont need this
+    @reservation.errors.clear
+    valid = params[:edit_fields].present? && alter_multiple_edit_reservations(@reservations, @reservation, attributes)
+    if(valid)
+      @reservations.map { |r| r.save }
+      redirect_to session.delete(:return_to)
+     else
+      render 'reservations/multiple/edit'
+     end   
+  else
+    @reservation = generate_multiple_edit_set_reservation(@reservations, attributes)
+    render 'reservations/multiple/edit'
+  end
+end
+
+def multiple_delete
+  # handle delete
+  if params[:confirm] == 'confirm'
+    @reservations.destroy_all
+    redirect_to session.delete(:return_to)
+  else
+    render 'reservations/multiple/delete'
+  end
+end
+
 private
   
+  def generate_multiple_edit_set_reservation(reservations, attributes)
+    set_reservation = Reservation.new
+    # copy values from first reservation
+    attributes.each do |a|
+      set_reservation.send(a.to_s + '=', reservations.first.send(a))
+    end
+
+    reservations.each do |r|
+      attributes.each do |a|
+        if r.send(a) != set_reservation.send(a)
+          # Not the same, so nillify
+          set_reservation.send(a.to_s + '=', nil)
+          attributes.delete_if {|key, value| value == a } 
+        end
+      end
+      # Do not continue,because everything is different already
+      return false if attributes.count <= 0
+    end
+    set_reservation
+  end
+
+  def alter_multiple_edit_reservations(reservations, form_reservation, attributes)
+    # Setting the new attribute values
+    attributes.each do |a|
+      new_value = resource_params[a.to_s]
+      if params[:edit_fields].include?(a.to_s)
+        reservations.map { |r| r.send(a.to_s + '=', new_value) }
+      end
+    end
+
+    # Checking if the new attribute values are possible
+    # Adding errors to the form_reservation
+    valid = true
+    if reservations_not_overlapping_each_other(reservations)
+      valid = false
+      form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
+    else 
+      reservations.each do |res|
+        # Disable standard overlapping validation (which possibly includes reservation which are also being edited with this multiple edit action)
+        res.validate_overlapping = false
+        unless res.valid? && res.not_overlapping_with_set(res.entity.reservations.where.not(id: reservations.ids))
+          res.errors.messages.each do |ir_level, ir_messages|
+            ir_messages.each do |ir_message|
+              if ir_message
+                valid = false
+                form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_error_html', reservation_id: res.id, ir_message: ir_message).html_safe)
+              end
+            end
+          end
+        end
+      end
+    end
+    valid
+  end
+
+  def reservations_not_overlapping_each_other(reservations)
+    # We are going to alter this set, so dup to make the altering non-permanent
+    dupreservations = reservations.dup
+
+    valid = true
+    while refres = dupreservations.shift
+      dupreservations.each do |res|
+        if res.begins_at <= refres.ends_at && res.ends_at >= refres.begins_at
+          valid = false
+          break
+        end
+      end
+    end
+    valid
+  end
+
   def load_resource
     case params[:action]
     when 'index'
@@ -138,7 +227,7 @@ private
       unless @reservations.present?
         @reservations = reservations.accessible_by(current_ability, :index).order(id: :desc).page(1)
       end
-    when 'multiple_edit'
+    when 'multiple'
       @reservations = @organisation.reservations.where(id: params[:reservation_ids])
     when 'new', 'create'
       @reservation = @organisation.reservations.build

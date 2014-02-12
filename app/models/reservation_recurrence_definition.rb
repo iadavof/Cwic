@@ -20,13 +20,13 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	column :repeating_instances, :integer
 
 	validates :reservation, presence: true
-	validates :repeating_unit, presence: true
-	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
-	validates :repeating_instances, numericality: { greater_than_or_equal_to: 1 }, allow_blank: true
-	validates :repeating_until, timeliness: { type: :date }, allow_blank: true
-	validate :length_not_greater_than_repetition_unit
-	validate :repeating_end_set
-	validate :repeating_end_after_reservation_end
+	validates :repeating_unit, presence: true, if: :repeating?
+	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }, if: :repeating?
+	validates :repeating_end, presence: true, if: :repeating?
+	validates :repeating_instances, presence: true, numericality: { greater_than_or_equal_to: 1 }, if: "self.repeating? && self.repeating_end == 'instances'" 
+	validates :repeating_until, presence: true, timeliness: { type: :date }, if: "self.repeating? && self.repeating_end == 'until'"
+	validate :length_not_greater_than_repetition_unit, if: :repeating?
+	validate :repeating_end_after_reservation_end, if: 'self.repeating? && self.repeating_until.present?'
 
 	def generate_recurrences
 		# If we are not repeating, there is nothing to do
@@ -50,9 +50,9 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 
 
 			# Get the requested occurences
-			if self.repeating_until.present?
-				recurrence_dates = schedule.occurrences DateTime.strptime(self.repeating_until, I18n.t("date.formats.default"))
-			elsif(self.repeating_instances.present?)
+			if self.repeating_end == 'until'
+				recurrence_dates = schedule.occurrences(self.repeating_until)
+			else
 				recurrence_dates = schedule.first(self.repeating_instances)
 			end
 
@@ -62,12 +62,12 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	end
 
 	def save_recurrences
-			unless @recurrences.empty?
-				# There are recurernces, set base_reservation for original reservation
-				self.reservation.base_reservation = self.reservation
-				self.reservation.save
-				@recurrences.map { |r| r.save }
-			end
+		unless @recurrences.blank?
+			# There are recurernces, set base_reservation for original reservation
+			self.reservation.base_reservation = self.reservation
+			self.reservation.save
+			@recurrences.map { |r| r.save }
+		end
 	end
 
 	def check_invalid_recurrences
@@ -126,7 +126,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	end
 
 	def length_not_greater_than_repetition_unit
-		return unless self.repeating && self.repeating_unit.present?
+		return unless self.repeating_unit.present?
 		
 		reservation_length = self.reservation.total_length
 		repeating_every = 1 if repeating_every.nil?
@@ -136,16 +136,9 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 		end
 	end
 
-	def repeating_end_set
-		unless !self.repeating || self.repeating_until.present? || self.repeating_instances.present?
-			self.errors.add(:repeating_end, I18n.t('.activerecord.errors.models.reservation_recurrence_definition.repeating_end'))
-		end
-	end
-
 	def repeating_end_after_reservation_end
-		if self.repeating && (self.repeating_until.present? && self.repeating_until < self.reservation.ends_at)
+		if self.repeating_until < self.reservation.ends_at
 			self.errors.add(:repeating_until, I18n.t('.activerecord.errors.models.reservation_recurrence_definition.repeating_until_before_end'))
 		end
 	end
-
 end

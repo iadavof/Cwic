@@ -1025,6 +1025,32 @@ div#confirm {
   }
 }
 
+table.multiple-edit {
+  margin-bottom: 0;  
+}
+
+div.multiple-edit-controls {
+  
+  margin-bottom: 20px;
+
+  span.multiple-edit {
+    margin: 0 20px 0 0;
+  }
+
+  input {
+    margin: 0 10px;
+    padding: 0;
+    color: #ff3520;
+    text-decoration: underline;
+    background-color: transparent;
+  }
+
+  input:hover {
+    color: #ff3520;
+    background-color: transparent;
+  }
+}
+
 /* Date and timepickers */
 .timepicker-field {
   width: 5em;

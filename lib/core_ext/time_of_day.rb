@@ -3,6 +3,6 @@
 # We use this merely to make clear we want only a time and not the date.
 class TimeOfDay < Time
   def initialize(hour, min = nil, sec = nil)
-    super(0, 1, 1, hour, min, sec)
+    super(1970, 1, 1, hour, min, sec)
   end
 end

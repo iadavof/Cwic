@@ -9,7 +9,7 @@ module TimeOfDayParser
   protected
 
   def build_object(parsed_date)
-    TimeOfDay.utc(0, 1, 1, *parsed_date.values_at(:hour, :min, :sec))
+    TimeOfDay.new(*parsed_date.values_at(:hour, :min, :sec))
   end
 
   def i18n_scope

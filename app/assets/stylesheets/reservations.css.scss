@@ -95,3 +95,16 @@ div.repeating_end_options {
 input#reservation_reservation_recurrence_definition_attributes_repeating_instances {
 	width: 3em;
 }
+
+div.multiple-edit-form {
+	padding: 10px;
+
+	div.cwic-checkbox[data-name="edit_fields[]"] {
+		margin-right: 20px;
+	}
+
+	input#begins_at_tod,
+	input#ends_at_tod {
+		margin: 0;
+	}
+}

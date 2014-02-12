@@ -1,29 +1,18 @@
 APP.reservations = {
-    'new': function() {
-      APP.reservations.organisationClientDropdown();
-      APP.organisation_clients.addAddressPickerToForm();
-      APP.reservations.bindSelectClientRadioButtons();
-      APP.reservations.bindReservationRecurrenceControls();
-    },
-    edit: function() {
-      APP.reservations.organisationClientDropdown();
-      APP.organisation_clients.addAddressPickerToForm();
-      // Hide organisation client selection
-      $('div.organisation_client_new_existing').hide();
-      APP.reservations.bindStatusSelectorControls();
-      APP.reservations.bindReservationRecurrenceControls();
-    },
-    create: function() {
-      APP.reservations.organisationClientDropdown();
-      APP.organisation_clients.addAddressPickerToForm();
-      APP.reservations.bindSelectClientRadioButtons();
-      APP.reservations.bindReservationRecurrenceControls();
+    index: function() {
+      APP.reservations.bindOnSubmitMiniSearch();
     },
     show: function() {
       APP.reservations.bindStatusSelectorControls();
     },
-    index: function() {
-      APP.reservations.bindOnSubmitMiniSearch();
+    form: function() {
+      APP.reservations.organisationClientDropdown();
+      APP.organisation_clients.addAddressPickerToForm();
+      APP.reservations.bindSelectClientRadioButtons();
+      APP.reservations.bindReservationRecurrenceControls();
+    },
+    multiple: function() {
+      APP.reservations.organisationClientDropdown();
     },
     bindSelectClientRadioButtons: function() {
       $(':radio[name="organisation_client_type"]').on('change', function() {
