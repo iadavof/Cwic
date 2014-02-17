@@ -1,4 +1,7 @@
 class EntityTypeIcon < ActiveRecord::Base
+	include PgSearch
+	include Sppable
+
   belongs_to :organisation
   has_many :entity_types, dependent: :nullify, foreign_key: 'icon_id'
 

@@ -59,19 +59,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      if params[:mini_search].present?
-        @organisation_clients = @organisation.organisation_clients.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(params[:page])
-        # if no results, check if not a page is selected that does not exist
-        unless @organisation_clients.present?
-          @organisation_clients = @organisation.organisation_clients.global_search(params[:mini_search]).accessible_by(current_ability, :index).page(1)
-        end
-      else
-        @organisation_clients = @organisation.organisation_clients.accessible_by(current_ability, :index).page(params[:page])
-        # if no results, check if not a page is selected that does not exist
-        unless @organisation_clients.present?
-          @organisation_clients = @organisation.organisation_clients.accessible_by(current_ability, :index).page(1)
-        end
-      end
+      @organisation_clients = @organisation.organisation_clients.accessible_by(current_ability, :index).ssp(params)
     when 'autocomplete_search'
       @organisation_clients = @organisation.organisation_clients.autocomplete_search(params[:q]).page(params[:page]).accessible_by(current_ability, :index)
     when 'new', 'create'

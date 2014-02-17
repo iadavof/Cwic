@@ -62,14 +62,9 @@ private
     case params[:action]
     when 'index'
       if @organisation.present?
-        @entity_type_icons = @organisation.entity_type_icons.accessible_by(current_ability, :index).page(params[:page])
-        unless @entity_type_icons.present?
-          @entity_type_icons = @organisation.entity_type_icons.accessible_by(current_ability, :index).page(1)
-        end
+        @entity_type_icons = @organisation.entity_type_icons.accessible_by(current_ability, :index).ssp(params)
       else
-        unless @entity_type_icons.present?
-          @entity_type_icons = EntityTypeIcon.accessible_by(current_ability, :index).page(1)
-        end
+        @entity_type_icons = EntityTypeIcon.accessible_by(current_ability, :index).ssp(params)
       end
     when 'new', 'create'
       if @organisation.present?

@@ -1,6 +1,6 @@
     <%= form_tag(nil, method: :get, class: 'mini-search' + ((defined? include_date && include_date) ? ' with-date' : '')) do %>
 
-      <% if defined? include_date && include_date %>
+      <% if (defined?(:include_date)).nil? && :include_date %>
           <%= text_field_tag(:date_domain_from, params[:date_domain_from], placeholder: t('.date_domain_from_placeholder'), id: 'date_domain_from', class: 'datepicker-field with-clear', :onchange => "this.form.submit();") %>
           <%= text_field_tag(:date_domain_to, params[:date_domain_to], placeholder: t('.date_domain_to_placeholder'), id: 'date_domain_to', class: 'datepicker-field with-clear', :onchange => "this.form.submit();") %>
       <% end %>

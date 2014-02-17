@@ -1,5 +1,6 @@
 class EntityType < ActiveRecord::Base
   include PgSearch
+  include Sspable
   include I18n::Alchemy
 
   has_many :entities, dependent: :destroy

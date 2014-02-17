@@ -1,4 +1,7 @@
 class Organisation < ActiveRecord::Base
+  include PgSearch
+  include Sspable
+
   has_many :organisation_users, dependent: :destroy
   has_many :users, through: :organisation_users
   has_many :entity_types, dependent: :destroy

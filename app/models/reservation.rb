@@ -1,5 +1,6 @@
 class Reservation < ActiveRecord::Base
   include PgSearch
+  include Sspable
   include DatetimeSplittable
   include I18n::Alchemy
   include Rails.application.routes.url_helpers

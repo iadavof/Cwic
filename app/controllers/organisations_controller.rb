@@ -45,11 +45,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @organisations = Organisation.accessible_by(current_ability, :index).page(params[:page])
-      # if no results, check if not a page is selected that does not exist
-      unless @organisations.present?
-        @organisations = Organisation.accessible_by(current_ability, :index).page(1)
-      end
+      @organisations = Organisation.accessible_by(current_ability, :index).ssp(params)
     when 'new', 'create'
       @organisation = Organisation.new
     else

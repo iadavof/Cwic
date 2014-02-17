@@ -764,6 +764,15 @@ div.field-with-clear input {
   margin-right: 0;
 }
 
+a.sortable-header-button {
+  text-decoration: none;
+  color: #444;
+
+  i {
+    font-size: 0.8em;
+  }
+}
+
 div.field-with-clear span {
   font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;

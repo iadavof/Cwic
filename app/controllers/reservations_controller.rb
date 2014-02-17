@@ -220,27 +220,14 @@ private
         reservations = @organisation.reservations
       end
       reservations = apply_date_domain(reservations)
-      reservations = apply_search_query(reservations)
 
-      @reservations = reservations.accessible_by(current_ability, :index).order(id: :desc).page(params[:page])
-      # if no results, check if not a page is selected that does not exist
-      unless @reservations.present?
-        @reservations = reservations.accessible_by(current_ability, :index).order(id: :desc).page(1)
-      end
+      @reservations = reservations.accessible_by(current_ability, :index).ssp(params)
     when 'multiple'
       @reservations = @organisation.reservations.where(id: params[:reservation_ids])
     when 'new', 'create'
       @reservation = @organisation.reservations.build
     else
       @reservation = @organisation.reservations.find(params[:id])
-    end
-  end
-
-  def apply_search_query(reservations)
-    if params[:mini_search].present?
-      reservations.global_search(params[:mini_search])
-    else
-      reservations
     end
   end
 
