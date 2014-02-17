@@ -102,6 +102,34 @@ class Reservation < ActiveRecord::Base
       end
   end
 
+  def not_overlapping_with_set(set_reservations)
+    valid = true
+    relation = set_reservations.joins(:reservation_status).where('reservations.id <> ? AND reservation_statuses.blocking = true', self.id.to_i)
+    total_overlap = relation.where('(:begins_at <= begins_at AND :ends_at >= ends_at) OR (:begins_at >= begins_at AND :ends_at <= ends_at)', begins_at: begins_at, ends_at: ends_at).first
+    if total_overlap.present?
+      # Total overlap means this reservation is completely within another reservation or completely over another reserveration, so we do not know whether it is best to change the begins_at or the ends_at to fix this problem.
+      errors.add(:base, I18n.t('activerecord.errors.models.reservation.total_overlap_html', reservation_url: organisation_reservation_path(total_overlap.organisation, total_overlap), other_begins_at: I18n.l(total_overlap.begins_at, format: :long), other_ends_at: I18n.l(total_overlap.ends_at, format: :long)).html_safe)
+      errors.add(:begins_at, false)
+      errors.add(:ends_at, false)
+      valid = false
+    else
+      # No complete overlap, but maybe just the ends_at overlaps
+      ends_at_overlap = relation.where('begins_at < :ends_at AND :ends_at <= ends_at', ends_at: ends_at).first
+      if ends_at_overlap.present?
+        #errors.add(:ends_at, :ends_at_html, reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long))
+        errors.add(:ends_at, I18n.t('activerecord.errors.models.reservation.attributes.ends_at.ends_at_html', reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long)).html_safe)
+        valid = false
+      end
+      # Or just the begins_at overlaps
+      begins_at_overlap = relation.where('begins_at <= :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
+      if begins_at_overlap.present?
+        errors.add(:begins_at, I18n.t('activerecord.errors.models.reservation.attributes.begins_at.begins_at_html', reservation_url: organisation_reservation_path(begins_at_overlap.organisation, begins_at_overlap), other_ends_at: I18n.l(begins_at_overlap.ends_at, format: :long)).html_safe)
+        valid = false
+      end
+    end
+    valid
+  end
+
 private
 
   def check_if_should_update_reservation_status
@@ -137,34 +165,6 @@ private
     if self.entity.present?
       not_overlapping_with_set(self.entity.reservations)
     end
-  end
-
-  def not_overlapping_with_set(set_reservations)
-    valid = true
-    relation = set_reservations.joins(:reservation_status).where('reservations.id <> ? AND reservation_statuses.blocking = true', self.id.to_i)
-    total_overlap = relation.where('(:begins_at <= begins_at AND :ends_at >= ends_at) OR (:begins_at >= begins_at AND :ends_at <= ends_at)', begins_at: begins_at, ends_at: ends_at).first
-    if total_overlap.present?
-      # Total overlap means this reservation is completely within another reservation or completely over another reserveration, so we do not know whether it is best to change the begins_at or the ends_at to fix this problem.
-      errors.add(:base, I18n.t('activerecord.errors.models.reservation.total_overlap_html', reservation_url: organisation_reservation_path(total_overlap.organisation, total_overlap), other_begins_at: I18n.l(total_overlap.begins_at, format: :long), other_ends_at: I18n.l(total_overlap.ends_at, format: :long)).html_safe)
-      errors.add(:begins_at, false)
-      errors.add(:ends_at, false)
-      valid = false
-    else
-      # No complete overlap, but maybe just the ends_at overlaps
-      ends_at_overlap = relation.where('begins_at < :ends_at AND :ends_at <= ends_at', ends_at: ends_at).first
-      if ends_at_overlap.present?
-        #errors.add(:ends_at, :ends_at_html, reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long))
-        errors.add(:ends_at, I18n.t('activerecord.errors.models.reservation.attributes.ends_at.ends_at_html', reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long)).html_safe)
-        valid = false
-      end
-      # Or just the begins_at overlaps
-      begins_at_overlap = relation.where('begins_at <= :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
-      if begins_at_overlap.present?
-        errors.add(:begins_at, I18n.t('activerecord.errors.models.reservation.attributes.begins_at.begins_at_html', reservation_url: organisation_reservation_path(begins_at_overlap.organisation, begins_at_overlap), other_ends_at: I18n.l(begins_at_overlap.ends_at, format: :long)).html_safe)
-        valid = false
-      end
-    end
-    valid
   end
 
   def save_recurrences

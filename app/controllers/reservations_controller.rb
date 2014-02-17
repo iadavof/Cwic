@@ -108,7 +108,7 @@ end
 
 def multiple_edit
   # handle edit
-  attributes = [:description, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity, :organisation_client]
+  attributes = [:description, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id]
   if params[:process] == 'process'
     @reservation = Reservation.new
     @reservation.localized.update_attributes(resource_params)
@@ -120,6 +120,7 @@ def multiple_edit
       @reservations.map { |r| r.save }
       redirect_to session.delete(:return_to)
      else
+      load_resource
       render 'reservations/multiple/edit'
      end   
   else
@@ -173,20 +174,19 @@ private
     # Checking if the new attribute values are possible
     # Adding errors to the form_reservation
     valid = true
-    if reservations_not_overlapping_each_other(reservations)
+    unless reservations_not_overlapping_each_other(reservations)
       valid = false
       form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
     else 
       reservations.each do |res|
+        puts res.inspect
         # Disable standard overlapping validation (which possibly includes reservation which are also being edited with this multiple edit action)
         res.validate_overlapping = false
         unless res.valid? && res.not_overlapping_with_set(res.entity.reservations.where.not(id: reservations.ids))
-          res.errors.messages.each do |ir_level, ir_messages|
-            ir_messages.each do |ir_message|
-              if ir_message
-                valid = false
-                form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_error_html', reservation_id: res.id, ir_message: ir_message).html_safe)
-              end
+          res.errors.full_messages.each do |ir_message|
+            if ir_message
+              valid = false
+              form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_error_html', reservation_id: res.id, ir_message: ir_message).html_safe)
             end
           end
         end

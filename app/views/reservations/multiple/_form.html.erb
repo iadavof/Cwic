@@ -29,12 +29,12 @@
     <%= f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field' %>
   </div>
   <div class="field">
-    <%= check_box_tag "edit_fields[]", :entity, false, class: 'edit_field_checkbox', id: 'edit_fields_entity' %>
+    <%= check_box_tag "edit_fields[]", :entity_id, false, class: 'edit_field_checkbox', id: 'edit_fields_entity' %>
     <%= f.label :entity %>
     <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
   </div>
   <div class="field">
-    <%= check_box_tag "edit_fields[]", :organisation_client, false, class: 'edit_field_checkbox', id: 'edit_fields_organisation_client' %>
+    <%= check_box_tag "edit_fields[]", :organisation_client_id, false, class: 'edit_field_checkbox', id: 'edit_fields_organisation_client' %>
     <%= f.label :organisation_client %>
     <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
   </div>

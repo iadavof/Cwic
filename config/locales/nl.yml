@@ -228,8 +228,10 @@ nl:
         ends_at_date: 'Einddatum'
         ends_at: 'Eindigt op'
         entity: 'Object'
+        entity_id: 'Object'
         description: 'Beschrijving'
         organisation_client: 'Klant'
+        organisation_client_id: 'Klant'
         reservation_recurrence_definition: 'Herhaling:'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'

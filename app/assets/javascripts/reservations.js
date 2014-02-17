@@ -13,6 +13,12 @@ APP.reservations = {
     },
     multiple: function() {
       APP.reservations.organisationClientDropdown();
+      APP.reservations.bindSelectEditFields();
+    },
+    bindSelectEditFields: function() {
+      var fields = $('div.field input, div.field select div.field textarea').on('focus', function(){
+        $(this).parents('div.field').find('input.edit_field_checkbox').prop('checked', true).trigger('change');
+      });
     },
     bindSelectClientRadioButtons: function() {
       $(':radio[name="organisation_client_type"]').on('change', function() {
