@@ -42,6 +42,8 @@ nl:
   'false': 'Nee'
   'yes': 'Ja'
   'no': 'Nee'
+  csv: 'csv'
+  xls: 'xls'
   for_example: 'Bijv.'
   default_title: 'Titel'
   multiple:
@@ -233,6 +235,7 @@ nl:
         organisation_client: 'Klant'
         organisation_client_id: 'Klant'
         reservation_recurrence_definition: 'Herhaling:'
+        reservation_status: 'Status'
         created_at: 'Aangemaakt op'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
@@ -531,6 +534,7 @@ nl:
       reservations_from: 'De reserveringen vanaf <strong>%{from}</strong> worden nu getoond.'
       reservations_to: 'De reserveringen tot en met <strong>%{to}</strong> worden nu getoond.'
       reservations_of: 'De reserveringen van <strong>%{of}</strong> worden nu getoond.'
+      download_as: 'Downloaden als:'
     status_controls:
       saved: 'Opgeslagen'
     form:

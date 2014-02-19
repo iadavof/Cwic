@@ -131,6 +131,33 @@ class Reservation < ActiveRecord::Base
     valid
   end
 
+  def self.to_csv
+    CSV.generate do |csv|
+      csv << [
+                Reservation.human_attribute_name(:reservation_status),
+                Reservation.human_attribute_name(:id),
+                Reservation.human_attribute_name(:description),
+                Reservation.human_attribute_name(:organisation_client),
+                Reservation.human_attribute_name(:entity),
+                Reservation.human_attribute_name(:begins_at),
+                Reservation.human_attribute_name(:ends_at),
+                Reservation.human_attribute_name(:created_at),
+              ]
+      all.each do |reservation|
+        csv << [
+                reservation.reservation_status.instance_name,
+                reservation.id,
+                reservation.description,
+                reservation.organisation_client.instance_name,
+                reservation.entity.instance_name,
+                I18n.l(reservation.begins_at, format: :long),
+                I18n.l(reservation.ends_at, format: :long),
+                I18n.l(reservation.created_at, format: :long),
+              ]
+      end
+    end
+  end
+
 private
 
   def check_if_should_update_reservation_status

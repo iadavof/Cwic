@@ -3,7 +3,7 @@
   <thead>
     <tr>
       <th><%= check_box_tag 'select_all_reservations', '', false, class: 'select-all-checkbox' %></th>
-      <%= sortable_table_head(Reservation, 'reservation_statuses.index') %>
+      <%= sortable_table_head(Reservation, 'reservation_statuses.index', Reservation.human_attribute_name(:reservation_status)) %>
       <%= sortable_table_head(Reservation, :id) %>
       <%= sortable_table_head(Reservation, :description) %>
       <%= table_head(Reservation, :organisation_client) %>

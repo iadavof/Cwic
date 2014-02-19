@@ -10,6 +10,11 @@
 <% elsif @reservations.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<div>
+<%= t('.download_as') %>
+<%= link_to(t('csv'), organisation_reservations_path(@organisation, params.merge({ format: 'csv', limit: nil, page: 1 }))) %>
+<%= link_to(t('xls'), organisation_reservations_path(@organisation, params.merge({ format: 'xls', limit: nil, page: 1 }))) %>
+</div>
 <%= paginate @reservations %>
 <%= render partial: 'reservations/table', locals: { reservations: @reservations, include_date: true } %>
 <%= paginate @reservations %>

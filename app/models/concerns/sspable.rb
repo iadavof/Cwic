@@ -20,6 +20,11 @@ module Sspable
       page_field = (prefix ? prefix + '_page' : 'page').to_sym
       options[limit_field].present? ? page(options[page_field]).per(options[limit_field]) : page(options[page_field])
     }
+
+    scope :ss, -> (options = {}) {
+      search_for_params(options).sort_for_params(options)
+    }
+
     scope :ssp, -> (options = {}) {
       search_for_params(options).sort_for_params(options).page_for_params(options)
     }
