@@ -767,10 +767,19 @@ div.field-with-clear input {
 a.sortable-header-button {
   text-decoration: none;
   color: #444;
+  opacity: 0.5;
 
   i {
     font-size: 0.8em;
   }
+}
+
+a.sortable-header-button.active {
+  opacity: 1;
+}
+
+a.sortable-header-button:hover {
+  opacity: 1;
 }
 
 div.field-with-clear span {

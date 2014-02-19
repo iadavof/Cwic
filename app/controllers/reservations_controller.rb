@@ -221,6 +221,8 @@ private
       end
       reservations = apply_date_domain(reservations)
 
+      reservations = reservations.joins(:reservation_status)
+
       @reservations = reservations.accessible_by(current_ability, :index).ssp(params)
     when 'multiple'
       @reservations = @organisation.reservations.where(id: params[:reservation_ids])

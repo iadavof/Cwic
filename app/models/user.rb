@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  include PgSearch
+  include Sspable
+
   # Include default devise modules. Others available are:
   # :token_authenticatable, :confirmable,
   # :lockable, :timeoutable and :omniauthable
@@ -15,6 +18,9 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
   validates :infix, length: { maximum: 255 }
+
+  pg_global_search against: { last_name: 'A', email: 'A', first_name: 'B' }
+
 
   def instance_name
     self.first_name + ' ' + (self.infix.present? ? self.infix + ' ' : '') + self.last_name

@@ -55,7 +55,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @feedbacks = Feedback.accessible_by(current_ability, :index)
+      @feedbacks = Feedback.accessible_by(current_ability, :index).ssp(params)
     when 'create'
       @feedback = Feedback.new
     else

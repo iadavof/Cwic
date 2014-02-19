@@ -14,15 +14,17 @@
 <table>
   <thead>
     <tr>
-      <th><%= OrganisationClient.human_attribute_name(:name) %></th>
-      <th><%= OrganisationClient.human_attribute_name(:email) %></th>
-      <th><%= Organisation.human_attribute_name(:route) %></th>
-      <th><%= Organisation.human_attribute_name(:street_number) %></th>
-      <th><%= Organisation.human_attribute_name(:postal_code) %></th>
-      <th><%= Organisation.human_attribute_name(:locality) %></th>
-      <th><%= Organisation.human_attribute_name(:country) %></th>
-      <th><%= Organisation.human_attribute_name(:phone) %></th>
-      <th><%= Organisation.human_attribute_name(:mobile_phone) %></th>
+      <th></th>
+      <%= sortable_table_head(OrganisationClient, :first_name) %>
+      <%= sortable_table_head(OrganisationClient, :last_name) %>
+      <%= sortable_table_head(OrganisationClient, :email) %>
+      <%= sortable_table_head(OrganisationClient, :route) %>
+      <%= sortable_table_head(OrganisationClient, :street_number) %>
+      <%= sortable_table_head(OrganisationClient, :postal_code) %>
+      <%= sortable_table_head(OrganisationClient, :locality) %>
+      <%= sortable_table_head(OrganisationClient, :country) %>
+      <%= sortable_table_head(OrganisationClient, :phone) %>
+      <%= sortable_table_head(OrganisationClient, :mobile_phone) %>
       <th></th>
     </tr>
   </thead>
@@ -31,6 +33,8 @@
     <% @organisation_clients.each do |organisation_client| %>
     <tr>
       <td><%= name_link_to_show([@organisation, organisation_client]) %></td>
+      <td><%= organisation_client.first_name %></td>
+      <td><%= organisation_client.last_name %></td>
       <td><%= organisation_client.email %></td>
       <td><%= organisation_client.route %></td>
       <td><%= organisation_client.street_number %></td>

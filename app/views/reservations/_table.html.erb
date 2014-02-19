@@ -3,13 +3,14 @@
   <thead>
     <tr>
       <th><%= check_box_tag 'select_all_reservations', '', false, class: 'select-all-checkbox' %></th>
-      <%= table_head(Reservation, :status) %>
+      <%= sortable_table_head(Reservation, 'reservation_statuses.index') %>
       <%= sortable_table_head(Reservation, :id) %>
       <%= sortable_table_head(Reservation, :description) %>
       <%= table_head(Reservation, :organisation_client) %>
       <%= table_head(Reservation, :entity) %>
       <%= sortable_table_head(Reservation, :begins_at) %>
       <%= sortable_table_head(Reservation, :ends_at) %>
+      <%= sortable_table_head(Reservation, :created_at) %>
       <th></th>
     </tr>
   </thead>
@@ -29,6 +30,7 @@
       <td><%= reservation.entity.instance_name %></td>
       <td><%= l(reservation.begins_at, format: :long) %></td>
       <td><%= l(reservation.ends_at, format: :long) %></td>
+      <td><%= l(reservation.created_at, format: :long) %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, reservation]) %>
         <%= icon_link_to_destroy([@organisation, reservation]) %>

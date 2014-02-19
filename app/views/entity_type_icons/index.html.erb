@@ -1,6 +1,13 @@
 <% content_for :page_title do %><%= index_title(EntityTypeIcon) %><% end %>
 
-<% if @entity_type_icons.empty? %>
+<% content_for :mini_search do %>
+  <%= render 'layouts/mini_search', current_search_type: EntityTypeIcon.model_name %>
+<% end %>
+
+<% if @entity_type_icons.empty? && params[:mini_search].present? %>
+<p><%= t('empty_for_search', classes: EntityTypeIcon.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe %>
+<%= link_to(t('remove_search'), entity_type_icons_path()) %></p>
+<% elsif @entity_type_icons.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: EntityTypeIcon.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <%= paginate @entity_type_icons %>
@@ -8,9 +15,9 @@
   <thead>
     <tr>
       <th></th>
-      <th><%= EntityTypeIcon.human_attribute_name(:name) %></th>
+        <%= sortable_table_head(EntityTypeIcon, :name) %>
       <% if @admin %>
-      <th><%= EntityTypeIcon.human_attribute_name(:organisation) %></th>
+        <%= sortable_table_head(EntityTypeIcon, :organisation) %>
       <% end %>
       <th></th>
     </tr>

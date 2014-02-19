@@ -15,8 +15,8 @@
   <thead>
     <tr>
       <th></th>
-      <th><%= EntityType.human_attribute_name(:name) %></th>
-      <th><%= EntityType.human_attribute_name(:description) %></th>
+        <%= sortable_table_head(EntityType, :name) %>
+        <%= sortable_table_head(EntityType, :description) %>
       <th></th>
     </tr>
   </thead>

@@ -1,20 +1,27 @@
 <% content_for :page_title do %><%= index_title(Organisation) %><% end %>
 
-<% if @organisations.empty? %>
-  <p><%= t('.empty', default: :empty_objects, classes: Organisation.model_name.human(count: 2).lcfirst) %></p>
+<% content_for :mini_search do %>
+  <%= render 'layouts/mini_search', current_search_type: Organisation.model_name %>
+<% end %>
+
+<% if @organisations.empty? && params[:mini_search].present? %>
+<p><%= t('empty_for_search', classes: Organisation.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe %>
+<%= link_to(t('remove_search'), organisations_path()) %></p>
+<% elsif @organisations.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: Organisation.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <%= paginate @organisations %>
 <table>
   <thead>
     <tr>
-      <th><%= Organisation.human_attribute_name(:name) %></th>
-      <th><%= Organisation.human_attribute_name(:route) %></th>
-      <th><%= Organisation.human_attribute_name(:street_number) %></th>
-      <th><%= Organisation.human_attribute_name(:locality) %></th>
-      <th><%= Organisation.human_attribute_name(:postal_code) %></th>
-      <th><%= Organisation.human_attribute_name(:country) %></th>
-      <th><%= Organisation.human_attribute_name(:phone_general) %></th>
-      <th><%= Organisation.human_attribute_name(:phone_reservations) %></th>
+      <%= sortable_table_head(Organisation, :name) %>
+      <%= sortable_table_head(Organisation, :route) %>
+      <%= sortable_table_head(Organisation, :street_number) %>
+      <%= sortable_table_head(Organisation, :locality) %>
+      <%= sortable_table_head(Organisation, :postal_code) %>
+      <%= sortable_table_head(Organisation, :country) %>
+      <%= sortable_table_head(Organisation, :phone_general) %>
+      <%= sortable_table_head(Organisation, :phone_reservations) %>
       <th></th>
     </tr>
   </thead>

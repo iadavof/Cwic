@@ -1,4 +1,5 @@
 class OrganisationUser < ActiveRecord::Base
+
   # There are two ways an organisation user can be added:
   # 1. Directly when registering a new user/organisation. In this case we do not use the by_email system and set the organisation user directly.
   # 2. By adding a new organisation user from the organisation settings panel. In this case we do use the by_email system. If the user cannot be found, then the system will respond with the invitation system.

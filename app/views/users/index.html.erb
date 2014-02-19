@@ -1,19 +1,27 @@
 <% content_for :page_title do %><%= index_title(User) %><% end %>
 
-<% if @users.empty? %>
+<% content_for :mini_search do %>
+  <%= render 'layouts/mini_search', current_search_type: User.model_name %>
+<% end %>
+
+<% if @users.empty? && params[:mini_search].present? %>
+<p><%= t('empty_for_search', classes: User.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe %>
+<%= link_to(t('remove_search'), users_path()) %></p>
+<% elsif @users.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: User.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @users %>
 <table>
   <thead>
     <tr>
       <th>#</th>
-      <th><%= User.human_attribute_name(:first_name) %></th>
-      <th><%= User.human_attribute_name(:infix) %></th>
-      <th><%= User.human_attribute_name(:last_name) %></th>
-      <th><%= User.human_attribute_name(:email) %></th>
-      <th><%= User.human_attribute_name(:sign_in_count) %></th>
-      <th><%= User.human_attribute_name(:created_at) %></th>
-      <th><%= User.human_attribute_name(:last_sign_in_at) %></th>
+        <%= sortable_table_head(User, :first_name) %>
+        <%= table_head(User, :infix) %>
+        <%= sortable_table_head(User, :last_name) %>
+        <%= sortable_table_head(User, :email) %>
+        <%= sortable_table_head(User, :sign_in_count) %>
+        <%= sortable_table_head(User, :created_at) %>
+        <%= sortable_table_head(User, :last_sign_in_at) %>
       <th></th>
     </tr>
   </thead>
@@ -37,4 +45,5 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @users %>
 <% end %>

@@ -68,7 +68,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @organisation_users = @organisation.organisation_users.accessible_by(current_ability, :index).ssp(params)
+      @organisation_users = @organisation.organisation_users.accessible_by(current_ability, :index).page()
     when 'new', 'create', 'send_invitation'
       @organisation_user = @organisation.organisation_users.build
     else

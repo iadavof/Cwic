@@ -1,16 +1,24 @@
 <% content_for :page_title do %><%= index_title(Feedback) %><% end %>
 
-<% if @feedbacks.empty? %>
+<% content_for :mini_search do %>
+  <%= render 'layouts/mini_search', current_search_type: Feedback.model_name %>
+<% end %>
+
+<% if @feedbacks.empty? && params[:mini_search].present? %>
+<p><%= t('empty_for_search', classes: Feedback.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe %>
+<%= link_to(t('remove_search'), feedbacks_path()) %></p>
+<% elsif @feedbacks.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: Feedback.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
+<%= paginate @feedbacks %>
 <table>
   <thead>
     <tr>
-      <th><%= Feedback.human_attribute_name(:screen_capture) %></th>
-      <th><%= Feedback.human_attribute_name(:user) %></th>
-      <th><%= Feedback.human_attribute_name(:organisation) %></th>
-      <th><%= Feedback.human_attribute_name(:message) %></th>
-      <th><%= Feedback.human_attribute_name(:specs) %></th>
+      <%= table_head(Feedback, :screen_capture) %>
+      <%= table_head(Feedback, :user) %>
+      <%= table_head(Feedback, :organisation) %>
+      <%= table_head(Feedback, :message) %>
+      <%= table_head(Feedback, :specs) %>
       <th></th>
     </tr>
   </thead>
@@ -30,4 +38,5 @@
     <% end %>
   </tbody>
 </table>
+<%= paginate @feedbacks %>
 <% end %>

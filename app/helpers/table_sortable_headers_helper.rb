@@ -20,12 +20,20 @@ module TableSortableHeadersHelper
     active_class_desc = %w(sortable-header-button desc)
     active_class_asc  = %w(sortable-header-button asc)
 
-    if params[:sort] == field
+    if(field.is_a?(Symbol))
+      field = "#{model.table_name}+#{field}"
+    else
+      field = field.gsub('.', '+')
+    end
+
+    # At this point, SSP could have changed the params sort from + to . already. Change it back temp for comparison
+    comp_sort = params[:sort].gsub('.', '+') if params[:sort].present?
+
+    if comp_sort == field
       active_class_desc << 'active' if params[:direction] == 'desc'
       active_class_asc  << 'active' if params[:direction] == 'asc'
     end
 
-    field = "#{model.table_name}+#{field}"
     content_tag(:span) do
       safe_join([
         link_to(icon('chevron-down'), params.merge({ "#{prefix + '_' if prefix}sort" => field, "#{prefix + '_' if prefix}direction" => 'desc', "#{prefix + '_' if prefix}page" => 1 }), class: active_class_desc),

@@ -233,6 +233,7 @@ nl:
         organisation_client: 'Klant'
         organisation_client_id: 'Klant'
         reservation_recurrence_definition: 'Herhaling:'
+        created_at: 'Aangemaakt op'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
         repeating_unit: 'Herhaald'
@@ -440,6 +441,10 @@ nl:
       search_organisationclient_placeholder: 'Klant zoeken...'
       search_entity_placeholder: 'Object zoeken...'
       search_entitytype_placeholder: 'Objectsoort zoeken...'
+      search_organisation_placeholder: 'Organisatie zoeken...'
+      search_user_placeholder: 'Gebruiker zoeken...'
+      search_feedback_placeholder: 'Feedback zoeken...'
+      search_entitytypeicon_placeholder: 'Objecticoon zoeken...'
       date_domain_from_placeholder: 'Vanaf datum...'
       date_domain_to_placeholder: 'Tot datum...'
       search: 'Zoeken'

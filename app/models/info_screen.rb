@@ -1,4 +1,7 @@
 class InfoScreen < ActiveRecord::Base
+  include PgSearch
+  include Sspable
+
   belongs_to :organisation
 
   has_many :info_screen_entity_types, dependent: :destroy, inverse_of: :info_screen

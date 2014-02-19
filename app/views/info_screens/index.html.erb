@@ -7,12 +7,12 @@
 <table>
   <thead>
     <tr>
-      <th><%= InfoScreen.human_attribute_name(:name) %></th>
-      <th><%= InfoScreen.human_attribute_name(:public) %></th>
-      <th><%= InfoScreen.human_attribute_name(:show_reservation_number) %></th>
-      <th><%= InfoScreen.human_attribute_name(:active_entities) %></th>
-      <th><%= InfoScreen.human_attribute_name(:clock_header) %></th>
-      <th><%= InfoScreen.human_attribute_name(:direction_char_visible) %></th>
+      <%= sortable_table_head(InfoScreen, :name) %>
+      <%= table_head(InfoScreen, :publc) %>
+      <%= table_head(InfoScreen, :show_reservation_number) %>
+      <%= table_head(InfoScreen, :active_entities) %>
+      <%= table_head(InfoScreen, :clock_header) %>
+      <%= table_head(InfoScreen, :direction_char_visible) %> 
       <th></th>
     </tr>
   </thead>
