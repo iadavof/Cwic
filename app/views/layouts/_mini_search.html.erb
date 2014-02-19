@@ -5,6 +5,8 @@
           <%= text_field_tag(:date_domain_to, params[:date_domain_to], placeholder: t('.date_domain_to_placeholder'), id: 'date_domain_to', class: 'datepicker-field with-clear', :onchange => "this.form.submit();") %>
       <% end %>
 
+      <%= hidden_field_tag('limit', params[:limit]) %>
+
       <%= text_field_tag(:mini_search, params[:mini_search], placeholder: t('.search_' + current_search_type.to_s.downcase + '_placeholder')) %>
       <%= submit_tag(t('.search'), class: 'button red') %>
     <% end %>

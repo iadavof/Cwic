@@ -976,6 +976,23 @@ table tr.highlight {
   background-color: rgba(109, 191, 206, 0.3);
 }
 
+div.table-container {
+  display: inline-block;
+  position: relative;
+  padding-top: 30px;
+
+  form#table_limit {
+    position: absolute;
+    top: 0;
+    right: 0;
+
+    div.cwic-dropdown {
+      width: 60px;
+    }
+  }
+
+}
+
 dl {
   display: block;
   margin: 20px 0;

@@ -1,47 +1,58 @@
-<%= form_tag organisation_reservations_multiple_path(@organisation) do %>
-<table class="multiple-edit">
-  <thead>
-    <tr>
-      <th><%= check_box_tag 'select_all_reservations', '', false, class: 'select-all-checkbox' %></th>
-      <%= sortable_table_head(Reservation, 'reservation_statuses.index', Reservation.human_attribute_name(:reservation_status)) %>
-      <%= sortable_table_head(Reservation, :id) %>
-      <%= sortable_table_head(Reservation, :description) %>
-      <%= table_head(Reservation, :organisation_client) %>
-      <%= table_head(Reservation, :entity) %>
-      <%= sortable_table_head(Reservation, :begins_at) %>
-      <%= sortable_table_head(Reservation, :ends_at) %>
-      <%= sortable_table_head(Reservation, :created_at) %>
-      <th></th>
-    </tr>
-  </thead>
+<div class="table-container">
+  <%= form_tag({ :action => "index"}, { method: 'get', id: "table_limit" }) do %>
+    <%= select_tag(:limit, options_for_select([["5", 5], ["10", 10], ["25", 25], ["50", 50], ["100", 100]], params[:limit]), { :onchange => "this.form.submit()" }) %>
+    <%= hidden_field_tag('sort', params[:sort]) %>
+    <%= hidden_field_tag('direction', params[:direction]) %>
+    <%= hidden_field_tag('page', 1) %>
+    <%= hidden_field_tag('mini_search', params[:mini_search]) %>
+    <%= hidden_field_tag('date_domain_from', params[:date_domain_from]) %>
+    <%= hidden_field_tag('date_domain_to', params[:date_domain_to]) %>
+  <% end %>
+  <%= form_tag organisation_reservations_multiple_path(@organisation) do %>
+  <table class="multiple-edit">
+    <thead>
+      <tr>
+        <th><%= check_box_tag 'select_all_reservations', '', false, class: 'select-all-checkbox' %></th>
+        <%= sortable_table_head(Reservation, 'reservation_statuses.index', Reservation.human_attribute_name(:reservation_status)) %>
+        <%= sortable_table_head(Reservation, :id) %>
+        <%= sortable_table_head(Reservation, :description) %>
+        <%= table_head(Reservation, :organisation_client) %>
+        <%= table_head(Reservation, :entity) %>
+        <%= sortable_table_head(Reservation, :begins_at) %>
+        <%= sortable_table_head(Reservation, :ends_at) %>
+        <%= sortable_table_head(Reservation, :created_at) %>
+        <th></th>
+      </tr>
+    </thead>
 
-  <tbody>
-    <% reservations.each do |reservation| %>
-    <%= content_tag(:tr, class: (local_assigns[:highlight].present? && highlight.include?(reservation)) ?  'highlight' : nil) do %>
-      <td><%= check_box_tag "reservation_ids[]", reservation.id, false, class: 'select-all-child', id: 'reservation_ids_' + reservation.id.to_s %></td>
-      <% if reservation.reservation_status.present? %>
-      <td style="opacity: 0.7; background-color: <%= reservation.reservation_status.color %>; color: <%= Cwic::Color.text_color(reservation.reservation_status.color) %>;"><%= reservation.reservation_status.name %></td>
-      <% else %>
-        <td></td>
+    <tbody>
+      <% reservations.each do |reservation| %>
+      <%= content_tag(:tr, class: (local_assigns[:highlight].present? && highlight.include?(reservation)) ?  'highlight' : nil) do %>
+        <td><%= check_box_tag "reservation_ids[]", reservation.id, false, class: 'select-all-child', id: 'reservation_ids_' + reservation.id.to_s %></td>
+        <% if reservation.reservation_status.present? %>
+        <td style="opacity: 0.7; background-color: <%= reservation.reservation_status.color %>; color: <%= Cwic::Color.text_color(reservation.reservation_status.color) %>;"><%= reservation.reservation_status.name %></td>
+        <% else %>
+          <td></td>
+        <% end %>
+        <td><%= name_link_to_show([@organisation, reservation]) %></td>
+        <td><%= reservation.description %></td>
+        <td><%= reservation.organisation_client.instance_name %></td>
+        <td><%= reservation.entity.instance_name %></td>
+        <td><%= l(reservation.begins_at, format: :long) %></td>
+        <td><%= l(reservation.ends_at, format: :long) %></td>
+        <td><%= l(reservation.created_at, format: :long) %></td>
+        <td class="icons">
+          <%= icon_link_to_edit([@organisation, reservation]) %>
+          <%= icon_link_to_destroy([@organisation, reservation]) %>
+        </td>
       <% end %>
-      <td><%= name_link_to_show([@organisation, reservation]) %></td>
-      <td><%= reservation.description %></td>
-      <td><%= reservation.organisation_client.instance_name %></td>
-      <td><%= reservation.entity.instance_name %></td>
-      <td><%= l(reservation.begins_at, format: :long) %></td>
-      <td><%= l(reservation.ends_at, format: :long) %></td>
-      <td><%= l(reservation.created_at, format: :long) %></td>
-      <td class="icons">
-        <%= icon_link_to_edit([@organisation, reservation]) %>
-        <%= icon_link_to_destroy([@organisation, reservation]) %>
-      </td>
-    <% end %>
-    <% end %>
-  </tbody>
-</table>
-<div class="multiple-edit-controls">
-  <span class="multiple-edit"><%= t('multiple.with_selected') %></span>
-  <%= submit_tag t('multiple.edit'), name: 'edit' %>
-  <%= submit_tag t('multiple.delete'), name: 'delete' %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="multiple-edit-controls">
+    <span class="multiple-edit"><%= t('multiple.with_selected') %></span>
+    <%= submit_tag t('multiple.edit'), name: 'edit' %>
+    <%= submit_tag t('multiple.delete'), name: 'delete' %>
+  </div>
+  <% end %>
 </div>
-<% end %>
