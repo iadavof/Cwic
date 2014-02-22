@@ -237,6 +237,7 @@ nl:
         reservation_recurrence_definition: 'Herhaling:'
         reservation_status: 'Status'
         created_at: 'Aangemaakt op'
+        created_by: 'Aangemaakt door'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
         repeating_unit: 'Herhaald'

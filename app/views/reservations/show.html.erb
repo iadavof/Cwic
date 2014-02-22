@@ -13,6 +13,10 @@
   <dd><%= link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity)) %></dd>
   <dt><%= Reservation.human_attribute_name(:organisation_client) %></dt>
   <dd><%= link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client)) %></dd>
+    <dt><%= Reservation.human_attribute_name(:created_by) %></dt>
+  <dd><%= @reservation.created_by.instance_name %></dd>
+  <dt><%= Reservation.human_attribute_name(:created_at) %></dt>
+  <dd><%= l(@reservation.created_at, format: :long) %></dd>
 </dl>
 
 <% unless @reservation.recurrences.empty? %>

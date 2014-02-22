@@ -66,6 +66,9 @@ class ReservationsController < ApplicationController
       @reservation.build_organisation_client
       return render action: :new
     end
+    
+    @reservation.created_by = current_user
+
     @reservation.save
     respond_with(@organisation, @reservation)
   end

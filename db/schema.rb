@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140129102439) do
+ActiveRecord::Schema.define(version: 20140222125746) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -343,9 +343,11 @@ ActiveRecord::Schema.define(version: 20140129102439) do
     t.string   "description"
     t.integer  "reservation_status_id",  limit: 8
     t.integer  "base_reservation_id",    limit: 8
+    t.integer  "created_by_id",          limit: 8
   end
 
   add_index "reservations", ["base_reservation_id"], name: "index_reservations_on_base_reservation_id", using: :btree
+  add_index "reservations", ["created_by_id"], name: "index_reservations_on_created_by_id", using: :btree
   add_index "reservations", ["entity_id"], name: "index_reservations_on_entity_id", using: :btree
   add_index "reservations", ["organisation_client_id"], name: "index_reservations_on_organisation_client_id", using: :btree
   add_index "reservations", ["organisation_id"], name: "index_reservations_on_organisation_id", using: :btree
