@@ -10,10 +10,10 @@ class Reservation < ActiveRecord::Base
   belongs_to :organisation_client
   belongs_to :entity
   belongs_to :organisation
-  belongs_to :created_by, class_name: 'User'
   belongs_to :reservation_status
   belongs_to :base_reservation, class_name: 'Reservation'
   has_many :stickies, as: :stickable, dependent: :destroy
+  has_many :reservation_logs, dependent: :destroy
   has_one :reservation_recurrence_definition
 
   validates :begins_at, presence: true
@@ -21,7 +21,6 @@ class Reservation < ActiveRecord::Base
   validates :entity, presence: true
   validates :organisation_client, presence: true
   validates :organisation, presence: true
-  validates :created_by, presence: true
   validates :reservation_status, presence: true, if: 'self.entity.present?'
   validate :not_overlapping, if: :validate_overlapping
   validate :check_invalid_recurrences, if: :new_record?

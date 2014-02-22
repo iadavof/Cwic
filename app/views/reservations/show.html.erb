@@ -6,17 +6,19 @@
 
 <dl>
   <dt><%= Reservation.human_attribute_name(:begins_at) %></dt>
-  <dd><%=l(@reservation.begins_at, format: :long) %></dd>
+    <dd><%=l(@reservation.begins_at, format: :long) %></dd>
   <dt><%= Reservation.human_attribute_name(:ends_at) %></dt>
-  <dd><%=l(@reservation.ends_at, format: :long) %></dd>
+    <dd><%=l(@reservation.ends_at, format: :long) %></dd>
   <dt><%= Reservation.human_attribute_name(:entity) %></dt>
-  <dd><%= link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity)) %></dd>
+    <dd><%= link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity)) %></dd>
   <dt><%= Reservation.human_attribute_name(:organisation_client) %></dt>
-  <dd><%= link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client)) %></dd>
-    <dt><%= Reservation.human_attribute_name(:created_by) %></dt>
-  <dd><%= @reservation.created_by.instance_name %></dd>
+    <dd><%= link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client)) %></dd>
   <dt><%= Reservation.human_attribute_name(:created_at) %></dt>
-  <dd><%= l(@reservation.created_at, format: :long) %></dd>
+    <dd><%= l(@reservation.created_at, format: :long) %></dd>
+  <% if @reservation.reservation_logs.present? %>
+  <dt><%= Reservation.human_attribute_name(:reservation_logs) %></dt>
+    <dd><%= render partial: 'log_table', locals: { logs: @reservation.reservation_logs } %></dd>
+  <% end %>
 </dl>
 
 <% unless @reservation.recurrences.empty? %>

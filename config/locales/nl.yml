@@ -127,6 +127,9 @@ nl:
       reservation_rule:
         one: 'Reserveringsregel'
         other: 'Reserveringsregels'
+      reservation_log:
+        one: 'Aanpassing'
+        other: 'Aanpassingen'
     attributes:
       user:
         name: 'Naam'
@@ -237,7 +240,7 @@ nl:
         reservation_recurrence_definition: 'Herhaling:'
         reservation_status: 'Status'
         created_at: 'Aangemaakt op'
-        created_by: 'Aangemaakt door'
+        reservation_logs: 'Aanpassingen'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
         repeating_unit: 'Herhaald'
@@ -247,6 +250,9 @@ nl:
         repeating_instances: 'aantal herhalingen'
         repeating_weekdays: 'Op weekdagen'
         repeating_monthdays: 'Dagen van maand'
+      reservation_log:
+        user: 'Gebruiker'
+        created_at: 'Tijdstip'
       feedback:
         screen_capture: 'Screenshot'
         user: 'Gebruiker'

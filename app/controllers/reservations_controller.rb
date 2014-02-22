@@ -66,10 +66,11 @@ class ReservationsController < ApplicationController
       @reservation.build_organisation_client
       return render action: :new
     end
-    
-    @reservation.created_by = current_user
 
-    @reservation.save
+    if @reservation.save
+      ReservationLog.create(reservation: @reservation, user: current_user)
+    end
+
     respond_with(@organisation, @reservation)
   end
 
@@ -88,6 +89,7 @@ class ReservationsController < ApplicationController
   # PATCH/PUT /reservations/1
   def update
     @reservation.localized.update_attributes(resource_params)
+    ReservationLog.create(reservation: @reservation, user: current_user)
     respond_with(@organisation, @reservation)
   end
 
@@ -126,7 +128,7 @@ def multiple_edit
     @reservation.errors.clear
     valid = params[:edit_fields].present? && alter_multiple_edit_reservations(@reservations, @reservation, attributes)
     if(valid)
-      @reservations.map { |r| r.save }
+      @reservations.map { |r| ReservationLog.create(reservation: r, user: current_user); r.save }
       redirect_to session.delete(:return_to)
      else
       load_resource

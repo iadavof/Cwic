@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140222125746) do
+ActiveRecord::Schema.define(version: 20140222133359) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -262,6 +262,17 @@ ActiveRecord::Schema.define(version: 20140222125746) do
     t.datetime "updated_at"
   end
 
+  create_table "reservation_logs", force: true do |t|
+    t.integer  "user_id",        limit: 8
+    t.integer  "reservation_id", limit: 8
+    t.string   "old_user_name"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reservation_logs", ["reservation_id"], name: "index_reservation_logs_on_reservation_id", using: :btree
+  add_index "reservation_logs", ["user_id"], name: "index_reservation_logs_on_user_id", using: :btree
+
   create_table "reservation_rule_scope_spans", force: true do |t|
     t.integer  "scope_id",     limit: 8
     t.datetime "created_at"
@@ -343,11 +354,9 @@ ActiveRecord::Schema.define(version: 20140222125746) do
     t.string   "description"
     t.integer  "reservation_status_id",  limit: 8
     t.integer  "base_reservation_id",    limit: 8
-    t.integer  "created_by_id",          limit: 8
   end
 
   add_index "reservations", ["base_reservation_id"], name: "index_reservations_on_base_reservation_id", using: :btree
-  add_index "reservations", ["created_by_id"], name: "index_reservations_on_created_by_id", using: :btree
   add_index "reservations", ["entity_id"], name: "index_reservations_on_entity_id", using: :btree
   add_index "reservations", ["organisation_client_id"], name: "index_reservations_on_organisation_client_id", using: :btree
   add_index "reservations", ["organisation_id"], name: "index_reservations_on_organisation_id", using: :btree

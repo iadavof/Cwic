@@ -11,6 +11,7 @@ class User < ActiveRecord::Base
   has_many :organisation_users, inverse_of: :user, dependent: :destroy
   has_many :organisations, through: :organisation_users
   has_many :invitations, class_name: 'User', as: :invited_by
+  has_many :reservation_logs
 
   accepts_nested_attributes_for :organisations
   accepts_nested_attributes_for :organisation_users
@@ -20,6 +21,8 @@ class User < ActiveRecord::Base
   validates :infix, length: { maximum: 255 }
 
   pg_global_search against: { last_name: 'A', email: 'A', first_name: 'B' }
+  # Save the current username in the logs and nullify the reference to this user
+  before_destroy :save_current_name_in_reservation_log
 
 
   def instance_name
@@ -43,5 +46,9 @@ class User < ActiveRecord::Base
       # User was invited. Do not (re)send confirmation e-mail, but resend invitation e-mail instead:
       self.invite!
     end
+  end
+
+  def save_current_name_in_reservation_log 
+    self.reservation_logs.update_all(old_user_name: instance_name, user_id: nil)
   end
 end
