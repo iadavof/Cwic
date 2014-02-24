@@ -19,5 +19,6 @@
 <%= render partial: 'reservations/table', locals: { reservations: @reservations, include_date: true } %>
 <%= paginate @reservations %>
 <% end %>
-
+<div>
 <%= button_link_to_new([@organisation, Reservation]) %>
+</div>

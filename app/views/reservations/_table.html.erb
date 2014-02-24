@@ -1,12 +1,7 @@
 <div class="table-container">
   <%= form_tag({ :action => "index"}, { method: 'get', id: "table_limit" }) do %>
     <%= select_tag(:limit, options_for_select([["5", 5], ["10", 10], ["25", 25], ["50", 50], ["100", 100]], params[:limit]), { :onchange => "this.form.submit()" }) %>
-    <%= hidden_field_tag('sort', params[:sort]) %>
-    <%= hidden_field_tag('direction', params[:direction]) %>
-    <%= hidden_field_tag('page', 1) %>
-    <%= hidden_field_tag('mini_search', params[:mini_search]) %>
-    <%= hidden_field_tag('date_domain_from', params[:date_domain_from]) %>
-    <%= hidden_field_tag('date_domain_to', params[:date_domain_to]) %>
+    <%= params_to_hidden_fields(:limit) %>
   <% end %>
   <%= form_tag organisation_reservations_multiple_path(@organisation) do %>
   <table class="multiple-edit">

@@ -126,6 +126,9 @@ gem 'attribute_normalizer'
 # Ice cube gem for easy recurrence rules
 gem 'ice_cube'
 
+# Repeat (filter) get fields as hidden fields
+gem "hash_to_hidden_fields"
+
 # Validator for timeliness of dates
 gem 'validates_timeliness'
 

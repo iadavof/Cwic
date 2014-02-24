@@ -127,6 +127,9 @@ GEM
       websocket-driver (>= 0.3.1)
     forgery (0.5.0)
     gistyle (0.9.7)
+    hash_to_hidden_fields (2.0.1)
+      actionpack (>= 3)
+      rack (~> 1.2)
     hike (1.2.3)
     i18n (0.6.9)
     ice_cube (0.11.1)
@@ -289,6 +292,7 @@ DEPENDENCIES
   factory_girl_rails
   forgery
   gistyle
+  hash_to_hidden_fields
   holidays!
   i18n_alchemy!
   ice_cube
