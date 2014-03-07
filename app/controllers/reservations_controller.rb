@@ -5,14 +5,13 @@ class ReservationsController < ApplicationController
 
   respond_to :html, except: :update_status
   respond_to :json
-  respond_to :csv, only: :index
-  respond_to :xls, only: :index
+  respond_to :csv, :xls, only: :index
 
   # GET /reservations
   def index
     respond_with do |format|
-      format.csv { send_data( @reservations.to_csv, filename: Reservation.model_name.human(count: 2) + '_' + I18n.l(Time.now, format: :long).gsub(' ', '_') + '.csv') }
-      format.xls { send_data( render_to_string(xls: @reservations), filename: Reservation.model_name.human(count: 2) + '_' + I18n.l(Time.now, format: :long).gsub(' ', '_') + '.xls') }
+      format.csv { send_data(@reservations.export(:csv), filename: Reservation.export_filename(:csv)) }
+      format.xls { send_data(@reservations.export(:xls), filename: Reservation.export_filename(:xls)) }
     end
   end
 

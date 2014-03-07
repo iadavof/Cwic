@@ -1,0 +1,5 @@
+<Row>
+  <% object.class.export_data.each do |key, options| %>
+    <Cell><Data ss:Type="<%= object.export_attribute_excel_type(key, options) %>"><%= object.export_attribute(key, :xls, options) %></Data></Cell>
+  <% end %>
+</Row>

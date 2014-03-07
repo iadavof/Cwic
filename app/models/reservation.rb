@@ -1,6 +1,7 @@
 class Reservation < ActiveRecord::Base
   include PgSearch
   include Sspable
+  include Exportable
   include DatetimeSplittable
   include I18n::Alchemy
   include Rails.application.routes.url_helpers
@@ -58,6 +59,19 @@ class Reservation < ActiveRecord::Base
     rel = rel.where('ends_at >= :begin', begin: from.beginning_of_day) if from.present?
     rel = rel.where('begins_at <= :end', end: to.end_of_day) if to.present?
     rel
+  end
+
+  def self.export_data
+    {
+      id: true,
+      reservation_status: true,
+      description: true,
+      organisation_client: true,
+      entity: true,
+      begins_at: true,
+      ends_at: true,
+      created_at: true,
+    }
   end
 
   def initialize(attributes = {})
@@ -141,33 +155,6 @@ class Reservation < ActiveRecord::Base
       end
     end
     valid
-  end
-
-  def self.to_csv
-    CSV.generate do |csv|
-      csv << [
-                Reservation.human_attribute_name(:reservation_status),
-                Reservation.human_attribute_name(:id),
-                Reservation.human_attribute_name(:description),
-                Reservation.human_attribute_name(:organisation_client),
-                Reservation.human_attribute_name(:entity),
-                Reservation.human_attribute_name(:begins_at),
-                Reservation.human_attribute_name(:ends_at),
-                Reservation.human_attribute_name(:created_at),
-              ]
-      all.each do |reservation|
-        csv << [
-                reservation.reservation_status.instance_name,
-                reservation.id,
-                reservation.description,
-                reservation.organisation_client.instance_name,
-                reservation.entity.instance_name,
-                I18n.l(reservation.begins_at, format: :long),
-                I18n.l(reservation.ends_at, format: :long),
-                I18n.l(reservation.created_at, format: :long),
-              ]
-      end
-    end
   end
 
 private
