@@ -25,7 +25,7 @@ class ReservationsController < ApplicationController
   def new
     if @reservation.organisation_client.nil?
       @reservation.build_organisation_client
-      # set map coordinates on coordinates organisation
+      # Set map coordinates on coordinates organisation
       @reservation.organisation_client.lat = @organisation.lat
       @reservation.organisation_client.lng = @organisation.lng
     end
@@ -43,7 +43,7 @@ class ReservationsController < ApplicationController
   def create
     # The tableless record is not persistent so we need to create it again
     @reservation.reservation_recurrence_definition = ReservationRecurrenceDefinition.new(reservation: @reservation)
-    
+
     if params[:organisation_client_type].present?
       if params[:organisation_client_type] == 'new'
         @focus = 'new_client'
@@ -109,52 +109,50 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, Reservation)
   end
 
-protected
-
-def multiple_action
-  # check if a parameter key edit or delete is defined, this is the name of the submit button that is clicked
-  action = %w(edit delete).detect {|action| params[action] }
-  "multiple_#{action}"
-end
-
-def multiple_edit
-  # handle edit
-  attributes = [:description, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id]
-  if params[:process] == 'process'
-    @reservation = Reservation.new
-    @reservation.localized.update_attributes(resource_params)
-
-    # Remove the validation errors from form_reservation because we dont need this
-    @reservation.errors.clear
-    valid = params[:edit_fields].present? && alter_multiple_edit_reservations(@reservations, @reservation, attributes)
-    if(valid)
-      @reservations.map { |r| ReservationLog.create(reservation: r, user: current_user); r.save }
-      redirect_to session.delete(:return_to)
-     else
-      load_resource
-      render 'reservations/multiple/edit'
-     end   
-  else
-    @reservation = generate_multiple_edit_set_reservation(@reservations, attributes)
-    render 'reservations/multiple/edit'
-  end
-end
-
-def multiple_delete
-  # handle delete
-  if params[:confirm] == 'confirm'
-    @reservations.destroy_all
-    redirect_to session.delete(:return_to)
-  else
-    render 'reservations/multiple/delete'
-  end
-end
-
 private
-  
+
+  def multiple_action
+    # Check if a parameter key edit or delete is defined, this is the name of the submit button that is clicked
+    action = %w(edit delete).detect {|action| params[action] }
+    "multiple_#{action}"
+  end
+
+  def multiple_edit
+    # Handle edit
+    attributes = [:description, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id]
+    if params[:process] == 'process'
+      @reservation = Reservation.new
+      @reservation.localized.update_attributes(resource_params)
+
+      # Remove the validation errors from form_reservation because we dont need this
+      @reservation.errors.clear
+      valid = params[:edit_fields].present? && alter_multiple_edit_reservations(@reservations, @reservation, attributes)
+      if(valid)
+        @reservations.map { |r| ReservationLog.create(reservation: r, user: current_user); r.save }
+        redirect_to session.delete(:return_to)
+       else
+        load_resource
+        render 'reservations/multiple/edit'
+       end
+    else
+      @reservation = generate_multiple_edit_set_reservation(@reservations, attributes)
+      render 'reservations/multiple/edit'
+    end
+  end
+
+  def multiple_delete
+    # Handle delete
+    if params[:confirm] == 'confirm'
+      @reservations.destroy_all
+      redirect_to session.delete(:return_to)
+    else
+      render 'reservations/multiple/delete'
+    end
+  end
+
   def generate_multiple_edit_set_reservation(reservations, attributes)
     set_reservation = Reservation.new
-    # copy values from first reservation
+    # Copy values from first reservation
     attributes.each do |a|
       set_reservation.send(a.to_s + '=', reservations.first.send(a))
     end
@@ -164,7 +162,7 @@ private
         if r.send(a) != set_reservation.send(a)
           # Not the same, so nillify
           set_reservation.send(a.to_s + '=', nil)
-          attributes.delete_if {|key, value| value == a } 
+          attributes.delete_if {|key, value| value == a }
         end
       end
       # Do not continue,because everything is different already
@@ -188,7 +186,7 @@ private
     unless reservations_not_overlapping_each_other(reservations)
       valid = false
       form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
-    else 
+    else
       reservations.each do |res|
         puts res.inspect
         # Disable standard overlapping validation (which possibly includes reservation which are also being edited with this multiple edit action)
@@ -230,29 +228,13 @@ private
       else
         reservations = @organisation.reservations
       end
-      reservations = apply_date_domain(reservations)
-
-      reservations = reservations.joins(:reservation_status)
-
-      @reservations = reservations.accessible_by(current_ability, :index).ssp(params)
+      @reservations = reservations.accessible_by(current_ability, :index).by_date_domain(params[:date_domain_from], params[:date_domain_to]).ssp(params)
     when 'multiple'
       @reservations = @organisation.reservations.where(id: params[:reservation_ids])
     when 'new', 'create'
       @reservation = @organisation.reservations.build
     else
       @reservation = @organisation.reservations.find(params[:id])
-    end
-  end
-
-  def apply_date_domain(reservations)
-    if params[:date_domain_from].present? && params[:date_domain_to].present?
-      reservations.where('begins_at <= :end AND ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.t('date.formats.default')).beginning_of_day, end: Date.strptime(params[:date_domain_to], I18n.translate('date.formats.default')).end_of_day)
-    elsif params[:date_domain_from].present?
-      reservations.where('ends_at >= :begin', begin: Date.strptime(params[:date_domain_from], I18n.t('date.formats.default')).beginning_of_day)
-    elsif params[:date_domain_to].present?
-      reservations.where('begins_at <= :end', end: Date.strptime(params[:date_domain_to], I18n.t('date.formats.default')).end_of_day)
-    else
-      reservations
     end
   end
 

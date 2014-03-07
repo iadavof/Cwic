@@ -51,6 +51,15 @@ class Reservation < ActiveRecord::Base
 
   default_order { order(id: :desc) }
 
+  def self.by_date_domain(from, to)
+    from = Date.strptime(from, I18n.t('date.formats.default')) if from.present? && from.is_a?(String)
+    to = Date.strptime(to, I18n.t('date.formats.default')) if to.present? && to.is_a?(String)
+    rel = scoped
+    rel = rel.where('ends_at >= :begin', begin: from.beginning_of_day) if from.present?
+    rel = rel.where('begins_at <= :end', end: to.end_of_day) if to.present?
+    rel
+  end
+
   def initialize(attributes = {})
     super
     @validate_overlapping = true
