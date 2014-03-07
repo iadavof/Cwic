@@ -1,21 +1,19 @@
+<%= paginate reservations, prefix: local_assigns[:prefix] %>
 <div class="table-container">
-  <%= form_tag({ :action => "index"}, { method: 'get', id: "table_limit" }) do %>
-    <%= select_tag(:limit, options_for_select([["5", 5], ["10", 10], ["25", 25], ["50", 50], ["100", 100]], params[:limit]), { :onchange => "this.form.submit()" }) %>
-    <%= params_to_hidden_fields(:limit) %>
-  <% end %>
+  <%= limiting prefix: local_assigns[:prefix] %>
   <%= form_tag organisation_reservations_multiple_path(@organisation) do %>
   <table class="multiple-edit">
     <thead>
       <tr>
         <th><%= check_box_tag 'select_all_reservations', '', false, class: 'select-all-checkbox' %></th>
-        <%= sortable_table_head(Reservation, 'reservation_statuses.index', Reservation.human_attribute_name(:reservation_status)) %>
-        <%= sortable_table_head(Reservation, :id) %>
-        <%= sortable_table_head(Reservation, :description) %>
-        <%= table_head(Reservation, :organisation_client) %>
-        <%= table_head(Reservation, :entity) %>
-        <%= sortable_table_head(Reservation, :begins_at) %>
-        <%= sortable_table_head(Reservation, :ends_at) %>
-        <%= sortable_table_head(Reservation, :created_at) %>
+        <%= sortable_table_head(Reservation, [:reservation_status, :index], prefix: local_assigns[:prefix]) %>
+        <%= sortable_table_head(Reservation, :id, prefix: local_assigns[:prefix]) %>
+        <%= sortable_table_head(Reservation, :description, prefix: local_assigns[:prefix]) %>
+        <%= sortable_table_head(Reservation, [:organisation_client, :first_name], prefix: local_assigns[:prefix]) %>
+        <%= sortable_table_head(Reservation, [:entity, :name], prefix: local_assigns[:prefix]) %>
+        <%= sortable_table_head(Reservation, :begins_at, prefix: local_assigns[:prefix]) %>
+        <%= sortable_table_head(Reservation, :ends_at, prefix: local_assigns[:prefix]) %>
+        <%= sortable_table_head(Reservation, :created_at, prefix: local_assigns[:prefix]) %>
         <th></th>
       </tr>
     </thead>
@@ -51,3 +49,4 @@
   </div>
   <% end %>
 </div>
+<%= paginate reservations, prefix: local_assigns[:prefix] %>

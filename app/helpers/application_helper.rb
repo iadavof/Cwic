@@ -33,10 +33,6 @@ module ApplicationHelper
     content_tag(:div, content_tag(:i, '', class: 'icon-info-sign') + content_tag(:p, text), class: 'help')
   end
 
-  def params_to_hidden_fields(*exclude)
-    hash_to_hidden_fields(params.except(:action, :controller, :organisation_id, :utf8, *exclude))
-  end
-
   def include_google_maps_lib
     content_for(:javascript_libs) do
       javascript_include_tag('https://maps.google.com/maps/api/js?sensor=false')

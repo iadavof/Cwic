@@ -49,6 +49,8 @@ class Reservation < ActiveRecord::Base
   scope :info_boards,  -> { joins(:reservation_status).where('reservation_statuses.info_boards = true') }
   scope :billable, -> { joins(:reservation_status).where('reservation_statuses.billable = true') }
 
+  default_order { order(id: :desc) }
+
   def initialize(attributes = {})
     super
     @validate_overlapping = true
@@ -96,7 +98,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def recurrences
-    @recurrences ||= 
+    @recurrences ||=
       if self.base_reservation.present?
         self.organisation.reservations.where(base_reservation: self.base_reservation).order(:begins_at)
       else

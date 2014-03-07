@@ -981,7 +981,7 @@ div.table-container {
   position: relative;
   padding-top: 30px;
 
-  form#table_limit {
+  form#limiting {
     position: absolute;
     top: 0;
     right: 0;
@@ -1061,11 +1061,11 @@ div#confirm {
 }
 
 table.multiple-edit {
-  margin-bottom: 0;  
+  margin-bottom: 0;
 }
 
 div.multiple-edit-controls {
-  
+
   margin-bottom: 20px;
 
   span.multiple-edit {

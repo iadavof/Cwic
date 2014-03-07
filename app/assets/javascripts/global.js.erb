@@ -1,7 +1,6 @@
 var current_user, current_organisation;
-APP.init = function() {
-  /*this.global.detectBodyChanges();*/
 
+APP.init = function() {
   // Load current_user and current_organisation data
   var body = $('body');
   current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
@@ -40,6 +39,9 @@ APP.init = function() {
   // Make select all button on tables work
   this.global.bindSelectAllCheckboxEvents();
 
+  // Auto submit limiting fields
+  $('#limiting select').on('change', function() { this.form.submit(); });
+
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
@@ -57,35 +59,6 @@ $(document).on('page:load', function() { NProgress.stackPop(); });
 $(document).on('page:restore', function() { NProgress.remove(); });
 
 APP.global = {
-  /*
-  detectBodyChanges: function() {
-    var observeDOM = (function(){
-        var MutationObserver = window.MutationObserver || window.WebKitMutationObserver,
-            eventListenerSupported = window.addEventListener;
-
-        return function(obj, callback){
-            if( MutationObserver ){
-                // define a new observer
-                var obs = new MutationObserver(function(mutations, observer){
-                    if( mutations[0].addedNodes.length || mutations[0].removedNodes.length )
-                        callback();
-                });
-                // have the observer observe foo for changes in children
-                obs.observe( obj, { childList:true, subtree:true });
-            }
-            else if( eventListenerSupported ){
-                obj.addEventListener('DOMNodeInserted', callback, false);
-                obj.addEventListener('DOMNodeRemoved', callback, false);
-            }
-        }
-    })();
-
-    observeDOM( document.body ,function(){
-        $(document).trigger('thisIsADifferentBody');
-        console.log('Body changed');
-    });
-  },
-  */
   bindSelectAllCheckboxEvents: function() {
     $('input.select-all-checkbox').siblings('div.cwic-checkbox').on('click', function() {
       var select_all_button = $(this).siblings('input.select-all-checkbox');
@@ -96,7 +69,7 @@ APP.global = {
       var select_all_child = $(this);
       var select_all_childs = select_all_child.parents('table').find('input.select-all-child');
       var select_all_button = select_all_child.parents('table').find('input.select-all-checkbox');
- 
+
       var all_selected = true;
       select_all_childs.each(function() {
         if(!$(this).is(':checked')) {
