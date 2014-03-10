@@ -28,7 +28,6 @@ CwicFeedback.prototype.openFeedbackModal = function() {
     this.modal.find('p#creating_screenshot').css('visibility', 'visible');
 
     this.takeScreenshot();
-
 }
 
 CwicFeedback.prototype.renderFeedbackTextInput = function() {
