@@ -1,4 +1,4 @@
-function IADAtodayAndTomorrow(options) {
+function CwicTodayAndTomorrow(options) {
   this.options = $.extend({
     container: 'schedule-container',
     backend_url: 'url to backend',
@@ -9,7 +9,7 @@ function IADAtodayAndTomorrow(options) {
   this.renderTodayAndTomorrow();
 }
 
-IADAtodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
+CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   this.scheduleContainer = $('#' + this.options.container);
   this.bindEntityInfoControls();
   this.initWebSocket();
@@ -18,7 +18,7 @@ IADAtodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   setInterval(function() {schedule.updateTodayTomorrowView();}, 300000);
 }
 
-IADAtodayAndTomorrow.prototype.initWebSocket = function() {
+CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   var tat = this;
   var dispatcher = new WebSocketRails(this.options.websocket_url);
   // Open reservations_channel for organisation
@@ -27,7 +27,7 @@ IADAtodayAndTomorrow.prototype.initWebSocket = function() {
   channel.bind('update', function() { tat.updateTodayTomorrowView(); });
 }
 
-IADAtodayAndTomorrow.prototype.bindEntityInfoControls = function() {
+CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
   this.scheduleContainer.find('p.entity-name').each(function(){
     var descriptionHeight;
     $(this).on('click', function() {
@@ -45,7 +45,7 @@ IADAtodayAndTomorrow.prototype.bindEntityInfoControls = function() {
   });
 }
 
-IADAtodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
+CwicTodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
   var tat = this;
   $.ajax({
     type: 'GET',
@@ -58,7 +58,7 @@ IADAtodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
   });
 }
 
-IADAtodayAndTomorrow.prototype.afterTodayTomorrowUpdate = function(response) {
+CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdate = function(response) {
   if(response.length == 1) {
     this.afterTodayTomorrowUpdateEntity(response[0].entities, this.scheduleContainer);
   } else {
@@ -69,7 +69,7 @@ IADAtodayAndTomorrow.prototype.afterTodayTomorrowUpdate = function(response) {
   }
 }
 
-IADAtodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_type_info, parentdiv) {
+CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_type_info, parentdiv) {
   for(var entity_array_nr in entity_type_info) {
     var entity = entity_type_info[entity_array_nr];
     var jentity = parentdiv.find('#entity_' + entity.entity_id);
@@ -78,7 +78,7 @@ IADAtodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_
   }
 }
 
-IADAtodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
+CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
   if(entity.current_reservation == null && entity.upcoming_reservations.today.length  <= 0 && entity.upcoming_reservations.tomorrow.length <= 0) {
     parentdiv.append(this.getTemplateClone('noReservationsTemplate'));
     return;
@@ -143,7 +143,7 @@ IADAtodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv
   }
 }
 
-IADAtodayAndTomorrow.prototype.getTemplateClone = function(id) {
+CwicTodayAndTomorrow.prototype.getTemplateClone = function(id) {
   var newitem = $('#tat-templates').find('#' + id).clone();
   newitem.removeAttr('id');
   newitem.show();

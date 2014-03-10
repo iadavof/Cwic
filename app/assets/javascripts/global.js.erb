@@ -15,7 +15,7 @@ APP.init = function() {
     this.global.searchBarInit();
 
     // Load the feedback module
-    new IADAFeedback({
+    new CwicFeedback({
       open_button_id: 'open-feedback-button',
       backend_url: Routes.feedbacks_path({ format: 'json' })
     });

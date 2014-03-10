@@ -2,7 +2,7 @@ APP.stickies = {
   loadStickies: function() {
     var container = $('#note-container');
     if(container.length) {
-      new IADAStickyNotes({
+      new CwicStickyNotes({
         container: container.attr('id'),
         resource: {
           class_name: container.data('resource-class-name'),

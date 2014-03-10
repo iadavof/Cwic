@@ -1,6 +1,6 @@
 APP.schedule_view = {
   horizontal_calendar_day: function() {
-    new IADAscheduleView({
+    new CwicScheduleView({
       container: 'calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
@@ -17,7 +17,7 @@ APP.schedule_view = {
     });
   },
   horizontal_calendar_week: function() {
-    new IADAscheduleView({
+    new CwicScheduleView({
       container: 'calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
@@ -27,7 +27,7 @@ APP.schedule_view = {
     });
   },
   vertical_calendar_day: function() {
-    new IADAscheduleView({
+    new CwicScheduleView({
       container: 'calendar',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
@@ -37,7 +37,7 @@ APP.schedule_view = {
     });
   },
   today_and_tomorrow: function() {
-    new IADAtodayAndTomorrow({
+    new CwicTodayAndTomorrow({
       container: 'today-and-tomorrow-container',
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       websocket_url: window.location.host + Routes.websocket_path(),

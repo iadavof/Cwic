@@ -1,9 +1,9 @@
-IADAoccupationView.prototype.options = null;
-IADAoccupationView.prototype.currentMonth = 0;
-IADAoccupationView.prototype.currentYear = 0;
-IADAoccupationView.prototype.occupationContainer = null;
+CwicOccupationView.prototype.options = null;
+CwicOccupationView.prototype.currentMonth = 0;
+CwicOccupationView.prototype.currentYear = 0;
+CwicOccupationView.prototype.occupationContainer = null;
 
-function IADAoccupationView(options) {
+function CwicOccupationView(options) {
   this.options = $.extend({
     container: 'schedule-container',
     backend_url: 'url to backend',
@@ -14,13 +14,13 @@ function IADAoccupationView(options) {
   this.renderOccupation();
 }
 
-IADAoccupationView.prototype.initiateContainer = function() {
+CwicOccupationView.prototype.initiateContainer = function() {
   this.occupationContainer = $('#' + this.options.container);
   this.occupationContainer.append(this.getTemplateClone('occupationContainerTemplate').contents());
   this.occupationContainer.addClass('occupation-container');
 }
 
-IADAoccupationView.prototype.renderOccupation = function() {
+CwicOccupationView.prototype.renderOccupation = function() {
   var today = new Date();
   this.currentYear = today.getFullYear();
 
@@ -33,7 +33,7 @@ IADAoccupationView.prototype.renderOccupation = function() {
   this.bindControls();
 }
 
-IADAoccupationView.prototype.bindControls = function() {
+CwicOccupationView.prototype.bindControls = function() {
   var occ = this;
 
   if(this.options.view == 'weekOccupation') {
@@ -96,7 +96,7 @@ IADAoccupationView.prototype.bindControls = function() {
 
 }
 
-IADAoccupationView.prototype.updateOccupationView = function() {
+CwicOccupationView.prototype.updateOccupationView = function() {
   this.occupationContainer.find('div.top-axis div.top-axis-frame').remove();
 
   if(this.options.view == 'dayOccupation') {
@@ -124,7 +124,7 @@ IADAoccupationView.prototype.updateOccupationView = function() {
 }
 
 
-IADAoccupationView.prototype.getEntities = function() {
+CwicOccupationView.prototype.getEntities = function() {
   var occ = this;
   $.ajax({
     type: 'POST',
@@ -137,7 +137,7 @@ IADAoccupationView.prototype.getEntities = function() {
   });
 }
 
-IADAoccupationView.prototype.getPercentages = function() {
+CwicOccupationView.prototype.getPercentages = function() {
   if(this.options.view == 'dayOccupation') {
     var url = this.options.backend_url + '/day_occupation_percentages.json';
     var data = {
@@ -161,7 +161,7 @@ IADAoccupationView.prototype.getPercentages = function() {
   });
 }
 
-IADAoccupationView.prototype.fillPercentages = function(response) {
+CwicOccupationView.prototype.fillPercentages = function(response) {
   for(var ent_nr in response.entities) {
     var entity = response.entities[ent_nr].entity_id;
     if(this.options.view == 'dayOccupation') {
@@ -182,7 +182,7 @@ IADAoccupationView.prototype.fillPercentages = function(response) {
   }
 }
 
-IADAoccupationView.prototype.createRows = function(response) {
+CwicOccupationView.prototype.createRows = function(response) {
 
   for(ent_nr in response.entities) {
     var entity = response.entities[ent_nr];
@@ -205,7 +205,7 @@ IADAoccupationView.prototype.createRows = function(response) {
   this.resizeActions();
 }
 
-IADAoccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) {
+CwicOccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) {
   var rows = this.occupationContainer.find('div.occupation-matrix-row');
   rows.find('div.occupation-matrix-block').remove();
 
@@ -222,7 +222,7 @@ IADAoccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
   }
 }
 
-IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
+CwicOccupationView.prototype.createHeader = function(maxNr, blockWidth) {
   var topAxis = this.occupationContainer.find('div.top-axis');
   topAxis.find('.top-axis-frame').remove();
   for(var day = 1; day <= maxNr; day += 1) {
@@ -237,7 +237,7 @@ IADAoccupationView.prototype.createHeader = function(maxNr, blockWidth) {
   this.resizeActions();
 }
 
-IADAoccupationView.prototype.resizeActions = function() {
+CwicOccupationView.prototype.resizeActions = function() {
   var newHeight = this.occupationContainer.find('.occupation-matrix-block').first().width();
   var row = this.occupationContainer.find('.occupation-matrix-row')
   row.css('height', newHeight);
@@ -269,26 +269,26 @@ IADAoccupationView.prototype.resizeActions = function() {
 }
 
 
-IADAoccupationView.prototype.bindWindowEvents = function() {
+CwicOccupationView.prototype.bindWindowEvents = function() {
   var occ = this;
   $(window).resize(function() {
     occ.resizeActions();
   });
 }
 
-IADAoccupationView.prototype.getTemplateClone = function(id) {
+CwicOccupationView.prototype.getTemplateClone = function(id) {
   var newitem = $('#occupation-templates').find('#' + id).clone();
   newitem.removeAttr('id');
   newitem.show();
   return newitem;
 }
 
-IADAoccupationView.prototype.daysInMonth = function() {
+CwicOccupationView.prototype.daysInMonth = function() {
   return new Date(this.currentYear, this.currentMonth, 0).getDate();
 }
 
 
-IADAoccupationView.prototype.getColorForPercentage = function(pct, alpha) {
+CwicOccupationView.prototype.getColorForPercentage = function(pct, alpha) {
   if(pct > 100) {
     pct = 100;
   }
@@ -319,7 +319,7 @@ IADAoccupationView.prototype.getColorForPercentage = function(pct, alpha) {
   }
 }
 
-IADAoccupationView.prototype.numberOfWeeksInYear = function(year) {
+CwicOccupationView.prototype.numberOfWeeksInYear = function(year) {
   var fiftyThreeDaysInYears = [4, 9, 15, 20, 26, 32, 37, 43, 48, 54, 60, 65, 71, 76, 82, 88, 93, 99, 105, 111, 116, 122, 128, 133, 139, 144, 150, 156, 161, 167, 172, 178, 184, 189, 195, 201, 207, 212, 218, 224, 229, 235, 240, 246, 252, 257, 263, 268, 274, 280, 285, 291, 296, 303, 308, 314, 320, 325, 331, 336, 342, 348, 353, 359, 364, 370, 376, 381, 387, 392, 398];
   var mod400 = year % 400;
   if(fiftyThreeDaysInYears.indexOf(mod400) > 0) {

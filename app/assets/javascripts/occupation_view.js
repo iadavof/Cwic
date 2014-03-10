@@ -1,6 +1,6 @@
 APP.occupation_view = {
   day_occupation: function() {
-    new IADAoccupationView({
+    new CwicOccupationView({
       container: 'occupation-container',
       backend_url: Routes.organisation_occupation_view_path(current_organisation),
       view: 'dayOccupation',
@@ -8,7 +8,7 @@ APP.occupation_view = {
     });
   },
   week_occupation: function() {
-    new IADAoccupationView({
+    new CwicOccupationView({
       container: 'occupation-container',
       backend_url: Routes.organisation_occupation_view_path(current_organisation),
       view: 'weekOccupation',

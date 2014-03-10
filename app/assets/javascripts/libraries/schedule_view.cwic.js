@@ -1,4 +1,4 @@
-function IADAscheduleView(options) {
+function CwicScheduleView(options) {
   this.options = $.extend({
     container: 'schedule-container',
     backend_url: 'url to backend',
@@ -29,21 +29,21 @@ function IADAscheduleView(options) {
   }
 }
 
-IADAscheduleView.prototype.renderHorizontalCalendar = function () {
+CwicScheduleView.prototype.renderHorizontalCalendar = function () {
   this.initScheduleStub();
   this.createEntityShowCase();
   this.bindControls();
   this.addHorizontalViewTimeAxis();
 }
 
-IADAscheduleView.prototype.renderVerticalCalendar = function() {
+CwicScheduleView.prototype.renderVerticalCalendar = function() {
   this.initScheduleStub();
   this.createEntityShowCase();
   this.bindControls();
   this.addVerticalViewTimeAxis();
 }
 
-IADAscheduleView.prototype.initScheduleStub = function() {
+CwicScheduleView.prototype.initScheduleStub = function() {
   this.scheduleContainer = $('#' + this.options.container);
   this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
   if(this.options.view == 'horizontalCalendar' || this.options.view == 'verticalCalendar') {
@@ -57,7 +57,7 @@ IADAscheduleView.prototype.initScheduleStub = function() {
   this.renderScheduleBodyGrid();
 }
 
-IADAscheduleView.prototype.getFocusMoment = function() {
+CwicScheduleView.prototype.getFocusMoment = function() {
   var now = moment().startOf('day');
   if(this.scheduleContainer.data('target-year') != '' && this.scheduleContainer.data('target-month') != '' && this.scheduleContainer.data('target-day') != '') {
     now.year(parseInt(this.scheduleContainer.data('target-year')));
@@ -70,7 +70,7 @@ IADAscheduleView.prototype.getFocusMoment = function() {
   return now;
 }
 
-IADAscheduleView.prototype.setBeginAndEndFromNavigationReference = function() {
+CwicScheduleView.prototype.setBeginAndEndFromNavigationReference = function() {
   if(this.currentMode == 'custom' && this.customDomainLength != null) {
     this.beginDate = moment(this.navigationReference).startOf(this.options.zoom);
     this.endDate = moment(this.navigationReference).add('days', this.customDomainLength).endOf(this.options.zoom);
@@ -80,7 +80,7 @@ IADAscheduleView.prototype.setBeginAndEndFromNavigationReference = function() {
   }
 }
 
-IADAscheduleView.prototype.toggleEntity = function(entity_button) {
+CwicScheduleView.prototype.toggleEntity = function(entity_button) {
   var entity_button = $(entity_button);
   var id = parseInt(entity_button.attr('id').split('_')[1]);
 
@@ -99,7 +99,7 @@ IADAscheduleView.prototype.toggleEntity = function(entity_button) {
   this.updateSchedule();
 }
 
-IADAscheduleView.prototype.addSelectedEntity = function(id) {
+CwicScheduleView.prototype.addSelectedEntity = function(id) {
   if(this.options.view == 'horizontalCalendar') {
       // Add this item to the selection
       this.selectedEntities.push(id);
@@ -111,18 +111,18 @@ IADAscheduleView.prototype.addSelectedEntity = function(id) {
   this.setLocalStorageEntities(this.selectedEntities);
 }
 
-IADAscheduleView.prototype.clearSelectedEntities = function() {
+CwicScheduleView.prototype.clearSelectedEntities = function() {
   this.selectedEntities = [];
   this.setLocalStorageEntities(this.selectedEntities);
 }
 
-IADAscheduleView.prototype.removeSelectedEntity = function(id) {
+CwicScheduleView.prototype.removeSelectedEntity = function(id) {
   this.selectedEntities.splice($.inArray(id, this.selectedEntities), 1);
   // Update the local storage
   this.setLocalStorageEntities(this.selectedEntities);
 }
 
-IADAscheduleView.prototype.getEntitiesFromLocalStorage = function() {
+CwicScheduleView.prototype.getEntitiesFromLocalStorage = function() {
   if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
     if(this.options.view == 'verticalCalendar' && localStorage.previouslySelectedEntities.length > 0) {
       // Only one selected entity possible, in case
@@ -133,13 +133,13 @@ IADAscheduleView.prototype.getEntitiesFromLocalStorage = function() {
   return [];
 }
 
-IADAscheduleView.prototype.setLocalStorageEntities = function() {
+CwicScheduleView.prototype.setLocalStorageEntities = function() {
   if(typeof(Storage) !== 'undefined') {
     localStorage.previouslySelectedEntities = this.selectedEntities;
   }
 }
 
-IADAscheduleView.prototype.toggleCustomDomainControls = function() {
+CwicScheduleView.prototype.toggleCustomDomainControls = function() {
   var customDomainButton = this.scheduleContainer.find('div.control-container.navigate a#customMode');
   var controlContainer = this.scheduleContainer.find('div.control-container.domain');
   if(customDomainButton.hasClass('active')) {
@@ -153,7 +153,7 @@ IADAscheduleView.prototype.toggleCustomDomainControls = function() {
 
 }
 
-IADAscheduleView.prototype.toggleEntities = function(on) {
+CwicScheduleView.prototype.toggleEntities = function(on) {
   // This function is only used in horizontal calendar mode where more entity items can be selected at once
 
   schedule = this;
@@ -172,7 +172,7 @@ IADAscheduleView.prototype.toggleEntities = function(on) {
   this.updateSchedule();
 }
 
-IADAscheduleView.prototype.createEntityShowCase = function() {
+CwicScheduleView.prototype.createEntityShowCase = function() {
   var schedule = this;
 
   if(this.options.view == 'horizontalCalendar') {
@@ -191,7 +191,7 @@ IADAscheduleView.prototype.createEntityShowCase = function() {
   });
 };
 
-IADAscheduleView.prototype.bindControls = function() {
+CwicScheduleView.prototype.bindControls = function() {
   var schedule = this;
 
   // Set the correct scope button to active
@@ -283,7 +283,7 @@ IADAscheduleView.prototype.bindControls = function() {
   this.bindOnResize();
 }
 
-IADAscheduleView.prototype.bindToolbarEvents = function() {
+CwicScheduleView.prototype.bindToolbarEvents = function() {
   var schedule = this;
   schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
     $(this).attr('data-original-padding-top', $(this).css('padding-top'));
@@ -313,7 +313,7 @@ IADAscheduleView.prototype.bindToolbarEvents = function() {
   this.bindToolbarButtonActions();
 }
 
-IADAscheduleView.prototype.closeToolbar = function(callback) {
+CwicScheduleView.prototype.closeToolbar = function(callback) {
     this.removeFocusFromAllScheduleItems();
     this.updateScheduleItemFocus();
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
@@ -322,7 +322,7 @@ IADAscheduleView.prototype.closeToolbar = function(callback) {
     this.scheduleContainer.find('div.top-axis div.reservation-controls').removeClass('open').animate({height: 0}, 200, callback);
 }
 
-IADAscheduleView.prototype.openToolbar = function(scheduleItem) {
+CwicScheduleView.prototype.openToolbar = function(scheduleItem) {
   var schedule = this;
 
   var timeAxis = schedule.scheduleContainer.find('.top-axis');
@@ -340,7 +340,7 @@ IADAscheduleView.prototype.openToolbar = function(scheduleItem) {
   });
 }
 
-IADAscheduleView.prototype.bindOnResize = function() {
+CwicScheduleView.prototype.bindOnResize = function() {
   var schedule = this;
   var toolbar = schedule.scheduleContainer.find('.top-axis div.reservation-controls');
   $(window).on('resize', function() {
@@ -361,12 +361,12 @@ IADAscheduleView.prototype.bindOnResize = function() {
   });
 }
 
-IADAscheduleView.prototype.updateDateDomainControl = function() {
+CwicScheduleView.prototype.updateDateDomainControl = function() {
   this.scheduleContainer.find('#scheduleBeginDate').datepicker("setDate", this.beginDate.toDate());
   this.scheduleContainer.find('#scheduleEndDate').datepicker("setDate", this.endDate.toDate());
 }
 
-IADAscheduleView.prototype.nearestMomentPoint = function(rel, clickedElement) {
+CwicScheduleView.prototype.nearestMomentPoint = function(rel, clickedElement) {
   var containerTP = $(clickedElement);
 
   containerTPSize = this.options.view == 'horizontalCalendar' ? containerTP.width() : containerTP.height();
@@ -398,7 +398,7 @@ IADAscheduleView.prototype.nearestMomentPoint = function(rel, clickedElement) {
   return beginPoint.add(minutes, 'minutes');
 }
 
-IADAscheduleView.prototype.getScheduleItemForDOMObject = function(SchObj, dayRowObj) {
+CwicScheduleView.prototype.getScheduleItemForDOMObject = function(SchObj, dayRowObj) {
   var schedule_object_id = dayRowObj.data('scheduleObjectID');
   var schId = SchObj.data('scheduleItemID');
   if(schedule_object_id != null && schId != null) {
@@ -407,7 +407,7 @@ IADAscheduleView.prototype.getScheduleItemForDOMObject = function(SchObj, dayRow
   return null;
 }
 
-IADAscheduleView.prototype.getPointerRel = function(event, container) {
+CwicScheduleView.prototype.getPointerRel = function(event, container) {
   var offset = $(container).offset();
   if(this.options.view == 'horizontalCalendar') {
     return event.pageX - offset.left;
@@ -416,7 +416,7 @@ IADAscheduleView.prototype.getPointerRel = function(event, container) {
   }
 }
 
-IADAscheduleView.prototype.bindDragAndResizeControls = function() {
+CwicScheduleView.prototype.bindDragAndResizeControls = function() {
   var schedule = this;
   var currentScheduleItem = null;
   var side = null;
@@ -525,7 +525,7 @@ IADAscheduleView.prototype.bindDragAndResizeControls = function() {
   });
 }
 
-IADAscheduleView.prototype.showStatusMessage = function(content, ajax_wait, delay) {
+CwicScheduleView.prototype.showStatusMessage = function(content, ajax_wait, delay) {
   var notification = this.scheduleContainer.find('.ajax-notification');
   notification.css('pointer-events', 'auto');
 
@@ -553,7 +553,7 @@ IADAscheduleView.prototype.showStatusMessage = function(content, ajax_wait, dela
   return notification;
 }
 
-IADAscheduleView.prototype.hideStatusMessage = function() {
+CwicScheduleView.prototype.hideStatusMessage = function() {
   var notification = this.scheduleContainer.find('.ajax-notification');
   notification.finish();
   notification.animate({ height: 0 }, 200, function() {
@@ -566,7 +566,7 @@ IADAscheduleView.prototype.hideStatusMessage = function() {
 
 }
 
-IADAscheduleView.prototype.patchScheduleItemBackend = function(scheduleItem, undo) {
+CwicScheduleView.prototype.patchScheduleItemBackend = function(scheduleItem, undo) {
   var schedule = this;
 
   // saving status message
@@ -591,12 +591,12 @@ IADAscheduleView.prototype.patchScheduleItemBackend = function(scheduleItem, und
   });
 }
 
-IADAscheduleView.prototype.undoSaveAction = function(scheduleItem) {
+CwicScheduleView.prototype.undoSaveAction = function(scheduleItem) {
   scheduleItem.undoAcceptConcept();
   this.patchScheduleItemBackend(scheduleItem);
 }
 
-IADAscheduleView.prototype.bindNewReservationControls = function() {
+CwicScheduleView.prototype.bindNewReservationControls = function() {
   var newScheduleItem = null;
   var schedule = this;
   this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.schedule-object-item-parts', function(event) {
@@ -604,7 +604,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
     if(newScheduleItem == null && $(event.target).hasClass('schedule-object-item-parts')) {
       rel = schedule.getPointerRel(event, this);
       var schedule_object_id = $(event.target).data('scheduleObjectID');
-      newScheduleItem = new IADAscheduleViewItem(schedule, schedule_object_id);
+      newScheduleItem = new CwicScheduleViewItem(schedule, schedule_object_id);
       var nearestMoment = schedule.nearestMomentPoint(rel, this);
       newScheduleItem.conceptBegin = moment(nearestMoment);
       newScheduleItem.conceptEnd = moment(nearestMoment);
@@ -720,7 +720,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
         thisMoment.hours(plusOneButton.data('hours'));
         thisMoment.minutes(plusOneButton.data('minutes'));
 
-        var newScheduleItem = new IADAscheduleViewItem(schedule, schedule_object_id);
+        var newScheduleItem = new CwicScheduleViewItem(schedule, schedule_object_id);
         if(schedule.options.zoom = 'day') {
           // one hour
           newScheduleItem.conceptBegin = moment(thisMoment).subtract(30, 'minutes');
@@ -750,7 +750,7 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
 
 }
 
-IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, newScheduleItem, resetNewScheduleItem) {
+CwicScheduleView.prototype.setNewReservationForm = function(reservationForm, newScheduleItem, resetNewScheduleItem) {
   var schedule = this;
   var beginJDate = newScheduleItem.getConceptBegin().toDate();
   var endJDate = newScheduleItem.getConceptEnd().toDate();
@@ -779,7 +779,7 @@ IADAscheduleView.prototype.setNewReservationForm = function(reservationForm, new
   reservationForm.find('select').trigger('change');
 }
 
-IADAscheduleView.prototype.setDateDomain = function() {
+CwicScheduleView.prototype.setDateDomain = function() {
   var beginDateField = this.scheduleContainer.find('#scheduleBeginDate');
   var endDateField = this.scheduleContainer.find('#scheduleEndDate');
 
@@ -804,7 +804,7 @@ IADAscheduleView.prototype.setDateDomain = function() {
   this.updateSchedule();
 }
 
-IADAscheduleView.prototype.setErrorField =  function(field, error) {
+CwicScheduleView.prototype.setErrorField =  function(field, error) {
   if(field.parent().hasClass('field_with_errors')) {
     field.unwrap();
   }
@@ -813,7 +813,7 @@ IADAscheduleView.prototype.setErrorField =  function(field, error) {
   }
 }
 
-IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
+CwicScheduleView.prototype.afterEntitiesLoad = function(response) {
   var possibleEntities = [];
   var tabContainer = this.scheduleContainer.find('.entity-container div#entity-showcase-tabs');
 
@@ -882,7 +882,7 @@ IADAscheduleView.prototype.afterEntitiesLoad = function(response) {
   this.updateSchedule();
 }
 
-IADAscheduleView.prototype.addVerticalViewTimeAxis = function() {
+CwicScheduleView.prototype.addVerticalViewTimeAxis = function() {
   // Add time in left axis
 
   var axis = this.scheduleContainer.find('div.left-axis');
@@ -896,7 +896,7 @@ IADAscheduleView.prototype.addVerticalViewTimeAxis = function() {
   }
 }
 
-IADAscheduleView.prototype.addHorizontalViewTimeAxis = function() {
+CwicScheduleView.prototype.addHorizontalViewTimeAxis = function() {
   // Add time in top axis
 
   var scheduleContainer = $(this.scheduleContainer);
@@ -938,7 +938,7 @@ IADAscheduleView.prototype.addHorizontalViewTimeAxis = function() {
 }
 
 
-IADAscheduleView.prototype.createSchedule = function() {
+CwicScheduleView.prototype.createSchedule = function() {
   if(this.options.view == 'horizontalCalendar') {
     if(this.options.zoom == 'day') {
       this.createScheduleDay();
@@ -950,7 +950,7 @@ IADAscheduleView.prototype.createSchedule = function() {
   }
 }
 
-IADAscheduleView.prototype.createVerticalSchedule = function() {
+CwicScheduleView.prototype.createVerticalSchedule = function() {
   var schedule = this;
   var days = this.getDatesBetween(this.beginDate, this.endDate, true);
   var nrOfDays = days.length;
@@ -970,7 +970,7 @@ IADAscheduleView.prototype.createVerticalSchedule = function() {
   this.scheduleContainer.find('div.left-axis, div.schedule-body').css('height', '715px');
 }
 
-IADAscheduleView.prototype.createScheduleDay = function() {
+CwicScheduleView.prototype.createScheduleDay = function() {
   var schedule = this;
   var days = this.getDatesBetween(this.beginDate, this.endDate, true);
   for(var daynr in days) {
@@ -984,7 +984,7 @@ IADAscheduleView.prototype.createScheduleDay = function() {
 
 }
 
-IADAscheduleView.prototype.createScheduleWeek = function() {
+CwicScheduleView.prototype.createScheduleWeek = function() {
   var schedule = this;
   var weeks = this.getWeeksBetween(this.beginDate, this.endDate);
   for(var weeknr in weeks) {
@@ -998,7 +998,7 @@ IADAscheduleView.prototype.createScheduleWeek = function() {
 
 }
 
-IADAscheduleView.prototype.getWeeksBetween = function(begin, end) {
+CwicScheduleView.prototype.getWeeksBetween = function(begin, end) {
   var weeks = [];
   var currentMoment = moment(begin).startOf('week');
 
@@ -1011,7 +1011,7 @@ IADAscheduleView.prototype.getWeeksBetween = function(begin, end) {
   return weeks;
 }
 
-IADAscheduleView.prototype.loadScheduleObjects = function() {
+CwicScheduleView.prototype.loadScheduleObjects = function() {
   if(this.selectedEntities.length > 0) {
     schedule = this;
 
@@ -1029,7 +1029,7 @@ IADAscheduleView.prototype.loadScheduleObjects = function() {
   }
 }
 
-IADAscheduleView.prototype.clearSchedule = function() {
+CwicScheduleView.prototype.clearSchedule = function() {
   if(this.needleTimeout != null) {
      clearTimeout(this.needleTimeout);
   }
@@ -1043,7 +1043,7 @@ IADAscheduleView.prototype.clearSchedule = function() {
   }
 }
 
-IADAscheduleView.prototype.updateSchedule = function() {
+CwicScheduleView.prototype.updateSchedule = function() {
   this.clearSchedule();
   if(this.selectedEntities.length > 0) {
     this.loadScheduleObjects();
@@ -1055,16 +1055,16 @@ IADAscheduleView.prototype.updateSchedule = function() {
   this.updateDateDomainControl();
 }
 
-IADAscheduleView.prototype.disabledOverlay = function() {
+CwicScheduleView.prototype.disabledOverlay = function() {
   this.scheduleContainer.find('.schedule-body').append($('<div></div>', {'class': 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
 }
 
-IADAscheduleView.prototype.removeFocusFromAllScheduleItems = function() {
+CwicScheduleView.prototype.removeFocusFromAllScheduleItems = function() {
   this.scheduleContainer.find('div.schedule-item.open').removeClass('open');
   this.focusedScheduleItem = null;
 }
 
-IADAscheduleView.prototype.updateScheduleItemFocus = function() {
+CwicScheduleView.prototype.updateScheduleItemFocus = function() {
   // Check if an item is opened
   if(this.scheduleContainer.find('div.schedule-item.open').length > 0) {
     this.scheduleContainer.find('div.schedule-item:not(.open) .resizer.left, div.schedule-item:not(.open) .resizer.right').css('cursor', 'auto');
@@ -1076,7 +1076,7 @@ IADAscheduleView.prototype.updateScheduleItemFocus = function() {
   }
 }
 
-IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
+CwicScheduleView.prototype.afterScheduleObjectsLoad = function(response) {
   this.beginDate = moment(response.begin_date);
   this.endDate = moment(response.end_date);
 
@@ -1087,7 +1087,7 @@ IADAscheduleView.prototype.afterScheduleObjectsLoad = function(response) {
   this.addAllScheduleItems(response.schedule_objects);
 }
 
-IADAscheduleView.prototype.initScheduleObjectContainers = function(schobjJSON) {
+CwicScheduleView.prototype.initScheduleObjectContainers = function(schobjJSON) {
   var schedule = this;
   // Add schedule object container divs to the DOM
   $.each(schobjJSON, function(sobjId, sobj) {
@@ -1115,13 +1115,13 @@ IADAscheduleView.prototype.initScheduleObjectContainers = function(schobjJSON) {
   }
 }
 
-IADAscheduleView.prototype.addAllScheduleItems = function(schobjJSON) {
+CwicScheduleView.prototype.addAllScheduleItems = function(schobjJSON) {
   var schedule = this;
   this.scheduleItems = {};
   $.each(schobjJSON, function(schedule_object_id, sobj) {
     schedule.scheduleItems[schedule_object_id] = {};
     $.each(sobj.items, function(itemId, item) {
-      var schvi = new IADAscheduleViewItem(schedule, schedule_object_id, itemId);
+      var schvi = new CwicScheduleViewItem(schedule, schedule_object_id, itemId);
       schvi.parseFromJSON(item);
       schedule.scheduleItems[schedule_object_id][itemId] = schvi;
       schvi.render();
@@ -1129,24 +1129,24 @@ IADAscheduleView.prototype.addAllScheduleItems = function(schobjJSON) {
   });
 }
 
-IADAscheduleView.prototype.timeToPercentage = function(currentMoment) {
+CwicScheduleView.prototype.timeToPercentage = function(currentMoment) {
   var max = moment(currentMoment).endOf(this.options.zoom).diff(moment(currentMoment).startOf(this.options.zoom));
   return moment(currentMoment).diff(moment(currentMoment).startOf(this.options.zoom)) / max * 100.0;
 }
 
-IADAscheduleView.prototype.timePercentageSpan = function(beginMoment, endMoment) {
+CwicScheduleView.prototype.timePercentageSpan = function(beginMoment, endMoment) {
   var max = moment(beginMoment).endOf(this.options.zoom).diff(moment(beginMoment).startOf(this.options.zoom));
   return moment(endMoment).diff(beginMoment) / max * 100.0;
 }
 
-IADAscheduleView.prototype.getTemplateClone = function(id) {
+CwicScheduleView.prototype.getTemplateClone = function(id) {
   var newitem = $('#schedule-templates').find('#' + id).clone();
   newitem.removeAttr('id');
   newitem.show();
   return newitem;
 }
 
-IADAscheduleView.prototype.getDatesBetween = function(begin, end, inclusive) {
+CwicScheduleView.prototype.getDatesBetween = function(begin, end, inclusive) {
   var nrdays = moment(end).endOf('day').diff(moment(begin).startOf('day'), 'days');
   if(!inclusive && this.isStartOfDay(end)) {
     // End is start of day, meaning it actually is the end of the previous day. Decrease nrdays.
@@ -1162,12 +1162,12 @@ IADAscheduleView.prototype.getDatesBetween = function(begin, end, inclusive) {
   return days;
 }
 
-IADAscheduleView.prototype.isStartOfDay = function(date) {
+CwicScheduleView.prototype.isStartOfDay = function(date) {
   // Checks if the date is at the start of day (time = 00:00:00). This is useful for end dates, since this means they end at the previous day.
   return (moment(date).startOf('day').unix() == moment(date).unix());
 }
 
-IADAscheduleView.prototype.appendDay = function(dayMoment) {
+CwicScheduleView.prototype.appendDay = function(dayMoment) {
   var dayAxisDiv = this.getTemplateClone('dayAxisRowTemplate');
   dayAxisDiv.attr('id', 'label_' + dayMoment.format('YYYY-MM-DD'));
   dayAxisDiv.find('div.day-name p').text(dayMoment.format('dd'));
@@ -1193,7 +1193,7 @@ IADAscheduleView.prototype.appendDay = function(dayMoment) {
   timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
 }
 
-IADAscheduleView.prototype.renderTopAxis = function(dayWidth) {
+CwicScheduleView.prototype.renderTopAxis = function(dayWidth) {
   // dayWidth is only used for vertical Calendar
 
   if(this.options.view == 'horizontalCalendar' && this.options.zoom == 'day') {
@@ -1203,7 +1203,7 @@ IADAscheduleView.prototype.renderTopAxis = function(dayWidth) {
   }
 }
 
-IADAscheduleView.prototype.setTopAxisTexts = function() {
+CwicScheduleView.prototype.setTopAxisTexts = function() {
   topAxis = this.scheduleContainer.find('div.top-axis');
   if(this.options.view == 'verticalCalendar') {
     var parts = topAxis.find('div.axis-parts div.vertical-day-time-axis-frame');
@@ -1249,7 +1249,7 @@ IADAscheduleView.prototype.setTopAxisTexts = function() {
   }
 }
 
-IADAscheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
+CwicScheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
   var topAxis = this.scheduleContainer.find('.top-axis > div.axis-parts');
 
   var dayPart = this.getTemplateClone('verticalDayTimeAxisFrameTemplate');
@@ -1279,7 +1279,7 @@ IADAscheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
   this.scheduleContainer.find('.schedule-body').append(column);
 }
 
-IADAscheduleView.prototype.renderScheduleBodyGrid = function() {
+CwicScheduleView.prototype.renderScheduleBodyGrid = function() {
   var grid = this.scheduleContainer.find('div.schedule-body div.grid');
   var nritems = this.options.zoom == 'day' ? 23 : 27;
   for(var i = 0; i < nritems; i += 1) {
@@ -1291,7 +1291,7 @@ IADAscheduleView.prototype.renderScheduleBodyGrid = function() {
   }
 }
 
-IADAscheduleView.prototype.appendWeek = function(weekMoment) {
+CwicScheduleView.prototype.appendWeek = function(weekMoment) {
   var weekAxis = this.getTemplateClone('weekAxisRowTemplate');
   weekAxis.attr('id', 'label_' + weekMoment.format('GGGG-WW'));
   weekAxis.find('div.week-begin p').text(moment(weekMoment).startOf('week').format('l'));
@@ -1328,7 +1328,7 @@ IADAscheduleView.prototype.appendWeek = function(weekMoment) {
   timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
 }
 
-IADAscheduleView.prototype.showCurrentTimeNeedle = function() {
+CwicScheduleView.prototype.showCurrentTimeNeedle = function() {
   var currentDate = moment().format((this.options.zoom == 'day') ? 'YYYY-MM-DD' : 'GGGG-WW');
   var date_row = this.scheduleContainer.find('.row#' + currentDate);
   this.scheduleContainer.find('.left-axis-row.today:not(#label_' + currentDate + ')').removeClass('today');
@@ -1347,7 +1347,7 @@ IADAscheduleView.prototype.showCurrentTimeNeedle = function() {
   }
 }
 
-IADAscheduleView.prototype.showVerticalCurrentTimeNeedle = function() {
+CwicScheduleView.prototype.showVerticalCurrentTimeNeedle = function() {
   var currentDate = moment().format((this.options.zoom == 'day') ? 'YYYY-MM-DD' : 'GGGG-WW');
   var date_column = this.scheduleContainer.find('.column#' + currentDate);
   this.scheduleContainer.find('.top-axis div.vertical-day-time-axis-frame.today:not(#label_' + currentDate + ')').removeClass('today');
@@ -1368,7 +1368,7 @@ IADAscheduleView.prototype.showVerticalCurrentTimeNeedle = function() {
 
 /////////////////// Toolbar buttons ///////////////////
 
-IADAscheduleView.prototype.bindToolbarButtonActions = function() {
+CwicScheduleView.prototype.bindToolbarButtonActions = function() {
   var schedule = this;
   this.scheduleContainer.find('div.top-axis div.reservation-controls a.toolbar-button').on('click', function(event){
     event.preventDefault();
@@ -1391,7 +1391,7 @@ IADAscheduleView.prototype.bindToolbarButtonActions = function() {
   });
 }
 
-IADAscheduleView.prototype.removeScheduleItem = function() {
+CwicScheduleView.prototype.removeScheduleItem = function() {
   if(this.focusedScheduleItem != null) {
     var schedule = this;
     var confirm = window.confirm(function(item_id){var str = jsLang.schedule_view.delete_confirm; return str.replace('%{item_id}', item_id)}(schedule.focusedScheduleItem.item_id));
@@ -1416,7 +1416,7 @@ IADAscheduleView.prototype.removeScheduleItem = function() {
   }
 }
 
-IADAscheduleView.prototype.createScheduleItem = function(reservationForm, resetNewScheduleItem) {
+CwicScheduleView.prototype.createScheduleItem = function(reservationForm, resetNewScheduleItem) {
   var jreservationForm = $(reservationForm);
   $.ajax({
     url: schedule.options.patch_reservation_url + '.json',
@@ -1438,7 +1438,7 @@ IADAscheduleView.prototype.createScheduleItem = function(reservationForm, resetN
       if(xhr.status == 200) {
         var result = JSON.parse(xhr.responseText);
 
-        returnedScheduleItem = new IADAscheduleViewItem(schedule, result.entity_id);
+        returnedScheduleItem = new CwicScheduleViewItem(schedule, result.entity_id);
         schedule.scheduleItems[result.entity_id][result.id] = returnedScheduleItem;
         returnedScheduleItem.parseFromJSON(result);
 
@@ -1470,7 +1470,7 @@ IADAscheduleView.prototype.createScheduleItem = function(reservationForm, resetN
   });
 }
 
-IADAscheduleView.prototype.checkUnhideNonBlockingItems = function(schedule_object_id) {
+CwicScheduleView.prototype.checkUnhideNonBlockingItems = function(schedule_object_id) {
   var schedule = this;
   var otherItemsForObject = this.scheduleItems[schedule_object_id];
 
@@ -1489,7 +1489,7 @@ IADAscheduleView.prototype.checkUnhideNonBlockingItems = function(schedule_objec
   }
 }
 
-IADAscheduleView.prototype.editScheduleItem = function() {
+CwicScheduleView.prototype.editScheduleItem = function() {
   var path = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id + '/edit';
   if (typeof(Turbolinks) != 'undefined') {
     Turbolinks.visit(path);
@@ -1498,7 +1498,7 @@ IADAscheduleView.prototype.editScheduleItem = function() {
   }
 }
 
-IADAscheduleView.prototype.informationScheduleItem = function() {
+CwicScheduleView.prototype.informationScheduleItem = function() {
   var path = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id;;
   if (typeof(Turbolinks) != 'undefined') {
     Turbolinks.visit(path);
@@ -1507,7 +1507,7 @@ IADAscheduleView.prototype.informationScheduleItem = function() {
   }
 }
 
-IADAscheduleView.prototype.gotoClientScheduleItem = function() {
+CwicScheduleView.prototype.gotoClientScheduleItem = function() {
   var path = this.options.organisation_client_url + '/' + this.focusedScheduleItem.client_id;
   if (typeof(Turbolinks) != 'undefined') {
     Turbolinks.visit(path);
@@ -1518,7 +1518,7 @@ IADAscheduleView.prototype.gotoClientScheduleItem = function() {
 
 /////////////////// Schedule Item ///////////////////
 
-function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
+function CwicScheduleViewItem(_schedule, _schedule_object_id, _item_id) {
   this.schedule = _schedule;
   this.scheduleContainer = _schedule.scheduleContainer;
   this.schedule_object_id = _schedule_object_id || null;
@@ -1547,7 +1547,7 @@ function IADAscheduleViewItem(_schedule, _schedule_object_id, _item_id) {
 
 }
 
-IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
+CwicScheduleViewItem.prototype.parseFromJSON = function(newItem) {
   this.item_id = newItem.id;
   this.begin = moment(newItem.begin_moment);
   this.end = moment(newItem.end_moment);
@@ -1566,7 +1566,7 @@ IADAscheduleViewItem.prototype.parseFromJSON = function(newItem) {
   }
 }
 
-IADAscheduleViewItem.prototype.railsDataExport = function() {
+CwicScheduleViewItem.prototype.railsDataExport = function() {
   return {reservation: {
     reservation_id: this.item_id,
     begins_at: this.begin.format('YYYY-MM-DD HH:mm'),
@@ -1574,13 +1574,13 @@ IADAscheduleViewItem.prototype.railsDataExport = function() {
   }};
 }
 
-IADAscheduleViewItem.prototype.applyErrorGlow = function() {
+CwicScheduleViewItem.prototype.applyErrorGlow = function() {
   $.each(this.domObjects, function(index, item) {
     item.addClass('error-glow');
   });
 }
 
-IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMoment) {
+CwicScheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMoment) {
   var newScheduleItem = this.schedule.getTemplateClone('scheduleItemTemplate');
 
   if(this.schedule.options.view == 'horizontalCalendar') {
@@ -1645,7 +1645,7 @@ IADAscheduleViewItem.prototype.renderPart = function(jschobj, beginMoment, endMo
   return newScheduleItem;
 }
 
-IADAscheduleViewItem.prototype.acceptConcept = function() {
+CwicScheduleViewItem.prototype.acceptConcept = function() {
   this.undoBegin = this.begin;
   this.undoEnd = this.end;
 
@@ -1657,7 +1657,7 @@ IADAscheduleViewItem.prototype.acceptConcept = function() {
   this.rerender();
 }
 
-IADAscheduleViewItem.prototype.undoAcceptConcept = function() {
+CwicScheduleViewItem.prototype.undoAcceptConcept = function() {
   if(this.undoBegin != null) {
     this.begin = this.undoBegin;
   }
@@ -1668,7 +1668,7 @@ IADAscheduleViewItem.prototype.undoAcceptConcept = function() {
   this.rerender();
 }
 
-IADAscheduleViewItem.prototype.resetConcept = function() {
+CwicScheduleViewItem.prototype.resetConcept = function() {
   this.conceptBegin = null;
   this.conceptEnd = null;
 
@@ -1677,7 +1677,7 @@ IADAscheduleViewItem.prototype.resetConcept = function() {
   this.rerender(); // Rerender in normal mode
 }
 
-IADAscheduleViewItem.prototype.moveConceptTo = function(newBeginMoment) {
+CwicScheduleViewItem.prototype.moveConceptTo = function(newBeginMoment) {
   if(newBeginMoment.unix() == this.getConceptBegin().unix()) {
     // Nothing changed, move on
     return;
@@ -1692,13 +1692,13 @@ IADAscheduleViewItem.prototype.moveConceptTo = function(newBeginMoment) {
   this.rerender(true); // Rerender as concept
 }
 
-IADAscheduleViewItem.prototype.applyTimeDiffConcept = function(milliseconds) {
+CwicScheduleViewItem.prototype.applyTimeDiffConcept = function(milliseconds) {
   this.conceptBegin = moment(this.begin).add('ms', milliseconds);
   this.conceptEnd = moment(this.end).add('ms', milliseconds);
   this.rerender(true);
 }
 
-IADAscheduleViewItem.prototype.resizeConcept = function(side, newMoment) {
+CwicScheduleViewItem.prototype.resizeConcept = function(side, newMoment) {
   if(side == 'backwards') {
     if(newMoment.unix() == this.getConceptBegin().unix()) {
       // Nothing changed, move on
@@ -1715,11 +1715,11 @@ IADAscheduleViewItem.prototype.resizeConcept = function(side, newMoment) {
   this.rerender(true);
 }
 
-IADAscheduleViewItem.prototype.conceptDiffersWithOriginal = function() {
+CwicScheduleViewItem.prototype.conceptDiffersWithOriginal = function() {
   return (this.begin.unix() != this.getConceptBegin().unix() || this.end.unix() != this.getConceptEnd().unix());
 }
 
-IADAscheduleViewItem.prototype.checkEndAfterBegin = function(concept) {
+CwicScheduleViewItem.prototype.checkEndAfterBegin = function(concept) {
   if(concept) {
     var currBegin = this.getConceptBegin();
     var currEnd = this.getConceptEnd();
@@ -1734,16 +1734,16 @@ IADAscheduleViewItem.prototype.checkEndAfterBegin = function(concept) {
   return this.begin.unix() < this.end.unix();
 }
 
-IADAscheduleViewItem.prototype.getConceptBegin = function() {
+CwicScheduleViewItem.prototype.getConceptBegin = function() {
   return moment((this.conceptBegin != null) ? this.conceptBegin : this.begin);
 }
 
-IADAscheduleViewItem.prototype.getConceptEnd = function() {
+CwicScheduleViewItem.prototype.getConceptEnd = function() {
   return moment((this.conceptEnd != null) ? this.conceptEnd : this.end);
 }
 
 // This function has to be extended to check collision with first events just out of the current calendar scope
-IADAscheduleViewItem.prototype.conceptCollidesWithOthers = function() {
+CwicScheduleViewItem.prototype.conceptCollidesWithOthers = function() {
   var _this = this;
   var curConceptBegin = this.getConceptBegin();
   var curConceptEnd = this.getConceptEnd();
@@ -1774,21 +1774,21 @@ IADAscheduleViewItem.prototype.conceptCollidesWithOthers = function() {
   return collision;
 }
 
-IADAscheduleViewItem.prototype.conceptCollidesWith = function(moment) {
+CwicScheduleViewItem.prototype.conceptCollidesWith = function(moment) {
   var curConceptBegin = this.getConceptBegin();
   var curConceptEnd = this.getConceptEnd();
 
   return (curConceptBegin.unix() <= moment.unix() && curConceptEnd.unix() > moment.unix());
 }
 
-IADAscheduleViewItem.prototype.removeFromDom = function() {
+CwicScheduleViewItem.prototype.removeFromDom = function() {
   for(var nr in this.domObjects) {
     $(this.domObjects[nr]).remove();
   }
   this.domObjects = [];
 }
 
-IADAscheduleViewItem.prototype.setVisibilityDom = function(visible) {
+CwicScheduleViewItem.prototype.setVisibilityDom = function(visible) {
   this.hidden = !visible;
   for(var nr in this.domObjects) {
     if(visible) {
@@ -1799,7 +1799,7 @@ IADAscheduleViewItem.prototype.setVisibilityDom = function(visible) {
   }
 }
 
-IADAscheduleViewItem.prototype.applyFocus = function() {
+CwicScheduleViewItem.prototype.applyFocus = function() {
   this.schedule.removeFocusFromAllScheduleItems();
   $.each(this.domObjects, function(index, item){
     $(item).addClass('open');
@@ -1808,12 +1808,12 @@ IADAscheduleViewItem.prototype.applyFocus = function() {
   this.schedule.updateScheduleItemFocus();
 }
 
-IADAscheduleViewItem.prototype.rerender = function(concept) {
+CwicScheduleViewItem.prototype.rerender = function(concept) {
   this.removeFromDom();
   this.render(concept);
 }
 
-IADAscheduleViewItem.prototype.showResizers = function(schedulePart, back, forward) {
+CwicScheduleViewItem.prototype.showResizers = function(schedulePart, back, forward) {
   var schedulePart = $(schedulePart);
   if(this.schedule.options.view == 'horizontalCalendar' && schedulePart.width() > 30) {
     back ? schedulePart.find('div.resizer.left').show() : schedulePart.find('div.resizer.left').hide();
@@ -1824,7 +1824,7 @@ IADAscheduleViewItem.prototype.showResizers = function(schedulePart, back, forwa
   }
 }
 
-IADAscheduleViewItem.prototype.showContinues = function(schedulePart, back, forward) {
+CwicScheduleViewItem.prototype.showContinues = function(schedulePart, back, forward) {
   var schedulePart = $(schedulePart);
   if(this.schedule.options.view == 'horizontalCalendar') {
     back ? schedulePart.find('div.continue.left').show() : schedulePart.find('div.continue.left').hide();
@@ -1835,7 +1835,7 @@ IADAscheduleViewItem.prototype.showContinues = function(schedulePart, back, forw
   }
 }
 
-IADAscheduleViewItem.prototype.render = function(concept) {
+CwicScheduleViewItem.prototype.render = function(concept) {
   this.conceptMode = concept || false;
   if(this.conceptMode) {
     var currBegin = this.getConceptBegin();

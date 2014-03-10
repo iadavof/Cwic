@@ -1,6 +1,6 @@
 APP.info_screens = {
   show: function() {
-    var fullScreen = new IADAinfoScreen({
+    var fullScreen = new CwicInfoScreen({
       container: 'content',
       info_screen_id: $('#info-screen-container').data('info-screen-id'),
       backend_url: Routes.organisation_info_screen_reservations_path(current_organisation, $('#info-screen-container').data('info-screen-id')),

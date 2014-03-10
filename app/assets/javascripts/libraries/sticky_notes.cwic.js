@@ -1,11 +1,11 @@
-IADAStickyNotes.prototype.defaultNote = {
+CwicStickyNotes.prototype.defaultNote = {
   id: null,
   author: { id: 0, name: '' },
   weight: 0,
   created_at: '',
 }
 
-function IADAStickyNotes(options) {
+function CwicStickyNotes(options) {
   this.options = $.extend({
     container: 'note-container',
     backend_url: 'url to backend',
@@ -20,7 +20,7 @@ function IADAStickyNotes(options) {
   this.getNotes();
 }
 
-IADAStickyNotes.prototype.getNotes = function() {
+CwicStickyNotes.prototype.getNotes = function() {
   var sn = this;
 
   $.ajax({
@@ -36,7 +36,7 @@ IADAStickyNotes.prototype.getNotes = function() {
 
 }
 
-IADAStickyNotes.prototype.saveNote = function(note_element) {
+CwicStickyNotes.prototype.saveNote = function(note_element) {
   var note = $(note_element);
   var new_note = false;
   var textarea = note.find('textarea');
@@ -73,7 +73,7 @@ IADAStickyNotes.prototype.saveNote = function(note_element) {
   });
 }
 
-IADAStickyNotes.prototype.setTimestamps = function() {
+CwicStickyNotes.prototype.setTimestamps = function() {
   var timepies = $('div.notes div.note div.note-head p.created_at');
 
   timepies.each(function() {
@@ -83,7 +83,7 @@ IADAStickyNotes.prototype.setTimestamps = function() {
   });
 }
 
-IADAStickyNotes.prototype.renderNotes = function(notes) {
+CwicStickyNotes.prototype.renderNotes = function(notes) {
   for(noteNr in notes) {
     current = notes[noteNr];
     this.renderNote(current);
@@ -94,12 +94,12 @@ IADAStickyNotes.prototype.renderNotes = function(notes) {
   setInterval(function(){ schedule.setTimestamps(); }, 30000);
 }
 
-IADAStickyNotes.prototype.bindControls = function() {
+CwicStickyNotes.prototype.bindControls = function() {
   var sn = this;
   $('button.new-sticky').on('click', function() { sn.newNote(); });
 }
 
-IADAStickyNotes.prototype.newNote = function() {
+CwicStickyNotes.prototype.newNote = function() {
   var note = this.defaultNote;
   note.author = this.options.current_author;
   now = moment();
@@ -107,7 +107,7 @@ IADAStickyNotes.prototype.newNote = function() {
   this.renderNote(note);
 }
 
-IADAStickyNotes.prototype.renderNote = function(note_obj) {
+CwicStickyNotes.prototype.renderNote = function(note_obj) {
   var sn = this;
   var temp = $("#note-template").html();
   var note = $("<div class='note'></div>").html(temp);
@@ -166,7 +166,7 @@ IADAStickyNotes.prototype.renderNote = function(note_obj) {
   }
 }
 
-IADAStickyNotes.prototype.afterNoteMove = function(ui) {
+CwicStickyNotes.prototype.afterNoteMove = function(ui) {
   var notes = this.noteContainer.find('div.notes div.note');
   var noteOrder = [];
   notes.each(function() {
@@ -184,7 +184,7 @@ IADAStickyNotes.prototype.afterNoteMove = function(ui) {
   });
 }
 
-IADAStickyNotes.prototype.afterNoteEdit = function(element) {
+CwicStickyNotes.prototype.afterNoteEdit = function(element) {
   var note = $(element).closest('div.note');
   if(note.hasClass('focus')) {
     note.find('a.save-button').hide();
@@ -197,7 +197,7 @@ IADAStickyNotes.prototype.afterNoteEdit = function(element) {
   }
 }
 
-IADAStickyNotes.prototype.uponNoteEdit = function(element) {
+CwicStickyNotes.prototype.uponNoteEdit = function(element) {
   var note = $(element).parents('div.note');
   if(!note.hasClass('focus')) {
     note.addClass('focus');
@@ -208,7 +208,7 @@ IADAStickyNotes.prototype.uponNoteEdit = function(element) {
   }
 }
 
-IADAStickyNotes.prototype.deleteNote = function(element) {
+CwicStickyNotes.prototype.deleteNote = function(element) {
   var note = $(element).parents('div.note');
 
   note.hide();

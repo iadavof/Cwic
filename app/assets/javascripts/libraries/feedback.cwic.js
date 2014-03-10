@@ -1,12 +1,12 @@
-IADAFeedback.prototype.options = null;
+CwicFeedback.prototype.options = null;
 
-IADAFeedback.prototype.modal = null;
-IADAFeedback.prototype.button = null;
-IADAFeedback.prototype.screenshot = null;
-IADAFeedback.prototype.techInfo = null;
-IADAFeedback.prototype.messageArea = null;
+CwicFeedback.prototype.modal = null;
+CwicFeedback.prototype.button = null;
+CwicFeedback.prototype.screenshot = null;
+CwicFeedback.prototype.techInfo = null;
+CwicFeedback.prototype.messageArea = null;
 
-function IADAFeedback(options) {
+function CwicFeedback(options) {
     this.options = $.extend({
         open_button_id: 'open-feedback-button',
         backend_url: 'url to backend',
@@ -15,13 +15,13 @@ function IADAFeedback(options) {
     this.bindOpenFeedbackButton();
 }
 
-IADAFeedback.prototype.bindOpenFeedbackButton = function() {
+CwicFeedback.prototype.bindOpenFeedbackButton = function() {
     var fb = this;
     this.button = $('#' + this.options.open_button_id);
     this.button.on('click', function() { fb.openFeedbackModal(); });
 }
 
-IADAFeedback.prototype.openFeedbackModal = function() {
+CwicFeedback.prototype.openFeedbackModal = function() {
     this.button.attr('disabled', 'disabled');
     this.modal = APP.modal.openModal('new_feedback_popup', this.getTemplateClone('feedbackStatusTemplate'), this.closeFeedback());
     this.modal.attr('data-html2canvas-ignore', 'true');
@@ -31,7 +31,7 @@ IADAFeedback.prototype.openFeedbackModal = function() {
 
 }
 
-IADAFeedback.prototype.renderFeedbackTextInput = function() {
+CwicFeedback.prototype.renderFeedbackTextInput = function() {
     this.modal.children(':not(a.close)').remove();
     this.modal.append(this.getTemplateClone('feedbackTextTemplate'));
 
@@ -45,7 +45,7 @@ IADAFeedback.prototype.renderFeedbackTextInput = function() {
     });
 }
 
-IADAFeedback.prototype.takeScreenshot = function() {
+CwicFeedback.prototype.takeScreenshot = function() {
     var fb = this;
 
     html2canvas(document.body, {
@@ -56,7 +56,7 @@ IADAFeedback.prototype.takeScreenshot = function() {
     });
 }
 
-IADAFeedback.prototype.reviewFeedback = function() {
+CwicFeedback.prototype.reviewFeedback = function() {
     var fb = this;
 
     this.modal.children(':not(a.close)').remove();
@@ -88,12 +88,12 @@ IADAFeedback.prototype.reviewFeedback = function() {
     sendButton.on('click', function() { fb.sendFeedback(); });
 }
 
-IADAFeedback.prototype.closeFeedback = function() {
+CwicFeedback.prototype.closeFeedback = function() {
     this.screenshot = null;
     APP.modal.closeModal();
 }
 
-IADAFeedback.prototype.generateTechInfo = function() {
+CwicFeedback.prototype.generateTechInfo = function() {
     var is_tablet = !!navigator.userAgent.match(/(iPad|SCH-I800|xoom|kindle)/i);
     var is_phone = !is_tablet && !!navigator.userAgent.match(/(iPhone|iPod|blackberry|android 0.5|htc|lg|midp|mmp|mobile|nokia|opera mini|palm|pocket|psp|sgh|smartphone|symbian|treo mini|Playstation Portable|SonyEricsson|Samsung|MobileExplorer|PalmSource|Benq|Windows Phone|Windows Mobile|IEMobile|Windows CE|Nintendo Wii)/i);
     var viewport_x = window.innerWidth || document.documentElement.clientWidth || document.body.clientWidth;
@@ -131,7 +131,7 @@ IADAFeedback.prototype.generateTechInfo = function() {
     return this.techInfo;
 }
 
-IADAFeedback.prototype.objectToString = function(obj) {
+CwicFeedback.prototype.objectToString = function(obj) {
     var newObj = $.map(obj, function(val,index) {
         var str = index + ": " + val;
         return str;
@@ -139,7 +139,7 @@ IADAFeedback.prototype.objectToString = function(obj) {
     return newObj.join(", ");
 }
 
-IADAFeedback.prototype.sendFeedback = function() {
+CwicFeedback.prototype.sendFeedback = function() {
     var fb = this;
 
     // remove previous page
@@ -181,7 +181,7 @@ IADAFeedback.prototype.sendFeedback = function() {
 
 }
 
-IADAFeedback.prototype.getTemplateClone = function(id) {
+CwicFeedback.prototype.getTemplateClone = function(id) {
     var newitem = $('#feedback-templates').find('#' + id).clone();
     newitem.removeAttr('id');
     newitem.show();

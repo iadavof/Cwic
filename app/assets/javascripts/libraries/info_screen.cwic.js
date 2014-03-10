@@ -1,4 +1,4 @@
-function IADAinfoScreen(options) {
+function CwicInfoScreen(options) {
   this.options = $.extend({
     container: 'info-screen-container',
     backend_url: 'url to info screen backend',
@@ -17,7 +17,7 @@ function IADAinfoScreen(options) {
   this.init();
 }
 
-IADAinfoScreen.prototype.initWebSocket = function() {
+CwicInfoScreen.prototype.initWebSocket = function() {
   var is = this;
   var dispatcher = new WebSocketRails(this.options.websocket_url);
   // open reservations_channel for organisation
@@ -26,7 +26,7 @@ IADAinfoScreen.prototype.initWebSocket = function() {
   channel.bind('update', function() { is.getInfoScreenItems(); });
 }
 
-IADAinfoScreen.prototype.init = function() {
+CwicInfoScreen.prototype.init = function() {
   var is = this;
 
   this.realtimeFullscreensElemPlacement();
@@ -42,7 +42,7 @@ IADAinfoScreen.prototype.init = function() {
   this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);
 }
 
-IADAinfoScreen.prototype.removeDeletedItems = function(reservations) {
+CwicInfoScreen.prototype.removeDeletedItems = function(reservations) {
   var reservationIds = [];
   $.each(reservations, function(index, item) {
     reservationIds.push(item.id);
@@ -57,7 +57,7 @@ IADAinfoScreen.prototype.removeDeletedItems = function(reservations) {
   });
 }
 
-IADAinfoScreen.prototype.reservationAnimation = function(on) {
+CwicInfoScreen.prototype.reservationAnimation = function(on) {
   var tables = this.infoScreenContainer.find('table.reservation-dates');
   tables.each(function(index, item) {
     var table = $(item);
@@ -72,7 +72,7 @@ IADAinfoScreen.prototype.reservationAnimation = function(on) {
   });
 }
 
-IADAinfoScreen.prototype.itemUpdate = function(reservations) {
+CwicInfoScreen.prototype.itemUpdate = function(reservations) {
 
   // Stop the reservation table animations
   this.reservationAnimation(false);
@@ -116,7 +116,7 @@ IADAinfoScreen.prototype.itemUpdate = function(reservations) {
   this.reservationAnimation(true);
 }
 
-IADAinfoScreen.prototype.eatOverdueItems = function() {
+CwicInfoScreen.prototype.eatOverdueItems = function() {
   var view_reservations = this.infoScreenContainer.find('ul#realtime-list').children('li.infoScreenListItem');
   var currentTime = moment().unix();
 
@@ -130,7 +130,7 @@ IADAinfoScreen.prototype.eatOverdueItems = function() {
   });
 }
 
-IADAinfoScreen.prototype.createReservationItem = function(reservation) {
+CwicInfoScreen.prototype.createReservationItem = function(reservation) {
   var item = this.getTemplateClone('listItemTemplate');
   item.attr('id', 'reservation_' + reservation.id);
   var res_begin_moment = moment(reservation.begin_moment);
@@ -190,7 +190,7 @@ IADAinfoScreen.prototype.createReservationItem = function(reservation) {
 
 }
 
-IADAinfoScreen.prototype.settingsUpdate = function(settings) {
+CwicInfoScreen.prototype.settingsUpdate = function(settings) {
   var is = this;
 
   if(this.previousSettings == null || settings.clock_header != this.previousSettings.clock_header) {
@@ -205,7 +205,7 @@ IADAinfoScreen.prototype.settingsUpdate = function(settings) {
   this.previousSettings = settings;
 }
 
-IADAinfoScreen.prototype.getInfoScreenItems = function() {
+CwicInfoScreen.prototype.getInfoScreenItems = function() {
   var is = this;
 
   $.ajax({
@@ -220,7 +220,7 @@ IADAinfoScreen.prototype.getInfoScreenItems = function() {
   });
 }
 
-IADAinfoScreen.prototype.setOnResize = function() {
+CwicInfoScreen.prototype.setOnResize = function() {
   var is = this;
   $(window).on('resize', function() {
     is.realtimeFullscreensElemPlacement();
@@ -233,7 +233,7 @@ IADAinfoScreen.prototype.setOnResize = function() {
   });
 }
 
-IADAinfoScreen.prototype.initFullScreenControls = function() {
+CwicInfoScreen.prototype.initFullScreenControls = function() {
   var is = this;
   $('body').append($('<a>', {id: 'fullscreen-link'}).html($('<i>', {'class':'icon-resize-full'})));
   $('#fullscreen-link').on('click', function() {
@@ -241,13 +241,13 @@ IADAinfoScreen.prototype.initFullScreenControls = function() {
   });
 }
 
-IADAinfoScreen.prototype.realtimeFullscreensElemPlacement = function() {
+CwicInfoScreen.prototype.realtimeFullscreensElemPlacement = function() {
   $('#realtime-list > li > .inner .info-container').each(function(){
     $(this).css('margin-top', ($(this).parent().height() / 2) - ($(this).height() / 2) + 'px');
   });
 }
 
-IADAinfoScreen.prototype.requestFullScreen = function(el) {
+CwicInfoScreen.prototype.requestFullScreen = function(el) {
   // Supports most browsers and their versions.
   var requestMethod = el.requestFullScreen || el.webkitRequestFullScreen || el.mozRequestFullScreen || el.msRequestFullScreen;
 
@@ -267,12 +267,12 @@ IADAinfoScreen.prototype.requestFullScreen = function(el) {
   return false;
 }
 
-IADAinfoScreen.prototype.updateClock = function() {
+CwicInfoScreen.prototype.updateClock = function() {
   var now = moment();
   $('.current-time').html(now.format('[<span class="current-day">]dd[</span> <span class="current-date">]D MMM YYYY[</span><span class="current-hour">]HH[</span>:<span class="current-minute">]mm[</span><span class="current-second"> ]ss[</span>]'));
 }
 
-IADAinfoScreen.prototype.getTemplateClone = function(id) {
+CwicInfoScreen.prototype.getTemplateClone = function(id) {
   var item = $('#info-screen-templates').find('#' + id).clone();
   item.removeAttr('id');
   item.show();
