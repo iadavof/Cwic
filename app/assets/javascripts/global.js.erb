@@ -215,34 +215,38 @@ APP.global = {
     }
   },
   replaceConfirmBox: function() {
-    $.rails.allowAction = function(link) {
-      if(!$(link).attr('data-confirm')) {
-        return true;
+    $.rails.allowAction = function(element) {
+      if(element.data('skip-confirm-once')) { element.data('skip-confirm-once', null); return true; }
+
+      var message = element.data('confirm');
+      if(!message) { return true; }
+
+      if($.rails.fire(element, 'confirm')) {
+        answer = APP.global.createConfirmBox(element, message);
       }
-      APP.global.createConfirmBox(link);
       return false;
     };
-    $.rails.confirmed = function(link) {
-      var link = $(link);
-      link.removeAttr('data-confirm');
-      link.trigger('click.rails');
+    $.rails.allowActionAnswer = function(element, answer) {
+      callback = $.rails.fire(element, 'confirm:complete', [answer]);
+      if(answer && callback) {
+        element.data('skip-confirm-once', true); // Skip the confirm question once
+        element.trigger('click'); // Replay the action. Note this works for certain elements (links, buttons, etc.), but probably not all kinds.
+      }
     };
   },
-  createConfirmBox: function(link) {
-    var link = $(link);
-    var message = link.attr('data-confirm');
-
+  createConfirmBox: function(element, message) {
     var content = $('<div>');
 
     content.append($('<p>', { text: message, class: 'confirm-question' }));
 
-    var notOkButton = $('<a>', {class: 'button', text: jsLang.global.no });
-    var okButton = $('<a>', {class: 'button red', text: jsLang.global.yes });
-    okButton.on('click', function(){ APP.modal.closeModal(); $.rails.confirmed(link); });
-    notOkButton.on('click', function(){ APP.modal.closeModal(); });
+    var notOkButton = $('<a>', { class: 'button', text: jsLang.global.no });
+    var okButton = $('<a>', { class: 'button red', text: jsLang.global.yes });
 
-    content.append(okButton);
+    notOkButton.on('click', function() { APP.modal.closeModal(); $.rails.allowActionAnswer(element, false); });
+    okButton.on('click', function() { APP.modal.closeModal(); $.rails.allowActionAnswer(element, true); });
+
     content.append(notOkButton);
+    content.append(okButton);
 
     APP.modal.openModal('confirm', content);
   },
