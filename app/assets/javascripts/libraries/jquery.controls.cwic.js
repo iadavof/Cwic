@@ -184,52 +184,49 @@
     },
   };
 
-  $.fn.extend({
-    cwicControl: function(operation) {
-      switch(operation)
-      {
-      case 'destroy':
-        $(this).filter('select.replaced:not([multiple], .select2, .nocwic)').each(function() {
-          cwic_controls.dropdown.destroy($(this));
-        });
-        $(this).filter(':radio.replaced:not(.nocwic)').each(function() {
-          cwic_controls.radio_button.destroy($(this));
-        });
-        $(this).filter(':checkbox.replaced:not(.nocwic)').each(function() {
-          cwic_controls.checkbox.destroy($(this));
-        });
-        $(this).filter('input[type=file].replaced:not(.nocwic)').each(function() {
-          cwic_controls.file_field.destroy($(this));
-        });
-        break;
-      case 'recreate':
-        $(this).filter('select.replaced:not([multiple], .select2, .nocwic)').each(function() {
-          cwic_controls.dropdown.recreate($(this));
-        });
-        $(this).filter(':radio.replaced:not(.nocwic)').each(function() {
-          cwic_controls.radio_button.recreate($(this));
-        });
-        $(this).filter(':checkbox.replaced:not(.nocwic)').each(function() {
-          cwic_controls.checkbox.recreate($(this));
-        });
-        $(this).filter('input[type=file].replaced:not(.nocwic)').each(function() {
-          cwic_controls.file_field.recreate($(this));
-        });
-        break;
-      default:
-        $(this).filter('select:not(.replaced, [multiple], .select2, .nocwic)').each(function() {
-          cwic_controls.dropdown.create($(this));
-        });
-        $(this).filter(':radio:not(.replaced, .nocwic)').each(function() {
-          cwic_controls.radio_button.create($(this));
-        });
-        $(this).filter(':checkbox:not(.replaced, .nocwic)').each(function() {
-          cwic_controls.checkbox.create($(this));
-        });
-        $(this).filter('input[type=file]:not(.replaced, .nocwic)').each(function() {
-          cwic_controls.file_field.create($(this));
-        });
-      }
-    },
-  });
+  $.fn.cwicControl = function(operation) {
+    switch(operation) {
+    case 'destroy':
+      $(this).filter('select.replaced:not([multiple], .select2, .nocwic)').each(function() {
+        cwic_controls.dropdown.destroy($(this));
+      });
+      $(this).filter(':radio.replaced:not(.nocwic)').each(function() {
+        cwic_controls.radio_button.destroy($(this));
+      });
+      $(this).filter(':checkbox.replaced:not(.nocwic)').each(function() {
+        cwic_controls.checkbox.destroy($(this));
+      });
+      $(this).filter('input[type=file].replaced:not(.nocwic)').each(function() {
+        cwic_controls.file_field.destroy($(this));
+      });
+      break;
+    case 'recreate':
+      $(this).filter('select.replaced:not([multiple], .select2, .nocwic)').each(function() {
+        cwic_controls.dropdown.recreate($(this));
+      });
+      $(this).filter(':radio.replaced:not(.nocwic)').each(function() {
+        cwic_controls.radio_button.recreate($(this));
+      });
+      $(this).filter(':checkbox.replaced:not(.nocwic)').each(function() {
+        cwic_controls.checkbox.recreate($(this));
+      });
+      $(this).filter('input[type=file].replaced:not(.nocwic)').each(function() {
+        cwic_controls.file_field.recreate($(this));
+      });
+      break;
+    default:
+      $(this).filter('select:not(.replaced, [multiple], .select2, .nocwic)').each(function() {
+        cwic_controls.dropdown.create($(this));
+      });
+      $(this).filter(':radio:not(.replaced, .nocwic)').each(function() {
+        cwic_controls.radio_button.create($(this));
+      });
+      $(this).filter(':checkbox:not(.replaced, .nocwic)').each(function() {
+        cwic_controls.checkbox.create($(this));
+      });
+      $(this).filter('input[type=file]:not(.replaced, .nocwic)').each(function() {
+        cwic_controls.file_field.create($(this));
+      });
+    }
+  };
 })(jQuery);
