@@ -25,7 +25,7 @@
     <% @entity_types.each do |entity_type| %>
     <tr>
       <td><%= image_tag(entity_type.icon.image.icon.url) %></td>
-      <td><%= name_link_to_show([@organisation, entity_type], {name: entity_type.name.pl}) %></td>
+      <td><%= name_link_to_show([@organisation, entity_type]) %></td>
       <td><%= format_description(entity_type.description) %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, entity_type]) %>
