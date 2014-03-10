@@ -24,6 +24,7 @@ class EntityTypesController < ApplicationController
 
   # POST /entity_types
   def create
+    @entity_type.reservation_statuses.clear # Wis de standaard reserveringstatusses omdat deze anders dubbel worden toegevoegd
     @entity_type.localized.attributes = resource_params
     @entity_type.save
     respond_with(@organisation, @entity_type)
