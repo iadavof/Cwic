@@ -48,6 +48,7 @@ private
     case params[:action]
     when 'index'
       @entities = @organisation.entities.accessible_by(current_ability, :index).ssp(params)
+    when 'new', 'create'
       @entity = @organisation.entities.build
     else
       @entity = @organisation.entities.find(params[:id])
