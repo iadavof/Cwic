@@ -282,7 +282,6 @@ DEPENDENCIES
   attribute_normalizer
   cancan
   carrierwave
-  coffee-rails (~> 4.0.0)
   database_cleaner
   debugger
   devise (~> 3.1.1)
