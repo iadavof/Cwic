@@ -1,5 +1,5 @@
 function IADAtodayAndTomorrow(options) {
-  this.options = Object.extend({
+  this.options = $.extend({
     container: 'schedule-container',
     backend_url: 'url to backend',
     organisation_id: 0,
@@ -21,7 +21,7 @@ IADAtodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
 IADAtodayAndTomorrow.prototype.initWebSocket = function() {
   var tat = this;
   var dispatcher = new WebSocketRails(this.options.websocket_url);
-  // open reservations_channel for organisation
+  // Open reservations_channel for organisation
   var channel = dispatcher.subscribe('todayandtomorrows_' + this.options.organisation_id);
 
   channel.bind('update', function() { tat.updateTodayTomorrowView(); });

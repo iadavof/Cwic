@@ -72,8 +72,8 @@ APP.entity_types = {
           defaultValues.push(name);
         }
       });
-      propertyWrapper.find('.view [data-field="property-options"]').html(formatText(arrayToSentence(options)));
-      propertyWrapper.find('.view [data-field="default-value"]').html(formatText(arrayToSentence(defaultValues)));
+      propertyWrapper.find('.view [data-field="property-options"]').html(APP.util.formatText(APP.util.arrayToSentence(options)));
+      propertyWrapper.find('.view [data-field="default-value"]').html(APP.util.formatText(APP.util.arrayToSentence(defaultValues)));
     }
   },
   dataTypeChanged: function(propertyWrapper) {

@@ -1,5 +1,5 @@
 APP.util = {
-  // XXX TODO docs
+  // Fills 'dropdown' with 'items' considering 'options'. More or less similar to Rails' options_for_select helper.
   fillDropdownWithItems: function(dropdown, items, options) {
     var options = $.extend({ prompt: false, empty: true }, options || {});
     if(options['empty']) {
@@ -14,7 +14,7 @@ APP.util = {
     dropdown.val(dropdown.data('previous-value'));
     dropdown.cwicControl('recreate');
   },
-  // XXX TODO docs
+  // Translates all keys in 'array' using 'library'
   getTranslationsForArray: function(array, library) {
     translations = {};
     for(i in array) {
@@ -26,5 +26,34 @@ APP.util = {
   // Escape strings/names for use in jQuery selectors
   escapeForSelector: function(string) {
     return string.replace(/(:|\.|\[|\])/g,'\\$1');
+  },
+  // Translate an array to a human readable sentence with comma's and the word 'and'
+  arrayToSentence: function(array) {
+    if(array.length <= 1) {
+      return array
+    } else {
+      return array.slice(0, array.length - 1).join(', ') + jsLang.global.and_connector + array.slice(-1);
+    }
+  },
+  // Format text for output (basically by translating the empty string with the text /empty/)
+  formatText: function(text) {
+    if(text == '') {
+       return '<em>' + jsLang.global.none + '</em>';
+    } else {
+      return text;
+    }
+  }
+}
+
+// JavaScript and jQuery extensions
+$.size = function(obj) {
+  if(typeof Object.keys !== 'undefined') {
+    return Object.keys(obj).length
+  } else {
+    var size = 0, key;
+    for(key in obj) {
+      if(obj.hasOwnProperty(key)) size++;
+    }
+    return size;
   }
 }

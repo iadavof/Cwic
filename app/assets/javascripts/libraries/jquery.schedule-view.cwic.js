@@ -1,6 +1,5 @@
-
 function IADAscheduleView(options) {
-  this.options = Object.extend({
+  this.options = $.extend({
     container: 'schedule-container',
     backend_url: 'url to backend',
     patch_reservation_url: 'url to reservations controller',
@@ -646,13 +645,13 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
     // Handle new entry
     if(reservationForm == null) {
       if(newScheduleItem != null && newScheduleItem.checkEndAfterBegin(true) && !newScheduleItem.conceptCollidesWithOthers()) {
-        reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function(e) {
+        reservationForm = APP.modal.openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint') ,function(e) {
           e.preventDefault();
           if(newScheduleItem != null) {
             newScheduleItem.removeFromDom();
             newScheduleItem = null;
           }
-          closeModal(e);
+          APP.modal.closeModal(e);
           reservationForm = null;
         });
         APP.global.initializeSpecialFormFields(reservationForm);
@@ -733,13 +732,13 @@ IADAscheduleView.prototype.bindNewReservationControls = function() {
 
         }
 
-        var reservationForm = openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'), function(e) {
+        var reservationForm = APP.modal.openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'), function(e) {
           e.preventDefault();
           if(plusOneButton != null) {
             plusOneButton.remove();
             plusOneButton = null;
           }
-          closeModal(e);
+          APP.modal.closeModal(e);
           reservationForm = null;
         });
         APP.global.initializeSpecialFormFields(reservationForm);
@@ -935,7 +934,7 @@ IADAscheduleView.prototype.addHorizontalViewTimeAxis = function() {
     this.scheduleContainer.find('div.top-axis').height(this.scheduleContainer.find('div.top-axis div.day-time-axis-frame').outerHeight());
   }
 
-  timeAxis.cwicSticky();
+  timeAxis.cwicStickyHeader();
 }
 
 
@@ -966,7 +965,7 @@ IADAscheduleView.prototype.createVerticalSchedule = function() {
 
   this.setTopAxisTexts();
 
-  this.scheduleContainer.find('div.top-axis').cwicSticky();
+  this.scheduleContainer.find('div.top-axis').cwicStickyHeader();
   this.scheduleContainer.find('div.top-axis').parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
   this.scheduleContainer.find('div.left-axis, div.schedule-body').css('height', '715px');
 }
@@ -1447,7 +1446,7 @@ IADAscheduleView.prototype.createScheduleItem = function(reservationForm, resetN
         resetNewScheduleItem();
 
         returnedScheduleItem.render();
-        closeModal();
+        APP.modal.closeModal();
       } else if(xhr.status == 422) { // validation error
         var result = JSON.parse(xhr.responseText);
         if(typeof result.errors !== 'undefined') {
@@ -1478,7 +1477,7 @@ IADAscheduleView.prototype.checkUnhideNonBlockingItems = function(schedule_objec
   if(otherItemsForObject != null) {
     $.each(otherItemsForObject, function(itemId, item) {
       if(item.hidden) {
-        // If item collides with blocking item, we do not need it anymore, remove it 
+        // If item collides with blocking item, we do not need it anymore, remove it
         if(item.conceptCollidesWithOthers()) {
           item.removeFromDom();
           delete schedule.scheduleItems[item.schedule_object_id][itemId];

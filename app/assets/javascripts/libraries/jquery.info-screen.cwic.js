@@ -1,5 +1,5 @@
 function IADAinfoScreen(options) {
-  this.options = Object.extend({
+  this.options = $.extend({
     container: 'info-screen-container',
     backend_url: 'url to info screen backend',
     websocket_url: 'url to websocket',

@@ -1,5 +1,5 @@
 function IADAlogoClock(options) {
-  this.options = Object.extend({
+  this.options = $.extend({
     container: 'clock-container',
   }, options || {});
 
@@ -9,16 +9,15 @@ function IADAlogoClock(options) {
 
   this.hourArm = null;
   this.minuteArm = null;
-  
+
   $(window).on('resize', function() {lc.createFace();});
   this.createFace();
-
 
   setInterval(function(){ lc.setCurrentTime(); }, 30000);
 }
 
 IADAlogoClock.prototype.createFace = function() {
-  // remove old face
+  // Remove old face
   this.clockContainer.find('div.face').remove();
 
   if(this.clockContainer.width() > 300) {
@@ -118,5 +117,4 @@ IADAlogoClock.prototype.setCurrentTime = function() {
           'transform' : 'rotate('+minuteDeg+'deg)',
                'zoom' : 1
     });
-
 }

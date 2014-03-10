@@ -24,7 +24,7 @@ class EntityTypesController < ApplicationController
 
   # POST /entity_types
   def create
-    @entity_type.reservation_statuses.clear # Wis de standaard reserveringstatusses omdat deze anders dubbel worden toegevoegd
+    @entity_type.reservation_statuses.clear # Clear default reservation statuses to prevent adding them double (they were already added in the new action and send along with the resouce params)
     @entity_type.localized.attributes = resource_params
     @entity_type.save
     respond_with(@organisation, @entity_type)
