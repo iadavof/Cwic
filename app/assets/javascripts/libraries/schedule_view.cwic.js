@@ -759,11 +759,6 @@ CwicScheduleView.prototype.setNewReservationForm = function(reservationForm, new
   reservationForm.find('input#begins_at_tod').timepicker("setTime", beginJDate);
   reservationForm.find('input#ends_at_date').datepicker("setDate", endJDate);
   reservationForm.find('input#ends_at_tod').timepicker("setTime", endJDate);
-
-  reservationForm.find('select').cwicControl();
-
-  APP.reservations.organisationClientDropdown();
-
   reservationForm.find('select#reservation_entity_id').val(newScheduleItem.schedule_object_id);
 
   // Bind new client link

@@ -8,13 +8,7 @@ APP.schedule_view = {
       view: 'horizontalCalendar',
       zoom: 'day',
     });
-
-    $('#open-new-reservation-modal-button').on('click', function(e) {
-        e.preventDefault();
-        var reservationForm = APP.modal.openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'));
-        APP.global.initializeSpecialFormFields(reservationForm);
-        return false;
-    });
+    this.bind_new_reservation_modal_button();
   },
   horizontal_calendar_week: function() {
     new CwicScheduleView({
@@ -25,6 +19,7 @@ APP.schedule_view = {
       view: 'horizontalCalendar',
       zoom: 'week',
     });
+    this.bind_new_reservation_modal_button();
   },
   vertical_calendar_day: function() {
     new CwicScheduleView({
@@ -35,6 +30,7 @@ APP.schedule_view = {
       view: 'verticalCalendar',
       zoom: 'day',
     });
+    this.bind_new_reservation_modal_button();
   },
   today_and_tomorrow: function() {
     new CwicTodayAndTomorrow({
@@ -42,6 +38,14 @@ APP.schedule_view = {
       backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
       websocket_url: window.location.host + Routes.websocket_path(),
       organisation_id: $('#today-and-tomorrow-container').data('organisation-id'),
+    });
+  },
+  bind_new_reservation_modal_button: function() {
+    $('#open-new-reservation-modal-button').on('click', function(e) {
+      e.preventDefault();
+      var reservationForm = APP.modal.openModal('new_reservation_popup', $('#reservation-form-modal-blueprint').data('blueprint'));
+      APP.global.initializeSpecialFormFields(reservationForm);
+      return false;
     });
   }
 };

@@ -24,7 +24,7 @@
   </div>
   <div class="field">
     <%= f.label :organisation_client %>
-    <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
+    <%= f.hidden_field :organisation_client_id, class: 'organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
     <div style="text-align: right;">
       <a href="" id="new_organisation_client_link"><%= t('.new_organisation_client')%></a>
     </div>

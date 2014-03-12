@@ -300,19 +300,44 @@ APP.global = {
     $(parent).find('select, :radio, :checkbox, input[type=file]').cwicControl();
     $(parent).find('.datepicker-field').datepicker({ showOn: 'both' });
     $(parent).find('.timepicker-field').timepicker({ showPeriodLabels: false, showOn: 'both' });
+    $(parent).find('input.organisation_client_select').each(this.initializeOrganisationClientSelect);
+    $(parent).find('input.with-clear').each(this.initializeInputWithClear);
 
-    $(parent).find('input.with-clear').each(function() {
-      var input = $(this);
-      if(input.val() != '') {
-        input.wrap('<div class="field-with-clear"></div>');
-        var span = $('<span>', { text: 'X' });
-        input.after(span);
-        span.on('click', function(){
-          input.val('');
-          input.trigger('change');
-        });
-      }
-    });
     $(document).on('nested:fieldAdded', function() { APP.global.initializeSpecialFormFields(this); });
+  },
+  initializeInputWithClear: function() {
+    var input = $(this);
+    if(input.val() != '') {
+      input.wrap('<div class="field-with-clear"></div>');
+      var span = $('<span>', { text: 'X' });
+      input.after(span);
+      span.on('click', function(){
+        input.val(null);
+        input.trigger('change');
+      });
+    }
+  },
+  initializeOrganisationClientSelect: function() {
+    $(this).select2({
+      initSelection: function(element, callback) {
+          var id = $(element).val();
+          var text = $(element).data('prev-selected') || jsLang.reservations.select_client_placeholder;
+          return callback({id: id, text: text });
+      },
+      placeholder: jsLang.reservations.select_client_placeholder,
+      minimumInputLength: 1,
+      width: 'resolve',
+      ajax: {
+        url: Routes.organisation_organisation_clients_autocomplete_search_path(current_organisation, { format: 'json' }),
+        dataType: 'json',
+        quietMillis: 500,
+        data: function(term, page) {
+          return { q: term, page: page };
+        },
+        results: function(data, page) {
+          return data;
+        }
+      },
+    });
   }
 };

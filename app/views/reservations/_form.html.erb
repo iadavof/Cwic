@@ -38,10 +38,10 @@
   <div class="existing_organisation_client" <% if @focus == 'new_client' %>style="display: none;"<% end %>>
     <div class="field">
       <%= f.label :organisation_client %>
-      <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2' %>
+      <%= f.hidden_field :organisation_client_id, class: 'organisation_client_select' %>
     </div>
   </div>
-  <div class="new_organisation_client" <% if @focus != 'new_client' %>style="display: none;"<% end %>>
+  <div class="new_organisation_client" <% unless @focus == 'new_client' %>style="display: none;"<% end %>>
     <%= f.fields_for :organisation_client, @reservation.organisation_client, wrapper: false do |ocf| %>
       <%= render partial: 'organisation_clients/form_fields', locals: { f: ocf } %>
     <% end %>
@@ -49,7 +49,7 @@
   <% else %>
   <div class="field">
     <%= f.label :organisation_client %>
-    <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
+    <%= f.hidden_field :organisation_client_id, class: 'organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
   </div>
   <% end %>
   <div class="actions">
