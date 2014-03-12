@@ -5,7 +5,7 @@ APP.reservations = {
   show: function() {
     APP.reservations.bindStatusSelectorControls();
   },
-  form: function() {
+  _new_create: function() {
     APP.organisation_clients.addAddressPickerToForm();
     APP.reservations.bindSelectClientRadioButtons();
     APP.reservations.bindReservationRecurrenceControls();

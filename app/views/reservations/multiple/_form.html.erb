@@ -36,6 +36,6 @@
   <div class="field">
     <%= check_box_tag "edit_fields[]", :organisation_client_id, false, class: 'edit_field_checkbox', id: 'edit_fields_organisation_client' %>
     <%= f.label :organisation_client %>
-    <%= f.hidden_field :organisation_client_id, id: 'organisation_client_select', class: 'select2', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
+    <%= f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
   </div>
 </div>

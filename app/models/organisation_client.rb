@@ -43,7 +43,7 @@ class OrganisationClient < ActiveRecord::Base
       self.reservations.where('ends_at >= :now', now: Time.now).order(:ends_at).limit(limit)
     else
       self.reservations.where('ends_at >= :now', now: Time.now).order(:ends_at)
-    end 
+    end
   end
 
   def past_reservations(limit)

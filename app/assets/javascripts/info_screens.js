@@ -8,10 +8,7 @@ APP.info_screens = {
       organisation_id: $('#info-screen-container').data('organisation-id'),
     });
   },
-  edit: function() {
-    APP.info_screens.initCollapseThing();
-  },
-  'new': function() {
+  _form: function() {
     APP.info_screens.initCollapseThing();
   },
   initCollapseThing: function() {

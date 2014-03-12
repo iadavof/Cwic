@@ -1,11 +1,5 @@
 APP.organisations = {
-	edit: function() {
-		APP.organisations.addAddressPickerToForm();
-	},
-	'new': function() {
-		APP.organisations.addAddressPickerToForm();
-	},
-	create: function() {
+	_form: function() {
 		APP.organisations.addAddressPickerToForm();
 	},
 	addAddressPickerToForm: function() {
