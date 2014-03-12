@@ -29,8 +29,8 @@
         <% end %>
         <td><%= name_link_to_show([@organisation, reservation]) %></td>
         <td><%= reservation.description %></td>
-        <td><%= reservation.organisation_client.instance_name %></td>
-        <td><%= reservation.entity.instance_name %></td>
+        <td><%= name_link_to_show([@organisation, reservation.organisation_client]) %></td>
+        <td><%= name_link_to_show([@organisation, reservation.entity]) %></td>
         <td><%= l(reservation.begins_at, format: :long) %></td>
         <td><%= l(reservation.ends_at, format: :long) %></td>
         <td><%= l(reservation.created_at, format: :long) %></td>
