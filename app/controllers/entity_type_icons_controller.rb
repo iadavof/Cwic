@@ -59,25 +59,14 @@ class EntityTypeIconsController < ApplicationController
 
 private
   def load_resource
+    rel = (@organisation.present? ? @organisation.entity_type_icons : EntityTypeIcon)
     case params[:action]
     when 'index'
-      if @organisation.present?
-        @entity_type_icons = @organisation.entity_type_icons.accessible_by(current_ability, :index).ssp(params)
-      else
-        @entity_type_icons = EntityTypeIcon.accessible_by(current_ability, :index).ssp(params)
-      end
+      @entity_type_icons = rel.accessible_by(current_ability, :index).includes(:organisation).ssp(params)
     when 'new', 'create'
-      if @organisation.present?
-        @entity_type_icon = @organisation.entity_type_icons.build
-      else
-        @entity_type_icon = EntityTypeIcon.new
-      end
+      @entity_type_icon = rel.new
     else
-      if @organisation.present?
-        @entity_type_icon = @organisation.entity_type_icons.find(params[:id])
-      else
-        @entity_type_icon = EntityTypeIcon.find(params[:id])
-      end
+      @entity_type_icon = rel.find(params[:id])
     end
   end
 

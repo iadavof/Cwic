@@ -1,6 +1,8 @@
 class OccupationViewController < ApplicationController
 	respond_to :html, :json
 
+	before_action :load_resource
+
 	def day_occupation
 		render :day_occupation
 	end
@@ -11,7 +13,7 @@ class OccupationViewController < ApplicationController
 
 	def entities
 	result = []
-	@organisation.entities.each do |e|
+	@entities.each do |e|
 	  result << {
 	              id: e.id,
 	              icon: e.entity_type.icon.image.icon.url,
@@ -27,7 +29,6 @@ class OccupationViewController < ApplicationController
 		if params[:month].present? && params[:year].present?
 			month = params[:month].to_i
 			year = params[:year].to_i
-			@entities = @organisation.entities;
 			@entities.each do |e|
 				result << {
 					entity_id: e.id,
@@ -44,7 +45,6 @@ class OccupationViewController < ApplicationController
 		result = [];
 		if params[:year].present?
 			year = params[:year].to_i
-			@entities = @organisation.entities;
 			@entities.each do |e|
 				result << {
 					entity_id: e.id,
@@ -83,4 +83,13 @@ class OccupationViewController < ApplicationController
 		result
 	end
 
+private
+	def load_resource
+		case params[:action]
+		when 'entities'
+			@entities = @organisation.entities.includes(entity_type: :icon)
+		when 'day_occupation_percentages', 'week_occupation_percentages'
+			@entities = @organisation.entities
+		end
+	end
 end

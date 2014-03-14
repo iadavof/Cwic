@@ -1,7 +1,8 @@
 class ScheduleViewController < ApplicationController
-
   respond_to :html, except: [:index_domain, :entities]
   respond_to :json, only: [:index_domain, :entities]
+
+  before_action :load_resource
 
   def horizontal_calendar_day
     get_selected_entity_from_url
@@ -34,7 +35,7 @@ class ScheduleViewController < ApplicationController
   end
 
   def today_and_tomorrow
-    @entity_types = @organisation.entity_types.with_entities
+    respond_with(@entity_types)
   end
 
   def index_domain
@@ -47,7 +48,7 @@ class ScheduleViewController < ApplicationController
         @begin_date = Date.today
         @end_date = (Date.today + 1.weeks)
       end
-      @entities = @organisation.entities.where(id: entity_ids)
+      @entities = @organisation.entities.where(id: entity_ids).includes(:entity_type)
       respond_with(@entities)
     else
       render json: { error: 'no entity selected' }, status: :not_found
@@ -61,8 +62,7 @@ class ScheduleViewController < ApplicationController
 
   def today_tomorrow_update
     result = []
-    entity_types = @organisation.entity_types.with_entities
-    entity_types.each do |et|
+    @entity_types.each do |et|
       entity_type_result = {
         entity_type_id: et.id,
         entities: [],
@@ -164,6 +164,16 @@ class ScheduleViewController < ApplicationController
     if params[:year].present? && params[:week].present?
       @year = params[:year].to_i
       @week = params[:week].to_i
+    end
+  end
+
+private
+  def load_resource
+    case params[:action]
+    when 'today_and_tomorrow'
+      @entity_types = @organisation.entity_types.with_entities.includes(:entities, :icon)
+    when 'today_tomorrow_update'
+      @entity_types = @organisation.entity_types.with_entities.includes(:entities)
     end
   end
 end

@@ -40,7 +40,7 @@
       <% if @organisation_client.upcomming_reservations(15).empty? %>
         <%= content_tag(:p, t('.no_upcomming_reservations')) %>
       <% else %>
-        <%= render partial: 'reservations/table', locals: { reservations: @organisation_client.upcomming_reservations(15) } %>
+        <%= render partial: 'reservations/table', locals: { reservations: @organisation_client.upcomming_reservations(15).includes(:reservation_status, :organisation_client, :entity) } %>
       <% end %>
       <%= link_to(t('.all_reservations_of_client', client: @organisation_client.instance_name), organisation_organisation_client_reservations_path(@organisation, @organisation_client)) %>
     </div>
@@ -48,7 +48,7 @@
       <% if @organisation_client.past_reservations(15).empty? %>
         <%= content_tag(:p, t('.no_past_reservations')) %>
       <% else %>
-        <%= render partial: 'reservations/table', locals: { reservations: @organisation_client.past_reservations(15) } %>
+        <%= render partial: 'reservations/table', locals: { reservations: @organisation_client.past_reservations(15).includes(:reservation_status, :organisation_client, :entity) } %>
       <% end %>
       <%= link_to(t('.all_reservations_of_client', client: @organisation_client.instance_name), organisation_organisation_client_reservations_path(@organisation, @organisation_client)) %>
     </div>

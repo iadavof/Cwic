@@ -18,13 +18,13 @@
     <dd><%= l(@reservation.created_at, format: :long) %></dd>
   <% if @reservation.reservation_logs.present? %>
   <dt><%= Reservation.human_attribute_name(:reservation_logs) %></dt>
-    <dd><%= render partial: 'log_table', locals: { logs: @reservation.reservation_logs } %></dd>
+    <dd><%= render partial: 'log_table', locals: { logs: @reservation.reservation_logs.includes(:user) } %></dd>
   <% end %>
 </dl>
 
 <% unless @reservation.recurrences.empty? %>
 	<h2><%= t('.repetitions') %></h2>
-	<%= render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' } %>
+	<%= render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' } %>
 <% end %>
 
 <%= button_link_back_to_index([@organisation, Reservation]) %>

@@ -39,18 +39,14 @@ class OrganisationClient < ActiveRecord::Base
   end
 
   def upcomming_reservations(limit)
-    if defined? limit
-      self.reservations.where('ends_at >= :now', now: Time.now).order(:ends_at).limit(limit)
-    else
-      self.reservations.where('ends_at >= :now', now: Time.now).order(:ends_at)
-    end
+    rel = self.reservations.where('ends_at >= :now', now: Time.now).order(:ends_at)
+    rel = rel.limit(limit) if limit.present?
+    rel
   end
 
   def past_reservations(limit)
-    if defined? limit
-      self.reservations.where('begins_at <= :now AND ends_at <= :now', now: Time.now).order(ends_at: :desc).limit(limit)
-    else
-      self.reservations.where('begins_at <= :now AND ends_at <= :now', now: Time.now).order(ends_at: :desc)
-    end
+    rel = self.reservations.where('begins_at <= :now AND ends_at <= :now', now: Time.now).order(ends_at: :desc)
+    rel = rel.limit(limit) if limit.present?
+    rel
   end
 end

@@ -1,4 +1,4 @@
-<%= paginate reservations, prefix: local_assigns[:prefix] %>
+<%= paginate reservations, prefix: local_assigns[:prefix] if reservations.respond_to?(:current_page) %>
 <div class="table-container">
   <%= limiting prefix: local_assigns[:prefix] %>
   <%= form_tag organisation_reservations_multiple_path(@organisation) do %>
@@ -49,4 +49,4 @@
   </div>
   <% end %>
 </div>
-<%= paginate reservations, prefix: local_assigns[:prefix] %>
+<%= paginate reservations, prefix: local_assigns[:prefix] if reservations.respond_to?(:current_page) %>

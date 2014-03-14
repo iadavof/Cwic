@@ -40,7 +40,7 @@ class SearchController < ApplicationController
     results_by_type = results.group_by { |res| res[:type] }
 
     # Retrieve objects in this subset
-    objects = Hash[results_by_type.map { |type, results| [type, type.constantize.find(results.map { |res| res[:id] }).index_by { |res| res[:id] }] }]
+    objects = Hash[results_by_type.map { |type, results| [type, type.constantize.includes(includes_for_type(type)).find(results.map { |res| res[:id] }).index_by { |res| res[:id] }] }]
 
     # Map result ids to objects
     @results = results.map { |res| objects[res[:type]][res[:id]].tap { |o| o.pg_search_rank = res[:rank] } }
@@ -59,5 +59,16 @@ private
 
   def get_cache_key(search_key)
     "search_results_#{request.session_options[:id]}_#{search_key}"
+  end
+
+  def includes_for_type(type)
+    case type
+    when 'Reservation'
+      [:reservation_status, :entity, :organisation_client]
+    when 'Entity'
+      [:entity_type, :entity_images]
+    when 'EntityType'
+      [:entity_images]
+    end
   end
 end

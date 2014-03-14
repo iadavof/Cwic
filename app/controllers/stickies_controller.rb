@@ -51,7 +51,7 @@ private
   def load_resource
     case params[:action]
     when 'weight_update'
-      @stickies = @organisation.stickies.accessible_by(current_ability, :index).find(params[:new_weight_ids]);
+      @stickies = @organisation.stickies.accessible_by(current_ability, :index).find(params[:new_weight_ids])
     when 'stickies_for', 'create'
       @stickies = []
       item = nil
@@ -59,7 +59,7 @@ private
       if resource.present?
         item = resource.classify.constantize.find(params[:rid])
         if item.present? && item.stickies.present?
-          @stickies = item.stickies
+          @stickies = item.stickies.includes(:user)
         end
       end
 

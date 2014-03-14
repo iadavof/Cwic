@@ -17,9 +17,9 @@ class InfoScreensController < ApplicationController
   # GET /info_screens/1/reservations.json
   def info_screen_reservations
     @reservations = []
-    @active_ises = @info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active
+    @active_ises = @info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active.includes(:entity)
     @active_ises.each do |ise|
-      @reservations += ise.entity.reservations.by_date_domain(Time.now, Time.now + 1.day).info_boards
+      @reservations += ise.entity.reservations.by_date_domain(Time.now, Time.now + 1.day).info_boards.includes(:entity)
     end
     @reservations.sort_by(&:begins_at)
     respond_with(@info_screen, @active_ises, @reservations)
@@ -60,7 +60,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @info_screens = @organisation.info_screens.accessible_by(current_ability, :index).ssp(params)
+      @info_screens = @organisation.info_screens.accessible_by(current_ability, :index).includes(info_screen_entities: :entity).ssp(params)
     when 'new', 'create'
       @info_screen = @organisation.info_screens.build
     else
