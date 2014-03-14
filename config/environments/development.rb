@@ -35,4 +35,13 @@ Cwic::Application.configure do
   config.assets.initialize_on_precompile = true
 
   config.action_mailer.default_url_options = { :host => 'localhost:3000' }
+
+  # Bullet config
+  config.after_initialize do
+    Bullet.enable = true
+    Bullet.bullet_logger = true
+    Bullet.console = true
+    Bullet.rails_logger = true
+    Bullet.add_footer = true
+  end
 end

@@ -84,6 +84,9 @@ GEM
     attribute_normalizer (1.1.0)
     bcrypt-ruby (3.1.2)
     builder (3.1.4)
+    bullet (4.8.0)
+      activesupport
+      uniform_notifier (>= 1.4.0)
     cancan (1.6.10)
     carrierwave (0.9.0)
       activemodel (>= 3.2.0)
@@ -271,6 +274,7 @@ GEM
     uglifier (2.3.3)
       execjs (>= 0.3.0)
       json (>= 1.8.0)
+    uniform_notifier (1.4.0)
     validates_timeliness (3.0.14)
       timeliness (~> 0.3.6)
     warden (1.2.3)
@@ -285,6 +289,7 @@ DEPENDENCIES
   activerecord-tableless
   ancestry
   attribute_normalizer
+  bullet
   cancan
   carrierwave
   database_cleaner

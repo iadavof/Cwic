@@ -138,6 +138,9 @@ group :development do
 
   # Pry for easy debugging
   gem 'pry-rails'
+
+  # Bullet for warnings about potential query optimalisations
+  gem 'bullet'
 end
 
 group :test, :development do
