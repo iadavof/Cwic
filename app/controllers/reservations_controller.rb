@@ -229,7 +229,7 @@ private
       else
         reservations = @organisation.reservations
       end
-      @reservations = reservations.accessible_by(current_ability, :index).by_date_domain(params[:date_domain_from], params[:date_domain_to]).ssp(params)
+      @reservations = reservations.accessible_by(current_ability, :index).by_date_domain(params[:date_domain_from], params[:date_domain_to], delocalize: true).ssp(params)
     when 'multiple'
       @reservations = @organisation.reservations.where(id: params[:reservation_ids])
     when 'new', 'create'

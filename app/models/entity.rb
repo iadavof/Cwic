@@ -64,23 +64,6 @@ class Entity < ActiveRecord::Base
     Cwic::Color.text_color(self.color)
   end
 
-  def get_schedule_reservations(begins_at, ends_at, include_borders = false)
-    # Get all the reservations (items) in the scope of begin_date to end_date.
-    if include_borders
-      # However, we want to get the reservations directly before and after the scope as well to check for collisions in the schedule view. If there are no reservations found, then simply use the given date.
-      begins_at = self.reservations.where('ends_at < :begin', begin: begins_at).order(:ends_at).first.try(:begins_at) || begins_at
-      ends_at = self.reservations.where('begins_at > :end', end: ends_at).order(:begins_at).first.try(:ends_at) || ends_at
-    end
-    # Use inclusive comparison to include the two reservations above as well
-    self.reservations.where('begins_at <= :end AND ends_at >= :begin', begin: begins_at, end: ends_at)
-
-    #Todo Remove non-blocking items if they overlap with blocking item
-  end
-
-  def get_info_board_reservations(begins_at, ends_at)
-    self.reservations.where('begins_at <= :end AND ends_at >= :begin', begin: begins_at, end: ends_at).info_boards
-  end
-
   def set_initial_color
     self.color = Cwic::Color.random_hex_color
   end

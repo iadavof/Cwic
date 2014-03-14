@@ -19,7 +19,7 @@ class InfoScreensController < ApplicationController
     @reservations = []
     @active_ises = @info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active
     @active_ises.each do |ise|
-      @reservations += ise.entity.get_info_board_reservations(Time.now, Time.now + 1.day)
+      @reservations += ise.entity.reservations.by_date_domain(Time.now, Time.now + 1.day).info_boards
     end
     @reservations.sort_by(&:begins_at)
     respond_with(@info_screen, @active_ises, @reservations)

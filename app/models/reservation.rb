@@ -52,12 +52,30 @@ class Reservation < ActiveRecord::Base
 
   default_order { order(id: :desc) }
 
-  def self.by_date_domain(from, to)
-    from = Date.strptime(from, I18n.t('date.formats.default')) if from.present? && from.is_a?(String)
-    to = Date.strptime(to, I18n.t('date.formats.default')) if to.present? && to.is_a?(String)
+  # Get all reservations within the date domain.
+  # Options:
+  # - delocalize: delocalize dates with the current locale if they are strings
+  # - include_edges: indicates that we also want the reservations directly outside the scope. This can be useful to check for collisions.
+  def self.by_date_domain(from, to, options = {})
+    # Delocalize or parse from and to as date (if strings)
+    from = (options[:delocalize] ? Date.strptime(from, I18n.t('date.formats.default')) : from.to_date) if from.is_a?(String)
+    to = (options[:delocalize] ? Date.strptime(to, I18n.t('date.formats.default')) : to.to_date) if to.is_a?(String)
+
+    # Translate dates to beginning and end of day
+    from = from.beginning_of_day if from.is_a?(Date)
+    to = to.end_of_day if to.is_a?(Date)
+
     rel = scoped
-    rel = rel.where('ends_at >= :begin', begin: from.beginning_of_day) if from.present?
-    rel = rel.where('begins_at <= :end', end: to.end_of_day) if to.present?
+
+    if options[:include_edges]
+      # Include reservations directly before and after the scope as well. If there are no reservations found, then simply use the given date.
+      from = rel.where('ends_at <= :begin', begin: from).reorder(ends_at: :desc).first.try(:begins_at) || from if from.present?
+      to = rel.where('begins_at > :end', end: to).reorder(begins_at: :asc).first.try(:ends_at) || to if to.present?
+    end
+
+    # Get reservations in domain
+    rel = rel.where('ends_at > :begin', begin: from) if from.present?
+    rel = rel.where('begins_at <= :end', end: to) if to.present?
     rel
   end
 

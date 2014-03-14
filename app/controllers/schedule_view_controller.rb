@@ -26,7 +26,7 @@ class ScheduleViewController < ApplicationController
   def vertical_calendar_day
     get_selected_entity_from_url
     get_selected_day_from_url
-    
+
     # creating new reservation for the option to add one in this view
     @reservation = @organisation.reservations.build
     @title = I18n.t('schedule_view.vertical_schedule_day');
@@ -41,11 +41,11 @@ class ScheduleViewController < ApplicationController
     if params[:entity_ids].present?
       entity_ids = params[:entity_ids].split(',')
       if params[:schedule_begin].present? && params[:schedule_end].present?
-        @begin_date = Date.strptime(params[:schedule_begin], "%Y-%m-%d").beginning_of_day
-        @end_date = Date.strptime(params[:schedule_end], "%Y-%m-%d").end_of_day
+        @begin_date = params[:schedule_begin].to_date
+        @end_date = params[:schedule_end].to_date
       else
-        @begin_date = Date.today.beginning_of_day
-        @end_date = (Date.today + 1.weeks).end_of_day
+        @begin_date = Date.today
+        @end_date = (Date.today + 1.weeks)
       end
       @entities = @organisation.entities.where(id: entity_ids)
       respond_with(@entities)
