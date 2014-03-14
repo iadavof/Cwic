@@ -1,3 +1,15 @@
+div#entity-form {
+  div.field.slack-field {
+    span {
+      margin: 0 10px;
+    }
+
+    input {
+      width: 50px;
+    }
+  }
+}
+
 div.nested-scopes {
   margin-left: 1em;
 }

@@ -26,6 +26,9 @@ class Reservation < ActiveRecord::Base
   validate :not_overlapping, if: :validate_overlapping
   validate :check_invalid_recurrences, if: :new_record?
 
+  validates :slack_before, numericality: { allow_blank: true }
+  validates :slack_after, numericality: { allow_blank: true }
+
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
 
@@ -90,6 +93,16 @@ class Reservation < ActiveRecord::Base
       ends_at: true,
       created_at: true,
     }
+  end
+
+  def get_slack_before
+    return read_attribute(:slack_before) if read_attribute(:slack_before).present?
+    return self.entity.get_slack_before
+  end
+
+  def get_slack_after
+    return read_attribute(:slack_after) if read_attribute(:slack_after).present?
+    return self.entity.get_slack_after
   end
 
   def initialize(attributes = {})

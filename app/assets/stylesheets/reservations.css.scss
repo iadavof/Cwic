@@ -1,3 +1,15 @@
+div#reservation-form {
+  div.field.slack-field {
+    span {
+      margin: 0 10px;
+    }
+
+    input {
+      width: 50px;
+    }
+  }
+}
+
 div.status-selector {
 
 	div.statuses {
@@ -82,7 +94,7 @@ div.fields div.repeating_monthdays_selector {
 }
 
 div.fields div.repeating_weekdays_selector {
-	
+
 	label {
 		width: 31.333333%;
 	}

@@ -20,6 +20,9 @@ class Entity < ActiveRecord::Base
   validates :organisation, presence: true
   validates :color, color: true
 
+  validates :slack_before, numericality: { allow_blank: true }
+  validates :slack_after, numericality: { allow_blank: true }
+
   after_initialize :set_initial_color, if: :new_record?
   after_create :create_info_screen_entities
 
@@ -48,6 +51,16 @@ class Entity < ActiveRecord::Base
     else
       ''
     end
+  end
+
+  def get_slack_before
+    return read_attribute(:slack_before) if read_attribute(:slack_before).present?
+    return self.entity_type.slack_before
+  end
+
+  def get_slack_after
+    return read_attribute(:slack_after) if read_attribute(:slack_after).present?
+    return self.entity_type.slack_after
   end
 
   def all_entity_images

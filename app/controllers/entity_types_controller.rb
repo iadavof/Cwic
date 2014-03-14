@@ -56,7 +56,7 @@ private
 
   def resource_params
     params.require(:entity_type).permit(
-      :name, :description, :icon_id,
+      :name, :description, :icon_id, :slack_before, :slack_after,
       properties_attributes: [:id, :name, :description, :data_type_id, :required, :default_value, :index, :_destroy,
         options_attributes: [:id, :name, :default, :index, :_destroy]
       ],
