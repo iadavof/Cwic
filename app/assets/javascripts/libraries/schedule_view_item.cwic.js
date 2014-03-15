@@ -59,6 +59,11 @@ CwicScheduleViewItem.prototype.railsDataExport = function() {
   }};
 }
 
+CwicScheduleViewItem.prototype.setSlack = function(before, after) {
+  this.slack_before = before;
+  this.slack_after = after;
+}
+
 CwicScheduleViewItem.prototype.applyErrorGlow = function() {
   $.each(this.domObjects, function(index, item) {
     var schitem = item.find('div.schedule-item')

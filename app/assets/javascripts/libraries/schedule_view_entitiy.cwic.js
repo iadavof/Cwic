@@ -21,6 +21,9 @@ function CwicScheduleViewEntity(_schedule, _schedule_entity_type_id, _schedule_e
 CwicScheduleViewEntity.prototype.createNewScheduleItem = function(JSON) {
   var newItem = new CwicScheduleViewItem(this.schedule, this, JSON ? JSON.id : null);
 
+  // Set default slack
+  newItem.setSlack(this.default_slack_before, this.default_slack_after);
+
   // Only add a pointer to this new schedule item if it has an id
   if(newItem.item_id !== null) {
     this.scheduleItems[newItem.item_id] = newItem;
@@ -130,7 +133,7 @@ CwicScheduleViewEntity.prototype.parseFromJSON = function(json) {
   this.icon_src = json.icon;
 
   this.default_slack_before = json.default_slack_before;
-  this.default_slack_before = json.default_slack_after;
+  this.default_slack_after = json.default_slack_after;
 }
 
 
