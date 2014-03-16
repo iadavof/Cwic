@@ -358,9 +358,9 @@ CwicScheduleView.prototype.bindOnResize = function() {
   });
 }
 
-CwicScheduleView.rerenderScheduleItems = function() {
-  for(var scheId in schedule.scheduleEntities) {
-    schedule.scheduleEntities[scheId].rerenderScheduleItems();
+CwicScheduleView.prototype.rerenderScheduleItems = function() {
+  for(var scheId in this.scheduleEntities) {
+    this.scheduleEntities[scheId].rerenderScheduleItems();
   }
 }
 
@@ -842,6 +842,7 @@ CwicScheduleView.prototype.createEntityShowCaseTab = function(ent_type_id, ent_t
 }
 
 CwicScheduleView.prototype.afterEntitiesLoad = function(response) {
+  var schedule = this;
   var tabContainer = this.getEntityTabContainer();
   if(response.entity_types.length > 0) {
     for(var ent_nr in response.entity_types) {

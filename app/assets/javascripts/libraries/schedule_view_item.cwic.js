@@ -189,8 +189,7 @@ CwicScheduleViewItem.prototype.undoAcceptConcept = function() {
 }
 
 CwicScheduleViewItem.prototype.destroy = function() {
-  this.removeFromDom();
-  this.scheduleEntity.destroyScheduleItem(his.entity_id);
+  this.scheduleEntity.destroyScheduleItem(this.item_id);
 }
 
 CwicScheduleViewItem.prototype.resetConcept = function() {

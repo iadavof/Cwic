@@ -74,7 +74,8 @@ CwicScheduleViewEntity.prototype.getScheduleItemById = function(schiId) {
 }
 
 CwicScheduleViewEntity.prototype.destroyScheduleItem = function(schiId) {
-  delete this.scheduleItems[schiId].destroy();
+  this.scheduleItems[schiId].removeFromDom();
+  delete this.scheduleItems[schiId];
 }
 
 CwicScheduleViewEntity.prototype.rerenderScheduleItems = function() {
