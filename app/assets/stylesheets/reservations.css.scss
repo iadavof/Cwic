@@ -108,6 +108,19 @@ input#reservation_reservation_recurrence_definition_attributes_repeating_instanc
 	width: 3em;
 }
 
+div.slack-warning {
+	display: inline-block;
+	margin: 0 10px;
+	border: 1px solid #e59812;
+	padding: 0 10px;
+
+	i {
+		color: #e59812;
+		margin-right: 10px;
+		font-size: 1.8em;
+	}
+}
+
 div.multiple-edit-form {
 	padding: 10px;
 
