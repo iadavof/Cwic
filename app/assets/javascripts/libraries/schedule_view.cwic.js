@@ -1379,18 +1379,18 @@ CwicScheduleView.prototype.bindToolbarButtonActions = function() {
         schedule.editScheduleItem();
         break;
       case 'remove':
-        schedule.removeScheduleItem();
+        schedule.removeScheduleItem($(this));
         break;
     }
     return false;
   });
 }
 
-CwicScheduleView.prototype.removeScheduleItem = function() {
+CwicScheduleView.prototype.removeScheduleItem = function(link) {
   if(this.focusedScheduleItem != null) {
     var schedule = this;
-    var confirm = window.confirm(function(item_id){var str = jsLang.schedule_view.delete_confirm; return str.replace('%{item_id}', item_id)}(schedule.focusedScheduleItem.item_id));
-    if (confirm == true) {
+    link.data('confirm', jsLang.schedule_view.delete_confirm.replace('%{item_id}', schedule.focusedScheduleItem.item_id));
+    if($.rails.allowAction(link)) {
       this.showStatusMessage(jsLang.schedule_view.deleting, true);
       $.ajax({
         url: schedule.options.patch_reservation_url + '/' + schedule.focusedScheduleItem.item_id + '.json',

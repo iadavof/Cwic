@@ -217,7 +217,7 @@ APP.global = {
       if(!message) { return true; }
 
       if($.rails.fire(element, 'confirm')) {
-        answer = APP.global.createConfirmBox(element, message);
+        APP.global.createConfirmBox(element, message);
       }
       return false;
     };
