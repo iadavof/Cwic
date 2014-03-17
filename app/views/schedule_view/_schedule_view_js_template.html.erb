@@ -1,15 +1,3 @@
-<a href="#" data-confirm="Weet u zeker dat u R#390 wilt verwijderen?" data-action="destroy">Blaat</a>
-
-<a href="#" id="henk">henk</a>
-
-<script>
-$('#henk').on('click', function(e) {
-  e.preventDefault();
-$(this).after($('<a href="#" data-confirm="Weet u zeker dat u R#390 wilt verwijderen?" data-action="destroy">Blaat 2</a>'));
-return false;
-});
-</script>
-
 <div id="calendar" class="clearfix" data-target-year="<%= @year %>" data-target-week="<%= @week %>" data-target-month="<%= @month %>" data-target-day="<%= @day %>" data-target-entity="<%= @sel_entity %>"></div>
 
 <div id="schedule-templates" style="display: none;">
