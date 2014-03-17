@@ -42,6 +42,7 @@ class Reservation < ActiveRecord::Base
   after_save :trigger_update_websockets
   after_destroy :trigger_update_websockets
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
+  before_destroy :fix_base_reservation_reference, if: 'self.base_reservation_id == self.id'
 
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
 
@@ -174,7 +175,21 @@ class Reservation < ActiveRecord::Base
     valid
   end
 
+  def previous
+    self.entity.reservations.where('ends_at <= :begins_at', self.begins_at).reorder(ends_at: :desc).first
+  end
+
+  def next
+    self.entity.reservations.where('beginst_at >= :ends_at', self.ends_at).reorder(beginst_at: :asc).first
+  end
+
 private
+
+  def fix_base_reservation_reference
+    # The first reservation of a repeating set is removed!
+    repeating_set = self.class.where(base_reservation_id: self.id).where.not(id: self.id).reorder(begins_at: :asc)
+    repeating_set.update_all(base_reservation_id: repeating_set.first.id) if repeating_set.present?
+  end
 
   def check_if_should_update_reservation_status
     return if self.entity.nil?

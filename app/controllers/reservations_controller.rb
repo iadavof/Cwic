@@ -144,8 +144,11 @@ private
   def multiple_delete
     # Handle delete
     if params[:confirm] == 'confirm'
+      amount = @reservations.size
       @reservations.destroy_all
-      redirect_to session.delete(:return_to)
+      return_to = session.delete(:return_to)
+      return_to = organisation_reservations_path(@organisation) if (route = Rails.application.routes.recognize_path(return_to)) && route[:controller] == 'reservations' && route[:action] == 'show' && !Reservation.exists?(route[:id])
+      redirect_to return_to, notice: I18n.t('flash.actions.destroy.notice', resource_name: Reservation.model_name.human(count: amount))
     else
       render 'reservations/multiple/delete'
     end
