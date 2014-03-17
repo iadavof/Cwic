@@ -8,6 +8,8 @@ class ApplicationController < ActionController::Base
   before_action :set_locale
   before_action :load_organisation
 
+  add_flash_types :warning
+
   self.responder = ApplicationResponder
   respond_to :html
 

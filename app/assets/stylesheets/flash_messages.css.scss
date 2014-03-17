@@ -1,0 +1,62 @@
+div.flash_messages {
+  margin: 6px;
+  position: relative;
+  padding: 10px 10px 10px 3.4em;
+  border: 0 none;
+}
+
+div.flash_messages:before {
+  position: absolute;
+  top: 50%;
+  left: 0.4em;
+  height: 2em;
+  width: 2em;
+  margin-top: -0.5em;
+  font-size: 2em;
+  display: inline-block;
+  font-family: WebHostingHub-Glyphs;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 1;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+div.flash_messages a {
+  color: #fff;
+  opacity: 0.8;
+}
+
+div.flash_messages a:hover {
+  opacity: 1;
+}
+
+div.flash_messages.notice {
+  background-image: none;
+  background-color: #6DC11C;
+  color: #fff;
+}
+
+div.flash_messages.notice:before {
+  content: '\f479';
+}
+
+div.flash_messages.warning {
+  background-image: none;
+  background-color: #e59812;
+  color: #fff;
+}
+
+div.flash_messages.warning:before {
+  content: '\f04a';
+}
+
+div.flash_messages.alert {
+  background-image: none;
+  background-color: #bc2020;
+  color: #fff;
+}
+
+div.flash_messages.alert:before {
+  content: '\f478';
+}
