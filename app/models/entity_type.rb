@@ -21,6 +21,7 @@ class EntityType < ActiveRecord::Base
 
   after_initialize :add_default_entity_type_reservation_statuses, if: :new_record?
   after_save :create_info_screen_entity_types
+  after_save :update_reservations_slack_warnings
 
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :options, allow_destroy: true
@@ -58,5 +59,15 @@ class EntityType < ActiveRecord::Base
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3)
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
+  end
+
+  private
+
+  def update_reservations_slack_warnings
+    if self.slack_before_changed? || self.slack_after_changed?
+      self.entities.each do |entity|
+        entity.update_reservations_slack_warnings(true)
+      end
+    end
   end
 end

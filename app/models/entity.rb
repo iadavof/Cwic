@@ -25,6 +25,7 @@ class Entity < ActiveRecord::Base
 
   after_initialize :set_initial_color, if: :new_record?
   after_create :create_info_screen_entities
+  after_save :update_reservations_slack_warnings
 
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
@@ -61,6 +62,14 @@ class Entity < ActiveRecord::Base
   def get_slack_after
     return read_attribute(:slack_after) if read_attribute(:slack_after).present?
     return self.entity_type.slack_after
+  end
+
+  def update_reservations_slack_warnings(force)
+    if force || self.slack_before_changed? || self.slack_after_changed?
+      self.reservations.each do |reservation|
+        reservation.update_warning_state!
+      end
+    end
   end
 
   def all_entity_images
