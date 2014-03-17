@@ -58,8 +58,8 @@ class Reservation < ActiveRecord::Base
   # - include_edges: indicates that we also want the reservations directly outside the scope. This can be useful to check for collisions.
   def self.by_date_domain(from, to, options = {})
     # Delocalize or parse from and to as date (if strings)
-    from = (options[:delocalize] ? Date.strptime(from, I18n.t('date.formats.default')) : from.to_date) if from.is_a?(String)
-    to = (options[:delocalize] ? Date.strptime(to, I18n.t('date.formats.default')) : to.to_date) if to.is_a?(String)
+    from = (options[:delocalize] ? Date.strptime(from, I18n.t('date.formats.default')) : from.to_date) if from.present? && from.is_a?(String)
+    to = (options[:delocalize] ? Date.strptime(to, I18n.t('date.formats.default')) : to.to_date) if to.present? && to.is_a?(String)
 
     # Translate dates to beginning and end of day
     from = from.beginning_of_day if from.is_a?(Date)
@@ -72,7 +72,7 @@ class Reservation < ActiveRecord::Base
     end
 
     # Get reservations in domain
-    rel = self
+    rel = self.all
     rel = rel.where('ends_at > :begin', begin: from) if from.present?
     rel = rel.where('begins_at <= :end', end: to) if to.present?
     rel
