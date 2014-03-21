@@ -20,8 +20,8 @@ class Entity < ActiveRecord::Base
   validates :organisation, presence: true
   validates :color, color: true
 
-  validates :slack_before, numericality: { allow_blank: true }
-  validates :slack_after, numericality: { allow_blank: true }
+  validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
+  validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
 
   after_initialize :set_initial_color, if: :new_record?
   after_create :create_info_screen_entities
@@ -64,7 +64,7 @@ class Entity < ActiveRecord::Base
     return self.entity_type.slack_after
   end
 
-  def update_reservations_slack_warnings(force)
+  def update_reservations_slack_warnings(force = false)
     if force || self.slack_before_changed? || self.slack_after_changed?
       self.reservations.each do |reservation|
         reservation.update_warning_state!

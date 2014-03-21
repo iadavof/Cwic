@@ -11,7 +11,6 @@ div#reservation-form {
 }
 
 div.status-selector {
-
 	div.statuses {
 	  border: 1px solid #ccc;
 	  padding: 5px;
@@ -94,7 +93,6 @@ div.fields div.repeating_monthdays_selector {
 }
 
 div.fields div.repeating_weekdays_selector {
-
 	label {
 		width: 31.333333%;
 	}
@@ -109,7 +107,7 @@ input#reservation_reservation_recurrence_definition_attributes_repeating_instanc
 }
 
 div.slack-warning {
-	display: inline-block;
+  display: inline-block;
 	margin: 0 10px;
 	border: 1px solid #e59812;
 	padding: 0 10px;

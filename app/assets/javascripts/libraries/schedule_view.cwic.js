@@ -501,7 +501,6 @@ CwicScheduleView.prototype.bindDragAndResizeControls = function() {
       if(currentScheduleItem.conceptCollidesWithOthers()) {
         currentScheduleItem.applyErrorGlow();
       }
-
     }
   });
 

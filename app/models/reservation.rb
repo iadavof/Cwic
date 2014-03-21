@@ -26,8 +26,8 @@ class Reservation < ActiveRecord::Base
   validate :not_overlapping, if: :validate_overlapping
   validate :check_invalid_recurrences, if: :new_record?
 
-  validates :slack_before, numericality: { allow_blank: true }
-  validates :slack_after, numericality: { allow_blank: true }
+  validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
+  validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
 
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
@@ -191,11 +191,15 @@ class Reservation < ActiveRecord::Base
     valid
   end
 
+  # Get the reservation directly before this reservation (for the same entity).
+  # If was = true, then the old times for this reservation will be used.
   def previous(was = false)
     begins_at = (was ? self.begins_at_was : self.begins_at)
     self.entity.reservations.where('ends_at <= :begins_at', begins_at: begins_at).where.not(id: self.id).reorder(ends_at: :desc).first
   end
 
+  # Get the reservation directly after this reservation (for the same entity).
+  # If was = true, then the old times for this reservation will be used.
   def next(was = false)
     ends_at = (was ? self.ends_at_was : self.ends_at)
     self.entity.reservations.where('begins_at >= :ends_at', ends_at: ends_at).where.not(id: self.id).reorder(begins_at: :asc).first

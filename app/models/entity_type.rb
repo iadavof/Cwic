@@ -16,8 +16,8 @@ class EntityType < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 255 }
   validates :reservation_statuses, presence: true
 
-  validates :slack_before, presence: true, numericality: true
-  validates :slack_after, presence: true, numericality: true
+  validates :slack_before, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :slack_after, presence: true, numericality: { greater_than_or_equal_to: 0 }
 
   after_initialize :add_default_entity_type_reservation_statuses, if: :new_record?
   after_save :create_info_screen_entity_types
