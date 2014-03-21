@@ -12,7 +12,6 @@
     <% if @entity.properties.present? %>
     <li><a href="#properties"><%= EntityProperty.model_name.human(count: 2) %></a></li>
     <% end %>
-    <li><a href="#reservation-rules"><%= ReservationRule.model_name.human(count: 2) %></a></li>
     <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
   </ul>
 
@@ -38,14 +37,6 @@
       </dl>
     </div>
     <% end %>
-
-    <div id="reservation-rules">
-      <h2><%= ReservationRule.model_name.human(count: 2) %></h2>
-      <dl>
-        <%= render_reservation_rule_scopes(@entity.reservation_rule_scopes.arrange(order: :id)) %>
-        <%= button_link_to_new([@organisation, @entity, ReservationRuleScope]) %>
-      </dl>
-    </div>
 
     <div id="entity-images">
       <h2><%= EntityImage.model_name.human(count: 2) %></h2>

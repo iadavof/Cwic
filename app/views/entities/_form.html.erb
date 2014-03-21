@@ -11,7 +11,6 @@
       <% if @entity.properties.present? %>
       <li><a href="#properties"><%= t('.properties') %></a></li>
       <% end %>
-      <li><a href="#reservation_rules"><a href="#reservation-rules"><%= ReservationRule.model_name.human(count: 2) %></a></li>
       <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
     </ul>
 
@@ -53,17 +52,6 @@
         <% end %>
       </div>
       <% end %>
-
-      <div id="reservation_rules">
-        <h2><%= t('.reservation_rules') %></h2>
-        <%= format_help(t('.reservation_rules_help')) %>
-        <div class="nested-form" id="entities-reservation-rule-scopes">
-          <%= f.fields_for :reservation_rule_scopes, wrapper: false do |rrsf| %>
-            <%= render partial: 'reservation_rule_scope_fields', locals: { f: rrsf } %>
-          <% end %>
-        </div>
-        <%= f.link_to_add '', :reservation_rule_scopes, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScope.model_name.human.lcfirst) %>
-      </div>
 
       <div id="entity-images" class="hide">
         <h2><%= EntityImage.model_name.human(count: 2) %></h2>

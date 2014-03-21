@@ -16,9 +16,7 @@ Cwic::Application.routes.draw do
     match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
     resources :entity_types
 
-    resources :entities do
-      resources :reservation_rule_scopes
-    end
+    resources :entities
 
     resources :info_screens
     match 'info_screens/:id/reservations', controller: 'info_screens', action: 'info_screen_reservations', via: 'get', as: 'info_screen_reservations'

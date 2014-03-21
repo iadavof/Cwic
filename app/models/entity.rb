@@ -4,7 +4,6 @@ class Entity < ActiveRecord::Base
   include I18n::Alchemy
 
   has_many :properties, class_name: 'EntityProperty', dependent: :destroy, inverse_of: :entity
-  has_many :reservation_rule_scopes, dependent: :destroy, inverse_of: :entity
   has_many :reservations, dependent: :destroy
   has_many :day_occupations, dependent: :destroy
   has_many :week_occupations, dependent: :destroy
@@ -25,7 +24,6 @@ class Entity < ActiveRecord::Base
   after_create :create_info_screen_entities
 
   accepts_nested_attributes_for :properties, allow_destroy: true
-  accepts_nested_attributes_for :reservation_rule_scopes, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
 
   default_scope { order('id ASC') }

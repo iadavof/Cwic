@@ -53,19 +53,6 @@ var jsLang = {
     one_available: 'Nog 1 plaats beschikbaar',
     more_available: 'Nog %nr plaatsen beschikbaar',
   },
-  reservation_rule_scopes: {
-    span_selectors: {
-      year: {
-        'dates': 'Data',
-        'weeks': 'Weken',
-        'holidays': 'Feestdagen'
-      },
-      month: {
-        'days': 'Dagen',
-        'nr_dow_of': 'Weekdag x van de maand'
-      }
-    }
-  },
   occupation_view: {
     week: 'Week',
   },

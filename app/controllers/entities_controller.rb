@@ -59,8 +59,6 @@ private
     params.require(:entity).permit(
       :name, :frontend_name, :color, :description, :entity_type_id, :organisation_id, :include_entity_type_images,
       properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []],
-      #reservation_rules_attributes: [:id, :period_unit_id, :period_amount, :min_periods, :max_periods, :price, :_destroy]
-      reservation_rule_scopes_attributes: [:id, :name, :repetition_unit_id, :_destroy],
       entity_images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy]
     )
   end
