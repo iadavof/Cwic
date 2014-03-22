@@ -23,6 +23,9 @@ APP.init = function() {
     });
   }
 
+  // Load Google if needed
+  $(document).on('page:load', APP.global.initializeGoogleMapsFunctions);
+
   // Replace default confirm box with our confirm
   this.global.replaceConfirmBox();
 
@@ -341,5 +344,12 @@ APP.global = {
         }
       },
     });
+  }, // The following function will be used as a callback for loading the google maps libs and will be called after the libs is loaded
+  initializeGoogleMapsFunctions: function() {
+    if (typeof google === 'object' && typeof google.maps === 'object') {
+      if(typeof APP[$('body').data('controller')].afterGoogleMapsLoaded == 'function') {
+        APP[$('body').data('controller')].afterGoogleMapsLoaded();
+      }
+    }
   }
 };
