@@ -13,6 +13,7 @@ Cwic::Application.configure do
   # Send mails from staging.cwic.nl
   config.action_mailer.default_url_options = { host: 'staging.cwic.nl' }
 
+  # By default serve_static_assets is disabled, because Apache already does this.
   # Enable this line when running staging on a local machine (using Rails' default web server) to enable static assets serving
-  config.serve_static_assets = true
+  # config.serve_static_assets = true
 end
