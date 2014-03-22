@@ -7,7 +7,6 @@
     <%= jquery_ui_include_tag :google %>
     <%= content_for?(:javascript_libs) ? yield(:javascript_libs) : nil %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
-    <%= javascript_include_tag "i18n/cwic/translations-#{I18n.locale}" %>
     <%= csrf_meta_tags %>
   </head>
   <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-user-id="<%= current_user.try(:id) %>" data-current-user-name="<%= current_user.try(:instance_name) %>" data-current-organisation-id="<%= current_organisation.try(:id) %>" data-current-locale="<%= I18n.locale %>">

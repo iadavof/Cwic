@@ -1,10 +1,12 @@
-var current_user, current_organisation;
+var current_user, current_organisation, current_locale;
 
 APP.init = function() {
   // Load current_user and current_organisation data
   var body = $('body');
   current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
   current_organisation = { id: parseInt(body.data('current-organisation-id')) };
+  current_locale = body.data('current-locale');
+  this.global.initLocale(current_locale);
 
   this.global.contentAreaResizeInit();
 
@@ -54,6 +56,11 @@ $(document).on('page:load', function() { NProgress.stackPop(); });
 $(document).on('page:restore', function() { NProgress.remove(); });
 
 APP.global = {
+  initLocale: function(locale) {
+    $.datepicker.setDefaults($.datepicker.regional[locale]);
+    $.timepicker.setDefaults($.timepicker.regional[locale]);
+    jsLang = jsLangs[locale]; // TODO this is not very nice. Better to rewrite whole custom application JavaScript translations to I18n-js gem (if it is stable, ask Kevin for more information)
+  },
   bindSelectAllCheckboxEvents: function() {
     $('input.select-all-checkbox').siblings('div.cwic-checkbox').on('click', function() {
       var select_all_button = $(this).siblings('input.select-all-checkbox');
