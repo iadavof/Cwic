@@ -26,6 +26,9 @@ class Reservation < ActiveRecord::Base
   validate :not_overlapping, if: :validate_overlapping
   validate :check_invalid_recurrences, if: :new_record?
 
+  validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
+  validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
+
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
 
@@ -38,6 +41,9 @@ class Reservation < ActiveRecord::Base
   before_validation :check_if_should_update_reservation_status
   before_validation :generate_recurrences, if: :new_record?
   after_create :save_recurrences
+  before_save :update_warning_state
+  after_save :update_warning_state_neighbours
+
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_websockets
   after_destroy :trigger_update_websockets
@@ -90,6 +96,16 @@ class Reservation < ActiveRecord::Base
       ends_at: true,
       created_at: true,
     }
+  end
+
+  def get_slack_before
+    return read_attribute(:slack_before) if read_attribute(:slack_before).present?
+    return self.entity.get_slack_before
+  end
+
+  def get_slack_after
+    return read_attribute(:slack_after) if read_attribute(:slack_after).present?
+    return self.entity.get_slack_after
   end
 
   def initialize(attributes = {})
@@ -175,12 +191,45 @@ class Reservation < ActiveRecord::Base
     valid
   end
 
-  def previous
-    self.entity.reservations.where('ends_at <= :begins_at', self.begins_at).reorder(ends_at: :desc).first
+  # Get the reservation directly before this reservation (for the same entity).
+  # If was = true, then the old times for this reservation will be used.
+  def previous(was = false)
+    begins_at = (was ? self.begins_at_was : self.begins_at)
+    self.entity.reservations.where('ends_at <= :begins_at', begins_at: begins_at).where.not(id: self.id).reorder(ends_at: :desc).first
   end
 
-  def next
-    self.entity.reservations.where('beginst_at >= :ends_at', self.ends_at).reorder(beginst_at: :asc).first
+  # Get the reservation directly after this reservation (for the same entity).
+  # If was = true, then the old times for this reservation will be used.
+  def next(was = false)
+    ends_at = (was ? self.ends_at_was : self.ends_at)
+    self.entity.reservations.where('begins_at >= :ends_at', ends_at: ends_at).where.not(id: self.id).reorder(begins_at: :asc).first
+  end
+
+  def update_warning_state
+    self.warning = slack_before_overlapping || slack_after_overlapping
+    self
+  end
+
+  def update_warning_state!
+    update_warning_state.update_attribute(:warning, self[:warning])
+  end
+
+  def slack_before_overlapping
+    previous_reservation = self.previous
+    return false if previous_reservation.nil?
+
+    total_slack = self.get_slack_before + previous_reservation.get_slack_after
+
+    return self.begins_at - previous_reservation.ends_at < total_slack.minutes
+  end
+
+  def slack_after_overlapping
+    next_reservation = self.next
+    return false if next_reservation.nil?
+
+    total_slack = self.get_slack_after + next_reservation.get_slack_before
+
+    return next_reservation.begins_at - self.ends_at < total_slack.minutes
   end
 
 private
@@ -200,6 +249,26 @@ private
       if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type
         self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
       end
+    end
+  end
+
+  def update_warning_state_neighbours
+    if self.begins_at_changed?
+      # If begin times for this reservation changed, then update warnings for old and new first neighbour as well.
+      previous_reservation = self.previous(true)
+      previous_reservation.update_warning_state! if previous_reservation.present?
+
+      previous_reservation = self.previous
+      previous_reservation.update_warning_state! if previous_reservation.present?
+    end
+
+    if self.ends_at_changed?
+      # If begin times for this reservation changed, then update warnings for old and new first neighbour as well.
+      next_reservation = self.next(true)
+      next_reservation.update_warning_state! if next_reservation.present?
+
+      next_reservation = self.next
+      next_reservation.update_warning_state! if next_reservation.present?
     end
   end
 

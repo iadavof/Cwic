@@ -175,6 +175,8 @@ nl:
         name: 'Naam'
         description: 'Omschrijving'
         icon: 'Objecticoon'
+        slack_before: 'Speling vooraf'
+        slack_after: 'Speling achteraf'
       entity_type/properties:
         name: 'Eigenschapnaam'
         description: 'Omschrijving bij eigenschap'
@@ -207,6 +209,8 @@ nl:
         frontend_name: 'Publieke naam'
         description: 'Omschrijving'
         color: 'Kleur'
+        slack_before: 'Speling vooraf'
+        slack_after: 'Speling achteraf'
       entity_image:
         title: 'Titel'
         image: 'Foto'
@@ -229,6 +233,8 @@ nl:
         ends_at_tod: 'Eindtijd'
         ends_at_date: 'Einddatum'
         ends_at: 'Eindigt op'
+        slack_before: 'Speling vooraf'
+        slack_after: 'Speling achteraf'
         entity: 'Object'
         entity_id: 'Object'
         description: 'Beschrijving'
@@ -500,6 +506,8 @@ nl:
       clear: 'Leegmaken'
     form:
       general: 'Algemeen'
+      default_slack_times: 'Standaard speling voor en na reserveringen van dit object soort'
+      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elk object afzonderlijk in te stellen. De standaardwaarden voor speling voor deze objectsoort kunt u hieronder ingeven.'
       properties: 'Eigenschappen'
       properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
       options: 'Opties'
@@ -508,6 +516,7 @@ nl:
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
       reservation_statuses: 'Reservering statusen'
+      minutes: 'minuten'
 
   entity_type_icons:
     form:
@@ -519,15 +528,20 @@ nl:
     form:
       no_entity_types_found_html: 'Er zijn nog een objectsoorten toegevoegd. %{link} om een object van een bepaald objectsoort aan te kunnen maken.'
       general: 'Algemeen'
+      default_slack_times: 'Standaard speling voor en na reserveringen van dit object'
+      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elke reservering nog afzonderlijk bij te stellen. De standaardwaarden voor speling voor dit object kunt u hieronder ingeven.'
       properties: 'Eigenschappen'
       options: 'Opties'
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
       entity_name_example: '4.13B, 9.5, foyer, loft'
+      minutes: 'minuten'
 
   reservations:
     show:
       repetitions: 'Herhalingen'
       no_description: '<geen beschrijving>'
+      slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'
+      slack_after_overlaps_with_html: 'Speling achteraf overlapt met %{reservation}'
     index:
       reservations_of_from_to: 'De reserveringen van <strong>%{of}</strong> in de periode tussen <strong>%{from}</strong> en <strong>%{to}</strong> worden nu getoond.'
       reservations_of_from: 'De reserveringen van <strong>%{of}</strong> vanaf <strong>%{from}</strong> worden nu getoond.'
@@ -544,6 +558,8 @@ nl:
       existing_organisation_client: 'Bestaande klant'
       new_organisation_client: 'Nieuwe klant'
       reservation_description_example: 'tekenles, receptie, bloemschikken enz.'
+      default_slack_times: 'Speling voor reservering'
+      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na de reservering. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Hieronder kunnen de waarden voor deze speling worden aangepast voor deze reservering.'
     modal_form:
       new_organisation_client: 'Nieuwe klant'
       full_form: 'Meer opties'

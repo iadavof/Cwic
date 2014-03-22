@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140222133359) do
+ActiveRecord::Schema.define(version: 20140317142654) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -44,6 +44,8 @@ ActiveRecord::Schema.define(version: 20140222133359) do
     t.string   "color",                                default: "#18c13d"
     t.boolean  "include_entity_type_images",           default: true
     t.string   "frontend_name"
+    t.integer  "slack_before"
+    t.integer  "slack_after"
   end
 
   add_index "entities", ["entity_type_id"], name: "index_entities_on_entity_type_id", using: :btree
@@ -138,6 +140,8 @@ ActiveRecord::Schema.define(version: 20140222133359) do
     t.integer  "organisation_id", limit: 8
     t.integer  "entities_count",            default: 0, null: false
     t.integer  "icon_id",         limit: 8
+    t.integer  "slack_before",              default: 0
+    t.integer  "slack_after",               default: 0
   end
 
   add_index "entity_types", ["icon_id"], name: "index_entity_types_on_icon_id", using: :btree
@@ -298,6 +302,9 @@ ActiveRecord::Schema.define(version: 20140222133359) do
     t.string   "description"
     t.integer  "reservation_status_id",  limit: 8
     t.integer  "base_reservation_id",    limit: 8
+    t.integer  "slack_before"
+    t.integer  "slack_after"
+    t.boolean  "warning",                          default: false
   end
 
   add_index "reservations", ["base_reservation_id"], name: "index_reservations_on_base_reservation_id", using: :btree

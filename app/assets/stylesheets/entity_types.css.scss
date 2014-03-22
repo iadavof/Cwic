@@ -27,6 +27,16 @@ div#entity-type-form {
     display: none;
   }
 
+  div.field.slack-field {
+    span {
+      margin: 0 10px;
+    }
+
+    input {
+      width: 50px;
+    }
+  }
+
   a.add-nested-object {
     display: inline-block;
     font-size: 1.3em;
@@ -34,7 +44,6 @@ div#entity-type-form {
   }
 
   div#reservation-statuses {
-  
     div.reservation-status-header {
       div {
         float: left;
@@ -55,7 +64,6 @@ div#entity-type-form {
 
     ul#entity-type-reservation-statuses {
       list-style-type: none;
-
 
       li {
         margin: 1em;
@@ -83,7 +91,6 @@ div#entity-type-form {
             margin: 1em 2em;
           }
         }
-
       }
     }
   }

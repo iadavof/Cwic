@@ -20,8 +20,12 @@ class Entity < ActiveRecord::Base
   validates :organisation, presence: true
   validates :color, color: true
 
+  validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
+  validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
+
   after_initialize :set_initial_color, if: :new_record?
   after_create :create_info_screen_entities
+  after_save :update_reservations_slack_warnings
 
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
@@ -47,6 +51,24 @@ class Entity < ActiveRecord::Base
       self.id.to_s
     else
       ''
+    end
+  end
+
+  def get_slack_before
+    return read_attribute(:slack_before) if read_attribute(:slack_before).present?
+    return self.entity_type.slack_before
+  end
+
+  def get_slack_after
+    return read_attribute(:slack_after) if read_attribute(:slack_after).present?
+    return self.entity_type.slack_after
+  end
+
+  def update_reservations_slack_warnings(force = false)
+    if force || self.slack_before_changed? || self.slack_after_changed?
+      self.reservations.each do |reservation|
+        reservation.update_warning_state!
+      end
     end
   end
 

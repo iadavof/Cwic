@@ -1,82 +1,94 @@
-<%= nested_form_for([@organisation, @entity.localized]) do |f| %>
-  <%= render 'shared/error_messages', target: @entity %>
+<div id="entity-form">
+  <%= nested_form_for([@organisation, @entity.localized]) do |f| %>
+    <%= render 'shared/error_messages', target: @entity %>
 
-  <% if @organisation.entity_types.empty? %>
-  <p class="no_entity_types_found"><%= t('.no_entity_types_found_html', { link: link_to_new([@organisation, EntityType]) }) %></p>
-  <% else %>
-  <% if @entity.entity_type.present? %>
-  <div id="tabs">
-    <ul class="nav">
-      <li><a href="#general" class="current"><%= t('.general') %></a></li>
-      <% if @entity.properties.present? %>
-      <li><a href="#properties"><%= t('.properties') %></a></li>
-      <% end %>
-      <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
-    </ul>
-
-    <div class="tab-wrap">
-      <div id="general">
-        <div class="field autosubmit">
-          <%= f.label :entity_type %>
-          <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
-        </div>
-        <div class="field">
-          <%= f.label :name %>
-        <div class="field-with-example-wrapper">
-            <%= f.text_field :name, placeholder: @entity.default_name %>
-          <p><%= t('for_example') + ': ' + t('.entity_name_example') %></p>
-        </div>
-        </div>
-        <div class="field">
-          <%= f.label :frontend_name %>
-        <div class="field-with-example-wrapper">
-            <%= f.text_field :frontend_name, placeholder: @entity.instance_name %>
-          <p><%= t('for_example') + ': ' + t('.entity_name_example') %></p>
-        </div>
-        </div>
-        <div class="field">
-          <%= f.label :color %>
-          <%= f.text_field :color %>
-        </div>
-        <div class="field">
-          <%= f.label :description %>
-          <%= f.text_area :description %>
-        </div>
-      </div>
-
-      <% if @entity.properties.present? %>
-      <div id="properties">
-        <h2><%= EntityProperty.model_name.human(count: 2) %></h2>
-        <%= f.fields_for :properties do |pf| %>
-          <%= render partial: 'property_fields', locals: { f: pf } %>
+    <% if @organisation.entity_types.empty? %>
+    <p class="no_entity_types_found"><%= t('.no_entity_types_found_html', { link: link_to_new([@organisation, EntityType]) }) %></p>
+    <% else %>
+    <% if @entity.entity_type.present? %>
+    <div id="tabs">
+      <ul class="nav">
+        <li><a href="#general" class="current"><%= t('.general') %></a></li>
+        <% if @entity.properties.present? %>
+        <li><a href="#properties"><%= t('.properties') %></a></li>
         <% end %>
-      </div>
-      <% end %>
+        <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
+      </ul>
 
-      <div id="entity-images" class="hide">
-        <h2><%= EntityImage.model_name.human(count: 2) %></h2>
-        <%= format_help(t('.entity_images_help')) %>
-        <div class="field">
-          <%= f.label :include_entity_type_images %>
-          <%= f.check_box :include_entity_type_images %>
+      <div class="tab-wrap">
+        <div id="general">
+          <div class="field autosubmit">
+            <%= f.label :entity_type %>
+            <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
+          </div>
+          <div class="field">
+            <%= f.label :name %>
+          <div class="field-with-example-wrapper">
+              <%= f.text_field :name, placeholder: @entity.default_name %>
+            <p><%= t('for_example') + ': ' + t('.entity_name_example') %></p>
+          </div>
+          </div>
+          <div class="field">
+            <%= f.label :frontend_name %>
+          <div class="field-with-example-wrapper">
+              <%= f.text_field :frontend_name, placeholder: @entity.instance_name %>
+            <p><%= t('for_example') + ': ' + t('.entity_name_example') %></p>
+          </div>
+          </div>
+          <div class="field">
+            <%= f.label :color %>
+            <%= f.text_field :color %>
+          </div>
+          <div class="field">
+            <%= f.label :description %>
+            <%= f.text_area :description %>
+          </div>
+          <h2><%= t('.default_slack_times') %></h2>
+          <%= format_help(t('.default_slack_times_help')) %>
+          <div class="field slack-field">
+            <%= f.label :slack_before %>
+            <%= f.number_field :slack_before, placeholder: @entity.entity_type.slack_before %><span><%= t('.minutes') %></span>
+          </div>
+          <div class="field slack-field">
+            <%= f.label :slack_after %>
+            <%= f.number_field :slack_after, placeholder: @entity.entity_type.slack_after %><span><%= t('.minutes') %></span>
+          </div>
         </div>
-        <div class="nested-form" id="entity-images">
-          <%= f.fields_for :entity_images, @entity.entity_images, wrapper: false do |eif| %>
-            <%= render partial: 'entity_image_fields', locals: { f: eif } %>
+
+        <% if @entity.properties.present? %>
+        <div id="properties">
+          <h2><%= EntityProperty.model_name.human(count: 2) %></h2>
+          <%= f.fields_for :properties do |pf| %>
+            <%= render partial: 'property_fields', locals: { f: pf } %>
           <% end %>
         </div>
-        <%= f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst) %>
+        <% end %>
+
+        <div id="entity-images" class="hide">
+          <h2><%= EntityImage.model_name.human(count: 2) %></h2>
+          <%= format_help(t('.entity_images_help')) %>
+          <div class="field">
+            <%= f.label :include_entity_type_images %>
+            <%= f.check_box :include_entity_type_images %>
+          </div>
+          <div class="nested-form" id="entity-images">
+            <%= f.fields_for :entity_images, @entity.entity_images, wrapper: false do |eif| %>
+              <%= render partial: 'entity_image_fields', locals: { f: eif } %>
+            <% end %>
+          </div>
+          <%= f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst) %>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-  <% else %>
-  <div class="field autosubmit">
-    <%= f.label :entity_type_id %>
-    <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
-  </div>
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+    <% else %>
+    <div class="field autosubmit">
+      <%= f.label :entity_type_id %>
+      <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>
+    </div>
+    <% end %>
+    <% end %>
   <% end %>
-  <% end %>
-<% end %>
+</div>

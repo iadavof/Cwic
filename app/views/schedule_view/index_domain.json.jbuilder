@@ -1,10 +1,9 @@
 json.begin_date @begin_date.to_date
 json.end_date @end_date.to_date
 
-json.schedule_objects do
+json.schedule_entities do
   @entities.each do |entity|
     json.set! entity.id do
-      json.schedule_object_name entity.full_instance_name
       json.items do
         entity.reservations.by_date_domain(@begin_date, @end_date, include_edges: true).includes(:reservation_status, :organisation_client, :entity).each do |reservation|
           json.set! reservation.id do
