@@ -606,11 +606,11 @@ CwicScheduleView.prototype.undoSaveAction = function(scheduleItem) {
 CwicScheduleView.prototype.bindNewReservationControls = function() {
   var newScheduleItem = null;
   var schedule = this;
-  this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.schedule-object-item-parts', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('mousedown', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) {
     // check if left mouse button, starting a new item and check if not clicked on other reservation
-    if(newScheduleItem == null && $(event.target).hasClass('schedule-object-item-parts')) {
+    if(newScheduleItem == null && $(event.target).hasClass('schedule-object-item-parts') || $(event.target).hasClass('schedule-item-wrapper')) {
       rel = schedule.getPointerRel(event, this);
-      var scheduleEntity = schedule.scheduleEntities[$(event.target).data('scheduleEntityID')];
+      var scheduleEntity = schedule.scheduleEntities[$(event.target).closest('div.schedule-object-item-parts').data('scheduleEntityID')];
       newScheduleItem = scheduleEntity.createNewScheduleItem();
 
       var nearestMoment = schedule.nearestMomentPoint(rel, this);
@@ -632,7 +632,7 @@ CwicScheduleView.prototype.bindNewReservationControls = function() {
     }
   });
 
-  this.scheduleContainer.find('.schedule-body').on('mousemove', 'div.schedule-object-item-parts', function(event) {
+  this.scheduleContainer.find('.schedule-body').on('mousemove', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) {
     var rel = schedule.getPointerRel(event, this);
     if(newScheduleItem != null) {
       var newEnd = schedule.nearestMomentPoint(rel, this);
@@ -690,7 +690,7 @@ CwicScheduleView.prototype.bindNewReservationControls = function() {
   // Touch
   if (Modernizr.touch) {
     var plusOneButton = null;
-    this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-object-item-parts', function(event) {
+    this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) {
       if(plusOneButton == null) {
         var rel = schedule.getPointerRel(event, this);
         var focusMoment = schedule.nearestMomentPoint(rel, this);
@@ -713,7 +713,7 @@ CwicScheduleView.prototype.bindNewReservationControls = function() {
 
         event.stopPropagation();
         // Add event handler to remove this plus one
-        $('html').on('click.plusoneremove', 'div.schedule-object-item-parts', function(event) {
+        $('html').on('click.plusoneremove', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) {
           if(plusOneButton != null) {
             plusOneButton.remove();
             plusOneButton = null;
