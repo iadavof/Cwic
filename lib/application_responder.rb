@@ -7,7 +7,8 @@ class ApplicationResponder < ActionController::Responder
   # include Responders::CollectionResponder
 
   def to_json
-    set_flash_message! if set_flash_message?
+    # Uncomment the line below to also set flash messages after JSON requests
+    #set_flash_message! if set_flash_message?
     if !has_errors? || response_overridden?
       default_render
     else
