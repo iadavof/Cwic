@@ -8,6 +8,7 @@ class EntityType < ActiveRecord::Base
   has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
   has_many :entity_images, as: :entity_imageable, dependent: :destroy, inverse_of: :entity_imageable
   has_many :reservation_statuses, dependent: :destroy, inverse_of: :entity_type
+  has_many :reservation_rule_scopes, as: :scopeable, dependent: :destroy, inverse_of: :scopeable
   has_many :info_screen_entity_types, dependent: :destroy
 
   belongs_to :icon, class_name: 'EntityTypeIcon'
