@@ -1,6 +1,8 @@
 class TimeUnit < ActiveRecord::Base
   include I18n::Alchemy
 
+  symbolize :key
+
   validates :key, presence: true, uniqueness: true, length: { maximum: 255 }
   validates :seconds, numericality: { only_integer: true }, allow_nil: true
 
