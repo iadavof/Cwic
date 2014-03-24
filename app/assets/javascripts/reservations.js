@@ -6,12 +6,14 @@ APP.reservations = {
     APP.reservations.bindStatusSelectorControls();
   },
   _new_create: function() {
-    APP.organisation_clients.addAddressPickerToForm();
     APP.reservations.bindSelectClientRadioButtons();
     APP.reservations.bindReservationRecurrenceControls();
   },
   multiple: function() {
     APP.reservations.bindSelectEditFields();
+  },
+  afterGoogleMapsLoaded: function() {
+    APP.organisations.afterGoogleMapsLoaded();
   },
   bindSelectEditFields: function() {
     var fields = $('div.field input, div.field select div.field textarea').on('focus', function(){
