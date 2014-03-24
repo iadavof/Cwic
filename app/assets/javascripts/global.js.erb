@@ -247,8 +247,15 @@ APP.global = {
     var notOkButton = $('<a>', { class: 'button', text: jsLang.global.no });
     var okButton = $('<a>', { class: 'button red', text: jsLang.global.yes });
 
+    var okAction = function() { APP.modal.closeModal(); $.rails.allowActionAnswer(element, true); };
+
     notOkButton.on('click', function() { APP.modal.closeModal(); $.rails.allowActionAnswer(element, false); });
-    okButton.on('click', function() { APP.modal.closeModal(); $.rails.allowActionAnswer(element, true); });
+    okButton.on('click', okAction);
+
+    $(document).on('keyup.enter', function(e) {
+      e.preventDefault();
+      if (e.keyCode == 13) { okAction(); }
+    });
 
     content.append(notOkButton);
     content.append(okButton);
