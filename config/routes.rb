@@ -13,7 +13,9 @@ Cwic::Application.routes.draw do
     resources :organisation_users, except: :show
     match '/organisation_users/send_invitation', controller: 'organisation_users', action: 'send_invitation', via: 'post'
     match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
-    resources :entity_types
+    resources :entity_types do
+      resources :reservation_rule_scopes, scopeable_type: :entity_type
+    end
 
     resources :entities
 
