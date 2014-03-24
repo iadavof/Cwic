@@ -17,6 +17,7 @@ class ReservationRuleScope < ActiveRecord::Base
 
   belongs_to :scopeable, polymorphic: true
   belongs_to :repetition_unit, class_name: 'TimeUnit'
+  has_many :spans, class_name: 'ReservationRuleScopeSpan', dependent: :destroy, inverse_of: :scope, foreign_key: 'scope_id'
 
   symbolize :span_type
 
@@ -28,6 +29,8 @@ class ReservationRuleScope < ActiveRecord::Base
   validates :span_type, presence: true, valid_span_type: { allow_blank: true }, if: -> { self.repetition_unit.present? && SPAN_SELECTORS[self.repetition_unit.key].present? }
 
   has_ancestry
+
+  accepts_nested_attributes_for :spans, allow_destroy: true
 
   # Gives the keys of the valid repetition units for this scope. These are the available repetition units that are 'smaller' than the repetition unit of the parent.
   def valid_repetition_unit_keys

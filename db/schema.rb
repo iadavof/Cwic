@@ -277,6 +277,32 @@ ActiveRecord::Schema.define(version: 20140416143325) do
   add_index "reservation_logs", ["reservation_id"], name: "index_reservation_logs_on_reservation_id", using: :btree
   add_index "reservation_logs", ["user_id"], name: "index_reservation_logs_on_user_id", using: :btree
 
+  create_table "reservation_rule_scope_spans", force: true do |t|
+    t.integer  "scope_id",     limit: 8
+    t.integer  "year_from"
+    t.integer  "month_from"
+    t.integer  "week_from"
+    t.string   "holiday_from"
+    t.integer  "dom_from"
+    t.integer  "nrom_from"
+    t.integer  "dow_from"
+    t.integer  "hour_from"
+    t.integer  "minute_from"
+    t.integer  "year_to"
+    t.integer  "month_to"
+    t.integer  "week_to"
+    t.string   "holiday_to"
+    t.integer  "dom_to"
+    t.integer  "nrom_to"
+    t.integer  "dow_to"
+    t.integer  "hour_to"
+    t.integer  "minute_to"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reservation_rule_scope_spans", ["scope_id"], name: "index_reservation_rule_scope_spans_on_scope_id", using: :btree
+
   create_table "reservation_rule_scopes", force: true do |t|
     t.integer  "scopeable_id",       limit: 8
     t.string   "scopeable_type"
