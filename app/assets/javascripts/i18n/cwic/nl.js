@@ -50,5 +50,18 @@ jsLangs['nl'] = {
   },
   reservations: {
     select_client_placeholder: 'Selecteer een klant...'
+  },
+  reservation_rule_scopes: {
+    span_types: {
+      year: {
+        'dates': 'Data',
+        'weeks': 'Weken',
+        'holidays': 'Feestdagen'
+      },
+      month: {
+        'days': 'Dagen',
+        'nr_dow_of': 'Weekdag x van de maand'
+      }
+    }
   }
 }

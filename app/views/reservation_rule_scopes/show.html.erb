@@ -1,0 +1,14 @@
+<% content_for :page_title do %><%= show_title(@reservation_rule_scope) %><% end %>
+
+<dl>
+  <dt><%= ReservationRuleScope.human_attribute_name(:entity) %></dt>
+  <dd><%= @reservation_rule_scope.entity %></dd>
+  <dt><%= ReservationRuleScope.human_attribute_name(:name) %></dt>
+  <dd><%= @reservation_rule_scope.name %></dd>
+  <dt><%= ReservationRuleScope.human_attribute_name(:repetition_unit) %></dt>
+  <dd><%= @reservation_rule_scope.repetition_unit %></dd>
+</dl>
+
+<%= button_link_back_to_index(ReservationRuleScope) %>
+<%= button_link_to_edit(@reservation_rule_scope) %>
+<%= button_link_to_destroy(@reservation_rule_scope) %>

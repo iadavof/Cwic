@@ -8,9 +8,10 @@
     <% if @entity_type.properties.present? %>
     <li><a href="#properties"><%= EntityTypeProperty.model_name.human(count: 2) %></a></li>
     <% end %>
+    <li><a href="#reservation-rules"><%= ReservationRuleScope.model_name.human(count: 2) %></a></li>
     <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
   </ul>
-  
+
   <div class="tab-wrap">
     <div id="general">
       <%= image_tag(@entity_type.icon.image.medium_icon.url) %>
@@ -30,6 +31,14 @@
       </div>
     </div>
     <% end %>
+
+    <div id="reservation-rules">
+      <h2><%= ReservationRuleScope.model_name.human(count: 2) %></h2>
+      <dl>
+        <%= render_reservation_rule_scopes_for_owner(@entity_type) %>
+        <%= button_link_to_new([@organisation, @entity_type, ReservationRuleScope]) %>
+      </dl>
+    </div>
 
     <div id="entity-images">
       <h2><%= EntityImage.model_name.human(count: 2) %></h2>

@@ -1,0 +1,26 @@
+div#reservation-rule-scope-span-selector-wrapper {
+  display: none;
+}
+
+div#reservation-rule-scope-spans-container {
+  label#reservation-rule-scope-periods {
+    float: left;
+  }
+
+  div.actions {
+    display: inline-block;
+  }
+
+  div.span-fields {
+    display: inline-block;
+
+    label {
+      width: auto;
+    }
+
+    > div {
+      display: inline-block;
+      margin-right: 15px;
+    }
+  }
+}

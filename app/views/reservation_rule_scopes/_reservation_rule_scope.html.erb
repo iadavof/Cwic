@@ -1,0 +1,10 @@
+<div class="reservation-rule-scope">
+  <div class="actions">
+    <%= icon_link_to_new([@organisation, owner, ReservationRuleScope.new], location_query: { parent_id: reservation_rule_scope }) if reservation_rule_scope.can_have_childs? %>
+    <%= icon_link_to_edit([@organisation, owner, reservation_rule_scope]) %>
+    <%= icon_link_to_destroy([@organisation, owner, reservation_rule_scope]) %>
+  </div>
+  <h3><%= t('.scope') %>: <%= reservation_rule_scope.name %></h3>
+  <div><%= ReservationRuleScope.human_attribute_name(:repetition_unit) %>: <%= reservation_rule_scope.repetition_unit.try(:repetition_name) %></div>
+  <small><%= t('.active') %>: <%#= reservation_rule_scope.spans.map { |span| t('.active_from_to', from: l(span.active_from), to: l(span.active_to)) }.to_sentence %></small>
+</div>

@@ -102,6 +102,17 @@ ui-timepicker-table td {
   border: 0 none;
 }
 
+.ui-datepicker.fixed-year, .ui-datepicker.fixed-month {
+  .ui-datepicker-year, .ui-datepicker-calendar thead {
+    display: none;
+  }
+}
+
+.ui-datepicker.fixed-month {
+  .ui-datepicker-header {
+    display: none;
+  }
+}
 
 /* TABS */
 

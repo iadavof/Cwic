@@ -60,7 +60,15 @@ private
   end
 
   def resource_params
-    params.require(:reservation_rule_scope).permit(:scopeable_id, :parent_id, :name, :repetition_unit_id, :span_type)
+    params.require(:reservation_rule_scope).permit(
+      :scopeable_id, :parent_id, :name, :repetition_unit_id, :span_type,
+      spans_attributes: [
+        :id,
+        :year_from, :month_from, :week_from, :holiday_from, :dom_from, :nrom_from, :dow_from, :hour_from, :minute_from,
+        :year_to, :month_to, :week_to, :holiday_to, :dom_to, :nrom_to, :dow_to, :hour_to, :minute_to,
+        :_destroy
+      ]
+    )
   end
 
   def interpolation_options

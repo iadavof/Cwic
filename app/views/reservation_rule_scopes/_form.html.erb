@@ -1,0 +1,30 @@
+<%= nested_form_for([@organisation, @scopeable, @reservation_rule_scope]) do |f| %>
+  <%= render 'shared/error_messages', target: @reservation_rule_scope %>
+
+  <div class="field">
+    <%= f.label :name %>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :repetition_unit_id %>
+    <%= f.select :repetition_unit_id, @reservation_rule_scope.valid_repetition_units.map { |tu| [tu.repetition_name, tu.id, data: { key: tu.key }] }, prompt: true %>
+  </div>
+  <div class="field" id="reservation-rule-scope-span-selector-wrapper">
+    <%= f.label :span_type %>
+    <%= f.select :span_type, [],  {}, data: { :'previous-value' => f.object.span_type } %>
+  </div>
+  <div id="reservation-rule-scope-spans-container" style="display: none;">
+    <%= f.label(:periods, id: 'reservation-rule-scope-periods') %>
+    <div class="nested-form" id="reservation-rule-scope-spans">
+      <%= f.fields_for :spans, wrapper: false do |sf| %>
+        <%= render partial: 'span_fields', locals: { f: sf } %>
+      <% end %>
+    </div>
+    <div class="clearfix"></div>
+    <%= f.link_to_add '', :spans, data: { target: '#reservation-rule-scope-spans' }, id: 'add-span-wrapper-link', class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScopeSpan.model_name.human.lcfirst) %>
+  </div>
+  <div class="actions">
+    <%= f.hidden_field :parent_id %>
+    <%= f.submit %>
+  </div>
+<% end %>
