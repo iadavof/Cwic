@@ -15,6 +15,8 @@ APP.modal = {
     });
 
     // Content toevoegen aan modal
+    // To be sure, remove all the content of the modalDiv
+    modalDiv.empty();
     modalDiv.append(content);
 
     // Open overlay
@@ -51,6 +53,9 @@ APP.modal = {
 
     // Remove close event from ESC button
     $(document).off('keyup.escape');
+
+    // Also remove the enter event if this is used
+    $(document).off('keyup.enter');
 
 
     if(e != null) {

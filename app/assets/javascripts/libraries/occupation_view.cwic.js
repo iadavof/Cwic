@@ -18,6 +18,8 @@ CwicOccupationView.prototype.initiateContainer = function() {
   this.occupationContainer = $('#' + this.options.container);
   this.occupationContainer.append(this.getTemplateClone('occupationContainerTemplate').contents());
   this.occupationContainer.addClass('occupation-container');
+
+  this.occupationContainer.find('select').cwicControl('recreate');
 }
 
 CwicOccupationView.prototype.renderOccupation = function() {
@@ -73,13 +75,17 @@ CwicOccupationView.prototype.bindControls = function() {
         occ.currentYear += 1;
       }
     }
+
+    // Only trigger a cwic dropdown change event
+    occ.occupationContainer.find('select#date_current_year').val(occ.currentYear).trigger('change.cwicDropdown');
+    occ.occupationContainer.find('select#date_current_month').val(occ.currentMonth).trigger('change.cwicDropdown');
     occ.updateOccupationView();
   });
 
   this.occupationContainer.find('div.control-container select').on('change', function() {
-    occ.currentYear = parseInt($('select#date_current_year').val());
+    occ.currentYear = parseInt(occ.occupationContainer.find('select#date_current_year').val());
     if(occ.options.view == 'dayOccupation') {
-      occ.currentMonth = parseInt($('select#date_current_month').val());
+      occ.currentMonth = parseInt(occ.occupationContainer.find('select#date_current_month').val());
     }
     occ.updateOccupationView();
   });

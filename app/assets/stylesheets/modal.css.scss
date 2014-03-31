@@ -1,5 +1,5 @@
 .overlay {
-    background-color: rgba(0, 0, 0, 0.8);
+    background-color: rgba(0, 0, 0, 0.2);
     bottom: 0;
     cursor: default;
     left: 0;
@@ -93,7 +93,7 @@ body > *:not(.modal):not(.overlay) {
   transition: -webkit-filter .5s ease-in-out, filter .5s ease-in-out;
 }
 
-html.with-overlay body > *:not(.modal):not(.overlay) {
+html.with-overlay body > *:not(.modal):not(.overlay):not(.ui-datepicker):not(.ui-timepicker):not(.select2-drop) {
   -webkit-filter: blur(10px);
   filter: blur(10px);
 }
