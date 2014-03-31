@@ -1,7 +1,7 @@
 class OccupationViewController < ApplicationController
-	respond_to :html, :json
-
 	before_action :load_resource
+
+	respond_to :html, :json
 
 	def day_occupation
 		render :day_occupation

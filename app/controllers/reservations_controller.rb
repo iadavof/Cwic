@@ -114,7 +114,7 @@ private
 
   def multiple_action
     # Check if a parameter key edit or delete is defined, this is the name of the submit button that is clicked
-    action = %w(edit delete).detect {|action| params[action] }
+    action = %w(edit delete).detect { |a| params[a] }
     "multiple_#{action}"
   end
 
@@ -128,13 +128,13 @@ private
       # Remove the validation errors from form_reservation because we dont need this
       @reservation.errors.clear
       valid = params[:edit_fields].present? && alter_multiple_edit_reservations(@reservations, @reservation, attributes)
-      if(valid)
+      if valid
         @reservations.map { |r| ReservationLog.create(reservation: r, user: current_user); r.save }
         redirect_to session.delete(:return_to)
-       else
+      else
         load_resource
         render 'reservations/multiple/edit'
-       end
+      end
     else
       @reservation = generate_multiple_edit_set_reservation(@reservations, attributes)
       render 'reservations/multiple/edit'

@@ -14,6 +14,7 @@ DataType.create!([
 ])
 
 # Create default time periods
+# TODO? Remove common since it is not used anymore.
 TimeUnit.create!([
   { key: 'second', repetition_key: 'secondly', common: false, seconds: 1.second },
   { key: 'minute', repetition_key: 'minutely', common: false, seconds: 1.minute },

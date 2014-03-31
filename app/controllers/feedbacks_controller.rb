@@ -1,5 +1,4 @@
 class FeedbacksController < ApplicationController
-
   require 'digest/md5'
 
   before_action :load_resource

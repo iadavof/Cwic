@@ -1,8 +1,8 @@
 class ScheduleViewController < ApplicationController
+  before_action :load_resource
+
   respond_to :html, except: [:index_domain, :entities]
   respond_to :json, only: [:index_domain, :entities]
-
-  before_action :load_resource
 
   def horizontal_calendar_day
     get_selected_entity_from_url
@@ -104,7 +104,7 @@ class ScheduleViewController < ApplicationController
   end
 
   def today_tomorrow_update_upcoming_reservation(entity)
-    upcoming = {
+    {
       today: get_standard_reservation_info_for_scope(Time.now, Time.now.end_of_day, entity),
       tomorrow: get_standard_reservation_info_for_scope(Time.now.beginning_of_day + 1.day, Time.now.end_of_day + 1.day, entity),
     }
