@@ -100,7 +100,7 @@ gem 'js-routes'
 gem 'momentjs-rails'
 
 # search in selects
-gem "select2-rails"
+gem 'select2-rails'
 
 # PG_Search for easy text search and global searching
 gem 'pg_search', '~> 0.7.0' # Locked on minor version, because we use custom search functionality (see lib/core_ext/pg_search.rb).
@@ -121,13 +121,13 @@ gem 'holidays', github: 'kreintjes/holidays' #path: '~/rails/gems/holidays'githu
 gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' #path: '~/rails/gems/numbers_and_words'
 
 # Attribute normalizer to normalize/cleanup attribute values (for instance change blanks to nils)
-gem 'attribute_normalizer'
+gem 'attribute_normalizer', '~> 1.2.0.b'
 
 # Ice cube gem for easy recurrence rules
 gem 'ice_cube'
 
 # Repeat (filter) get fields as hidden fields
-gem "hash_to_hidden_fields"
+gem 'hash_to_hidden_fields'
 
 # Validator for timeliness of dates
 gem 'validates_timeliness'
