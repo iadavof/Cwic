@@ -34,7 +34,7 @@ CwicScheduleViewEntity.prototype.createNewScheduleItem = function(JSON) {
   }
 
   return newItem;
-}
+};
 
 CwicScheduleViewEntity.prototype.loadNewScheduleItemsFromJSON = function(itemsJSON) {
   var entity = this;
@@ -44,7 +44,7 @@ CwicScheduleViewEntity.prototype.loadNewScheduleItemsFromJSON = function(itemsJS
   $.each(itemsJSON, function(itemid, item) {
     entity.createNewScheduleItem(item);
   });
-}
+};
 
 CwicScheduleViewEntity.prototype.checkUnhideNonBlockingItems = function() {
   if(this.scheduleItems != null) {
@@ -59,7 +59,7 @@ CwicScheduleViewEntity.prototype.checkUnhideNonBlockingItems = function() {
       }
     });
   }
-}
+};
 
 CwicScheduleViewEntity.prototype.clearScheduleItems = function() {
   for(schiId in this.scheduleItems) {
@@ -67,28 +67,28 @@ CwicScheduleViewEntity.prototype.clearScheduleItems = function() {
     delete this.scheduleItems[schiId];
   }
   this.scheduleItems = {};
-}
+};
 
 CwicScheduleViewEntity.prototype.getScheduleItemById = function(schiId) {
   return this.scheduleItems[schiId];
-}
+};
 
 CwicScheduleViewEntity.prototype.destroyScheduleItem = function(schiId) {
   this.scheduleItems[schiId].removeFromDom();
   delete this.scheduleItems[schiId];
-}
+};
 
 CwicScheduleViewEntity.prototype.rerenderScheduleItems = function() {
   for(var schii in this.scheduleItems) {
     this.scheduleItems[schii].rerender();
   }
-}
+};
 
 CwicScheduleViewEntity.prototype.renderScheduleItems = function() {
   for(var schii in this.scheduleItems) {
     this.scheduleItems[schii].render();
   }
-}
+};
 
 CwicScheduleViewEntity.prototype.setEntityContainerHeight = function(nrEntities) {
   // Adjust height of object rows based on the number of objects that are being selected.
@@ -103,7 +103,7 @@ CwicScheduleViewEntity.prototype.setEntityContainerHeight = function(nrEntities)
       this.scheduleContainer.find('.left-axis .left-axis-row.today').height(this.scheduleContainer.find('.row.today').outerHeight());
     }
   }
-}
+};
 
 CwicScheduleViewEntity.prototype.renderScheduleEntityContainer = function(timeparts) {
   var newSchObjItemParts = this.schedule.getTemplateClone('scheduleEntityItemPartsTemplate');
@@ -111,7 +111,7 @@ CwicScheduleViewEntity.prototype.renderScheduleEntityContainer = function(timepa
   newSchObjItemParts.data('scheduleEntityID', this.entity_id);
   newSchObjItemParts.find('p.name').text(this.name);
   timeparts.append(newSchObjItemParts);
-}
+};
 
 CwicScheduleViewEntity.prototype.setSelected = function(sel) {
   this.selected = sel;
@@ -122,11 +122,11 @@ CwicScheduleViewEntity.prototype.setSelected = function(sel) {
       this.showCaseButtonDOM.removeClass('active');
     }
   }
-}
+};
 
 CwicScheduleViewEntity.prototype.getSelected = function() {
   return this.selected;
-}
+};
 
 CwicScheduleViewEntity.prototype.parseFromJSON = function(json) {
   this.color = json.color;
@@ -135,7 +135,7 @@ CwicScheduleViewEntity.prototype.parseFromJSON = function(json) {
 
   this.default_slack_before = json.default_slack_before;
   this.default_slack_after = json.default_slack_after;
-}
+};
 
 
 CwicScheduleViewEntity.prototype.renderEntityShowcaseButton = function(container) {
@@ -146,4 +146,4 @@ CwicScheduleViewEntity.prototype.renderEntityShowcaseButton = function(container
   container.append(this.showCaseButtonDOM);
 
   return this.showCaseButtonDOM;
-}
+};
