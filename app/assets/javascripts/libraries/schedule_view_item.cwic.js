@@ -440,18 +440,19 @@ CwicScheduleViewItem.prototype.bindDragAndResizeControls = function() {
     }
   }.reset();
 
-  this.schedule.scheduleContainer.on('mousedown.dragresize', 'div.schedule-item-wrapper.focused div.schedule-item', function(e) { _this.dragAndResizeDown(e, context); });
-  this.schedule.scheduleContainer.on('mousemove.dragresize', function(e) { _this.dragAndResizeMove(e, context); });
-  $('html').on('mouseup.dragresize', function(e) { _this.dragAndResizeUp(e, context); });
-  $('html').on('mousecancel.dragresize', function(e) { _this.dragAndResizeCancel(e, context); });
-  $(document).on('keyup.cancelDragOrResize', function(e) {_this.dragAndResizeEsc(e, context);});
+  this.schedule.scheduleContainer.on('mousedown.dragresize touchstart.dragresize', 'div.schedule-item-wrapper.focused div.schedule-item', function(e) { e.preventDefault(); _this.dragAndResizeDown(e, context); });
+  this.schedule.scheduleContainer.on('mousemove.dragresize touchmove.dragresize', function(e) { _this.dragAndResizeMove(e, context); });
+  $('html').on('mouseup.dragresize touchend.dragresize', function(e) { _this.dragAndResizeUp(e, context); });
+  $('html').on('mousecancel.dragresize touchcancel.dragresize', function(e) { _this.dragAndResizeCancel(e, context); });
+
+  $(document).on('keyup.cancelDragOrResize', function(e) { _this.dragAndResizeEsc(e, context);});
 };
 
 CwicScheduleViewItem.prototype.unbindDragAndResizeControls = function() {
-  this.schedule.scheduleContainer.off('mousedown.dragresize');
-  this.schedule.scheduleContainer.off('mousemove.dragresize');
-  $('html').off('mouseup.dragresize');
-  $('html').off('mousecancel.dragresize');
+  this.schedule.scheduleContainer.off('mousedown.dragresize touchstart.dragresize');
+  this.schedule.scheduleContainer.off('mousemove.dragresize touchmove.dragresize');
+  $('html').off('mouseup.dragresize touchend.dragresize');
+  $('html').off('mousecancel.dragresize touchcancel.dragresize');
   $(document).off('keyup.cancelDragOrResize');
 };
 
@@ -468,6 +469,7 @@ CwicScheduleViewItem.prototype.dragAndResizeEsc = function(event, context) {
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeDown = function(event, context) {
+  event.preventDefault();
   context.pointerDown = true;
   var scheduleItemClickedDom = $(event.target).closest('div.schedule-item');
   context.containerTP = scheduleItemClickedDom.parents('div.schedule-object-item-parts');
@@ -481,12 +483,19 @@ CwicScheduleViewItem.prototype.dragAndResizeDown = function(event, context) {
     context.dragStartMoment = this.schedule.nearestMomentPoint(rel, context.containerTP);
     context.lastDragMoment = context.dragStartMoment;
   }
+  return false;
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
+  event.preventDefault();
+  console.debug(event);
   if(context.pointerDown) {
+    // Get the something we clicked on
     var scheduleItemClickedDom = $(event.target);
+
+    // Are we in a different row or column?
     var newRow = scheduleItemClickedDom.closest('div.schedule-object-item-parts');
+    console.debug(newRow);
     if(newRow.length > 0) {
       context.containerTP = newRow;
     }
@@ -501,7 +510,6 @@ CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
         context.lastDragMoment = newMoment;
       }
     } else { // resize mode
-      // rel can be negative if item is dragged to previous day.
       this.resizeConcept(context.side, newMoment);
     }
 
@@ -514,6 +522,7 @@ CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
       this.applyErrorGlow();
     }
   }
+  return false;
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeUp = function(event, context) {

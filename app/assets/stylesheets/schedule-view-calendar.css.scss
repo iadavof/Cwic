@@ -340,7 +340,7 @@ div.calendar div.schedule-body div.column div.time-needle {
   display: block;
   background-color: #ffffff;
   box-shadow: 0 0 3px rgba(0,0,0,0.6);
-  z-index: 5;
+  z-index: 30;
   background-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 100%);
 }
 
@@ -350,63 +350,6 @@ div.calendar div.schedule-body div.row div.time-needle {
   top: -4px;
   width: 8px;
   margin-left: -4px;
-}
-
-div.calendar div.schedule-body div.row div.schedule-plus-one-button {
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 100%;
-  background-color: #1C5EAF;
-  color: white;
-  opacity: 0.7;
-  width: 4.166667%;
-}
-
-div.calendar div.schedule-body div.column div.schedule-plus-one-button {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 98%;
-  margin: 0 1%;
-  height: 4.166667%;
-  background-color: #1C5EAF;
-  color: white;
-  opacity: 0.7;
-}
-
-div.calendar div.schedule-body div.row div.schedule-plus-one-button span#plus,
-div.calendar div.schedule-body div.column div.schedule-plus-one-button span#plus {
-  width: 25px;
-  height: 25px;
-  margin-left: -12.5px;
-  margin-top: -12.5px;
-  text-align: center;
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  font-size: 2em;
-  font-weight: bold;
-}
-
-div.calendar div.schedule-body div.row div.schedule-plus-one-button span#plusone-prev,
-div.calendar div.schedule-body div.column div.schedule-plus-one-button span#plusone-prev {
-  position: absolute;
-  left: -15px;
-  top: 0;
-  height: 100%;
-  background-color: rgba(28, 94, 175, 0.5);
-  text-align: center;
-}
-
-div.calendar div.schedule-body div.row div.schedule-plus-one-button span#plusone-next,
-div.calendar div.schedule-body div.column div.schedule-plus-one-button span#plusone-next {
-  position: absolute;
-  right: -15px;
-  top: 0;
-  height: 100%;
-  background-color: rgba(28, 94, 175, 0.5);
-  text-align: center;
 }
 
 div.calendar div.schedule-body div.column div.time-needle {
@@ -688,7 +631,7 @@ div.calendar div.schedule-body div.column div.schedule-item {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 7;
   border-left: 1px solid #ccc;
   background-color: #1C9CB2;
   color: #444;
@@ -713,6 +656,20 @@ div.calendar div.schedule-body div.column div.schedule-item {
 
 div.calendar div.schedule-body div.row div.schedule-item-wrapper.blurred:after,
 div.calendar div.schedule-body div.column div.schedule-item-wrapper.blurred:after {
+  content: '';
+  width: 100%;
+  height: 100%;
+  display: block;
+  background-color: white;
+  position: absolute;
+  left: 0;
+  top: 0;
+  opacity: 0.6;
+  z-index: 6;
+}
+
+div.calendar div.schedule-body div.row div.schedule-item-wrapper.blurred div.schedule-item:after,
+div.calendar div.schedule-body div.column div.schedule-item-wrapper.blurred div.schedule-item:after {
   content: '';
   width: 100%;
   height: 100%;
@@ -789,78 +746,83 @@ div.calendar div.schedule-body div.column div.schedule-item.slack-glow {
   box-shadow:         0px 0px 15px rgba(226, 149, 44, 0.9);
 }
 
-div.calendar div.schedule-body div.row div.schedule-item div.continue,
-div.calendar div.schedule-body div.column div.schedule-item div.continue {
+div.calendar div.schedule-body div.row div.schedule-item div.continue-container,
+div.calendar div.schedule-body div.column div.schedule-item div.continue-container {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 8;
+  overflow: hidden;
+}
+
+div.calendar div.schedule-body div.row div.schedule-item div.continue-container div.continue,
+div.calendar div.schedule-body div.column div.schedule-item div.continue-container div.continue {
   position: absolute;
   width: 15px;
   height: 15px;
   line-height: 15px;
   display: none;
-  z-index: 2;
+  z-index: 8;
 }
 
-div.calendar div.schedule-body div.row div.schedule-item div.continue [class^="icon-"],
-div.calendar div.schedule-body div.row div.schedule-item div.continue [class*=" icon-"],
-div.calendar div.schedule-body div.column div.schedule-item div.continue [class^="icon-"],
-div.calendar div.schedule-body div.column div.schedule-item div.continue [class*=" icon-"] {
+div.calendar div.schedule-body div.row div.schedule-item div.continue-container div.continue [class^="icon-"],
+div.calendar div.schedule-body div.row div.schedule-item div.continue-container div.continue [class*=" icon-"],
+div.calendar div.schedule-body div.column div.schedule-item div.continue-container div.continue [class^="icon-"],
+div.calendar div.schedule-body div.column div.schedule-item div.continue-container div.continue [class*=" icon-"] {
   font-size: 0.75em;
-}
-
-div.calendar div.schedule-body div.row div.schedule-item div.continue [class^="icon-"],
-div.calendar div.schedule-body div.row div.schedule-item div.continue [class*=" icon-"],
-div.calendar div.schedule-body div.column div.schedule-item div.continue [class^="icon-"],
-div.calendar div.schedule-body div.column div.schedule-item div.continue [class*=" icon-"] {
   height: 15px;
   line-height: 15px;
   vertical-align: baseline;
 }
 
-div.calendar div.schedule-body div.row div.schedule-item div.continue.left {
+div.calendar div.schedule-body div.row div.schedule-item div.continue-container div.continue.left {
   left: 0;
   top: 0;
   height: 100%;
 }
 
-div.calendar div.schedule-body div.row div.schedule-item div.continue.left i {
+div.calendar div.schedule-body div.row div.schedule-item div.continue-container div.continue.left i {
   position: absolute;
   left: 2px;
   top: 50%;
   margin-top: -7.5px;
 }
 
-div.calendar div.schedule-body div.row div.schedule-item div.continue.right {
+div.calendar div.schedule-body div.row div.schedule-item div.continue-container div.continue.right {
   right: 0;
   top: 0;
   height: 100%;
 }
 
-div.calendar div.schedule-body div.row div.schedule-item div.continue.right i {
+div.calendar div.schedule-body div.row div.schedule-item div.continue-container div.continue.right i {
   position: absolute;
   right: 2px;
   top: 50%;
   margin-top: -7.5px;
 }
 
-div.calendar div.schedule-body div.column div.schedule-item div.continue.top {
+div.calendar div.schedule-body div.column div.schedule-item div.continue-container div.continue.top {
   top: 0;
   left: 0;
   width: 100%;
 }
 
-div.calendar div.schedule-body div.column div.schedule-item div.continue.top i {
+div.calendar div.schedule-body div.column div.schedule-item div.continue-container div.continue.top i {
   position: absolute;
   top: 2px;
   left: 50%;
   margin-left: -7.5px;
 }
 
-div.calendar div.schedule-body div.column div.schedule-item div.continue.bottom {
+div.calendar div.schedule-body div.column div.schedule-item div.continue-container div.continue.bottom {
   left: 0;
   bottom: 0;
   width: 100%;
 }
 
-div.calendar div.schedule-body div.column div.schedule-item div.continue.bottom i {
+div.calendar div.schedule-body div.column div.schedule-item div.continue-container div.continue.bottom i {
   position: absolute;
   bottom: 2px;
   left: 50%;
@@ -869,7 +831,7 @@ div.calendar div.schedule-body div.column div.schedule-item div.continue.bottom 
 
 div.calendar div.schedule-body div.row div.schedule-item-wrapper.focused,
 div.calendar div.schedule-body div.column div.schedule-item-wrapper.focused {
-  z-index: 11;
+  z-index: 20;
 }
 
 div.calendar div.schedule-body div.row div.schedule-item div.resizer,
@@ -877,7 +839,7 @@ div.calendar div.schedule-body div.column div.schedule-item div.resizer {
   position: absolute;
   display: none;
   visibility: hidden;
-  z-index: 12;
+  z-index: 21;
   color: #333;
 }
 

@@ -96,9 +96,9 @@ CwicScheduleViewEntity.prototype.setEntityContainerHeight = function(nrEntities)
     if(nrEntities == 1) {
       this.scheduleContainer.find('.schedule-object-item-parts').css('height', '60px');
     } else if(nrEntities == 2) {
-      this.scheduleContainer.find('.schedule-object-item-parts').css('height', '30px');
+      this.scheduleContainer.find('.schedule-object-item-parts').css('height', '60px');
     } else {
-      this.scheduleContainer.find('.schedule-object-item-parts').css('height', '20px');
+      this.scheduleContainer.find('.schedule-object-item-parts').css('height', '30px');
       this.scheduleContainer.find('.left-axis .left-axis-row:not(.today)').height(this.scheduleContainer.find('.row:not(.today)').outerHeight());
       this.scheduleContainer.find('.left-axis .left-axis-row.today').height(this.scheduleContainer.find('.row.today').outerHeight());
     }
