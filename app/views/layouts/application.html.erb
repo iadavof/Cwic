@@ -7,6 +7,7 @@
     <%= jquery_ui_include_tag :google %>
     <%= javascript_include_tag('https://maps.google.com/maps/api/js?sensor=false&callback=APP.global.initializeGoogleMapsFunctions', async: true) %>
     <%= javascript_include_tag "application", "data-turbolinks-track" => true %>
+    <meta name="viewport" content="width=device-width, user-scalable=no">
     <%= csrf_meta_tags %>
   </head>
   <body class="controller-<%= controller_name %> action-<%= action_name %>" data-controller="<%= controller_name %>" data-action="<%= action_name %>" data-current-user-id="<%= current_user.try(:id) %>" data-current-user-name="<%= current_user.try(:instance_name) %>" data-current-organisation-id="<%= current_organisation.try(:id) %>" data-current-locale="<%= I18n.locale %>">
