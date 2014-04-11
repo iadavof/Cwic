@@ -21,9 +21,8 @@ class User < ActiveRecord::Base
   validates :infix, length: { maximum: 255 }
 
   pg_global_search against: { last_name: 'A', email: 'A', first_name: 'B' }
-  # Save the current username in the logs and nullify the reference to this user
-  before_destroy :save_current_name_in_reservation_log
 
+  before_destroy :save_current_name_in_reservation_log # Save the current username in the logs and nullify the reference to this user
 
   def instance_name
     self.first_name + ' ' + (self.infix.present? ? self.infix + ' ' : '') + self.last_name
@@ -48,7 +47,7 @@ class User < ActiveRecord::Base
     end
   end
 
-  def save_current_name_in_reservation_log 
+  def save_current_name_in_reservation_log
     self.reservation_logs.update_all(old_user_name: instance_name, user_id: nil)
   end
 end
