@@ -154,20 +154,25 @@ APP.entity_types = {
     var dataType = propertyWrapper.find('select[data-field="data-type"]').find(':selected').data('key');
     if(dataType == 'set') {
       // Set: transform fields to check boxes.
+      propertyOptionWrapper.find('.default-field').cwicControl('destroy');
       propertyOptionWrapper.find('.default-field')
         .attr('type', 'checkbox')
-        .off('click');
+        .off('change')
+        .cwicControl();
     } else {
       // Enum: transform fields to radio buttons and make sure there can only be one selected at the same time.
+      console.debug(propertyOptionWrapper.find('.default-field'));
+      propertyOptionWrapper.find('.default-field').cwicControl('destroy');
       propertyOptionWrapper.find('.default-field')
         .attr('type', 'radio')
-        .click(function() { APP.entity_types.propertyOptionDefaultUncheckOthers($(this)); });
+        .change(function() { APP.entity_types.propertyOptionDefaultUncheckOthers($(this)); })
+        .cwicControl();
 
       // Check if there are not already two or more items default
       var checkedDefaultFields = propertyWrapper.find('.default-field:checked');
       if(checkedDefaultFields.size() > 1) {
         // There were already two or more items selected (this could happen when we change from set to enum): uncheck all items.
-        checkedDefaultFields.prop('checked', false);
+        checkedDefaultFields.prop('checked', false).trigger('change.cwicControl');
       }
     }
   },
@@ -179,13 +184,15 @@ APP.entity_types = {
   },
   propertyOptionDefaultUncheckAll: function(propertyWrapper) {
     // Uncheck all default checkboxes/radio buttons.
-    propertyWrapper.find('.default-field').prop('checked', false);
+    propertyWrapper.find('.default-field').prop('checked', false).trigger('change.cwicControl');;
   },
   propertyOptionDefaultUncheckOthers: function(field) {
-    // Uncheck all other default radio buttons.
-    field.closest('.property-options').find('.default-field').prop('checked', false);
-    // Check this radio button
-    field.prop('checked', true);
+    if(field.prop('checked')) {
+      // Uncheck all other default radio buttons.
+      field.closest('.property-options').find('.default-field').prop('checked', false).trigger('change.cwicControl');;
+      // Check this radio button
+      field.prop('checked', true).trigger('change.cwicControl');
+    }
   },
   updateIndexes: function(form) {
     $(form).find('.property-wrapper').each(function(index) {
