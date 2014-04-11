@@ -1,7 +1,7 @@
 class ReservationRuleScopesController < ApplicationController
   before_action :load_scopeable
   before_action :load_resource
-  authorize_resource through: :organisation
+  authorize_resource through: :scopeable
 
   # GET /reservation_rule_scopes
   def index

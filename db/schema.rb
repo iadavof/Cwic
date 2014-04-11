@@ -316,6 +316,25 @@ ActiveRecord::Schema.define(version: 20140416143325) do
 
   add_index "reservation_rule_scopes", ["scopeable_id", "scopeable_type"], name: "index_reservation_rule_scopes_on_scopeable", using: :btree
 
+  create_table "reservation_rules", force: true do |t|
+    t.integer  "scope_id",             limit: 8
+    t.string   "reserve_by"
+    t.integer  "period_unit_id",       limit: 8
+    t.integer  "period_amount"
+    t.integer  "min_periods"
+    t.integer  "max_periods"
+    t.decimal  "price",                          precision: 16, scale: 2
+    t.string   "price_per"
+    t.integer  "price_period_unit_id", limit: 8
+    t.integer  "price_period_amount"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reservation_rules", ["period_unit_id"], name: "index_reservation_rules_on_period_unit_id", using: :btree
+  add_index "reservation_rules", ["price_period_unit_id"], name: "index_reservation_rules_on_price_period_unit_id", using: :btree
+  add_index "reservation_rules", ["scope_id"], name: "index_reservation_rules_on_scope_id", using: :btree
+
   create_table "reservation_statuses", force: true do |t|
     t.string   "name"
     t.integer  "index"

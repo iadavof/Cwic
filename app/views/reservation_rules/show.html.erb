@@ -1,0 +1,28 @@
+<% content_for :page_title do %><%= show_title(@reservation_rule) %><% end %>
+
+<dl>
+  <dt><%= ReservationRule.human_attribute_name(:scope) %></dt>
+  <dd><%= @reservation_rule.scope %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:reserve_by) %></dt>
+  <dd><%= @reservation_rule.reserve_by %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:period_unit) %></dt>
+  <dd><%= @reservation_rule.period_unit %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:period_amount) %></dt>
+  <dd><%= @reservation_rule.localized.period_amount %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:min_periods) %></dt>
+  <dd><%= @reservation_rule.localized.min_periods %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:max_periods) %></dt>
+  <dd><%= @reservation_rule.localized.max_periods %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:price) %></dt>
+  <dd><%= @reservation_rule.localized.price %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:price_per) %></dt>
+  <dd><%= @reservation_rule.price_per %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:price_period_unit) %></dt>
+  <dd><%= @reservation_rule.price_period_unit %></dd>
+  <dt><%= ReservationRule.human_attribute_name(:price_period_amount) %></dt>
+  <dd><%= @reservation_rule.localized.price_period_amount %></dd>
+</dl>
+
+<%= button_link_back_to_index(ReservationRule) %>
+<%= button_link_to_edit(@reservation_rule) %>
+<%= button_link_to_destroy(@reservation_rule) %>

@@ -1,0 +1,46 @@
+<% content_for :page_title do %><%= index_title(ReservationRule) %><% end %>
+
+<% if @reservation_rules.empty? %>
+<p><%= t('.empty', default: :empty_objects, classes: ReservationRule.model_name.human(count: 2).lcfirst) %></p>
+<% else %>
+<table>
+  <thead>
+    <tr>
+      <th><%= ReservationRule.human_attribute_name(:scope) %></th>
+      <th><%= ReservationRule.human_attribute_name(:reserve_by) %></th>
+      <th><%= ReservationRule.human_attribute_name(:period_unit) %></th>
+      <th><%= ReservationRule.human_attribute_name(:period_amount) %></th>
+      <th><%= ReservationRule.human_attribute_name(:min_periods) %></th>
+      <th><%= ReservationRule.human_attribute_name(:max_periods) %></th>
+      <th><%= ReservationRule.human_attribute_name(:price) %></th>
+      <th><%= ReservationRule.human_attribute_name(:price_per) %></th>
+      <th><%= ReservationRule.human_attribute_name(:price_period_unit) %></th>
+      <th><%= ReservationRule.human_attribute_name(:price_period_amount) %></th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @reservation_rules.each do |reservation_rule| %>
+    <tr>
+      <td><%= name_link_to_show(reservation_rule) %></td>
+      <td><%= reservation_rule.reserve_by %></td>
+      <td><%= reservation_rule.period_unit %></td>
+      <td><%= reservation_rule.localized.period_amount %></td>
+      <td><%= reservation_rule.localized.min_periods %></td>
+      <td><%= reservation_rule.localized.max_periods %></td>
+      <td><%= reservation_rule.localized.price %></td>
+      <td><%= reservation_rule.price_per %></td>
+      <td><%= reservation_rule.price_period_unit %></td>
+      <td><%= reservation_rule.localized.price_period_amount %></td>
+      <td class="icons">
+        <%= icon_link_to_edit(reservation_rule) %>
+        <%= icon_link_to_destroy(reservation_rule) %>
+      </td>
+    </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<%= button_link_to_new(ReservationRule) %>

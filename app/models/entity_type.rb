@@ -62,8 +62,17 @@ class EntityType < ActiveRecord::Base
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
   end
 
-  private
+  def reservation_rules_for_time(time)
+    rules = []
+    self.reservation_rule_scopes.each do |rrs|
+      if rrs.matches?(time)
+        rules += rrs.rules
+      end
+    end
+    rules
+  end
 
+private
   def update_reservations_slack_warnings
     if self.slack_before_changed? || self.slack_after_changed?
       self.entities.each do |entity|

@@ -1,6 +1,6 @@
 class ValidSpanTypeValidator < ActiveModel::EachValidator
   def validate_each(record, attribute, value)
-    record.errors.add(attribute, :invalid) unless record.class::SPAN_SELECTORS[record.repetition_unit.key].include?(value)
+    record.errors.add(attribute, :invalid) unless record.class::SPAN_TYPES[record.repetition_unit.key].include?(value)
   end
 end
 
@@ -10,7 +10,7 @@ class ReservationRuleScope < ActiveRecord::Base
   # Keys of available repetition units to choose from when adding a root level scope.
   # These should be listed in decreasing order of size (time span).
   REPETITION_UNITS = [:infinite, :year, :month, :week, :day]
-  SPAN_SELECTORS = {
+  SPAN_TYPES = {
     year: [:dates, :weeks, :holidays],
     month: [:days, :nr_dow_of]
   }
@@ -18,6 +18,7 @@ class ReservationRuleScope < ActiveRecord::Base
   belongs_to :scopeable, polymorphic: true
   belongs_to :repetition_unit, class_name: 'TimeUnit'
   has_many :spans, class_name: 'ReservationRuleScopeSpan', dependent: :destroy, inverse_of: :scope, foreign_key: 'scope_id'
+  has_many :rules, class_name: 'ReservationRule', dependent: :destroy, inverse_of: :scope, foreign_key: 'scope_id'
 
   symbolize :span_type
 
@@ -26,7 +27,7 @@ class ReservationRuleScope < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 255 }
   validates :repetition_unit_id, presence: true
   validates :repetition_unit, presence: true, if: -> { repetition_unit_id.present? }
-  validates :span_type, presence: true, valid_span_type: { allow_blank: true }, if: -> { self.repetition_unit.present? && SPAN_SELECTORS[self.repetition_unit.key].present? }
+  validates :span_type, presence: true, valid_span_type: { allow_blank: true }, if: -> { self.repetition_unit.present? && SPAN_TYPES[self.repetition_unit.key].present? }
 
   has_ancestry
 
@@ -48,6 +49,31 @@ class ReservationRuleScope < ActiveRecord::Base
 
   def valid_repetition_units
     TimeUnit.where(key: valid_repetition_unit_keys).reorder(seconds: :desc)
+  end
+
+  def matches?(time)
+    self.spans.each do |s|
+      return true if s.matches?(time)
+    end
+    return false
+
+    # TEMP
+    if self.repetition_unit.key == :infinite
+
+    else
+      rule = IceCube::Rule.send(self.repetition_unit.repetition_key)
+
+
+
+      schedule = IceCube::Schedule.new
+      schedule.add_recurrence_rule(rule)
+    end
+  end
+
+  def active
+    self.spans.each do |s|
+
+    end
   end
 
   def instance_name

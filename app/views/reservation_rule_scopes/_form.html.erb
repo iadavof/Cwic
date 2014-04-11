@@ -14,14 +14,15 @@
     <%= f.select :span_type, [],  {}, data: { :'previous-value' => f.object.span_type } %>
   </div>
   <div id="reservation-rule-scope-spans-container" style="display: none;">
-    <%= f.label(:periods, id: 'reservation-rule-scope-periods') %>
-    <div class="nested-form" id="reservation-rule-scope-spans">
-      <%= f.fields_for :spans, wrapper: false do |sf| %>
-        <%= render partial: 'span_fields', locals: { f: sf } %>
-      <% end %>
+    <%= f.label(:active, id: 'reservation-rule-scope-periods') %>
+    <div class="multi-row-fields">
+      <div class="nested-form" id="reservation-rule-scope-spans">
+        <%= f.fields_for :spans, wrapper: false do |sf| %>
+          <%= render partial: 'span_fields', locals: { f: sf } %>
+        <% end %>
+      </div>
+      <%= f.link_to_add '', :spans, data: { target: '#reservation-rule-scope-spans' }, id: 'add-span-wrapper-link', class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScopeSpan.model_name.human.lcfirst) %>
     </div>
-    <div class="clearfix"></div>
-    <%= f.link_to_add '', :spans, data: { target: '#reservation-rule-scope-spans' }, id: 'add-span-wrapper-link', class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationRuleScopeSpan.model_name.human.lcfirst) %>
   </div>
   <div class="actions">
     <%= f.hidden_field :parent_id %>

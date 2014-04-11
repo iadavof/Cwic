@@ -20,6 +20,7 @@ nl:
   to_destroy_object_confirm: 'Weet u zeker dat u %{name} wilt verwijderen?'
   back_to_show_object: 'Terug naar %{name}'
   back_to_index_objects: 'Terug naar lijst met %{classes}'
+  icon_to_new_object: '%{class} aanmaken'
   icon_to_edit_object: '%{name} bewerken'
   icon_to_destroy_object: '%{name} verwijderen'
   to_close_object: 'Sluiten'
@@ -127,6 +128,12 @@ nl:
       reservation_log:
         one: 'Aanpassing'
         other: 'Aanpassingen'
+      reservation_rule_scope:
+        one: 'Reserveringsregelscope'
+        other: 'Reserveringsregelscopes'
+      reservation_rule:
+        one: 'Reserveringsregel'
+        other: 'Reserveringsregels'
     attributes:
       user:
         name: 'Naam'
@@ -280,6 +287,22 @@ nl:
       reservation_status:
         name: 'Naam'
         color: 'Kleur'
+      reservation_rule_scope:
+        name: 'Naam'
+        repetition_unit_id: 'Herhaling'
+        span_type: 'Soort'
+        active: 'Geldig'
+      reservation_rule_scope_span:
+        from: 'van'
+        to: 'tot'
+      reservation_rule:
+        reserve_by: 'Reserveren beperken tot'
+        period_unit_id: 'Reserveer per'
+        min_periods: 'Minimaal aantal periodes'
+        max_periods: 'Maximum aantal periodes'
+        price: 'Prijs'
+        price_per: 'Prijs instellen voor'
+        price_period_unit_id: 'Prijs per'
     errors:
       messages:
         date_blank: "datum moet opgegeven zijn"
@@ -312,6 +335,16 @@ nl:
             repeating_until:
               invalid_date: 'ongeldige datum'
           repeating_until_before_end: 'voor herhalingsreeks valt voor het einde van de eerste reservering'
+    symbolizes:
+      reservation_rule:
+        reserve_by:
+          period: 'Periode'
+          scope: 'Hele scope'
+          free: 'Vrij'
+        price_per:
+          period: 'Periode'
+          reservation: 'Reservering'
+
   data_types:
     string:
       name: 'Regel tekst'

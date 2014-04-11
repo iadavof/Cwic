@@ -3,7 +3,9 @@ div#reservation-rule-scope-span-selector-wrapper {
 }
 
 div#reservation-rule-scope-spans-container {
-  label#reservation-rule-scope-periods {
+  margin-bottom: 1em;
+
+  > label {
     float: left;
   }
 

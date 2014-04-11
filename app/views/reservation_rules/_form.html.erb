@@ -1,0 +1,35 @@
+<%= form_for([@organisation, @scopeable, @scope, @reservation_rule.localized]) do |f| %>
+  <%= render 'shared/error_messages', target: @reservation_rule %>
+
+  <div class="field">
+    <%= f.label :reserve_by %>
+    <%= f.select :reserve_by, ReservationRule.get_reserve_by_values, prompt: true %>
+  </div>
+  <div class="field">
+    <%= f.label :period_unit_id %>
+    <%= f.number_field :period_amount %> <%= f.collection_select :period_unit_id, @reservation_rule.valid_period_units, :id, :human_name, prompt: true %>
+  </div>
+  <div class="field">
+    <%= f.label :min_periods %>
+    <%= f.number_field :min_periods %>
+  </div>
+  <div class="field">
+    <%= f.label :max_periods %>
+    <%= f.number_field :max_periods %>
+  </div>
+  <div class="field">
+    <%= f.label :price %>
+    <%= f.text_field :price %>
+  </div>
+  <div class="field">
+    <%= f.label :price_per %>
+    <%= f.select :price_per, ReservationRule.get_price_per_values, prompt: true %>
+  </div>
+  <div class="field">
+    <%= f.label :price_period_unit_id %>
+    <%= f.number_field :price_period_amount %> <%= f.collection_select :price_period_unit_id, @reservation_rule.valid_period_units, :id, :human_name, prompt: true %>
+  </div>
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

@@ -7,4 +7,11 @@
   <h3><%= t('.scope') %>: <%= reservation_rule_scope.name %></h3>
   <div><%= ReservationRuleScope.human_attribute_name(:repetition_unit) %>: <%= reservation_rule_scope.repetition_unit.try(:repetition_name) %></div>
   <small><%= t('.active') %>: <%#= reservation_rule_scope.spans.map { |span| t('.active_from_to', from: l(span.active_from), to: l(span.active_to)) }.to_sentence %></small>
+  <p>
+    <strong><%= ReservationRule.model_name.human(count: 2) %></strong>
+    <ul>
+      <%= render reservation_rule_scope.rules, owner: owner, reservation_rule_scope: reservation_rule_scope %>
+    </ul>
+    <div><%= icon_link_to_new([@organisation, owner, reservation_rule_scope, ReservationRule.new]) %></div>
+  </p>
 </div>
