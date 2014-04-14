@@ -70,13 +70,8 @@ private
   def check_entity_type_changed(template)
     return false unless params[:entity_type_changed].present?
     @entity.entity_type_id = resource_params[:entity_type_id]
-    build_properties if @entity.entity_type.present?
+    @entity.rebuild_properties
     render template
     true
-  end
-
-  def build_properties
-    @entity.properties.clear
-    @entity.properties.build(@entity.entity_type.properties.map { |pt| { property_type: pt } }).each { |p| p.set_default_value }
   end
 end

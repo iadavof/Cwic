@@ -16,14 +16,14 @@ class Entity < ActiveRecord::Base
   belongs_to :organisation
 
   validates :entity_type_id, presence: true
-  validates :entity_type, presence: true, if: "entity_type_id.present?"
+  validates :entity_type, presence: true, if: 'entity_type_id.present?'
   validates :organisation, presence: true
   validates :color, color: true
 
   validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
 
-  after_initialize :set_initial_color, if: :new_record?
+  after_initialize :init, on: :create
   after_create :create_info_screen_entities
   after_save :update_reservations_slack_warnings
 
@@ -34,12 +34,17 @@ class Entity < ActiveRecord::Base
 
   pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
 
+  def init
+    self.color ||= Cwic::Color.random_hex_color
+    self.build_properties if self.properties.blank?
+  end
+
   def instance_name
     self.name.present? ? self.name : self.default_name
   end
 
   def full_instance_name
-    self.entity_type.name + ': ' + self.name
+    "#{self.entity_type.name}: #{self.name}"
   end
 
   def frontend_name
@@ -84,14 +89,42 @@ class Entity < ActiveRecord::Base
     Cwic::Color.text_color(self.color)
   end
 
-  def set_initial_color
-    self.color = Cwic::Color.random_hex_color
-  end
-
   def create_info_screen_entities
     self.organisation.info_screens.each do |is|
       iset = InfoScreenEntityType.where('entity_type_id = ? AND info_screen_id = ?', self.entity_type.id, is.id).first;
       InfoScreenEntity.create(entity: self, info_screen_entity_type: iset, active: iset.add_new_entities)
     end
+  end
+
+  def rebuild_properties
+    self.properties.clear
+    self.build_properties
+  end
+
+  def build_properties
+    if self.entity_type.present?
+      self.properties.build(self.entity_type.properties.map { |pt| { property_type: pt } }).each { |p| p.set_default_value }
+    end
+  end
+
+  # Set property values by an list/array (matching array index on property index) or hash (matching hash key on property name or index depending on key type)
+  def set_properties(*values)
+    if values.size == 1 && values.first.is_a?(Hash)
+      # We are dealing with a hash
+      values.first.each do |key, index|
+        self.set_property(key, value)
+      end
+    else
+      # We are dealing with a list/array
+      values.flatten.each_with_index do |value, index|
+        self.set_property(index, value)
+      end
+    end
+  end
+
+  def set_property(name_or_index, value)
+    property = self.properties.detect { |p| name_or_index.is_a?(Integer) ? p.property_type.index == name_or_index : p.property_type.name == name_or_index }
+    raise "Unknown property #{name} for entity of type #{self.entity_type.instance_name}" if property.nil?
+    property.value = value
   end
 end
