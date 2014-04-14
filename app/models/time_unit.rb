@@ -1,7 +1,7 @@
 class TimeUnit < ActiveRecord::Base
   include I18n::Alchemy
 
-  validates :key, presence: true, length: { maximum: 255 }, uniqueness: true
+  validates :key, presence: true, uniqueness: true, length: { maximum: 255 }
   validates :seconds, numericality: { only_integer: true }, allow_nil: true
 
   default_scope { order('seconds ASC') }
