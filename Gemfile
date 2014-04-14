@@ -132,6 +132,9 @@ gem 'hash_to_hidden_fields'
 # Validator for timeliness of dates
 gem 'validates_timeliness'
 
+# Make ActiveRecord objects deep clonable (dup) including associations
+gem 'deep_cloneable'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
