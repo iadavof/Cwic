@@ -83,7 +83,7 @@ APP.reservations = {
         type: 'PATCH',
         url: Routes.organisation_reservations_update_status_path(current_organisation, selectorDiv.data('reservation-id')) + '.json',
         data: {
-          status_id: new_status_id,
+          status_id: new_status_id
         }
       }).success(function(response) {
         selectorDiv.find('p.saved-notification').show();
@@ -96,47 +96,60 @@ APP.reservations = {
 
     });
   },
+  showHideWeekdayMonthdaySelectors: function() {
+    var value = $(this).find('option:selected').data('key');
+    $('div.recurrence_definition_fields div.recurrence_definition_monthly, div.recurrence_definition_fields div.recurrence_definition_weekly').hide();
+    if(value == 'week') {
+      $('div.recurrence_definition_fields div.recurrence_definition_weekly').show();
+    } else if(value == 'month') {
+      $('div.recurrence_definition_fields div.recurrence_definition_monthly').show();
+    }
+  },
+  showHideRecurrenceFields: function() {
+    if($(this).is(':checked')) {
+      $('div.recurrence_definition_fields').show();
+      $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').trigger('change');
+    } else {
+      $('div.recurrence_definition_fields').hide();
+    }
+  },
+  showHideRepeatingEndInstancesOrUntil: function() {
+    var value = $(this).val();
+    if($(this).is(':checked')) {
+      if(value == 'until') {
+        $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').show();
+        $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').val('').hide().trigger('change');
+      } else if(value == 'instances') {
+        $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').show();
+        $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').val('').hide().trigger('change');
+      }
+    }
+  },
+  setRepeatingEveryUnitLabel: function() {
+    var value = $(this).find('option:selected').data('key');
+    $('span.repeating_every_unit').hide();
+    if(value == '') {
+      return;
+    }
+    $('span.repeating_every_unit#repeating_every_unit_' + value).show();
+  },
   bindReservationRecurrenceControls: function() {
-    $('select#reservation_reservation_recurrence_definition_attributes_repeating_unit').on('change', function() {
-      var value = $(this).find('option:selected').data('key');
-      $('div.recurrence_definition_fields div.recurrence_definition_monthly, div.recurrence_definition_fields div.recurrence_definition_weekly').hide();
-      if(value == 'week') {
-        $('div.recurrence_definition_fields div.recurrence_definition_weekly').show();
-      } else if(value == 'month') {
-        $('div.recurrence_definition_fields div.recurrence_definition_monthly').show();
-      }
-    });
+    var repeatingUnitField = $('select#reservation_reservation_recurrence_definition_attributes_repeating_unit_id');
+    repeatingUnitField.on('change', APP.reservations.showHideWeekdayMonthdaySelectors);
+    repeatingUnitField.on('change', APP.reservations.setRepeatingEveryUnitLabel);
+    // call the "on change" function on page load to restore browser cached input selection
+    APP.reservations.showHideWeekdayMonthdaySelectors.call(repeatingUnitField);
+    APP.reservations.setRepeatingEveryUnitLabel.call(repeatingUnitField);
 
-    $('input[name="reservation[reservation_recurrence_definition_attributes][repeating]"]').on('change', function() {
-      if($(this).is(':checked')) {
-        $('div.recurrence_definition_fields').show();
-        $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').trigger('change');
-      } else {
-        $('div.recurrence_definition_fields').hide();
-      }
-    });
 
-    $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').on('change', function() {
-      var value = $(this).val();
-      if($(this).is(':checked')) {
-        if(value == 'until') {
-          $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').show();
-          $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').val('').hide().trigger('change');
-        } else if(value == 'instances') {
-          $('input#reservation_reservation_recurrence_definition_attributes_repeating_instances').show();
-          $('input#reservation_reservation_recurrence_definition_attributes_repeating_until').val('').hide().trigger('change');
-        }
-      }
-    });
+    $('input[name="reservation[reservation_recurrence_definition_attributes][repeating]"]').on('change', APP.reservations.showHideRecurrenceFields);
+    $('input#reservation_reservation_recurrence_definition_attributes_repeating_end_until, input#reservation_reservation_recurrence_definition_attributes_repeating_end_instances').on('change', APP.reservations.showHideRepeatingEndInstancesOrUntil);
 
+    // Binding on click for weekday and monthday selectors
     $('div.repeating_monthdays_selector, div.repeating_weekdays_selector').on('click', 'label', function() {
       label = $(this);
-      // Because of the For attribute in the label, the checkbox will change when clicking on the label. We do not need to handle this here
-      if(label.hasClass('active')) {
-        label.removeClass('active');
-      } else {
-        label.addClass('active');
-      }
+      // Because of the For attribute in the label, the checkbox will change when clicking on the label. We do not need to handle this here.
+      label.hasClass('active') ? label.removeClass('active') : label.addClass('active');
     });
 
     // Setting the values after reload.
@@ -151,5 +164,5 @@ APP.reservations = {
         $("label[for='"+$(this).attr('id')+"']").addClass('active');
       }
     });
-  },
-}
+  }
+};

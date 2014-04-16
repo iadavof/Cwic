@@ -15,7 +15,7 @@ GIT
 
 GIT
   remote: git://github.com/kreintjes/gistyle.git
-  revision: d7877e902c0f087af2330c364a4580e3a94fa8ca
+  revision: 1b7046763064b61e15438045f5ec3d7afa7017c6
   specs:
     gistyle (0.9.7)
 
@@ -140,7 +140,7 @@ GEM
       rack (~> 1.2)
     hike (1.2.3)
     i18n (0.6.9)
-    ice_cube (0.11.1)
+    ice_cube (0.12.0)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
       multi_json (>= 1.2.0)

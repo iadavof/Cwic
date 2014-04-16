@@ -567,6 +567,13 @@ nl:
       delete:
         are_you_sure_you_want_delete: 'Weet je het zeker dat je onderstaande reserveringen wilt verwijderen?'
 
+  reservation_recurrence_definitions:
+    form_fields:
+      repeating_every_unit_days: 'dag(en)'
+      repeating_every_unit_weeks: 'week(en)'
+      repeating_every_unit_months: 'maand(en)'
+      repeating_every_unit_years: 'jaar'
+
   info_screens:
     form:
       selected_entity_types: 'Geselecteerde objecttypen'

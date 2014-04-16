@@ -23,6 +23,10 @@
 		<div  class="field">
 			<%= f.label :repeating_every %>
 			<%= f.select :repeating_every, f.object.repeating_every_choices %>
+			<span id="repeating_every_unit_day" class="repeating_every_unit"><%= t('.repeating_every_unit_days') %></span>
+			<span id="repeating_every_unit_week" class="repeating_every_unit"><%= t('.repeating_every_unit_weeks') %></span>
+			<span id="repeating_every_unit_month" class="repeating_every_unit"><%= t('.repeating_every_unit_months') %></span>
+			<span id="repeating_every_unit_year" class="repeating_every_unit"><%= t('.repeating_every_unit_years') %></span>
 		</div>
 			<div  class="field">
 				<%= f.label :repeating_end %>

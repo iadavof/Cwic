@@ -18,4 +18,12 @@ class TimeUnit < ActiveRecord::Base
   def instance_name
     self.key
   end
+
+  def ==(other)
+    if other.is_a?(Symbol)
+      self.key == other.to_s
+    else
+      super
+    end
+  end
 end
