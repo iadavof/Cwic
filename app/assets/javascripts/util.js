@@ -81,3 +81,17 @@ $.size = function(obj) {
     return size;
   }
 }
+
+jQuery.event.copy = function (from, to) {
+    from = from.jquery ? from : jQuery(from);
+    to = to.jquery ? to : jQuery(to);
+
+    var events = from[0].events || jQuery.data(from[0], "events") || jQuery._data(from[0], "events");
+    if (!from.length || !to.length || !events) return;
+
+    return to.each(function () {
+        for (var type in events)
+        for (var handler in events[type])
+        jQuery.event.add(this, type, events[type][handler], events[type][handler].data);
+    });
+};

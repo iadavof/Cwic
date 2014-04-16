@@ -270,7 +270,6 @@ div.calendar div.schedule-body {
   position: relative;
   overflow: hidden;
   margin-top: 1px;
-  padding-top: 5px;
 }
 
 div.calendar div.schedule-body div.row {
@@ -1009,7 +1008,7 @@ div.calendar div.schedule-body div.column div.schedule-item p.item-text {
   left: 0;
   width: 100%;
   text-align: center;
-  padding: 17px;
+  padding: 10px 15px;
   overflow: hidden;
   max-height: 100%;
   box-sizing: border-box;

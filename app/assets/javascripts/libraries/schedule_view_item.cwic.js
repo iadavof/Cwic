@@ -69,7 +69,7 @@ CwicScheduleViewItem.prototype.setSlack = function(before, after) {
 CwicScheduleViewItem.prototype.applyGlow = function(kind, on) {
   var domObjectsSItems = $(this.getDomObjects()).find('div.schedule-item');
   (on) ? domObjectsSItems.addClass(kind + '-glow') : domObjectsSItems.removeClass(kind + '-glow');
-}
+};
 
 CwicScheduleViewItem.prototype.relativeSlackPercentage = function(slackBegin, begin, slackEnd) {
   var totalWrapperTimeLength = slackEnd.diff(slackBegin);
@@ -104,6 +104,8 @@ CwicScheduleViewItem.prototype.renderPart = function(jschobj, momentBlock) {
   newScheduleItem.find('p.item-text').text(this.description);
 
   jschobj.append(newScheduleItemWrapper);
+
+  (newScheduleItem.width() < 40) ? newScheduleItem.find('div.status').hide() : newScheduleItem.find('div.status').show();
 
   return newScheduleItemWrapper;
 };
@@ -198,17 +200,18 @@ CwicScheduleViewItem.prototype.resizeConcept = function(side, newMoment) {
   if(side == 'backwards') {
     if(newMoment.isSame(this.getConceptBegin())) {
       // Nothing changed, move on
-      return;
+      return this.getDomObjects();
     }
     this.conceptBegin = moment(newMoment);
   } else {
     if(newMoment.isSame(this.getConceptEnd())) {
       // Nothing changed, move on
-      return;
+      return this.getDomObjects();
     }
     this.conceptEnd = moment(newMoment);
   }
   this.rerender(true);
+  return this.getDomObjects();
 };
 
 CwicScheduleViewItem.prototype.conceptDiffersWithOriginal = function() {
@@ -344,23 +347,13 @@ CwicScheduleViewItem.prototype.deepRerender = function(concept) {
 };
 
 CwicScheduleViewItem.prototype.addResizers = function(schedulePartWrapper, back, forward) {
-  if(this.schedule.options.view == 'horizontalCalendar') {
-    back ? schedulePartWrapper.find('div.resizer.left').show() : schedulePartWrapper.find('div.resizer.left').hide();
-    forward ? schedulePartWrapper.find('div.resizer.right').show() : schedulePartWrapper.find('div.resizer.right').hide();
-  } else if (this.schedule.options.view == 'verticalCalendar') {
-    back ? schedulePartWrapper.find('div.resizer.top').show() : schedulePartWrapper.find('div.resizer.top').hide();
-    forward ? schedulePartWrapper.find('div.resizer.bottom').show() : schedulePartWrapper.find('div.resizer.bottom').hide();
-  }
+  back ? schedulePartWrapper.find('div.resizer.'+ this.schedule.cssLeftOrTop()).show() : schedulePartWrapper.find('div.resizer.' + this.schedule.cssLeftOrTop()).hide();
+  forward ? schedulePartWrapper.find('div.resizer.' + this.schedule.cssRightOrBottom()).show() : schedulePartWrapper.find('div.resizer.' + this.schedule.cssRightOrBottom()).hide();
 };
 
 CwicScheduleViewItem.prototype.showContinues = function(schedulePartWrapper, back, forward) {
-  if(this.schedule.options.view == 'horizontalCalendar') {
-    back ? schedulePartWrapper.find('div.continue.left').show() : schedulePartWrapper.find('div.continue.left').hide();
-    forward ? schedulePartWrapper.find('div.continue.right').show() : schedulePartWrapper.find('div.continue.right').hide();
-  } else if (this.schedule.options.view == 'verticalCalendar') {
-    back ? schedulePartWrapper.find('div.continue.top').show() : schedulePartWrapper.find('div.continue.top').hide();
-    forward ? schedulePartWrapper.find('div.continue.bottom').show() : schedulePartWrapper.find('div.continue.bottom').hide();
-  }
+  back ? schedulePartWrapper.find('div.continue.' + this.schedule.cssLeftOrTop()).show() : schedulePartWrapper.find('div.continue.' + this.schedule.cssLeftOrTop()).hide();
+  forward ? schedulePartWrapper.find('div.continue.' + this.schedule.cssRightOrBottom()).show() : schedulePartWrapper.find('div.continue.' + this.schedule.cssRightOrBottom()).hide();
 };
 
 CwicScheduleViewItem.prototype.getMomentsBlock = function() {
@@ -489,17 +482,17 @@ CwicScheduleViewItem.prototype.bindDragAndResizeControls = function() {
   }.reset();
 
   var scheduleBody = this.schedule.scheduleContainer.find('div.schedule-body');
-  scheduleBody.on('movestart.dragresize', 'div.schedule-item-wrapper.focused div.schedule-item', function(e) { _this.dragAndResizeDown(e, context); });
-  scheduleBody.on('move.dragresize', function(e) { _this.dragAndResizeMove(e, context); });
-  scheduleBody.on('moveend.dragresize', function(e) { _this.dragAndResizeUp(e, context); });
+  scheduleBody.on('pointerdown.dragresize', function(e) { _this.dragAndResizeDown(e, context); });
+  scheduleBody.on('pointermove.dragresize', function(e) { _this.dragAndResizeMove(e, context); });
+  scheduleBody.on('pointerup.dragresize', function(e) { _this.dragAndResizeUp(e, context); });
   $(document).on('keyup.cancelDragOrResize', function(e) { _this.dragAndResizeEsc(e, context);});
 };
 
 CwicScheduleViewItem.prototype.unbindDragAndResizeControls = function() {
   var scheduleBody = this.schedule.scheduleContainer.find('div.schedule-body');
-  scheduleBody.off('movestart.dragresize');
-  scheduleBody.off('move.dragresize');
-  scheduleBody.off('moveend.dragresize');
+  scheduleBody.off('pointerdown.dragresize');
+  scheduleBody.off('pointermove.dragresize');
+  scheduleBody.off('pointerup.dragresize');
   $(document).off('keyup.cancelDragOrResize');
 };
 
@@ -516,12 +509,12 @@ CwicScheduleViewItem.prototype.dragAndResizeEsc = function(event, context) {
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeDown = function(event, context) {
-  console.debug(event.type);
   context.pointerDown = true;
-  var scheduleItemDOM = $(event.target);
-  context.container = scheduleItemDOM.closest('div.schedule-object-item-parts');
+  // Get the dom element which is pointed
+  var pointed = this.schedule.getElementForPoint(event);
+  context.container = this.schedule.getContainerForPoint(event);
   // Check if drag started on resize handle
-  var handle = $(event.target).closest('div.resizer');
+  var handle = pointed.closest('div.resizer');
   if(handle.length !== 0) { // resize mode
     context.side = (handle.hasClass('left') || handle.hasClass('top') ? 'backwards' : 'forwards');
   } else { // drag mode
@@ -532,30 +525,45 @@ CwicScheduleViewItem.prototype.dragAndResizeDown = function(event, context) {
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
-  console.debug(event.type);
   if(context.pointerDown) {
-    // Get the something we clicked on
-    var scheduleItemClickedDom = $(event.target);
+    event.preventDefault();
 
     // Are we in a different row or column?
-    var newRow = scheduleItemClickedDom.closest('div.schedule-object-item-parts');
+    // We cannot use the event.target here because with touch events, this is not updated upon a move event.
+    // We need to get this information based on the event coordinates.
+    var newRow = schedule.getContainerForPoint(event);
     if(newRow.length > 0) {
       context.container = newRow;
     }
 
+    // Get the event information from the current scheduleItemDom
+    var pointed = this.schedule.getElementForPoint(event);
+    var events = pointed.events || jQuery.data(pointed, "events") || jQuery._data(pointed, "events");
+    console.debug('events', events);
     var rel = this.schedule.getPointerRel(event, context.container);
     var newMoment = this.schedule.nearestMomentPoint(rel, context.container);
+
+    var newDoms;
     if(context.side === null) { // drag item mode
       // correct position in schedule-item, because we want to know the begin position of this item.
       // rel can be negative if item is dragged to previous day.
       if(!newMoment.isSame(context.lastDragMoment)) {
         var dragMomentDiffMS = moment(newMoment).diff(context.dragStartMoment);
-        var newDoms = this.applyTimeDiffConcept(dragMomentDiffMS);
+        newDoms = this.applyTimeDiffConcept(dragMomentDiffMS);
         context.lastDragMoment = newMoment;
       }
     } else { // resize mode
-      this.resizeConcept(context.side, newMoment);
+      newDoms = this.resizeConcept(context.side, newMoment);
     }
+
+    // Reattach events
+    $(newDoms).each(function () {
+      for (var type in events) {
+        for (var handler in events[type]) {
+          jQuery.event.add(this, type, events[type][handler], events[type][handler].data);
+        }
+      }
+    });
   }
 };
 
@@ -567,7 +575,6 @@ CwicScheduleViewItem.prototype.checkGlowState = function() {
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeUp = function(event, context) {
-  console.debug(event.type);
   context.pointerDown = false;
   if(this.conceptCollidesWithOthers() || !this.checkEndAfterBegin(true)) {
     this.resetConcept();

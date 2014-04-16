@@ -196,9 +196,6 @@ CwicScheduleView.prototype.bindControls = function() {
   // Bind the controls for the previous/next page of the schedule navigation
   this.bindNavigationControls();
 
-  // Bind the controls for directly manipulating the reservations in the schedule view
-  this.bindNewReservationDragControls();
-
   // Bind the buttons in the expanding toolbar menu when clicking on a schedule item
   this.bindEditModeEvents();
 
@@ -350,6 +347,15 @@ CwicScheduleView.prototype.stopEditMode = function(callback) {
   });
 };
 
+CwicScheduleView.prototype.startNewReservationMode = function() {
+  // Bind the controls for directly manipulating the reservations in the schedule view
+  this.bindNewReservationDragControls();
+};
+
+CwicScheduleView.prototype.sopNewReservationMode = function() {
+
+};
+
 CwicScheduleView.prototype.closeToolbar = function(callback) {
     schedule.scheduleContainer.find('.schedule-body, .left-axis').each(function() {
       $(this).animate({ 'padding-top': $(this).data('original-padding-top') }, 200);
@@ -452,7 +458,17 @@ CwicScheduleView.prototype.getScheduleItemForDOMObject = function(ScheDOM) {
 CwicScheduleView.prototype.getPointerRel = function(event, container) {
   console.debug(event);
   var offset = $(container).offset();
-  return (this.options.view == 'horizontalCalendar') ? event.pageX - offset.left : event.pageY - offset.top;
+  return (this.options.view == 'horizontalCalendar') ? event.originalEvent.pageX - offset.left : event.originalEvent.pageY - offset.top;
+};
+
+CwicScheduleView.prototype.getContainerForPoint = function(event) {
+  var pointedElement = document.elementFromPoint(event.originalEvent.pageX, event.originalEvent.pageY);
+  return $(pointedElement).closest('div.schedule-object-item-parts');
+};
+
+CwicScheduleView.prototype.getElementForPoint = function(event) {
+  var pointedElement = document.elementFromPoint(event.originalEvent.pageX, event.originalEvent.pageY);
+  return $(pointedElement);
 };
 
 CwicScheduleView.prototype.showStatusMessage = function(content, ajax_wait, delay) {
@@ -540,9 +556,10 @@ CwicScheduleView.prototype.bindNewReservationDragControls = function() {
     }
   }.reset();
 
-  this.scheduleContainer.find('.schedule-body').on('movestart', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) { schedule.newReservationDown(event, context); });
-  this.scheduleContainer.find('.schedule-body').on('move', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) { schedule.newReservationMove(event, context); });
-  $('html').on('moveend', function(event) { schedule.newReservationUp(event, context); });
+  var body = this.scheduleContainer.find('schedule-body');
+  body.on('pointerdown.newreservation', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) { schedule.newReservationDown(event, context); });
+  body.on('pointermove.newreservation', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) { schedule.newReservationMove(event, context); });
+  $('html').on('pointerup.newreservation', function(event) { schedule.newReservationUp(event, context); });
 
   $(document).on('keyup.escape_new_reservation', function(e) {
     if (e.keyCode == 27) {
@@ -554,6 +571,12 @@ CwicScheduleView.prototype.bindNewReservationDragControls = function() {
     $(document).off('keyup.escape_new_reservation');
   });
 
+};
+
+CwicScheduleView.prototype.unbindNewReservationDragControls = function() {
+  var body = this.scheduleContainer.find('schedule-body');
+  body.off('pointerdown.newreservation pointermove.newreservation');
+  $('html').off('pointerup.newreservation');
 };
 
 CwicScheduleView.prototype.newReservationDown = function(event, context) {
