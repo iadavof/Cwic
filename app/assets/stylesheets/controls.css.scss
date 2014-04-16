@@ -100,10 +100,26 @@ input[type="file"].replaced {
   color: inherit;
 }
 
-.cwic-dropdown.open .cwic-dropdown-options {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+.cwic-dropdown.open
+.cwic-dropdown-options,
+.cwic-dropdown:focus {
   border: 1px solid #999;
   height: auto;
+}
+
+.select2-drop {
+  border-radius: 0;
+  color: inherit;
+}
+
+.select2-container-active,
+.select2-container-active,
+.select2-dropdown-open,
+.select2-drop,
+.cwic-dropdown:focus,
+.cwic-dropdown.open .cwic-dropdown-options {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  outline: none;
 }
 
 .cwic-dropdown .cwic-dropdown-options .cwic-dropdown-current-option {
@@ -185,6 +201,17 @@ input[type="file"].replaced {
 .cwic-radio-button {
   position: relative;
   margin: 5px;
+}
+
+.cwic-checkbox:focus,
+.cwic-radio-button:focus {
+  outline: none;
+}
+
+.cwic-checkbox:focus > .inner,
+.cwic-radio-button:focus > .inner {
+  border-color: #999;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .cwic-radio-button > .inner {
@@ -283,20 +310,6 @@ input[type="file"].replaced {
 .select2-dropdown-open .select2-choice,
 .select2-drop {
   border-color: #999;
-}
-
-.select2-drop {
-  border-radius: 0;
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  color: inherit;
-}
-
-.select2-dropdown-open {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-}
-
-.select2-container-active, .select2-container-active {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
 }
 
 .select2-container:hover .select2-choice .select2-arrow:before,
