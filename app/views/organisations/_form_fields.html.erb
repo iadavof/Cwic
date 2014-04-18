@@ -4,14 +4,15 @@
         <%= f.label :name %>
         <%= f.text_field :name %>
       </div>
-        <div class="field">
-          <%= f.label :phone_general %>
-          <%= f.text_field :phone_general %>
-        </div>
-        <div class="field">
-          <%= f.label :phone_reservations %>
-          <%= f.text_field :phone_reservations %>
-        </div>
+      <div class="field">
+        <%= f.label :phone_general %>
+        <%= f.text_field :phone_general %>
+      </div>
+      <div class="field">
+        <%= f.label :phone_reservations %>
+        <%= f.text_field :phone_reservations %>
+      </div>
+
       <div class="field">
         <label for="addresspicker" class="required"><%=t('.address') %></label>
         <input type="text" id="addresspicker" placeholder="<%= t('.search_address') %>" />
@@ -51,6 +52,7 @@
       <%= f.hidden_field :lng, class: "addresspicker-lng" %>
       <%= f.hidden_field :lat, class: "addresspicker-lat" %>
     </div>
+
     <div class="address-map" id="addresspicker-map">
       <img class="ajax_wait" />
     </div>

@@ -1,8 +1,5 @@
 APP.organisations = {
-	_form: function() {
-	},
 	afterGoogleMapsLoaded: function() {
-
 		$('#addresspicker-map img').remove();
 
 		var addresspickerMap = $('#addresspicker').addresspicker({

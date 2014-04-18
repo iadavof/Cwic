@@ -1,7 +1,7 @@
 APP.registrations = {
-  init: function() {
-  	APP.organisations.addAddressPickerToForm();
-  },
+  afterGoogleMapsLoaded: function() {
+    APP.organisations.afterGoogleMapsLoaded();
+  }
 }
 
 APP.sessions = {
