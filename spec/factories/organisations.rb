@@ -1,11 +1,7 @@
 # Let op: deze factory wordt ook gebruikt door de SeedHelper
 FactoryGirl.define do
-  factory :organisation_client do
-    organisation
-
-    first_name                  { Forgery(:name).first_name }
-    last_name                   { Forgery(:name).last_name }
-    email                       { Forgery(:email).address }
+  factory :organisation do
+    name                        { Forgery(:name).company_name }
     route                       { Forgery(:address).street_address }
     street_number               { Forgery(:address).street_number }
     locality                    { Forgery(:address).city }
@@ -13,7 +9,5 @@ FactoryGirl.define do
     administrative_area_level_1 { Forgery(:address).state }
     country                     { Forgery(:address).country }
     postal_code                 { Forgery(:address).zip }
-    phone                       { Forgery(:address).phone }
-    mobile_phone                { Forgery(:address).phone }
   end
 end
