@@ -161,7 +161,6 @@ APP.entity_types = {
         .cwicControl();
     } else {
       // Enum: transform fields to radio buttons and make sure there can only be one selected at the same time.
-      console.debug(propertyOptionWrapper.find('.default-field'));
       propertyOptionWrapper.find('.default-field').cwicControl('destroy');
       propertyOptionWrapper.find('.default-field')
         .attr('type', 'radio')
