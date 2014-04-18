@@ -5,6 +5,7 @@ class Sticky < ActiveRecord::Base
   belongs_to :user
   belongs_to :organisation
 
+  validates :organisation, presence: true
   validates :stickable, presence: true
   validates :user, presence: true
   validates :weight, numericality: true, allow_nil: true
