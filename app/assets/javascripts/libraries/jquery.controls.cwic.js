@@ -18,8 +18,6 @@
         cwic_controls.dropdown.bindEvents(dropdown, dropdownReplacement);
       },
       bindEvents: function(dropdown, dropdownReplacement) {
-        // Bind events
-
         /* Update dropdown when value of select element changes */
         dropdown.on('change.cwicControl change.cwicDropdown keyup.cwicControl keyup.cwicDropdown click.cwicControl click.cwicDropdown', function(e) {
           var selectedOption = $(this).find('option:selected');
@@ -184,16 +182,16 @@
           fileField.val() ? fileFieldReplacement.addClass('filled').text(fileField.val()) : fileFieldReplacement.removeClass('filled');
         });
 
-        fileFieldReplacement.on('click', function(e) { cwic_controls.file_field.openFileExplorer(); });
+        fileFieldReplacement.on('click', function(e) { cwic_controls.file_field.openFileExplorer(fileField); });
 
         // Make sure we can select this dropdown with tab
         fileFieldReplacement.attr('tabindex', '0');
         fileFieldReplacement.on('keyup', function (event) { cwic_controls.file_field.keyEventsHandler(event, fileField, fileFieldReplacement); });
       },
-      openFileExplorer: function(filefield) {
+      openFileExplorer: function(fileField) {
         fileField.trigger('click');
       },
-      keyEventsHandler: function(event, checkbox, checkboxReplacement) {
+      keyEventsHandler: function(event, fileField, fileFieldReplacement) {
         switch(event.which) {
           case 13: // Enter
           case 32: // Space
