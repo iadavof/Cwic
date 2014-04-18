@@ -3,6 +3,7 @@ class InfoScreenEntityType < ActiveRecord::Base
   belongs_to :entity_type
 
   has_many :info_screen_entities, dependent: :destroy, inverse_of: :info_screen_entity_type
+  has_many :entities, through: :info_screen_entities
 
   validates :info_screen, presence: true
   validates :entity_type, presence: true
