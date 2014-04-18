@@ -13,22 +13,17 @@ class EntityProperty < ActiveRecord::Base
   validates :value, numericality: { only_integer: true }, allow_blank: true, if: :integer?
   validates :value, numericality: true, allow_blank: true, if: :float?
 
+  after_initialize :init, if: :new_record?
   after_find :cast_value
   before_validation :parse_value
 
-  delegate :required?, :string?, :integer?, :float?, :single_option?, :multiple_options?, to: :property_type
+  delegate :required?, :string?, :integer?, :float?, :has_options?, :single_option?, :multiple_options?, to: :property_type
 
   default_scope { includes(:property_type).order('entity_type_properties.name') }
 
-  def set_default_value
-    if self.multiple_options?
-      self.values = self.property_type.options.where(default: true)
-    elsif self.single_option?
-      default = self.property_type.options.where(default: true)
-      self.value = default.first.id if default.present?
-    else
-      self.value = self.property_type.default_value
-    end
+  def init
+    # Set default value if value is not already set
+    set_default_value if self.value.nil? && self.values.empty?
   end
 
   def formatted_value
@@ -38,6 +33,27 @@ class EntityProperty < ActiveRecord::Base
     else
       # We are dealing with a simple single value property (primitive type or enum). Format it by letting the entity_property type format it.
       self.property_type.format_value(self.value)
+    end
+  end
+
+  def set_value(value)
+    if self.has_options? && !value.nil?
+      values = [value].flatten
+      raise "Not all values are of the same type" if values.map(&:class).uniq.size > 1
+      if values.first.is_a?(EntityTypePropertyOption)
+        values = values
+      elsif values.first.is_a?(Fixnum)
+        values = self.property_type.options.find(values)
+      elsif values.first.is_a?(String)
+        values = self.property_type.options.where(name: values)
+      end
+      if self.single_option?
+        self.value = values.first.id
+      else
+        self.values = values
+      end
+    else
+      self.value = value
     end
   end
 
@@ -51,6 +67,18 @@ class EntityProperty < ActiveRecord::Base
   end
 
 private
+  def set_default_value
+    return if self.property_type.nil?
+    if self.multiple_options?
+      default = self.property_type.options.where(default: true)
+    elsif self.single_option?
+      default = self.property_type.options.where(default: true).first
+    else
+      default = self.property_type.default_value
+    end
+    self.set_value(default)
+  end
+
   def cast_value
     if self.multiple_options?
       self.value = self.values.present? # Needed to let the required validation for multiple option properties work.

@@ -8,8 +8,7 @@ class Entity < ActiveRecord::Base
   has_many :day_occupations, dependent: :destroy
   has_many :week_occupations, dependent: :destroy
   has_many :info_screen_entities, dependent: :destroy
-
-  has_many :stickies, as: :stickable, dependent: :destroy
+  has_many :stickies, as: :stickable, dependent: :destroy, inverse_of: :stickable
   has_many :entity_images, as: :entity_imageable, dependent: :destroy
 
   belongs_to :entity_type, counter_cache: true
@@ -23,7 +22,7 @@ class Entity < ActiveRecord::Base
   validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
 
-  after_initialize :init, on: :create
+  after_initialize :init, if: :new_record?
   after_create :create_info_screen_entities
   after_save :update_reservations_slack_warnings
 
@@ -103,7 +102,7 @@ class Entity < ActiveRecord::Base
 
   def build_properties
     if self.entity_type.present?
-      self.properties.build(self.entity_type.properties.map { |pt| { property_type: pt } }).each { |p| p.set_default_value }
+      self.properties.build(self.entity_type.properties.map { |pt| { property_type: pt } })
     end
   end
 
@@ -125,6 +124,6 @@ class Entity < ActiveRecord::Base
   def set_property(name_or_index, value)
     property = self.properties.detect { |p| name_or_index.is_a?(Integer) ? p.property_type.index == name_or_index : p.property_type.name == name_or_index }
     raise "Unknown property #{name} for entity of type #{self.entity_type.instance_name}" if property.nil?
-    property.value = value
+    property.set_value(value)
   end
 end
