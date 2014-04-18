@@ -3,7 +3,6 @@
     dropdown: {
       create: function(dropdown) {
         // Generate dropdown and add it to DOM
-
         var options = dropdown.find('option');
         var defaultOption = dropdown.find('option:selected');
         var dropdownReplacement = $('<div class="cwic-dropdown" data-name="' + dropdown.attr('name') + '"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div><div class="cwic-dropdown-options"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div></div></div>');
@@ -43,7 +42,6 @@
 
         // Make sure we can select this dropdown with tab
         dropdownReplacement.attr('tabindex', '0');
-        dropdownReplacement.on('keyup', function (event) { cwic_controls.dropdown.keyEventsHandler(event, dropdown, dropdownReplacement); });
 
         /* Update select element when dropdown option is clicked */
         dropdownReplacement.find('.cwic-dropdown-option').each(function() {
@@ -63,15 +61,6 @@
           }
         });
       },
-      keyEventsHandler: function(event, dropdown, dropdownReplacement) {
-        console.debug(event.which);
-        switch(event.which) {
-          case 9:
-            break;
-          default: return false;
-        }
-        return false;
-      },
       destroy: function(dropdown) {
         // Destroy the dropdown and unbind events from select element
         var dropdownReplacement = $(dropdown).next('.cwic-dropdown');
@@ -80,7 +69,6 @@
       },
       recreate: function(dropdown) {
         // Destroy the dropdown and create it again
-
         cwic_controls.dropdown.destroy(dropdown);
         cwic_controls.dropdown.create(dropdown);
       },
@@ -121,13 +109,11 @@
         radioButton.off('.cwicRadioButton').removeClass('replaced');
       },
       keyEventsHandler: function(event, radioButton, radioButtonReplacement) {
-        console.debug(event.which);
         switch(event.which) {
-          case 13:
-          case 32:
+          case 13: // Enter
+          case 32: // Space
             cwic_controls.radio_button.changeValue(radioButton, radioButtonReplacement);
             break;
-          default: return false;
         }
         return false;
       },
@@ -167,11 +153,10 @@
       },
       keyEventsHandler: function(event, checkbox, checkboxReplacement) {
         switch(event.which) {
-          case 13:
-          case 32:
+          case 13: // Enter
+          case 32: // Space
             cwic_controls.checkbox.changeValue(checkbox, checkboxReplacement);
             break;
-          default: return false;
         }
         return false;
       },
@@ -210,8 +195,8 @@
       },
       keyEventsHandler: function(event, checkbox, checkboxReplacement) {
         switch(event.which) {
-          case 13:
-          case 32:
+          case 13: // Enter
+          case 32: // Space
             cwic_controls.file_field.openFileExplorer(fileField);
             break;
           default: return false;
