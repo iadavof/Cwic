@@ -135,6 +135,12 @@ gem 'validates_timeliness'
 # Make ActiveRecord objects deep clonable (dup) including associations
 gem 'deep_cloneable'
 
+# Factory girl to generate data for tests (this is a replacement for fixtures)
+gem 'factory_girl_rails'
+
+# The forgery fake data generator (useful for testing)
+gem 'forgery'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
@@ -149,12 +155,6 @@ end
 group :test, :development do
   # The RSpec testing framework
   gem 'rspec-rails'
-
-  # Factory girl to generate data for tests (this is a replacement for fixtures)
-  gem 'factory_girl_rails'
-
-  # The forgery fake data generator (useful for testing)
-  gem 'forgery'
 
   # The debugger gem
   gem 'debugger'
