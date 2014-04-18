@@ -7,7 +7,9 @@ class EntityTypeIcon < ActiveRecord::Base
 
   mount_uploader :image, EntityTypeIconUploader
 
-  validates :name, presence: true, length: { maximum: 255 }
+  validates :name, presence: true, uniqueness: true, length: { maximum: 255 }
+
+  pg_global_search against: { name: 'A' }
 
   def instance_name
     self.name

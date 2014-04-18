@@ -27,7 +27,6 @@ class InfoScreensController < ApplicationController
 
   # GET /info_screens/new
   def new
-    @info_screen.initialize_entity_types_and_entities
     respond_with(@info_screen)
   end
 
@@ -40,19 +39,19 @@ class InfoScreensController < ApplicationController
   def create
     @info_screen.attributes = resource_params
     @info_screen.save
-    redirect_to action: "index"
+    redirect_to action: :index
   end
 
   # PATCH/PUT /info_screens/1
   def update
     @info_screen.update_attributes(resource_params)
-    redirect_to action: "index"
+    redirect_to action: :index
   end
 
   # DELETE /info_screens/1
   def destroy
     @info_screen.destroy
-    redirect_to action: "index"
+    redirect_to action: :index
   end
 
 private

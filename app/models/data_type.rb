@@ -1,5 +1,5 @@
 class DataType < ActiveRecord::Base
-  validates :key, presence: true, length: { maximum: 255 }, uniqueness: true
+  validates :key, presence: true, uniqueness: true, length: { maximum: 255 }
   validates :rails_type, presence: true, length: { maximum: 255 }
   validates :form_type, presence: true, length: { maximum: 255 }
 

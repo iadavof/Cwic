@@ -22,7 +22,6 @@ class EntityTypeProperty < ActiveRecord::Base
   before_validation :parse_default_value
   before_validation :clear_default_value, if: "data_type.present? && has_options?" # The default value of sets and enums are stored in the options itself, so we clear the default value here.
   before_validation :clear_options, unless: "data_type.present? && :has_options?" # We are not dealing with an options data type (set or enum), so we can clear all possible (old) options.
-
   after_create :create_entity_properties
 
   accepts_nested_attributes_for :options, allow_destroy: true

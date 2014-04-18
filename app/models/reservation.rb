@@ -40,15 +40,15 @@ class Reservation < ActiveRecord::Base
   before_validation :check_reservation_organisation
   before_validation :check_if_should_update_reservation_status
   before_validation :generate_recurrences, if: :new_record?
-  after_create :save_recurrences
   before_save :update_warning_state
+  after_create :save_recurrences
   after_save :update_warning_state_neighbours
-
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_websockets
+
+  before_destroy :fix_base_reservation_reference, if: 'self.base_reservation_id == self.id'
   after_destroy :trigger_update_websockets
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
-  before_destroy :fix_base_reservation_reference, if: 'self.base_reservation_id == self.id'
 
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
 

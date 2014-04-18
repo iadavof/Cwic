@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140318130934) do
+ActiveRecord::Schema.define(version: 20140416143325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -41,7 +41,7 @@ ActiveRecord::Schema.define(version: 20140318130934) do
     t.text     "description"
     t.datetime "created_at"
     t.datetime "updated_at"
-    t.string   "color",                                default: "#18c13d"
+    t.string   "color"
     t.boolean  "include_entity_type_images",           default: true
     t.string   "frontend_name"
     t.integer  "slack_before"
@@ -198,16 +198,6 @@ ActiveRecord::Schema.define(version: 20140318130934) do
 
   add_index "info_screens", ["organisation_id"], name: "index_info_screens_on_organisation_id", using: :btree
 
-  create_table "intro_sections", force: true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.string   "image"
-    t.integer  "weight",           default: 0
-    t.string   "background_color", default: "#fff"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
   create_table "organisation_clients", force: true do |t|
     t.string   "first_name"
     t.string   "infix"
@@ -286,62 +276,6 @@ ActiveRecord::Schema.define(version: 20140318130934) do
 
   add_index "reservation_logs", ["reservation_id"], name: "index_reservation_logs_on_reservation_id", using: :btree
   add_index "reservation_logs", ["user_id"], name: "index_reservation_logs_on_user_id", using: :btree
-
-  create_table "reservation_rule_scope_spans", force: true do |t|
-    t.integer  "scope_id",     limit: 8
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "year_from"
-    t.integer  "month_from"
-    t.integer  "dom_from"
-    t.integer  "week_from"
-    t.integer  "dow_from"
-    t.integer  "hour_from"
-    t.integer  "minute_from"
-    t.integer  "year_to"
-    t.integer  "month_to"
-    t.integer  "dom_to"
-    t.integer  "week_to"
-    t.integer  "dow_to"
-    t.integer  "hour_to"
-    t.integer  "minute_to"
-    t.string   "holiday_from"
-    t.integer  "nrom_from"
-    t.string   "holiday_to"
-    t.integer  "nrom_to"
-  end
-
-  add_index "reservation_rule_scope_spans", ["scope_id"], name: "index_reservation_rule_scope_spans_on_scope_id", using: :btree
-
-  create_table "reservation_rule_scopes", force: true do |t|
-    t.integer  "entity_id",          limit: 8
-    t.string   "name"
-    t.integer  "repetition_unit_id", limit: 8
-    t.string   "ancestry"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "span_selector"
-  end
-
-  add_index "reservation_rule_scopes", ["entity_id"], name: "index_reservation_rule_scopes_on_entity_id", using: :btree
-  add_index "reservation_rule_scopes", ["repetition_unit_id"], name: "index_reservation_rule_scopes_on_repetition_unit_id", using: :btree
-
-  create_table "reservation_rules", force: true do |t|
-    t.integer  "entity_id",      limit: 8
-    t.integer  "period_unit_id", limit: 8
-    t.integer  "period_amount",                                     default: 1
-    t.integer  "min_periods",                                       default: 1
-    t.integer  "max_periods"
-    t.decimal  "price",                    precision: 16, scale: 2, default: 0.0
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.integer  "scope_id",       limit: 8
-    t.boolean  "closed"
-  end
-
-  add_index "reservation_rules", ["entity_id"], name: "index_reservation_rules_on_entity_id", using: :btree
-  add_index "reservation_rules", ["period_unit_id"], name: "index_reservation_rules_on_period_unit_id", using: :btree
-  add_index "reservation_rules", ["scope_id"], name: "index_reservation_rules_on_scope_id", using: :btree
 
   create_table "reservation_statuses", force: true do |t|
     t.string   "name"
