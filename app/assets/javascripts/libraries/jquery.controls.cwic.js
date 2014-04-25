@@ -1,291 +1,229 @@
 (function($) {
-  var cwic_controls = {
-    dropdown: {
-      create: function(dropdown) {
-        // Generate dropdown and add it to DOM
-        var options = dropdown.find('option');
-        var defaultOption = dropdown.find('option:selected');
-        var dropdownReplacement = $('<div class="cwic-dropdown" data-name="' + dropdown.attr('name') + '"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div><div class="cwic-dropdown-options"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div></div></div>');
-        options.each(function(i) {
-          var option = $(this);
-          var optionReplacement = $('<div class="cwic-dropdown-option" data-value="' + option.attr('value') + '">' + (option.text() || '...') + '</div>');
-          if (optionReplacement.data('value') === defaultOption.val()) {
-            optionReplacement.addClass('selected');
-          }
-          dropdownReplacement.find('.cwic-dropdown-options').append(optionReplacement);
-        });
-        dropdown.addClass('replaced').after(dropdownReplacement);
-        cwic_controls.dropdown.bindEvents(dropdown, dropdownReplacement);
-      },
-      bindEvents: function(dropdown, dropdownReplacement) {
-        /* Update dropdown when value of select element changes */
-        dropdown.on('change.cwicControl.cwicDropdown keyup.cwicControl.cwicDropdown click.cwicControl.cwicDropdown', function(e) {
-          var selectedOption = $(this).find('option:selected');
-          dropdownReplacement.find('.cwic-dropdown-current-option').text((selectedOption.text() || '...'));
-          dropdownReplacement.find('.cwic-dropdown-option').removeClass('selected');
-          dropdownReplacement.find('.cwic-dropdown-option[data-value=' + APP.util.escapeForSelector(selectedOption.val()) + ']').addClass('selected');
-        });
+  var cwic_controls = {};
 
-        /* Add class to autosubmit dropdowns on change */
-        if (dropdown.is('.autosubmit')) {
-          dropdown.on('change.cwicControl.cwicDropdown', function(e) {
-            dropdownReplacement.addClass('autosubmit-busy');
-          });
-        }
-
-        /* Open dropdown on click */
-        dropdownReplacement.find('.cwic-dropdown-current-option').on('click', function(e) {
-          cwic_controls.dropdown.toggleDropdown(dropdownReplacement);
-        });
-
-        // Make sure we can select this dropdown with tab
-        dropdownReplacement.attr('tabindex', '0');
-        dropdownReplacement.on('keyup', function (event) { cwic_controls.dropdown.keyEventsHandler(event, dropdown, dropdownReplacement); });
-        dropdownReplacement.on('keydown', function (event) { event.preventDefault(); });
-
-        /* Update select element when dropdown option is clicked */
-        dropdownReplacement.find('.cwic-dropdown-option').each(function() {
-          $(this).on('click', function(e) {
-            var optionReplacement = $(this);
-            dropdown.val(optionReplacement.data('value')).trigger('change');
-            optionReplacement.parent('.cwic-dropdown-options').siblings('.cwic-dropdown-current-option').text(dropdown.find('option:selected').text() || '...');
-            optionReplacement.addClass('selected').siblings('.cwic-dropdown-option').removeClass('selected');
-            dropdownReplacement.removeClass('open');
-          });
-        });
-
-        /* Close dropdown when there's a click event outside dropdown */
-        $(document).on('click.cwicControl.cwicDropdown', function(e) {
-          if(!$(e.target).is(dropdownReplacement.children().add(dropdownReplacement))) {
-            dropdownReplacement.removeClass('open');
-          }
-        });
-      },
-      toggleDropdown: function(dropdownReplacement) {
-        dropdownReplacement.hasClass('open') ? dropdownReplacement.removeClass('open') : dropdownReplacement.addClass('open');
-      },
-      keyEventsHandler: function(event, dropdown, dropdownReplacement) {
-        switch(event.which) {
-          case 13: // Spacebar
-          case 32: // Enter
-            cwic_controls.dropdown.toggleDropdown(dropdownReplacement);
-            break;
-          case 37: // Left
-          case 38: // Up
-            var prev = dropdown.find('option:selected').prev('option');
-            if(prev.length > 0) {
-              dropdown.val(prev.val());
-              dropdown.trigger('change');
-            }
-            break;
-          case 39: // Right
-          case 40: // Down
-            var next = dropdown.find('option:selected').next('option');
-            if(next.length > 0) {
-              dropdown.val(next.val());
-              dropdown.trigger('change');
-            }
-            break;
-        }
-        return false;
-      },
-      destroy: function(dropdown) {
-        // Destroy the dropdown and unbind events from select element
-        var dropdownReplacement = $(dropdown).next('.cwic-dropdown');
-        dropdownReplacement.remove();
-        dropdown.off('.cwicDropdown').removeClass('replaced');
-      },
-      recreate: function(dropdown) {
-        // Destroy the dropdown and create it again
-        cwic_controls.dropdown.destroy(dropdown);
-        cwic_controls.dropdown.create(dropdown);
-      }
+  cwic_controls.base = {
+    $field: null,
+    $replacement: null,
+    type: null,
+    setField:function(field) {
+      this.$field = field;
+      this.$replacement = this.$field.next('.cwic-' + this.type.replace('_', '-'));
     },
-    radio_button: {
-      create: function(radioButton) {
-        var radioButtonReplacement = $('<div class="cwic-radio-button" data-name="' + radioButton.attr('name') + '"><div class="inner"></div></div>');
-        if (radioButton.is(':checked')) {
-          radioButtonReplacement.addClass('checked');
-        }
-        radioButton.addClass('replaced').after(radioButtonReplacement);
-        cwic_controls.radio_button.bindEvents(radioButton, radioButtonReplacement);
-      },
-      bindEvents: function(radioButton, radioButtonReplacement) {
-        radioButton.on('change.cwicControl.cwicRadioButton', function(e) {
-          if ($(this).is(':checked')) {
-            radioButtonReplacement.addClass('checked');
-            $('.cwic-radio-button[data-name=' + APP.util.escapeForSelector(radioButtonReplacement.data('name')) + ']').not(radioButtonReplacement).removeClass('checked');
-          } else {
-            radioButtonReplacement.removeClass('checked');
-          }
-        });
-        radioButtonReplacement.on('click', function(e) { cwic_controls.radio_button.changeValue(radioButton, radioButtonReplacement); });
-
-        // Make sure we can select this dropdown with tab
-        radioButtonReplacement.attr('tabindex', '0');
-        radioButtonReplacement.on('keyup', function (event) { cwic_controls.radio_button.keyEventsHandler(event, radioButton, radioButtonReplacement); });
-      },
-      changeValue: function(radioButton, radioButtonReplacement) {
-        if (!radioButtonReplacement.hasClass('checked')) {
-          radioButton.prop('checked', true).trigger('change');
-          radioButtonReplacement.addClass('checked');
-        }
-      },
-      destroy: function(radioButton) {
-        var radioButtonReplacement = radioButton.next('.cwic-radio-button');
-        radioButtonReplacement.remove();
-        radioButton.off('.cwicRadioButton').removeClass('replaced');
-      },
-      keyEventsHandler: function(event, radioButton, radioButtonReplacement) {
-        switch(event.which) {
-          case 13: // Enter
-          case 32: // Space
-            cwic_controls.radio_button.changeValue(radioButton, radioButtonReplacement);
-            break;
-        }
-        return false;
-      },
-      recreate: function(radioButton) {
-        cwic_controls.radio_button.destroy(radioButton);
-        cwic_controls.radio_button.create(radioButton);
+    create: function(field) {
+      this.$field = field;
+      this.$replacement = $('<div class="cwic-'+ this.type.replace('_', '-') +'" data-name="' + this.$field.attr('name') + '"><div class="inner"></div></div>');
+      if (this.$field.is(':checked')) {
+        this.$replacement.addClass('checked');
       }
+      this.$field.addClass('replaced').after(this.$replacement);
+      this.bindEvents();
     },
-    checkbox: {
-      create: function(checkbox) {
-        var checkboxReplacement = $('<div class="cwic-checkbox" data-name="' + checkbox.attr('name') + '"><div class="inner"></div></div>');
-        if (checkbox.is(':checked')) {
-          checkboxReplacement.addClass('checked');
-        }
-        checkbox.addClass('replaced').after(checkboxReplacement);
-        cwic_controls.checkbox.bindEvents(checkbox, checkboxReplacement);
-      },
-      bindEvents: function(checkbox, checkboxReplacement) {
-        checkbox.on('change.cwicControl.cwicCheckbox', function(e) {
-          $(this).is(':checked') ? checkboxReplacement.addClass('checked') : checkboxReplacement.removeClass('checked');
-        });
-
-        checkboxReplacement.on('click', function(event) { cwic_controls.checkbox.changeValue(checkbox, checkboxReplacement); });
-
-        // Make sure we can select this dropdown with tab
-        checkboxReplacement.attr('tabindex', '0');
-        checkboxReplacement.on('keyup', function (event) { cwic_controls.checkbox.keyEventsHandler(event, checkbox, checkboxReplacement); });
-      },
-      changeValue: function(checkbox, checkboxReplacement) {
-        if (checkboxReplacement.hasClass('checked')) {
-          checkbox.prop('checked', false).trigger('change');
-          checkboxReplacement.removeClass('checked');
-        } else {
-          checkbox.prop('checked', true).trigger('change');
-          checkboxReplacement.addClass('checked');
-        }
-      },
-      keyEventsHandler: function(event, checkbox, checkboxReplacement) {
-        switch(event.which) {
-          case 13: // Enter
-          case 32: // Space
-            cwic_controls.checkbox.changeValue(checkbox, checkboxReplacement);
-            break;
-        }
-        return false;
-      },
-      destroy: function(checkbox) {
-        var checkboxReplacement = checkbox.next('.cwic-checkbox');
-        checkboxReplacement.remove();
-        checkbox.off('.cwicCheckbox').removeClass('replaced');
-      },
-      recreate: function(checkbox) {
-        cwic_controls.checkbox.destroy(checkbox);
-        cwic_controls.checkbox.create(checkbox);
-      }
+    destroy: function(field) {
+      this.setField(field);
+      $replacement.remove();
+      $field.off('.cwicControl').removeClass('replaced');
     },
-    file_field: {
-      create: function(fileField) {
-        var fileFieldReplacement = $('<div class="cwic-filefield">' + jsLang.controls.file_field.upload_file + '</div>');
-        if (fileField.val()) {
-          fileFieldReplacement.addClass('filled').text(fileField.val());
-        }
-        fileField.addClass('replaced').after(fileFieldReplacement);
-        cwic_controls.file_field.bindEvents(fileField, fileFieldReplacement);
-      },
-      bindEvents: function(fileField, fileFieldReplacement) {
-        fileField.on('change.cwicControl.cwicFileField', function() {
-          fileField.val() ? fileFieldReplacement.addClass('filled').text(fileField.val()) : fileFieldReplacement.removeClass('filled');
-        });
+    recreate: function(field) {
+      this.destroy(field);
+      this.create(field);
+    },
+    onChangeEvent: function(event, field) {
+      setField(field);
+      this.$field.val() ? this.$replacement.addClass('filled').text(this.$field.val()) : this.$replacement.removeClass('filled');
+    },
+    bindEvents: function() {
+      var cc = this;
+      this.$field.on('change.cwicControl', function(event) { cc.onChangeEvent(event, $(this)); });
 
-        fileFieldReplacement.on('click', function(e) { cwic_controls.file_field.openFileExplorer(fileField); });
+      this.$field.on('click', function() { cc.primaryAction.call(cc, $(this)); });
 
-        // Make sure we can select this dropdown with tab
-        fileFieldReplacement.attr('tabindex', '0');
-        fileFieldReplacement.on('keyup', function (event) { cwic_controls.file_field.keyEventsHandler(event, fileField, fileFieldReplacement); });
-      },
-      openFileExplorer: function(fileField) {
-        fileField.trigger('click');
-      },
-      keyEventsHandler: function(event, fileField, fileFieldReplacement) {
-        switch(event.which) {
-          case 13: // Enter
-          case 32: // Space
-            cwic_controls.file_field.openFileExplorer(fileField);
-            break;
-          default: return false;
-        }
-        return false;
-      },
-      destroy: function(fileField) {
-        var fileFieldReplacement = fileField.next('.cwic-filefield');
-        fileFieldReplacement.remove();
-        fileField.off('.cwicFileField').removeClass('replaced');
-      },
-      recreate: function(fileField) {
-        cwic_controls.file_field.destroy(fileField);
-        cwic_controls.file_field.create(fileField);
+      // Make sure we can select this dropdown with tab
+      this.$replacement.attr('tabindex', '0');
+      this.$replacement.on('keyup', function(event) { cc.keyboardHandler.call(cc, event, $(this)); });
+    },
+    primaryAction: function(field) {
+      this.setField(field);
+      this.$field.trigger('click');
+    },
+    nextAction: function() { },
+    prevAction: function() { },
+    keyboardHandler: function(event, field) {
+      switch(event.which) {
+        case 13: // Spacebar
+        case 32: // Enter
+          this.primaryAction(field);
+          break;
+        case 37: // Left
+        case 38: // Up
+          this.prevAction(field);
+          break;
+        case 39: // Right
+        case 40: // Down
+          this.nextAction(field);
+          break;
       }
+      return false;
     }
   };
 
-  $.fn.cwicControl = function(operation) {
-    switch(operation) {
-    case 'destroy':
-      $(this).filter('select.replaced:not([multiple], .select2, .nocwic)').each(function() {
-        cwic_controls.dropdown.destroy($(this));
+  cwic_controls.dropdown = $.extend({}, cwic_controls.base, {
+    type: 'dropdown',
+    create: function(field) {
+      var cc = this;
+      cc.$field = field;
+      var options = cc.$field.find('option');
+      var defaultOption = cc.$field.find('option:selected');
+      cc.$replacement = $('<div class="cwic-dropdown" data-name="' + cc.$field.attr('name') + '"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div><div class="cwic-dropdown-options"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div></div></div>');
+      options.each(function() {
+        var option = $(this);
+        var optionReplacement = $('<div class="cwic-dropdown-option" data-value="' + option.attr('value') + '">' + (option.text() || '...') + '</div>');
+        console.debug('creating the dropdownz');
+        if (optionReplacement.data('value') === defaultOption.val()) {
+          optionReplacement.addClass('selected');
+        }
+        cc.$replacement.find('.cwic-dropdown-options').append(optionReplacement);
       });
-      $(this).filter(':radio.replaced:not(.nocwic)').each(function() {
-        cwic_controls.radio_button.destroy($(this));
+      cc.$field.addClass('replaced').after(cc.$replacement);
+      cc.bindEvents();
+    },
+    bindEvents: function() {
+      var cc = this;
+      this.$field.on('change.cwicControl keyup.cwicControl click.cwicControl', function(e) { cc.onChangeEvent(e, $(this)); });
+
+      /* Add class to autosubmit dropdowns on change */
+      if (this.$field.is('.autosubmit')) {
+        this.$field.on('change.cwicControl', function(e) {
+          this.$replacement.addClass('autosubmit-busy');
+        });
+      }
+
+      /* Open dropdown on click */
+      this.$replacement.find('.cwic-dropdown-current-option').on('click', function() { cc.primaryAction.call(cc, $(this)); });
+
+      // Make sure we can select this dropdown with tab
+      this.$replacement.attr('tabindex', '0');
+      this.$replacement.on('keyup', function(event) { cc.keyboardHandler.call(cc, event, $(this)); });
+      this.$replacement.on('keydown', function (event) { event.preventDefault(); });
+
+      /* Update select element when dropdown option is clicked */
+      this.$replacement.find('.cwic-dropdown-option').each(function() {
+        var optionReplacement = $(this);
+        optionReplacement.on('click', function(e) {
+          dropdown.val(optionReplacement.data('value')).trigger('change');
+          optionReplacement.parent('.cwic-dropdown-options').siblings('.cwic-dropdown-current-option').text(this.$field.find('option:selected').text() || '...');
+          optionReplacement.addClass('selected').siblings('.cwic-dropdown-option').removeClass('selected');
+          this.$replacement.removeClass('open');
+        });
       });
-      $(this).filter(':checkbox.replaced:not(.nocwic)').each(function() {
-        cwic_controls.checkbox.destroy($(this));
+
+      /* Close dropdown when there's a click event outside dropdown */
+      $(document).on('click.cwicControl', function(e) {
+        if(!$(e.target).is(cc.$replacement.children().add(cc.$replacement))) {
+          cc.$replacement.removeClass('open');
+        }
       });
-      $(this).filter('input[type=file].replaced:not(.nocwic)').each(function() {
-        cwic_controls.file_field.destroy($(this));
-      });
-      break;
-    case 'recreate':
-      $(this).filter('select.replaced:not([multiple], .select2, .nocwic)').each(function() {
-        cwic_controls.dropdown.recreate($(this));
-      });
-      $(this).filter(':radio.replaced:not(.nocwic)').each(function() {
-        cwic_controls.radio_button.recreate($(this));
-      });
-      $(this).filter(':checkbox.replaced:not(.nocwic)').each(function() {
-        cwic_controls.checkbox.recreate($(this));
-      });
-      $(this).filter('input[type=file].replaced:not(.nocwic)').each(function() {
-        cwic_controls.file_field.recreate($(this));
-      });
-      break;
-    default:
-      $(this).filter('select:not(.replaced, [multiple], .select2, .nocwic)').each(function() {
-        cwic_controls.dropdown.create($(this));
-      });
-      $(this).filter(':radio:not(.replaced, .nocwic)').each(function() {
-        cwic_controls.radio_button.create($(this));
-      });
-      $(this).filter(':checkbox:not(.replaced, .nocwic)').each(function() {
-        cwic_controls.checkbox.create($(this));
-      });
-      $(this).filter('input[type=file]:not(.replaced, .nocwic)').each(function() {
-        cwic_controls.file_field.create($(this));
-      });
+    },
+    primaryAction: function(field) {
+      this.setField(field);
+      this.$replacement.hasClass('open') ? this.$replacement.removeClass('open') : this.$replacement.addClass('open');
+    },
+    nextAction: function(field) {
+      this.setField(field);
+      var next = this.$field.find('option:selected').next('option');
+      if(next.length > 0) {
+        this.$field.val(next.val());
+        this.$field.trigger('change');
+      }
+    },
+    prevAction: function(field) {
+      this.setField(field);
+      var prev = this.$field.find('option:selected').prev('option');
+      if(prev.length > 0) {
+        this.$field.val(prev.val());
+        this.$field.trigger('change');
+      }
     }
+  });
+
+  cwic_controls.radio_button = $.extend({}, cwic_controls.base, {
+    type: 'radio_button',
+    primaryAction: function(field) {
+      this.setField(field);
+      if (!this.$replacement.hasClass('checked')) {
+        this.$field.prop('checked', true).trigger('change');
+        this.$replacement.addClass('checked');
+      }
+    },
+    onChangeEvent: function(event, field) {
+      this.setField(field);
+      if (this.$field.is(':checked')) {
+        this.$replacement.addClass('checked');
+        $('.cwic-radio-button[data-name=' + APP.util.escapeForSelector(this.$replacement.data('name')) + ']').not(this.$replacement).removeClass('checked');
+      } else {
+        this.$replacement.removeClass('checked');
+      }
+    }
+  });
+
+  cwic_controls.checkbox = $.extend({}, cwic_controls.base, {
+    type: 'checkbox',
+    primaryAction: function(field) {
+      this.setField(field);
+      if (this.$replacement.hasClass('checked')) {
+        this.$field.prop('checked', false).trigger('change');
+        this.$replacement.removeClass('checked');
+      } else {
+        this.$field.prop('checked', true).trigger('change');
+        this.$replacement.addClass('checked');
+      }
+    },
+    onChangeEvent: function(event, field) {
+      this.setField(field);
+      this.$field.is(':checked') ? this.$replacement.addClass('checked') : this.$replacement.removeClass('checked');
+    }
+  });
+
+  cwic_controls.file_field = $.extend({}, cwic_controls.base, {
+    type: 'file_field',
+    create: function() {
+      this.$replacement = $('<div class="cwic-filefield">' + jsLang.controls.file_field.upload_file + '</div>');
+      if (this.$field.val()) {
+        this.$replacement.addClass('filled').text(this.$field.val());
+      }
+      this.$field.addClass('replaced').after(this.$replacement);
+      this.bindEvents();
+    },
+    onChangeEvent: function(event, field) {
+      this.setField(field);
+      this.$field.val() ? this.$replacement.addClass('filled').text(this.$field.val()) : this.$replacement.removeClass('filled');
+    }
+  });
+
+  $.fn.cwicControl = function(operation) {
+    operation = operation || 'create';
+    console.debug('cc'+ operation);
+    console.debug($(this));
+    /*$(this).filter('select:not(.nocwic), input[type=file]:not(.nocwic), :radio:not(.nocwic), :checkbox:not(.nocwic)').each(function() {
+      console.debug($(this));
+
+    });*/
+    replacedFilter = (operation == 'create' ? ':not(.replaced)' : '.replaced');
+    $(this).filter('select:not(.nocwic, .select2, [multiple])').filter(replacedFilter).each(function() {
+      console.debug('we has select');
+      cwic_controls.dropdown[operation]($(this));
+    });
+    $(this).filter(':radio:not(.nocwic)').filter(replacedFilter).each(function() {
+      console.debug('we has radio ' + operation);
+      console.debug(cwic_controls.radio_button);
+      cwic_controls.radio_button[operation]($(this));
+    });
+    $(this).filter(':checkbox:not(.nocwic)').filter(replacedFilter).each(function() {
+      console.debug('we has checkbox');
+      cwic_controls.checkbox[operation]($(this));
+    });
+    $(this).filter('input[type=file]:not(.nocwic)').filter(replacedFilter).each(function() {
+      console.debug('we has file');
+      cwic_controls.file_field[operation]($(this));
+    });
   };
 })(jQuery);
