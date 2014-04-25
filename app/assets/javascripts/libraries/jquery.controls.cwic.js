@@ -1,6 +1,9 @@
 (function($) {
   var cwic_controls = {};
 
+  ///
+  // Cwic controls base (mainly applicable for checkboxes and radio buttons)
+  ///
   cwic_controls.base = {
     $field: null,
     $replacement: null,
@@ -9,15 +12,7 @@
       this.$field = field;
       this.$replacement = this.$field.next('.cwic-' + this.type.replace('_', '-'));
     },
-    create: function(field) {
-      this.$field = field;
-      this.$replacement = $('<div class="cwic-'+ this.type.replace('_', '-') +'" data-name="' + this.$field.attr('name') + '"><div class="inner"></div></div>');
-      if (this.$field.is(':checked')) {
-        this.$replacement.addClass('checked');
-      }
-      this.$field.addClass('replaced').after(this.$replacement);
-      this.bindEvents();
-    },
+    // General code
     destroy: function(field) {
       this.setField(field);
       $replacement.remove();
@@ -27,26 +22,14 @@
       this.destroy(field);
       this.create(field);
     },
-    onChangeEvent: function(event, field) {
-      setField(field);
-      this.$field.val() ? this.$replacement.addClass('filled').text(this.$field.val()) : this.$replacement.removeClass('filled');
-    },
-    bindEvents: function() {
+    nextAction: function() { },
+    prevAction: function() { },
+    bindKeyEvents: function() {
       var cc = this;
-      this.$field.on('change.cwicControl', function(event) { cc.onChangeEvent(event, $(this)); });
-
-      this.$field.on('click', function() { cc.primaryAction.call(cc, $(this)); });
-
-      // Make sure we can select this dropdown with tab
+      // Make sure we can select this control with tab
       this.$replacement.attr('tabindex', '0');
       this.$replacement.on('keyup', function(event) { cc.keyboardHandler.call(cc, event, $(this)); });
     },
-    primaryAction: function(field) {
-      this.setField(field);
-      this.$field.trigger('click');
-    },
-    nextAction: function() { },
-    prevAction: function() { },
     keyboardHandler: function(event, field) {
       switch(event.which) {
         case 13: // Spacebar
@@ -63,9 +46,37 @@
           break;
       }
       return false;
+    },
+    // The base code below is mainly for Cwic checkboxes and radio buttons
+    create: function(field) {
+      this.$field = field;
+      this.$replacement = $('<div class="cwic-'+ this.type.replace('_', '-') +'" data-name="' + this.$field.attr('name') + '"><div class="inner"></div></div>');
+      if (this.$field.is(':checked')) {
+        this.$replacement.addClass('checked');
+      }
+      this.$field.addClass('replaced').after(this.$replacement);
+      this.bindEvents();
+    },
+    bindEvents: function() {
+      var cc = this;
+      this.$field.on('change.cwicControl', function(event) { cc.onChangeEvent(event, $(this)); });
+      this.$replacement.on('click', function() { cc.primaryAction.call(cc, $(this)); });
+      this.bindKeyEvents();
+    },
+    onChangeEvent: function(event, field) {
+      setField(field);
+      this.$field.val() ? this.$replacement.addClass('filled').text(this.$field.val()) : this.$replacement.removeClass('filled');
+    },
+    primaryAction: function(field) {
+      console.debug('primary action called')
+      this.setField(field);
+      this.$field.trigger('click');
     }
   };
 
+  ///
+  // Cwic dropdown
+  ///
   cwic_controls.dropdown = $.extend({}, cwic_controls.base, {
     type: 'dropdown',
     create: function(field) {
@@ -90,22 +101,19 @@
       var cc = this;
       this.$field.on('change.cwicControl keyup.cwicControl click.cwicControl', function(e) { cc.onChangeEvent(e, $(this)); });
 
-      /* Add class to autosubmit dropdowns on change */
+      // Add class to autosubmit dropdowns on change
       if (this.$field.is('.autosubmit')) {
         this.$field.on('change.cwicControl', function(e) {
           this.$replacement.addClass('autosubmit-busy');
         });
       }
 
-      /* Open dropdown on click */
+      // Open dropdown on click
       this.$replacement.find('.cwic-dropdown-current-option').on('click', function() { cc.primaryAction.call(cc, $(this)); });
-
-      // Make sure we can select this dropdown with tab
-      this.$replacement.attr('tabindex', '0');
-      this.$replacement.on('keyup', function(event) { cc.keyboardHandler.call(cc, event, $(this)); });
+      this.bindKeyEvents();
       this.$replacement.on('keydown', function (event) { event.preventDefault(); });
 
-      /* Update select element when dropdown option is clicked */
+      // Update select element when dropdown option is clicked
       this.$replacement.find('.cwic-dropdown-option').each(function() {
         var optionReplacement = $(this);
         optionReplacement.on('click', function(e) {
@@ -116,7 +124,7 @@
         });
       });
 
-      /* Close dropdown when there's a click event outside dropdown */
+      // Close dropdown when there's a click event outside dropdown
       $(document).on('click.cwicControl', function(e) {
         if(!$(e.target).is(cc.$replacement.children().add(cc.$replacement))) {
           cc.$replacement.removeClass('open');
@@ -145,6 +153,9 @@
     }
   });
 
+  ///
+  // Cwic radio button
+  ///
   cwic_controls.radio_button = $.extend({}, cwic_controls.base, {
     type: 'radio_button',
     primaryAction: function(field) {
@@ -165,6 +176,9 @@
     }
   });
 
+  ///
+  // Cwic checkbox
+  ///
   cwic_controls.checkbox = $.extend({}, cwic_controls.base, {
     type: 'checkbox',
     primaryAction: function(field) {
@@ -183,6 +197,9 @@
     }
   });
 
+  ///
+  // Cwic file field
+  ///
   cwic_controls.file_field = $.extend({}, cwic_controls.base, {
     type: 'file_field',
     create: function() {
@@ -199,14 +216,14 @@
     }
   });
 
+
+  ///
+  // Main jQuery cwicControl function
+  ///
   $.fn.cwicControl = function(operation) {
     operation = operation || 'create';
     console.debug('cc'+ operation);
     console.debug($(this));
-    /*$(this).filter('select:not(.nocwic), input[type=file]:not(.nocwic), :radio:not(.nocwic), :checkbox:not(.nocwic)').each(function() {
-      console.debug($(this));
-
-    });*/
     replacedFilter = (operation == 'create' ? ':not(.replaced)' : '.replaced');
     $(this).filter('select:not(.nocwic, .select2, [multiple])').filter(replacedFilter).each(function() {
       console.debug('we has select');
