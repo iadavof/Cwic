@@ -50,7 +50,6 @@ CwicControl.prototype.create_dropdown = function() {
   options.each(function() {
     var option = $(this);
     var optionReplacement = $('<div class="cwic-dropdown-option" data-value="' + option.attr('value') + '">' + (option.text() || '...') + '</div>');
-    console.debug(defaultOption);
     if (optionReplacement.data('value') == defaultOption.val()) {
       optionReplacement.addClass('selected');
     }
