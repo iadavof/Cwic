@@ -115,8 +115,8 @@ gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom websocket-ra
 # Organisation of the seeds
 gem 'seedbank'
 
-# Holidays gem to determine the dates of holidays. Custom gem to add keys and kings day
-gem 'holidays', github: 'kreintjes/holidays' #path: '~/rails/gems/holidays'github: 'kreintjes/holidays'
+# Holidays gem to determine the dates of holidays. Custom gem to add keys for each holiday
+gem 'holidays', github: 'kreintjes/holidays'
 
 # Translate numbers to words (and ordinal forms). Custom gem to add ordinal support for dutch locale.
 gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' #path: '~/rails/gems/numbers_and_words'

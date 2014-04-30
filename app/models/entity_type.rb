@@ -62,14 +62,14 @@ class EntityType < ActiveRecord::Base
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
   end
 
+  # Gets the most narrowing scope matching the time from all reservation rule scopes
+  def scope_for_time(time)
+    ReservationRuleScope.scope_for_time(self.reservation_rule_scopes.roots, time)
+  end
+
+  # Gets the reservation rules for the most narrowing scope matching the time
   def reservation_rules_for_time(time)
-    rules = []
-    self.reservation_rule_scopes.each do |rrs|
-      if rrs.matches?(time)
-        rules += rrs.rules
-      end
-    end
-    rules
+    scope_for_time(time).try(:rules) || []
   end
 
 private

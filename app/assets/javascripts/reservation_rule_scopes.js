@@ -63,7 +63,7 @@ APP.reservation_rule_scopes = {
       }
       container.show();
     } else {
-      container.hide();
+      container.show(); // XXX TODO temp
     }
   },
   initializeSpanWrapper: function(spanWrapper) {

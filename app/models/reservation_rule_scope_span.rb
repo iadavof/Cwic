@@ -30,11 +30,26 @@ class ReservationRuleScopeSpan < ActiveRecord::Base
   end
 
   def relevant_holidays_keys
-    relevant_holidays.map { |h| h[:key] }
+    relevant_holidays.map { |h| "#{I18n.locale}:#{h[:key]}" }
   end
 
   def matches?(time)
-    parsed_span.cover?(parse_time(time))
+    if self.scope.repetition_unit.key == :year && self.scope.span_type == :holidays
+      matches_holiday?(time)
+    else
+      parsed_span.cover?(parse_time(time))
+    end
+  end
+
+  def instance_name
+    "TODO"
+  end
+
+private
+  def matches_holiday?(time)
+    # Holidays do not support ranges. We therefore only look at the from values. This value is a string in the format <locale>:<holiday_key>
+    (locale, key) = value(:holiday, :from).split(':')
+    Holidays.on(time, locale).any? { |h| h[:key] == key }
   end
 
   def parsed_span
@@ -52,16 +67,16 @@ class ReservationRuleScopeSpan < ActiveRecord::Base
       when :dates
        time.to_date.change(year: 2000)
       when :weeks
-        time.to_date.cweek # TODO last?
+        time.to_date.cweek
       when :holidays
-        raise "Not yet implemented"
+        Holidays.on(time)
       end
     when :month
       case self.scope.span_type
       when :days
-        time.to_date.change(year: 2000, month: 5) # TODO last?
+        time.to_date.change(year: 2000, month: 5)
       when :nr_dow_of
-        NrDowOfMonth.from_date(time.to_date) # TODO last?
+        NrDowOfMonth.from_date(time.to_date)
       end
     when :week
       time.to_date.cwday
@@ -81,7 +96,7 @@ class ReservationRuleScopeSpan < ActiveRecord::Base
       when :weeks
         value(:week, from_to)
       when :holidays
-        raise "Not yet implemented"
+        value(:holiday, from_to)
       end
     when :month
       case self.scope.span_type
@@ -99,9 +114,5 @@ class ReservationRuleScopeSpan < ActiveRecord::Base
 
   def value(key, from_to)
     self.send("#{key}_#{from_to}")
-  end
-
-  def instance_name
-    "TODO"
   end
 end

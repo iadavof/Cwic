@@ -51,25 +51,26 @@ class ReservationRuleScope < ActiveRecord::Base
     TimeUnit.where(key: valid_repetition_unit_keys).reorder(seconds: :desc)
   end
 
+  # Gets the most narrowing scope matching the time from this scope its childs
+  def scope_for_time(time)
+    if self.matches?(time)
+      puts "#{self.name} matches!"
+      scope = self.class.scope_for_time(self.children, time)
+      scope || self
+    else
+      nil
+    end
+  end
+
+  # Does this scope match the time?
   def matches?(time)
     self.spans.each do |s|
       return true if s.matches?(time)
     end
     return false
-
-    # TEMP
-    if self.repetition_unit.key == :infinite
-
-    else
-      rule = IceCube::Rule.send(self.repetition_unit.repetition_key)
-
-
-
-      schedule = IceCube::Schedule.new
-      schedule.add_recurrence_rule(rule)
-    end
   end
 
+  # Remove this?
   def active
     self.spans.each do |s|
 
@@ -78,5 +79,20 @@ class ReservationRuleScope < ActiveRecord::Base
 
   def instance_name
     self.name
+  end
+
+  # Gets the most narrowing scope matching the time from a set of scopes and their childs
+  def self.scope_for_time(scopes, time)
+    matches = []
+    scopes.each do |s|
+      matches << s if s.matches?(time)
+    end
+    return nil if matches.none?
+    if matches.one?
+      match = matches.first
+    else
+      raise "Multiple child rules matches this rule, but this is not yet supported"
+    end
+    match.scope_for_time(time)
   end
 end

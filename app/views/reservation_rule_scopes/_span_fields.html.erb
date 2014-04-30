@@ -15,24 +15,28 @@
     </div>
   </div>
   <div class="span-data">
-    <%= f.text_field(:year_from, class: 'year-from') %>
-    <%= f.text_field(:month_from, class: 'month-from') %>
-    <%= f.text_field(:week_from, class: 'week-from') %>
-    <%= f.text_field(:holiday_from, class: 'holiday-from') %>
-    <%= f.text_field(:dom_from, class: 'dom-from') %>
-    <%= f.text_field(:nrom_from, class: 'nrom-from') %>
-    <%= f.text_field(:dow_from, class: 'dow-from') %>
-    <%= f.text_field(:hour_from, class: 'hour-from') %>
-    <%= f.text_field(:minute_from, class: 'minute-from') %>
-    <%= f.text_field(:year_to, class: 'year-to') %>
-    <%= f.text_field(:month_to, class: 'month-to') %>
-    <%= f.text_field(:week_to, class: 'week-to') %>
-    <%= f.text_field(:holiday_to, class: 'holiday-to') %>
-    <%= f.text_field(:dom_to, class: 'dom-to') %>
-    <%= f.text_field(:nrom_to, class: 'nrom-to') %>
-    <%= f.text_field(:dow_to, class: 'dow-to') %>
-    <%= f.text_field(:hour_to, class: 'hour-to') %>
-    <%= f.text_field(:minute_to, class: 'minute-to') %>
+    <div class="from">
+      <%= f.text_field(:year_from, class: 'year-from') %>
+      <%= f.text_field(:month_from, class: 'month-from') %>
+      <%= f.text_field(:week_from, class: 'week-from') %>
+      <%= f.text_field(:holiday_from, class: 'holiday-from') %>
+      <%= f.text_field(:dom_from, class: 'dom-from') %>
+      <%= f.text_field(:nrom_from, class: 'nrom-from') %>
+      <%= f.text_field(:dow_from, class: 'dow-from') %>
+      <%= f.text_field(:hour_from, class: 'hour-from') %>
+      <%= f.text_field(:minute_from, class: 'minute-from') %>
+    </div>
+    <div class="to">
+      <%= f.text_field(:year_to, class: 'year-to') %>
+      <%= f.text_field(:month_to, class: 'month-to') %>
+      <%= f.text_field(:week_to, class: 'week-to') %>
+      <%= f.text_field(:holiday_to, class: 'holiday-to') %>
+      <%= f.text_field(:dom_to, class: 'dom-to') %>
+      <%= f.text_field(:nrom_to, class: 'nrom-to') %>
+      <%= f.text_field(:dow_to, class: 'dow-to') %>
+      <%= f.text_field(:hour_to, class: 'hour-to') %>
+      <%= f.text_field(:minute_to, class: 'minute-to') %>
+    </div>
   </div>
 </div>
   <!--
@@ -52,7 +56,7 @@
     </div>
     <div class="field holiday from">
       <%= f.label(:holiday_from) %>
-      <%= f.select(:holiday_from, f.object.relevant_holidays.map { |h| [h[:name], h[:key]] }, prompt: true) %>
+      <%= f.select(:holiday_from, f.object.relevant_holidays.map { |h| [h[:name], "#{I18n.locale}:#{h[:key]}"] }, prompt: true) %>
     </div>
     <div class="field week from">
       <%= f.label(:week_from) %>
@@ -91,7 +95,7 @@
     </div>
     <div class="field holiday to">
       <%= f.label(:holiday_to) %>
-      <%= f.select(:holiday_to, f.object.relevant_holidays.map { |h| [h[:name], h[:key]] }, prompt: true) %>
+      <%= f.select(:holiday_to, f.object.relevant_holidays.map { |h| [h[:name], "#{I18n.locale}:#{h[:key]}"] }, prompt: true) %>
     </div>
     <div class="field week to">
       <%= f.label(:week_to) %>

@@ -400,6 +400,43 @@ nl:
       name: 'Oneindig'
       repetition_name: 'Geen herhaling'
 
+  holidays:
+    general:
+      new_year:
+        name: 'Nieuwjaar'
+        date: '2008-01-01'
+      good_friday:
+        name: 'Goede Vrijdag'
+        date: '2008-03-21'
+      easter_sunday:
+        name: 'Eerste Paasdag'
+        date: '2008-03-23'
+      easter_monday:
+        name: 'Tweede Paasdag'
+        date: '2008-03-24'
+      ascension_day:
+        name: 'Hemelvaartsdag'
+        date: '2008-05-01'
+      whit_sunday:
+        name: 'Eerste Pinksterdag'
+        date: '2008-05-11'
+      whit_monday:
+        name: 'Tweede Pinksterdag'
+        date: '2008-05-12'
+      christmas_day:
+        name: 'Eerste Kerstdag'
+        date: '2008-12-25'
+      boxing_day:
+        name: 'Tweede Kerstdag'
+        date: '2008-12-26'
+    nl:
+      kings_day:
+        name: 'Koningsdag'
+        date: '2008-04-27'
+      liberation_day:
+        name: 'Bevrijdingsdag'
+        date: '2008-05-05'
+
   errors:
     messages:
       date_must_be_in_future: 'moet in de toekomst liggen'
