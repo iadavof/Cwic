@@ -77,8 +77,8 @@ CwicOccupationView.prototype.bindControls = function() {
     }
 
     // Only trigger a cwic dropdown change event
-    occ.occupationContainer.find('select#date_current_year').val(occ.currentYear).trigger('change.cwicDropdown');
-    occ.occupationContainer.find('select#date_current_month').val(occ.currentMonth).trigger('change.cwicDropdown');
+    occ.occupationContainer.find('select#date_current_year').val(occ.currentYear).trigger('change.cwicControl');
+    occ.occupationContainer.find('select#date_current_month').val(occ.currentMonth).trigger('change.cwicControl');
     occ.updateOccupationView();
   });
 
