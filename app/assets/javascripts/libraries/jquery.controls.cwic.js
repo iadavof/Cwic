@@ -21,7 +21,6 @@ CwicControl.prototype.detectType = function() {
 };
 
 CwicControl.prototype.create = function() {
-
   // Create the type specific replacement field.
   this['create_' + this.type]();
 
@@ -148,6 +147,7 @@ CwicControl.prototype.bindEvents = function() {
 
 CwicControl.prototype.bindEvents_dropdown = function() {
   var cc = this;
+
   // Add class to autosubmit dropdowns on change
   if (this.$field.is('.autosubmit')) {
     this.$field.on('change.cwicControl', function(e) {
@@ -167,6 +167,9 @@ CwicControl.prototype.bindEvents_dropdown = function() {
       optionReplacement.addClass('selected').siblings('.cwic-dropdown-option').removeClass('selected');
     });
   });
+
+  // Close dropdown when losing focus
+  this.$replacement.on('blur.cwicControl', function() { cc.closeAction.call(cc); });
 };
 
 CwicControl.prototype.primaryAction = function() {
@@ -225,6 +228,7 @@ $.fn.cwicControl = function(operation) {
     if(typeof field.data('cwicControl') == 'undefined') {
       field.data('cwicControl', new CwicControl(field));
     }
+
     // Perform the selected operation, this includes create
     field.data('cwicControl')[operation]();
 
