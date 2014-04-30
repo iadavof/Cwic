@@ -83,8 +83,7 @@ CwicControl.prototype.closeAction = function() {
 
 CwicControl.prototype.keyboardHandler = function(event) {
   switch(event.which) {
-    case 13: // Spacebar
-    case 32: // Enter
+    case 32: // Spacebar
       this.primaryAction();
       break;
     case 37: // Left
