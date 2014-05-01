@@ -91,6 +91,11 @@ CwicScheduleViewItem.prototype.renderPart = function(jschobj, momentBlock) {
   var newScheduleItemWrapper = this.schedule.getTemplateClone('scheduleItemTemplate');
   var newScheduleItem = newScheduleItemWrapper.find('div.schedule-item');
 
+  if(this.item_id == null) {
+    // This item is newly created
+    newScheduleItem.find('div.plus').show();
+  }
+
   this.setScheduleItemDimensions(newScheduleItemWrapper, momentBlock);
 
   this.addLayout(newScheduleItemWrapper, newScheduleItem);
@@ -105,16 +110,14 @@ CwicScheduleViewItem.prototype.renderPart = function(jschobj, momentBlock) {
 
   jschobj.append(newScheduleItemWrapper);
 
-  (newScheduleItem.width() < 40) ? newScheduleItem.find('div.status').hide() : newScheduleItem.find('div.status').show();
+  newScheduleItem.find('div.status').css('visibility', (newScheduleItem.width() < 40) ? 'hidden' : 'visible');
 
   return newScheduleItemWrapper;
 };
 
 CwicScheduleViewItem.prototype.addStatusFlag = function(scheduleItemDOM) {
-  if(this.status) {
-    scheduleItemDOM.find('div.status').attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color, borderColor: this.status.text_color }).find('span').text(this.status.name.substring(0,1));
-  } else {
-    scheduleItemDOM.find('div.status').hide();
+  if(this.status != null) {
+    scheduleItemDOM.find('div.status').show().attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color, borderColor: this.status.text_color }).find('span').text(this.status.name.substring(0,1));
   }
 };
 
@@ -190,8 +193,8 @@ CwicScheduleViewItem.prototype.moveConceptTo = function(newBeginMoment) {
 };
 
 CwicScheduleViewItem.prototype.applyTimeDiffConcept = function(milliseconds) {
-  this.conceptBegin = moment(this.begin).add('ms', milliseconds);
-  this.conceptEnd = moment(this.end).add('ms', milliseconds);
+  this.conceptBegin = moment(this.getConceptBegin()).add('ms', milliseconds);
+  this.conceptEnd = moment(this.getConceptEnd()).add('ms', milliseconds);
   this.rerender(true);
   return this.getDomObjects();
 };
@@ -215,7 +218,7 @@ CwicScheduleViewItem.prototype.resizeConcept = function(side, newMoment) {
 };
 
 CwicScheduleViewItem.prototype.conceptDiffersWithOriginal = function() {
-  return !this.begin.isSame(this.getConceptBegin()) || !this.end.isSame(this.getConceptEnd());
+  return !this.begin || !this.end || !this.begin.isSame(this.getConceptBegin()) || !this.end.isSame(this.getConceptEnd());
 };
 
 CwicScheduleViewItem.prototype.checkEndAfterBegin = function(concept) {
@@ -475,7 +478,6 @@ CwicScheduleViewItem.prototype.bindDragAndResizeControls = function() {
       this.side = null;
       this.pointerDown = false;
       this.container = null;
-      this.dragStartMoment = null;
       this.lastDragMoment = null;
       return this;
     }
@@ -519,8 +521,7 @@ CwicScheduleViewItem.prototype.dragAndResizeDown = function(event, context) {
     context.side = (handle.hasClass('left') || handle.hasClass('top') ? 'backwards' : 'forwards');
   } else { // drag mode
     var rel = this.schedule.getPointerRel(event, context.container);
-    context.dragStartMoment = this.schedule.nearestMomentPoint(rel, context.container);
-    context.lastDragMoment = context.dragStartMoment;
+    context.lastDragMoment = this.schedule.nearestMomentPoint(rel, context.container);
   }
 };
 
@@ -539,7 +540,6 @@ CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
     // Get the event information from the current scheduleItemDom
     var pointed = this.schedule.getElementForPoint(event);
     var events = pointed.events || jQuery.data(pointed, "events") || jQuery._data(pointed, "events");
-    console.debug('events', events);
     var rel = this.schedule.getPointerRel(event, context.container);
     var newMoment = this.schedule.nearestMomentPoint(rel, context.container);
 
@@ -548,7 +548,7 @@ CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
       // correct position in schedule-item, because we want to know the begin position of this item.
       // rel can be negative if item is dragged to previous day.
       if(!newMoment.isSame(context.lastDragMoment)) {
-        var dragMomentDiffMS = moment(newMoment).diff(context.dragStartMoment);
+        var dragMomentDiffMS = moment(newMoment).diff(context.lastDragMoment);
         newDoms = this.applyTimeDiffConcept(dragMomentDiffMS);
         context.lastDragMoment = newMoment;
       }
