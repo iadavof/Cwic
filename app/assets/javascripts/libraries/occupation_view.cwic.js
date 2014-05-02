@@ -18,8 +18,6 @@ CwicOccupationView.prototype.initiateContainer = function() {
   this.occupationContainer = $('#' + this.options.container);
   this.occupationContainer.append(this.getTemplateClone('occupationContainerTemplate').contents());
   this.occupationContainer.addClass('occupation-container');
-
-  this.occupationContainer.find('select').cwicControl('recreate');
 }
 
 CwicOccupationView.prototype.renderOccupation = function() {
@@ -39,7 +37,7 @@ CwicOccupationView.prototype.bindControls = function() {
   var occ = this;
 
   if(this.options.view == 'weekOccupation') {
-    this.occupationContainer.find('select#date_current_month, select#date_current_month + .dropdown').hide();
+    this.occupationContainer.find('select#date_current_month, select#date_current_month + .cwic-dropdown').hide();
     this.occupationContainer.find('div.control-container a#current span.year').show();
   } else {
     this.occupationContainer.find('div.control-container a#current span.month').show();
@@ -99,7 +97,6 @@ CwicOccupationView.prototype.bindControls = function() {
       window.location.href = occ.options.schedule_url + '/entity/' + selEntity + '/' + occ.currentYear + '/' + block.data('nr');
     }
   });
-
 }
 
 CwicOccupationView.prototype.updateOccupationView = function() {
@@ -189,7 +186,6 @@ CwicOccupationView.prototype.fillPercentages = function(response) {
 }
 
 CwicOccupationView.prototype.createRows = function(response) {
-
   for(ent_nr in response.entities) {
     var entity = response.entities[ent_nr];
     var entityRow = this.getTemplateClone('entityRowTemplate');
@@ -255,7 +251,6 @@ CwicOccupationView.prototype.resizeActions = function() {
     this.occupationContainer.find('div.top-axis-frame').css('visibility', 'visible');
   }
 
-
   // The percentage notation does not fit anymore, hide it
   if(newHeight < 30) {
     // hide the entity axis and reuse the freed space
@@ -274,7 +269,6 @@ CwicOccupationView.prototype.resizeActions = function() {
   }
 }
 
-
 CwicOccupationView.prototype.bindWindowEvents = function() {
   var occ = this;
   $(window).resize(function() {
@@ -283,16 +277,14 @@ CwicOccupationView.prototype.bindWindowEvents = function() {
 }
 
 CwicOccupationView.prototype.getTemplateClone = function(id) {
-  var newitem = $('#occupation-templates').find('#' + id).clone();
-  newitem.removeAttr('id');
-  newitem.show();
+  var newitem = $($('#' + id).text());
+  APP.global.initializeSpecialFormFields(newitem);
   return newitem;
 }
 
 CwicOccupationView.prototype.daysInMonth = function() {
   return new Date(this.currentYear, this.currentMonth, 0).getDate();
 }
-
 
 CwicOccupationView.prototype.getColorForPercentage = function(pct, alpha) {
   if(pct > 100) {
