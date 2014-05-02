@@ -315,7 +315,7 @@ APP.global = {
     $(parent).find('input.organisation_client_select').each(this.initializeOrganisationClientSelect);
     $(parent).find('input.with-clear').each(this.initializeInputWithClear);
 
-    $(document).on('nested:fieldAdded', function() { APP.global.initializeSpecialFormFields(this); });
+    $(document).on('nested:fieldAdded', function(e) { APP.global.initializeSpecialFormFields(e.field); });
   },
   initializeInputWithClear: function() {
     var input = $(this);
