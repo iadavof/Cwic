@@ -31,9 +31,10 @@ CwicControl.prototype.create = function() {
 };
 
 CwicControl.prototype.destroy = function() {
-  $this.replacement.remove();
-  delete $this.replacement;
-  $this.field.off('.cwicControl').removeClass('replaced');
+  this.$replacement.remove();
+  this.$field.off('.cwicControl').removeClass('replaced');
+  this.$field.removeData('cwicControl');
+  delete this;
 };
 
 CwicControl.prototype.recreate = function() {
@@ -230,10 +231,5 @@ $.fn.cwicControl = function(operation) {
 
     // Perform the selected operation, this includes create
     field.data('cwicControl')[operation]();
-
-    if(operation == 'destroy') {
-      // We also need to remove the object
-      delete field.data('cwicControl');
-    }
   });
 };
