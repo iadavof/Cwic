@@ -42,6 +42,14 @@ APP.util = {
     } else {
       return text;
     }
+  },
+  // Escape string for use in a jQuery selector
+  escapeJQuerySelectorString: function(str) {
+    if(str) {
+      return str.replace(/([ #;?%&,.+*~\':"!^$[\]()=>|\/@])/g,'\\$1');
+    } else {
+      return str;
+    }
   }
 }
 
