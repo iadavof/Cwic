@@ -85,18 +85,29 @@ CwicControl.prototype.closeAction = function() {
 CwicControl.prototype.keyboardHandler = function(event) {
   switch(event.which) {
     case 32: // Spacebar
-      this.primaryAction();
+      this.primaryAction(event);
+      break;
+    case 33: // Page up
+    case 36: // Home
+      this.pickOptionAction(event, 'first');
       break;
     case 37: // Left
     case 38: // Up
-      this.previousAction();
+      this.pickOptionAction(event, 'previous');
       break;
     case 39: // Right
     case 40: // Down
-      this.nextAction();
+      this.pickOptionAction(event, 'next');
+      break;
+    case 34: // Page down
+    case 35: // End
+      this.pickOptionAction(event, 'last');
       break;
     case 27: // Escape
-      this.closeAction();
+      this.closeAction(event);
+      break;
+    case 13: // Enter
+      this.submitForm(event);
       break;
   }
   return false;
@@ -121,8 +132,10 @@ CwicControl.prototype.onChangeHandler_checkbox = function() {
 
 CwicControl.prototype.onChangeHandler_radio_button = function() {
   if(this.$field.is(':checked')) {
-    $('.cwic-radio-button[data-name=' + APP.util.escapeForSelector(this.$replacement.data('name')) + ']').not(this.$replacement).removeClass('checked');
+    // Uncheck all other radio buttons
+    $('.cwic-radio-button[data-name=' + APP.util.escapeForSelector(this.$replacement.data('name')) + ']').not(this.$replacement).removeClass('checked').attr('tabindex', null);
     this.$replacement.addClass('checked');
+    this.$replacement.attr('tabindex', '0'); // This radio button can be selected through tab. The others not.
   } else {
     this.$replacement.removeClass('checked');
   }
@@ -135,16 +148,19 @@ CwicControl.prototype.onChangeHandler_file_field = function() {
 CwicControl.prototype.bindEvents = function() {
   var cc = this;
 
+  // Enable label selection
+  $('label[for="' + APP.util.escapeJQuerySelectorString(this.$field.attr('id')) + '"]').on('click', function(event) { cc.$replacement.focus(); });
+
   this.$field.on('change.cwicControl', function(event) { cc.onChangeHandler.call(cc, event); });
   this.$replacement.on('click', function() { cc.primaryAction.call(cc); });
 
-  if($.inArray(this.type, ['dropdown']) > -1) {
+  if(this['bindEvents_' + this.type]) {
     this['bindEvents_' + this.type]();
   }
 
   // Key events
   this.$replacement.attr('tabindex', '0');
-  this.$replacement.on('keyup', function(event) { cc.keyboardHandler.call(cc, event); });
+  this.$replacement.on('keydown', function(event) { cc.keyboardHandler.call(cc, event); });
 };
 
 CwicControl.prototype.bindEvents_dropdown = function() {
@@ -156,9 +172,6 @@ CwicControl.prototype.bindEvents_dropdown = function() {
       this.$replacement.addClass('autosubmit-busy');
     });
   }
-
-  // Make sure scrolling with keys is disabled
-  this.$replacement.on('keydown.cwicControl', function (event) { if($.inArray(event.which, [37,38,39,40]) > -1) { event.preventDefault(); }});
 
   // Update select element when dropdown option is clicked
   this.$replacement.find('.cwic-dropdown-option').each(function() {
@@ -183,19 +196,12 @@ CwicControl.prototype.primaryAction_dropdown = function() {
 };
 
 CwicControl.prototype.primaryAction_checkbox = function() {
-  if (this.$replacement.hasClass('checked')) {
-    this.$field.prop('checked', false).trigger('change');
-    this.$replacement.removeClass('checked');
-  } else {
-    this.$field.prop('checked', true).trigger('change');
-    this.$replacement.addClass('checked');
-  }
+  this.$field.prop('checked', !this.$replacement.hasClass('checked')).trigger('change');
 };
 
 CwicControl.prototype.primaryAction_radio_button = function() {
-  if (!this.$replacement.hasClass('checked')) {
+  if(!this.$replacement.hasClass('checked')) {
     this.$field.prop('checked', true).trigger('change');
-    this.$replacement.addClass('checked');
   }
 };
 
@@ -203,20 +209,58 @@ CwicControl.prototype.primaryAction_file_field = function() {
   this.$field.trigger('click');
 };
 
-CwicControl.prototype.nextAction = function() {
-  var next = this.$field.find('option:selected').next('option');
-  if(next.length > 0) {
-    this.$field.val(next.val());
-    this.$field.trigger('change');
+CwicControl.prototype.previousAction = function(event) {
+  event.preventDefault();
+  var prev = this.$field.find('option:selected').prev('option');
+  if(prev.length > 0) {
+    this.setValue(prev.val());
   }
 };
 
-CwicControl.prototype.previousAction = function() {
-  var prev = this.$field.find('option:selected').prev('option');
-  if(prev.length > 0) {
-    this.$field.val(prev.val());
-    this.$field.trigger('change');
+CwicControl.prototype.pickOptionAction = function(event, direction) {
+  if(this['pickOptionAction_' + this.type]) {
+    this['pickOptionAction_' + this.type](event, direction);
   }
+};
+
+CwicControl.prototype.pickOptionAction_dropdown = function(event, direction) {
+  event.preventDefault(); // Prevent scrolling
+  var options = this.$field.find('option');
+  var current = options.filter(':checked');
+  var option = this.getOptionByDirection(options, current, direction);
+  if(option.length > 0) {
+    this.$field.val(option.val()).trigger('change');
+  }
+};
+
+CwicControl.prototype.pickOptionAction_radio_button = function(event, direction) {
+  event.preventDefault(); // Prevent scrolling
+  var options = $('input:radio[name="' + APP.util.escapeJQuerySelectorString(this.$field.attr('name')) + '"]');
+  var current = this.$field;
+  var option = this.getOptionByDirection(options, current, direction);
+  if(option.length > 0) {
+    option.prop('checked', true).trigger('change');
+    option.data('cwicControl').$replacement.focus();
+  }
+};
+
+CwicControl.prototype.getOptionByDirection = function(options, current, direction) {
+  switch(direction) {
+    case 'first':
+      return options.first();
+    case 'previous':
+      var index = options.index(current) - 1;
+      return options.eq(index < 0 ? options.length - 1 : index);
+    case 'next':
+      var index = options.index(current) + 1;
+      return options.eq(index >= options.length ? 0 : index);
+    case 'last':
+      return options.last();
+  }
+};
+
+CwicControl.prototype.submitForm = function(event) {
+  this.$field[0].form.submit();
 };
 
 ///
