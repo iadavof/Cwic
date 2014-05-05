@@ -108,9 +108,11 @@ CwicControl.prototype.onChangeHandler = function(event) {
 
 CwicControl.prototype.onChangeHandler_dropdown = function() {
   var selectedOption = this.$field.find('option:selected');
-  this.$replacement.find('.cwic-dropdown-current-option').text((selectedOption.text() || '...'));
-  this.$replacement.find('.cwic-dropdown-option').removeClass('selected');
-  this.$replacement.find('.cwic-dropdown-option[data-value=' + APP.util.escapeForSelector(selectedOption.val()) + ']').addClass('selected');
+  if(selectedOption.length > 0) {
+    this.$replacement.find('.cwic-dropdown-current-option').text((selectedOption.text() || '...'));
+    this.$replacement.find('.cwic-dropdown-option').removeClass('selected');
+    this.$replacement.find('.cwic-dropdown-option[data-value=' + APP.util.escapeForSelector(selectedOption.val()) + ']').addClass('selected');
+  }
 };
 
 CwicControl.prototype.onChangeHandler_checkbox = function() {
