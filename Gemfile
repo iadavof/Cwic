@@ -104,7 +104,7 @@ gem 'momentjs-rails'
 gem 'select2-rails'
 
 # PG_Search for easy text search and global searching
-gem 'pg_search', '~> 0.7.0' # Locked on minor version, because we use custom search functionality (see lib/core_ext/pg_search.rb).
+gem 'pg_search', '~> 0.7.3' # Locked on minor version, because we use custom search functionality (see lib/core_ext/pg_search.rb).
 
 # Easy pagination (and unfortunately unefficient due to unnecessary queries)
 gem 'kaminari'

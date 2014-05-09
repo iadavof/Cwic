@@ -346,7 +346,7 @@ DEPENDENCIES
   nested_form
   numbers_and_words!
   pg
-  pg_search (~> 0.7.0)
+  pg_search (~> 0.7.3)
   pry-rails
   quiet_assets
   rails (~> 4.1.1)!
