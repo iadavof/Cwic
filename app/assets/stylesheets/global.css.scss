@@ -329,7 +329,7 @@ div.right-controls {
 
 #search-bar {
   overflow: hidden;
-  background-color: #ffffff;
+  background-color: #1c9cb2;
   text-align: center;
   position: relative;
   z-index: 2;
@@ -345,7 +345,7 @@ html.js #search-bar.open {
 }
 
 #search-bar > .inner {
-  padding: 10px;
+  padding: 18px 0 10px 0;
 }
 
 #global_search {
@@ -354,17 +354,18 @@ html.js #search-bar.open {
 
 #menu-bar {
   position: relative;
-  background: #666666;
-  border-bottom: 1px solid #444444;
-  background-image: -moz-linear-gradient(top, rgba(0,0,0,0.2) 0%, transparent 100%);
-  color: #ffffff;
+  background: #fff;
+  border-bottom: 1px solid #ccc;
   text-align: right;
+  font-size: 1.1em;
+  font-weight: 500;
+  border-top: 8px solid #1c9cb2;
 }
 
 #menu-bar i[class^="icon-"],
 #menu-bar i[class*=" icon-"] {
   vertical-align: baseline;
-  font-size: 1.1em;
+  font-size: 1em;
   position: relative;
   bottom: -0.12em;
   margin: 0 0.2em 0 0;
@@ -407,8 +408,13 @@ html.js #search-bar.open {
 #user-info a {
   display: block;
   padding: 0.7em 0.9em;
-  color: #ffffff;
+  color: #444;
   text-decoration: none;
+}
+
+#main-menu > li > a {
+  border-top: 8px solid transparent;
+  margin-top: -8px;
 }
 
 #user-menu > li > a > i.icon {
@@ -425,6 +431,12 @@ html.js #search-bar.open {
   background: rgba(255,255,255,0.1);
 }
 
+#main-menu > li.selected {
+  background-color: #eee;
+  border-color: #eee;
+}
+
+/*
 #main-menu > li.selected:after {
   display: block;
   content: '.';
@@ -440,14 +452,14 @@ html.js #search-bar.open {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
 }
+*/
 
 #main-menu > li.active.selected:after {
   border-top-color: #ff3520;
 }
 
 #main-menu > li.active > a {
-  background: #ff3520;
-  color: #ffffff;
+  border-color: #ff3520;
 }
 
 #user-menu {
@@ -477,7 +489,7 @@ html.js #search-bar.open {
 #open-search-button {
   display: inline-block;
   float: left;
-  color: #ffffff;
+  color: #1c9cb2;
   text-decoration: none;
   padding: 0.7em 0.9em;
   line-height: 100%;
@@ -487,18 +499,19 @@ html.js #search-bar.open {
 }
 
 #open-search-button.open {
-  color: #666666;
-  background-color: #ffffff;
+  color: #fff;
+  background-color: #1c9cb2;
 }
 
 #submenu-box {
-  background: #dddddd;
+  background: #ff3520;
+  color: #fff;
   text-align: center;
   background-image: image-url("logo_transp.png");
   background-repeat: no-repeat;
   background-position: left bottom;
-  background-position: left -10px bottom -10px;
-  background-size: 160px auto;
+  background-position: left bottom -50px;
+  background-size: 300px auto;
 }
 
 html.js #submenu-box {
@@ -546,8 +559,10 @@ html.js #submenu-box > .submenu > .submenu-block {
 }
 
 #submenu-box > .submenu > .submenu-block > h3 {
-  margin: 1em 0 0.3em 0;
-  font-size: 1.3em;
+  margin: 1em 0.6em 0.3em 0.6em;
+  padding: 0.25em 0;
+  font-size: 1.5em;
+  font-weight: 700;
 }
 
 #submenu-box > .submenu > .submenu-block > ul {
@@ -568,6 +583,7 @@ html.js #submenu-box > .submenu > .submenu-block {
   margin-right: -20px;
   text-decoration: none;
   transition: background-color 0.1s;
+  color: #fff;
 }
 
 #submenu-box > .submenu > .submenu-block > ul > li a:hover {
@@ -575,8 +591,8 @@ html.js #submenu-box > .submenu > .submenu-block {
 }
 
 #submenu-box > .submenu > .submenu-block > ul > li.active a {
-  background-color: #ff3520;
-  color: #ffffff;
+  background-color: #fff;
+  color: #ff3520;
   text-decoration: none;
 }
 
@@ -585,7 +601,7 @@ html.js #submenu-box > .submenu > .submenu-block {
  */
 
 #header {
-  box-shadow: 0 1px 2px rgba(0,0,0,0.4);
+  box-shadow: 0 1px 10px rgba(0,0,0,0.2);
   position: relative;
   z-index: 198;
 }
