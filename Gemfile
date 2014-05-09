@@ -151,6 +151,9 @@ group :development do
 
   # Bullet for warnings about potential query optimalisations
   gem 'bullet'
+
+  # Spring gem for application pre-loading leading to faster Rails commands
+  gem 'spring'
 end
 
 group :test, :development do
