@@ -142,6 +142,9 @@ gem 'factory_girl_rails'
 # The forgery fake data generator (useful for testing)
 gem 'forgery'
 
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin]
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
