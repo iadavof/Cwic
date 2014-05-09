@@ -1,7 +1,8 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.0.2'
+# Use rails-4-1 github branch because the gem contains a bug in ActiveRecord that gives problems with pg_search. This bug will be fixed in Rails 4.1.2, but is not yet available..
+gem 'rails', '~> 4.1.1', github: 'rails/rails', branch: '4-1-stable' # TODO update to Rails 4.1.2 as soon as it is available
 
 # Use postgresql as the database for Active Record
 gem 'pg'
