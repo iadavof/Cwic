@@ -213,7 +213,7 @@ private
     dupreservations = reservations.dup
 
     valid = true
-    while refres = dupreservations.shift
+    while refres = dupreservations.to_a.shift
       dupreservations.each do |res|
         if res.begins_at <= refres.ends_at && res.ends_at >= refres.begins_at
           valid = false
