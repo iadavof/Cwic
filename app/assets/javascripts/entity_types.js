@@ -79,8 +79,8 @@ APP.entity_types = {
   dataTypeChanged: function(propertyWrapper) {
     // Determine the selected data type
     var dataType = propertyWrapper.find('select[data-field="data-type"]').find(':selected').data('key')
-    var requiredWrapper = propertyWrapper.find('.required');
-    var defaultValueWrapper = propertyWrapper.find('.default-value');
+    var requiredWrapper = propertyWrapper.find('.field.required');
+    var defaultValueWrapper = propertyWrapper.find('.field.default-value');
     var defaultValueFormattedFieldContainer = defaultValueWrapper.find('.default-value-formatted-field');
     var options = propertyWrapper.find('.property-options');
 
@@ -95,6 +95,7 @@ APP.entity_types = {
     }
 
     // Rebuild/show data type specific fields
+    var defaultValueFormattedField = null;
     switch(dataType) {
       case 'enum':
       case 'set':
@@ -105,21 +106,23 @@ APP.entity_types = {
         options.show();
         break;
       case 'text':
-        $('<textarea data-field="default-value"></textarea>').appendTo(defaultValueFormattedFieldContainer);
-        defaultValueWrapper.show();
+        defaultValueFormattedField = $('<textarea data-field="default-value"></textarea>');
         break;
       case 'boolean':
         requiredWrapper.hide();
-        $('<input type="checkbox" value="1" data-field="default-value" />').appendTo(defaultValueFormattedFieldContainer);
-        defaultValueWrapper.show();
+        defaultValueFormattedField = $('<input type="checkbox" value="1" data-field="default-value" />');
         break;
       case 'string':
       case 'integer':
       case 'decimal':
       default:
-        $('<input type="text" data-field="default-value" />').appendTo(defaultValueFormattedFieldContainer);
-        defaultValueWrapper.show();
+        defaultValueFormattedField = $('<input type="text" data-field="default-value" />');
         break;
+    }
+
+    if(defaultValueFormattedField) {
+      defaultValueFormattedField.data('field', 'default-value').appendTo(defaultValueFormattedFieldContainer).cwicControl();
+      defaultValueWrapper.show();
     }
   },
   parseFormattedDefaultValues: function(form) {
