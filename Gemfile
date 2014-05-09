@@ -69,7 +69,7 @@ gem 'devise-i18n-views', '~> 0.2.8'
 gem 'cancan'
 
 # Use I18n alchemy gem for easy number (and possibly date) parsing and localization in forms
-gem 'i18n_alchemy', github: 'carlosantoniodasilva/i18n_alchemy'
+gem 'i18n_alchemy'
 
 # Responders gem for nice and easy responses after CRUD actions
 gem 'responders'

@@ -6,14 +6,6 @@ GIT
       i18n (>= 0.3.7)
 
 GIT
-  remote: git://github.com/carlosantoniodasilva/i18n_alchemy.git
-  revision: 44c3301373e7ce0dbdfe658a62ba6dbc27e531ee
-  specs:
-    i18n_alchemy (0.2.0)
-      activesupport (>= 3.2.0, < 4.1)
-      i18n (~> 0.6)
-
-GIT
   remote: git://github.com/kreintjes/gistyle.git
   revision: 1b7046763064b61e15438045f5ec3d7afa7017c6
   specs:
@@ -80,7 +72,6 @@ GEM
     ancestry (2.0.0)
       activerecord (>= 3.0.0)
     arel (4.0.1)
-    atomic (1.1.15)
     attribute_normalizer (1.2.0.b)
     bcrypt-ruby (3.1.2)
     bcrypt-ruby (3.1.2-x86-mingw32)
@@ -144,6 +135,9 @@ GEM
       rack (~> 1.2)
     hike (1.2.3)
     i18n (0.6.9)
+    i18n_alchemy (0.2.1)
+      activesupport (>= 3.2.0, < 4.2)
+      i18n (~> 0.6)
     ice_cube (0.12.0)
     jbuilder (1.5.3)
       activesupport (>= 3.0.0)
@@ -179,7 +173,7 @@ GEM
     modernizr-rails (2.7.0)
     momentjs-rails (2.5.1)
       railties (>= 3.1)
-    multi_json (1.9.0)
+    multi_json (1.10.0)
     nested_form (0.3.2)
     orm_adapter (0.5.0)
     pg (0.17.0)
@@ -271,8 +265,7 @@ GEM
       eventmachine (>= 1.0.0)
       rack (>= 1.0.0)
     thor (0.18.1)
-    thread_safe (0.2.0)
-      atomic (>= 1.1.7, < 2)
+    thread_safe (0.3.3)
     tilt (1.4.1)
     timeliness (0.3.7)
     treetop (1.4.15)
@@ -316,7 +309,7 @@ DEPENDENCIES
   gistyle!
   hash_to_hidden_fields
   holidays!
-  i18n_alchemy!
+  i18n_alchemy
   ice_cube
   jbuilder
   jquery-minicolors-rails
