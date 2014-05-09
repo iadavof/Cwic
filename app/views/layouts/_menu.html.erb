@@ -1,18 +1,5 @@
 <%= render 'layouts/search' %>
 <div id="menu-bar" class="clearfix">
-  <div id="user-info">
-    <a id="current-user" href="#"><i class="icon-user"></i> <%= current_user.instance_name %><%= ' (' + current_organisation.instance_name + ')' if current_organisation.present? %></a>
-    <ul id="user-menu">
-      <% if current_user.organisations.count > 1 %>
-        <% current_user.organisations.each do |org| %>
-          <li><%= link_to(content_tag(:i, '', class: current_organisation == org ? 'icon icon-ok' : 'icon') + ' ' + org.instance_name, set_organisation_path(org))%></li>
-        <% end %>
-      <% end %>
-      <li><%= link_to(content_tag(:i, '', class: 'icon icon-off') + ' ' + t('.logout'), destroy_user_session_path, method: :delete) %></li>
-    </ul>
-  </div>
-  <a id="open-feedback-button" class="button blue"><%= t('.feedback') %></a>
-  <%= content_tag(:a, content_tag(:i, nil, class: 'icon-search'), id: 'open-search-button', class: (controller_name == 'search' ? 'open' : nil), href: '#') %>
   <ul id="main-menu">
     <% menu.each_with_index do |(category_name, category_content), index| %>
     <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: (category_matches?(category_name) ? "active" : nil)) do %>
@@ -24,25 +11,17 @@
     <% end %>
     <% end %>
   </ul>
-</div>
-<div id="submenu-box" class="clearfix">
-  <% menu.each_with_index do |(category_name, category_content), index| %>
-  <% unless category_content[:url].present? # With subitems %>
-  <div class="submenu clearfix" data-main-menu-relation="main-menu-item-<%= index + 1 %>">
-    <h2><%= t(".#{category_name}") %></h2>
-    <% category_content.each do |sub_category_name, sub_category_content| %>
-    <div class="submenu-block">
-      <%= content_tag(:h3, t(".#{sub_category_name}"), class: (sub_category_matches?(category_name, sub_category_name) ? "active" : nil)) %>
-      <ul>
-        <% sub_category_content.each do |link_name, link_content| %>
-        <%= content_tag(:li, class: (link_matches?(category_name, sub_category_name, link_name) ? "active" : nil)) do %>
-          <%= link_to((link_content[:name].present? ? link_content[:name] : t(".#{link_name}")), link_content[:url], link_content.except(:name, :url)) %>
+  <%= content_tag(:a, content_tag(:i, nil, class: 'icon-search'), id: 'open-search-button', class: (controller_name == 'search' ? 'open' : nil), href: '#') %>
+  <a id="open-feedback-button" class="button blue"><%= t('.feedback') %></a>
+  <div id="user-info">
+    <a id="current-user" href="#"><i class="icon-user"></i> <%= current_user.instance_name %><%= ' (' + current_organisation.instance_name + ')' if current_organisation.present? %></a>
+    <ul id="user-menu">
+      <% if current_user.organisations.count > 1 %>
+        <% current_user.organisations.each do |org| %>
+          <li><%= link_to(content_tag(:i, '', class: current_organisation == org ? 'icon icon-ok' : 'icon') + ' ' + org.instance_name, set_organisation_path(org))%></li>
         <% end %>
-        <% end %>
-      </ul>
-    </div>
-    <% end %>
+      <% end %>
+      <li><%= link_to(content_tag(:i, '', class: 'icon icon-off') + ' ' + t('.logout'), destroy_user_session_path, method: :delete) %></li>
+    </ul>
   </div>
-  <% end %>
-  <% end %>
 </div>

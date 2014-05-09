@@ -21,9 +21,12 @@
       <% if user_signed_in? %>
       <%= render "layouts/menu" %>
       <% end %>
-      <div id="progress-bar-container"></div>
     </div>
+    <% if user_signed_in? %>
+    <%= render "layouts/submenu" %>
+    <% end %>
     <div id="content-area">
+      <div id="progress-bar-container"></div>
       <div class="inner">
         <%= content_for?(:mini_search) ? yield(:mini_search) : '' %>
         <% if content_for?(:right_controls) %>

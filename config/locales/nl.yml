@@ -422,8 +422,11 @@ nl:
       overview: 'Overzicht'
       reservations: 'Reserveringen'
       settings: 'Instellingen'
-      home: 'Home'
       admin: 'Admin'
+      feedback: 'Feedback'
+    submenu:
+      home: 'Home'
+      reservations: 'Reserveringen'
       organisation_clients: 'Klanten'
       organisation_users: 'Gebruikers'
       entity_types: 'Objectsoorten'
@@ -442,7 +445,6 @@ nl:
       info_screens: 'Informatieschermen'
       entity_type_icons: 'Objecticonen'
       users: 'Alle gebruikers'
-      feedback: 'Feedback'
       feedbacks: 'Feedback'
       organisations: 'Organisaties'
     search:

@@ -1,61 +1,101 @@
+/*
+100: Thin
+200: ExtraLight
+300: Light
+400: Regular
+500: Medium
+600: SemiBold
+700: Bold
+800: ExtraBold
+900: Black
+*/
+
 @font-face {
-  font-family: 'Aller';
-  src: font-url('aller_rg-webfont.eot');
-  src: font-url('aller_rg-webfont.eot?#iefix') format('embedded-opentype'),
-       font-url('aller_rg-webfont.woff') format('woff'),
-       font-url('aller_rg-webfont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Thin-webfont.eot');
+    src: font-url('ClearSans-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Thin-webfont.woff') format('woff'),
+         font-url('ClearSans-Thin-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Thin-webfont.svg#clear_sans_thinregular') format('svg');
+    font-weight: 100;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'Aller';
-  src: font-url('aller_bd-webfont.eot');
-  src: font-url('aller_bd-webfont.eot?#iefix') format('embedded-opentype'),
-       font-url('aller_bd-webfont.woff') format('woff'),
-       font-url('aller_bd-webfont.ttf') format('truetype');
-  font-weight: bold;
-  font-style: normal;
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Light-webfont.eot');
+    src: font-url('ClearSans-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Light-webfont.woff') format('woff'),
+         font-url('ClearSans-Light-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Light-webfont.svg#clear_sans_lightregular') format('svg');
+    font-weight: 300;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'Aller';
-  src: font-url('aller_it-webfont.eot');
-  src: font-url('aller_it-webfont.eot?#iefix') format('embedded-opentype'),
-       font-url('aller_it-webfont.woff') format('woff'),
-       font-url('aller_it-webfont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: italic;
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Regular-webfont.eot');
+    src: font-url('ClearSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Regular-webfont.woff') format('woff'),
+         font-url('ClearSans-Regular-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Regular-webfont.svg#clear_sansregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'Aller';
-  src: font-url('aller_bdit-webfont.eot');
-  src: font-url('aller_bdit-webfont.eot?#iefix') format('embedded-opentype'),
-       font-url('aller_bdit-webfont.woff') format('woff'),
-       font-url('aller_bdit-webfont.ttf') format('truetype');
-  font-weight: bold;
-  font-style: italic;
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Italic-webfont.eot');
+    src: font-url('ClearSans-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Italic-webfont.woff') format('woff'),
+         font-url('ClearSans-Italic-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Italic-webfont.svg#clear_sansitalic') format('svg');
+    font-weight: 400;
+    font-style: italic;
 }
 
 @font-face {
-  font-family: 'AllerLight';
-  src: font-url('aller_lt-webfont.eot');
-  src: font-url('aller_lt-webfont.eot?#iefix') format('embedded-opentype'),
-       font-url('aller_lt-webfont.woff') format('woff'),
-       font-url('aller_lt-webfont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Medium-webfont.eot');
+    src: font-url('ClearSans-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Medium-webfont.woff') format('woff'),
+         font-url('ClearSans-Medium-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Medium-webfont.svg#clear_sans_mediumregular') format('svg');
+    font-weight: 500;
+    font-style: normal;
 }
 
 @font-face {
-  font-family: 'AllerLight';
-  src: font-url('aller_ltit-webfont.eot');
-  src: font-url('aller_ltit-webfont.eot?#iefix') format('embedded-opentype'),
-       font-url('aller_ltit-webfont.woff') format('woff'),
-       font-url('aller_ltit-webfont.ttf') format('truetype');
-  font-weight: normal;
-  font-style: italic;
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-MediumItalic-webfont.eot');
+    src: font-url('ClearSans-MediumItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-MediumItalic-webfont.woff') format('woff'),
+         font-url('ClearSans-MediumItalic-webfont.ttf') format('truetype'),
+         font-url('ClearSans-MediumItalic-webfont.svg#clear_sans_mediumitalic') format('svg');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Bold-webfont.eot');
+    src: font-url('ClearSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Bold-webfont.woff') format('woff'),
+         font-url('ClearSans-Bold-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Bold-webfont.svg#clear_sansbold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-BoldItalic-webfont.eot');
+    src: font-url('ClearSans-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-BoldItalic-webfont.woff') format('woff'),
+         font-url('ClearSans-BoldItalic-webfont.ttf') format('truetype'),
+         font-url('ClearSans-BoldItalic-webfont.svg#clear_sansbold_italic') format('svg');
+    font-weight: 700;
+    font-style: italic;
 }
 
 @font-face {
@@ -141,7 +181,7 @@ html {
 body {
   color: #444444;
   font-size: 80%;
-  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   margin: 0;
   padding: 0;
   line-height: 200%;
@@ -278,7 +318,8 @@ body[data-current-user-id=''] #content > .inner {
 
 form.mini-search {
   float: right;
-  margin: 2em;
+  vertical-align: middle;
+  margin: 2.5em 30px;
 }
 
 div.right-controls {
@@ -330,7 +371,7 @@ html.js #search-bar.open {
 }
 
 #user-info {
-  float: left;
+  display: inline-block;
   margin: 0 0 -1px 0;
   position: relative;
 }
@@ -342,6 +383,10 @@ html.js #search-bar.open {
   margin: 0 0 -1px 0;
   padding: 0;
   white-space: nowrap;
+}
+
+#main-menu {
+  float: left;
 }
 
 #main-menu > li,
@@ -361,7 +406,7 @@ html.js #search-bar.open {
 #user-menu > li > a,
 #user-info a {
   display: block;
-  padding: 5px 8px;
+  padding: 0.7em 0.9em;
   color: #ffffff;
   text-decoration: none;
 }
@@ -426,17 +471,18 @@ html.js #search-bar.open {
 }
 
 #open-feedback-button {
-  float: left;
+  display: inline-block;
 }
 
 #open-search-button {
   display: inline-block;
+  float: left;
   color: #ffffff;
   text-decoration: none;
-  padding: 5px 8px;
+  padding: 0.7em 0.9em;
   line-height: 100%;
   border-radius: 0 0 3px 3px;
-  margin-right: 5px;
+  margin-left: 8px;
   vertical-align: top;
 }
 
@@ -446,35 +492,39 @@ html.js #search-bar.open {
 }
 
 #submenu-box {
-  overflow: hidden;
-  position: relative;
   background: #dddddd;
-/*  border-bottom: 1px solid #b5b5b5; */
   text-align: center;
   background-image: image-url("logo_transp.png");
   background-repeat: no-repeat;
-  background-position: -10px center;
+  background-position: left bottom;
+  background-position: left -10px bottom -10px;
   background-size: 160px auto;
 }
 
 html.js #submenu-box {
-  height: 0;
+  overflow: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  bottom: 0;
 }
 
 #submenu-box > .submenu {
   display: inline-block;
   vertical-align: top;
   text-align: left;
-  padding: 12px 10px 10px 10px;
+  padding: 20px;
   margin: 0;
 }
 
 html.js #submenu-box > .submenu {
   display: none;
+  vertical-align: baseline;
 }
 
 html.js #submenu-box > .submenu.selected {
-  display: inline-block;
+  display: block;
 }
 
 #submenu-box > .submenu > h2 {
@@ -484,12 +534,19 @@ html.js #submenu-box > .submenu.selected {
 }
 
 #submenu-box > .submenu > .submenu-block {
-  float: left;
+  vertical-align: top;
+  display: inline-block;
   margin: 0 15px;
 }
 
+html.js #submenu-box > .submenu > .submenu-block {
+  vertical-align: baseline;
+  display: block;
+  margin: 0;
+}
+
 #submenu-box > .submenu > .submenu-block > h3 {
-  margin: 0 0 7px 0;
+  margin: 1em 0 0.3em 0;
   font-size: 1.3em;
 }
 
@@ -500,14 +557,15 @@ html.js #submenu-box > .submenu.selected {
 }
 
 #submenu-box > .submenu > .submenu-block > ul > li {
+  display: block;
   padding: 0;
   margin: 0;
 }
 
 #submenu-box > .submenu > .submenu-block > ul > li a {
-  display: inline-block;
-  padding: 2px 10px;
-  margin-left: -10px;
+  display: block;
+  padding: 0.7em 0.9em;
+  margin-right: -20px;
   text-decoration: none;
   transition: background-color 0.1s;
 }
@@ -520,7 +578,6 @@ html.js #submenu-box > .submenu.selected {
   background-color: #ff3520;
   color: #ffffff;
   text-decoration: none;
-  padding: 2px 10px;
 }
 
 /**
@@ -529,7 +586,6 @@ html.js #submenu-box > .submenu.selected {
 
 #header {
   box-shadow: 0 1px 2px rgba(0,0,0,0.4);
-  margin-bottom: 3px;
   position: relative;
   z-index: 198;
 }
@@ -682,10 +738,10 @@ h1, h2, h3, h4, h5, h6 {
 }
 
 h1 {
-  font-family: 'AllerLight', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-weight: 300;
   font-size: 2.5em;
   margin: 0;
-  padding: 0.7em 20px;
+  padding: 1em 30px;
   line-height: 120%;
 }
 
@@ -715,7 +771,6 @@ img {
 
 h1 strong {
   font-weight: bold;
-  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   color: #ff3520;
 }
 
@@ -739,7 +794,7 @@ a > img {
 }
 
 input, textarea, select {
-  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   border: 1px solid #cccccc;
   padding: 8px;
@@ -788,7 +843,7 @@ i.table-warning-icon {
 }
 
 div.field-with-clear span {
-  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   display: inline-block;
   width: 1em;
@@ -860,7 +915,7 @@ input[type="submit"],
 input[type="reset"],
 button,
 .button {
-  font-family: 'Aller', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   display: inline-block;
   position: relative;
   width: auto;
@@ -935,8 +990,8 @@ html.js #content-area {
   position: absolute;
   top: 300px;
   bottom: 0;
-  left: 0;
-  width: 100%;
+  left: 300px;
+  right: 0;
 }
 
 #content-area > .inner {
@@ -944,8 +999,7 @@ html.js #content-area {
 }
 
 #content {
-  margin: 0 10px 10px 10px;
-/*  border: 1px solid #cccccc; */
+  margin: 0 30px 10px 30px;
   background: #ffffff;
 }
 
