@@ -37,6 +37,7 @@ class InfoScreensController < ApplicationController
 
   # POST /info_screens
   def create
+    @info_screen.info_screen_entity_types.clear # Clear default reservation statuses to prevent adding them double (they were already added in the new action and send along with the resouce params)
     @info_screen.attributes = resource_params
     @info_screen.save
     redirect_to action: :index
