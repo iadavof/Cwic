@@ -658,8 +658,7 @@ div#progress-bar-container {
     opacity: 0;
     visibility: hidden;
     border: 1px solid #17889d;
-    border-radius: 3px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.4);
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
     background: #ffffff;
     z-index: 1;
     transition: opacity 0.2s ease-in-out 0s, visibility 0s linear 0.2s;
@@ -739,7 +738,7 @@ h5.title-box,
 h6.title-box  {
   line-height: 1em;
   display: inline-block;
-  box-shadow: 0 0 4px rgba(0,0,0,0.4);
+  box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
   border: 1px solid #e6301d;
   border-radius: 5px;
   background: #ff3520;

@@ -6,7 +6,7 @@ nl:
   destroy: 'Verwijder'
   update: 'Update'
   index_objects_html: 'Lijst met <strong>%{classes}</strong>'
-  index_objects_html_of: 'Lijst met <strong>%{classes}</strong> van %{instance_name}'
+  index_objects_html_of: 'Lijst met <strong>%{classes}</strong> van <strong>%{instance_name}</strong>'
   empty_objects: 'Geen %{classes}'
   empty_for_search: 'Geen %{classes} gevonden voor de zoekopdracht <strong>%{search}</strong>.'
   remove_search: 'Zoekopdracht verwijderen'

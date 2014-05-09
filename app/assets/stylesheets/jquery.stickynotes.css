@@ -22,7 +22,7 @@ div.note {
     background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FEF4AC), color-stop(1, #F4E183));
     background-image: -webkit-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
     background-image: linear-gradient(to bottom, #FEF4AC 0%, #F4E183 100%);
-    box-shadow: 0px 0px 5px 2px #dddddd;
+    box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
     display: block;
     width: 400px;
     min-height: 200px;
