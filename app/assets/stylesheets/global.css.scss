@@ -329,7 +329,7 @@ div.right-controls {
 
 #search-bar {
   overflow: hidden;
-  background-color: #1c9cb2;
+  background-color: #fff;
   text-align: center;
   position: relative;
   z-index: 2;
@@ -345,7 +345,7 @@ html.js #search-bar.open {
 }
 
 #search-bar > .inner {
-  padding: 18px 0 10px 0;
+  padding: 15px 0;
 }
 
 #global_search {
@@ -354,12 +354,12 @@ html.js #search-bar.open {
 
 #menu-bar {
   position: relative;
-  background: #fff;
-  border-bottom: 1px solid #ccc;
+  background: #ff3520;
   text-align: right;
   font-size: 1.1em;
   font-weight: 500;
-  border-top: 8px solid #1c9cb2;
+  border-bottom: 7px solid #fff;
+  color: #fff;
 }
 
 #menu-bar i[class^="icon-"],
@@ -381,7 +381,7 @@ html.js #search-bar.open {
 #user-menu {
   display: inline-block;
   list-style-type: none;
-  margin: 0 0 -1px 0;
+  margin: 0;
   padding: 0;
   white-space: nowrap;
 }
@@ -408,13 +408,14 @@ html.js #search-bar.open {
 #user-info a {
   display: block;
   padding: 0.7em 0.9em;
-  color: #444;
+  color: #fff;
   text-decoration: none;
 }
 
 #main-menu > li > a {
-  border-top: 8px solid transparent;
-  margin-top: -8px;
+  border-bottom: 7px solid #fff;
+  margin-bottom: -7px;
+  transition: 0.2s ease-in-out;
 }
 
 #user-menu > li > a > i.icon {
@@ -431,9 +432,8 @@ html.js #search-bar.open {
   background: rgba(255,255,255,0.1);
 }
 
-#main-menu > li.selected {
-  background-color: #eee;
-  border-color: #eee;
+#main-menu > li.selected > a {
+  border-color: #1c9cb2;
 }
 
 /*
@@ -458,8 +458,12 @@ html.js #search-bar.open {
   border-top-color: #ff3520;
 }
 
+#main-menu > li.active {
+  background-color: #fff;
+}
+
 #main-menu > li.active > a {
-  border-color: #ff3520;
+  color: #ff3520;
 }
 
 #user-menu {
@@ -489,7 +493,7 @@ html.js #search-bar.open {
 #open-search-button {
   display: inline-block;
   float: left;
-  color: #1c9cb2;
+  color: #fff;
   text-decoration: none;
   padding: 0.7em 0.9em;
   line-height: 100%;
@@ -499,12 +503,12 @@ html.js #search-bar.open {
 }
 
 #open-search-button.open {
-  color: #fff;
-  background-color: #1c9cb2;
+  color: #1c9cb2;
+  background-color: #fff;
 }
 
 #submenu-box {
-  background: #ff3520;
+  background: #999;
   color: #fff;
   text-align: center;
   background-image: image-url("logo_transp.png");
@@ -587,12 +591,12 @@ html.js #submenu-box > .submenu > .submenu-block {
 }
 
 #submenu-box > .submenu > .submenu-block > ul > li a:hover {
-  background-color: rgba(255,255,255,0.4);
+  background-color: rgba(255,255,255,0.2);
 }
 
 #submenu-box > .submenu > .submenu-block > ul > li.active a {
-  background-color: #fff;
-  color: #ff3520;
+  background-color: #ff3520;
+  color: #fff;
   text-decoration: none;
 }
 
@@ -601,7 +605,7 @@ html.js #submenu-box > .submenu > .submenu-block {
  */
 
 #header {
-  box-shadow: 0 1px 10px rgba(0,0,0,0.2);
+  box-shadow: 0 1px 15px rgba(0,0,0,0.2);
   position: relative;
   z-index: 198;
 }
