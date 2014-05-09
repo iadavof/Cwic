@@ -5,56 +5,43 @@ class EntityTypeIconsController < ApplicationController
 
   # GET /entity_type_icons
   def index
-    respond_with(@organisation.present? ? [@organisation, @entity_type_icons] : @entity_type_icons)
+    respond_with(@organisation, @entity_type_icons) # Automatically handles the case when @organisation is not present for the admin interface
   end
 
   # GET /entity_type_icons/1
   def show
-    respond_with(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
+    respond_with(@organisation, @entity_type_icon)
   end
 
   # GET /entity_type_icons/new
   def new
-    respond_with(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
+    respond_with(@organisation, @entity_type_icon)
   end
 
   # GET /entity_type_icons/1/edit
   def edit
-    respond_with(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
+    respond_with(@organisation, @entity_type_icon)
   end
 
   # POST /entity_type_icons
   def create
     @entity_type_icon.attributes = resource_params
-    if @admin
-      if params[:organisation_id] == ""
-        @entity_type_icon.organisation = nil
-      end
-    else
-        @entity_type_icon.organisation = @organisation
-    end
+    @entity_type_icon.organisation = @organisation unless @admin
     @entity_type_icon.save
-    respond_with(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
+    respond_with(@organisation, @entity_type_icon)
   end
 
   # PATCH/PUT /entity_type_icons/1
   def update
     @entity_type_icon.update_attributes(resource_params)
-    if @admin
-      if params[:organisation_id] == ""
-        @entity_type_icon.organisation = nil
-      end
-    else
-        @entity_type_icon.organisation = @organisation
-    end
     @entity_type_icon.save
-    respond_with(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
+    respond_with(@organisation, @entity_type_icon)
   end
 
   # DELETE /entity_type_icons/1
   def destroy
     @entity_type_icon.destroy
-    respond_with(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
+    respond_with(@organisation, @entity_type_icon)
   end
 
 private
