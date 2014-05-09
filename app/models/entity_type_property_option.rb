@@ -23,8 +23,8 @@ class EntityTypePropertyOption < ActiveRecord::Base
 
 private
   def clear_depending_entity_properties
-    # Because of a bug in Rails with regard to default_scopes and update_all, we need to perform this action in a block of EntityProperty.send(:with_exclusive_scope).
-    EntityProperty.send(:with_exclusive_scope) { self.entity_type_property.entity_properties.update_all({ value: nil }, { value: self.id.to_s }) }
+    # Because of a bug in Rails with regard to default_scopes, associations and update_all, we need to perform this action in an unscoped block.
+    EntityProperty.unscoped { self.entity_type_property.entity_properties.where(value: self.id.to_s).update_all(value: nil) }
   end
 end
 
