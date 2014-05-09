@@ -61,9 +61,9 @@ gem 'rails-i18n'
 gem 'rich_pluralization', github: 'archan937/rich_pluralization'
 
 # Devise for authentication. Gems are locked on minor versions, because we use custom Devise functionality and views.
-gem 'devise', '~> 3.1.1'
-gem 'devise_invitable', '~> 1.3.0'
-gem 'devise-i18n', '~> 0.10.0'
+gem 'devise', '~> 3.2.4'
+gem 'devise_invitable', '~> 1.3.5'
+gem 'devise-i18n', '~> 0.10.3'
 gem 'devise-i18n-views', '~> 0.2.8'
 
 # Use CanCan for access control / authorisation
