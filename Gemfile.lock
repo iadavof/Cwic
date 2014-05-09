@@ -6,12 +6,6 @@ GIT
       i18n (>= 0.3.7)
 
 GIT
-  remote: git://github.com/kreintjes/gistyle.git
-  revision: 1b7046763064b61e15438045f5ec3d7afa7017c6
-  specs:
-    gistyle (0.9.7)
-
-GIT
   remote: git://github.com/kreintjes/holidays.git
   revision: dca4cd582e5c9bc221366905919fae5c26e1fc71
   specs:
@@ -84,6 +78,12 @@ GIT
       activesupport (= 4.1.1)
       rake (>= 0.8.7)
       thor (>= 0.18.1, < 2.0)
+
+GIT
+  remote: git://github.com/tonytonyjan/gistyle.git
+  revision: c94a2059a4e4a9e9e877ffece609bf3abdbe66d7
+  specs:
+    gistyle (0.9.7)
 
 GEM
   remote: http://rubygems.org/
