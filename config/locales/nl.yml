@@ -458,6 +458,7 @@ nl:
       search_entitytype_placeholder: 'Objectsoort zoeken...'
       search_organisation_placeholder: 'Organisatie zoeken...'
       search_user_placeholder: 'Gebruiker zoeken...'
+      search_organisationuser_placeholder: 'Gebruiker zoeken...'
       search_feedback_placeholder: 'Feedback zoeken...'
       search_entitytypeicon_placeholder: 'Objecticoon zoeken...'
       date_domain_from_placeholder: 'Vanaf datum...'

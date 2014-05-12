@@ -1,4 +1,6 @@
 class OrganisationUser < ActiveRecord::Base
+  include PgSearch
+  include Sspable
 
   # There are two ways an organisation user can be added:
   # 1. Directly when registering a new user/organisation. In this case we do not use the by_email system and set the organisation user directly.
@@ -14,6 +16,8 @@ class OrganisationUser < ActiveRecord::Base
   validates :organisation_role, presence: true
 
   before_validation :set_user, :set_organisation_role, on: :create
+
+  pg_global_search associated_against: { user: { last_name: 'A', email: 'A', first_name: 'B' } }
 
   attr_accessor :by_email, :user_email # Needed to add organisation user based on their e-mail
 

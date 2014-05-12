@@ -19,23 +19,22 @@ class FeedbacksController < ApplicationController
 
   # POST /feedbacks
   def create
-
     # Check if file is within picture_path
-  if params[:feedback][:screen_capture]
-    screen_capture_params = params[:feedback][:screen_capture]
-    # Create a new tempfile named fileupload
-    tempfile = Tempfile.new("fileupload")
-    tempfile.binmode
-    # Get the file and decode it with base64 then write it to the tempfile
-    tempfile.write(Base64.decode64(URI::unescape(screen_capture_params)[22..-1]))
-    tempfile.close
-    # Create a new uploaded file
-    filehash = Digest::MD5.hexdigest(screen_capture_params) + '.png';
-    uploaded_file = ActionDispatch::Http::UploadedFile.new(tempfile: tempfile, filename: filehash, type: 'image/png')
-    uploaded_file.inspect
-    # Replace picture_path with the new uploaded file
-    params[:feedback][:screen_capture] =  uploaded_file
-  end
+    if params[:feedback][:screen_capture]
+      screen_capture_params = params[:feedback][:screen_capture]
+      # Create a new tempfile named fileupload
+      tempfile = Tempfile.new("fileupload")
+      tempfile.binmode
+      # Get the file and decode it with base64 then write it to the tempfile
+      tempfile.write(Base64.decode64(URI::unescape(screen_capture_params)[22..-1]))
+      tempfile.close
+      # Create a new uploaded file
+      filehash = Digest::MD5.hexdigest(screen_capture_params) + '.png';
+      uploaded_file = ActionDispatch::Http::UploadedFile.new(tempfile: tempfile, filename: filehash, type: 'image/png')
+      uploaded_file.inspect
+      # Replace picture_path with the new uploaded file
+      params[:feedback][:screen_capture] =  uploaded_file
+    end
 
     @feedback.attributes = resource_params
     @feedback.user = current_user

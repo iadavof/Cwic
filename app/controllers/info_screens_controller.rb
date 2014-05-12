@@ -6,12 +6,12 @@ class InfoScreensController < ApplicationController
 
   # GET /info_screens
   def index
-    respond_with(@info_screens)
+    respond_with(@organisation, @info_screens)
   end
 
   # GET /info_screens/1
   def show
-    respond_with(@info_screen)
+    respond_with(@organisation, @info_screen)
   end
 
   # GET /info_screens/1/reservations.json
@@ -22,7 +22,7 @@ class InfoScreensController < ApplicationController
       @reservations += ise.entity.reservations.by_date_domain(Time.now, Time.now + 1.day).info_boards.includes(:entity)
     end
     @reservations.sort_by(&:begins_at)
-    respond_with(@info_screen, @active_ises, @reservations)
+    respond_with(@organisation, @info_screen, @active_ises, @reservations)
   end
 
   # GET /info_screens/new
@@ -37,21 +37,22 @@ class InfoScreensController < ApplicationController
 
   # POST /info_screens
   def create
+    @info_screen.info_screen_entity_types.clear # Clear default reservation statuses to prevent adding them double (they were already added in the new action and send along with the resouce params)
     @info_screen.attributes = resource_params
     @info_screen.save
-    redirect_to action: :index
+    respond_with(@organisation, @info_screen, location: organisation_info_screens_path(@organisation))
   end
 
   # PATCH/PUT /info_screens/1
   def update
     @info_screen.update_attributes(resource_params)
-    redirect_to action: :index
+    respond_with(@organisation, @info_screen, location: organisation_info_screens_path(@organisation))
   end
 
   # DELETE /info_screens/1
   def destroy
     @info_screen.destroy
-    redirect_to action: :index
+    respond_with(@organisation, @info_screen)
   end
 
 private

@@ -169,7 +169,7 @@ CwicControl.prototype.bindEvents_dropdown = function() {
   // Add class to autosubmit dropdowns on change
   if (this.$field.is('.autosubmit')) {
     this.$field.on('change.cwicControl', function(e) {
-      this.$replacement.addClass('autosubmit-busy');
+      cc.$replacement.addClass('autosubmit-busy');
     });
   }
 

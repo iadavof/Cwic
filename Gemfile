@@ -1,7 +1,8 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-gem 'rails', '~> 4.0.2'
+# Use rails-4-1 github branch because the gem contains a bug in ActiveRecord that gives problems with pg_search. This bug will be fixed in Rails 4.1.2, but is not yet available..
+gem 'rails', '~> 4.1.1', github: 'rails/rails', branch: '4-1-stable' # TODO update to Rails 4.1.2 as soon as it is available
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -28,7 +29,7 @@ gem 'jquery-ui-rails-cdn'
 gem 'modernizr-rails'
 
 # Use the gistyle gem for the Garber Irish Javascript loading implementation
-gem 'gistyle', github: 'kreintjes/gistyle'
+gem 'gistyle', github: 'tonytonyjan/gistyle'
 
 # Color picker
 gem 'jquery-minicolors-rails'
@@ -60,16 +61,16 @@ gem 'rails-i18n'
 gem 'rich_pluralization', github: 'archan937/rich_pluralization'
 
 # Devise for authentication. Gems are locked on minor versions, because we use custom Devise functionality and views.
-gem 'devise', '~> 3.1.1'
-gem 'devise_invitable', '~> 1.3.0'
-gem 'devise-i18n', '~> 0.10.0'
+gem 'devise', '~> 3.2.4'
+gem 'devise_invitable', '~> 1.3.5'
+gem 'devise-i18n', '~> 0.10.3'
 gem 'devise-i18n-views', '~> 0.2.8'
 
 # Use CanCan for access control / authorisation
 gem 'cancan'
 
 # Use I18n alchemy gem for easy number (and possibly date) parsing and localization in forms
-gem 'i18n_alchemy', github: 'carlosantoniodasilva/i18n_alchemy'
+gem 'i18n_alchemy'
 
 # Responders gem for nice and easy responses after CRUD actions
 gem 'responders'
@@ -103,7 +104,7 @@ gem 'momentjs-rails'
 gem 'select2-rails'
 
 # PG_Search for easy text search and global searching
-gem 'pg_search', '~> 0.7.0' # Locked on minor version, because we use custom search functionality (see lib/core_ext/pg_search.rb).
+gem 'pg_search', '~> 0.7.3' # Locked on minor version, because we use custom search functionality (see lib/core_ext/pg_search.rb).
 
 # Easy pagination (and unfortunately unefficient due to unnecessary queries)
 gem 'kaminari'
@@ -141,6 +142,9 @@ gem 'factory_girl_rails'
 # The forgery fake data generator (useful for testing)
 gem 'forgery'
 
+# Windows does not include zoneinfo files, so bundle the tzinfo-data gem
+gem 'tzinfo-data', platforms: [:mingw, :mswin]
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
@@ -150,6 +154,9 @@ group :development do
 
   # Bullet for warnings about potential query optimalisations
   gem 'bullet'
+
+  # Spring gem for application pre-loading leading to faster Rails commands
+  gem 'spring'
 end
 
 group :test, :development do
