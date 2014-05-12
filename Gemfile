@@ -89,7 +89,7 @@ gem 'magnific-popup-rails'
 gem 'activerecord-import'
 
 # Active model tableless for using tableless models in a nested form
-gem 'activerecord-tableless', github: 'kreintjes/activerecord-tableless' # Custom gem to fix problem in combination with Rails 4-1-stable branch (and thus also future Rails versions). Use normal version again when pull request is merged.
+gem 'activerecord-tableless'
 
 # Ancestry gem for ActiveRecord tree helpers
 gem 'ancestry'
