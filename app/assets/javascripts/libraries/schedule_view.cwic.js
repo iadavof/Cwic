@@ -45,7 +45,7 @@ CwicScheduleView.prototype.renderVerticalCalendar = function() {
 CwicScheduleView.prototype.initScheduleStub = function() {
   this.scheduleContainer = $('#' + this.options.container);
   this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
-  this.scheduleContainer.addClass('calendar  '+ this.options.view);
+  this.scheduleContainer.addClass('calendar  ' + this.options.view);
 
   // Set schedule to the selected date or current date
   this.navigationReference = this.getFocusMoment();

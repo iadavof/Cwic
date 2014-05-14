@@ -68,7 +68,7 @@ CwicScheduleViewItem.prototype.setSlack = function(before, after) {
 
 CwicScheduleViewItem.prototype.applyGlow = function(kind, on) {
   var domObjectsSItems = $(this.getDomObjects()).find('div.schedule-item');
-  (on) ? domObjectsSItems.addClass(kind + '-glow') : domObjectsSItems.removeClass(kind + '-glow');
+  domObjectsSItems.toggleClass(kind + '-glow', on);
 };
 
 CwicScheduleViewItem.prototype.relativeSlackPercentage = function(slackBegin, begin, slackEnd) {
@@ -428,6 +428,8 @@ CwicScheduleViewItem.prototype.render = function(concept) {
     if($.inArray(partBeginContainerId, domObjectsAlreadyPresent) > -1) {
       // Dom object already exists for this container! lets make use of it
       schedulePartWrapper = $(this.domObjects[partBeginContainerId]);
+      // If it was previously flagged as a removal candidate, unflag it and show it again.
+      schedulePartWrapper.show().removeClass('locked-removal-candidate');
       this.setScheduleItemDimensions(schedulePartWrapper, partMomentBlock);
 
       // Remove this item from the array of existing dom objects that are not used.
@@ -466,8 +468,15 @@ CwicScheduleViewItem.prototype.render = function(concept) {
 
   // Lets see if we still need to delete unused DOM objects from the previous render
   $(domObjectsAlreadyPresent).each(function(index, value) {
-    $(_this.domObjects[value]).remove();
-    delete _this.domObjects[value];
+    var item = $(_this.domObjects[value]);
+    // If this item is locked, it cannot be removed (could be needed for drag events)
+    if(item.hasClass('locked')) {
+      item.addClass('locked-removal-candidate');
+      item.hide();
+    } else {
+      $(_this.domObjects[value]).remove();
+      delete _this.domObjects[value];
+    }
   });
 };
 
@@ -476,6 +485,7 @@ CwicScheduleViewItem.prototype.bindDragAndResizeControls = function() {
   var context = {
     reset: function() {
       this.side = null;
+      this.startPointedScheduleItem = null;
       this.pointerDown = false;
       this.container = null;
       this.lastDragMoment = null;
@@ -513,7 +523,11 @@ CwicScheduleViewItem.prototype.dragAndResizeEsc = function(event, context) {
 CwicScheduleViewItem.prototype.dragAndResizeDown = function(event, context) {
   context.pointerDown = true;
   // Get the dom element which is pointed
-  var pointed = this.schedule.getElementForPoint(event);
+  pointed = this.schedule.getElementForPoint(event);
+  context.startPointedScheduleItem = pointed.closest('div.schedule-item-wrapper');
+  // Make sure the pointed schedule item wont be removed (to make touch interaction function properly)
+  context.startPointedScheduleItem.addClass('locked');
+
   context.container = this.schedule.getContainerForPoint(event);
   // Check if drag started on resize handle
   var handle = pointed.closest('div.resizer');
@@ -539,7 +553,6 @@ CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
 
     // Get the event information from the current scheduleItemDom
     var pointed = this.schedule.getElementForPoint(event);
-    var events = pointed.events || jQuery.data(pointed, "events") || jQuery._data(pointed, "events");
     var rel = this.schedule.getPointerRel(event, context.container);
     var newMoment = this.schedule.nearestMomentPoint(rel, context.container);
 
@@ -555,15 +568,6 @@ CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
     } else { // resize mode
       newDoms = this.resizeConcept(context.side, newMoment);
     }
-
-    // Reattach events
-    $(newDoms).each(function () {
-      for (var type in events) {
-        for (var handler in events[type]) {
-          jQuery.event.add(this, type, events[type][handler], events[type][handler].data);
-        }
-      }
-    });
   }
 };
 
@@ -579,6 +583,13 @@ CwicScheduleViewItem.prototype.dragAndResizeUp = function(event, context) {
   if(this.conceptCollidesWithOthers() || !this.checkEndAfterBegin(true)) {
     this.resetConcept();
   }
+
+  if(context.startPointedScheduleItem.hasClass('locked-removal-candidate')) {
+    context.startPointedScheduleItem.remove();
+  } else {
+    context.startPointedScheduleItem.removeClass('locked');
+  }
+
   // Reset drag vars
   context.reset();
 };
