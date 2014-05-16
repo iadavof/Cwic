@@ -90,8 +90,10 @@ APP.global = {
   },
   contentAreaResizeInit: function() {
     $('#below-header').css({top: $('#header').outerHeight(true) + 'px'});
+    $('#content-area').css({top: $('#local-menu').outerHeight(true) + 'px'});
     $(window).on('resize', function() {
       $('#below-header').css({top: $('#header').outerHeight(true) + 'px'});
+      $('#content-area').css({top: $('#local-menu').outerHeight(true) + 'px'});
     });
   },
   menuInit: function() {

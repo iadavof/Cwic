@@ -1,13 +1,13 @@
 /*
 100: Thin
-200: ExtraLight
+200: ExtraLight   XX NOT AVAILABLE XX
 300: Light
 400: Regular
 500: Medium
-600: SemiBold
+600: SemiBold     XX NOT AVAILABLE XX
 700: Bold
-800: ExtraBold
-900: Black
+800: ExtraBold    XX NOT AVAILABLE XX
+900: Black        XX NOT AVAILABLE XX
 */
 
 @font-face {
@@ -316,6 +316,11 @@ html.js #search-bar.open {
   background: rgba(255,255,255,0.1);
 }
 
+#main-menu > li.selected {
+  position: relative;
+  z-index: 2;
+}
+
 #main-menu > li.selected > a {
   border-color: #1c9cb2;
 }
@@ -326,8 +331,6 @@ html.js #search-bar.open {
 
 #main-menu > li.active {
   background-color: #fff;
-  position: relative;
-  z-index: 2;
 }
 
 #main-menu > li.active > a {
