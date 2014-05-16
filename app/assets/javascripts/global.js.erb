@@ -309,8 +309,8 @@ APP.global = {
       parent = document.body;
     }
     $(parent).find('select, :radio, :checkbox, input[type=file]').cwicControl();
-    $(parent).find('.datepicker-field').datepicker({ showOn: 'both' });
-    $(parent).find('.timepicker-field').timepicker({ showPeriodLabels: false, showOn: 'both' });
+    $(parent).find('.datepicker-field').datepicker();
+    $(parent).find('.timepicker-field').timepicker({ showPeriodLabels: false });
     $(parent).find('input.organisation_client_select').each(this.initializeOrganisationClientSelect);
     $(parent).find('input.with-clear').each(this.initializeInputWithClear);
 
