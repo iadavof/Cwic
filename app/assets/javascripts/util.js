@@ -6,7 +6,7 @@ APP.util = {
       dropdown.empty();
     }
     if(options['prompt']) {
-      $(new Option((typeof options['prompt'] === 'string' ? options['prompt'] : jsLang.global.prompt), null)).appendTo(dropdown);
+      $(new Option((typeof options['prompt'] === 'string' ? options['prompt'] : jsLang.global.prompt), '')).appendTo(dropdown);
     }
     for(key in items) {
       $(new Option(items[key], key)).appendTo(dropdown);
