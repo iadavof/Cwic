@@ -20,6 +20,7 @@ nl:
   to_destroy_object_confirm: 'Weet u zeker dat u %{name} wilt verwijderen?'
   back_to_show_object: 'Terug naar %{name}'
   back_to_index_objects: 'Terug naar lijst met %{classes}'
+  icon_to_new_object: '%{class} aanmaken'
   icon_to_edit_object: '%{name} bewerken'
   icon_to_destroy_object: '%{name} verwijderen'
   to_close_object: 'Sluiten'
