@@ -89,11 +89,9 @@ APP.global = {
     });
   },
   contentAreaResizeInit: function() {
-    $('#content-area').css({top: $('#header').outerHeight(true) + $('#local-menu').outerHeight(true) + 'px'});
-    $('#submenu-box').css({top: $('#header').outerHeight(true) + 'px'});
+    $('#below-header').css({top: $('#header').outerHeight(true) + 'px'});
     $(window).on('resize', function() {
-      $('#content-area').css({top: $('#header').outerHeight(true) + $('#local-menu').outerHeight(true) + 'px'});
-      $('#submenu-box').css({top: $('#header').outerHeight(true) + 'px'});
+      $('#below-header').css({top: $('#header').outerHeight(true) + 'px'});
     });
   },
   menuInit: function() {
@@ -110,7 +108,7 @@ APP.global = {
     $('#open-search-button').on('click', function() {
       $(window).trigger('header-start-animation');
       var searchBar = $('#search-bar');
-      var belowHeader = $('#content-area, #submenu-box');
+      var belowHeader = $('#below-header');
       var searchField = $('#global_search');
       if(!searchBar.hasClass('open')) {
         $(this).addClass('open');
@@ -145,9 +143,7 @@ APP.global = {
   },
   slideSubMenuByMenuItem: function(htmlId, animated) {
     var submenuBox = $('#submenu-box');
-    var contentArea = $('#content-area');
-    var localMenu = $('#local-menu');
-    var mainArea = $('#local-menu, #content-area');
+    var mainArea = $('#main-area');
     var menuItem = $('#' + htmlId);
     var relatedSubmenu = $('#submenu-box > .submenu[data-main-menu-relation="' + htmlId + '"]').first();
     var duration = animated ? 250 : 0;

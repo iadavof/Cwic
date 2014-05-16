@@ -326,6 +326,8 @@ html.js #search-bar.open {
 
 #main-menu > li.active {
   background-color: #fff;
+  position: relative;
+  z-index: 2;
 }
 
 #main-menu > li.active > a {
@@ -473,10 +475,11 @@ html.js #submenu-box > .submenu > .submenu-block {
 
 #local-menu {
   background-color: #17889D;
-  height: 50px;
-  left: 300px;
-  position: absolute;
-  right: 0;
+  padding: 10px;
+}
+
+html.js body[data-current-user-id=''] #local-menu {
+  display: none;
 }
 
 /**
@@ -484,12 +487,30 @@ html.js #submenu-box > .submenu > .submenu-block {
  */
 
 div#progress-bar-container {
+  position: absolute;
+  top: 100%;
+  margin-top: -7px;
   width: 100%;
-  position: relative;
 }
 
 #notice {
   color: green;
+}
+
+html.js #below-header {
+  position: absolute;
+  top: 80px;
+  bottom: 0;
+  left: 0;
+  right: 0;
+}
+
+html.js #main-area {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 300px;
+  right: 0;
 }
 
 #content-area {
@@ -498,12 +519,14 @@ div#progress-bar-container {
 
 html.js #content-area {
   position: absolute;
-  top: 300px;
+  top: 50px;
   bottom: 0;
-  left: 300px;
+  left: 0;
   right: 0;
 }
 
+html.js body[data-current-user-id=''] #below-header,
+html.js body[data-current-user-id=''] #main-area,
 html.js body[data-current-user-id=''] #content-area {
   position: static;
 }

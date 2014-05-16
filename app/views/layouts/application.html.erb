@@ -21,26 +21,29 @@
       <% if user_signed_in? %>
       <%= render "layouts/menu" %>
       <% end %>
-    </div>
-    <% if user_signed_in? %>
-    <%= render "layouts/submenu" %>
-    <% end %>
-    <div id="local-menu">
-    </div>
-    <div id="content-area">
       <div id="progress-bar-container"></div>
-      <div class="inner">
-        <%= content_for?(:mini_search) ? yield(:mini_search) : '' %>
-        <% if content_for?(:right_controls) %>
-          <div class="right-controls">
-            <%= yield(:right_controls) %>
-          </div>
-        <% end %>
-        <h1 id="page-title"><%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %></h1>
-        <div id="content">
-          <div class="inner clearfix">
-            <%= render partial: 'layouts/flash_messages' %>
-            <%= content_for?(:content) ? yield(:content) : yield %>
+    </div>
+    <div id="below-header">
+      <% if user_signed_in? %>
+      <%= render "layouts/submenu" %>
+      <% end %>
+      <div id="main-area">
+        <%= render "layouts/local_menu" %>
+        <div id="content-area">
+          <div class="inner">
+            <%= content_for?(:mini_search) ? yield(:mini_search) : '' %>
+            <% if content_for?(:right_controls) %>
+              <div class="right-controls">
+                <%= yield(:right_controls) %>
+              </div>
+            <% end %>
+            <h1 id="page-title"><%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %></h1>
+            <div id="content">
+              <div class="inner clearfix">
+                <%= render partial: 'layouts/flash_messages' %>
+                <%= content_for?(:content) ? yield(:content) : yield %>
+              </div>
+            </div>
           </div>
         </div>
       </div>
