@@ -57,7 +57,8 @@ class Week
   end
 
   def self.from_date(date)
-    # %V - Week number of the week-based year (01..53), %G - The week-based year
-    Week.new(date.strftime('%G').to_i, date.strftime('%V').to_i)
+    # ISO 8601 week-based year and week: cwyear gives the week-based year; cweek gives the week number of the week-based year (1-53).
+    # For some years the first few days of this year could have the previous year as cwyear (and cweek at 52 or 53).
+    Week.new(date.cwyear, date.cweek)
   end
 end

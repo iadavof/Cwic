@@ -1,5 +1,4 @@
 Cwic::Application.routes.draw do
-
   get "home/index"
   root to: 'home#index'
 
@@ -57,7 +56,7 @@ Cwic::Application.routes.draw do
     resources :reservations
     match '/organisation_clients/autocomplete_search', controller: 'organisation_clients', action: 'autocomplete_search', via: 'get'
     resources :organisation_clients do
-        resources :reservations
+      resources :reservations
     end
     resources :entity_type_icons
 

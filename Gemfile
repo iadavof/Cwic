@@ -145,6 +145,9 @@ gem 'forgery'
 # Windows does not include zoneinfo files, so bundle the tzinfo-data gem
 gem 'tzinfo-data', platforms: [:mingw, :mswin]
 
+# Symbolizes Active Record attributes and validates them against a list
+gem 'symbolize'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'

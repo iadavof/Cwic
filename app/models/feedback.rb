@@ -1,5 +1,4 @@
 class Feedback < ActiveRecord::Base
-
 	include PgSearch
 	include Sspable
 
