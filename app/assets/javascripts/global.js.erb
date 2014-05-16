@@ -89,9 +89,11 @@ APP.global = {
     });
   },
   contentAreaResizeInit: function() {
-    $('#content-area, #submenu-box').css({top: $('#header').outerHeight(true) + 'px'});
+    $('#content-area').css({top: $('#header').outerHeight(true) + $('#local-menu').outerHeight(true) + 'px'});
+    $('#submenu-box').css({top: $('#header').outerHeight(true) + 'px'});
     $(window).on('resize', function() {
-      $('#content-area, #submenu-box').css({top: $('#header').outerHeight(true) + 'px'});
+      $('#content-area').css({top: $('#header').outerHeight(true) + $('#local-menu').outerHeight(true) + 'px'});
+      $('#submenu-box').css({top: $('#header').outerHeight(true) + 'px'});
     });
   },
   menuInit: function() {
@@ -144,6 +146,8 @@ APP.global = {
   slideSubMenuByMenuItem: function(htmlId, animated) {
     var submenuBox = $('#submenu-box');
     var contentArea = $('#content-area');
+    var localMenu = $('#local-menu');
+    var mainArea = $('#local-menu, #content-area');
     var menuItem = $('#' + htmlId);
     var relatedSubmenu = $('#submenu-box > .submenu[data-main-menu-relation="' + htmlId + '"]').first();
     var duration = animated ? 250 : 0;
@@ -176,7 +180,7 @@ APP.global = {
             $(this).attr('title', jsLang.global.expand_menu + ' [Alt+' + shortcutKey + ']');
           }
         });
-        $(contentArea).animate({left: 0}, duration, 'swing');
+        $(mainArea).animate({left: 0}, duration, 'swing');
         $(submenuBox).animate({width: 0}, duration, 'swing', function() {
           $(submenus).removeClass('selected');
           $(window).trigger('header-animated');
@@ -197,11 +201,11 @@ APP.global = {
           }
         });
         if ($(submenuBox).height() > 0) { /* Contract expanded submenu first, then expand requested submenu */
-          $(contentArea).animate({left: 0}, duration, 'swing');
+          $(mainArea).animate({left: 0}, duration, 'swing');
           $(submenuBox).animate({width: 0}, duration, 'swing', function() {
             $(submenus).removeClass('selected');
             $(relatedSubmenu).addClass('selected');
-            $(contentArea).animate({left: $(submenuBox).data('width')}, duration, 'swing');
+            $(mainArea).animate({left: $(submenuBox).data('width')}, duration, 'swing');
             $(submenuBox).animate({width: $(this).data('width')}, duration, 'swing', function() {
               $(window).trigger('header-animated');
             });
@@ -209,7 +213,7 @@ APP.global = {
         } else { /* Expand requested submenu */
           $(submenus).removeClass('selected');
           $(relatedSubmenu).addClass('selected');
-          $(contentArea).animate({left: $(submenuBox).data('width')}, duration, 'swing');
+          $(mainArea).animate({left: $(submenuBox).data('width')}, duration, 'swing');
           $(submenuBox).animate({width: $(this).data('width')}, duration, 'swing', function(){
             $(window).trigger('header-animated');
           });

@@ -4,8 +4,6 @@ nl:
       send_instructions: 'Een e-mail met instructies is verzonden naar %{email}.'
       invitation_token_invalid: 'De uitnodigingscode is niet geldig!'
       updated: 'Je wachtwoord is succesvol ingesteld. Je bent nu ingelogd.'
-      no_invitations_remaining: "No invitations remaining"
-      invitation_removed: 'Your invitation was removed.'
       new:
         header: "Verstuur een uitnodiging"
         submit_button: "Verstuur uitnodiging"
@@ -15,3 +13,4 @@ nl:
     mailer:
       invitation_instructions:
         subject: 'Join Cwic!'
+        # TODO translations for body of invitation mail
