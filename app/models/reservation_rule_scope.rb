@@ -37,7 +37,7 @@ class ReservationRuleScope < ActiveRecord::Base
   def valid_repetition_unit_keys
     keys = REPETITION_UNITS
     if parent.present?
-      keys.drop(keys.index(parent.repetition_unit.key) + 1) # Drop period units up to the parent key
+      keys.drop(keys.index(parent.repetition_unit.key)) # Drop period units up to, but not including, the parent key
     else
       keys # Return all available period units
     end
@@ -51,10 +51,9 @@ class ReservationRuleScope < ActiveRecord::Base
     TimeUnit.where(key: valid_repetition_unit_keys).reorder(seconds: :desc)
   end
 
-  # Gets the most narrowing scope matching the time from this scope its childs
+  # Gets the most narrowing scope matching the time from this scope its children
   def scope_for_time(time)
     if self.matches?(time)
-      puts "#{self.name} matches!"
       scope = self.class.scope_for_time(self.children, time)
       scope || self
     else
@@ -64,17 +63,17 @@ class ReservationRuleScope < ActiveRecord::Base
 
   # Does this scope match the time?
   def matches?(time)
-    self.spans.each do |s|
-      return true if s.matches?(time)
-    end
-    return false
+    spans_for_time(time).any?
   end
 
-  # Remove this?
-  def active
-    self.spans.each do |s|
+  # What is the width of this scope for the time
+  def width_for_time(time)
+    spans_for_time(time).map { |s| s.width }.min
+  end
 
-    end
+  # All spans that match the time. TODO maybe we should not allow overlapping spans?
+  def spans_for_time(time)
+    self.spans.select { |s| s.matches?(time) }
   end
 
   def instance_name
@@ -83,16 +82,11 @@ class ReservationRuleScope < ActiveRecord::Base
 
   # Gets the most narrowing scope matching the time from a set of scopes and their childs
   def self.scope_for_time(scopes, time)
-    matches = []
-    scopes.each do |s|
-      matches << s if s.matches?(time)
+    match = nil
+    scopes.each do |scope|
+      width = scope.width_for_time(time)
+      match = { scope: scope, width: width } if scope.matches?(time) && (match.nil? || width < match[:width]) # TODO what if scopes have equal width?
     end
-    return nil if matches.none?
-    if matches.one?
-      match = matches.first
-    else
-      raise "Multiple child rules matches this rule, but this is not yet supported"
-    end
-    match.scope_for_time(time)
+    match[:scope].scope_for_time(time) if match.present?
   end
 end

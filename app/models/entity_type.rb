@@ -64,7 +64,7 @@ class EntityType < ActiveRecord::Base
 
   # Gets the most narrowing scope matching the time from all reservation rule scopes
   def scope_for_time(time)
-    ReservationRuleScope.scope_for_time(self.reservation_rule_scopes.roots, time)
+    ReservationRuleScope.scope_for_time(self.reservation_rule_scopes.roots.includes(:repetition_unit, :spans), time)
   end
 
   # Gets the reservation rules for the most narrowing scope matching the time
