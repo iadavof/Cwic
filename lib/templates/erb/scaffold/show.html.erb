@@ -1,5 +1,11 @@
 <%% content_for :page_title do %><%%= show_title(@<%= singular_table_name %>) %><%% end %>
 
+<%% content_for :local_menu_navigation do %>
+  <%%= button_link_back_to_index(<%= class_name %>) %>
+  <%%= button_link_to_edit(@<%= singular_table_name %>) %>
+  <%%= button_link_to_destroy(@<%= singular_table_name %>) %>
+<%% end %>
+
 <dl>
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
   <dt><%%= <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %></dt>
@@ -10,7 +16,3 @@
 <% end -%>
 <% end -%>
 </dl>
-
-<%%= button_link_back_to_index(<%= class_name %>) %>
-<%%= button_link_to_edit(@<%= singular_table_name %>) %>
-<%%= button_link_to_destroy(@<%= singular_table_name %>) %>

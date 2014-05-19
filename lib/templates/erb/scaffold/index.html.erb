@@ -1,5 +1,9 @@
 <%% content_for :page_title do %><%%= index_title(<%= class_name %>) %><%% end %>
 
+<%% content_for :local_menu_navigation do %>
+  <%%= button_link_to_new(<%= class_name %>) %>
+<%% end %>
+
 <%% if @<%= plural_table_name %>.empty? %>
 <p><%%= t('.empty', default: :empty_objects, classes: <%= class_name %>.model_name.human(count: 2).lcfirst) %></p>
 <%% else %>
@@ -35,5 +39,3 @@
   </tbody>
 </table>
 <%% end %>
-
-<%%= button_link_to_new(<%= class_name %>) %>
