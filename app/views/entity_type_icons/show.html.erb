@@ -1,5 +1,11 @@
 <% content_for :page_title do %><%= show_title(@entity_type_icon) %><% end %>
 
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_index(@organisation.present? ? [@organisation, EntityTypeIcon] : EntityTypeIcon) %>
+  <%= button_link_to_edit(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon) %>
+  <%= button_link_to_destroy(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon) %>
+<% end %>
+
 <div class="entity-type-icon-image">
   <%= image_tag(@entity_type_icon.image.medium_icon.url) %>
 </div>
@@ -10,7 +16,3 @@
   <dt><%= EntityTypeIcon.human_attribute_name(:organisation) %></dt>
   <dd><%= @entity_type_icon.organisation ? @entity_type_icon.organisation.name : t('all_organisations') %></dd>
 </dl>
-
-<%= button_link_back_to_index(@organisation.present? ? [@organisation, EntityTypeIcon] : EntityTypeIcon) %>
-<%= button_link_to_edit(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon) %>
-<%= button_link_to_destroy(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon) %>

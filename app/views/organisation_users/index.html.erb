@@ -1,6 +1,10 @@
 <% content_for :page_title do %><%= index_title(OrganisationUser) %><% end %>
 
-<% content_for :mini_search do %>
+<% content_for :local_menu_navigation do %>
+  <%= button_link_to_new([@organisation, OrganisationUser]) %>
+<% end %>
+
+<% content_for :local_menu_page do %>
   <%= render 'layouts/mini_search', current_search_type: OrganisationUser.model_name %>
 <% end %>
 
@@ -36,5 +40,3 @@
 </table>
 <%= paginate @organisation_users %>
 <% end %>
-
-<%= button_link_to_new([@organisation, OrganisationUser]) %>

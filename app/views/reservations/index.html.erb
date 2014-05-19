@@ -2,7 +2,11 @@
   <%= @organisation_client.present? ? index_title_of(Reservation, @organisation_client.instance_name).html_safe : index_title(Reservation).html_safe %>
 <% end %>
 
-<% content_for :mini_search do %>
+<% content_for :local_menu_navigation do %>
+  <%= button_link_to_new([@organisation, Reservation]) %>
+<% end %>
+
+<% content_for :local_menu_page do %>
   <%= render 'layouts/mini_search', current_search_type: Reservation.model_name, include_date: true %>
 <% end %>
 
@@ -25,7 +29,3 @@
   </div>
   <%= render partial: 'reservations/table', locals: { reservations: @reservations, include_date: true } %>
 <% end %>
-
-<div>
-  <%= button_link_to_new([@organisation, Reservation]) %>
-</div>

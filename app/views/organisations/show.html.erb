@@ -1,5 +1,11 @@
 <% content_for :page_title do %><%= show_title(@organisation) %><% end %>
 
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_index(Organisation) %>
+  <%= button_link_to_edit(@organisation) %>
+  <%= button_link_to_destroy(@organisation) %>
+<% end %>
+
 <dl>
   <dt><%= Organisation.human_attribute_name(:name) %></dt>
   <dd><%= @organisation.name %></dd>
@@ -22,7 +28,3 @@
   <dt><%= Organisation.human_attribute_name(:phone_reservations) %></dt>
   <dd><%= @organisation.phone_reservations %></dd>
 </dl>
-
-<%= button_link_back_to_index(Organisation) %>
-<%= button_link_to_edit(@organisation) %>
-<%= button_link_to_destroy(@organisation) %>

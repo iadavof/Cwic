@@ -1,11 +1,11 @@
 <% content_for :page_title do %><%= index_title(OrganisationClient) %><% end %>
 
-<% content_for :mini_search do %>
-  <%= render 'layouts/mini_search', current_search_type: OrganisationClient.model_name %>
+<% content_for :local_menu_navigation do %>
+  <%= button_link_to_new([@organisation, OrganisationClient]) %>
 <% end %>
 
-<% content_for :local_menu do %>
-  <%= button_link_to_new([@organisation, OrganisationClient]) %>
+<% content_for :local_menu_page do %>
+  <%= render 'layouts/mini_search', current_search_type: OrganisationClient.model_name %>
 <% end %>
 
 <% if @organisation_clients.empty? && params[:mini_search].present? %>

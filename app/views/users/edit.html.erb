@@ -1,6 +1,8 @@
 <% content_for :page_title do %><%= edit_title(@user) %><% end %>
 
-<%= render 'form' %>
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_show(@user) %>
+  <%= button_link_back_to_index(User) %>
+<% end %>
 
-<%= button_link_back_to_show(@user) %>
-<%= button_link_back_to_index(User) %>
+<%= render 'form' %>

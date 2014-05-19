@@ -1,5 +1,12 @@
 <% content_for :page_title do %><%= t('.title_html', default: :show_object_html, class: @entity.class.model_name.human, name: @entity.instance_name + ' (' + @entity.entity_type.instance_name + ')') %><% end %>
 
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_index([@organisation, Entity]) %>
+  <%= button_link_to_edit([@organisation, @entity]) %>
+  <%= button_link_to_destroy([@organisation, @entity]) %>
+<% end %>
+
+
 <% if @entity.all_entity_images.present? %>
 <%= render partial: 'entities/ken_burns_slideshow', locals: { images: @entity.all_entity_images } %>
 <% end %>
@@ -54,7 +61,3 @@
     </div>
   </div>
 </div>
-
-<%= button_link_back_to_index([@organisation, Entity]) %>
-<%= button_link_to_edit([@organisation, @entity]) %>
-<%= button_link_to_destroy([@organisation, @entity]) %>

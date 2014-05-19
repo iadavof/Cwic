@@ -10,6 +10,9 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 
+# Use autoprefixer to add browser prefixes to css rules
+gem "autoprefixer-rails"
+
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 

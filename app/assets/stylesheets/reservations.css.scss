@@ -12,18 +12,16 @@ div#reservation-form {
 
 div.status-selector {
 	div.statuses {
-	  border: 1px solid #ccc;
-	  padding: 5px;
-	  border-radius: 3px 3px 3px 3px;
+	  border-radius: 3px;
 
 		a.status-button {
 		  background-color: #ccc;
 		  color: #444;
-		  opacity: 0.2;
+		  opacity: .2;
 		}
 
 		a.status-button.active {
-			opacity: 0.7;
+			opacity: .7;
 		}
 
 		a.status-button:hover {

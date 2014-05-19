@@ -1,0 +1,50 @@
+#local-menu {
+  background-color: #17889d;
+  padding: 0 0.5em 0 1em;
+}
+
+html.js body[data-current-user-id=''] #local-menu {
+  display: none;
+}
+
+#local-menu .button {
+  margin: .6em 0;
+  padding: .6em .8em;
+  background: transparent;
+  color: #fff;
+}
+
+#local-menu .button:hover {
+  background: rgba(0, 0, 0, .2);
+}
+
+#local-menu .navigation-actions,
+#local-menu .context-actions,
+#local-menu .page-actions {
+  width: 33.333333333%;
+  float: left;
+  overflow: hidden;
+  margin: 0;
+  box-sizing: border-box;
+  padding: 0 .6em;
+  display: block;
+}
+
+#local-menu .page-actions {
+  float: right;
+}
+
+#local-menu .context-actions {
+  margin: .3em 0;
+  background-color: #fff;
+  border-radius: 3px;
+}
+
+#local-menu .context-actions .button {
+  margin: .3em .1em;
+  background-color: #666;
+}
+
+#local-menu .context-actions .button:hover {
+  background-color: #777;
+}

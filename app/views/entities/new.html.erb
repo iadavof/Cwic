@@ -1,5 +1,7 @@
 <% content_for :page_title do %><%= new_title(Entity) %><% end %>
 
-<%= render 'form' %>
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_index([@organisation, Entity]) %>
+<% end %>
 
-<%= button_link_back_to_index([@organisation, Entity]) %>
+<%= render 'form' %>

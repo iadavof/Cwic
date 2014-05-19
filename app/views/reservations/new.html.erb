@@ -1,5 +1,7 @@
 <% content_for :page_title do %><%= new_title(Reservation) %><% end %>
 
-<%= render 'form' %>
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_index([@organisation, Reservation]) %>
+<% end %>
 
-<%= button_link_back_to_index([@organisation, Reservation]) %>
+<%= render 'form' %>

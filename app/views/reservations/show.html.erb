@@ -1,8 +1,17 @@
 <% content_for :page_title do %><%= show_title(@reservation) %><% end %>
 
-<% content_for :right_controls do %>
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_index([@organisation, Reservation]) %>
+  <%= button_link_to_edit([@organisation, @reservation]) %>
+  <%= button_link_to_destroy([@organisation, @reservation]) %>
+<% end %>
+
+
+<% content_for :local_menu_context do %>
   <%= render partial: 'reservations/status_controls', locals: { reservation: @reservation } %>
 <% end %>
+
+
 <%= render partial: 'stickies/resource_stickies', locals: { resource: @reservation } %>
 
 <dl>
@@ -26,7 +35,3 @@
 	<h2><%= t('.repetitions') %></h2>
 	<%= render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' } %>
 <% end %>
-
-<%= button_link_back_to_index([@organisation, Reservation]) %>
-<%= button_link_to_edit([@organisation, @reservation]) %>
-<%= button_link_to_destroy([@organisation, @reservation]) %>

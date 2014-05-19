@@ -31,12 +31,6 @@
         <%= render "layouts/local_menu" %>
         <div id="content-area">
           <div class="inner">
-            <%= content_for?(:mini_search) ? yield(:mini_search) : '' %>
-            <% if content_for?(:right_controls) %>
-              <div class="right-controls">
-                <%= yield(:right_controls) %>
-              </div>
-            <% end %>
             <h1 id="page-title"><%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %></h1>
             <div id="content">
               <div class="inner clearfix">

@@ -1,5 +1,11 @@
 <% content_for :page_title do %><%= show_title(@user) %><% end %>
 
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_index(User) %>
+  <%= button_link_to_edit(@user) %>
+  <%= button_link_to_destroy(@user) %>
+<% end %>
+
 <dl>
   <dt><%= User.human_attribute_name(:first_name) %></dt>
   <dd><%= @user.first_name %></dd>
@@ -16,7 +22,3 @@
   <dt><%= User.human_attribute_name(:last_sign_in_at) %></dt>
   <dd><%=l(@user.last_sign_in_at, format: :long) if @user.last_sign_in_at.present? %></dd>
 </dl>
-
-<%= button_link_back_to_index(User) %>
-<%= button_link_to_edit(@user) %>
-<%= button_link_to_destroy(@user) %>

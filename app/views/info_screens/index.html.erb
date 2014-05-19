@@ -1,5 +1,10 @@
 <% content_for :page_title do %><%= index_title(InfoScreen) %><% end %>
 
+<% content_for :local_menu_navigation do %>
+  <%= button_link_to_new([@organisation, InfoScreen]) %>
+<% end %>
+
+
 <% if @info_screens.empty? %>
 <p><%= t('.empty', default: :empty_objects, classes: InfoScreen.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
@@ -12,7 +17,7 @@
       <%= table_head(InfoScreen, :show_reservation_number) %>
       <%= table_head(InfoScreen, :active_entities) %>
       <%= table_head(InfoScreen, :clock_header) %>
-      <%= table_head(InfoScreen, :direction_char_visible) %> 
+      <%= table_head(InfoScreen, :direction_char_visible) %>
       <th></th>
     </tr>
   </thead>
@@ -36,5 +41,3 @@
 </table>
 <%= paginate @info_screens %>
 <% end %>
-
-<%= button_link_to_new([@organisation, InfoScreen]) %>

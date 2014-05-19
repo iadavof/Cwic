@@ -1,0 +1,92 @@
+#submenu-box {
+  background: #999;
+  color: #fff;
+  text-align: center;
+  background-image: image-url("logo_transp.png");
+  background-repeat: no-repeat;
+  background-position: left bottom;
+  background-position: left bottom -50px;
+  background-size: 300px auto;
+}
+
+html.js #submenu-box {
+  overflow: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  bottom: 0;
+}
+
+#submenu-box > .submenu {
+  display: inline-block;
+  vertical-align: top;
+  text-align: left;
+  padding: 20px;
+  margin: 0;
+}
+
+html.js #submenu-box > .submenu {
+  display: none;
+  vertical-align: baseline;
+}
+
+html.js #submenu-box > .submenu.selected {
+  display: block;
+}
+
+#submenu-box > .submenu > h2 {
+  display: none;
+  padding: 0;
+  margin: 0;
+}
+
+#submenu-box > .submenu > .submenu-block {
+  vertical-align: top;
+  display: inline-block;
+  margin: 0 15px;
+}
+
+html.js #submenu-box > .submenu > .submenu-block {
+  vertical-align: baseline;
+  display: block;
+  margin: 0;
+}
+
+#submenu-box > .submenu > .submenu-block > h3 {
+  margin: 1em 0.6em 0.3em 0.6em;
+  padding: 0.25em 0;
+  font-size: 1.5em;
+  font-weight: 700;
+}
+
+#submenu-box > .submenu > .submenu-block > ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+}
+
+#submenu-box > .submenu > .submenu-block > ul > li {
+  display: block;
+  padding: 0;
+  margin: 0;
+}
+
+#submenu-box > .submenu > .submenu-block > ul > li a {
+  display: block;
+  padding: 0.7em 0.9em;
+  margin-right: -20px;
+  text-decoration: none;
+  transition: background-color 0.1s;
+  color: #fff;
+}
+
+#submenu-box > .submenu > .submenu-block > ul > li a:hover {
+  background-color: rgba(255,255,255,0.2);
+}
+
+#submenu-box > .submenu > .submenu-block > ul > li.active a {
+  background-color: #ff3520;
+  color: #fff;
+  text-decoration: none;
+}

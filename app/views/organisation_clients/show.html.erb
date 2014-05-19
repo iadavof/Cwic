@@ -1,6 +1,6 @@
 <% content_for :page_title do %><%= show_title(@organisation_client) %><% end %>
 
-<% content_for :local_menu do %>
+<% content_for :local_menu_navigation do %>
   <%= button_link_back_to_index([@organisation, OrganisationClient]) %>
   <%= button_link_to_edit([@organisation, @organisation_client]) %>
   <%= button_link_to_destroy([@organisation, @organisation_client]) %>

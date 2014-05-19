@@ -1,5 +1,10 @@
 <% content_for :page_title do %><%= t('.today_and_tomorrow') %><% end %>
 
+<% content_for :local_menu_navigation do %>
+  <%= button_link_to_new([@organisation, Reservation]) %>
+<% end %>
+
+
 <div id="today-and-tomorrow-container" class="clearfix today-and-tomorrow-container" data-organisation-id="<%= current_organisation.id %>">
   <% if @entity_types.empty? %>
     <p class="no_entities_found"><%= t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe %></p>

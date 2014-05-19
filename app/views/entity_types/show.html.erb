@@ -1,4 +1,11 @@
 <% content_for :page_title do %><%= show_title(@entity_type) %><% end %>
+
+<% content_for :local_menu_navigation do %>
+  <%= button_link_back_to_index([@organisation, EntityType]) %>
+  <%= button_link_to_edit([@organisation, @entity_type]) %>
+  <%= button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type)) %>
+<% end %>
+
 <% if @entity_type.entity_images.present? %>
   <%= render partial: 'entities/ken_burns_slideshow', locals: {images: @entity_type.entity_images} %>
 <% end %>
@@ -10,7 +17,7 @@
     <% end %>
     <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
   </ul>
-  
+
   <div class="tab-wrap">
     <div id="general">
       <%= image_tag(@entity_type.icon.image.medium_icon.url) %>
@@ -47,7 +54,3 @@
     </div>
   </div>
 </div>
-
-<%= button_link_back_to_index([@organisation, EntityType]) %>
-<%= button_link_to_edit([@organisation, @entity_type]) %>
-<%= button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type)) %>
