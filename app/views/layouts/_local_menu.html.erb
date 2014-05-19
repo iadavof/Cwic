@@ -1,2 +1,7 @@
 <div id="local-menu">
+  <%= content_for?(:local_menu) ? yield(:local_menu) : '' %>
+  <div class="dynamic-buttons">
+    <a href="#" class="button">hallo</a>
+    <a href="#" class="button">hoi</a>
+  </div>
 </div>

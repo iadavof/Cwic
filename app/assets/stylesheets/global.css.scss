@@ -478,11 +478,39 @@ html.js #submenu-box > .submenu > .submenu-block {
 
 #local-menu {
   background-color: #17889D;
-  padding: 10px;
+  padding: 0 0.5em 0 1em;
 }
 
 html.js body[data-current-user-id=''] #local-menu {
   display: none;
+}
+
+#local-menu .button {
+  margin: 0.6em 0;
+  padding: 0.6em 0.8em;
+  background: transparent;
+  color: #fff;
+}
+
+#local-menu .button:hover {
+  background: rgba(0,0,0,0.2);
+}
+
+#local-menu .dynamic-buttons {
+  display: inline-block;
+  background-color: #fff;
+  margin: 0.3em;
+  padding: 0 0.6em;
+  border-radius: 3px;
+}
+
+#local-menu .dynamic-buttons .button {
+  margin: 0.3em 0.1em;
+  background-color: #666;
+}
+
+#local-menu .dynamic-buttons .button:hover {
+  background-color: #777;
 }
 
 /**

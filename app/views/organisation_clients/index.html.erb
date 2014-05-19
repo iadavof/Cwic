@@ -4,6 +4,10 @@
   <%= render 'layouts/mini_search', current_search_type: OrganisationClient.model_name %>
 <% end %>
 
+<% content_for :local_menu do %>
+  <%= button_link_to_new([@organisation, OrganisationClient]) %>
+<% end %>
+
 <% if @organisation_clients.empty? && params[:mini_search].present? %>
 <p><%= t('empty_for_search', classes: OrganisationClient.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe %>
 <%= link_to(t('remove_search'), organisation_organisation_clients_path(current_organisation)) %></p>
@@ -53,5 +57,3 @@
 </table>
 <%= paginate @organisation_clients %>
 <% end %>
-
-<%= button_link_to_new([@organisation, OrganisationClient]) %>
