@@ -1,6 +1,7 @@
 #local-menu {
   background-color: #17889d;
   padding: 0 0.5em 0 1em;
+  position: relative;
 }
 
 html.js body[data-current-user-id=''] #local-menu {
@@ -22,22 +23,30 @@ html.js body[data-current-user-id=''] #local-menu {
 #local-menu .context-actions,
 #local-menu .page-actions {
   width: 33.333333333%;
-  float: left;
   overflow: hidden;
   margin: 0;
   box-sizing: border-box;
   padding: 0 .6em;
   display: block;
+  position: relative;
+}
+
+#local-menu .navigation-actions {
+  float: left;
+}
+
+#local-menu .context-actions {
+  position: absolute;
+  margin: .3em 0;
+  background-color: #fff;
+  border-radius: 3px;
+  left: 50%;
+  top: 0;
+  margin-left: -16.666666%;
 }
 
 #local-menu .page-actions {
   float: right;
-}
-
-#local-menu .context-actions {
-  margin: .3em 0;
-  background-color: #fff;
-  border-radius: 3px;
 }
 
 #local-menu .context-actions .button {

@@ -50,6 +50,22 @@ APP.util = {
     } else {
       return str;
     }
+  },
+  arrayKeys: function(input) {
+    var output = new Array();
+    var counter = 0;
+    for (i in input) {
+        output[counter++] = i;
+    }
+    return output;
+  },
+  arrayValues: function(input) {
+    var output = new Array();
+    var counter = 0;
+    for (i in input) {
+        output[counter++] = input[i];
+    }
+    return output;
   }
 }
 

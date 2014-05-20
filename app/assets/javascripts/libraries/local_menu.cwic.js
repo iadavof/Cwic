@@ -1,7 +1,10 @@
 function CwicLocalMenu(menu, options) {
   this.options = $.extend({
-    divisions: { navigation: 'local_menu_navigation', context: 'local_menu_context', page: 'local_menu_page' },
-    default_division: 'context',
+    divisions: { 
+      navigation: 'navigation-actions',
+      context: 'context-actions',
+      page: 'page-actions'
+    },
   }, options || {});
 
   this.menu = $(menu);
@@ -13,50 +16,109 @@ function CwicLocalMenu(menu, options) {
 CwicLocalMenu.prototype.init = function() {
   var _this = this;
 
-  this.options.divisions.each(function(key, value){
-    this.divisionDoms[key] = _this.menu.find('.' + value);
-  });
+  $.each(this.options.divisions,
+    function(key, value){
+      _this.divisionDoms[key] = _this.menu.find('.' + value);
+    }
+  );
 
+  this.bindOnResize();
 };
 
-CwicLocalMenu.prototype.addButton = function(division, content) {
-  division = division || this.options.default_division;
+CwicLocalMenu.prototype.bindOnResize = function() {
+  var _this = this;
+  this.updateHeightSettings();
+  $(window).on('resize', function(){ _this.updateHeightSettings.call(_this); });
+}
 
-  if($.inArray(division, APP.util.array_keys(this.divisionDoms)) > -1) {
+CwicLocalMenu.prototype.addButton = function(division, id, content, weight) {
+  weight = weight || 0;
 
-    var newButton = $('<a>', { 'class': 'button', html: content });
+  if($.inArray(division, APP.util.arrayKeys(this.divisionDoms)) > -1) {
 
-    this.divisionDoms[division].append(newButton);
+    var newButton = $('<a>', { 'class': 'button', html: content, id: id });
+    newButton.data('weight', weight);
+    var added = false;
+    this.divisionDoms[division].children().each(
+      function(){
+        var current = $(this);
+        var currentWeightData = typeof current.data('weight') == 'undefined' ? 0 : current.data('weight');
+        if(parseInt(currentWeightData, 10) > weight) {
+          current.before(newButton);
+          added = true;
+          return false;
+        }
+      }
+    );
+
+    if(!added) {
+      this.divisionDoms[division].append(newButton);
+    }
+
+    // Update the height
+    this.updateHeightSettings();
 
     return newButton;
   }
+};
+
+CwicLocalMenu.prototype.updateHeightSettings = function() {
+  var maxOuterHeight = 0;
+  $.each(this.divisionDoms,
+    function(){
+      maxOuterHeight = Math.max(maxOuterHeight, $(this).outerHeight(true));
+    }
+  );
+  this.menu.height(maxOuterHeight);
+
+  APP.global.contentAreaResize();
 };
 
 CwicLocalMenu.prototype.isDivision = function(division) {
-  return $.inArray(division, APP.util.array_keys(this.divisionDoms)) > -1;
+  return $.inArray(division, APP.util.arrayKeys(this.divisionDoms)) > -1;
 };
 
-CwicLocalMenu.prototype.removeButton = function(division, content) {
-  division = division || this.options.default_division;
+CwicLocalMenu.prototype.removeButton = function(division, id) {
+  this.divisionDoms[division].find('a#' . id);
 
-  if(this.isDivision(division)) {
-
-    var newButton = $('<a>', { 'class': 'button', html: content });
-
-    this.divisionDoms[division].append(newButton);
-
-    return newButton;
-  }
+  // Update the height
+  this.updateHeightSettings();
 };
 
 CwicLocalMenu.prototype.clearDivision = function(division) {
-  if(this.isDivision) {
+  if(this.isDivision(division)) {
     this.divisionDoms[division].html('');
   }
+
+  // Update the height
+  this.updateHeightSettings();
 };
 
 CwicLocalMenu.prototype.clearAllDivisions = function() {
-  $(this.divisionDoms).each(function(){
-    this.html('');
-  });
+  $.each(this.divisionDoms,
+    function(){
+      $(this).html('');
+    }
+  );
+
+  // Update the height
+  this.updateHeightSettings();
+};
+
+// Get the weight of the utmost left item
+CwicLocalMenu.prototype.getWeightMin = function(division) {
+  if(this.isDivision(division)) {
+    var mostLeft = this.divisionDoms[division].children().first();
+    mostLeftWeight = typeof mostLeft.data('weight') == 'undefined' ? 0 : mostLeft.data('weight');
+    return mostLeftWeight;
+  }
+};
+
+// Get the weight of the utmost right item
+CwicLocalMenu.prototype.getWeightMax = function(division) {
+  if(this.isDivision(division)) {
+    var mostRight = this.divisionDoms[division].children().last();
+    mostRightWeight = typeof mostRight.data('weight') == 'undefined' ? 0 : mostRight.data('weight');
+    return mostRightWeight;
+  }
 };

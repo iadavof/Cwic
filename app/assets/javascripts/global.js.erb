@@ -8,8 +8,6 @@ APP.init = function() {
   current_locale = body.data('current-locale');
   this.global.initLocale(current_locale);
 
-  this.global.contentAreaResizeInit();
-
   if ($('#header:visible').length > 0) {
     // Load the menu
     this.global.menuInit();
@@ -22,6 +20,9 @@ APP.init = function() {
       backend_url: Routes.feedbacks_path({ format: 'json' })
     });
   }
+
+  // Load the api for the local menu
+  this.global.loadLocalMenu();
 
   // Load Google if needed
   $(document).on('page:load', APP.global.initializeGoogleMapsFunctions);
@@ -88,13 +89,9 @@ APP.global = {
 
     });
   },
-  contentAreaResizeInit: function() {
+  contentAreaResize: function() {
     $('#below-header').css({top: $('#header').outerHeight(true) + 'px'});
     $('#content-area').css({top: $('#local-menu').outerHeight(true) + 'px'});
-    $(window).on('resize', function() {
-      $('#below-header').css({top: $('#header').outerHeight(true) + 'px'});
-      $('#content-area').css({top: $('#local-menu').outerHeight(true) + 'px'});
-    });
   },
   menuInit: function() {
     var submenuBox = $('#submenu-box');
@@ -105,6 +102,9 @@ APP.global = {
     $('#main-menu > li > a').on('click', function() {
       return APP.global.slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
     });
+  },
+  loadLocalMenu: function(){
+    window.localMenu = new CwicLocalMenu($('div#local-menu'));
   },
   searchBarInit: function() {
     $('#open-search-button').on('click', function() {
