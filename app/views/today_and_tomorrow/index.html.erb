@@ -10,9 +10,9 @@
     <p class="no_entities_found"><%= t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe %></p>
   <% else %>
     <% if @entity_types.count == 1 %>
-      <%= render partial: 'schedule_view/today_and_tomorrow/entity_block', collection: @entity_types.first.entities, as: :entity %>
+      <%= render partial: 'today_and_tomorrow/entity_block', collection: @entity_types.first.entities, as: :entity %>
     <% else %>
-      <%= render partial: 'schedule_view/today_and_tomorrow/entity_type_block', collection: @entity_types, as: :entity_type %>
+      <%= render partial: 'today_and_tomorrow/entity_type_block', collection: @entity_types, as: :entity_type %>
     <% end %>
   <% end %>
 </div>

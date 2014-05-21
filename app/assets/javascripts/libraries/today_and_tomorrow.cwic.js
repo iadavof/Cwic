@@ -7,7 +7,7 @@ function CwicTodayAndTomorrow(options) {
   }, options || {});
 
   this.renderTodayAndTomorrow();
-}
+};
 
 CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   this.scheduleContainer = $('#' + this.options.container);
@@ -16,7 +16,7 @@ CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   this.updateTodayTomorrowView();
   var schedule = this;
   setInterval(function() {schedule.updateTodayTomorrowView();}, 300000);
-}
+};
 
 CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   var tat = this;
@@ -25,7 +25,7 @@ CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   var channel = dispatcher.subscribe('todayandtomorrows_' + this.options.organisation_id);
 
   channel.bind('update', function() { tat.updateTodayTomorrowView(); });
-}
+};
 
 CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
   this.scheduleContainer.find('p.entity-name').each(function(){
@@ -43,20 +43,20 @@ CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
       }
     });
   });
-}
+};
 
 CwicTodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
   var tat = this;
   $.ajax({
     type: 'GET',
-    url: this.options.backend_url  + '/today_tomorrow_update',
+    url: this.options.backend_url,
     data: {
 
     }
   }).success(function(response) {
     tat.afterTodayTomorrowUpdate(response);
   });
-}
+};
 
 CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdate = function(response) {
   if(response.length == 1) {
@@ -67,7 +67,7 @@ CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdate = function(response) {
       this.afterTodayTomorrowUpdateEntity(response[entity_type_array_nr].entities, jentity_type);
     }
   }
-}
+};
 
 CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_type_info, parentdiv) {
   for(var entity_array_nr in entity_type_info) {
@@ -76,7 +76,7 @@ CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_
     jentity = jentity.find('div.updated-info').html('');
     this.createNewUpdatedInfo(entity, jentity);
   }
-}
+};
 
 CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
   if(entity.current_reservation == null && entity.upcoming_reservations.today.length  <= 0 && entity.upcoming_reservations.tomorrow.length <= 0) {
@@ -141,11 +141,11 @@ CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv
     }
     parentdiv.append(nextInfo);
   }
-}
+};
 
 CwicTodayAndTomorrow.prototype.getTemplateClone = function(id) {
   var newitem = $('#tat-templates').find('#' + id).clone();
   newitem.removeAttr('id');
   newitem.show();
   return newitem;
-}
+};

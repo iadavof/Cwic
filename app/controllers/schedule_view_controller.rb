@@ -34,10 +34,6 @@ class ScheduleViewController < ApplicationController
     render 'schedule_view'
   end
 
-  def today_and_tomorrow
-    respond_with(@entity_types)
-  end
-
   def index_domain
     if params[:entity_ids].present?
       entity_ids = params[:entity_ids].split(',')
@@ -58,70 +54,6 @@ class ScheduleViewController < ApplicationController
   def entities
     @entity_types = @organisation.entity_types.where('entities_count > 0')
     respond_with(@entity_types)
-  end
-
-  def today_tomorrow_update
-    result = []
-    @entity_types.each do |et|
-      entity_type_result = {
-        entity_type_id: et.id,
-        entities: [],
-      }
-
-      et.entities.each do |e|
-        entity_type_result[:entities] << today_tomorrow_update_entity(e)
-      end
-
-      result << entity_type_result
-    end
-    render json: result, status: :ok
-  end
-
-  def today_tomorrow_update_entity(entity)
-    {
-      entity_id: entity.id,
-      current_reservation: today_tomorrow_update_current_reservation(entity),
-      upcoming_reservations: today_tomorrow_update_upcoming_reservation(entity),
-    }
-  end
-
-  def today_tomorrow_update_current_reservation(entity)
-    r = entity.reservations.where('begins_at < :update_moment AND ends_at >= :update_moment', update_moment: Time.now).first
-    current = nil
-    if r.present?
-      current = {
-        item_id: r.id,
-        begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
-        end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
-        description: r.instance_name + (r.description.present? ? (' : ' + r.description) : '') + ', ' + r.organisation_client.instance_name,
-        progress: calculate_current_progress(r),
-      }
-      if r.begins_at.to_date != r.ends_at.to_date
-        current[:day_separators] = reservation_day_change_at(r)
-      end
-      current
-    end
-  end
-
-  def today_tomorrow_update_upcoming_reservation(entity)
-    {
-      today: get_standard_reservation_info_for_scope(Time.now, Time.now.end_of_day, entity),
-      tomorrow: get_standard_reservation_info_for_scope(Time.now.beginning_of_day + 1.day, Time.now.end_of_day + 1.day, entity),
-    }
-  end
-
-  def get_standard_reservation_info_for_scope(scope_begin, scope_end, entity)
-    res = []
-    reservations = entity.reservations.where('begins_at >= :start AND begins_at < :end', start: scope_begin, end: scope_end)
-    reservations.each do |r|
-    res << {
-      item_id: r.id,
-      begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
-      end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
-      description: r.instance_name + (r.description.present? ? (' : ' + r.description) : '') + ', ' + r.organisation_client.instance_name,
-    }
-    end
-    res
   end
 
   def calculate_current_progress(reservation)
@@ -165,6 +97,10 @@ class ScheduleViewController < ApplicationController
       @year = params[:year].to_i
       @week = params[:week].to_i
     end
+  end
+
+  def current_menu_sub_category
+    :planning
   end
 
 private
