@@ -1,7 +1,7 @@
 <% content_for :page_title do %><%= show_title(@user) %><% end %>
 
 <% content_for :local_menu_navigation do %>
-  <%= button_link_back_to_index(User) %>
+  <%= button_link_to_index(User) %>
   <%= button_link_to_edit(@user) %>
   <%= button_link_to_destroy(@user) %>
 <% end %>

@@ -1,7 +1,7 @@
 <% content_for :page_title do %><%= show_title(@entity_type) %><% end %>
 
 <% content_for :local_menu_navigation do %>
-  <%= button_link_back_to_index([@organisation, EntityType]) %>
+  <%= button_link_to_index([@organisation, EntityType]) %>
   <%= button_link_to_edit([@organisation, @entity_type]) %>
   <%= button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type)) %>
 <% end %>

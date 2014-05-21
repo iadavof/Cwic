@@ -1,8 +1,8 @@
 <% content_for :page_title do %><%= edit_title(@organisation) %><% end %>
 
 <% content_for :local_menu_navigation do %>
-  <%= button_link_back_to_show(@organisation) %>
-  <%= button_link_back_to_index(Organisation) %>
+  <%= button_link_to_show(@organisation) %>
+  <%= button_link_to_index(Organisation) %>
 <% end %>
 
 <%= render 'form' %>

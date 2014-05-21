@@ -1,8 +1,8 @@
 <% content_for :page_title do %><%= t('.title_html', default: :edit_object_html, class: @entity.class.model_name.human, name: @entity.instance_name + ' (' + @entity.entity_type.instance_name + ')') %><% end %>
 
 <% content_for :local_menu_navigation do %>
-  <%= button_link_back_to_show([@organisation, @entity]) %>
-  <%= button_link_back_to_index([@organisation, Entity]) %>
+  <%= button_link_to_show([@organisation, @entity]) %>
+  <%= button_link_to_index([@organisation, Entity]) %>
 <% end %>
 
 <%= render 'form' %>

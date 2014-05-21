@@ -42,17 +42,6 @@ module LinkHelper
     link_to_if(can?(:destroy, relevant_object(object)), name, location, options) {}
   end
 
-  # Link back to object helpers
-  def link_back_to_index(object, options = {})
-    options[:name] ||= t('.back_to_index', default: :back_to_index_objects, classes: object_classes_name(object).lcfirst)
-    link_to_index(object, options)
-  end
-
-  def link_back_to_show(object, options = {})
-    options[:name] ||= t('.back_to_show', default: :back_to_show_object, class: object_class_name(object).lcfirst, name: object_name(object))
-    link_to_show(object, options)
-  end
-
   # Name link to object helpers
   def name_link_to_show(object, options = {})
     options[:name] ||= object_name(object)
@@ -106,17 +95,6 @@ module LinkHelper
   def button_link_to_destroy(object, options = {})
     options[:class] ||= 'button'
     link_to_destroy(object, options)
-  end
-
-  # Button link back to object helpers
-  def button_link_back_to_index(object, options = {})
-    options[:class] ||= 'button'
-    link_back_to_index(object, options)
-  end
-
-  def button_link_back_to_show(object, options = {})
-    options[:class] ||= 'button'
-    link_back_to_show(object, options)
   end
 
 private

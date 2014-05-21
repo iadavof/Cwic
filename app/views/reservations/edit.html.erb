@@ -1,8 +1,8 @@
 <% content_for :page_title do %><%= edit_title(@reservation) %><% end %>
 
 <% content_for :local_menu_navigation do %>
-  <%= button_link_back_to_show([@organisation, @reservation]) %>
-  <%= button_link_back_to_index([@organisation, Reservation]) %>
+  <%= button_link_to_show([@organisation, @reservation]) %>
+  <%= button_link_to_index([@organisation, Reservation]) %>
 <% end %>
 
 <% content_for :local_menu_context do %>

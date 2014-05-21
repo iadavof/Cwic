@@ -13,5 +13,5 @@
   <dd><%= link_to(image_tag(@feedback.screen_capture.url, {style: "max-width: 500px; max-height: 500px;"}), @feedback.screen_capture.url) %></dd>
 </dl>
 
-<%= button_link_back_to_index(Feedback) %>
+<%= button_link_to_index(Feedback) %>
 <%= button_link_to_destroy(@feedback) %>
