@@ -594,7 +594,7 @@ body[data-current-user-id=''] #logo-container {
 }
 
 div {
-  &.field {
+  &.field, &.actions {
     margin-bottom: 10px;
   }
 }
@@ -1141,6 +1141,17 @@ div.nested-object-wrapper {
 
   div.option-sort-handle {
     cursor: move;
+  }
+
+  div.actions {
+    position: absolute;
+    top: 0;
+    right: 0;
+    font-size: 1.3em;
+  }
+
+  div.actions a.icon {
+    margin-left: 2px;
   }
 
   div.view {
