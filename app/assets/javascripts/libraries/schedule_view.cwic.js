@@ -44,7 +44,7 @@ CwicScheduleView.prototype.renderVerticalCalendar = function() {
 
 CwicScheduleView.prototype.initScheduleStub = function() {
   this.scheduleContainer = $('#' + this.options.container);
-  this.scheduleContainer.append(this.getTemplateClone('scheduleContainerTemplate').contents());
+  this.scheduleContainer.append(APP.util.getTemplateClone('scheduleContainerTemplate').contents());
   this.scheduleContainer.addClass('calendar  ' + this.options.view);
 
   // Set schedule to the selected date or current date
@@ -606,7 +606,7 @@ CwicScheduleView.prototype.plusOneActionCreatePlusOneButton = function(event, co
       context.container = this.getContainerForPoint(event);
       var rel = schedule.getPointerRel(event, context.container);
       context.focusMoment = this.nearestMomentPoint(rel, context.container);
-      context.plusOneButton = schedule.getTemplateClone('plusOneButtonTemplate');
+      context.plusOneButton = APP.util.getTemplateClone('plusOneButtonTemplate');
 
       // Set the correct position and dimensions of the plusone button
       context.plusOneButton.css(schedule.cssLeftOrTop(), schedule.timeToPercentage(moment(context.focusMoment).subtract(schedule.getSnapLength(), 'minutes')) + '%');
@@ -786,7 +786,7 @@ CwicScheduleView.prototype.addVerticalViewTimeAxis = function() {
   // We also use this function to update the schedule on resize, so clearing the old items
   axis.find('div.time').html('');
   for(var i = 1; i < 24; i += 1) {
-    var hourpart = this.getTemplateClone('timeAxisRowTemplate');
+    var hourpart = APP.util.getTemplateClone('timeAxisRowTemplate');
     hourpart.data('time', (i < 10 ? '0' + i : i) + ':00');
     hourpart.find('div.time').text((i < 10 ? '0' + i : i) + ':00');
     axis.append(hourpart);
@@ -805,10 +805,10 @@ CwicScheduleView.prototype.addHorizontalViewTimeAxis = function() {
   for(var i = 1; i < parts; i += 1) {
     var timepart;
     if(this.options.zoom == 'day') {
-      timepart = this.getTemplateClone('hourTimeAxisFrameTemplate');
+      timepart = APP.util.getTemplateClone('hourTimeAxisFrameTemplate');
       timepart.data('hour', i).find('p.time').text(i);
     } else {
-      timepart = this.getTemplateClone('sixHourTimeAxisFrameTemplate');
+      timepart = APP.util.getTemplateClone('sixHourTimeAxisFrameTemplate');
       timepart.data('hour', i % 4);
       timepart.data('day', i / 4);
       timepart.find('p.time').text((i * 6) % 24);
@@ -819,7 +819,7 @@ CwicScheduleView.prototype.addHorizontalViewTimeAxis = function() {
 
   if(this.options.zoom == 'week') {
     for(var i = 0; i < 7; i++) {
-      var dayPart = this.getTemplateClone('dayTimeAxisFrameTemplate');
+      var dayPart = APP.util.getTemplateClone('dayTimeAxisFrameTemplate');
       dayPart.css('left', (i * 14.285714) + '%');
       dayPart.data('date', moment().weekday(i));
       timeAxisHours.append(dayPart);
@@ -1001,12 +1001,6 @@ CwicScheduleView.prototype.minutesToPixels = function(scheduleItemDOM, minutes) 
   return dayRowTPwidth * (minutes / this.getZoomMinutes());
 };
 
-CwicScheduleView.prototype.getTemplateClone = function(id) {
-  var newitem = $($('#' + id).text());
-  APP.global.initializeSpecialFormFields(newitem);
-  return newitem;
-};
-
 CwicScheduleView.prototype.getDatesBetween = function(begin, end, inclusive) {
   var nrdays = moment(end).endOf('day').diff(moment(begin).startOf('day'), 'days');
   if(!inclusive && this.isStartOfDay(end)) {
@@ -1029,7 +1023,7 @@ CwicScheduleView.prototype.isStartOfDay = function(date) {
 };
 
 CwicScheduleView.prototype.appendDay = function(dayMoment) {
-  var dayAxisDiv = this.getTemplateClone('dayAxisRowTemplate');
+  var dayAxisDiv = APP.util.getTemplateClone('dayAxisRowTemplate');
   dayAxisDiv.attr('id', 'label_' + this.getContainerId(dayMoment));
   dayAxisDiv.find('div.day-name p').text(dayMoment.format('dd'));
   dayAxisDiv.find('div.day-nr p').text(dayMoment.format('D'));
@@ -1037,7 +1031,7 @@ CwicScheduleView.prototype.appendDay = function(dayMoment) {
 
   this.scheduleContainer.find('.left-axis').append(dayAxisDiv);
 
-  var row = this.getTemplateClone('rowTemplate');
+  var row = APP.util.getTemplateClone('rowTemplate');
   row.attr('id', this.getContainerId(dayMoment));
 
   this.scheduleContainer.find('.schedule-body').append(row);
@@ -1097,7 +1091,7 @@ CwicScheduleView.prototype.setTopAxisTexts = function() {
 CwicScheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
   var topAxis = this.scheduleContainer.find('.top-axis > div.axis-parts');
 
-  var dayPart = this.getTemplateClone('verticalDayTimeAxisFrameTemplate');
+  var dayPart = APP.util.getTemplateClone('verticalDayTimeAxisFrameTemplate');
   dayPart.css('width', dayWidth + '%');
 
   // store the date in header item
@@ -1109,7 +1103,7 @@ CwicScheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
 
   topAxis.append(dayPart);
 
-  var column = this.getTemplateClone('columnTemplate');
+  var column = APP.util.getTemplateClone('columnTemplate');
   column.attr('id', dayMoment.format('YYYY-MM-DD'));
 
   column.css({ width: dayWidth + '%' });
@@ -1121,7 +1115,7 @@ CwicScheduleView.prototype.renderScheduleBodyGrid = function() {
   var grid = this.scheduleContainer.find('div.schedule-body div.grid');
   var nritems = this.options.zoom == 'day' ? 23 : 27;
   for(var i = 0; i < nritems; i += 1) {
-    var gridItem = this.getTemplateClone('gridItemTemplate');
+    var gridItem = APP.util.getTemplateClone('gridItemTemplate');
     gridItem.addClass(this.options.view == 'horizontalCalendar' ? 'horizontal' : 'vertical');
     gridItem.addClass(this.options.zoom);
     grid.append(gridItem);
@@ -1129,7 +1123,7 @@ CwicScheduleView.prototype.renderScheduleBodyGrid = function() {
 };
 
 CwicScheduleView.prototype.appendWeek = function(weekMoment) {
-  var weekAxis = this.getTemplateClone('weekAxisRowTemplate');
+  var weekAxis = APP.util.getTemplateClone('weekAxisRowTemplate');
   weekAxis.attr('id', 'label_' + this.getContainerId(weekMoment));
   weekAxis.find('div.week-begin p').text(moment(weekMoment).startOf('week').format('l'));
   weekAxis.find('div.week-nr p').text(weekMoment.format('W'));
@@ -1137,7 +1131,7 @@ CwicScheduleView.prototype.appendWeek = function(weekMoment) {
 
   this.scheduleContainer.find('.left-axis').append(weekAxis);
 
-  var row = this.getTemplateClone('rowTemplate');
+  var row = APP.util.getTemplateClone('rowTemplate');
   $(row).attr('id', this.getContainerId(weekMoment));
 
   this.scheduleContainer.find('.schedule-body').append(row);

@@ -16,7 +16,7 @@ function CwicOccupationView(options) {
 
 CwicOccupationView.prototype.initiateContainer = function() {
   this.occupationContainer = $('#' + this.options.container);
-  this.occupationContainer.append(this.getTemplateClone('occupationContainerTemplate').contents());
+  this.occupationContainer.append(APP.util.getTemplateClone('occupationContainerTemplate').contents());
   this.occupationContainer.addClass('occupation-container');
 };
 
@@ -187,16 +187,16 @@ CwicOccupationView.prototype.getBlockTitle = function(nr, percent) {
 CwicOccupationView.prototype.createRows = function(response) {
   for(ent_nr in response.entities) {
     var entity = response.entities[ent_nr];
-    var entityRow = this.getTemplateClone('entityRowTemplate');
+    var entityRow = APP.util.getTemplateClone('entityRowTemplate');
     entityRow.attr('id', 'entity_' + entity.id);
     entityRow.find('img.entity-icon').attr('src', entity.icon).css('border-color', entity.color);
     this.occupationContainer.find('.entity-axis').append(entityRow);
 
-    var occupationRow = this.getTemplateClone('occupationMatrixRowTemplate');
+    var occupationRow = APP.util.getTemplateClone('occupationMatrixRowTemplate');
     occupationRow.attr('id', 'or_' + entity.id);
     occupationRow.data('entity-id', entity.id);
 
-    var titleDiv = this.getTemplateClone('entityRowTitleTemplate');
+    var titleDiv = APP.util.getTemplateClone('entityRowTitleTemplate');
     titleDiv.find('p.entity-name').text(entity.name);
     this.occupationContainer.find('.occupation-matrix-body').append(titleDiv);
 
@@ -213,12 +213,12 @@ CwicOccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
   var zeroPercentColor = this.getColorForPercentage(0.0001, 0.1);
 
   for(var i = 1; i <= maxNr; i += 1) {
-    var block = this.getTemplateClone('occupationMatrixBlockTemplate')
-    .addClass('nr_' + i)
-    .data('nr', i)
-    .attr('title', this.getBlockTitle(i, 0))
-    .css('width', blockWidth + '%')
-    .css('background-color', zeroPercentColor);
+    var block = APP.util.getTemplateClone('occupationMatrixBlockTemplate');
+    block.addClass('nr_' + i);
+    block.data('nr', i);
+    block.attr('title', this.getBlockTitle(i, 0));
+    block.css('width', blockWidth + '%');
+    block.css('background-color', zeroPercentColor);
     rows.append(block);
   }
 };
@@ -227,7 +227,7 @@ CwicOccupationView.prototype.createHeader = function(maxNr, blockWidth) {
   var topAxis = this.occupationContainer.find('div.top-axis');
   topAxis.find('.top-axis-frame').remove();
   for(var day = 1; day <= maxNr; day += 1) {
-    var block = this.getTemplateClone('topAxisFrameTemplate');
+    var block = APP.util.getTemplateClone('topAxisFrameTemplate');
     block.find('p.nr').text(day);
     block.css('width', blockWidth + '%');
     topAxis.append(block);
@@ -274,12 +274,6 @@ CwicOccupationView.prototype.bindWindowEvents = function() {
   $(window).resize(function() {
     occ.resizeActions();
   });
-};
-
-CwicOccupationView.prototype.getTemplateClone = function(id) {
-  var newitem = $($('#' + id).text());
-  APP.global.initializeSpecialFormFields(newitem);
-  return newitem;
 };
 
 CwicOccupationView.prototype.daysInMonth = function() {

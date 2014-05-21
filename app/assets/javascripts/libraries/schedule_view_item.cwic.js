@@ -88,7 +88,7 @@ CwicScheduleViewItem.prototype.relativeSlackWidthPercentage = function(slackBegi
 };
 
 CwicScheduleViewItem.prototype.renderPart = function(jschobj, momentBlock) {
-  var newScheduleItemWrapper = this.schedule.getTemplateClone('scheduleItemTemplate');
+  var newScheduleItemWrapper = APP.util.getTemplateClone('scheduleItemTemplate');
   var newScheduleItem = newScheduleItemWrapper.find('div.schedule-item');
 
   if(this.item_id == null) {

@@ -106,7 +106,7 @@ CwicScheduleViewEntity.prototype.setEntityContainerHeight = function(nrEntities)
 };
 
 CwicScheduleViewEntity.prototype.renderScheduleEntityContainer = function(timeparts) {
-  var newSchObjItemParts = this.schedule.getTemplateClone('scheduleEntityItemPartsTemplate');
+  var newSchObjItemParts = APP.util.getTemplateClone('scheduleEntityItemPartsTemplate');
   newSchObjItemParts.addClass('scheduleEntity_' + this.entity_id);
   newSchObjItemParts.data('scheduleEntityID', this.entity_id);
   newSchObjItemParts.find('p.name').text(this.name);
@@ -139,7 +139,7 @@ CwicScheduleViewEntity.prototype.parseFromJSON = function(json) {
 
 
 CwicScheduleViewEntity.prototype.renderEntityShowcaseButton = function(container) {
-  this.showCaseButtonDOM = this.schedule.getTemplateClone('entityButtonTemplate');
+  this.showCaseButtonDOM = APP.util.getTemplateClone('entityButtonTemplate');
   this.showCaseButtonDOM.attr('id', 'entity_'+ this.entity_id).css('border-color', this.color);
   this.showCaseButtonDOM.find('.entity-name').text(this.name);
   this.showCaseButtonDOM.find('img.entity-icon').attr('src', this.icon_src);
