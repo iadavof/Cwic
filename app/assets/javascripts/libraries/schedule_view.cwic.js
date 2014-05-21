@@ -1002,9 +1002,8 @@ CwicScheduleView.prototype.minutesToPixels = function(scheduleItemDOM, minutes) 
 };
 
 CwicScheduleView.prototype.getTemplateClone = function(id) {
-  var newitem = $('#schedule-templates').find('#' + id).clone();
-  newitem.removeAttr('id');
-  newitem.show();
+  var newitem = $($('#' + id).text());
+  APP.global.initializeSpecialFormFields(newitem);
   return newitem;
 };
 
