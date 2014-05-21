@@ -170,11 +170,11 @@ CwicScheduleView.prototype.createEntityShowCase = function() {
   var schedule = this;
 
   if(this.options.view == 'horizontalCalendar') {
-    this.scheduleContainer.find('.entity-container a#selectAll').on('click', function(e){e.preventDefault(); schedule.toggleEntities(true); return false;});
-    this.scheduleContainer.find('.entity-container a#selectNone').on('click', function(e){e.preventDefault(); schedule.toggleEntities(false); return false;});
+    this.scheduleContainer.find('.fast-select a#selectAll').on('click', function(e){e.preventDefault(); schedule.toggleEntities(true); return false;});
+    this.scheduleContainer.find('.fast-select a#selectNone').on('click', function(e){e.preventDefault(); schedule.toggleEntities(false); return false;});
   } else if(this.options.view == 'verticalCalendar') {
-    this.scheduleContainer.find('.entity-container a#selectAll').hide();
-    this.scheduleContainer.find('.entity-container a#selectNone').hide();
+    this.scheduleContainer.find('.fast-select a#selectAll').hide();
+    this.scheduleContainer.find('.fast-select a#selectNone').hide();
   }
 
   $.ajax({
@@ -759,7 +759,7 @@ CwicScheduleView.prototype.afterEntitiesLoad = function(response) {
 
   } else {
     this.scheduleContainer.find('.entity-container p.no_entities_found').show();
-    this.scheduleContainer.find('.entity-container div.fast-select').hide();
+    this.scheduleContainer.find('div.fast-select').hide();
     tabContainer.hide();
 
     // Ook de button voor het aanmaken van een nieuwe reservering uitschakelen (hoewel dit eigenlijk een beetje abstractiebreuk is aangezien dit buiten de schedule container zit).
