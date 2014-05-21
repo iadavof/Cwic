@@ -2,12 +2,11 @@
 
 <div id="schedule-templates" style="display: none;">
   <div class="schedule" id="scheduleContainerTemplate">
+    <div class="fast-select clearfix">
+      <a id="selectNone" class="button"><%=t('.select_none') %></a>
+      <a id="selectAll" class="button"><%=t('.select_all') %></a>
+    </div>
     <div class="entity-container clearfix">
-      <h2><%= Entity.model_name.human(count: 2) %></h2>
-      <div class="fast-select">
-        <a id="selectAll" class="button"><%=t('.select_all') %></a>
-        <a id="selectNone" class="button"><%=t('.select_none') %></a>
-      </div>
 
       <div id="entity-showcase-tabs">
         <ul class="nav">
