@@ -91,11 +91,6 @@ CwicScheduleViewItem.prototype.renderPart = function(jschobj, momentBlock) {
   var newScheduleItemWrapper = APP.util.getTemplateClone('scheduleItemTemplate');
   var newScheduleItem = newScheduleItemWrapper.find('div.schedule-item');
 
-  if(this.item_id == null) {
-    // This item is newly created
-    newScheduleItem.find('div.plus').show();
-  }
-
   this.setScheduleItemDimensions(newScheduleItemWrapper, momentBlock);
 
   this.addLayout(newScheduleItemWrapper, newScheduleItem);
@@ -352,14 +347,14 @@ CwicScheduleViewItem.prototype.deepRerender = function(concept) {
   this.render(concept);
 };
 
-CwicScheduleViewItem.prototype.addResizers = function(schedulePartWrapper, back, forward) {
-  back ? schedulePartWrapper.find('div.resizer.'+ this.schedule.cssLeftOrTop()).show() : schedulePartWrapper.find('div.resizer.' + this.schedule.cssLeftOrTop()).hide();
-  forward ? schedulePartWrapper.find('div.resizer.' + this.schedule.cssRightOrBottom()).show() : schedulePartWrapper.find('div.resizer.' + this.schedule.cssRightOrBottom()).hide();
+CwicScheduleViewItem.prototype.showResizers = function(schedulePartWrapper, back, forward) {
+  schedulePartWrapper.find('div.resizer.'+ this.schedule.cssLeftOrTop())[back ? 'show' : 'hide']();
+  schedulePartWrapper.find('div.resizer.' + this.schedule.cssRightOrBottom())[forward ? 'show' : 'hide']();
 };
 
 CwicScheduleViewItem.prototype.showContinues = function(schedulePartWrapper, back, forward) {
-  back ? schedulePartWrapper.find('div.continue.' + this.schedule.cssLeftOrTop()).show() : schedulePartWrapper.find('div.continue.' + this.schedule.cssLeftOrTop()).hide();
-  forward ? schedulePartWrapper.find('div.continue.' + this.schedule.cssRightOrBottom()).show() : schedulePartWrapper.find('div.continue.' + this.schedule.cssRightOrBottom()).hide();
+  schedulePartWrapper.find('div.continue.' + this.schedule.cssLeftOrTop())[back ? 'show' : 'hide']();
+  schedulePartWrapper.find('div.continue.' + this.schedule.cssRightOrBottom())[forward ? 'show' : 'hide']();
 };
 
 CwicScheduleViewItem.prototype.getMomentsBlock = function() {
@@ -446,23 +441,27 @@ CwicScheduleViewItem.prototype.render = function(concept) {
       if(container.length === 0) {
         continue;
       }
-
+      // Create a new schedule item for the current container
       schedulePartWrapper = this.renderPart(container, partMomentBlock);
       this.domObjects[partBeginContainerId] = schedulePartWrapper.get(0);
     }
 
+    schedulePartWrapper.find('div.ok')[this.conceptDiffersWithOriginal() ? 'show' : 'hide']();
+
     if(momentBlock.begin.isAfter(partBegin) && momentBlock.begin.isBefore(partEnd) && momentBlock.end.isAfter(partBegin) && momentBlock.end.isBefore(partEnd)) {
-      this.addResizers(schedulePartWrapper, true, true);
+      this.showResizers(schedulePartWrapper, true, true);
+      this.showContinues(schedulePartWrapper, false, false);
     } else if(momentBlock.begin.isAfter(partBegin) && momentBlock.begin.isBefore(partEnd)) {
       // ScheduleItem begin is in current part
       this.showContinues(schedulePartWrapper, false, true);
-      this.addResizers(schedulePartWrapper, true, false);
+      this.showResizers(schedulePartWrapper, true, false);
     } else if(momentBlock.end.isAfter(partBegin) && momentBlock.end.isBefore(partEnd)) {
       // ScheduleItem end is in current part
       this.showContinues(schedulePartWrapper, true, false);
-      this.addResizers(schedulePartWrapper, false, true);
+      this.showResizers(schedulePartWrapper, false, true);
     } else {
       // All overlapped parts
+      this.showResizers(schedulePartWrapper, false, false);
       this.showContinues(schedulePartWrapper, true, true);
     }
   }
@@ -513,13 +512,10 @@ CwicScheduleViewItem.prototype.unbindDragAndResizeControls = function() {
 
 
 CwicScheduleViewItem.prototype.dragAndResizeEsc = function(event, context) {
-  if (event.keyCode == 27) {
-    if(this.conceptDiffersWithOriginal()) {
-      this.resetConcept();
-      context.reset();
-    } else {
-      this.schedule.stopEditMode();
-    }
+  if (event.keyCode == 27) { // ESC
+    this.schedule.stopEditMode(false);
+  } else if(event.keyCode == 13) { // ENTER
+    this.schedule.stopEditMode(true);
   }
 };
 

@@ -640,8 +640,8 @@ div.calendar div.schedule-body div.column div.schedule-item {
   transition: opacity 300ms ease-in-out;
 }
 
-div.calendar div.schedule-body div.row div.schedule-item div.plus,
-div.calendar div.schedule-body div.column div.schedule-item div.plus {
+div.calendar div.schedule-body div.row div.schedule-item div.ok,
+div.calendar div.schedule-body div.column div.schedule-item div.ok {
   width: 100%;
   height: 100%;
   cursor: pointer;
@@ -652,8 +652,8 @@ div.calendar div.schedule-body div.column div.schedule-item div.plus {
   display: none;
 }
 
-div.calendar div.schedule-body div.row div.schedule-item div.plus span,
-div.calendar div.schedule-body div.column div.schedule-item div.plus span {
+div.calendar div.schedule-body div.row div.schedule-item div.ok span,
+div.calendar div.schedule-body div.column div.schedule-item div.ok span {
   width: 25px;
   height: 25px;
   margin-left: -12.5px;

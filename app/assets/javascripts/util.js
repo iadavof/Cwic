@@ -68,7 +68,7 @@ APP.util = {
     return output;
   },
   getTemplateClone: function(id) {
-    var newitem = $('<div>').html($('#' + id).text()).contents()
+    var newitem = $($('#' + id).text());
     APP.global.initializeSpecialFormFields(newitem);
     return newitem;
   }

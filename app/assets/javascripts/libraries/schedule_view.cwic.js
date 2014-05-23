@@ -335,13 +335,17 @@ CwicScheduleView.prototype.bindStartStopEditModeOnClick = function() {
       event.stopPropagation();
       if(schedule.focusedScheduleItem == null) {
         schedule.startEditMode(possibleScheduleItem);
-      } else if(schedule.focusedScheduleItem.item_id != parseInt($(possibleScheduleItem).data('scheduleItemID'), 10)) {
+      } else if(possibleScheduleItem.data('scheduleItemID') != null && schedule.focusedScheduleItem.item_id != parseInt(possibleScheduleItem.data('scheduleItemID'), 10)) {
         // A schedule item is currently being edited
-        schedule.stopEditMode();
+        schedule.stopEditMode(false);
         schedule.startEditMode(possibleScheduleItem);
+      } else {
+        // Clicked on the schedule item, Save the schedule item!
+        schedule.stopEditMode(true);
       }
     } else {
-      schedule.stopEditMode();
+      // Clicked outside the schedule item, revert the edit
+      schedule.stopEditMode(false);
     }
   });
 };
@@ -387,14 +391,13 @@ CwicScheduleView.prototype.stopEditMode = function(accept) {
   localMenu.toggleButtons('context', ['description', 'client', 'edit', 'remove', 'cancel', 'save'], false);
 
   this.focusedScheduleItem.removeFocus();
-
   (accept) ? this.saveEditModeChanges() : this.discardEditModeChanges();
 
   schedule.focusedScheduleItem = null;
 };
 
 CwicScheduleView.prototype.saveEditModeChanges = function() {
-  if(schedule.focusedScheduleItem !== null && schedule.focusedScheduleItem.conceptDiffersWithOriginal()) {
+  if(schedule.focusedScheduleItem != null) {
     schedule.focusedScheduleItem.acceptConcept();
     if(schedule.focusedScheduleItem.item_id) {
       // Item id is present, this is not a new schedule item, patch
@@ -413,7 +416,7 @@ CwicScheduleView.prototype.discardEditModeChanges = function() {
 
 CwicScheduleView.prototype.scheduleItemChanged = function() {
   localMenu.toggleButtons('context', ['description', 'client', 'edit', 'remove'], false);
-  localMenu.toggleButtons('context', ['cancel', 'save'], false);
+  localMenu.toggleButtons('context', ['cancel', 'save'], true);
 
 };
 
