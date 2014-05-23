@@ -58,6 +58,7 @@ CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
   cancel.on('click', function() { schedule.stopEditMode.call(schedule, false); } );
 
   var save = window.localMenu.addButton('context', 'save', APP.util.getTemplateClone('contextButtonSave'), 6);
+  save.addClass('red');
   save.on('click', function() { schedule.stopEditMode.call(schedule, true); } );
 
   // Hide all buttons on init

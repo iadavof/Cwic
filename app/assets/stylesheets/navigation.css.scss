@@ -272,6 +272,14 @@ html.js body[data-current-user-id=''] #local-menu {
   background-color: #777;
 }
 
+#local-menu .context-actions .button.red {
+  background-color: #ff3520;
+}
+
+#local-menu .context-actions .button.red:hover {
+  background-color: #ff4a37;
+}
+
 /* Pagination and tabs */
 
 .pagination {
