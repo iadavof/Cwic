@@ -685,7 +685,7 @@ nl:
     horizontal_schedule_day: 'Horizontale dagkalender'
     horizontal_schedule_week: 'Horizontale weekkalender'
     vertical_schedule_day: 'Verticale dagkalender'
-    template:
+    schedule_view:
       set: 'Stel in'
       tm: t/m
       today: 'Vandaag'
@@ -693,6 +693,8 @@ nl:
       week: 'Week'
       month: 'Maand'
       year: 'Jaar'
+      custom: 'Aangepast'
+    template:
       select_all: 'Alles selecteren'
       select_none: 'Niets selecteren'
       no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'
@@ -700,7 +702,6 @@ nl:
       organisation_client: 'Klant'
       edit: 'Bewerken'
       delete: 'Verwijderen'
-      custom: 'Aangepast'
 
   occupation_view:
     day_occupation:

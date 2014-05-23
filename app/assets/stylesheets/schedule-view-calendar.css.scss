@@ -21,32 +21,21 @@ div.calendar.verticalCalendar div.schedule-body {
   height: 1080px; /* 24 * 45 */
 }
 
-
-div.calendar div.control-container {
-  margin: 20px 0;
+#local-menu div.control-container {
+  display: inline-block;
 }
 
-div.calendar div.control-container.navigate {
-  margin-bottom: 0;
-}
-
-div.calendar div.control-container.navigate a.button.active {
+#local-menu div.control-container a.button.active {
   background-color: #8c8c8c;
 }
 
-div.calendar div.control-container.domain {
-  height: 0;
-  margin-top: 0;
-  padding-top: 10px;
-  overflow: hidden;
+#local-menu div.control-container.domain-custom {
+  display: none;
 }
 
-div.calendar div.control-container.domain div.inner {
-
-}
-
-div.calendar div.control-container span.tm {
+#local-menu div.control-container span.tm {
   padding: 0 10px;
+  color: #fff;
 }
 
 div.calendar div.cwic-sticky-container {
@@ -61,48 +50,6 @@ div.calendar div.top-axis {
   z-index: 10;
   border-bottom: 2px solid #ccc;
   margin-bottom: -1px;
-}
-
-div.calendar div.top-axis .reservation-controls {
-  position: absolute;
-  top: 100%;
-  left: 0;
-  width: 100%;
-  background-color: #17889D;
-  color: #fff;
-  text-align: center;
-  overflow: hidden;
-  height: 0;
-}
-
-div.calendar div.top-axis .reservation-controls > .inner {
-  padding: 5px 8px;
-}
-
-div.calendar div.top-axis .reservation-controls .toolbar-button {
-  margin: 0 5px;
-  color: #fff;
-  text-decoration: none;
-  padding: 5px 8px;
-  display: inline-block;
-}
-
-div.calendar div.top-axis .reservation-controls .toolbar-button:hover {
-  background-color: rgba(0,0,0,0.2);
-}
-
-div.calendar div.top-axis .reservation-controls .toolbar-button > i {
-  font-size: 18px;
-  margin-right: 5px;
-}
-
-div.calendar div.top-axis .reservation-controls .toolbar-close-button {
-  float: right;
-  font-size: 1em;
-  line-height: 200%;
-  color: #fff;
-  text-decoration: none;
-  padding: 5px 8px;
 }
 
 div.calendar div.top-axis .description-bubble {

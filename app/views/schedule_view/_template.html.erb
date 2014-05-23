@@ -18,27 +18,6 @@
 
       <p class="no_entities_found"><%= t('.no_entities_found', link: link_to_new([@organisation, Entity])).html_safe %></p>
     </div>
-    <div class="clearfix">
-      <div class="control-container navigate">
-        <a id="previous" class="button"><i class="icon-chevron-left"></i></a>
-        <a id="current" class="button"><%=t('.today') %></a>
-        <a id="next" class="button"><i class="icon-chevron-right"></i></a>
-        <span style="margin: 0px 10px;"></span>
-        <a id="dayMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.day') %></a>
-        <a id="weekMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.week') %></a>
-        <a id="monthMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.month') %></a>
-        <a id="yearMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.year') %></a>
-        <a id="customMode" class="button scope"><i class="icon-calendar" style="margin-right: 5px;"></i><%=t('.custom') %></a>
-      </div>
-      <div class="control-container domain">
-        <div class="inner">
-          <input type="text" id="scheduleBeginDate" style="position: relative; z-index: 100;" autocomplete="off" />
-          <span class="tm"><%=t('.tm') %></span>
-          <input type="text" id="scheduleEndDate" style="position: relative; z-index: 100;" autocomplete="off" />
-          <a class="button" id="scheduleDateUpdate"/><%=t('.set') %></a>
-        </div>
-      </div>
-    </div>
     <div class="top-axis clearfix">
       <div class="ajax-notification-container">
         <div class="ajax-notification">
@@ -47,15 +26,6 @@
         </div>
       </div>
       <div class="axis-parts clearfix"></div>
-      <div class="reservation-controls">
-        <div class="inner clearfix">
-          <a href="#" id="description" class="toolbar-button"><i class="icon-info-sign"></i> <%= t('.description') %></a>
-          <a href="#" id="client" class="toolbar-button"><i class="icon-user"></i> <%= t('.organisation_client') %></a>
-          <a href="#" id="edit" class="toolbar-button"><i class="icon-edit"></i> <%= t('.edit') %></a>
-          <a href="#" id="remove" class="toolbar-button"><i class="icon-remove-sign"></i> <%= t('.delete') %></a>
-          <a href="#" class="icon-remove toolbar-close-button"></a>
-        </div>
-      </div>
       <div class="description-bubble"></div>
     </div>
     <div class="left-axis"></div>
@@ -160,4 +130,28 @@
 
 <script type="text/template" id="plusOneButtonTemplate">
   <div class="schedule-plus-one-button"><span>+</span></div>
+</script>
+
+<script type="text/template" id="contextButtonDescription">
+  <i class="icon-info-sign"></i> <%= t('.description') %>
+</script>
+
+<script type="text/template" id="contextButtonClient">
+  <i class="icon-user"></i> <%= t('.organisation_client') %>
+</script>
+
+<script type="text/template" id="contextButtonEdit">
+  <i class="icon-edit"></i> <%= t('.edit') %>
+</script>
+
+<script type="text/template" id="contextButtonRemove">
+  <i class="icon-remove-sign"></i> <%= t('.delete') %>
+</script>
+
+<script type="text/template" id="contextButtonSave">
+  <i class="icon-edit"></i> <%= t('save') %>
+</script>
+
+<script type="text/template" id="contextButtonCancel">
+  <i class="icon-remove-sign"></i> <%= t('cancel') %>
 </script>

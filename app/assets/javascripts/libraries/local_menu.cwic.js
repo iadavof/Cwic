@@ -1,6 +1,6 @@
 function CwicLocalMenu(menu, options) {
   this.options = $.extend({
-    divisions: { 
+    divisions: {
       navigation: 'navigation-actions',
       context: 'context-actions',
       page: 'page-actions'
@@ -29,7 +29,7 @@ CwicLocalMenu.prototype.bindOnResize = function() {
   var _this = this;
   this.updateHeightSettings();
   $(window).on('resize', function(){ _this.updateHeightSettings.call(_this); });
-}
+};
 
 CwicLocalMenu.prototype.addButton = function(division, id, content, weight) {
   weight = weight || 0;
@@ -62,6 +62,16 @@ CwicLocalMenu.prototype.addButton = function(division, id, content, weight) {
   }
 };
 
+CwicLocalMenu.prototype.getDivision = function(division) {
+  if(this.isDivision(division)) {
+    return this.divisionDoms[division];
+  }
+};
+
+CwicLocalMenu.prototype.getButton = function(buttonid) {
+  return this.menu.find('#' + buttonid);
+};
+
 CwicLocalMenu.prototype.updateHeightSettings = function() {
   var maxHeight = 0;
   $.each(this.divisionDoms,
@@ -92,6 +102,24 @@ CwicLocalMenu.prototype.removeButton = function(division, id) {
 CwicLocalMenu.prototype.clearDivision = function(division) {
   if(this.isDivision(division)) {
     this.divisionDoms[division].html('');
+  }
+
+  // Update the height
+  this.updateHeightSettings();
+};
+
+CwicLocalMenu.prototype.toggleButtons = function(division, buttonids, newState) {
+  if(!this.isDivision(division)) {
+    return;
+  }
+
+  if(!$.isArray(buttonids)) {
+    buttonids = [buttonids];
+  }
+
+  for(buttonidi in buttonids) {
+    var buttonid = buttonids[buttonidi];
+    this.divisionDoms[division].find('#' + buttonid)[newState ? 'show' : 'hide']();
   }
 
   // Update the height

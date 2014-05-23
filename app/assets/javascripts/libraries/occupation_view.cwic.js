@@ -126,7 +126,6 @@ CwicOccupationView.prototype.updateOccupationView = function() {
   this.getPercentages();
 };
 
-
 CwicOccupationView.prototype.getEntities = function() {
   var occ = this;
   $.ajax({

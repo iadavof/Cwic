@@ -190,12 +190,14 @@ CwicScheduleViewItem.prototype.moveConceptTo = function(newBeginMoment) {
   this.conceptEnd = moment(newBeginMoment).add('ms', duration);
 
   this.rerender(true); // Rerender as concept
+  this.schedule.scheduleItemChanged();
 };
 
 CwicScheduleViewItem.prototype.applyTimeDiffConcept = function(milliseconds) {
   this.conceptBegin = moment(this.getConceptBegin()).add('ms', milliseconds);
   this.conceptEnd = moment(this.getConceptEnd()).add('ms', milliseconds);
   this.rerender(true);
+  this.schedule.scheduleItemChanged();
   return this.getDomObjects();
 };
 
@@ -214,6 +216,7 @@ CwicScheduleViewItem.prototype.resizeConcept = function(side, newMoment) {
     this.conceptEnd = moment(newMoment);
   }
   this.rerender(true);
+  this.schedule.scheduleItemChanged();
   return this.getDomObjects();
 };
 
