@@ -12,11 +12,11 @@ describe OrganisationUsersController do
     end
 
     it "routes to #show" do
-      get("/organisation_users/1").should route_to("organisation_users#show", :id => "1")
+      get("/organisation_users/1").should route_to("organisation_users#show", id: "1")
     end
 
     it "routes to #edit" do
-      get("/organisation_users/1/edit").should route_to("organisation_users#edit", :id => "1")
+      get("/organisation_users/1/edit").should route_to("organisation_users#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -24,11 +24,11 @@ describe OrganisationUsersController do
     end
 
     it "routes to #update" do
-      put("/organisation_users/1").should route_to("organisation_users#update", :id => "1")
+      put("/organisation_users/1").should route_to("organisation_users#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/organisation_users/1").should route_to("organisation_users#destroy", :id => "1")
+      delete("/organisation_users/1").should route_to("organisation_users#destroy", id: "1")
     end
 
   end

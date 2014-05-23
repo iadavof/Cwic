@@ -41,7 +41,7 @@ describe StickiesController do
   describe "GET show" do
     it "assigns the requested sticky as @sticky" do
       sticky = Sticky.create! valid_attributes
-      get :show, {:id => sticky.to_param}, valid_session
+      get :show, {id: sticky.to_param}, valid_session
       assigns(:sticky).should eq(sticky)
     end
   end
@@ -56,7 +56,7 @@ describe StickiesController do
   describe "GET edit" do
     it "assigns the requested sticky as @sticky" do
       sticky = Sticky.create! valid_attributes
-      get :edit, {:id => sticky.to_param}, valid_session
+      get :edit, {id: sticky.to_param}, valid_session
       assigns(:sticky).should eq(sticky)
     end
   end
@@ -65,18 +65,18 @@ describe StickiesController do
     describe "with valid params" do
       it "creates a new Sticky" do
         expect {
-          post :create, {:sticky => valid_attributes}, valid_session
+          post :create, {sticky: valid_attributes}, valid_session
         }.to change(Sticky, :count).by(1)
       end
 
       it "assigns a newly created sticky as @sticky" do
-        post :create, {:sticky => valid_attributes}, valid_session
+        post :create, {sticky: valid_attributes}, valid_session
         assigns(:sticky).should be_a(Sticky)
         assigns(:sticky).should be_persisted
       end
 
       it "redirects to the created sticky" do
-        post :create, {:sticky => valid_attributes}, valid_session
+        post :create, {sticky: valid_attributes}, valid_session
         response.should redirect_to(Sticky.last)
       end
     end
@@ -85,14 +85,14 @@ describe StickiesController do
       it "assigns a newly created but unsaved sticky as @sticky" do
         # Trigger the behavior that occurs when invalid params are submitted
         Sticky.any_instance.stub(:save).and_return(false)
-        post :create, {:sticky => { "stickable" => "invalid value" }}, valid_session
+        post :create, {sticky: { "stickable" => "invalid value" }}, valid_session
         assigns(:sticky).should be_a_new(Sticky)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Sticky.any_instance.stub(:save).and_return(false)
-        post :create, {:sticky => { "stickable" => "invalid value" }}, valid_session
+        post :create, {sticky: { "stickable" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -107,18 +107,18 @@ describe StickiesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Sticky.any_instance.should_receive(:update).with({ "stickable" => "" })
-        put :update, {:id => sticky.to_param, :sticky => { "stickable" => "" }}, valid_session
+        put :update, {id: sticky.to_param, sticky: { "stickable" => "" }}, valid_session
       end
 
       it "assigns the requested sticky as @sticky" do
         sticky = Sticky.create! valid_attributes
-        put :update, {:id => sticky.to_param, :sticky => valid_attributes}, valid_session
+        put :update, {id: sticky.to_param, sticky: valid_attributes}, valid_session
         assigns(:sticky).should eq(sticky)
       end
 
       it "redirects to the sticky" do
         sticky = Sticky.create! valid_attributes
-        put :update, {:id => sticky.to_param, :sticky => valid_attributes}, valid_session
+        put :update, {id: sticky.to_param, sticky: valid_attributes}, valid_session
         response.should redirect_to(sticky)
       end
     end
@@ -128,7 +128,7 @@ describe StickiesController do
         sticky = Sticky.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Sticky.any_instance.stub(:save).and_return(false)
-        put :update, {:id => sticky.to_param, :sticky => { "stickable" => "invalid value" }}, valid_session
+        put :update, {id: sticky.to_param, sticky: { "stickable" => "invalid value" }}, valid_session
         assigns(:sticky).should eq(sticky)
       end
 
@@ -136,7 +136,7 @@ describe StickiesController do
         sticky = Sticky.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Sticky.any_instance.stub(:save).and_return(false)
-        put :update, {:id => sticky.to_param, :sticky => { "stickable" => "invalid value" }}, valid_session
+        put :update, {id: sticky.to_param, sticky: { "stickable" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -146,13 +146,13 @@ describe StickiesController do
     it "destroys the requested sticky" do
       sticky = Sticky.create! valid_attributes
       expect {
-        delete :destroy, {:id => sticky.to_param}, valid_session
+        delete :destroy, {id: sticky.to_param}, valid_session
       }.to change(Sticky, :count).by(-1)
     end
 
     it "redirects to the stickies list" do
       sticky = Sticky.create! valid_attributes
-      delete :destroy, {:id => sticky.to_param}, valid_session
+      delete :destroy, {id: sticky.to_param}, valid_session
       response.should redirect_to(stickies_url)
     end
   end

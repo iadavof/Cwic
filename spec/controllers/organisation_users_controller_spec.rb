@@ -41,7 +41,7 @@ describe OrganisationUsersController do
   describe "GET show" do
     it "assigns the requested organisation_user as @organisation_user" do
       organisation_user = OrganisationUser.create! valid_attributes
-      get :show, {:id => organisation_user.to_param}, valid_session
+      get :show, {id: organisation_user.to_param}, valid_session
       assigns(:organisation_user).should eq(organisation_user)
     end
   end
@@ -56,7 +56,7 @@ describe OrganisationUsersController do
   describe "GET edit" do
     it "assigns the requested organisation_user as @organisation_user" do
       organisation_user = OrganisationUser.create! valid_attributes
-      get :edit, {:id => organisation_user.to_param}, valid_session
+      get :edit, {id: organisation_user.to_param}, valid_session
       assigns(:organisation_user).should eq(organisation_user)
     end
   end
@@ -65,18 +65,18 @@ describe OrganisationUsersController do
     describe "with valid params" do
       it "creates a new OrganisationUser" do
         expect {
-          post :create, {:organisation_user => valid_attributes}, valid_session
+          post :create, {organisation_user: valid_attributes}, valid_session
         }.to change(OrganisationUser, :count).by(1)
       end
 
       it "assigns a newly created organisation_user as @organisation_user" do
-        post :create, {:organisation_user => valid_attributes}, valid_session
+        post :create, {organisation_user: valid_attributes}, valid_session
         assigns(:organisation_user).should be_a(OrganisationUser)
         assigns(:organisation_user).should be_persisted
       end
 
       it "redirects to the created organisation_user" do
-        post :create, {:organisation_user => valid_attributes}, valid_session
+        post :create, {organisation_user: valid_attributes}, valid_session
         response.should redirect_to(OrganisationUser.last)
       end
     end
@@ -85,14 +85,14 @@ describe OrganisationUsersController do
       it "assigns a newly created but unsaved organisation_user as @organisation_user" do
         # Trigger the behavior that occurs when invalid params are submitted
         OrganisationUser.any_instance.stub(:save).and_return(false)
-        post :create, {:organisation_user => { "user" => "invalid value" }}, valid_session
+        post :create, {organisation_user: { "user" => "invalid value" }}, valid_session
         assigns(:organisation_user).should be_a_new(OrganisationUser)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         OrganisationUser.any_instance.stub(:save).and_return(false)
-        post :create, {:organisation_user => { "user" => "invalid value" }}, valid_session
+        post :create, {organisation_user: { "user" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -107,18 +107,18 @@ describe OrganisationUsersController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         OrganisationUser.any_instance.should_receive(:update).with({ "user" => "" })
-        put :update, {:id => organisation_user.to_param, :organisation_user => { "user" => "" }}, valid_session
+        put :update, {id: organisation_user.to_param, organisation_user: { "user" => "" }}, valid_session
       end
 
       it "assigns the requested organisation_user as @organisation_user" do
         organisation_user = OrganisationUser.create! valid_attributes
-        put :update, {:id => organisation_user.to_param, :organisation_user => valid_attributes}, valid_session
+        put :update, {id: organisation_user.to_param, organisation_user: valid_attributes}, valid_session
         assigns(:organisation_user).should eq(organisation_user)
       end
 
       it "redirects to the organisation_user" do
         organisation_user = OrganisationUser.create! valid_attributes
-        put :update, {:id => organisation_user.to_param, :organisation_user => valid_attributes}, valid_session
+        put :update, {id: organisation_user.to_param, organisation_user: valid_attributes}, valid_session
         response.should redirect_to(organisation_user)
       end
     end
@@ -128,7 +128,7 @@ describe OrganisationUsersController do
         organisation_user = OrganisationUser.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         OrganisationUser.any_instance.stub(:save).and_return(false)
-        put :update, {:id => organisation_user.to_param, :organisation_user => { "user" => "invalid value" }}, valid_session
+        put :update, {id: organisation_user.to_param, organisation_user: { "user" => "invalid value" }}, valid_session
         assigns(:organisation_user).should eq(organisation_user)
       end
 
@@ -136,7 +136,7 @@ describe OrganisationUsersController do
         organisation_user = OrganisationUser.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         OrganisationUser.any_instance.stub(:save).and_return(false)
-        put :update, {:id => organisation_user.to_param, :organisation_user => { "user" => "invalid value" }}, valid_session
+        put :update, {id: organisation_user.to_param, organisation_user: { "user" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -146,13 +146,13 @@ describe OrganisationUsersController do
     it "destroys the requested organisation_user" do
       organisation_user = OrganisationUser.create! valid_attributes
       expect {
-        delete :destroy, {:id => organisation_user.to_param}, valid_session
+        delete :destroy, {id: organisation_user.to_param}, valid_session
       }.to change(OrganisationUser, :count).by(-1)
     end
 
     it "redirects to the organisation_users list" do
       organisation_user = OrganisationUser.create! valid_attributes
-      delete :destroy, {:id => organisation_user.to_param}, valid_session
+      delete :destroy, {id: organisation_user.to_param}, valid_session
       response.should redirect_to(organisation_users_url)
     end
   end

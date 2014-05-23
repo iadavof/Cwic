@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "info_screens/show" do
   before(:each) do
     @info_screen = assign(:info_screen, stub_model(InfoScreen,
-      :name => "Name",
-      :public => false
+      name: "Name",
+      public: false
     ))
   end
 

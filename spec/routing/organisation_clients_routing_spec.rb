@@ -12,11 +12,11 @@ describe OrganisationClientsController do
     end
 
     it "routes to #show" do
-      get("/organisation_clients/1").should route_to("organisation_clients#show", :id => "1")
+      get("/organisation_clients/1").should route_to("organisation_clients#show", id: "1")
     end
 
     it "routes to #edit" do
-      get("/organisation_clients/1/edit").should route_to("organisation_clients#edit", :id => "1")
+      get("/organisation_clients/1/edit").should route_to("organisation_clients#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -24,11 +24,11 @@ describe OrganisationClientsController do
     end
 
     it "routes to #update" do
-      put("/organisation_clients/1").should route_to("organisation_clients#update", :id => "1")
+      put("/organisation_clients/1").should route_to("organisation_clients#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/organisation_clients/1").should route_to("organisation_clients#destroy", :id => "1")
+      delete("/organisation_clients/1").should route_to("organisation_clients#destroy", id: "1")
     end
 
   end

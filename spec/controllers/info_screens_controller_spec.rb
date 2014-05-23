@@ -41,7 +41,7 @@ describe InfoScreensController do
   describe "GET show" do
     it "assigns the requested info_screen as @info_screen" do
       info_screen = InfoScreen.create! valid_attributes
-      get :show, {:id => info_screen.to_param}, valid_session
+      get :show, {id: info_screen.to_param}, valid_session
       assigns(:info_screen).should eq(info_screen)
     end
   end
@@ -56,7 +56,7 @@ describe InfoScreensController do
   describe "GET edit" do
     it "assigns the requested info_screen as @info_screen" do
       info_screen = InfoScreen.create! valid_attributes
-      get :edit, {:id => info_screen.to_param}, valid_session
+      get :edit, {id: info_screen.to_param}, valid_session
       assigns(:info_screen).should eq(info_screen)
     end
   end
@@ -65,18 +65,18 @@ describe InfoScreensController do
     describe "with valid params" do
       it "creates a new InfoScreen" do
         expect {
-          post :create, {:info_screen => valid_attributes}, valid_session
+          post :create, {info_screen: valid_attributes}, valid_session
         }.to change(InfoScreen, :count).by(1)
       end
 
       it "assigns a newly created info_screen as @info_screen" do
-        post :create, {:info_screen => valid_attributes}, valid_session
+        post :create, {info_screen: valid_attributes}, valid_session
         assigns(:info_screen).should be_a(InfoScreen)
         assigns(:info_screen).should be_persisted
       end
 
       it "redirects to the created info_screen" do
-        post :create, {:info_screen => valid_attributes}, valid_session
+        post :create, {info_screen: valid_attributes}, valid_session
         response.should redirect_to(InfoScreen.last)
       end
     end
@@ -85,14 +85,14 @@ describe InfoScreensController do
       it "assigns a newly created but unsaved info_screen as @info_screen" do
         # Trigger the behavior that occurs when invalid params are submitted
         InfoScreen.any_instance.stub(:save).and_return(false)
-        post :create, {:info_screen => { "name" => "invalid value" }}, valid_session
+        post :create, {info_screen: { "name" => "invalid value" }}, valid_session
         assigns(:info_screen).should be_a_new(InfoScreen)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         InfoScreen.any_instance.stub(:save).and_return(false)
-        post :create, {:info_screen => { "name" => "invalid value" }}, valid_session
+        post :create, {info_screen: { "name" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -107,18 +107,18 @@ describe InfoScreensController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         InfoScreen.any_instance.should_receive(:update).with({ "name" => "MyString" })
-        put :update, {:id => info_screen.to_param, :info_screen => { "name" => "MyString" }}, valid_session
+        put :update, {id: info_screen.to_param, info_screen: { "name" => "MyString" }}, valid_session
       end
 
       it "assigns the requested info_screen as @info_screen" do
         info_screen = InfoScreen.create! valid_attributes
-        put :update, {:id => info_screen.to_param, :info_screen => valid_attributes}, valid_session
+        put :update, {id: info_screen.to_param, info_screen: valid_attributes}, valid_session
         assigns(:info_screen).should eq(info_screen)
       end
 
       it "redirects to the info_screen" do
         info_screen = InfoScreen.create! valid_attributes
-        put :update, {:id => info_screen.to_param, :info_screen => valid_attributes}, valid_session
+        put :update, {id: info_screen.to_param, info_screen: valid_attributes}, valid_session
         response.should redirect_to(info_screen)
       end
     end
@@ -128,7 +128,7 @@ describe InfoScreensController do
         info_screen = InfoScreen.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         InfoScreen.any_instance.stub(:save).and_return(false)
-        put :update, {:id => info_screen.to_param, :info_screen => { "name" => "invalid value" }}, valid_session
+        put :update, {id: info_screen.to_param, info_screen: { "name" => "invalid value" }}, valid_session
         assigns(:info_screen).should eq(info_screen)
       end
 
@@ -136,7 +136,7 @@ describe InfoScreensController do
         info_screen = InfoScreen.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         InfoScreen.any_instance.stub(:save).and_return(false)
-        put :update, {:id => info_screen.to_param, :info_screen => { "name" => "invalid value" }}, valid_session
+        put :update, {id: info_screen.to_param, info_screen: { "name" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -146,13 +146,13 @@ describe InfoScreensController do
     it "destroys the requested info_screen" do
       info_screen = InfoScreen.create! valid_attributes
       expect {
-        delete :destroy, {:id => info_screen.to_param}, valid_session
+        delete :destroy, {id: info_screen.to_param}, valid_session
       }.to change(InfoScreen, :count).by(-1)
     end
 
     it "redirects to the info_screens list" do
       info_screen = InfoScreen.create! valid_attributes
-      delete :destroy, {:id => info_screen.to_param}, valid_session
+      delete :destroy, {id: info_screen.to_param}, valid_session
       response.should redirect_to(info_screens_url)
     end
   end

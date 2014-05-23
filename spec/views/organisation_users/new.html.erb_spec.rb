@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "organisation_users/new" do
   before(:each) do
     assign(:organisation_user, stub_model(OrganisationUser,
-      :user => nil,
-      :organisation => nil,
-      :organisation_role => nil
+      user: nil,
+      organisation: nil,
+      organisation_role: nil
     ).as_new_record)
   end
 

@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "entities/new" do
   before(:each) do
     assign(:entity, stub_model(Entity,
-      :name => "MyString",
-      :description => "MyText",
-      :entity_type => nil,
-      :organisation => nil
+      name: "MyString",
+      description: "MyText",
+      entity_type: nil,
+      organisation: nil
     ).as_new_record)
   end
 

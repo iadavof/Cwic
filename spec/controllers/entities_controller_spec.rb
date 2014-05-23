@@ -41,7 +41,7 @@ describe EntitiesController do
   describe "GET show" do
     it "assigns the requested entity as @entity" do
       entity = Entity.create! valid_attributes
-      get :show, {:id => entity.to_param}, valid_session
+      get :show, {id: entity.to_param}, valid_session
       assigns(:entity).should eq(entity)
     end
   end
@@ -56,7 +56,7 @@ describe EntitiesController do
   describe "GET edit" do
     it "assigns the requested entity as @entity" do
       entity = Entity.create! valid_attributes
-      get :edit, {:id => entity.to_param}, valid_session
+      get :edit, {id: entity.to_param}, valid_session
       assigns(:entity).should eq(entity)
     end
   end
@@ -65,18 +65,18 @@ describe EntitiesController do
     describe "with valid params" do
       it "creates a new Entity" do
         expect {
-          post :create, {:entity => valid_attributes}, valid_session
+          post :create, {entity: valid_attributes}, valid_session
         }.to change(Entity, :count).by(1)
       end
 
       it "assigns a newly created entity as @entity" do
-        post :create, {:entity => valid_attributes}, valid_session
+        post :create, {entity: valid_attributes}, valid_session
         assigns(:entity).should be_a(Entity)
         assigns(:entity).should be_persisted
       end
 
       it "redirects to the created entity" do
-        post :create, {:entity => valid_attributes}, valid_session
+        post :create, {entity: valid_attributes}, valid_session
         response.should redirect_to(Entity.last)
       end
     end
@@ -85,14 +85,14 @@ describe EntitiesController do
       it "assigns a newly created but unsaved entity as @entity" do
         # Trigger the behavior that occurs when invalid params are submitted
         Entity.any_instance.stub(:save).and_return(false)
-        post :create, {:entity => { "name" => "invalid value" }}, valid_session
+        post :create, {entity: { "name" => "invalid value" }}, valid_session
         assigns(:entity).should be_a_new(Entity)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Entity.any_instance.stub(:save).and_return(false)
-        post :create, {:entity => { "name" => "invalid value" }}, valid_session
+        post :create, {entity: { "name" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -107,18 +107,18 @@ describe EntitiesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Entity.any_instance.should_receive(:update).with({ "name" => "MyString" })
-        put :update, {:id => entity.to_param, :entity => { "name" => "MyString" }}, valid_session
+        put :update, {id: entity.to_param, entity: { "name" => "MyString" }}, valid_session
       end
 
       it "assigns the requested entity as @entity" do
         entity = Entity.create! valid_attributes
-        put :update, {:id => entity.to_param, :entity => valid_attributes}, valid_session
+        put :update, {id: entity.to_param, entity: valid_attributes}, valid_session
         assigns(:entity).should eq(entity)
       end
 
       it "redirects to the entity" do
         entity = Entity.create! valid_attributes
-        put :update, {:id => entity.to_param, :entity => valid_attributes}, valid_session
+        put :update, {id: entity.to_param, entity: valid_attributes}, valid_session
         response.should redirect_to(entity)
       end
     end
@@ -128,7 +128,7 @@ describe EntitiesController do
         entity = Entity.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Entity.any_instance.stub(:save).and_return(false)
-        put :update, {:id => entity.to_param, :entity => { "name" => "invalid value" }}, valid_session
+        put :update, {id: entity.to_param, entity: { "name" => "invalid value" }}, valid_session
         assigns(:entity).should eq(entity)
       end
 
@@ -136,7 +136,7 @@ describe EntitiesController do
         entity = Entity.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Entity.any_instance.stub(:save).and_return(false)
-        put :update, {:id => entity.to_param, :entity => { "name" => "invalid value" }}, valid_session
+        put :update, {id: entity.to_param, entity: { "name" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -146,13 +146,13 @@ describe EntitiesController do
     it "destroys the requested entity" do
       entity = Entity.create! valid_attributes
       expect {
-        delete :destroy, {:id => entity.to_param}, valid_session
+        delete :destroy, {id: entity.to_param}, valid_session
       }.to change(Entity, :count).by(-1)
     end
 
     it "redirects to the entities list" do
       entity = Entity.create! valid_attributes
-      delete :destroy, {:id => entity.to_param}, valid_session
+      delete :destroy, {id: entity.to_param}, valid_session
       response.should redirect_to(entities_url)
     end
   end

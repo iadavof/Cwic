@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "feedbacks/new" do
   before(:each) do
     assign(:feedback, stub_model(Feedback,
-      :message => "MyText",
-      :specs => "MyText",
-      :screen_capture => "MyString"
+      message: "MyText",
+      specs: "MyText",
+      screen_capture: "MyString"
     ).as_new_record)
   end
 

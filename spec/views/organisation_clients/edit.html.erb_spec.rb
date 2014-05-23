@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "organisation_clients/edit" do
   before(:each) do
     @organisation_client = assign(:organisation_client, stub_model(OrganisationClient,
-      :first_name => "",
-      :infix => "",
-      :last_name => "",
-      :email => "MyString"
+      first_name: "",
+      infix: "",
+      last_name: "",
+      email: "MyString"
     ))
   end
 

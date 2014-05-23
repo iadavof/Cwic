@@ -41,7 +41,7 @@ describe EntityTypesController do
   describe "GET show" do
     it "assigns the requested entity_type as @entity_type" do
       entity_type = EntityType.create! valid_attributes
-      get :show, {:id => entity_type.to_param}, valid_session
+      get :show, {id: entity_type.to_param}, valid_session
       assigns(:entity_type).should eq(entity_type)
     end
   end
@@ -56,7 +56,7 @@ describe EntityTypesController do
   describe "GET edit" do
     it "assigns the requested entity_type as @entity_type" do
       entity_type = EntityType.create! valid_attributes
-      get :edit, {:id => entity_type.to_param}, valid_session
+      get :edit, {id: entity_type.to_param}, valid_session
       assigns(:entity_type).should eq(entity_type)
     end
   end
@@ -65,18 +65,18 @@ describe EntityTypesController do
     describe "with valid params" do
       it "creates a new EntityType" do
         expect {
-          post :create, {:entity_type => valid_attributes}, valid_session
+          post :create, {entity_type: valid_attributes}, valid_session
         }.to change(EntityType, :count).by(1)
       end
 
       it "assigns a newly created entity_type as @entity_type" do
-        post :create, {:entity_type => valid_attributes}, valid_session
+        post :create, {entity_type: valid_attributes}, valid_session
         assigns(:entity_type).should be_a(EntityType)
         assigns(:entity_type).should be_persisted
       end
 
       it "redirects to the created entity_type" do
-        post :create, {:entity_type => valid_attributes}, valid_session
+        post :create, {entity_type: valid_attributes}, valid_session
         response.should redirect_to(EntityType.last)
       end
     end
@@ -85,14 +85,14 @@ describe EntityTypesController do
       it "assigns a newly created but unsaved entity_type as @entity_type" do
         # Trigger the behavior that occurs when invalid params are submitted
         EntityType.any_instance.stub(:save).and_return(false)
-        post :create, {:entity_type => { "name" => "invalid value" }}, valid_session
+        post :create, {entity_type: { "name" => "invalid value" }}, valid_session
         assigns(:entity_type).should be_a_new(EntityType)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         EntityType.any_instance.stub(:save).and_return(false)
-        post :create, {:entity_type => { "name" => "invalid value" }}, valid_session
+        post :create, {entity_type: { "name" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -107,18 +107,18 @@ describe EntityTypesController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         EntityType.any_instance.should_receive(:update).with({ "name" => "MyString" })
-        put :update, {:id => entity_type.to_param, :entity_type => { "name" => "MyString" }}, valid_session
+        put :update, {id: entity_type.to_param, entity_type: { "name" => "MyString" }}, valid_session
       end
 
       it "assigns the requested entity_type as @entity_type" do
         entity_type = EntityType.create! valid_attributes
-        put :update, {:id => entity_type.to_param, :entity_type => valid_attributes}, valid_session
+        put :update, {id: entity_type.to_param, entity_type: valid_attributes}, valid_session
         assigns(:entity_type).should eq(entity_type)
       end
 
       it "redirects to the entity_type" do
         entity_type = EntityType.create! valid_attributes
-        put :update, {:id => entity_type.to_param, :entity_type => valid_attributes}, valid_session
+        put :update, {id: entity_type.to_param, entity_type: valid_attributes}, valid_session
         response.should redirect_to(entity_type)
       end
     end
@@ -128,7 +128,7 @@ describe EntityTypesController do
         entity_type = EntityType.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         EntityType.any_instance.stub(:save).and_return(false)
-        put :update, {:id => entity_type.to_param, :entity_type => { "name" => "invalid value" }}, valid_session
+        put :update, {id: entity_type.to_param, entity_type: { "name" => "invalid value" }}, valid_session
         assigns(:entity_type).should eq(entity_type)
       end
 
@@ -136,7 +136,7 @@ describe EntityTypesController do
         entity_type = EntityType.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         EntityType.any_instance.stub(:save).and_return(false)
-        put :update, {:id => entity_type.to_param, :entity_type => { "name" => "invalid value" }}, valid_session
+        put :update, {id: entity_type.to_param, entity_type: { "name" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -146,13 +146,13 @@ describe EntityTypesController do
     it "destroys the requested entity_type" do
       entity_type = EntityType.create! valid_attributes
       expect {
-        delete :destroy, {:id => entity_type.to_param}, valid_session
+        delete :destroy, {id: entity_type.to_param}, valid_session
       }.to change(EntityType, :count).by(-1)
     end
 
     it "redirects to the entity_types list" do
       entity_type = EntityType.create! valid_attributes
-      delete :destroy, {:id => entity_type.to_param}, valid_session
+      delete :destroy, {id: entity_type.to_param}, valid_session
       response.should redirect_to(entity_types_url)
     end
   end

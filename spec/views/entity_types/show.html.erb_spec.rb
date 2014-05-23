@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "entity_types/show" do
   before(:each) do
     @entity_type = assign(:entity_type, stub_model(EntityType,
-      :name => "Name",
-      :description => "MyText"
+      name: "Name",
+      description: "MyText"
     ))
   end
 

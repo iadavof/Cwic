@@ -12,11 +12,11 @@ describe StickiesController do
     end
 
     it "routes to #show" do
-      get("/stickies/1").should route_to("stickies#show", :id => "1")
+      get("/stickies/1").should route_to("stickies#show", id: "1")
     end
 
     it "routes to #edit" do
-      get("/stickies/1/edit").should route_to("stickies#edit", :id => "1")
+      get("/stickies/1/edit").should route_to("stickies#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -24,11 +24,11 @@ describe StickiesController do
     end
 
     it "routes to #update" do
-      put("/stickies/1").should route_to("stickies#update", :id => "1")
+      put("/stickies/1").should route_to("stickies#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/stickies/1").should route_to("stickies#destroy", :id => "1")
+      delete("/stickies/1").should route_to("stickies#destroy", id: "1")
     end
 
   end
