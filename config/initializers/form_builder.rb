@@ -11,7 +11,7 @@ class ActionView::Helpers::FormBuilder
 
     if object.class.validators_on(method).map(&:class).include? ActiveRecord::Validations::PresenceValidator
       if options.class != Hash
-        options = {:class => "required"}
+        options = {class: "required"}
       else
         options[:class] = ((options[:class] || "") + " required").split(" ").uniq.join(" ")
       end
