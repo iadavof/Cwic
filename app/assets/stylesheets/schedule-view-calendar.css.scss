@@ -64,23 +64,15 @@ div.calendar div.top-axis .description-bubble {
   display: none;
 }
 
-
-div.calendar div.top-axis .ajax-notification-container {
-  position: absolute;
-  left: 0;
-  top: 100%;
-  width: 100%;
-  text-align: center;
-  margin-top: 2px;
-  pointer-events: none;
+.ajax-notification {
+  display: block;
+  background-color: #fef4ac;
+  border: 1px solid #f4e183;
+  padding: 5px 8px;
+  font-size: 0.86em;
 }
 
-div.calendar div.top-axis .ajax-notification-container .ajax-notification {
-  text-align: left;
-  visibility: hidden;
-}
-
-div.calendar div.top-axis .ajax-notification-container .ajax-notification .ajax-wait {
+.ajax-notification .ajax-wait {
   position: relative;
   float: left;
   height: 25px;
@@ -89,9 +81,10 @@ div.calendar div.top-axis .ajax-notification-container .ajax-notification .ajax-
   background-size: 25px 25px;
   background-position: center center;
   background-repeat: no-repeat;
+  margin: 0 5px;
 }
 
-div.calendar div.top-axis .ajax-notification-container .ajax-notification .message {
+.ajax-notification .message {
   position: relative;
   float: left;
   line-height: 25px;
@@ -1032,7 +1025,7 @@ div.calendar div.schedule-body div.column div.schedule-item p.item-text {
 }
 
 div.calendar div.entity-container .ui-tabs .ui-tabs-panel {
-  padding: 0;
+  padding: 6px 0 0;
 }
 
 div.calendar div.entity-container p.no_entities_found {

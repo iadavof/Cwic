@@ -19,12 +19,6 @@
       <p class="no_entities_found"><%= t('.no_entities_found', link: link_to_new([@organisation, Entity])).html_safe %></p>
     </div>
     <div class="top-axis clearfix">
-      <div class="ajax-notification-container">
-        <div class="ajax-notification">
-          <div class="ajax-wait"></div>
-          <div class="message"></div>
-        </div>
-      </div>
       <div class="axis-parts clearfix"></div>
       <div class="description-bubble"></div>
     </div>
@@ -154,4 +148,11 @@
 
 <script type="text/template" id="contextButtonCancel">
   <i class="icon-remove-sign"></i><span><%= t('cancel') %></span>
+</script>
+
+<script type="text/template" id="ajaxNotification">
+  <div class="ajax-notification clearfix">
+    <div class="ajax-wait"></div>
+    <div class="message"></div>
+  </div>
 </script>

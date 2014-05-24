@@ -10,6 +10,9 @@ function CwicScheduleViewItem(_schedule, _scheduleEntity, _item_id) {
   this.begin = null; // momentjs object
   this.end = null; // momentjs object
 
+  this.undoBegin = null; // momentjs object
+  this.undoEnd = null; // momentjs object
+
   this.conceptBegin = null; // momentjs object
   this.conceptEnd = null; // momentjs object
   this.conceptMode = false; // momentjs object
@@ -156,7 +159,7 @@ CwicScheduleViewItem.prototype.undoAcceptConcept = function() {
     this.end = this.undoEnd;
   }
 
-  this.rerender();
+  this.resetConcept();
 };
 
 CwicScheduleViewItem.prototype.destroy = function() {
@@ -489,6 +492,7 @@ CwicScheduleViewItem.prototype.bindDragAndResizeControls = function() {
       this.side = null;
       this.startPointedScheduleItem = null;
       this.pointerDown = false;
+      this.pointerDownPoint = null;
       this.container = null;
       this.lastDragMoment = null;
       return this;
@@ -496,7 +500,7 @@ CwicScheduleViewItem.prototype.bindDragAndResizeControls = function() {
   }.reset();
 
   var scheduleBody = this.schedule.scheduleContainer.find('div.schedule-body');
-  scheduleBody.on('pointerdown.dragresize', function(e) { _this.dragAndResizeDown(e, context); });
+  scheduleBody.on('pointerdown.dragresize', 'div.schedule-item', function(e) { _this.dragAndResizeDown(e, context); });
   scheduleBody.on('pointermove.dragresize', function(e) { _this.dragAndResizeMove(e, context); });
   scheduleBody.on('pointerup.dragresize', function(e) { _this.dragAndResizeUp(e, context); });
   $(document).on('keyup.cancelDragOrResize', function(e) { _this.dragAndResizeEsc(e, context);});
@@ -521,9 +525,21 @@ CwicScheduleViewItem.prototype.dragAndResizeEsc = function(event, context) {
 
 CwicScheduleViewItem.prototype.dragAndResizeDown = function(event, context) {
   context.pointerDown = true;
+
+  // store startPoint
+  context.pointerDownPoint = { pageX: event.originalEvent.pageX, pageY: event.originalEvent.pageY };
+
   // Get the dom element which is pointed
   pointed = this.schedule.getElementForPoint(event);
   context.startPointedScheduleItem = pointed.closest('div.schedule-item-wrapper');
+
+  // Assert if this drag is not started on the current schedule item
+  var startPointedScheduleItemId = context.startPointedScheduleItem.find('.schedule-item').data('scheduleItemID');
+  if(this.item_id != null && this.item_id != parseInt(startPointedScheduleItemId, 10)) {
+    context.reset();
+    return;
+  }
+
   // Make sure the pointed schedule item wont be removed (to make touch interaction function properly)
   context.startPointedScheduleItem.addClass('locked');
 
@@ -572,25 +588,34 @@ CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
 
 CwicScheduleViewItem.prototype.checkGlowState = function() {
   var errorGlow = this.conceptCollidesWithOthers();
-  var slackGlow = this.conceptSlackCollidesWithOthers() && ! errorGlow;
+  var slackGlow = this.conceptSlackCollidesWithOthers() && !errorGlow;
   this.applyGlow('slack', slackGlow);
   this.applyGlow('error', errorGlow);
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeUp = function(event, context) {
-  context.pointerDown = false;
-  if(this.conceptCollidesWithOthers() || !this.checkEndAfterBegin(true)) {
-    this.resetConcept();
-  }
+  if(context.pointerDown) {
+    context.pointerDown = false;
+    // Check if this drag should perfom the click action (small or no movement)
+    var currentPoint = this.schedule.getPointerRel(event, context.container);
+    // Euclidean distance
+    if(Math.sqrt(Math.pow(event.originalEvent.pageX - context.pointerDownPoint.pageX, 2) + Math.pow(event.originalEvent.pageY - context.pointerDownPoint.pageY, 2)) < 10) {
+      this.schedule.stopEditMode(true);
+    }
 
-  if(context.startPointedScheduleItem.hasClass('locked-removal-candidate')) {
-    context.startPointedScheduleItem.remove();
-  } else {
-    context.startPointedScheduleItem.removeClass('locked');
-  }
+    if(this.conceptCollidesWithOthers() || !this.checkEndAfterBegin(true)) {
+      this.resetConcept();
+    }
 
-  // Reset drag vars
-  context.reset();
+    if(context.startPointedScheduleItem.hasClass('locked-removal-candidate')) {
+      context.startPointedScheduleItem.remove();
+    } else {
+      context.startPointedScheduleItem.removeClass('locked');
+    }
+
+    // Reset drag vars
+    context.reset();
+  }
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeCancel = function(event, context) {

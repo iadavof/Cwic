@@ -62,7 +62,7 @@ CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
   save.on('click', function() { schedule.stopEditMode.call(schedule, true); } );
 
   // Hide all buttons on init
-  localMenu.toggleButtons('context', ['description', 'client', 'edit', 'remove', 'cancel', 'save'], false);
+  this.toggleLocalMenuButtons('context', ['description', 'client', 'edit', 'remove', 'cancel', 'save'], false);
 };
 
 CwicScheduleView.prototype.initScheduleStub = function() {
@@ -329,7 +329,7 @@ CwicScheduleView.prototype.bindNavigationControls = function() {
 
 CwicScheduleView.prototype.bindStartStopEditModeOnClick = function() {
   var schedule = this;
-  this.scheduleContainer.find('.schedule-body').on('click', function(event) {
+  $('html').on('click', function(event) {
     var possibleScheduleItem = schedule.clickedScheduleItem(event);
     if(possibleScheduleItem) {
       // Op een schedule item geklikt, prevent the plus one button action from firing
@@ -340,9 +340,6 @@ CwicScheduleView.prototype.bindStartStopEditModeOnClick = function() {
         // A schedule item is currently being edited
         schedule.stopEditMode(false);
         schedule.startEditMode(possibleScheduleItem);
-      } else {
-        // Clicked on the schedule item, Save the schedule item!
-        schedule.stopEditMode(true);
       }
     } else {
       // Clicked outside the schedule item, revert the edit
@@ -370,12 +367,19 @@ CwicScheduleView.prototype.startEditMode = function(scheduleItemDOM, notWithTool
   }
 
   if(!notWithToolbar) {
-      localMenu.toggleButtons('context', ['description', 'client', 'edit', 'remove'], true);
+      this.toggleLocalMenuButtons('context', ['description', 'client', 'edit', 'remove'], true);
   }
 
   this.focusedScheduleItem.applyFocus();
   this.focusedScheduleItem.bindDragAndResizeControls();
 };
+
+CwicScheduleView.prototype.toggleLocalMenuButtons = function(division, buttonids, state) {
+  // Hide the status messages
+  this.hideStatusMessage(true);
+  localMenu.toggleButtons(division, buttonids, state);
+};
+
 
 CwicScheduleView.prototype.stopEditMode = function(accept) {
   var schedule = this;
@@ -389,7 +393,7 @@ CwicScheduleView.prototype.stopEditMode = function(accept) {
   this.focusedScheduleItem.unbindDragAndResizeControls();
 
   // Hide context menu buttons
-  localMenu.toggleButtons('context', ['description', 'client', 'edit', 'remove', 'cancel', 'save'], false);
+  this.toggleLocalMenuButtons('context', ['description', 'client', 'edit', 'remove', 'cancel', 'save'], false);
 
   this.focusedScheduleItem.removeFocus();
   (accept) ? this.saveEditModeChanges() : this.discardEditModeChanges();
@@ -412,13 +416,14 @@ CwicScheduleView.prototype.saveEditModeChanges = function() {
 };
 
 CwicScheduleView.prototype.discardEditModeChanges = function() {
-  schedule.focusedScheduleItem.resetConcept();
+  if(schedule.focusedScheduleItem) {
+    schedule.focusedScheduleItem.resetConcept();
+  }
 };
 
 CwicScheduleView.prototype.scheduleItemChanged = function() {
-  localMenu.toggleButtons('context', ['description', 'client', 'edit', 'remove'], false);
-  localMenu.toggleButtons('context', ['cancel', 'save'], true);
-
+  this.toggleLocalMenuButtons('context', ['description', 'client', 'edit', 'remove'], false);
+  this.toggleLocalMenuButtons('context', ['cancel', 'save'], true);
 };
 
 CwicScheduleView.prototype.handleNewScheduleItemSave = function() {
@@ -517,40 +522,36 @@ CwicScheduleView.prototype.getElementForPoint = function(event) {
 };
 
 CwicScheduleView.prototype.showStatusMessage = function(content, ajax_wait, delay) {
-  var notification = this.scheduleContainer.find('.ajax-notification');
-  notification.css('pointer-events', 'auto');
+  var schedule = this;
+  // Always remove possibly present status messages
+  this.hideStatusMessage(true);
 
-  if(this.statusMessageTimeout !== null) {
+  if(this.statusMessageTimeout != null) {
     // There is still a status message hide timeout present, clear it
     clearTimeout(this.statusMessageTimeout);
   }
+
+  var notification = APP.util.getTemplateClone('ajaxNotification');
 
   notification.find('.ajax-wait')[ajax_wait ? 'show' : 'hide']();
 
   notification.find('.message').html(content);
 
-  var currentNotifyHeight = notification.height();
-  notification.css({height: 0, visibility: 'visible'});
-  notification.finish();
-  notification.animate({height: currentNotifyHeight + 'px'}, 200);
-  var schedule = this;
   if(delay !== null && delay > 0) {
-    this.statusMessageTimeout = setTimeout(function() {schedule.hideStatusMessage();}, delay);
+    this.statusMessageTimeout = setTimeout(function() { schedule.hideStatusMessage(); }, 100000);
   }
+
+  localMenu.getDivision('context').append(notification);
+  localMenu.updateHeightSettings();
+  notification.fadeIn(300);
+
   return notification;
 };
 
-CwicScheduleView.prototype.hideStatusMessage = function() {
-  var notification = this.scheduleContainer.find('.ajax-notification');
-  notification.finish();
-  notification.animate({ height: 0 }, 200, function() {
-    $(this).css({ visibility: 'hidden', height: 'auto' });
-    // remove message
-    notification.find('.message').html('');
-    notification.find('.ajax-wait').hide();
-    notification.css('pointer-events', 'inherit');
-  });
-
+CwicScheduleView.prototype.hideStatusMessage = function(force) {
+  force = force || false;
+  localMenu.getDivision('context').find('.ajax-notification').fadeOut(force ? 0 : 500, function() { $(this).remove(); });
+  localMenu.updateHeightSettings();
 };
 
 CwicScheduleView.prototype.patchScheduleItemBackend = function(scheduleItem, undo) {
