@@ -169,7 +169,6 @@ CwicScheduleViewItem.prototype.destroy = function() {
 CwicScheduleViewItem.prototype.resetConcept = function() {
   this.conceptBegin = null;
   this.conceptEnd = null;
-
   this.scheduleEntity.checkUnhideNonBlockingItems();
 
   this.rerender(); // Rerender in normal mode
