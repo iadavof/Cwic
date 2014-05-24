@@ -416,6 +416,7 @@ CwicScheduleView.prototype.saveEditModeChanges = function() {
 };
 
 CwicScheduleView.prototype.discardEditModeChanges = function() {
+  console.debug('discard');
   if(schedule.focusedScheduleItem) {
     schedule.focusedScheduleItem.resetConcept();
   }

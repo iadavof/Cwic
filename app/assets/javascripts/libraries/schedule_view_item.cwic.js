@@ -431,7 +431,6 @@ CwicScheduleViewItem.prototype.render = function(concept) {
       // If it was previously flagged as a removal candidate, unflag it and show it again.
       schedulePartWrapper.show().removeClass('locked-removal-candidate');
       this.setScheduleItemDimensions(schedulePartWrapper, partMomentBlock);
-
       // Remove this item from the array of existing dom objects that are not used.
       domObjectsAlreadyPresent = $.grep(domObjectsAlreadyPresent, function(value) {
         return value != partBeginContainerId;
@@ -471,16 +470,29 @@ CwicScheduleViewItem.prototype.render = function(concept) {
   this.checkGlowState();
 
   // Lets see if we still need to delete unused DOM objects from the previous render
-  $(domObjectsAlreadyPresent).each(function(index, value) {
+  $.each(domObjectsAlreadyPresent, function(index, value) {
     var item = $(_this.domObjects[value]);
     // If this item is locked, it cannot be removed (could be needed for drag events)
     if(item.hasClass('locked')) {
-      item.addClass('locked-removal-candidate');
-      item.hide();
+      item.addClass('locked-removal-candidate').hide();
     } else {
-      $(_this.domObjects[value]).remove();
+      item.remove();
       delete _this.domObjects[value];
     }
+  });
+};
+
+CwicScheduleViewItem.prototype.cleanUpLockedDomItems = function() {
+  var _this = this;
+  $.each(this.domObjects, function(index, item){
+    item = $(this);
+    if(item.hasClass('locked-removal-candidate')) {
+      item.remove();
+      delete _this.domObjects[index];
+    } else {
+      item.removeClass('locked');
+    }
+
   });
 };
 
@@ -606,11 +618,7 @@ CwicScheduleViewItem.prototype.dragAndResizeUp = function(event, context) {
       this.resetConcept();
     }
 
-    if(context.startPointedScheduleItem.hasClass('locked-removal-candidate')) {
-      context.startPointedScheduleItem.remove();
-    } else {
-      context.startPointedScheduleItem.removeClass('locked');
-    }
+    this.cleanUpLockedDomItems();
 
     // Reset drag vars
     context.reset();
