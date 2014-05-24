@@ -535,6 +535,7 @@ CwicScheduleViewItem.prototype.dragAndResizeEsc = function(event, context) {
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeDown = function(event, context) {
+  event.preventDefault();
   context.pointerDown = true;
 
   // store startPoint
