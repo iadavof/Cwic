@@ -18,13 +18,15 @@
 
       <p class="no_entities_found"><%= t('.no_entities_found', link: link_to_new([@organisation, Entity])).html_safe %></p>
     </div>
-    <div class="top-axis clearfix">
-      <div class="axis-parts clearfix"></div>
-      <div class="description-bubble"></div>
-    </div>
     <div class="left-axis"></div>
-    <div class="schedule-body">
-      <div class="grid"></div>
+    <div class="schedule-scroll-container">
+      <div class="top-axis clearfix">
+        <div class="axis-parts clearfix"></div>
+        <div class="description-bubble"></div>
+      </div>
+      <div class="schedule-body">
+        <div class="grid"></div>
+      </div>
     </div>
   </div>
 </script>
@@ -119,6 +121,9 @@
 <script type="text/template" id="scheduleEntityItemPartsTemplate">
   <div class="schedule-object-item-parts">
     <p class="name"></p>
+    <p class="name" style="left: 25%;"></p>
+    <p class="name" style="left: 50%;"></p>
+    <p class="name" style="left: 75%;"></p>
   </div>
 </script>
 

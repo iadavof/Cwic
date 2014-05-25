@@ -879,7 +879,6 @@ CwicScheduleView.prototype.createVerticalSchedule = function() {
   this.setTopAxisTexts();
 
   this.scheduleContainer.find('div.top-axis').cwicStickyHeader();
-  this.scheduleContainer.find('div.top-axis').parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
 };
 
 CwicScheduleView.prototype.createScheduleDay = function() {
@@ -1054,15 +1053,11 @@ CwicScheduleView.prototype.appendDay = function(dayMoment) {
   row.attr('id', this.getContainerId(dayMoment));
 
   this.scheduleContainer.find('.schedule-body').append(row);
-
-  var timeAxis = this.scheduleContainer.find('.top-axis');
-  timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
-}
-;
+};
 
 CwicScheduleView.prototype.setTopAxisTexts = function() {
   topAxis = this.scheduleContainer.find('div.top-axis');
-    var parts;
+  var parts;
   if(this.options.view == 'verticalCalendar') {
     parts = topAxis.find('div.axis-parts div.vertical-day-time-axis-frame');
 
