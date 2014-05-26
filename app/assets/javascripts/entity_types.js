@@ -1,5 +1,8 @@
 APP.entity_types = {
-  init: function() {
+  show: function() {
+    $('div.entity-images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery: { enabled: true } });
+  },
+  _form: function() {
     var form = $('form.new_entity_type, form.edit_entity_type');
     form.submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
     this.initIconSelector();
@@ -15,8 +18,6 @@ APP.entity_types = {
     APP.entity_types.initReservationStatusSort();
     form.find('.reservation-status-wrapper').each(function () { APP.entity_types.initReservationStatusWrapper($(this)); });
     $(document).on('nested:fieldAdded:reservation_statuses', function(event) { APP.entity_types.initReservationStatusWrapper(event.field); });
-
-    $('div.entity-images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery: { enabled: true } });
   },
   initReservationStatusSort: function() {
     $('ul#entity-type-reservation-statuses').sortable({
