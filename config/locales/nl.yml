@@ -127,6 +127,9 @@ nl:
       reservation_log:
         one: 'Aanpassing'
         other: 'Aanpassingen'
+      reserve_period:
+        one: 'Reserveerperiode'
+        other: 'Reserveerperioden'
     attributes:
       user:
         name: 'Naam'
@@ -280,6 +283,12 @@ nl:
       reservation_status:
         name: 'Naam'
         color: 'Kleur'
+      reserve_period:
+        name: 'Naam'
+        period_amount: 'Periode aantal'
+        period_unit: 'Periode eenheid'
+        period_unit_id: 'Periode eenheid'
+        price: 'Prijs'
     errors:
       messages:
         date_blank: "datum moet opgegeven zijn"
@@ -413,6 +422,11 @@ nl:
       name: 'Oneindig'
       numeral_name: 'Oneindig'
       repetition_name: 'Geen herhaling'
+
+  reserve_period:
+    default_name:
+      one: 'Per %{unit}'
+      other: 'Per %{count} %{unit_plural}'
 
   errors:
     messages:
