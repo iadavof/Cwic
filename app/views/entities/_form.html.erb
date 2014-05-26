@@ -45,13 +45,13 @@
           </div>
           <h2><%= t('.default_slack_times') %></h2>
           <%= format_help(t('.default_slack_times_help')) %>
-          <div class="field slack-field">
+          <div class="field">
             <%= f.label :slack_before %>
-            <%= f.number_field :slack_before, placeholder: @entity.entity_type.slack_before %><span><%= t('.minutes') %></span>
+            <%= f.number_field :slack_before, placeholder: @entity.entity_type.slack_before %> <span class="field-suffix"><%= t('.minutes') %></span>
           </div>
-          <div class="field slack-field">
+          <div class="field">
             <%= f.label :slack_after %>
-            <%= f.number_field :slack_after, placeholder: @entity.entity_type.slack_after %><span><%= t('.minutes') %></span>
+            <%= f.number_field :slack_after, placeholder: @entity.entity_type.slack_after %> <span class="field-suffix"><%= t('.minutes') %></span>
           </div>
         </div>
 
