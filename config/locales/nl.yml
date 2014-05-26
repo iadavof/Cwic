@@ -312,6 +312,7 @@ nl:
             repeating_until:
               invalid_date: 'ongeldige datum'
           repeating_until_before_end: 'voor herhalingsreeks valt voor het einde van de eerste reservering'
+
   data_types:
     string:
       name: 'Regel tekst'
@@ -337,34 +338,80 @@ nl:
 
   time_units:
     second:
-      name: 'Seconde'
+      name:
+        one: 'Seconde'
+        other: 'Seconden'
+      numeral_name:
+        one: 'Seconde'
+        other: 'Seconden'
       repetition_name: 'Elke seconde'
     minute:
-      name: 'Minuut'
+      name:
+        one: 'Minuut'
+        other: 'Minuten'
+      numeral_name:
+        one: 'Minuut'
+        other: 'Minuten'
       repetition_name: 'Elke minuut'
     quarter:
-      name: 'Kwartier'
+      name:
+        one: 'Kwartier'
+        other: 'Kwartieren'
+      numeral_name:
+        one: 'Kwartier'
+        other: 'Kwartier'
       repetition_name: 'Elk kwartier'
     half_hour:
-      name: 'Half uur'
+      name:
+        one: 'Half uur'
+        other: 'Halve uren'
+      numeral_name:
+        one: 'Half uur'
+        other: 'Halve uren'
       repetition_name: 'Elk half uur'
     hour:
-      name: 'Uur'
+      name:
+        one: 'Uur'
+        other: 'Uren'
+      numeral_name:
+        one: 'Uur'
+        other: 'Uur'
       repetition_name: 'Elk uur'
     day:
-      name: 'Dag'
+      name:
+        one: 'Dag'
+        other: 'Dagen'
+      numeral_name:
+        one: 'Dag'
+        other: 'Dagen'
       repetition_name: 'Dagelijks'
     week:
-      name: 'Week'
+      name:
+        one: 'Week'
+        other: 'Weken'
+      numeral_name:
+        one: 'Week'
+        other: 'Weken'
       repetition_name: 'Wekelijks'
     month:
-      name: 'Maand'
+      name:
+        one: 'Maand'
+        other: 'Maanden'
+      numeral_name:
+        one: 'Maand'
+        other: 'Maanden'
       repetition_name: 'Maandelijks'
     year:
-      name: 'Jaar'
+      name:
+        one: 'Jaar'
+        other: 'Jaren'
+      numeral_name:
+        one: 'Jaar'
+        other: 'Jaar'
       repetition_name: 'Jaarlijks'
     infinite:
       name: 'Oneindig'
+      numeral_name: 'Oneindig'
       repetition_name: 'Geen herhaling'
 
   errors:
