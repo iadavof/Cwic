@@ -8,6 +8,7 @@ class EntityType < ActiveRecord::Base
   has_many :entity_images, as: :entity_imageable, dependent: :destroy, inverse_of: :entity_imageable
   has_many :reservation_statuses, dependent: :destroy, inverse_of: :entity_type
   has_many :info_screen_entity_types, dependent: :destroy
+  has_many :reserve_periods, dependent: :destroy, inverse_of: :entity_type
 
   belongs_to :icon, class_name: 'EntityTypeIcon'
   belongs_to :organisation
@@ -26,6 +27,7 @@ class EntityType < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
   accepts_nested_attributes_for :reservation_statuses, allow_destroy: true
+  accepts_nested_attributes_for :reserve_periods, allow_destroy: true
 
   scope :with_entities, -> { where('entities_count > 0') }
 
