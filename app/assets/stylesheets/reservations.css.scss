@@ -5,7 +5,7 @@ div#reservation-form {
     }
 
     input {
-      width: 50px;
+      width: 4em;
     }
   }
   div.field.field-entity, fieldset.begin-and-end {
@@ -20,11 +20,13 @@ div#reservation-form {
       }
     }
   }
+  div.field.field-entity {
+    margin-bottom: 3em;
+  }
   fieldset.begin-and-end {
     display: block;
     border: 0 none;
     padding: 0;
-    margin-bottom: 3em;
     input, textarea, select {
       text-align: center;
       &.replaced + div {
@@ -32,12 +34,19 @@ div#reservation-form {
       }
     }
   }
-  div.field.field-begins-at, div.field.field-ends-at {
+  div.field.field-begins-at, div.field.field-ends-at, div.field.slack-field {
     display: inline-block;
+    vertical-align: top;
+  }
+  div.field.field-begins-at, div.field.field-ends-at {
     white-space: nowrap;
+    background-color: #99d2dd;
   }
   div.field.field-begins-at {
     margin-right: 60px;
+  }
+  div.field.slack-field {
+    background-color: rgba(255, 53, 32, 0.2);
   }
 }
 

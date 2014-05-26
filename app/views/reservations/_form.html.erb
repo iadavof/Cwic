@@ -2,12 +2,12 @@
   <%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
     <%= render 'shared/error_messages', target: @reservation %>
 
-    <div class="field field-entity">
-      <%= f.label :entity %>
-      <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
-    </div>
-    
     <fieldset class="begin-and-end">
+      <div class="field slack-field">
+        <%= f.label :slack_before %>
+        <%= f.number_field :slack_before, placeholder: @reservation.entity.try(:get_slack_before), min: 0 %>
+        <div><%= t('.minutes') %></div>
+      </div>
       <div class="field field-begins-at">
         <%= f.label :begins_at %>
         <%= f.text_field :begins_at_date, id: 'begins_at_date', class: 'datepicker-field' %>
@@ -18,7 +18,19 @@
         <%= f.text_field :ends_at_date, id: 'ends_at_date', class: 'datepicker-field' %>
         <%= f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field' %>
       </div>
+      <div class="field slack-field">
+        <%= f.label :slack_after %>
+        <%= f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after), min: 0 %>
+        <div><%= t('.minutes') %></div>
+      </div>
     </fieldset>
+    <%= format_help(t('.default_slack_times_help')) %>
+    
+    <div class="field field-entity">
+      <%= f.label :entity %>
+      <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
+    </div>
+    
     <div class="field">
       <%= f.label :description %>
       <div class="field-with-example-wrapper">
@@ -56,16 +68,9 @@
       <%= f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
     </div>
     <% end %>
+    <!--
     <h2><%= t('.default_slack_times') %></h2>
-    <%= format_help(t('.default_slack_times_help')) %>
-    <div class="field slack-field">
-      <%= f.label :slack_before %>
-      <%= f.number_field :slack_before, placeholder: @reservation.entity.try(:get_slack_before) %><span><%= t('.minutes') %></span>
-    </div>
-    <div class="field slack-field">
-      <%= f.label :slack_after %>
-      <%= f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after) %><span><%= t('.minutes') %></span>
-    </div>
+    -->
     <div class="actions">
       <%= f.submit %>
     </div>
