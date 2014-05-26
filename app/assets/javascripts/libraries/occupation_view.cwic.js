@@ -181,7 +181,7 @@ CwicOccupationView.prototype.fillPercentages = function(response) {
 };
 
 CwicOccupationView.prototype.getBlockTitle = function(nr, percent) {
-  return (this.options.view == 'dayOccupation' ? jsLang.occupation_view.day : jsLang.occupation_view.week) + ' ' + nr + ': ' + Math.round(percent) + '%'
+  return (this.options.view == 'dayOccupation' ? jsLang.occupation_view.day : jsLang.occupation_view.week) + ' ' + nr + ': ' + Math.round(percent) + '%';
 };
 
 CwicOccupationView.prototype.createRows = function(response) {
@@ -213,12 +213,12 @@ CwicOccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
   var zeroPercentColor = this.getColorForPercentage(0.0001, 0.1);
 
   for(var i = 1; i <= maxNr; i += 1) {
-    var block = this.getTemplateClone('occupationMatrixBlockTemplate');
-    block.addClass('nr_' + i);
-    block.data('nr', i);
-    block.attr('title', this.getBlockTitle(i, 0));
-    block.css('width', blockWidth + '%');
-    block.css('background-color', zeroPercentColor);
+    var block = this.getTemplateClone('occupationMatrixBlockTemplate')
+    .addClass('nr_' + i)
+    .data('nr', i)
+    .attr('title', this.getBlockTitle(i, 0))
+    .css('width', blockWidth + '%')
+    .css('background-color', zeroPercentColor);
     rows.append(block);
   }
 };
@@ -251,18 +251,19 @@ CwicOccupationView.prototype.resizeActions = function() {
   }
 
   // The percentage notation does not fit anymore, hide it
+  var dayAxisSticky;
   if(newHeight < 30) {
     // hide the entity axis and reuse the freed space
     this.occupationContainer.find('.occupation-matrix-block p.percent').hide();
     this.occupationContainer.find('.entity-axis').hide();
     // adjust width of day axis
-    var dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container')
+    dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
     dayAxisSticky.css('margin-left', '0');
   } else {
     // make room for the entity axis and show it on the left side
     this.occupationContainer.find('.occupation-matrix-block p.percent').show();
     // Adjust the width of the day axis
-    var dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container')
+    dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
     dayAxisSticky.css('margin-left', '4%');
     this.occupationContainer.find('.entity-axis').show();
   }
@@ -292,7 +293,7 @@ CwicOccupationView.prototype.getColorForPercentage = function(pct, alpha) {
   if(pct <= 0) {
     pct = 0.0001;
   }
-  pct = pct / 100.0
+  pct = pct / 100.0;
   var percentColors = [
     { pct: 0.0, color: { r: 0x00, g: 0xff, b: 0 } },
     { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
