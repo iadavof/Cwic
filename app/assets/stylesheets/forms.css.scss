@@ -34,6 +34,12 @@ div.actions {
   color: inherit;
 }
 
+.field span.field-suffix {
+  margin-left: 10px;
+}
+
+
+
 .field > .with_errors {
   display: inline-block;
   color: #ff3520;
@@ -125,6 +131,9 @@ input, textarea {
 }
 
 input {
+  &[type="number"] {
+    width: 6em;
+  }
   &[type="file"],
   &[type="checkbox"] {
     width: auto;
