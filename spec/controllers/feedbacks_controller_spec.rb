@@ -41,7 +41,7 @@ describe FeedbacksController do
   describe "GET show" do
     it "assigns the requested feedback as @feedback" do
       feedback = Feedback.create! valid_attributes
-      get :show, {:id => feedback.to_param}, valid_session
+      get :show, {id: feedback.to_param}, valid_session
       assigns(:feedback).should eq(feedback)
     end
   end
@@ -56,7 +56,7 @@ describe FeedbacksController do
   describe "GET edit" do
     it "assigns the requested feedback as @feedback" do
       feedback = Feedback.create! valid_attributes
-      get :edit, {:id => feedback.to_param}, valid_session
+      get :edit, {id: feedback.to_param}, valid_session
       assigns(:feedback).should eq(feedback)
     end
   end
@@ -65,18 +65,18 @@ describe FeedbacksController do
     describe "with valid params" do
       it "creates a new Feedback" do
         expect {
-          post :create, {:feedback => valid_attributes}, valid_session
+          post :create, {feedback: valid_attributes}, valid_session
         }.to change(Feedback, :count).by(1)
       end
 
       it "assigns a newly created feedback as @feedback" do
-        post :create, {:feedback => valid_attributes}, valid_session
+        post :create, {feedback: valid_attributes}, valid_session
         assigns(:feedback).should be_a(Feedback)
         assigns(:feedback).should be_persisted
       end
 
       it "redirects to the created feedback" do
-        post :create, {:feedback => valid_attributes}, valid_session
+        post :create, {feedback: valid_attributes}, valid_session
         response.should redirect_to(Feedback.last)
       end
     end
@@ -85,14 +85,14 @@ describe FeedbacksController do
       it "assigns a newly created but unsaved feedback as @feedback" do
         # Trigger the behavior that occurs when invalid params are submitted
         Feedback.any_instance.stub(:save).and_return(false)
-        post :create, {:feedback => { "message" => "invalid value" }}, valid_session
+        post :create, {feedback: { "message" => "invalid value" }}, valid_session
         assigns(:feedback).should be_a_new(Feedback)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         Feedback.any_instance.stub(:save).and_return(false)
-        post :create, {:feedback => { "message" => "invalid value" }}, valid_session
+        post :create, {feedback: { "message" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -107,18 +107,18 @@ describe FeedbacksController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         Feedback.any_instance.should_receive(:update).with({ "message" => "MyText" })
-        put :update, {:id => feedback.to_param, :feedback => { "message" => "MyText" }}, valid_session
+        put :update, {id: feedback.to_param, feedback: { "message" => "MyText" }}, valid_session
       end
 
       it "assigns the requested feedback as @feedback" do
         feedback = Feedback.create! valid_attributes
-        put :update, {:id => feedback.to_param, :feedback => valid_attributes}, valid_session
+        put :update, {id: feedback.to_param, feedback: valid_attributes}, valid_session
         assigns(:feedback).should eq(feedback)
       end
 
       it "redirects to the feedback" do
         feedback = Feedback.create! valid_attributes
-        put :update, {:id => feedback.to_param, :feedback => valid_attributes}, valid_session
+        put :update, {id: feedback.to_param, feedback: valid_attributes}, valid_session
         response.should redirect_to(feedback)
       end
     end
@@ -128,7 +128,7 @@ describe FeedbacksController do
         feedback = Feedback.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Feedback.any_instance.stub(:save).and_return(false)
-        put :update, {:id => feedback.to_param, :feedback => { "message" => "invalid value" }}, valid_session
+        put :update, {id: feedback.to_param, feedback: { "message" => "invalid value" }}, valid_session
         assigns(:feedback).should eq(feedback)
       end
 
@@ -136,7 +136,7 @@ describe FeedbacksController do
         feedback = Feedback.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         Feedback.any_instance.stub(:save).and_return(false)
-        put :update, {:id => feedback.to_param, :feedback => { "message" => "invalid value" }}, valid_session
+        put :update, {id: feedback.to_param, feedback: { "message" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -146,13 +146,13 @@ describe FeedbacksController do
     it "destroys the requested feedback" do
       feedback = Feedback.create! valid_attributes
       expect {
-        delete :destroy, {:id => feedback.to_param}, valid_session
+        delete :destroy, {id: feedback.to_param}, valid_session
       }.to change(Feedback, :count).by(-1)
     end
 
     it "redirects to the feedbacks list" do
       feedback = Feedback.create! valid_attributes
-      delete :destroy, {:id => feedback.to_param}, valid_session
+      delete :destroy, {id: feedback.to_param}, valid_session
       response.should redirect_to(feedbacks_url)
     end
   end

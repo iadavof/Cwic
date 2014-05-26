@@ -17,7 +17,7 @@ class ScreencapUploader < CarrierWave::Uploader::Base
   end
 
   version :icon do
-     process :resize_to_fit => [100, 100]
+     process resize_to_fit: [100, 100]
    end
 
 end

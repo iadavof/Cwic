@@ -12,11 +12,11 @@ describe EntitiesController do
     end
 
     it "routes to #show" do
-      get("/entities/1").should route_to("entities#show", :id => "1")
+      get("/entities/1").should route_to("entities#show", id: "1")
     end
 
     it "routes to #edit" do
-      get("/entities/1/edit").should route_to("entities#edit", :id => "1")
+      get("/entities/1/edit").should route_to("entities#edit", id: "1")
     end
 
     it "routes to #create" do
@@ -24,11 +24,11 @@ describe EntitiesController do
     end
 
     it "routes to #update" do
-      put("/entities/1").should route_to("entities#update", :id => "1")
+      put("/entities/1").should route_to("entities#update", id: "1")
     end
 
     it "routes to #destroy" do
-      delete("/entities/1").should route_to("entities#destroy", :id => "1")
+      delete("/entities/1").should route_to("entities#destroy", id: "1")
     end
 
   end

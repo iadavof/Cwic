@@ -47,6 +47,7 @@ jsLangs['nl'] = {
   },
   occupation_view: {
     week: 'Week',
+    day: 'Dag'
   },
   reservations: {
     select_client_placeholder: 'Selecteer een klant...'

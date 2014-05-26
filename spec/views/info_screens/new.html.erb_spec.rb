@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "info_screens/new" do
   before(:each) do
     assign(:info_screen, stub_model(InfoScreen,
-      :name => "MyString",
-      :public => false
+      name: "MyString",
+      public: false
     ).as_new_record)
   end
 

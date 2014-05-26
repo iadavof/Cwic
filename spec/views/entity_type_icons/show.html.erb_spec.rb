@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "entity_type_icons/show" do
   before(:each) do
     @entity_type_icon = assign(:entity_type_icon, stub_model(EntityTypeIcon,
-      :name => "Name",
-      :organisation => nil
+      name: "Name",
+      organisation: nil
     ))
   end
 

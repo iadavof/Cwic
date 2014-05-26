@@ -78,5 +78,5 @@ Cwic::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
-  config.action_mailer.default_url_options = { :host => 'cwic.nl' }
+  config.action_mailer.default_url_options = { host: 'cwic.nl' }
 end

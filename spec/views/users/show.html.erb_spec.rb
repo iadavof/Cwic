@@ -3,11 +3,11 @@ require 'spec_helper'
 describe "users/show" do
   before(:each) do
     @user = assign(:user, stub_model(User,
-      :first_name => "First Name",
-      :infix => "Infix",
-      :last_name => "Last Name",
-      :email => "Email",
-      :sign_in_count => 1
+      first_name: "First Name",
+      infix: "Infix",
+      last_name: "Last Name",
+      email: "Email",
+      sign_in_count: 1
     ))
   end
 

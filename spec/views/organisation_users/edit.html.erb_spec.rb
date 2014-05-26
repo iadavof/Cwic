@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "organisation_users/edit" do
   before(:each) do
     @organisation_user = assign(:organisation_user, stub_model(OrganisationUser,
-      :user => nil,
-      :organisation => nil,
-      :organisation_role => nil
+      user: nil,
+      organisation: nil,
+      organisation_role: nil
     ))
   end
 

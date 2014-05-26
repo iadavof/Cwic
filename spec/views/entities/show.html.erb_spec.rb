@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "entities/show" do
   before(:each) do
     @entity = assign(:entity, stub_model(Entity,
-      :name => "Name",
-      :description => "MyText",
-      :entity_type => nil,
-      :organisation => nil
+      name: "Name",
+      description: "MyText",
+      entity_type: nil,
+      organisation: nil
     ))
   end
 

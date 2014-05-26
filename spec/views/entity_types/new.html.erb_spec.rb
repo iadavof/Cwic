@@ -3,8 +3,8 @@ require 'spec_helper'
 describe "entity_types/new" do
   before(:each) do
     assign(:entity_type, stub_model(EntityType,
-      :name => "MyString",
-      :description => "MyText"
+      name: "MyString",
+      description: "MyText"
     ).as_new_record)
   end
 

@@ -81,8 +81,8 @@ module MenuHelper
 
   def link_name_matches?(link_name)
     aliases = {
-      :create => :new,
-      :update => :edit
+      create: :new,
+      update: :edit
     }
     current_menu_link == link_name || aliases[current_menu_link] == link_name
   end

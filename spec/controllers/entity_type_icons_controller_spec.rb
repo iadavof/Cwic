@@ -41,7 +41,7 @@ describe EntityTypeIconsController do
   describe "GET show" do
     it "assigns the requested entity_type_icon as @entity_type_icon" do
       entity_type_icon = EntityTypeIcon.create! valid_attributes
-      get :show, {:id => entity_type_icon.to_param}, valid_session
+      get :show, {id: entity_type_icon.to_param}, valid_session
       assigns(:entity_type_icon).should eq(entity_type_icon)
     end
   end
@@ -56,7 +56,7 @@ describe EntityTypeIconsController do
   describe "GET edit" do
     it "assigns the requested entity_type_icon as @entity_type_icon" do
       entity_type_icon = EntityTypeIcon.create! valid_attributes
-      get :edit, {:id => entity_type_icon.to_param}, valid_session
+      get :edit, {id: entity_type_icon.to_param}, valid_session
       assigns(:entity_type_icon).should eq(entity_type_icon)
     end
   end
@@ -65,18 +65,18 @@ describe EntityTypeIconsController do
     describe "with valid params" do
       it "creates a new EntityTypeIcon" do
         expect {
-          post :create, {:entity_type_icon => valid_attributes}, valid_session
+          post :create, {entity_type_icon: valid_attributes}, valid_session
         }.to change(EntityTypeIcon, :count).by(1)
       end
 
       it "assigns a newly created entity_type_icon as @entity_type_icon" do
-        post :create, {:entity_type_icon => valid_attributes}, valid_session
+        post :create, {entity_type_icon: valid_attributes}, valid_session
         assigns(:entity_type_icon).should be_a(EntityTypeIcon)
         assigns(:entity_type_icon).should be_persisted
       end
 
       it "redirects to the created entity_type_icon" do
-        post :create, {:entity_type_icon => valid_attributes}, valid_session
+        post :create, {entity_type_icon: valid_attributes}, valid_session
         response.should redirect_to(EntityTypeIcon.last)
       end
     end
@@ -85,14 +85,14 @@ describe EntityTypeIconsController do
       it "assigns a newly created but unsaved entity_type_icon as @entity_type_icon" do
         # Trigger the behavior that occurs when invalid params are submitted
         EntityTypeIcon.any_instance.stub(:save).and_return(false)
-        post :create, {:entity_type_icon => { "name" => "invalid value" }}, valid_session
+        post :create, {entity_type_icon: { "name" => "invalid value" }}, valid_session
         assigns(:entity_type_icon).should be_a_new(EntityTypeIcon)
       end
 
       it "re-renders the 'new' template" do
         # Trigger the behavior that occurs when invalid params are submitted
         EntityTypeIcon.any_instance.stub(:save).and_return(false)
-        post :create, {:entity_type_icon => { "name" => "invalid value" }}, valid_session
+        post :create, {entity_type_icon: { "name" => "invalid value" }}, valid_session
         response.should render_template("new")
       end
     end
@@ -107,18 +107,18 @@ describe EntityTypeIconsController do
         # receives the :update_attributes message with whatever params are
         # submitted in the request.
         EntityTypeIcon.any_instance.should_receive(:update).with({ "name" => "MyString" })
-        put :update, {:id => entity_type_icon.to_param, :entity_type_icon => { "name" => "MyString" }}, valid_session
+        put :update, {id: entity_type_icon.to_param, entity_type_icon: { "name" => "MyString" }}, valid_session
       end
 
       it "assigns the requested entity_type_icon as @entity_type_icon" do
         entity_type_icon = EntityTypeIcon.create! valid_attributes
-        put :update, {:id => entity_type_icon.to_param, :entity_type_icon => valid_attributes}, valid_session
+        put :update, {id: entity_type_icon.to_param, entity_type_icon: valid_attributes}, valid_session
         assigns(:entity_type_icon).should eq(entity_type_icon)
       end
 
       it "redirects to the entity_type_icon" do
         entity_type_icon = EntityTypeIcon.create! valid_attributes
-        put :update, {:id => entity_type_icon.to_param, :entity_type_icon => valid_attributes}, valid_session
+        put :update, {id: entity_type_icon.to_param, entity_type_icon: valid_attributes}, valid_session
         response.should redirect_to(entity_type_icon)
       end
     end
@@ -128,7 +128,7 @@ describe EntityTypeIconsController do
         entity_type_icon = EntityTypeIcon.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         EntityTypeIcon.any_instance.stub(:save).and_return(false)
-        put :update, {:id => entity_type_icon.to_param, :entity_type_icon => { "name" => "invalid value" }}, valid_session
+        put :update, {id: entity_type_icon.to_param, entity_type_icon: { "name" => "invalid value" }}, valid_session
         assigns(:entity_type_icon).should eq(entity_type_icon)
       end
 
@@ -136,7 +136,7 @@ describe EntityTypeIconsController do
         entity_type_icon = EntityTypeIcon.create! valid_attributes
         # Trigger the behavior that occurs when invalid params are submitted
         EntityTypeIcon.any_instance.stub(:save).and_return(false)
-        put :update, {:id => entity_type_icon.to_param, :entity_type_icon => { "name" => "invalid value" }}, valid_session
+        put :update, {id: entity_type_icon.to_param, entity_type_icon: { "name" => "invalid value" }}, valid_session
         response.should render_template("edit")
       end
     end
@@ -146,13 +146,13 @@ describe EntityTypeIconsController do
     it "destroys the requested entity_type_icon" do
       entity_type_icon = EntityTypeIcon.create! valid_attributes
       expect {
-        delete :destroy, {:id => entity_type_icon.to_param}, valid_session
+        delete :destroy, {id: entity_type_icon.to_param}, valid_session
       }.to change(EntityTypeIcon, :count).by(-1)
     end
 
     it "redirects to the entity_type_icons list" do
       entity_type_icon = EntityTypeIcon.create! valid_attributes
-      delete :destroy, {:id => entity_type_icon.to_param}, valid_session
+      delete :destroy, {id: entity_type_icon.to_param}, valid_session
       response.should redirect_to(entity_type_icons_url)
     end
   end

@@ -3,9 +3,9 @@ require 'spec_helper'
 describe "feedbacks/show" do
   before(:each) do
     @feedback = assign(:feedback, stub_model(Feedback,
-      :message => "MyText",
-      :specs => "MyText",
-      :screen_capture => "Screen Capture"
+      message: "MyText",
+      specs: "MyText",
+      screen_capture: "Screen Capture"
     ))
   end
 

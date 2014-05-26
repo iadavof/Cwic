@@ -3,10 +3,10 @@ require 'spec_helper'
 describe "reservations/show" do
   before(:each) do
     @reservation = assign(:reservation, stub_model(Reservation,
-      :begins_at => "",
-      :ends_at => "",
-      :entity => "",
-      :organisation_client => nil
+      begins_at: "",
+      ends_at: "",
+      entity: "",
+      organisation_client: nil
     ))
   end
 

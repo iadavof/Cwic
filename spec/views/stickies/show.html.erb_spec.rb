@@ -3,13 +3,13 @@ require 'spec_helper'
 describe "stickies/show" do
   before(:each) do
     @sticky = assign(:sticky, stub_model(Sticky,
-      :stickable => nil,
-      :user => nil,
-      :sticky_text => "MyText",
-      :pos_x => 1.5,
-      :pos_y => 1.5,
-      :width => 1.5,
-      :height => 1.5
+      stickable: nil,
+      user: nil,
+      sticky_text: "MyText",
+      pos_x: 1.5,
+      pos_y: 1.5,
+      width: 1.5,
+      height: 1.5
     ))
   end
 

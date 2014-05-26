@@ -23,7 +23,7 @@ class EntityTypeIconUploader < CarrierWave::Uploader::Base
   end
 
   # Process files as they are uploaded:
-  process :resize_to_fit => [500, 500]
+  process resize_to_fit: [500, 500]
   #
   # def scale(width, height)
   #   # do something
@@ -32,15 +32,15 @@ class EntityTypeIconUploader < CarrierWave::Uploader::Base
   # Create different versions of your uploaded files:
 
   version :big_icon do
-     process :resize_to_fit => [200, 200]
+     process resize_to_fit: [200, 200]
    end
 
   version :medium_icon do
-     process :resize_to_fit => [100, 100]
+     process resize_to_fit: [100, 100]
    end
 
   version :icon do
-     process :resize_to_fit => [50, 50]
+     process resize_to_fit: [50, 50]
    end
 
   # Add a white list of extensions which are allowed to be uploaded.
