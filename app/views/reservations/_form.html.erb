@@ -2,6 +2,23 @@
   <%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
     <%= render 'shared/error_messages', target: @reservation %>
 
+    <div class="field field-entity">
+      <%= f.label :entity %>
+      <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
+    </div>
+    
+    <fieldset class="begin-and-end">
+      <div class="field field-begins-at">
+        <%= f.label :begins_at %>
+        <%= f.text_field :begins_at_date, id: 'begins_at_date', class: 'datepicker-field' %>
+        <%= f.text_field :begins_at_tod, id: 'begins_at_tod', class: 'timepicker-field' %>
+      </div>
+      <div class="field field-ends-at">
+        <%= f.label :ends_at %>
+        <%= f.text_field :ends_at_date, id: 'ends_at_date', class: 'datepicker-field' %>
+        <%= f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field' %>
+      </div>
+    </fieldset>
     <div class="field">
       <%= f.label :description %>
       <div class="field-with-example-wrapper">
@@ -9,25 +26,11 @@
         <p><%= t('for_example') + ': ' + t('.reservation_description_example') %></p>
       </div>
     </div>
-    <div class="field">
-      <%= f.label :begins_at %>
-      <%= f.text_field :begins_at_date, id: 'begins_at_date', class: 'datepicker-field' %>
-      <%= f.text_field :begins_at_tod, id: 'begins_at_tod', class: 'timepicker-field' %>
-    </div>
-    <div class="field">
-      <%= f.label :ends_at %>
-      <%= f.text_field :ends_at_date, id: 'ends_at_date', class: 'datepicker-field' %>
-      <%= f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field' %>
-    </div>
     <% if @reservation.new_record? %>
     <%= f.fields_for :reservation_recurrence_definition, @reservation.reservation_recurrence_definition, wrapper: false do |rrdf| %>
       <%= render partial: 'reservation_recurrence_definitions/form_fields', locals: { f: rrdf } %>
     <% end %>
     <% end %>
-    <div class="field">
-      <%= f.label :entity %>
-      <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
-    </div>
     <% if @reservation.new_record? %>
     <div class="organisation_client_new_existing">
       <div class="field">

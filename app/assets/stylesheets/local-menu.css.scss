@@ -22,31 +22,22 @@ html.js body[data-current-user-id=''] #local-menu {
 #local-menu .navigation-actions,
 #local-menu .context-actions,
 #local-menu .page-actions {
-  width: 33.333333333%;
+  width: 33.333%;
   overflow: hidden;
   margin: 0;
   box-sizing: border-box;
   padding: 0 .6em;
   display: block;
   position: relative;
-}
-
-#local-menu .navigation-actions {
   float: left;
+  min-width: 500px;
 }
 
 #local-menu .context-actions {
-  position: absolute;
   margin: .3em 0;
   background-color: #fff;
   border-radius: 3px;
-  left: 50%;
-  top: 0;
-  margin-left: -16.666666%;
-}
-
-#local-menu .page-actions {
-  float: right;
+  text-align: center;
 }
 
 #local-menu .context-actions .button {

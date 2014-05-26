@@ -8,6 +8,37 @@ div#reservation-form {
       width: 50px;
     }
   }
+  div.field.field-entity, fieldset.begin-and-end {
+    label {
+      display: block;
+      width: auto;
+    }
+    input, textarea, select {
+      font-size: 2em;
+      &.replaced + div {
+        font-size: 2em;
+      }
+    }
+  }
+  fieldset.begin-and-end {
+    display: block;
+    border: 0 none;
+    padding: 0;
+    margin-bottom: 3em;
+    input, textarea, select {
+      text-align: center;
+      &.replaced + div {
+        text-align: center;
+      }
+    }
+  }
+  div.field.field-begins-at, div.field.field-ends-at {
+    display: inline-block;
+    white-space: nowrap;
+  }
+  div.field.field-begins-at {
+    margin-right: 60px;
+  }
 }
 
 div.status-selector {

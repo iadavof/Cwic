@@ -42,8 +42,6 @@
   @extend .icon-circleadd;
   &:before {
     @extend [class^="icon-"];
-    margin: 0 5px 0 0;
-    vertical-align: middle;
   }
 }
 
@@ -51,8 +49,6 @@
   @extend .icon-remove-sign;
   &:before {
     @extend [class^="icon-"];
-    margin: 0 5px 0 0;
-    vertical-align: middle;
   }
 }
 
@@ -67,8 +63,6 @@
   @extend .icon-edit;
   &:before {
     @extend [class^="icon-"];
-    margin: 0 5px 0 0;
-    vertical-align: middle;
   }
 }
 
@@ -76,8 +70,6 @@
   @extend .icon-list;
   &:before {
     @extend [class^="icon-"];
-    margin: 0 5px 0 0;
-    vertical-align: middle;
   }
 }
 
@@ -85,8 +77,6 @@
   @extend .icon-eye-view;
   &:before {
     @extend [class^="icon-"];
-    margin: 0 5px 0 0;
-    vertical-align: middle;
   }
 }
 
@@ -94,7 +84,12 @@ button.new-sticky {
   @extend .icon-stickynote;
   &:before {
     @extend [class^="icon-"];
-    margin: 0 5px 0 0;
-    vertical-align: middle;
+  }
+}
+
+.nav a.with-errors {
+  @extend .icon-warning-sign;
+  &:before {
+    @extend [class^="icon-"];
   }
 }

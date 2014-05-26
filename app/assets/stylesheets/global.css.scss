@@ -593,6 +593,16 @@ body[data-current-user-id=''] #logo-container {
   border-left-color: #1c9cb2;
 }
 
+.nav a.with-errors:before {
+  margin: 0 5px 0 0;
+  vertical-align: middle;
+  color: #ff3520;
+}
+
+.nav .ui-state-active a.with-errors:before {
+  color: inherit;
+}
+
 div {
   &.field, &.actions {
     margin-bottom: 10px;
@@ -936,6 +946,11 @@ input[type="reset"].red:hover,
 button.red:hover,
 .button.red:hover {
   background-color: #ff4a37;
+}
+
+.button:before {
+  margin: 0 5px 0 0;
+  vertical-align: middle;
 }
 
 label {

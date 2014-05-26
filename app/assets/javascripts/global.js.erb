@@ -294,14 +294,18 @@ APP.global = {
     container.tabs({ active: this.determineFirstTabWithErrors(container) });
   },
   determineFirstTabWithErrors: function(container) {
-    // Determines the first tab to open. This is the first tab with errors (if any, else simply open the first tab)
+    // Determines the first tab to open. This is the first tab with errors (if any, else simply open the first tab). Also adds the 'with-errors' class to any tabs with errors.
     var first = 0;
+    var determined = false;
     container.find('.nav a').each(function(index) {
       var id = $(this).attr('href'); // Starts with #
       var tab = container.find(id);
       if(tab.find('div.field_with_errors').length) {
-        first = index
-        return false; // Break
+        if(first == 0 && !determined) {
+          first = index;
+          determined = true;
+        }
+        $(this).addClass('with-errors');
       }
     });
     return first;
