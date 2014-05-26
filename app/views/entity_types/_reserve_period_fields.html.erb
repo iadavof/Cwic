@@ -1,0 +1,20 @@
+<div class="fields nested-object-wrapper">
+  <div class="form clearfix visible">
+    <div class="field">
+      <%= f.label :name %>
+      <%= f.text_field :name, placeholder: f.object.name %>
+    </div>
+    <div class="field">
+      <%= f.label :period_unit_id, t('.period') %>
+      <%= f.number_field :period_amount, placeholder: 1 %>
+      <%= f.collection_select :period_unit_id, TimeUnit.where(key: [:minute, :quarter, :half_hour, :hour, :day, :week]), :id, :human_name, prompt: true %>
+    </div>
+    <div class="field">
+      <%= f.label :price %>
+      <%= f.number_field :price, step: :any %> <span class="field-suffix"><%= t('.per_period') %></span>
+    </div>
+    <div class="actions">
+      <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+    </div>
+  </div>
+</div>

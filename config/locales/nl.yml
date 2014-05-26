@@ -46,6 +46,7 @@ nl:
   xls: 'xls'
   for_example: 'Bijv.'
   default_title: 'Titel'
+  unlimited: 'Onbeperkt'
   multiple:
     delete: 'Verwijderen'
     edit: 'Bewerken'
@@ -289,6 +290,11 @@ nl:
         period_unit: 'Periode eenheid'
         period_unit_id: 'Periode eenheid'
         price: 'Prijs'
+      entity_type/reserve_periods:
+        period_amount: 'Periode bij reserveerperiode'
+        period_unit: 'Periode bij reserveerperiode'
+        period_unit_id: 'Periode bij reserveerperiode'
+        price: 'Prijs bij reserveerperiode'
     errors:
       messages:
         date_blank: "datum moet opgegeven zijn"
@@ -574,6 +580,7 @@ nl:
       options: 'Opties'
       options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
       images: "Foto's"
+      reserve_periods: 'Reserveerperioden'
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
       reservation_statuses: 'Reservering statusen'
@@ -581,6 +588,9 @@ nl:
     property_fields:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
       clear: 'Leegmaken'
+    reserve_period_fields:
+      period: 'Periode'
+      per_period: 'per periode'
 
   entity_type_icons:
     form:

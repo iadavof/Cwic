@@ -9,6 +9,7 @@
         <li><a href="#options"><%= t('.options') %></a></li>
         <li><a href="#reservation-statuses"><%= t('.reservation_statuses') %></a></li>
         <li><a href="#images"><%= t('.images') %></a></li>
+        <li><a href="#reserve-periods"><%= t('.reserve_periods') %></a></li>
       </ul>
 
       <div class="tab-wrap">
@@ -94,6 +95,17 @@
             <% end %>
           </div>
           <%= f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst) %>
+        </div>
+
+        <div id="reserve-periods" class="hide">
+          <h2><%= ReservePeriod.model_name.human(count: 2) %></h2>
+          <%= format_help(t('.reserve_periods_help')) %>
+          <div class="nested-form" id="entity-type-reserve-periods">
+            <%= f.fields_for :reserve_periods, wrapper: false do |rpf| %>
+              <%= render partial: 'reserve_period_fields', locals: { f: rpf } %>
+            <% end %>
+          </div>
+          <%= f.link_to_add '', :reserve_periods, data: { target: '#entity-type-reserve-periods' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservePeriod.model_name.human.lcfirst) %>
         </div>
       </div>
     </div>
