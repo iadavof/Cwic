@@ -63,14 +63,18 @@ CwicLocalMenu.prototype.addButton = function(division, id, content, weight) {
 };
 
 CwicLocalMenu.prototype.updateHeightSettings = function() {
-  var maxOuterHeight = 0;
+  var maxHeight = 0;
   $.each(this.divisionDoms,
     function(){
-      maxOuterHeight = Math.max(maxOuterHeight, $(this).outerHeight(true));
+      $(this).css({height: ''});
+      maxHeight = Math.max(maxHeight, $(this).height());
     }
   );
-  this.menu.height(maxOuterHeight);
-
+  $.each(this.divisionDoms,
+    function(){
+      $(this).css({height: maxHeight + 'px'});
+    }
+  );
   APP.global.contentAreaResize();
 };
 
