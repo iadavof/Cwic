@@ -638,7 +638,7 @@ div {
     left: 2.1em;
     margin: 0;
     padding: 0.3em 0.5em;
-    max-width: 40em;
+    width: 40em;
     opacity: 0;
     visibility: hidden;
     border: 1px solid #17889d;
@@ -647,10 +647,13 @@ div {
     z-index: 1;
     transition: opacity 0.2s ease-in-out 0s, visibility 0s linear 0.2s;
   }
-  display: block;
   position: relative;
   margin: 0.5em 0;
   padding: 0;
+}
+
+span.help {
+  display: inline-block;
 }
 
 .form-columns {

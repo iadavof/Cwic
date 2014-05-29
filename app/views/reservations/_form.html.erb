@@ -23,7 +23,7 @@
         <%= f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after), min: 0 %><div><%= t('.minutes') %></div>
       </div>
     </fieldset>
-    <%= format_help(t('.default_slack_times_help')) %>
+    <%= format_help(t('.default_slack_times_help'), 'inline') %>
     
     <div class="form-columns clearfix">
       <div class="form-column">
