@@ -653,6 +653,27 @@ div {
   padding: 0;
 }
 
+.form-columns {
+  .form-column {
+    width: 32%;
+    box-sizing: border-box;
+    min-width: 400px;
+    float: left;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-left: 2%;
+    margin-bottom: 20px;
+    &:first-child {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
 /* add required field asterisk */
 label.required:after {
     content: " *";
@@ -710,29 +731,31 @@ h6.title-box  {
 
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
-  letter-spacing: 0.02em;
-  word-spacing: 0.03em;
-  margin: 0.7em 0;
+  margin: 1.5em 0 1em 0;
+  [class^="icon-"], [class*=" icon-"] {
+    font-size: 1em;
+    margin: 0 0.5em 0 0;
+  }
 }
 
 h1 {
   font-weight: 300;
-  font-size: 2.5em;
+  font-size: 2.8em;
   margin: 0;
   padding: 1em 30px;
   line-height: 120%;
 }
 
 h2 {
-  font-size: 1.6em;
+  font-size: 1.9em;
 }
 
 h3 {
-  font-size: 1.4em;
+  font-size: 1.6em;
 }
 
 h4 {
-  font-size: 1.3em;
+  font-size: 1.4em;
 }
 
 h5 {
