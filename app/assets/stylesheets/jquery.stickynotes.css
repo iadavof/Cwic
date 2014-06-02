@@ -15,13 +15,8 @@
 
 div.note {
     position: relative;
-    background-color: #FEF4AC;
-    background-image: -ms-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
-    background-image: -moz-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
-    background-image: -o-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
-    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FEF4AC), color-stop(1, #F4E183));
-    background-image: -webkit-linear-gradient(top, #FEF4AC 0%, #F4E183 100%);
-    background-image: linear-gradient(to bottom, #FEF4AC 0%, #F4E183 100%);
+    background-color: #fef4ac;
+    background-image: linear-gradient(to bottom, #fef4ac 0%, #f4e183 100%);
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
     display: block;
     width: 400px;

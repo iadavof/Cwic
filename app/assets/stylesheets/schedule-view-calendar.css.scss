@@ -340,15 +340,6 @@ div.calendar div.schedule-body div.column:nth-child(even).today {
   -webkit-background-size: 30px 30px;
   -moz-background-size: 30px 30px;
   background-size: 30px 30px;
-  background-image: -webkit-gradient(linear, left top, right bottom,
-            color-stop(0.25, rgba(255, 255, 255, 0.3)), color-stop(0.25, transparent),
-            color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.3)),
-            color-stop(0.75, rgba(255, 255, 255, 0.3)), color-stop(0.75, transparent),
-            to(transparent));
-  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
 }
 
@@ -360,15 +351,6 @@ div.calendar div.schedule-body div.column.today {
   -webkit-background-size: 30px 30px;
   -moz-background-size: 30px 30px;
   background-size: 30px 30px;
-  background-image: -webkit-gradient(linear, left top, right bottom,
-            color-stop(0.25, rgba(255, 255, 255, 0.3)), color-stop(0.25, transparent),
-            color-stop(0.5, transparent), color-stop(0.5, rgba(255, 255, 255, 0.3)),
-            color-stop(0.75, rgba(255, 255, 255, 0.3)), color-stop(0.75, transparent),
-            to(transparent));
-  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
   background-image: linear-gradient(135deg, rgba(255, 255, 255, 0.3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
 }
 
@@ -379,7 +361,7 @@ div.calendar div.schedule-body div.column div.time-needle {
   background-color: #ffffff;
   box-shadow: 0 0 3px rgba(0,0,0,0.6);
   z-index: 5;
-  background-image: -moz-linear-gradient(top, transparent 0%, rgba(0,0,0,0.12) 100%);
+  background-image: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.12) 100%);
 }
 
 div.calendar div.schedule-body div.row div.time-needle {

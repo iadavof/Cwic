@@ -21,7 +21,7 @@ input[type="file"].replaced {
   font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   border: 1px solid #cccccc;
-  padding: 8px;
+  padding: 0.8em;
   margin: 0;
   width: 15em;
   transition: border-color 0.2s;
@@ -129,7 +129,7 @@ input[type="file"].replaced {
 
 .cwic-dropdown .cwic-dropdown-current-option,
 .cwic-dropdown .cwic-dropdown-option {
-  padding: 8px 26px 8px 8px;
+  padding: 0.8em 26px 0.8em 0.8em;
   overflow: hidden;
   text-overflow: ellipsis;
   cursor: pointer;
@@ -240,7 +240,7 @@ input[type="file"].replaced {
 }
 
 .cwic-filefield {
-  padding: 8px 8px 8px 34px;
+  padding: 0.8em 0.8em 0.8em 34px;
   cursor: pointer;
   white-space: nowrap;
   overflow: hidden;
@@ -284,7 +284,7 @@ input[type="file"].replaced {
   border: 1px solid #ccc;
   height: auto;
   line-height: normal;
-  padding: 8px 0 8px 8px;
+  padding: 0.8em 0 0.8em 0.8em;
 }
 
 .select2-default {

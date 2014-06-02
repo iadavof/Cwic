@@ -1,69 +1,76 @@
 div#reservation-form {
   div.field.slack-field {
-    background-color: #ffbbb5;
-    color: #9e2014;
+    background-color: #ffecea;
     margin: 0;
-    padding: 0 0 5px 0;
+    padding: 0;
     position: absolute;
     top: 0;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     height: 100%;
-    width: 12em;
+    width: 16em;
     &.slack-field-begin {
       left: 0;
-      border-right: 10px solid #fff;
+      border-right: 5px solid #fff;
     }
     &.slack-field-end {
       right: 0;
-      border-left: 10px solid #fff;
+      border-left: 5px solid #fff;
     }
     span {
       margin: 0 10px;
     }
     input {
-      width: 5em;
+      width: 5.5em;
     }
-  }
-  div.field.field-entity, fieldset.begin-and-end {
     label {
-      display: block;
-      width: auto;
-    }
-    input, textarea, select {
-      font-size: 1.5em;
-      &.replaced + div {
-        font-size: 1.5em;
-      }
+      display: inline-block;
     }
   }
+  
   fieldset.begin-and-end {
     position: relative;
     display: block;
     border: 0 none;
-    padding: 0 13em 1.2em 13em;
-    margin: 0;
+    padding: 0 17em 2.6em 17em;
+    margin: 0 0 50px 0;
     text-align: center;
-    background-color: #99d2dd;
-    color: #17889d;
-    font-weight: 500;
-    font-size: 1.2em;
+    background-color: #d7eff2;
+    label, .suffix, label + span.help, .suffix + span.help {
+      padding: 0.8em 0;
+      vertical-align: middle;
+    }
+    label + span.help, .suffix + span.help {
+      margin-top: -0.1em;
+      margin-right: 0;
+    }
     input, textarea, select {
       text-align: center;
+      font-size: 1.4em;
+      font-weight: 500;
       &.replaced + div {
         text-align: center;
+        font-size: 1.4em;
+        font-weight: 500;
       }
     }
     .timepicker-field {
       margin-left: 5px;
     }
-    i {
-      color: #fff;
+    i.until-icon {
+      color: #1c9cb2;
       display: inline-block;
       vertical-align: middle;
-      font-size: 3em;
+      font-size: 3.6em;
       line-height: 180%;
-      transform: translate(0,-0.12em);
+      margin: -0.18em 0 0 0;
+      padding: 0;
+    }
+    label {
+      display: block;
+      width: auto;
+      font-weight: 500;
+      font-size: 1.3em;
     }
   }
   div.field.field-begins-at, div.field.field-ends-at {
@@ -99,6 +106,18 @@ div#reservation-form {
       div.field.field-entity {
         display: inline-block;
         text-align: left;
+        font-weight: 500;
+        label {
+          display: block;
+          width: auto;
+          text-align: center;
+        }
+        input, textarea, select {
+          font-size: 1.3em;
+          &.replaced + div {
+            font-size: 1.3em;
+          }
+        }
       }
     }
     ul.entity-list {
@@ -139,21 +158,25 @@ div#reservation-form {
 
 div.status-selector {
 	div.statuses {
-	  border-radius: 3px;
-
+    border-radius: 3px;
+  
 		a.status-button {
 		  background-color: #ccc;
-		  color: #444;
-		  opacity: .2;
+		  color: inherit;
+		  opacity: 0.2;
+		}
+    
+		a.status-button:hover {
+			opacity: 0.5;
 		}
 
 		a.status-button.active {
-			opacity: .7;
+			opacity: 1;
 		}
-
-		a.status-button:hover {
-			opacity: 1.0;
-		}
+    
+    a.status-button:last-child:before {
+      display: none;
+    }
 	}
 
 	p.saved-notification {
@@ -175,6 +198,7 @@ div.status-selector.mini {
 
 	a.status-button {
 		padding: 4px 5px;
+    position: relative;
 	}
 }
 

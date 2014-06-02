@@ -189,7 +189,7 @@ html.with-overlay body {
 #header {
   box-shadow: 0 1px 15px rgba(0,0,0,0.2);
   position: relative;
-  z-index: 198;
+  z-index: 199;
 }
 
 /* Search */
@@ -371,16 +371,16 @@ html.js #search-bar.open {
   background-color: #fff;
 }
 
-/**
- * Content
- */
-
 div#progress-bar-container {
   position: absolute;
   top: 100%;
   margin-top: -7px;
   width: 100%;
 }
+
+/**
+ * Content
+ */
 
 #notice {
   color: green;
@@ -392,6 +392,7 @@ html.js #below-header {
   bottom: 0;
   left: 0;
   right: 0;
+  z-index: 0;
 }
 
 html.js #main-area {
@@ -523,6 +524,16 @@ body[data-current-user-id=''] #logo-container {
   font-size: 14px;
 }
 
+td.icons {
+  [class^="icon-"], [class*=" icon-"] {
+    font-size: 18px;
+    margin-left: 18px;
+    &:first-child {
+      margin-left: 0;
+    }
+  }
+}
+
 [class^="icon-"].red:before,
 [class*=" icon-"].red:before {
   color: #ff3520;
@@ -622,11 +633,9 @@ div {
 .help {
   [class^="icon-"], [class*=" icon-"] {
     &:hover + p {
-      opacity: 1;
-      visibility: visible;
-      transition-delay: 0s;
+      display: block;
     }
-    font-size: 1.5em;
+    font-size: 1.2em;
     line-height: 130%;
     margin: 0;
     color: #17889d;
@@ -639,13 +648,12 @@ div {
     margin: 0;
     padding: 0.3em 0.5em;
     width: 40em;
-    opacity: 0;
-    visibility: hidden;
+    display: none;
     border: 1px solid #17889d;
     box-shadow: 0 1px 15px rgba(0, 0, 0, 0.2);
     background: #ffffff;
     z-index: 1;
-    transition: opacity 0.2s ease-in-out 0s, visibility 0s linear 0.2s;
+    text-align: left;
   }
   position: relative;
   margin: 0.5em 0;
@@ -654,6 +662,7 @@ div {
 
 span.help {
   display: inline-block;
+  vertical-align: middle;
 }
 
 .form-columns {
@@ -680,6 +689,7 @@ span.help {
 /* add required field asterisk */
 label.required:after {
     content: " *";
+    color: #ff3520;
 }
 
 .field > .with_errors {
@@ -797,13 +807,20 @@ input, textarea, select {
   font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
   border: 1px solid #cccccc;
-  padding: 8px;
+  padding: 0.8em;
   margin: 0;
   width: 15em;
   transition: border-color 0.2s;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
   color: inherit;
+}
+
+fieldset.inline-fieldset {
+  display: inline-block;
+  border: 0 none;
+  padding: 0;
+  margin: 0;
 }
 
 input, textarea {
@@ -861,7 +878,7 @@ div.field-with-clear span {
   border-left: none;
   cursor: pointer;
   transition: background-color 0.2s ease-in-out;
-  background-image: -moz-linear-gradient(top, rgba(255,255,255,0.2) 0%, transparent 60%);
+  background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 60%);
 }
 
 .field_with_errors > div.field-with-clear > input {
@@ -922,69 +939,51 @@ button,
   border: 0 none;
   background-color: #666;
   color: #fff;
-  padding: 8px 10px;
+  padding: 0.8em 1em;
   text-decoration: none;
   cursor: pointer;
   border-radius: 3px;
   line-height: normal;
   transition: background-color 0.2s ease-in-out;
-  background-image: -moz-linear-gradient(top, rgba(255,255,255,.2) 0%, transparent 60%);
+  background-image: linear-gradient(to bottom, rgba(255,255,255,.2) 0%, transparent 60%);
+  &:before {
+    margin: 0 0.4em 0 0;
+    vertical-align: middle;
+  }
+  &:hover {
+    background-color: #747474;
+    color: #fff;
+  }
+  &:active {
+    background-image: linear-gradient(to top, rgba(255,255,255,.2) 0%, transparent 60%);
+  }
+  &.blue {
+    background-color: #17889d;
+    &:hover {
+      background-color: #3194a5;
+    }
+  }
+  &.red {
+    background-color: #ff3520;
+    font-weight: bold;
+    &:hover {
+      background-color: #ff4a37;
+    }
+  }
 }
 
-input[type="submit"]:hover,
-input[type="reset"]:hover,
-button:hover,
-.button:hover {
-  background-color: #747474;
-  color: #fff;
-}
-
-input[type="submit"]:active,
-input[type="reset"]:active,
-button:active,
-.button:active {
-  background-image: -moz-linear-gradient(bottom, rgba(255,255,255,.2) 0%, transparent 60%);
-}
-
-input[type="submit"].blue,
-input[type="reset"].blue,
-button.blue,
-.button.blue {
-  background-color: #17889d;
-}
-
-input[type="submit"].blue:hover,
-input[type="reset"].blue:hover,
-button.blue:hover,
-.button.blue:hover {
-  background-color: #3194a5;
-}
-
-input[type="submit"],
-input[type="reset"].red,
-button.red,
-.button.red {
-  background-color: #ff3520;
-}
-
-input[type="submit"]:hover,
-input[type="reset"].red:hover,
-button.red:hover,
-.button.red:hover {
-  background-color: #ff4a37;
-}
-
-.button:before {
-  margin: 0 5px 0 0;
-  vertical-align: middle;
+input[type="submit"] {
+  @extend input[type="submit"].red;
 }
 
 label {
   display: inline-block;
   width: 10em;
-  padding: 9px 5px 9px 0;
+  padding: 0.8em 0.5em 0.8em 0;
+  margin: 1px 0;
   line-height: normal;
   vertical-align: top;
+  font-weight: 500;
 }
 
 table {
@@ -1069,15 +1068,6 @@ dd + dt {
   -webkit-background-size: 30px 30px;
   -moz-background-size: 30px 30px;
   background-size: 30px 30px;
-  background-image: -webkit-gradient(linear, left top, right bottom,
-            color-stop(.25, rgba(255, 255, 255, .3)), color-stop(.25, transparent),
-            color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .3)),
-            color-stop(.75, rgba(255, 255, 255, .3)), color-stop(.75, transparent),
-            to(transparent));
-  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
   background-image: linear-gradient(135deg, rgba(255, 255, 255, .3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
 
   -webkit-animation: animate-stripes-30 1.5s linear 0s infinite normal;
@@ -1139,8 +1129,8 @@ div.entity-images-container a {
   margin: 10px;
   outline: none;
 
-  -webkit-box-shadow:  2px 2px 2px 1px rgba(00, 00, 00, .1);
-  box-shadow:  2px 2px 2px 1px rgba(00, 00, 00, .1);
+  -webkit-box-shadow:  2px 2px 2px 1px rgba(0, 0, 0, 0.1);
+  box-shadow:  2px 2px 2px 1px rgba(0, 0, 0, 0.1);
 }
 
 div.entity-images-container a img {

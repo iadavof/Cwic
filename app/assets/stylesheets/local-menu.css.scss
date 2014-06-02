@@ -2,6 +2,8 @@
   background-color: #17889d;
   padding: 0 0.5em 0 1em;
   position: relative;
+  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  z-index: 198;
 }
 
 html.js body[data-current-user-id=''] #local-menu {
@@ -9,7 +11,7 @@ html.js body[data-current-user-id=''] #local-menu {
 }
 
 #local-menu .button {
-  margin: 0.6em 0;
+  margin: 0.4em 0;
   padding: 0.6em 0.8em;
   background: transparent;
   color: #fff;
@@ -24,14 +26,13 @@ html.js body[data-current-user-id=''] #local-menu {
 #local-menu .page-actions {
   width: 33.333%;
   overflow: hidden;
-  margin: 0;
   box-sizing: border-box;
   padding: 0 0.6em;
   margin: 0.3em 0;
   display: block;
   position: relative;
   float: left;
-  min-width: 500px;
+  min-width: 250px;
 }
 
 #local-menu .context-actions {
@@ -40,12 +41,14 @@ html.js body[data-current-user-id=''] #local-menu {
   text-align: center;
 }
 
-#local-menu .context-actions:empty {
+#local-menu .navigation-actions:empty,
+#local-menu .context-actions:empty,
+#local-menu .page-actions:empty {
   background-color: transparent;
+  margin: 0;
 }
 
 #local-menu .context-actions .button {
-  margin: 0.3em 0.1em;
   background-color: #666;
 }
 

@@ -4,26 +4,25 @@
 
     <fieldset class="begin-and-end">
       <div class="field slack-field slack-field-begin">
-        <%= f.label :slack_before %>
-        <%= f.number_field :slack_before, placeholder: @reservation.entity.try(:get_slack_before), min: 0 %><div><%= t('.minutes') %></div>
+        <%= f.label :slack_before %><%= format_help(t('.default_slack_times_help'), :inline) %>
+        <%= f.number_field :slack_before, placeholder: @reservation.entity.try(:get_slack_before), min: 0 %><div class="suffix"><%= t('.minutes') %></div>
       </div>
       <div class="field field-begins-at">
         <%= f.label :begins_at %>
         <%= f.text_field :begins_at_date, id: 'begins_at_date', class: 'datepicker-field' %>
         <%= f.text_field :begins_at_tod, id: 'begins_at_tod', class: 'timepicker-field' %>
       </div>
-      <i class="icon-circle-arrow-right"></i>
+      <i class="icon-circle-arrow-right until-icon"></i>
       <div class="field field-ends-at">
         <%= f.label :ends_at %>
         <%= f.text_field :ends_at_date, id: 'ends_at_date', class: 'datepicker-field' %>
         <%= f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field' %>
       </div>
       <div class="field slack-field slack-field-end">
-        <%= f.label :slack_after %>
-        <%= f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after), min: 0 %><div><%= t('.minutes') %></div>
+        <%= f.label :slack_after %><%= format_help(t('.default_slack_times_help'), :inline) %>
+        <%= f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after), min: 0 %><div class="suffix"><%= t('.minutes') %></div>
       </div>
     </fieldset>
-    <%= format_help(t('.default_slack_times_help'), 'inline') %>
     
     <div class="form-columns clearfix">
       <div class="form-column">
@@ -64,8 +63,10 @@
         <div class="organisation_client_new_existing">
           <div class="field">
             <label for="organisation_client_type"><%= t('.organisation_client_type') %></label>
-            <%= radio_button_tag :organisation_client_type, :existing, @focus != 'new_client' %><%= label_tag(:organisation_client_type_existing, t('.existing_organisation_client')) %><br />
-            <%= radio_button_tag :organisation_client_type, :new, @focus == 'new_client' %><%= label_tag(:organisation_client_type_new, t('.new_organisation_client')) %>
+            <fieldset class="inline-fieldset">
+              <%= radio_button_tag :organisation_client_type, :existing, @focus != 'new_client' %><%= label_tag(:organisation_client_type_existing, t('.existing_organisation_client')) %>
+              <%= radio_button_tag :organisation_client_type, :new, @focus == 'new_client' %><%= label_tag(:organisation_client_type_new, t('.new_organisation_client')) %>
+            </fieldset>
           </div>
         </div>
         <div class="existing_organisation_client" <% if @focus == 'new_client' %>style="display: none;"<% end %>>
