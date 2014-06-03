@@ -5,7 +5,9 @@ function CwicScheduleView(options) {
     patch_reservation_url: 'url to reservations controller',
     view: 'horizontalCalendar',
     snap_part: '0.5',
-    zoom: 'day'
+    zoom: 'day',
+    scroll_step: 20,
+    scroll_hover_margin: 100,
   }, options || {});
 
   this.scheduleContainer = null;
@@ -19,6 +21,8 @@ function CwicScheduleView(options) {
   this.focusedScheduleItem = null;
   this.statusMessageTimeout = null;
 
+  this.scrollContainerInterval;
+
   this.currentMode = (this.options.view == 'horizontalCalendar') ? (this.options.zoom == 'day') ? 'week' : 'month' : 'week';
   this.renderCalendar();
 }
@@ -27,6 +31,7 @@ CwicScheduleView.prototype.renderCalendar = function() {
   this.initScheduleStub();
   this.createEntityShowCase();
   this.bindControls();
+  this.initScrollContainerActions();
   this.addContextButtonsToLocalMenu();
 
   (this.options.view == 'horizontalCalendar') ? this.renderHorizontalCalendar() : this.renderVerticalCalendar();
@@ -38,6 +43,12 @@ CwicScheduleView.prototype.renderHorizontalCalendar = function () {
 
 CwicScheduleView.prototype.renderVerticalCalendar = function() {
   this.addVerticalViewTimeAxis();
+};
+
+CwicScheduleView.prototype.initScrollContainerActions = function() {
+  var schedule = this;
+
+  $('html').on('keydown', function(event) { schedule.bindScrollKeyboardKeyDown.call(schedule, event); });
 };
 
 CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
@@ -75,6 +86,25 @@ CwicScheduleView.prototype.initScheduleStub = function() {
   this.setBeginAndEndFromNavigationReference();
 
   this.renderScheduleBodyGrid();
+};
+
+CwicScheduleView.prototype.scrollContainerStep = function(step) {
+  var scrollContainer = this.scheduleContainer.find('.schedule-scroll-container');
+  var oldScrollLeft = scrollContainer.scrollLeft();
+  scrollContainer.scrollLeft(oldScrollLeft + step);
+};
+
+CwicScheduleView.prototype.bindScrollKeyboardKeyDown = function(event) {
+  switch(event.which) {
+    case 37:
+      event.preventDefault();
+      this.scrollContainerStep(- this.options.scroll_step);
+      break;
+    case 39:
+      event.preventDefault();
+      this.scrollContainerStep(this.options.scroll_step);
+      break;
+  }
 };
 
 CwicScheduleView.prototype.getFocusMoment = function() {
