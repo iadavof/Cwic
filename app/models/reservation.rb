@@ -143,6 +143,10 @@ class Reservation < ActiveRecord::Base
     begins_at_was.present? && ends_at_was.present? ? period_to_days(begins_at_was, ends_at_was) : nil
   end
 
+  def cost
+    entity.reservation_cost(self.begins_at, self.ends_at)
+  end
+
   def instance_name
     "R##{self.id.to_s}"
   end
