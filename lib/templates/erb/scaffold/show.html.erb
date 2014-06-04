@@ -10,7 +10,9 @@
 <% attributes.reject(&:password_digest?).each do |attribute| -%>
   <dt><%%= <%= class_name %>.human_attribute_name(:<%= attribute.name %>) %></dt>
 <% if [:integer, :float, :decimal].include?(attribute.type) -%>
-  <dd><%%= @<%= singular_table_name %>.localized.<%= attribute.name %> %></dd>
+  <dd><%%= number_with_delimiter(@<%= singular_table_name %>.<%= attribute.name %>) %></dd>
+<% elsif [:date, :time, :datetime, :timestamp].include?(attribute.type) -%>
+  <dd><%%= l(@<%= singular_table_name %>.<%= attribute.name %>, format: :long) %></dd>
 <% else -%>
   <dd><%%= @<%= singular_table_name %>.<%= attribute.name %> %></dd>
 <% end -%>

@@ -24,7 +24,9 @@
       <td><%%= name_link_to_show(<%= singular_table_name %>) %></td>
 <% attributes.from(1).each do |attribute| -%>
 <% if [:integer, :float, :decimal].include?(attribute.type) -%>
-      <td><%%= <%= singular_table_name %>.localized.<%= attribute.name %> %></td>
+      <td><%%= number_with_delimiter(<%= singular_table_name %>.<%= attribute.name %>) %></td>
+<% elsif [:date, :time, :datetime, :timestamp].include?(attribute.type) -%>
+      <td><%%= l(<%= singular_table_name %>.<%= attribute.name %>) %></td>
 <% else -%>
       <td><%%= <%= singular_table_name %>.<%= attribute.name %> %></td>
 <% end -%>
