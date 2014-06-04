@@ -18,7 +18,7 @@ module DatetimeSplittable
         define_method("correct_errors_#{attribute}") { self.correct_errors_date_and_tod(attribute) }
 
         localize "#{attribute}_date", using: :date
-        localize "#{attribute}_tod", using: TimeOfDayParser
+        localize "#{attribute}_tod", using: :tod
 
         if required
           validates "#{attribute}_date", presence: { message: :date_blank }

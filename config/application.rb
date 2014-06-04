@@ -25,12 +25,14 @@ module Cwic
     # Custom directories with classes and modules you want to be autoloadable.
     config.autoload_paths += %W(#{config.root}/lib)
     config.autoload_paths += %W(#{config.root}/lib/core_ext)
+    config.autoload_paths += %W(#{config.root}/lib/i18n_alchemy)
 
     # Precompile jquery libraries for the case that CDN is not available
     config.assets.precompile += ['jquery.js', 'jquery.ui.all.js']
 
     # Load core extensions (only autoloading is not enough, since the String class is already loaded and therefore the core_ext will not be loaded anymore)
     Dir[File.join(Rails.root, 'lib', 'core_ext', '*.rb')].each { |l| require l }
+    Dir[File.join(Rails.root, 'lib', 'i18n_alchemy', '*.rb')].each { |l| require l }
 
     config.generators do |g|
 	   g.stylesheets false
