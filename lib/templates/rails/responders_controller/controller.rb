@@ -29,7 +29,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # POST <%= route_url %>
   def create
-<% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) }.present? -%>
+<% if attributes.select { |attr| [:date, :time, :datetime, :timestamp].include?(attr.type) }.present? -%>
     @<%= singular_table_name %>.localized.attributes = resource_params
 <% else -%>
     @<%= singular_table_name %>.attributes = resource_params
@@ -40,7 +40,7 @@ class <%= controller_class_name %>Controller < ApplicationController
 
   # PATCH/PUT <%= route_url %>/1
   def update
-<% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) }.present? -%>
+<% if attributes.select { |attr| [:date, :time, :datetime, :timestamp].include?(attr.type) }.present? -%>
     @<%= singular_table_name %>.localized.update_attributes(resource_params)
 <% else -%>
     @<%= singular_table_name %>.update_attributes(resource_params)

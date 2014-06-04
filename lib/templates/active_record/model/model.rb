@@ -1,6 +1,6 @@
 <% module_namespacing do -%>
 class <%= class_name %> < <%= parent_class_name.classify %>
-<% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) }.present? -%>
+<% if attributes.select { |attr| [:date, :time, :datetime, :timestamp].include?(attr.type) }.present? -%>
   include I18n::Alchemy
 
 <% end -%>

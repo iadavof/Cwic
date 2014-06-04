@@ -1,4 +1,4 @@
-<% if attributes.select { |attr| [:integer, :float, :decimal].include?(attr.type) }.present? -%>
+<% if attributes.select { |attr| [:date, :time, :datetime, :timestamp].include?(attr.type) }.present? -%>
 <%%= form_for(@<%= singular_table_name %>.localized) do |f| %>
 <% else -%>
 <%%= form_for(@<%= singular_table_name %>) do |f| %>
