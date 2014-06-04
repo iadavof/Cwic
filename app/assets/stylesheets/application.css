@@ -14,5 +14,11 @@
  *= require select2
  *= require magnific-popup
  *= require global
+ *= require icons
+ *= require forms
+ *= require tables
+ *= require controls
+ *= require header
+ *= require content
  *= require_directory .
  */

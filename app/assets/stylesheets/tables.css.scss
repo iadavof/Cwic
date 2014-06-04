@@ -60,11 +60,12 @@ div.multiple-edit-controls {
     padding: 0;
     color: #ff3520;
     text-decoration: underline;
-    background-color: transparent;
-  }
-  input:hover {
-    color: #ff3520;
-    background-color: transparent;
+    background: transparent;
+    &:hover {
+      color: #ff3520;
+      background: transparent;
+      text-decoration: none;
+    }
   }
 }
 

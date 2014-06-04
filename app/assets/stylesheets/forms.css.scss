@@ -168,6 +168,15 @@ label {
   }
 }
 
+.multiple-edit-form {
+  input:first-child + .cwic-checkbox, input:first-child + .cwic-radio-button {
+    vertical-align: top;
+    + label {
+      vertical-align: top;
+    }
+  }
+}
+
 fieldset.inline-fieldset {
   display: inline-block;
   border: 0 none;
