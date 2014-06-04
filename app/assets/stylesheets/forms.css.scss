@@ -1,0 +1,234 @@
+.form-columns {
+  .form-column {
+    width: 32%;
+    box-sizing: border-box;
+    min-width: 400px;
+    float: left;
+    border: 1px solid #ccc;
+    padding: 20px;
+    margin-left: 2%;
+    margin-bottom: 20px;
+    &:first-child {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+}
+
+div.field,
+div.actions {
+  margin-bottom: 10px;
+}
+
+.ui-widget {
+  font-family: inherit;
+  font-size: 1em;
+}
+
+.ui-widget-content,
+.ui-widget-header {
+  color: inherit;
+}
+
+.field > .with_errors {
+  display: inline-block;
+  color: #ff3520;
+}
+
+.field_with_errors {
+  display: inline-block;
+  vertical-align: top;
+  > label {
+    color: #ff3520;
+  }
+  > input, > select, > textarea {
+    border: 2px solid #ff3520;
+  }
+}
+
+div.field-with-example-wrapper {
+  display: inline-block;
+  p {
+    font-size: 90%;
+    font-style: italic;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+input[type="submit"],
+input[type="reset"],
+button,
+.button {
+  font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  display: inline-block;
+  position: relative;
+  width: auto;
+  border: 0 none;
+  background-color: #666;
+  color: #fff;
+  padding: 0.8em 1em;
+  text-decoration: none;
+  cursor: pointer;
+  border-radius: 3px;
+  line-height: normal;
+  transition: background-color 0.2s ease-in-out;
+  background-image: linear-gradient(to bottom, rgba(255,255,255,.2) 0%, transparent 60%);
+  &:before {
+    margin: 0 0.4em 0 0;
+    vertical-align: middle;
+  }
+  &:hover {
+    background-color: #747474;
+    color: #fff;
+  }
+  &:active {
+    background-image: linear-gradient(to top, rgba(255,255,255,.2) 0%, transparent 60%);
+  }
+  &.blue {
+    background-color: #17889d;
+    &:hover {
+      background-color: #3194a5;
+    }
+  }
+  &.red {
+    background-color: #ff3520;
+    font-weight: bold;
+    &:hover {
+      background-color: #ff4a37;
+    }
+  }
+}
+
+input, textarea, select {
+  font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+  font-size: 1em;
+  border: 1px solid #cccccc;
+  padding: 0.8em;
+  margin: 0;
+  width: 15em;
+  transition: border-color 0.2s;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  color: inherit;
+}
+
+input, textarea {
+  color: #222;
+  &:focus {
+    border-color: #999;
+  }
+}
+
+input {
+  &[type="file"],
+  &[type="checkbox"] {
+    width: auto;
+  }
+  &[type="checkbox"] {
+    vertical-align: middle;
+    margin: 0.5em 0 0;
+    border: 0 none;
+  }
+  &[type="submit"] {
+    @extend input[type="submit"].red;
+  }
+  &::-moz-focus-inner {
+    border: 0;
+    padding: 0;
+  }
+}
+
+textarea {
+  width: 30em;
+  height: 10em;
+}
+
+select {
+  width: auto;
+}
+
+label {
+  display: inline-block;
+  width: 10em;
+  padding: 0.8em 0.5em 0.8em 0;
+  margin: 1px 0;
+  line-height: normal;
+  vertical-align: top;
+  font-weight: 500;
+  &.required {
+    &:after {
+      content: " *";
+      color: #ff3520;
+    }
+  }
+}
+
+fieldset.inline-fieldset {
+  display: inline-block;
+  border: 0 none;
+  padding: 0;
+  margin: 0;
+}
+
+div.field-with-clear {
+  display: inline-block;
+  input {
+    border-right: 0;
+    margin-right: 0;
+  }
+  span {
+    font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-size: 1em;
+    display: inline-block;
+    width: 1em;
+    height: 100%;
+    color: #fff;
+    background-color: #FF3520;
+    vertical-align: middle;
+    margin-right: 5px;
+    margin-left: -2px;
+    margin-top: -1px;
+    margin-right: 5px;
+    text-align: center;
+    padding: 4px;
+    border: 1px solid #ccc;
+    border-left: none;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 60%);
+    &:hover {
+      background-color: #ff4a37;
+    }
+  }
+}
+
+.field_with_errors > div.field-with-clear {
+  > input {
+    border: 2px solid #ff3520;
+    border-right: none;
+  }
+  > span {
+    border: 2px solid #ff3520;
+    border-left: none;
+  }
+}
+
+.minicolors-theme-default .minicolors-input {
+  height: auto;
+}
+
+.timepicker-field {
+  width: 5em;
+  margin-left: 15px;
+  margin-right: 5px;
+}
+
+.datepicker-field {
+  width: 8em;
+  margin-right: 5px;
+}

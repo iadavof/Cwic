@@ -1,0 +1,149 @@
+/*
+100: Thin
+200: ExtraLight   XX NOT AVAILABLE XX
+300: Light
+400: Regular
+500: Medium
+600: SemiBold     XX NOT AVAILABLE XX
+700: Bold
+800: ExtraBold    XX NOT AVAILABLE XX
+900: Black        XX NOT AVAILABLE XX
+*/
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Thin-webfont.eot');
+    src: font-url('ClearSans-Thin-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Thin-webfont.woff') format('woff'),
+         font-url('ClearSans-Thin-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Thin-webfont.svg#clear_sans_thinregular') format('svg');
+    font-weight: 100;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Light-webfont.eot');
+    src: font-url('ClearSans-Light-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Light-webfont.woff') format('woff'),
+         font-url('ClearSans-Light-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Light-webfont.svg#clear_sans_lightregular') format('svg');
+    font-weight: 300;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Regular-webfont.eot');
+    src: font-url('ClearSans-Regular-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Regular-webfont.woff') format('woff'),
+         font-url('ClearSans-Regular-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Regular-webfont.svg#clear_sansregular') format('svg');
+    font-weight: 400;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Italic-webfont.eot');
+    src: font-url('ClearSans-Italic-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Italic-webfont.woff') format('woff'),
+         font-url('ClearSans-Italic-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Italic-webfont.svg#clear_sansitalic') format('svg');
+    font-weight: 400;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Medium-webfont.eot');
+    src: font-url('ClearSans-Medium-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Medium-webfont.woff') format('woff'),
+         font-url('ClearSans-Medium-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Medium-webfont.svg#clear_sans_mediumregular') format('svg');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-MediumItalic-webfont.eot');
+    src: font-url('ClearSans-MediumItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-MediumItalic-webfont.woff') format('woff'),
+         font-url('ClearSans-MediumItalic-webfont.ttf') format('truetype'),
+         font-url('ClearSans-MediumItalic-webfont.svg#clear_sans_mediumitalic') format('svg');
+    font-weight: 500;
+    font-style: italic;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-Bold-webfont.eot');
+    src: font-url('ClearSans-Bold-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-Bold-webfont.woff') format('woff'),
+         font-url('ClearSans-Bold-webfont.ttf') format('truetype'),
+         font-url('ClearSans-Bold-webfont.svg#clear_sansbold') format('svg');
+    font-weight: 700;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'Clear Sans';
+    src: font-url('ClearSans-BoldItalic-webfont.eot');
+    src: font-url('ClearSans-BoldItalic-webfont.eot?#iefix') format('embedded-opentype'),
+         font-url('ClearSans-BoldItalic-webfont.woff') format('woff'),
+         font-url('ClearSans-BoldItalic-webfont.ttf') format('truetype'),
+         font-url('ClearSans-BoldItalic-webfont.svg#clear_sansbold_italic') format('svg');
+    font-weight: 700;
+    font-style: italic;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: font-url('signika-regular-webfont.eot');
+  src: font-url('signika-regular-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('signika-regular-webfont.woff') format('woff'),
+       font-url('signika-regular-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Signika';
+  src: font-url('signika-bold-webfont.eot');
+  src: font-url('signika-bold-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('signika-bold-webfont.woff') format('woff'),
+       font-url('signika-bold-webfont.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SignikaLight';
+  src: font-url('signika-light-webfont.eot');
+  src: font-url('signika-light-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('signika-light-webfont.woff') format('woff'),
+       font-url('signika-light-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'SignikaSemibold';
+  src: font-url('signika-semibold-webfont.eot');
+  src: font-url('signika-semibold-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('signika-semibold-webfont.woff') format('woff'),
+       font-url('signika-semibold-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'ArchitectsDaughter';
+  src: font-url('architectsdaughter-webfont.eot');
+  src: font-url('architectsdaughter-webfont.eot?#iefix') format('embedded-opentype'),
+       font-url('architectsdaughter-webfont.woff') format('woff'),
+       font-url('architectsdaughter-webfont.ttf') format('truetype');
+  font-weight: normal;
+  font-style: italic;
+}

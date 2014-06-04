@@ -1,6 +1,30 @@
 @import 'imports/iada-wayfinding';
 @import 'imports/whhg';
 
+.icon {
+  text-decoration: none;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  vertical-align: middle;
+  font-size: 14px;
+  &.red {
+    &:before {
+      color: #ff3520;
+    }
+  }
+  &.blue {
+    &:before {
+      color: #17889d;
+    }
+  }
+  &.green {
+    &:before {
+      color: #18c13d;
+    }
+  }
+}
+
 .button [class^="icon-"], button [class^="icon-"],
 .button [class*=" icon-"], button [class*=" icon-"],
 .button[class^="icon-"]:before, button[class^="icon-"]:before,

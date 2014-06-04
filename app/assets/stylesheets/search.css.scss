@@ -2,75 +2,63 @@
   border: 1px solid #ddd;
   margin-top: 10px;
   border-bottom: 0 none;
-}
-
-.result > .inner {
-  padding: 10px;
-  position: relative;
-  padding-left: 70px;
-}
-
-.result > .inner > h3 {
-  margin-top: 0;
-}
-
-.result > .inner h4 {
-  margin: 0;
-}
-
-.result > .inner div.controls {
-  float: right;
-}
-
-.result > .inner div.extra-controls {
-  position: absolute;
-  top: 5px;
-  right: 50px;
-}
-
-.result .result-icon {
-  position: absolute;
-  top: 0px;
-  left: 0px;
-  width: 60px;
-  height: 60px;
-  text-align: center;
-  border-bottom: 1px solid #ccc;
-  border-right: 1px solid #ccc;
-}
-
-.result .result-icon i {
-  width: 60px;
-  height: 60px;
-  line-height: 60px;
-  font-size: 30px;
-}
-
-.result .rank {
-  height: 3px;
-  background-color: #ddd;
-  margin: 0 -1px;
-}
-
-.result .rank > .inner {
-  height: 100%;
-  background-color: #1c9cb2;
-}
-
-.result div.column {
-  position: relative;
-  float: left;
-  width: 33.33333%;
-  height: 100%;
-  padding: 1%;
-  -moz-box-sizing: border-box;
-  box-sizing: border-box;
-}
-
-.result div.column:first-child {
-  border-right: 1px solid #ccc;
-}
-
-.result div.column:last-child {
-  border-left: 1px solid #ccc;
+  > .inner {
+    padding: 10px;
+    position: relative;
+    padding-left: 70px;
+    > h3 {
+      margin-top: 0;
+    }
+    h4 {
+      margin: 0;
+    }
+    div.controls {
+      float: right;
+    }
+    div.extra-controls {
+      position: absolute;
+      top: 5px;
+      right: 50px;
+    }
+    .result-icon {
+      position: absolute;
+      top: 0px;
+      left: 0px;
+      width: 60px;
+      height: 60px;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      border-right: 1px solid #ccc;
+      i {
+        width: 60px;
+        height: 60px;
+        line-height: 60px;
+        font-size: 30px;
+      }
+    }
+    .rank {
+      height: 3px;
+      background-color: #ddd;
+      margin: 0 -1px;
+      > .inner {
+        height: 100%;
+        background-color: #1c9cb2;
+      }
+    }
+    div.column {
+      position: relative;
+      float: left;
+      width: 33.33333%;
+      height: 100%;
+      padding: 1%;
+      -moz-box-sizing: border-box;
+      box-sizing: border-box;
+      &:first-child {
+        border-right: 1px solid #ccc;
+      }
+      &:last-child {
+        border-left: 1px solid #ccc;
+      }
+    }
+  }
 }
