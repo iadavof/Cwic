@@ -25,14 +25,14 @@ class EntityTypesController < ApplicationController
   # POST /entity_types
   def create
     @entity_type.reservation_statuses.clear # Clear default reservation statuses to prevent adding them double (they were already added in the new action and send along with the resouce params)
-    @entity_type.localized.attributes = resource_params
+    @entity_type.attributes = resource_params
     @entity_type.save
     respond_with(@organisation, @entity_type)
   end
 
   # PATCH/PUT /entity_types/1
   def update
-    @entity_type.localized.update_attributes(resource_params)
+    @entity_type.update_attributes(resource_params)
     respond_with(@organisation, @entity_type)
   end
 

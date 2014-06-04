@@ -19,14 +19,6 @@ class DataType < ActiveRecord::Base
   end
 
   def parse_value(value)
-    case self.rails_type
-    when 'Integer'
-      parsed = (I18n::Alchemy::NumericParser.parse(value))
-    when 'Float'
-      parsed = (I18n::Alchemy::NumericParser.parse(value))
-    else
-      parsed = value
-    end
     cast_value(parsed) rescue value
   end
 
@@ -34,10 +26,6 @@ class DataType < ActiveRecord::Base
     return value if value.nil? # We cannot check on blank, because else the boolean false is not formatted correctly.
 
     case self.rails_type
-    when 'Integer'
-      I18n::Alchemy::NumericParser.localize(value)
-    when 'Float'
-      I18n::Alchemy::NumericParser.localize(value)
     when 'Boolean'
       I18n.t(value.to_s)
     else

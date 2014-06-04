@@ -1,6 +1,4 @@
 class EntityTypeProperty < ActiveRecord::Base
-  include I18n::Alchemy
-
   belongs_to :entity_type
   belongs_to :data_type
 

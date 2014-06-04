@@ -1,5 +1,5 @@
 <div id="entity-type-form">
-  <%= nested_form_for([@organisation, @entity_type.localized]) do |f| %>
+  <%= nested_form_for([@organisation, @entity_type]) do |f| %>
     <%= render 'shared/error_messages', target: @entity_type %>
 
     <div id="tabs">
@@ -78,7 +78,7 @@
           <h2><%= EntityTypeOption.model_name.human(count: 2) %></h2>
           <%= format_help(t('.options_help')) %>
           <div class="nested-form" id="entity-type-options">
-            <%= f.fields_for :options, @entity_type.options.sort_by(&:index).map(&:localized), wrapper: false do |of| %>
+            <%= f.fields_for :options, @entity_type.options.sort_by(&:index), wrapper: false do |of| %>
               <%= render partial: 'option_fields', locals: { f: of } %>
             <% end %>
           </div>

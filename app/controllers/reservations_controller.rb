@@ -54,9 +54,6 @@ class ReservationsController < ApplicationController
     end
 
     @reservation.localized.attributes = resource_params
-    # I18n alchemy tries to parse the lat and lng values (which are in English format) and thus breaks things. We therefore need to replace these values with the originals.
-    @reservation.organisation_client.lat = resource_params[:organisation_client_attributes][:lat] if resource_params[:organisation_client_attributes].present?
-    @reservation.organisation_client.lng = resource_params[:organisation_client_attributes][:lng] if resource_params[:organisation_client_attributes].present?
 
     if params[:full].present?
       @reservation.build_organisation_client

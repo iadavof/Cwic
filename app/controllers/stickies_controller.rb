@@ -15,7 +15,7 @@ class StickiesController < ApplicationController
 
   # POST /stickies
   def create
-    @sticky.localized.attributes = resource_params
+    @sticky.attributes = resource_params
     @sticky.weight = 0
     @sticky.save
     respond_with(@organisation, @sticky) do |format|
@@ -33,7 +33,7 @@ class StickiesController < ApplicationController
 
   # PATCH/PUT /stickies/1
   def update
-    @sticky.localized.update_attributes(resource_params)
+    @sticky.update_attributes(resource_params)
     respond_with(@organisation, @sticky) do |format|
       format.json { render json: nil }
     end

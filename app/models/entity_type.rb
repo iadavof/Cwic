@@ -1,7 +1,6 @@
 class EntityType < ActiveRecord::Base
   include PgSearch
   include Sspable
-  include I18n::Alchemy
 
   has_many :entities, dependent: :destroy
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type

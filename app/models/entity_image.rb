@@ -1,6 +1,4 @@
 class EntityImage < ActiveRecord::Base
-  include I18n::Alchemy
-
   belongs_to :entity_imageable, polymorphic: true
   belongs_to :organisation
 

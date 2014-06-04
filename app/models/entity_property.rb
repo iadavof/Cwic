@@ -1,6 +1,4 @@
 class EntityProperty < ActiveRecord::Base
-  include I18n::Alchemy
-
   belongs_to :entity
   belongs_to :property_type, class_name: 'EntityTypeProperty'
   has_and_belongs_to_many :values, class_name: 'EntityTypePropertyOption', join_table: 'entity_properties_values', association_foreign_key: 'value_id'

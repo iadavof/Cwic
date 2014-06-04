@@ -1,5 +1,5 @@
 <div id="entity-form">
-  <%= nested_form_for([@organisation, @entity.localized]) do |f| %>
+  <%= nested_form_for([@organisation, @entity]) do |f| %>
     <%= render 'shared/error_messages', target: @entity %>
 
     <% if @organisation.entity_types.empty? %>

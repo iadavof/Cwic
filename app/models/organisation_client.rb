@@ -1,7 +1,6 @@
 class OrganisationClient < ActiveRecord::Base
   include PgSearch
   include Sspable
-  include I18n::Alchemy
 
   belongs_to :organisation
   has_many :reservations, dependent: :destroy

@@ -1,6 +1,4 @@
 class ReservationStatus < ActiveRecord::Base
-  include I18n::Alchemy
-
   belongs_to :entity_type
 
   validates :name, presence: true, length: { maximum: 255 }

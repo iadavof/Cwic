@@ -25,7 +25,7 @@ class EntitiesController < ApplicationController
   # POST /entities
   def create
     return if check_entity_type_changed('new')
-    @entity.localized.attributes = resource_params
+    @entity.attributes = resource_params
     @entity.save
     respond_with(@organisation, @entity)
   end
@@ -33,7 +33,7 @@ class EntitiesController < ApplicationController
   # PATCH/PUT /entities/1
   def update
     return if check_entity_type_changed('edit')
-    @entity.localized.update_attributes(resource_params)
+    @entity.update_attributes(resource_params)
     respond_with(@organisation, @entity)
   end
 

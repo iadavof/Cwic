@@ -1,6 +1,4 @@
 class Sticky < ActiveRecord::Base
-  include I18n::Alchemy
-
   belongs_to :stickable, polymorphic: true
   belongs_to :user
   belongs_to :organisation

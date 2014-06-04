@@ -1,6 +1,4 @@
 class EntityTypePropertyOption < ActiveRecord::Base
-  include I18n::Alchemy
-
   default_scope { order(:index) }
 
   belongs_to :entity_type_property

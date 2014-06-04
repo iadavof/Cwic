@@ -1,6 +1,4 @@
 class EntityTypeOption < ActiveRecord::Base
-  include I18n::Alchemy
-
   belongs_to :entity_type
 
   validates :entity_type, presence: true
