@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140516145012) do
+ActiveRecord::Schema.define(version: 20140604082538) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -138,10 +138,12 @@ ActiveRecord::Schema.define(version: 20140516145012) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "organisation_id"
-    t.integer  "entities_count",  default: 0, null: false
+    t.integer  "entities_count",         default: 0, null: false
     t.integer  "icon_id"
-    t.integer  "slack_before",    default: 0
-    t.integer  "slack_after",     default: 0
+    t.integer  "slack_before",           default: 0
+    t.integer  "slack_after",            default: 0
+    t.integer  "min_reservation_length"
+    t.integer  "max_reservation_length"
   end
 
   add_index "entity_types", ["icon_id"], name: "index_entity_types_on_icon_id", using: :btree

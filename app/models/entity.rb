@@ -28,7 +28,7 @@ class Entity < ActiveRecord::Base
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
 
-  delegate :reserve_periods, to: :entity_type
+  delegate :reserve_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
 
   default_scope { order('id ASC') }
 

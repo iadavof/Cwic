@@ -106,6 +106,18 @@
             <% end %>
           </div>
           <%= f.link_to_add '', :reserve_periods, data: { target: '#entity-type-reserve-periods' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservePeriod.model_name.human.lcfirst) %>
+
+          <h2><%= t('.reservation_length_limitations') %></h2>
+          <div>
+            <div class="field">
+              <%= f.label :min_reservation_length %>
+              <%= f.number_field :min_reservation_length %> <span class="field-suffix"><%= t('.minutes') %></span>
+            </div>
+            <div class="field">
+              <%= f.label :max_reservation_length %>
+              <%= f.number_field :max_reservation_length %> <span class="field-suffix"><%= t('.minutes') %></span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
