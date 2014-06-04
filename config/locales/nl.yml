@@ -311,6 +311,9 @@ nl:
             user:
               taken: 'bestaat al binnen de organisatie'
         reservation:
+          period_not_allowed: 'De periode van de reservering is niet toegestaan volgens de gedefinieerde reserveerperioden voor dit object'
+          period_too_small: 'Een reservering voor dit object moet minimaal %{count} minuten duren'
+          period_too_large: 'Een reservering voor dit object mag maximaal %{count} minuten duren'
           repetition_error_html: 'Herhaling van %{begins_at}: %{ir_message}'
           multiple_edit_error_html: 'Reservering R#%{reservation_id}: %{ir_message}'
           multiple_edit_overlaps: 'De ingevoerde tijden overlappen met elkaar'
