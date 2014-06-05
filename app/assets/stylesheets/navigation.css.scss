@@ -287,7 +287,11 @@ html.js body[data-current-user-id=''] #local-menu {
     margin-top: 10px;
   }
   :after {
-    @extend .clearfix:after;
+    display: block;
+    content: '.';
+    height: 0;
+    visibility: hidden;
+    clear: both;
   }
   > span {
     float: left;

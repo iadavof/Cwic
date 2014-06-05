@@ -32,7 +32,7 @@ div#reservation-form {
     position: relative;
     display: block;
     border: 0 none;
-    padding: 0 17em 2.6em 17em;
+    padding: 0 17em 2.9em 17em;
     margin: 0 0 50px 0;
     text-align: center;
     background-color: #d7eff2;
@@ -46,12 +46,26 @@ div#reservation-form {
     }
     input, textarea, select {
       text-align: center;
-      font-size: 1.4em;
+      font-size: 1.6em;
       font-weight: 500;
+      border: 0.1em solid #1c9cb2;
+      color: #17889d;
+      &:focus {
+        border-color: #17889d;
+      }
       &.replaced + div {
         text-align: center;
         font-size: 1.4em;
         font-weight: 500;
+        color: #17889d;
+      }
+    }
+    .field_with_errors {
+      input, textarea, select {
+        border-color: #ff3520;
+        &.replaced + div {
+          border-color: #ff3520;
+        }
       }
     }
     .timepicker-field {
