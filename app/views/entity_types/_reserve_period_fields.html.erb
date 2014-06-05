@@ -11,7 +11,7 @@
     </div>
     <div class="field">
       <%= f.label :price %>
-      <%= f.number_field :price, step: :any, min: 0 %> <span class="field-suffix"><%= t('.per_period') %></span>
+      <span class="field-prefix"><%= t('number.currency.format.unit') %></span> <%= f.number_field :price, step: :any, min: 0, class: 'price' %> <span class="field-suffix"><%= t('.per_period') %></span>
     </div>
     <div class="actions">
       <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>

@@ -34,11 +34,13 @@ div.actions {
   color: inherit;
 }
 
+.field span.field-prefix {
+  margin-right: 10px;
+}
+
 .field span.field-suffix {
   margin-left: 10px;
 }
-
-
 
 .field > .with_errors {
   display: inline-block;
@@ -133,6 +135,11 @@ input, textarea {
 input {
   &[type="number"] {
     width: 6em;
+  }
+  &[type="number"] {
+    &.price {
+      width: 10em;
+    }
   }
   &[type="file"],
   &[type="checkbox"] {
