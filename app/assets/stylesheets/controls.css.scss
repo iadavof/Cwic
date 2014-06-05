@@ -82,7 +82,7 @@ input[type="file"].replaced {
   }
   .cwic-dropdown-current-option,
   .cwic-dropdown-option {
-    padding: 0.8em 26px 0.8em 0.8em;
+    padding: 0.8em 2em 0.8em 0.8em;
     overflow: hidden;
     text-overflow: ellipsis;
     cursor: pointer;
@@ -103,13 +103,13 @@ input[type="file"].replaced {
     text-align: center;
     &:before {
       display: block;
-      font-size: 10px;
-      line-height: 10px;
-      height: 10px;
+      font-size: 0.7em;
+      line-height: 0.7em;
+      height: 0.7em;
       position: absolute;
       top: 50%;
-      right: 8px;
-      margin-top: -5px;
+      right: 0.9em;
+      margin-top: -0.35em;
       transition: transform 0.3s;
     }
     &:hover:before {
@@ -134,9 +134,9 @@ input[type="file"].replaced {
         background-image: image-url('ajax_wait.svg');
         background-size: 100% 100%;
         background-repeat: no-repeat;
-        width: 20px;
-        height: 20px;
-        margin-top: -10px;
+        width: 1.4em;
+        height: 1.4em;
+        margin-top: -0.7em;
         transform: none;
         transition: none;
       }
