@@ -38,11 +38,11 @@
           <%= format_help(t('.default_slack_times_help')) %>
           <div class="field">
             <%= f.label :slack_before %>
-            <%= f.number_field :slack_before %> <span class="field-suffix"><%= t('.minutes') %></span>
+            <%= f.number_field :slack_before, min: 0 %> <span class="field-suffix"><%= t('.minutes') %></span>
           </div>
           <div class="field">
             <%= f.label :slack_after %>
-            <%= f.number_field :slack_after %> <span class="field-suffix"><%= t('.minutes') %></span>
+            <%= f.number_field :slack_after, min: 0 %> <span class="field-suffix"><%= t('.minutes') %></span>
           </div>
         </div>
 
@@ -111,11 +111,11 @@
           <div>
             <div class="field">
               <%= f.label :min_reservation_length %>
-              <%= f.number_field :min_reservation_length %> <span class="field-suffix"><%= t('.minutes') %></span>
+              <%= f.number_field :min_reservation_length, min: 0 %> <span class="field-suffix"><%= t('.minutes') %></span>
             </div>
             <div class="field">
               <%= f.label :max_reservation_length %>
-              <%= f.number_field :max_reservation_length %> <span class="field-suffix"><%= t('.minutes') %></span>
+              <%= f.number_field :max_reservation_length, min: 0 %> <span class="field-suffix"><%= t('.minutes') %></span>
             </div>
           </div>
         </div>
