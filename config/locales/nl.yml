@@ -181,6 +181,8 @@ nl:
         icon: 'Objecticoon'
         slack_before: 'Speling vooraf'
         slack_after: 'Speling achteraf'
+        min_reservation_length: 'Minimale duur'
+        max_reservation_length: 'Maximale duur'
       entity_type/properties:
         name: 'Eigenschapnaam'
         description: 'Omschrijving bij eigenschap'
@@ -588,6 +590,7 @@ nl:
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
       reservation_statuses: 'Reservering statusen'
       minutes: 'minuten'
+      reservation_length_limitations: 'Duurbeperkingen'
     property_fields:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
       clear: 'Leegmaken'
