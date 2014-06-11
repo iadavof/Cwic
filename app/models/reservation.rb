@@ -25,6 +25,7 @@ class Reservation < ActiveRecord::Base
   validates :reservation_status, presence: true, if: 'self.entity.present?'
   validate :not_overlapping, if: :validate_overlapping
   validate :check_invalid_recurrences, if: :new_record?
+  validate :ensure_period_valid, if: 'self.begins_at.present? && self.ends_at.present?'
 
   validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
@@ -127,7 +128,7 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def total_length
+  def length
     self.ends_at - self.begins_at
   end
 
@@ -141,6 +142,10 @@ class Reservation < ActiveRecord::Base
 
   def days_was
     begins_at_was.present? && ends_at_was.present? ? period_to_days(begins_at_was, ends_at_was) : nil
+  end
+
+  def cost
+    entity.reservation_cost(self.begins_at, self.ends_at)
   end
 
   def instance_name
@@ -293,6 +298,15 @@ private
     if self.entity.present?
       not_overlapping_with_set(self.entity.reservations)
     end
+  end
+
+  def ensure_period_valid
+    # Check if reservation period is possible according to reserver periods
+    errors.add(:base, I18n.t('activerecord.errors.models.reservation.period_not_allowed')) unless entity.reservation_matches_periods?(begins_at, ends_at)
+    # Check if reservation period is long enough
+    errors.add(:base, I18n.t('activerecord.errors.models.reservation.period_too_small', count: entity.min_reservation_length)) if entity.min_reservation_length_seconds.present? && length < entity.min_reservation_length_seconds
+    # Check if reservation period is not too long
+    errors.add(:base, I18n.t('activerecord.errors.models.reservation.period_too_large', count: entity.max_reservation_length)) if entity.max_reservation_length_seconds.present? && length > entity.max_reservation_length_seconds
   end
 
   def save_recurrences

@@ -2,21 +2,23 @@ class EntityType < ActiveRecord::Base
   include PgSearch
   include Sspable
 
+  belongs_to :organisation
+  belongs_to :icon, class_name: 'EntityTypeIcon'
+
   has_many :entities, dependent: :destroy
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type
   has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
   has_many :entity_images, as: :entity_imageable, dependent: :destroy, inverse_of: :entity_imageable
   has_many :reservation_statuses, dependent: :destroy, inverse_of: :entity_type
   has_many :info_screen_entity_types, dependent: :destroy
-
-  belongs_to :icon, class_name: 'EntityTypeIcon'
-  belongs_to :organisation
+  has_many :reserve_periods, dependent: :destroy, inverse_of: :entity_type
 
   validates :name, presence: true, length: { maximum: 255 }
   validates :reservation_statuses, presence: true
-
   validates :slack_before, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :slack_after, presence: true, numericality: { greater_than_or_equal_to: 0 }
+  validates :min_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validates :max_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
   after_initialize :add_default_entity_type_reservation_statuses, if: :new_record?
   after_save :create_info_screen_entity_types
@@ -26,6 +28,7 @@ class EntityType < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
   accepts_nested_attributes_for :reservation_statuses, allow_destroy: true
+  accepts_nested_attributes_for :reserve_periods, allow_destroy: true
 
   scope :with_entities, -> { where('entities_count > 0') }
 
@@ -39,6 +42,30 @@ class EntityType < ActiveRecord::Base
     end
   end
   alias_method_chain :icon, :default
+
+  def min_reservation_length
+    super / 60 if super.present?
+  end
+
+  def min_reservation_length=(value)
+    super(value.present? ? value.to_i * 60 : nil)
+  end
+
+  def min_reservation_length_seconds
+    read_attribute(:min_reservation_length)
+  end
+
+  def max_reservation_length
+    super / 60 if super.present?
+  end
+
+  def max_reservation_length_seconds
+    read_attribute(:max_reservation_length)
+  end
+
+  def max_reservation_length=(value)
+    super(value.present? ? value.to_i * 60 : nil)
+  end
 
   def instance_name
     self.name

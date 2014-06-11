@@ -87,7 +87,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	end
 
 	def clone_reservation(recurrence_dates)
-		reservation_length = self.reservation.total_length
+		reservation_length = self.reservation.length
 
 		if recurrence_dates.first == self.reservation.begins_at
 			# Remove the first recurrence because this is the original reservation which is already saved
@@ -134,7 +134,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	def length_not_greater_than_repetition_unit
 		return unless self.repeating_unit.present?
 
-		reservation_length = self.reservation.total_length
+		reservation_length = self.reservation.length
 		repeating_every = 1 if repeating_every.nil?
 
 		if self.repeating_every * self.repeating_unit.seconds < reservation_length
