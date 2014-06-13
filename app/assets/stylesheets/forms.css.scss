@@ -77,7 +77,7 @@ button,
   position: relative;
   width: auto;
   border: 0 none;
-  background-color: #666;
+  background-color: #17889d;
   color: #fff;
   padding: 0.8em 1em;
   text-decoration: none;
@@ -91,21 +91,27 @@ button,
     vertical-align: middle;
   }
   &:hover {
-    background-color: #747474;
+    background-color: #3194a5;
     color: #fff;
   }
   &:active {
     background-image: linear-gradient(to top, rgba(255,255,255,.2) 0%, transparent 60%);
   }
-  &.blue {
-    background-color: #17889d;
+  &.grey {
+    background-color: #666;
     &:hover {
-      background-color: #3194a5;
+      background-color: #747474;
+    }
+  }
+  &.green {
+    background-color: #18c13d;
+    font-weight: bold;
+    &:hover {
+      background-color: #3fc65a;
     }
   }
   &.red {
     background-color: #ff3520;
-    font-weight: bold;
     &:hover {
       background-color: #ff4a37;
     }
@@ -151,7 +157,7 @@ input {
     border: 0 none;
   }
   &[type="submit"] {
-    @extend input[type="submit"].red;
+    @extend input[type="submit"].green;
   }
   &::-moz-focus-inner {
     border: 0 none;

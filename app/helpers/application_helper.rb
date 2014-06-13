@@ -30,6 +30,6 @@ module ApplicationHelper
 
   def format_help(text, type = :block)
     text = format_text(text)
-    content_tag((type == :inline ? :span : :div), content_tag(:i, '', class: 'icon-info-sign') + content_tag(:p, text), class: 'help')
+    content_tag((type == :inline ? :span : :div), content_tag(:i, '', class: 'icon-info-sign', title: text), class: 'help')
   end
 end

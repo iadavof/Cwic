@@ -126,12 +126,12 @@
 /* Submenu */
 
 #submenu-box {
-  background: #999;
+  background-color: #666;
   color: #fff;
   text-align: center;
   background-image: image-url("logo_transp.png");
   background-repeat: no-repeat;
-  background-position: left bottom;
+  background-position: left bottom; /* fallback for older browsers */
   background-position: left bottom -50px;
   background-size: 300px auto;
   z-index: 199;
@@ -222,26 +222,19 @@ html.js #submenu-box > .submenu > .submenu-block {
 /* Local menu */
 
 #local-menu {
-  background-color: #17889d;
+  background-color: #fff;
   padding: 0 0.5em 0 1em;
   position: relative;
-  box-shadow: 0 0 30px rgba(0,0,0,0.3);
+  box-shadow: 0 0 30px rgba(0,0,0,0.2);
   z-index: 198;
+  .button {
+    margin: 0.4em 0;
+    padding: 0.6em 0.8em;
+  }
 }
 
 html.js body[data-current-user-id=''] #local-menu {
   display: none;
-}
-
-#local-menu .button {
-  margin: 0.4em 0;
-  padding: 0.6em 0.8em;
-  background: transparent;
-  color: #fff;
-}
-
-#local-menu .button:hover {
-  background: rgba(0, 0, 0, 0.2);
 }
 
 #local-menu .navigation-actions,

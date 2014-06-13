@@ -14,8 +14,8 @@ nl:
   show_object_html: '%{class}: <strong>%{name}</strong>'
   edit_object_html: 'Bewerk %{class}: <strong>%{name}</strong>'
   to_index_objects: 'Lijst met %{classes}'
-  to_new_object: 'Nieuwe %{class}'
-  to_show_object: 'Bekijk %{name}'
+  to_new_object: '%{class} toevoegen'
+  to_show_object: '%{name} bekijken'
   to_edit_object: 'Bewerken'
   to_destroy_object: 'Verwijderen'
   to_destroy_object_confirm: 'Weet u zeker dat u %{name} wilt verwijderen?'
@@ -31,6 +31,7 @@ nl:
   order_nested_object: 'Volgorde van %{classes} aanpassen'
   edit_nested_object: '%{class} bewerken'
   done_nested_object: 'Klaar met bewerken'
+  settings: 'Instellingen'
   include_blank_none: 'Geen'
   prompt_choose: 'Kies...'
   all_organisations: 'Alle organisaties'
@@ -222,14 +223,14 @@ nl:
         image: 'Foto'
         include_entity_type_images: "Voeg foto's van objecttype toe"
         remote_image_url: 'URL van externe afbeelding'
-        image_from_file: 'Locale afbeelding'
+        image_from_file: 'Lokale afbeelding'
       entity_type_icon:
         name: 'Naam'
         organisation: 'Organisatie'
         organisation_id: 'Organisatie'
         entity_type_icon_image: 'Icoon'
         remote_image_url: 'URL van externe afbeelding'
-        image_from_file: 'Locale afbeelding'
+        image_from_file: 'Lokale afbeelding'
       entity/properties:
         value: 'Eigenschap'
       reservation:
@@ -634,12 +635,19 @@ nl:
     status_controls:
       saved: 'Opgeslagen'
     form:
+      entity: 'Object'
+      entity_type: 'Objectsoort'
+      selected_entity: 'Geselecteerd object'
+      available_entities: 'Beschikbare objecten'
+      organisation_client: 'Klant'
       organisation_client_type: 'Soort klant'
       existing_organisation_client: 'Bestaande klant'
       new_organisation_client: 'Nieuwe klant'
+      settings: 'Instellingen'
       reservation_description_example: 'tekenles, receptie, bloemschikken enz.'
       default_slack_times: 'Speling voor reservering'
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na de reservering. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Hieronder kunnen de waarden voor deze speling worden aangepast voor deze reservering.'
+      minutes: 'minuten'
     modal_form:
       new_organisation_client: 'Nieuwe klant'
       full_form: 'Meer opties'

@@ -106,10 +106,10 @@ ui-timepicker-table td {
 /* TABS */
 
 .ui-tabs {
-  background: transparent;
+  background: #eee;
+  border: 0 none;
+  padding: 0 5px 5px 5px;
   border-radius: 0;
-  border-color: #cccccc;
-  padding: 0;
   margin-bottom: 1em;
 }
 
@@ -122,20 +122,24 @@ ui-timepicker-table td {
 }
 
 .ui-tabs .ui-tabs-nav {
-  background: #f7f7f7;
+  background: transparent;
   border: 0 none;
-  border-bottom: 1px solid #cccccc;
   border-radius: 0;
   padding: 0;
 }
 
+.ui-tabs .tab-wrap {
+  background: #fff;
+}
+
 .ui-tabs .ui-state-default {
-  background: #dddddd;
+  background: transparent;
   border: 0 none;
   color: inherit;
   border-radius: 0;
 }
 
+/*
 .ui-tabs .ui-state-active:after {
   border-left: 5px solid transparent;
   border-right: 5px solid transparent;
@@ -151,6 +155,7 @@ ui-timepicker-table td {
   width: 0;
   z-index: 1;
 }
+*/
 
 .ui-tabs .ui-state-default a,
 .ui-tabs .ui-state-hover a {
@@ -158,7 +163,7 @@ ui-timepicker-table td {
 }
 
 .ui-tabs .ui-state-hover {
-  background: #cccccc;
+  background: transparent;
   color: inherit;
   border: 0 none;
 }
@@ -175,7 +180,10 @@ ui-timepicker-table td {
   margin: 0;
   padding: 0;
   line-height: normal;
-  border-left: 1px solid #cccccc;
+  border-top: 5px solid transparent;
+  &:hover {
+    border-top-color: #ccc;
+  }
 }
 
 .ui-tabs .ui-tabs-nav li:first-child {
@@ -189,12 +197,8 @@ ui-timepicker-table td {
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
-  border: 0 none;
-  background: #ff3520;
+  border-top-color: #ff3520;
+  background: #fff;
   margin: 0;
   padding: 0;
-}
-
-.ui-tabs .ui-tabs-nav li.ui-tabs-active a {
-  color: #ffffff;
 }

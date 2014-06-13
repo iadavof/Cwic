@@ -13,7 +13,7 @@ form.mini-search {
 
 #search-bar {
   overflow: hidden;
-  background-color: #fff;
+  background-color: #1c9cb2;
   text-align: center;
   position: relative;
   z-index: 2;
@@ -52,8 +52,7 @@ html.js #search-bar {
   margin-left: 8px;
   vertical-align: top;
   &.open {
-    color: #1c9cb2;
-    background-color: #fff;
+    background-color: #1c9cb2;
   }
 }
 

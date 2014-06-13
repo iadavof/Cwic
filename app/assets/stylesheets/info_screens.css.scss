@@ -1,5 +1,6 @@
 body.controller-info_screens.action-show #header,
 body.controller-info_screens.action-show #submenu-box,
+body.controller-info_screens.action-show #local-menu,
 body.controller-info_screens.action-show h1 {
   display: none;
 }
@@ -14,6 +15,15 @@ body.controller-info_screens.action-show #content {
 body.controller-info_screens.action-show {
   padding: 0;
   margin: 0;
+}
+
+html.js body.controller-info_screens.action-show #below-header,
+html.js body.controller-info_screens.action-show #main-area {
+  position: static;
+  top: auto;
+  left: auto;
+  right: auto;
+  bottom: auto;
 }
 
 body.controller-info_screens.action-show #content-area {

@@ -1,26 +1,28 @@
 div#entity-type-form {
-  div.field.icon-select label {
+  div.field.field-icon-select label {
     float: left;
     border: 2px solid #ccc;
     display: block;
     margin: 5px;
-    padding: 5px;
-    height: 60px;
-    line-height: 120px;
-    background-position: center 5px;
+    padding: 70px 10px 10px 10px;
+    background-position: center 10px;
     background-repeat: no-repeat;
     text-align: center;
-    font-size: 50%;
+    font-size: 0.9em;
     white-space: nowrap;
     text-overflow: ellipsis;
     overflow: hidden;
+    width: auto;
+    min-width: 50px;
+    max-width: 100px;
+    cursor: pointer;
   }
 
-  div.field.icon-select label.active {
+  div.field.field-icon-select label.active {
       border: 2px solid #ff3520;
   }
 
-  div.field.icon-select input[type="radio"] {
+  div.field.field-icon-select input[type="radio"] {
     float: left;
     width: 40px;
     height: 40px;

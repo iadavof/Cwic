@@ -41,6 +41,23 @@
   }
 }
 
+div#reservation-form {
+  div.entity-selector {
+    div.selected-entity {
+      @extend .icon-time;
+      &.available {
+        @extend .icon-ok;
+      }
+      &.unavailable {
+        @extend .icon-remove;
+      }
+      &:before {
+        @extend [class^="icon-"];
+      }
+    }
+  }
+}
+
 .cwic-checkbox.checked > .inner {
   @extend .icon-ok;
   &:before {
