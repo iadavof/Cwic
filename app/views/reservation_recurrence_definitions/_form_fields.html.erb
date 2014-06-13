@@ -6,7 +6,7 @@
 	<div class="recurrence_definition_fields">
 		<div  class="field">
 			<%= f.label :repeating_unit %>
-			<%= f.select :repeating_unit_id, f.object.repeating_units.map { |tu| [tu.repetition_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'repeating-unit' } %>
+			<%= f.select :repeating_unit_id, f.object.repeating_units.map { |tu| [tu.human_repetition_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'repeating-unit' } %>
 		</div>
 		<div class="field recurrence_definition_weekly">
 			<%= f.label :repeating_weekdays %>

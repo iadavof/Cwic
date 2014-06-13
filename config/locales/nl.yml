@@ -46,6 +46,7 @@ nl:
   xls: 'xls'
   for_example: 'Bijv.'
   default_title: 'Titel'
+  unlimited: 'Onbeperkt'
   multiple:
     delete: 'Verwijderen'
     edit: 'Bewerken'
@@ -127,6 +128,9 @@ nl:
       reservation_log:
         one: 'Aanpassing'
         other: 'Aanpassingen'
+      reserve_period:
+        one: 'Reserveerperiode'
+        other: 'Reserveerperioden'
     attributes:
       user:
         name: 'Naam'
@@ -177,6 +181,8 @@ nl:
         icon: 'Objecticoon'
         slack_before: 'Speling vooraf'
         slack_after: 'Speling achteraf'
+        min_reservation_length: 'Minimale duur'
+        max_reservation_length: 'Maximale duur'
       entity_type/properties:
         name: 'Eigenschapnaam'
         description: 'Omschrijving bij eigenschap'
@@ -200,7 +206,7 @@ nl:
         amount_relevant: 'Vraag aantal?'
         default_price: 'Standaardprijs'
       entity_type/options:
-        name: 'Eigenschapnaam'
+        name: 'Optienaam'
         description: 'Omschrijving bij optie'
         default_price: 'Standaardprijs bij optie'
       entity:
@@ -280,6 +286,17 @@ nl:
       reservation_status:
         name: 'Naam'
         color: 'Kleur'
+      reserve_period:
+        name: 'Naam'
+        period_amount: 'Periode aantal'
+        period_unit: 'Periode eenheid'
+        period_unit_id: 'Periode eenheid'
+        price: 'Prijs'
+      entity_type/reserve_periods:
+        period_amount: 'Periode bij reserveerperiode'
+        period_unit: 'Periode bij reserveerperiode'
+        period_unit_id: 'Periode bij reserveerperiode'
+        price: 'Prijs bij reserveerperiode'
     errors:
       messages:
         date_blank: "datum moet opgegeven zijn"
@@ -296,6 +313,9 @@ nl:
             user:
               taken: 'bestaat al binnen de organisatie'
         reservation:
+          period_not_allowed: 'De periode van de reservering is niet toegestaan volgens de gedefinieerde reserveerperioden voor dit object'
+          period_too_small: 'Een reservering voor dit object moet minimaal %{count} minuten duren'
+          period_too_large: 'Een reservering voor dit object mag maximaal %{count} minuten duren'
           repetition_error_html: 'Herhaling van %{begins_at}: %{ir_message}'
           multiple_edit_error_html: 'Reservering R#%{reservation_id}: %{ir_message}'
           multiple_edit_overlaps: 'De ingevoerde tijden overlappen met elkaar'
@@ -312,6 +332,7 @@ nl:
             repeating_until:
               invalid_date: 'ongeldige datum'
           repeating_until_before_end: 'voor herhalingsreeks valt voor het einde van de eerste reservering'
+
   data_types:
     string:
       name: 'Regel tekst'
@@ -337,35 +358,86 @@ nl:
 
   time_units:
     second:
-      name: 'Seconde'
+      name:
+        one: 'Seconde'
+        other: 'Seconden'
+      numeral_name:
+        one: 'Seconde'
+        other: 'Seconden'
       repetition_name: 'Elke seconde'
     minute:
-      name: 'Minuut'
+      name:
+        one: 'Minuut'
+        other: 'Minuten'
+      numeral_name:
+        one: 'Minuut'
+        other: 'Minuten'
       repetition_name: 'Elke minuut'
     quarter:
-      name: 'Kwartier'
+      name:
+        one: 'Kwartier'
+        other: 'Kwartieren'
+      numeral_name:
+        one: 'Kwartier'
+        other: 'Kwartier'
       repetition_name: 'Elk kwartier'
     half_hour:
-      name: 'Half uur'
+      name:
+        one: 'Half uur'
+        other: 'Halve uren'
+      numeral_name:
+        one: 'Half uur'
+        other: 'Halve uren'
       repetition_name: 'Elk half uur'
     hour:
-      name: 'Uur'
+      name:
+        one: 'Uur'
+        other: 'Uren'
+      numeral_name:
+        one: 'Uur'
+        other: 'Uur'
       repetition_name: 'Elk uur'
     day:
-      name: 'Dag'
+      name:
+        one: 'Dag'
+        other: 'Dagen'
+      numeral_name:
+        one: 'Dag'
+        other: 'Dagen'
       repetition_name: 'Dagelijks'
     week:
-      name: 'Week'
+      name:
+        one: 'Week'
+        other: 'Weken'
+      numeral_name:
+        one: 'Week'
+        other: 'Weken'
       repetition_name: 'Wekelijks'
     month:
-      name: 'Maand'
+      name:
+        one: 'Maand'
+        other: 'Maanden'
+      numeral_name:
+        one: 'Maand'
+        other: 'Maanden'
       repetition_name: 'Maandelijks'
     year:
-      name: 'Jaar'
+      name:
+        one: 'Jaar'
+        other: 'Jaren'
+      numeral_name:
+        one: 'Jaar'
+        other: 'Jaar'
       repetition_name: 'Jaarlijks'
     infinite:
       name: 'Oneindig'
+      numeral_name: 'Oneindig'
       repetition_name: 'Geen herhaling'
+
+  reserve_period:
+    default_name:
+      one: 'Per %{unit}'
+      other: 'Per %{count} %{unit_plural}'
 
   errors:
     messages:
@@ -504,9 +576,6 @@ nl:
     still_used_destroy_confirm:
       one: 'Objectsoort %{name} wordt nog gebruikt door een object. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
       other: 'Objectsoort %{name} wordt nog gebruikt door %{count} objecten. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
-    property_fields:
-      required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
-      clear: 'Leegmaken'
     form:
       general: 'Algemeen'
       default_slack_times: 'Standaard speling voor en na reserveringen van dit object soort'
@@ -516,10 +585,18 @@ nl:
       options: 'Opties'
       options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
       images: "Foto's"
+      reserve_periods: 'Reserveerperioden'
       entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
       reservation_statuses: 'Reservering statusen'
       minutes: 'minuten'
+      reservation_length_limitations: 'Duurbeperkingen'
+    property_fields:
+      required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
+      clear: 'Leegmaken'
+    reserve_period_fields:
+      period: 'Periode'
+      per_period: 'per periode'
 
   entity_type_icons:
     form:

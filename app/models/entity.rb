@@ -28,6 +28,8 @@ class Entity < ActiveRecord::Base
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
 
+  delegate :reserve_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
+
   default_scope { order('id ASC') }
 
   pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
@@ -124,5 +126,14 @@ class Entity < ActiveRecord::Base
     property = self.properties.detect { |p| name_or_index.is_a?(Integer) ? p.property_type.index == name_or_index : p.property_type.name == name_or_index }
     raise "Unknown property #{name} for entity of type #{self.entity_type.instance_name}" if property.nil?
     property.set_value(value)
+  end
+
+  def reservation_matches_periods?(begins_at, ends_at)
+    reservation_cost(begins_at, ends_at).present?
+  end
+
+  def reservation_cost(begins_at, ends_at)
+    length = (ends_at - begins_at).round
+    Cwic::Knapsack.new(reserve_periods.map { |rp| { c: rp.price, w: rp.length } }).solve_minimum(length)
   end
 end

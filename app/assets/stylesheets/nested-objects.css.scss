@@ -76,6 +76,9 @@ div.nested-object-wrapper {
     display: none;
     position: relative;
     padding-right: 45px;
+    &.visible {
+      display: block;
+    }
     div.name input {
       width: 140px;
     }
