@@ -258,7 +258,7 @@ CwicScheduleView.prototype.bindControls = function() {
   this.bindStartStopEditModeOnClick();
 
   // Bind actions for creating a new reservation with the plus one button
-  this.bindPlusOneButtonActions();
+  this.bindPlusOneAction();
 
   // Perform the required actions on resize of the browser window
   this.bindOnResize();
@@ -446,7 +446,6 @@ CwicScheduleView.prototype.saveEditModeChanges = function() {
 };
 
 CwicScheduleView.prototype.discardEditModeChanges = function() {
-  console.debug('discard');
   if(schedule.focusedScheduleItem) {
     schedule.focusedScheduleItem.resetConcept();
   }
@@ -615,76 +614,30 @@ CwicScheduleView.prototype.undoSaveAction = function(scheduleItem) {
   this.patchScheduleItemBackend(scheduleItem);
 };
 
-CwicScheduleView.prototype.bindPlusOneButtonActions = function() {
+CwicScheduleView.prototype.bindPlusOneAction = function() {
   var schedule = this;
 
-  var context = {
-    reset: function() {
-      this.plusOneButton = null;
-      this.focusMoment = null;
-      this.container = null;
-      return this;
-    },
-    removePlusOneButton: function() {
-      if(this.plusOneButton != null) {
-        this.plusOneButton.remove();
-        this.plusOneButton = null;
-      }
-      $('html').off('click.plusoneremove');
-    }
-  }.reset();
-
   this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-object-item-parts, div.schedule-item-wrapper', function(event) {
-    schedule.plusOneActionCreatePlusOneButton(event, context);
-  });
-
-  this.scheduleContainer.find('.schedule-body').on('click', 'div.schedule-plus-one-button', function(event) {
-    schedule.plusOneActionStartEditMode(event, context);
-  });
-};
-
-CwicScheduleView.prototype.plusOneActionCreatePlusOneButton = function(event, context) {
-    if(this.clickedScheduleItem(event)) {
-      // We clicked on a schedule item, do nothing.
+    // If on schedule item, return
+    if(schedule.clickedScheduleItem(event) != null) {
       return;
     }
 
-    if(this.focusedScheduleItem == null && context.plusOneButton == null) {
+    if(schedule.focusedScheduleItem == null) {
+      event.preventDefault();
       event.stopPropagation();
-      context.container = this.getContainerForPoint(event);
-      var rel = schedule.getPointerRel(event, context.container);
-      context.focusMoment = this.nearestMomentPoint(rel, context.container);
-      context.plusOneButton = APP.util.getTemplateClone('plusOneButtonTemplate');
-
-      // Set the correct position and dimensions of the plusone button
-      context.plusOneButton.css(schedule.cssLeftOrTop(), schedule.timeToPercentage(moment(context.focusMoment).subtract(schedule.getSnapLength(), 'minutes')) + '%');
-      context.plusOneButton.css(schedule.cssWidthOrHeight(), schedule.timePercentageSpan(moment(context.focusMoment).subtract(schedule.getSnapLength(), 'minutes'), moment(context.focusMoment).add(schedule.getSnapLength(), 'minutes')) + '%');
-
-      // Add the button to the correct timeframe-entity container
-      context.container.append(context.plusOneButton);
-
-      // Add event handler to remove this plus one
-      $('html').on('click.plusoneremove', function() { context.removePlusOneButton.call(context) });
+      var container = schedule.getContainerForPoint(event);
+      var rel = schedule.getPointerRel(event, container);
+      var scheduleEntity = schedule.scheduleEntities[container.data('scheduleEntityID')];
+      var focusMoment =  schedule.nearestMomentPoint(rel, container);
+      schedule.focusedScheduleItem = scheduleEntity.createNewScheduleItem();
+      schedule.focusedScheduleItem.conceptBegin = moment(focusMoment).subtract(schedule.getSnapLength(), 'minutes');
+      schedule.focusedScheduleItem.conceptEnd = moment(focusMoment).add(schedule.getSnapLength(), 'minutes');
+      schedule.focusedScheduleItem.render(true);
+      schedule.scheduleItemChanged();
+      schedule.startEditMode(null, true);
     }
-};
-
-CwicScheduleView.prototype.plusOneActionStartEditMode = function(event, context) {
-  event.stopPropagation();
-  if(schedule.focusedScheduleItem == null) {
-    var scheduleEntity = schedule.scheduleEntities[context.container.data('scheduleEntityID')];
-
-    // Create a new scheduleItem for the selected time
-    schedule.focusedScheduleItem = scheduleEntity.createNewScheduleItem();
-    schedule.focusedScheduleItem.conceptBegin = moment(context.focusMoment).subtract(schedule.getSnapLength(), 'minutes');
-    schedule.focusedScheduleItem.conceptEnd = moment(context.focusMoment).add(schedule.getSnapLength(), 'minutes');
-
-    context.removePlusOneButton();
-    context.reset();
-    // Render the new created schedule item
-    schedule.focusedScheduleItem.render(true);
-    // End start edit mode for this item
-    schedule.startEditMode(null, true);
-  }
+  });
 };
 
 CwicScheduleView.prototype.setNewReservationForm = function(reservationForm, newScheduleItem, resetNewScheduleItem) {

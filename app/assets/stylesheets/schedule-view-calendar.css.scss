@@ -21,19 +21,20 @@ div.calendar.verticalCalendar div.schedule-body {
   height: 1080px; /* 24 * 45 */
 }
 
-#local-menu div.control-container {
+#local-menu div.navigation-actions div.control-container {
   display: inline-block;
 }
 
-#local-menu div.control-container a.button.active {
+#local-menu div.navigation-actions div.control-container a.button.active,
+#local-menu div.page-actions div.control-container a.button.active {
   background-color: #8c8c8c;
 }
 
-#local-menu div.control-container.domain-custom {
+#local-menu div.page-actions div.control-container.domain-custom {
   display: none;
 }
 
-#local-menu div.control-container span.tm {
+#local-menu div.page-actions div.control-container span.tm {
   padding: 0 10px;
   color: #fff;
 }
@@ -639,6 +640,8 @@ div.calendar div.schedule-body div.column div.schedule-item {
   transition: opacity 300ms ease-in-out;
 }
 
+div.calendar div.schedule-body div.row div.schedule-item div.plus,
+div.calendar div.schedule-body div.column div.schedule-item div.plus,
 div.calendar div.schedule-body div.row div.schedule-item div.ok,
 div.calendar div.schedule-body div.column div.schedule-item div.ok {
   width: 100%;
@@ -651,12 +654,10 @@ div.calendar div.schedule-body div.column div.schedule-item div.ok {
   display: none;
 }
 
+div.calendar div.schedule-body div.row div.schedule-item div.plus span,
+div.calendar div.schedule-body div.column div.schedule-item div.plus span,
 div.calendar div.schedule-body div.row div.schedule-item div.ok span,
 div.calendar div.schedule-body div.column div.schedule-item div.ok span {
-  width: 25px;
-  height: 25px;
-  margin-left: -12.5px;
-  margin-top: -12.5px;
   text-align: center;
   position: absolute;
   left: 50%;
@@ -664,6 +665,22 @@ div.calendar div.schedule-body div.column div.schedule-item div.ok span {
   font-size: 1.5em;
   font-weight: bold;
   color: white;
+  width: 25px;
+  height: 25px;
+}
+
+div.calendar div.schedule-body div.row div.schedule-item div.ok span,
+div.calendar div.schedule-body div.column div.schedule-item div.ok span {
+  font-family: 'WebHostingHub-Glyphs';
+  margin-left: -12.5px;
+  margin-top: -12.5px;
+}
+
+div.calendar div.schedule-body div.row div.schedule-item div.plus span,
+div.calendar div.schedule-body div.column div.schedule-item div.plus span {
+  font-size: 2.2em;
+  margin-left: -15px;
+  margin-top: -15px;
 }
 
 div.calendar div.schedule-body div.row div.schedule-item-wrapper.blurred:after,

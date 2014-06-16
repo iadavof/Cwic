@@ -447,7 +447,8 @@ CwicScheduleViewItem.prototype.render = function(concept) {
       this.domObjects[partBeginContainerId] = schedulePartWrapper.get(0);
     }
 
-    schedulePartWrapper.find('div.ok')[this.conceptDiffersWithOriginal() ? 'show' : 'hide']();
+    schedulePartWrapper.find('div.plus')[this.item_id == null ? 'show' : 'hide']();
+    schedulePartWrapper.find('div.ok')[this.item_id !== null && this.conceptDiffersWithOriginal() ? 'show' : 'hide']();
 
     if(momentBlock.begin.isAfter(partBegin) && momentBlock.begin.isBefore(partEnd) && momentBlock.end.isAfter(partBegin) && momentBlock.end.isBefore(partEnd)) {
       this.showResizers(schedulePartWrapper, true, true);
