@@ -7,5 +7,5 @@
   <%= params_to_hidden_fields(:date_domain_from, :date_domain_to, :mini_search) %>
 
   <%= text_field_tag(:mini_search, params[:mini_search], placeholder: t('.search_' + current_search_type.to_s.downcase + '_placeholder')) %>
-  <%= submit_tag(t('.search'), class: 'button red') %>
+  <%= submit_tag(t('.search'), class: 'button') %>
 <% end %>

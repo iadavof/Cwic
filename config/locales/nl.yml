@@ -496,12 +496,14 @@ nl:
 
   layouts:
     menu:
-      logout: 'Uitloggen'
       overview: 'Overzicht'
       reservations: 'Reserveringen'
       settings: 'Instellingen'
       admin: 'Admin'
       feedback: 'Feedback'
+      logout: 'Uitloggen'
+      organisation: 'Organisatie'
+      actions: 'Acties'
     submenu:
       home: 'Home'
       reservations: 'Reserveringen'

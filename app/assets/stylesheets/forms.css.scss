@@ -86,7 +86,7 @@ button,
   line-height: normal;
   transition: background-color 0.2s ease-in-out;
   background-image: linear-gradient(to bottom, rgba(255,255,255,.2) 0%, transparent 60%);
-  &:before {
+  &:before, i {
     margin: 0 0.4em 0 0;
     vertical-align: middle;
   }

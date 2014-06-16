@@ -27,6 +27,7 @@ div#reservation-form {
     }
     label {
       display: inline-block;
+      color: #1c9cb2;
     }
     .suffix {
       font-size: 1.3em;
@@ -91,7 +92,7 @@ div#reservation-form {
     label {
       display: block;
       width: auto;
-      font-weight: 500;
+      font-weight: bold;
       font-size: 1.3em;
     }
   }
