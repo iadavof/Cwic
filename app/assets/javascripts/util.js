@@ -66,6 +66,11 @@ APP.util = {
         output[counter++] = input[i];
     }
     return output;
+  },
+  getTemplateClone: function(id) {
+    var newitem = $($('#' + id).text());
+    APP.global.initializeSpecialFormFields(newitem);
+    return newitem;
   }
 }
 
