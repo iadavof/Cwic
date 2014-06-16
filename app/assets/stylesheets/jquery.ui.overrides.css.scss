@@ -139,24 +139,6 @@ ui-timepicker-table td {
   border-radius: 0;
 }
 
-/*
-.ui-tabs .ui-state-active:after {
-  border-left: 5px solid transparent;
-  border-right: 5px solid transparent;
-  border-top: 10px solid #ff3520;
-  content: ".";
-  display: block;
-  height: 0;
-  left: 50%;
-  margin-left: -5px;
-  overflow: hidden;
-  position: absolute;
-  top: 100%;
-  width: 0;
-  z-index: 1;
-}
-*/
-
 .ui-tabs .ui-state-default a,
 .ui-tabs .ui-state-hover a {
   color: inherit;
@@ -197,7 +179,7 @@ ui-timepicker-table td {
 }
 
 .ui-tabs .ui-tabs-nav li.ui-tabs-active {
-  border-top-color: #ff3520;
+  border-top-color: #1c9cb2;
   background: #fff;
   margin: 0;
   padding: 0;

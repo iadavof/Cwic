@@ -245,8 +245,8 @@ APP.global = {
 
     content.append($('<p>', { text: message, class: 'confirm-question' }));
 
-    var notOkButton = $('<a>', { class: 'button', text: jsLang.global.no });
-    var okButton = $('<a>', { class: 'button red', text: jsLang.global.yes });
+    var notOkButton = $('<a>', { class: 'button red', text: jsLang.global.no });
+    var okButton = $('<a>', { class: 'button green', text: jsLang.global.yes });
 
     var okAction = function() { APP.modal.closeModal(); $.rails.allowActionAnswer(element, true); };
 

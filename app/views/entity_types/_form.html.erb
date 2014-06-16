@@ -54,25 +54,26 @@
               <%= render partial: 'property_fields', locals: { f: pf } %>
             <% end %>
           </div>
-          <%= f.link_to_add '', :properties, data: { target: '#entity-type-properties' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
+          <%= f.link_to_add '', :properties, data: { target: '#entity-type-properties' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
         </div>
 
         <div id="reservation-statuses" class="hide">
           <h2><%= ReservationStatus.model_name.human(count: 2) %></h2>
           <%= format_help(t('.reservation_status_help')) %>
           <div class="reservation-status-header clearfix">
+            <div class="icon icon-resize-vertical sort-handle hidden"></div>
             <div class="name"><%= ReservationStatus.human_attribute_name(:name) %></div>
             <div class="color"><%= ReservationStatus.human_attribute_name(:color) %></div>
-            <div><%= ReservationStatus.human_attribute_name(:blocking) %></div>
-            <div><%= ReservationStatus.human_attribute_name(:info_boards) %></div>
-            <div><%= ReservationStatus.human_attribute_name(:billable) %></div>
+            <div><%= ReservationStatus.human_attribute_name(:blocking).html_safe %></div>
+            <div><%= ReservationStatus.human_attribute_name(:info_boards).html_safe %></div>
+            <div><%= ReservationStatus.human_attribute_name(:billable).html_safe %></div>
           </div>
           <ul class="nested-form" id="entity-type-reservation-statuses">
             <%= f.fields_for :reservation_statuses, @entity_type.reservation_statuses.sort_by(&:index), wrapper: false do |rsf| %>
               <%= render partial: 'reservation_status_fields', locals: { f: rsf } %>
             <% end %>
           </ul>
-          <%= f.link_to_add '', :reservation_statuses, data: { target: '#entity-type-reservation-statuses' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservationStatus.model_name.human.lcfirst) %>
+          <%= f.link_to_add '', :reservation_statuses, data: { target: '#entity-type-reservation-statuses' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: ReservationStatus.model_name.human.lcfirst) %>
         </div>
 
         <div id="options" class="hide">
@@ -83,7 +84,7 @@
               <%= render partial: 'option_fields', locals: { f: of } %>
             <% end %>
           </div>
-          <%= f.link_to_add '', :options, data: { target: '#entity-type-options' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityTypeOption.model_name.human.lcfirst) %>
+          <%= f.link_to_add '', :options, data: { target: '#entity-type-options' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityTypeOption.model_name.human.lcfirst) %>
         </div>
 
         <div id="images" class="hide">
@@ -94,7 +95,7 @@
               <%= render partial: 'entities/entity_image_fields', locals: { f: eif } %>
             <% end %>
           </div>
-          <%= f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst) %>
+          <%= f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst) %>
         </div>
 
         <div id="reserve-periods" class="hide">
@@ -105,7 +106,7 @@
               <%= render partial: 'reserve_period_fields', locals: { f: rpf } %>
             <% end %>
           </div>
-          <%= f.link_to_add '', :reserve_periods, data: { target: '#entity-type-reserve-periods' }, class: 'icon icon-plus add-nested-object', title: t('add_nested_object', class: ReservePeriod.model_name.human.lcfirst) %>
+          <%= f.link_to_add '', :reserve_periods, data: { target: '#entity-type-reserve-periods' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: ReservePeriod.model_name.human.lcfirst) %>
 
           <h2><%= t('.reservation_length_limitations') %></h2>
           <div>

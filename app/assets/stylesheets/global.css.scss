@@ -39,6 +39,10 @@ html.js body {
   color: #fff;
 }
 
+.hidden {
+  visibility: hidden;
+}
+
 h1, h2, h3, h4, h5, h6 {
   font-weight: normal;
   margin: 1.5em 0 1em 0;
@@ -202,5 +206,37 @@ div.entity-images-container {
     margin: 10px;
     float: right;
     text-align: center;
+  }
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  &.action-button {
+    font-size: 13px !important;
+    color: #fff !important;
+    background-color: #1c9cb2;
+    padding: 0.5em;
+    width: 1em;
+    height: 1em;
+    line-height: 1em;
+    border-radius: 50%;
+    transition: 0.2s;
+    &:hover {
+      color: #1c9cb2 !important;
+      background-color: #eee;
+    }
+    &.icon-remove {
+      background-color: #ff3520;
+      &:hover {
+        color: #ff3520 !important;
+        background-color: #eee;
+      }
+    }
+    &.icon-ok {
+      background-color: #18c13d;
+      &:hover {
+        color: #18c13d !important;
+        background-color: #eee;
+      }
+    }
   }
 }

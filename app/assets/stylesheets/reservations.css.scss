@@ -11,17 +11,19 @@ div#reservation-form {
     width: 16em;
     &.slack-field-begin {
       left: 0;
-      border-right: 5px solid #fff;
     }
     &.slack-field-end {
       right: 0;
-      border-left: 5px solid #fff;
     }
     span {
       margin: 0 10px;
     }
     input {
       width: 5.5em;
+      border-color: #99d2dd;
+      &:focus {
+        border-color: #6dbfce;
+      }
     }
     label {
       display: inline-block;
@@ -36,11 +38,12 @@ div#reservation-form {
   fieldset.begin-and-end {
     position: relative;
     display: block;
-    border: 0 none;
+    border: 1px solid #6dbfce;
+    box-shadow: 0 0 15px rgba(0,0,0,0.2);
     padding: 0 17em 3.5em 17em;
     margin: 0 0 30px 0;
     text-align: center;
-    background-color: #1c9cb2;
+    background-color: #6dbfce;
     label, .suffix, label + span.help, .suffix + span.help {
       padding: 0.8em 0;
       vertical-align: middle;
@@ -51,9 +54,9 @@ div#reservation-form {
     }
     input, textarea, select {
       text-align: center;
-      font-size: 1.6em;
+      font-size: 1.4em;
       font-weight: 500;
-      border: 0.1em solid #1c9cb2;
+      border: 1px solid #1c9cb2;
       color: #17889d;
       &:focus {
         border-color: #17889d;
@@ -80,9 +83,9 @@ div#reservation-form {
       color: #fff;
       display: inline-block;
       vertical-align: middle;
-      font-size: 3.6em;
+      font-size: 3.2em;
       line-height: 180%;
-      margin: -0.18em 0 0 0;
+      margin: -0.2em 0 0 0;
       padding: 0;
     }
     label {

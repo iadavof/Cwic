@@ -1,5 +1,12 @@
 /* Main menu */
 
+.logo-in-app {
+  width: auto;
+  height: 2.2em;
+  margin: 0.45em;
+  vertical-align: top;
+}
+
 #menu-bar {
   position: relative;
   background: #ff3520;
@@ -50,22 +57,12 @@
 }
 
 #main-menu > li > a,
-#user-menu > li > a,
+#user-menu .section ul > li > a,
 #user-info a {
   display: block;
   padding: 0.7em 0.9em;
   color: #fff;
   text-decoration: none;
-}
-
-#user-menu > li {
-  display: block;
-  > a {
-    > i.icon {
-      width: 20px;
-      display: inline-block;
-    }
-  }
 }
 
 #main-menu > li {
@@ -98,7 +95,7 @@
 }
 
 #main-menu > li > a:hover,
-#user-menu > li > a:hover {
+#user-menu .section ul > li > a:hover {
   background: rgba(255,255,255,0.1);
 }
 
@@ -107,14 +104,50 @@
   position: absolute;
   margin: 0;
   top: 100%;
-  left: 0;
+  right: 0;
   min-width: 100%;
   z-index: 22;
-  background: #B5B5B5;
+  background: #e3e3e3;
+  color: #444444;
   text-align: left;
-  > li {
-    > a {
-      color: #444444;
+  box-shadow: 0 1px 10px rgba(0,0,0,0.2);
+  .user-menu-section-title {
+    margin: 0;
+    padding: 0.7em 0.9em;
+    font-size: 1em;
+    font-weight: bold;
+    background-color: #ccc;
+  }
+  .section ul {
+    font-size: 0.9em;
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+    > li {
+      display: block;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      > a {
+        color: inherit;
+        > i.icon {
+          width: 20px;
+          display: inline-block;
+          color: #1c9cb2;
+        }
+      }
+      &.selected {
+        background-color: #1c9cb2;
+        > a {
+          color: #fff;
+          &:hover {
+            background-color: transparent;
+          }
+          > i.icon {
+            color: inherit;
+          }
+        }
+      }
     }
   }
 }
@@ -214,7 +247,7 @@ html.js #submenu-box > .submenu > .submenu-block {
 }
 
 #submenu-box > .submenu > .submenu-block > ul > li.active a {
-  background-color: #ff3520;
+  background-color: #1c9cb2;
   color: #fff;
   text-decoration: none;
 }

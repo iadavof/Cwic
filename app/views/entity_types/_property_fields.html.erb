@@ -22,8 +22,8 @@
       </dl>
     </div>
     <div class="actions">
-      <%= link_to '', 'javascript:void(0)', class: 'icon icon-edit', title: t('edit_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
-      <%= f.link_to_remove '', class: 'icon icon-remove', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-edit action-button', title: t('edit_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
+      <%= f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
     </div>
   </div>
   <div class="form clearfix">
@@ -49,8 +49,8 @@
       </div>
     </div>
     <div class="actions">
-      <%= link_to '', 'javascript:void(0)', class: 'icon icon-ok', title: t('done_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
-      <%= link_to '', 'javascript:void(0)', class: 'icon icon-remove remove-nested-fields-extra', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-ok action-button', title: t('done_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
+      <%= link_to '', 'javascript:void(0)', class: 'icon icon-remove action-button remove-nested-fields-extra', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst) %>
     </div>
     <div class="nested-form property-options">
       <h4><%= EntityTypePropertyOption.model_name.human(count: 2) %></h4>
@@ -69,7 +69,7 @@
           <% end %>
         </tbody>
       </table>
-      <%= f.link_to_add '', :options, class: 'icon icon-plus', title: t('add_nested_object', class: EntityTypePropertyOption.model_name.human.lcfirst) %>
+      <%= f.link_to_add '', :options, class: 'icon icon-plus action-button', title: t('add_nested_object', class: EntityTypePropertyOption.model_name.human.lcfirst) %>
     </div>
   </div>
   <%= f.hidden_field :index, class: 'index-field' %>

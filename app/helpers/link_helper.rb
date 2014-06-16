@@ -52,21 +52,21 @@ module LinkHelper
   # Icon link to object helpers
   def icon_link_to_new(object, options = {})
     options[:name] = ''
-    options[:class] ||= 'icon icon-plus'
+    options[:class] ||= 'icon icon-plus action-button'
     options[:title] ||= t('.to_new', default: :icon_to_new_object, class: object_class_name(object).lcfirst, name: object_name(object))
     link_to_new(object, options)
   end
 
   def icon_link_to_edit(object, options = {})
     options[:name] = ''
-    options[:class] ||= 'icon icon-edit'
+    options[:class] ||= 'icon icon-edit action-button'
     options[:title] ||= t('.to_edit', default: :icon_to_edit_object, class: object_class_name(object).lcfirst, name: object_name(object))
     link_to_edit(object, options)
   end
 
   def icon_link_to_destroy(object, options = {})
     options[:name] = ''
-    options[:class] ||= 'icon icon-remove'
+    options[:class] ||= 'icon icon-remove action-button'
     options[:title] ||= t('.to_destroy', default: :icon_to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
     link_to_destroy(object, options)
   end
