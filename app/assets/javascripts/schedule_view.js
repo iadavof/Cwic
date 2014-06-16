@@ -32,14 +32,6 @@ APP.schedule_view = {
     });
     this.bind_new_reservation_modal_button();
   },
-  today_and_tomorrow: function() {
-    new CwicTodayAndTomorrow({
-      container: 'today-and-tomorrow-container',
-      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
-      websocket_url: window.location.host + Routes.websocket_path(),
-      organisation_id: $('#today-and-tomorrow-container').data('organisation-id'),
-    });
-  },
   bind_new_reservation_modal_button: function() {
     $('#open-new-reservation-modal-button').on('click', function(e) {
       e.preventDefault();

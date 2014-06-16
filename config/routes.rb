@@ -35,12 +35,13 @@ Cwic::Application.routes.draw do
     match '/schedule_view/vertical_calendar_day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get'
     match '/schedule_view/vertical_calendar_day/entity/:entity/:year/:month/:day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get', as: 'vertical_calendar_day_entity_date'
     match '/schedule_view/vertical_calendar_day/:year/:month/:day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get', as: 'vertical_calendar_day_date'
-    match '/schedule_view/today_and_tomorrow', controller: 'schedule_view', action: 'today_and_tomorrow', via: 'get'
+
+    match '/today_and_tomorrow', controller: 'today_and_tomorrow', action: 'index', via: 'get'
+    match '/today_and_tomorrow/update', controller: 'today_and_tomorrow', action: 'update', via: 'get'
 
     # JSON routes for schedules
     match '/schedule_view/index_domain', controller: 'schedule_view', action: 'index_domain', via: 'post', as: 'reservations_domain_json'
     match '/schedule_view/entities', controller: 'schedule_view', action: 'entities', via: 'get', as: 'schedule_entities_json'
-    match '/schedule_view/today_tomorrow_update', controller: 'schedule_view', action: 'today_tomorrow_update', via: 'get', as: 'today_tomorrow_update_json'
     match '/schedule_view', controller: 'schedule_view', action: 'index', via: 'get', as: 'schedule_view_index'
 
     # Routes for dayOccupation
