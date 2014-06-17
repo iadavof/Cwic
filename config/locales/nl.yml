@@ -255,7 +255,7 @@ nl:
         reservation_logs: 'Aanpassingen'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
-        repeating_unit: 'Herhaald'
+        repeating_unit: 'Herhaling'
         repeating_every: 'Herhaal iedere'
         repeating_end: 'Herhalen tot'
         repeating_until: 'herhaalt tot datum'
@@ -594,9 +594,11 @@ nl:
       options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
       images: "Foto's"
       reserve_periods: 'Reserveerperioden'
-      entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
+      reserve_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
+      entity_images_help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
-      reservation_statuses: 'Reservering statusen'
+      reservation_statuses: 'Reserveringsstatussen'
+      reservation_status_help: 'Met reserveringsstatussen kunt u aangeven waar een reservering zich bevindt in het verwerkingsproces. U kunt hier zelf statussen aanmaken die aansluiten bij uw werkwijze en instellen welke consequenties aan individuele statussen moeten worden verbonden (bijvoorbeeld of er nieuwe reserveringen kunnen worden aangemaakt die overlappen met een andere reservering met de status ''geannuleerd'').'
       minutes: 'minuten'
       reservation_length_limitations: 'Duurbeperkingen'
     property_fields:

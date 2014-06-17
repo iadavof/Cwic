@@ -10,7 +10,7 @@
           <ul>
           <% if current_user.organisations.count > 1 %>
             <% current_user.organisations.each do |org| %>
-              <li<%= current_organisation == org ? ' class="selected"'.html_safe : '' %>><%= link_to(content_tag(:i, '', class: current_organisation == org ? 'icon icon-ok' : 'icon') + ' ' + org.instance_name, set_organisation_path(org))%></li>
+              <li<%= current_organisation == org ? ' class="selected"'.html_safe : nil %>><%= link_to(content_tag(:i, nil, class: current_organisation == org ? 'icon icon-ok' : 'icon') + ' ' + org.instance_name, set_organisation_path(org))%></li>
             <% end %>
           <% end %>
           </ul>
@@ -25,7 +25,9 @@
     </div>
   </div>
   <div id="menu-main-area">
-    <img src="<%= asset_path('logo_in_app.png') %>" class="logo-in-app" />
+    <%= link_to(home_index_path, class: 'logo-in-app') do %>
+      <img src="<%= asset_path('logo_in_app.png') %>" />
+    <% end %>
     <ul id="main-menu">
       <% menu.each_with_index do |(category_name, category_content), index| %>
       <%= content_tag(:li, id: "main-menu-item-#{index+1}", class: (category_matches?(category_name) ? "active" : nil)) do %>

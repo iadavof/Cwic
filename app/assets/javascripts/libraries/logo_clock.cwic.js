@@ -27,7 +27,7 @@ CwicLogoClock.prototype.createFace = function() {
     face.css({
       position: 'absolute',
       backgroundColor: 'white',
-      left: '21.5%',
+      left: '21.6%',
       top: '48%',
       marginTop: -radius + 'px',
       marginLeft: -radius + 'px',

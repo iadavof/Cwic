@@ -48,10 +48,13 @@ APP.init = function() {
   // Auto submit limiting fields
   $('#limiting select').on('change', function() { this.form.submit(); });
 
+  // Replace AJAX spinner with svg version if SMIL animations are available
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
   }
+  
+  this.global.bindHelpModalEvents();
 };
 
 // Add progress bar for Turbolink requests
@@ -64,6 +67,13 @@ APP.global = {
     $.datepicker.setDefaults($.datepicker.regional[locale]);
     $.timepicker.setDefaults($.timepicker.regional[locale]);
     jsLang = jsLangs[locale]; // TODO this is not very nice. Better to rewrite whole custom application JavaScript translations to I18n-js gem (if it is stable, ask Kevin for more information)
+  },
+  bindHelpModalEvents: function() {
+    $('.help i').on('click', function() {
+      var content = $('<p/>');
+      content.text($(this).attr('title'));
+      APP.modal.openModal('help-modal', content);
+    });
   },
   bindSelectAllCheckboxEvents: function() {
     $('input.select-all-checkbox').siblings('div.cwic-checkbox').on('click', function() {
