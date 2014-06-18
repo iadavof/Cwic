@@ -72,6 +72,14 @@ APP.util = {
     APP.global.initializeSpecialFormFields(newitem);
     return newitem;
   },
+  setFieldErrorState:  function(field, error) {
+    if(field.parent().hasClass('field_with_errors')) {
+      field.unwrap();
+    }
+    if(error) {
+      field.wrap($('<div>', {'class': 'field_with_errors'}));
+    }
+  }
 }
 
 // JavaScript and jQuery extensions

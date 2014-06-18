@@ -681,10 +681,10 @@ CwicScheduleView.prototype.setDateDomain = function() {
 
   // Check if entered endDate is bigger than the entered beginDate
   if(moment(newEndMoment).startOf('day').isBefore(moment(newBeginMoment).startOf('day'))) {
-    this.setErrorField(endDateField, true);
+    APP.util.setFieldErrorState(endDateField, true);
     return;
   } else {
-    this.setErrorField(endDateField, false);
+    APP.util.setFieldErrorState(endDateField, false);
   }
 
   this.beginDate = newBeginMoment;
@@ -695,15 +695,6 @@ CwicScheduleView.prototype.setDateDomain = function() {
   this.navigationReference = this.beginDate;
 
   this.updateSchedule();
-};
-
-CwicScheduleView.prototype.setErrorField =  function(field, error) {
-  if(field.parent().hasClass('field_with_errors')) {
-    field.unwrap();
-  }
-  if(error) {
-    field.wrap($('<div>', {'class': 'field_with_errors'}));
-  }
 };
 
 CwicScheduleView.prototype.getEntityTabContainer = function() {

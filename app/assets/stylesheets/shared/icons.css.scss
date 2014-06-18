@@ -39,6 +39,9 @@ div#reservation-form {
       &.available {
         @extend .icon-ok;
       }
+      &.warning-available {
+        @extend .icon-warning-sign;
+      }
       &.unavailable {
         @extend .icon-remove;
       }

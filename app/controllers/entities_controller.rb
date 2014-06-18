@@ -2,6 +2,9 @@ class EntitiesController < ApplicationController
   before_action :load_resource
   authorize_resource through: :organisation
 
+  respond_to :html, except: [:availability]
+  respond_to :json, only: [:availability]
+
   # GET /entities
   def index
     respond_with(@entities)
@@ -43,9 +46,21 @@ class EntitiesController < ApplicationController
     respond_with(@organisation, @entity)
   end
 
+  def availability
+    if params[:selected_entity_id].present?
+      @selected_entity = @organisation.entities.find(params[:selected_entity_id])
+      @selected_entity_feedback = {
+          available: @selected_entity.is_available_between?(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]))
+      }
+    end
+    respond_with(@organisation, @entities, @selected_entity_feedback)
+  end
+
 private
   def load_resource
     case params[:action]
+    when 'availability'
+      @entities = @organisation.entity_types.find(params[:entity_type_id]).entities.accessible_by(current_ability, :index).available_between(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]))
     when 'index'
       @entities = @organisation.entities.accessible_by(current_ability, :index).includes(:entity_type).ssp(params)
     when 'new', 'create'

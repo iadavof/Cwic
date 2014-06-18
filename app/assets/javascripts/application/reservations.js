@@ -11,6 +11,10 @@ APP.reservations = {
   _new_create: function() {
     APP.reservations.bindSelectClientRadioButtons();
     APP.reservations.bindReservationRecurrenceControls();
+    new newReservationFormController({
+      entities_controller_url: Routes.organisation_entities_path(current_organisation),
+      container: 'reservation-form'
+    });
   },
   multiple: function() {
     APP.reservations.bindSelectEditFields();
