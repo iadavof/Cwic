@@ -18,13 +18,13 @@
       </div>
     </div>
     <% end %>
-    <div id="header">
-      <% if user_signed_in? %>
-      <%= render "layouts/menu" %>
-      <% end %>
-      <div id="progress-bar-container"></div>
-    </div>
     <div id="below-header">
+      <div id="header">
+        <% if user_signed_in? %>
+        <%= render "layouts/menu" %>
+        <% end %>
+        <div id="progress-bar-container"></div>
+      </div>
       <% if user_signed_in? %>
       <%= render "layouts/submenu" %>
       <% end %>

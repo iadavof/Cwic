@@ -9,7 +9,7 @@
       <ul>
         <% sub_category_content.each do |link_name, link_content| %>
         <%= content_tag(:li, class: (link_matches?(category_name, sub_category_name, link_name) ? "active" : nil)) do %>
-          <%= link_to((link_content[:name].present? ? content_tag(:i, nil, class: link_content[:icon]) + link_content[:name] : content_tag(:i, nil, class: link_content[:icon]) + t(".#{link_name}")), link_content[:url], link_content.except(:name, :icon, :url)) %>
+          <%= link_to((link_content[:name].present? ? content_tag(:i, nil, class: link_content[:icon].present? ? link_content[:icon] : 'icon-moonfull') + link_content[:name] : content_tag(:i, nil, class: link_content[:icon].present? ? link_content[:icon] : 'icon-moonfull') + t(".#{link_name}")), link_content[:url], link_content.except(:name, :icon, :url)) %>
         <% end %>
         <% end %>
       </ul>

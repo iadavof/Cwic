@@ -203,6 +203,8 @@ div.entity-images-container {
 
 [class^="icon-"], [class*=" icon-"] {
   &.action-button {
+    display: inline-block;
+    text-align: center;
     font-size: 13px !important;
     color: #fff !important;
     background-color: #1c9cb2;

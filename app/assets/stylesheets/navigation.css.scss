@@ -171,7 +171,6 @@
   background-position: left bottom; /* fallback for older browsers */
   background-position: left bottom -50px;
   background-size: 300px auto;
-  z-index: 199;
   > .submenu {
     display: inline-block;
     vertical-align: top;
@@ -246,6 +245,7 @@ html.js #submenu-box {
   bottom: 0;
   > .submenu {
     display: none;
+    width: 260px;
     vertical-align: baseline;
     &.selected {
       display: block;

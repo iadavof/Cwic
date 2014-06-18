@@ -4,6 +4,13 @@
   z-index: 199;
 }
 
+html.js #header {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+}
+
 /* Search */
 
 form.mini-search {
@@ -19,14 +26,6 @@ form.mini-search {
   z-index: 2;
   > .inner {
     padding: 15px 0;
-  }
-}
-
-html.js #search-bar {
-  height: 0;
-  &.open {
-    height: auto;
-    overflow: visible;
   }
 }
 
