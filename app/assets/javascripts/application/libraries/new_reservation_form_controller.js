@@ -142,8 +142,8 @@ newReservationFormController.prototype.updateAvailableEntities = function() {
       ends_at: _this.endMoment.toJSON()
     }
   }).success(function(response) {
-    if(response.selected_entity_feedback) {
-      _this.updateSelectedEntityFeedback(response.selected_entity_feedback);
+    if(response.selected_entity) {
+      _this.updateSelectedEntityFeedback(response.selected_entity);
     }
     _this.updateAvailableEntitiesList(response.entities);
   });
@@ -154,6 +154,9 @@ newReservationFormController.prototype.updateAvailableEntitiesList = function(en
   this.clearAvailableEntitiesList();
 
   var entityList = this.getAvailableEntitiesList();
+
+  this.showNoAvailableEntitiesListMessage(entities.length <= 0);
+
   $.each(entities, function(index, entity) {
     // Cache the entity info for later form settings during entity selection
     _this.currentAvailableEntities[entity.id] = entity;
@@ -178,6 +181,10 @@ newReservationFormController.prototype.updateAvailableEntitiesList = function(en
 
     entityList.append(newLi);
   });
+};
+
+newReservationFormController.prototype.showNoAvailableEntitiesListMessage = function(visible) {
+  this.formContainer.find('div.entity-selector div.no-entities-available')[visible ? 'show' : 'hide']();
 };
 
 newReservationFormController.prototype.updateSelectedEntityFeedback = function(feedback) {

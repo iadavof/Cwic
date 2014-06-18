@@ -181,6 +181,19 @@
       }
     }
 
+    div.no-entities-available {
+      background-color: #ff3520;
+      color: #fff;
+      font-size: 1.8em;
+      font-weight: bold;
+      padding: .8em;
+      display: none;
+
+      &:before {
+        margin-right: 1em;
+      }
+    }
+
     ul.entity-list {
       display: block;
       list-style-type: none;

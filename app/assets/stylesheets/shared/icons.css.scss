@@ -49,6 +49,10 @@ div#reservation-form {
         @extend [class^="icon-"];
       }
     }
+
+    div.no-entities-available {
+        @extend .icon-remove;
+      }
   }
 }
 

@@ -39,6 +39,7 @@
                 <%= select_tag :entity_type_id, options_for_select(@organisation.entity_types.sort.collect { |et| [et.name, et.id] }, @reservation.entity.try(:entity_type_id)), { prompt: t('prompt_choose') } %>
               </div>
             </div>
+            <div class="no-entities-available"><%= t('.no_entities_available') %></div>
             <ul class="entity-list"></ul>
           </div>
         </div>

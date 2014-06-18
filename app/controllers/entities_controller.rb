@@ -49,9 +49,11 @@ class EntitiesController < ApplicationController
   def availability
     if params[:selected_entity_id].present?
       @selected_entity = @organisation.entities.find(params[:selected_entity_id])
-      @selected_entity_feedback = {
-          available: @selected_entity.is_available_between?(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]))
-      }
+      if @selected_entity.present?
+        @selected_entity_feedback = {
+            available: @selected_entity.is_available_between?(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]))
+        }
+      end
     end
     respond_with(@organisation, @entities, @selected_entity_feedback)
   end
