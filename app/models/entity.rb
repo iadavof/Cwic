@@ -148,4 +148,12 @@ private
   def self.available_between(begins_at, ends_at)
     self.all.find_all{|e| e.is_available_between?(begins_at, ends_at) }
   end
+
+  def is_available_between?(begins_at, ends_at)
+    not self.reservations.by_date_domain(begins_at, ends_at).any?
+  end
+
+  def self.available_between(begins_at, ends_at)
+    self.all.find_all{|e| e.is_available_between?(begins_at, ends_at) }
+  end
 end

@@ -154,7 +154,6 @@ newReservationFormController.prototype.updateAvailableEntitiesList = function(en
   this.clearAvailableEntitiesList();
 
   var entityList = this.getAvailableEntitiesList();
-
   this.showNoAvailableEntitiesListMessage(entities.length <= 0);
 
   $.each(entities, function(index, entity) {
