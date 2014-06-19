@@ -85,7 +85,6 @@ CwicLocalMenu.prototype.updateHeightSettings = function() {
       $(this).css({height: maxHeight + 'px'});
     }
   );
-  APP.global.contentAreaResize();
 };
 
 CwicLocalMenu.prototype.isDivision = function(division) {

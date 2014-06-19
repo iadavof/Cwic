@@ -23,8 +23,6 @@ APP.init = function() {
 
   // Load the api for the local menu
   this.global.loadLocalMenu();
-
-  this.global.contentAreaResize();
   
   // Load Google if needed
   $(document).on('page:load', APP.global.initializeGoogleMapsFunctions);
@@ -57,6 +55,11 @@ APP.init = function() {
   }
   
   this.global.bindHelpModalEvents();
+  
+  this.global.contentAreaResize();
+  $(window).on('resize', function() {
+    APP.global.contentAreaResize();
+  });
 };
 
 // Add progress bar for Turbolink requests
@@ -101,9 +104,11 @@ APP.global = {
 
     });
   },
-  contentAreaResize: function() {
+  contentAreaResize: function(location) {
     $('#below-header').css({top: $('#search-bar').is('.open') ? $('#header').outerHeight() + 'px' : $('#header').outerHeight() - $('#search-bar').outerHeight() + 'px'});
-    $('#header').css({top: -$('#header').outerHeight() + 'px'});
+    if (!Modernizr.csstransforms) {
+      $('#header').css({top: -$('#header').outerHeight() + 'px'});
+    }
     $('#content-area').css({top: $('#local-menu').outerHeight() + 'px'});
   },
   menuInit: function() {
@@ -131,28 +136,63 @@ APP.global = {
     window.localMenu = new CwicLocalMenu($('div#local-menu'));
   },
   searchBarInit: function() {
+    var $searchBar = $('#search-bar');
     $('#open-search-button').on('click', function() {
       $(window).trigger('header-start-animation');
-      var $searchBar = $('#search-bar');
-      var $belowHeader = $('#below-header');
-      var $searchField = $('#global_search');
       if(!$searchBar.hasClass('open')) {
-        $(this).addClass('open');
-        $belowHeader.animate({top: $('#header').outerHeight() + 'px'}, 150, 'swing', function() {
-          $searchBar.addClass('open');
-          $(window).trigger('header-animated');
-        });
-        $searchField.focus();
+        APP.global.openSearchBar();
       } else {
-        $searchField.blur().val('');
-        $(this).removeClass('open');
-        $belowHeader.animate({top: $('#menu-bar').outerHeight() + 'px'}, 150, 'swing', function() {
-          $searchBar.removeClass('open');
-          $(window).trigger('header-animated');
-        });
+        APP.global.closeSearchBar();
       }
       return false;
     });
+  },
+  openSearchBar: function() {
+    var $searchBar = $('#search-bar');
+    var $belowHeader = $('#below-header');
+    var $searchField = $('#global_search');
+    
+    $('#open-search-button').addClass('open');
+    
+    $(document).keydown(function(event) {
+      /* Close search bar when esc button is pressed */
+      if(event.keyCode == 27) {
+        APP.global.closeSearchBar();
+      }
+    });
+    if (Modernizr.csstransitions) {
+      APP.util.cssTransitionsAnimate($belowHeader, {top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
+        $searchBar.addClass('open');
+        $(window).trigger('header-animated');
+      });
+    } else {
+      $belowHeader.animate({top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
+        $searchBar.addClass('open');
+        $(window).trigger('header-animated');
+      });
+    }
+    $searchField.focus();
+  },
+  closeSearchBar: function() {
+    var $searchBar = $('#search-bar');
+    var $belowHeader = $('#below-header');
+    var $searchField = $('#global_search');
+    
+    $searchField.blur().val('');
+    
+    $('#open-search-button').removeClass('open');
+    
+    if (Modernizr.csstransitions) {
+      APP.util.cssTransitionsAnimate($belowHeader, {top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
+        $searchBar.removeClass('open');
+        $(window).trigger('header-animated');
+      });
+    } else {
+      $belowHeader.animate({top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
+        $searchBar.removeClass('open');
+        $(window).trigger('header-animated');
+      });
+    }
   },
   addProgressbarToAjax : function() {
     NProgress.configure({ container: $('div#progress-bar-container'), showSpinner: false });
@@ -215,17 +255,12 @@ APP.global = {
     var $submenu = $(submenu);
     var duration = animated ? 200 : 0;
     
-    $mainArea.css({transform: 'translate3d(0,0,0)'});
-    
     switch (direction) {
       case 'in':
         if (Modernizr.csstransitions) {
-          $mainArea.css({transition: duration/1000 + 's ease'});
-          $mainArea.one('transitionend webkitTransitionEnd', function() {
-            $mainArea.css({transition: 'none'});
+          APP.util.cssTransitionsAnimate($mainArea, {left: 0}, duration, 'swing', function() {
             $submenus.removeClass('selected');
           });
-          $mainArea.css({left: 0});
         } else {
           $mainArea.animate({left: 0}, duration, 'swing', function() {
             $submenus.removeClass('selected');
@@ -236,24 +271,32 @@ APP.global = {
         $submenus.removeClass('selected').css({opacity: 0});
         $submenu.addClass('selected').css({opacity: 1});
         if (Modernizr.csstransitions) {
-          $mainArea.css({transition: duration/1000 + 's ease'});
-          $mainArea.one('transitionend webkitTransitionEnd', function() {
-            $mainArea.css({transition: 'none'});
-          });
-          console.log($submenuBox.outerWidth());
-          $mainArea.css({left: $submenuBox.outerWidth() + 'px'});
+          APP.util.cssTransitionsAnimate($mainArea, {left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
         } else {
-          $mainArea.animate({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing', function(){
-          });
+          $mainArea.animate({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
         }
         break;
       case 'in-out':
-        $submenus.animate({opacity: 0}, duration/3, 'swing', function() {
-          $submenus.removeClass('selected');
-          $submenu.animate({opacity: 1}, duration/3, 'swing', function() {
-            $submenu.addClass('selected');
+        // @TODO Callback firing another animation doesn't work properly
+        /*
+        if (Modernizr.csstransitions) {
+          APP.util.cssTransitionsAnimate($submenus, {opacity: 0}, duration/3, 'swing', function() {
+            $submenus.removeClass('selected');
+            APP.util.cssTransitionsAnimate($submenus, {opacity: 1}, duration/3, 'swing', function() {
+              $submenu.addClass('selected');
+            });
           });
-        });
+        } else {
+        */
+          $submenus.animate({opacity: 0}, duration/2.5, 'swing', function() {
+            $submenus.removeClass('selected');
+            $submenu.animate({opacity: 1}, duration/2.5, 'swing', function() {
+              $submenu.addClass('selected');
+            });
+          });
+        /*
+        }
+        */
         break;
     }
   },

@@ -11,6 +11,10 @@ html.js #header {
   width: 100%;
 }
 
+html.js.csstransforms #header {
+  transform: translate(0, -100%);
+}
+
 /* Search */
 
 form.mini-search {

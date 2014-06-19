@@ -28,20 +28,33 @@ CwicTodayAndTomorrow.prototype.initWebSocket = function() {
 };
 
 CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
-  this.scheduleContainer.find('p.entity-name').each(function(){
-    var descriptionHeight;
-    $(this).on('click', function() {
-      if($(this).siblings('.entity-description').hasClass('opened')) {
-        $(this).siblings('.entity-description').animate({height: 0}, 200, function(){
-          $(this).css({display: 'none', height: 'auto'}).removeClass('opened');
+  this.scheduleContainer.find('p.entity-name').on('click', function() {
+    var $description = $(this).siblings('.entity-description');
+    var descriptionHeight = $description.height();
+    
+    if($description.hasClass('opened')) {
+      if (Modernizr.csstransitions) {
+        APP.util.cssTransitionsAnimate($description, {height: 0}, 200, 'swing', function(){
+          $description.css({display: 'none', height: 'auto'}).removeClass('opened');
         });
       } else {
-        descriptionHeight = $(this).siblings('.entity-description').height();
-        $(this).siblings('.entity-description').css({height: 0, display: 'block'}).animate({height: descriptionHeight}, 200, function() {
-          $(this).css({height: 'auto'});
-        }).addClass('opened');
+        $description.animate({height: 0}, 200, 'swing', function(){
+          $description.css({display: 'none', height: 'auto'}).removeClass('opened');
+        });
       }
-    });
+    } else {
+      $description.css({height: 0, display: 'block'})
+      if (Modernizr.csstransitions) {
+        APP.util.cssTransitionsAnimate($description, {height: descriptionHeight}, 200, 'swing', function() {
+          $description.css({height: 'auto'});
+        })
+      } else {
+        $description.animate({height: descriptionHeight}, 200, 'swing', function() {
+          $description.css({height: 'auto'});
+        });
+      }
+      $description.addClass('opened');
+    }
   });
 };
 
