@@ -138,6 +138,9 @@ button,
       background-color: #ddd;
     }
   }
+  &[data-method="delete"] {
+    @extend .button.red;
+  }
 }
 
 input, textarea, select {

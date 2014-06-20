@@ -23,6 +23,17 @@ div.calendar.verticalCalendar div.schedule-body {
 
 #local-menu div.navigation-actions div.control-container {
   display: inline-block;
+  .button {
+    i {
+      margin: 0;
+    }
+  }
+  #previous.button, #next.button {
+    box-sizing: border-box;
+    width: 2.625em;
+    height: 2.625em;
+    text-align: center;
+  }
 }
 
 #local-menu div.page-actions div.control-container.domain-custom {
@@ -97,7 +108,7 @@ div.calendar div.left-axis {
 div.calendar div.left-axis-row {
   position: relative;
   height: 62px;
-  padding: 2px 0;
+  padding: 4.5px 0;
 }
 
 div.calendar div.left-axis-row > .inner {
@@ -546,6 +557,8 @@ div.calendar div.schedule-body div.row div.schedule-objects {
   border-left-width: 12px;
   border-right-width: 12px;
   min-height: 62px;
+  padding-top: 4px;
+  padding-bottom: 1px;
 }
 
 div.calendar div.schedule-body div.column div.schedule-objects {
@@ -743,7 +756,7 @@ div.calendar div.schedule-body div.column div.schedule-item-wrapper {
   top: 0;
   width: 98%;
   height: 1px;
-  margin: 1%;
+  margin: 0 1%;
 }
 
 div.calendar div.schedule-body div.row div.schedule-item-wrapper,
