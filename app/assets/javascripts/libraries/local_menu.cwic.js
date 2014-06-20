@@ -57,6 +57,9 @@ CwicLocalMenu.prototype.addButton = function(division, id, content, weight) {
 
     // Update the height
     this.updateHeightSettings();
+    
+    // Update UI dimensions
+    APP.global.contentAreaResize();
 
     return newButton;
   }
@@ -96,6 +99,9 @@ CwicLocalMenu.prototype.removeButton = function(division, id) {
 
   // Update the height
   this.updateHeightSettings();
+  
+  // Update UI dimensions
+  APP.global.contentAreaResize();
 };
 
 CwicLocalMenu.prototype.clearDivision = function(division) {
@@ -105,6 +111,9 @@ CwicLocalMenu.prototype.clearDivision = function(division) {
 
   // Update the height
   this.updateHeightSettings();
+  
+  // Update UI dimensions
+  APP.global.contentAreaResize();
 };
 
 CwicLocalMenu.prototype.toggleButtons = function(division, buttonids, newState) {
@@ -123,6 +132,9 @@ CwicLocalMenu.prototype.toggleButtons = function(division, buttonids, newState) 
 
   // Update the height
   this.updateHeightSettings();
+  
+  // Update UI dimensions
+  APP.global.contentAreaResize();
 };
 
 CwicLocalMenu.prototype.clearAllDivisions = function() {
@@ -134,6 +146,9 @@ CwicLocalMenu.prototype.clearAllDivisions = function() {
 
   // Update the height
   this.updateHeightSettings();
+  
+  // Update UI dimensions
+  APP.global.contentAreaResize();
 };
 
 // Get the weight of the utmost left item

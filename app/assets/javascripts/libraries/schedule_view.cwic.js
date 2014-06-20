@@ -63,13 +63,15 @@ CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
   edit.on('click', function() { schedule.editScheduleItem.call(schedule); } );
 
   var remove = window.localMenu.addButton('context', 'remove', APP.util.getTemplateClone('contextButtonRemove'), 4);
+  remove.addClass('red');
   remove.on('click', function() { schedule.removeScheduleItem.call(schedule, $(this)); } );
 
   var cancel = window.localMenu.addButton('context', 'cancel', APP.util.getTemplateClone('contextButtonCancel'), 5);
+  cancel.addClass('red');
   cancel.on('click', function() { schedule.stopEditMode.call(schedule, false); } );
 
   var save = window.localMenu.addButton('context', 'save', APP.util.getTemplateClone('contextButtonSave'), 6);
-  save.addClass('red');
+  save.addClass('green');
   save.on('click', function() { schedule.stopEditMode.call(schedule, true); } );
 
   // Hide all buttons on init
@@ -206,6 +208,7 @@ CwicScheduleView.prototype.toggleCustomDomainControls = function(open) {
   var domainCustomContainer = this.getDomainCustomContainer();
   domainCustomContainer[(open ? 'show' : 'hide')]();
   window.localMenu.updateHeightSettings();
+  APP.global.contentAreaResize();
 };
 
 CwicScheduleView.prototype.toggleEntities = function(on) {
@@ -573,6 +576,7 @@ CwicScheduleView.prototype.showStatusMessage = function(content, ajax_wait, dela
 
   localMenu.getDivision('context').append(notification);
   localMenu.updateHeightSettings();
+  APP.global.contentAreaResize();
   notification.fadeIn(300);
 
   return notification;
@@ -582,6 +586,7 @@ CwicScheduleView.prototype.hideStatusMessage = function(force) {
   force = force || false;
   localMenu.getDivision('context').find('.ajax-notification').fadeOut(force ? 0 : 500, function() { $(this).remove(); });
   localMenu.updateHeightSettings();
+  APP.global.contentAreaResize();
 };
 
 CwicScheduleView.prototype.patchScheduleItemBackend = function(scheduleItem, undo) {

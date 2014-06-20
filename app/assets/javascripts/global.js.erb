@@ -121,6 +121,7 @@ APP.global = {
       return APP.global.slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
     });
     
+    /* Highlight shortcut letters */
     $menuItems.children('a').each(function(){
       var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
       if (shortcutKey) {
@@ -206,14 +207,14 @@ APP.global = {
     });
   },
   slideSubMenuByMenuItem: function(htmlId, animated) {
-    var $mainArea = $('#main-area');
     var $menuItem = $('#' + htmlId);
-    var $submenus = $('#submenu-box > .submenu');
     var $relatedSubmenu = $('#submenu-box > .submenu[data-main-menu-relation="' + htmlId + '"]').first();
     
     if (!htmlId || $relatedSubmenu.length == 0 || $menuItem.length == 0) {
       return true;
     } else {
+      var $mainArea = $('#main-area');
+      var $submenus = $('#submenu-box > .submenu');
       var $menuItems = $('#main-menu > li');
 
       if ($menuItem.hasClass('selected')) {
@@ -253,27 +254,36 @@ APP.global = {
     var $mainArea = $('#main-area');
     var $submenus = $('#submenu-box > .submenu');
     var $submenu = $(submenu);
-    var duration = animated ? 200 : 0;
+    var duration = 200;
     
     switch (direction) {
       case 'in':
-        if (Modernizr.csstransitions) {
-          APP.util.cssTransitionsAnimate($mainArea, {left: 0}, duration, 'swing', function() {
-            $submenus.removeClass('selected');
-          });
+        if (animated) {
+          if (Modernizr.csstransitions) {
+            APP.util.cssTransitionsAnimate($mainArea, {left: 0}, duration, 'swing', function() {
+              $submenus.removeClass('selected');
+            });
+          } else {
+            $mainArea.animate({left: 0}, duration, 'swing', function() {
+              $submenus.removeClass('selected');
+            });
+          }
         } else {
-          $mainArea.animate({left: 0}, duration, 'swing', function() {
-            $submenus.removeClass('selected');
-          });
+          $mainArea.css({left: 0});
+          $submenus.removeClass('selected');
         }
         break;
       case 'out':
         $submenus.removeClass('selected').css({opacity: 0});
         $submenu.addClass('selected').css({opacity: 1});
-        if (Modernizr.csstransitions) {
-          APP.util.cssTransitionsAnimate($mainArea, {left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
+        if (animated) {
+          if (Modernizr.csstransitions) {
+            APP.util.cssTransitionsAnimate($mainArea, {left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
+          } else {
+            $mainArea.animate({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
+          }
         } else {
-          $mainArea.animate({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
+          $mainArea.css({left: $submenuBox.outerWidth() + 'px'});
         }
         break;
       case 'in-out':

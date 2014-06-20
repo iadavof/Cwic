@@ -33,7 +33,7 @@ div.flash_messages a:hover {
 
 div.flash_messages.notice {
   background-image: none;
-  background-color: #6DC11C;
+  background-color: #18c13d;
   color: #fff;
 }
 
@@ -43,7 +43,7 @@ div.flash_messages.notice:before {
 
 div.flash_messages.warning {
   background-image: none;
-  background-color: #e59812;
+  background-color: #ff8d20;
   color: #fff;
 }
 
@@ -53,7 +53,7 @@ div.flash_messages.warning:before {
 
 div.flash_messages.alert {
   background-image: none;
-  background-color: #bc2020;
+  background-color: #ff3520;
   color: #fff;
 }
 

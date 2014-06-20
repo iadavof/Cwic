@@ -214,22 +214,37 @@ div.entity-images-container {
     line-height: 1em;
     border-radius: 50%;
     transition: 0.2s;
-    &:hover {
+    &:hover, &:active {
       color: #1c9cb2 !important;
+    }
+    &:hover {
       background-color: #eee;
+    }
+    &:active {
+      background-color: #ddd;
     }
     &.icon-remove {
       background-color: #ff3520;
-      &:hover {
+      &:hover, &:active {
         color: #ff3520 !important;
+      }
+      &:hover {
         background-color: #eee;
+      }
+      &:active {
+        background-color: #ddd;
       }
     }
     &.icon-ok {
       background-color: #18c13d;
-      &:hover {
+      &:hover, &:active {
         color: #18c13d !important;
+      }
+      &:hover {
         background-color: #eee;
+      }
+      &:active {
+        background-color: #ddd;
       }
     }
   }

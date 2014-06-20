@@ -20,6 +20,13 @@ html.js.csstransforms #header {
 form.mini-search {
   float: right;
   vertical-align: middle;
+  input[type="submit"] {
+    margin-left: 20px;
+  }
+}
+
+#local-menu form.mini-search input[type="submit"] {
+  margin-left: 10px;
 }
 
 #search-bar {
@@ -30,6 +37,9 @@ form.mini-search {
   z-index: 2;
   > .inner {
     padding: 15px 0;
+  }
+  input[type="submit"] {
+    margin-left: 10px;
   }
 }
 
@@ -51,7 +61,7 @@ form.mini-search {
   text-decoration: none;
   padding: 0.7em 0.9em;
   line-height: 100%;
-  border-radius: 0 0 3px 3px;
+  border-radius: 0 0 1.5em 1.5em;
   margin-left: 8px;
   vertical-align: top;
   &.open {

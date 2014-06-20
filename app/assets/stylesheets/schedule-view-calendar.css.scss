@@ -25,18 +25,12 @@ div.calendar.verticalCalendar div.schedule-body {
   display: inline-block;
 }
 
-#local-menu div.navigation-actions div.control-container a.button.active,
-#local-menu div.page-actions div.control-container a.button.active {
-  background-color: #8c8c8c;
-}
-
 #local-menu div.page-actions div.control-container.domain-custom {
   display: none;
 }
 
 #local-menu div.page-actions div.control-container span.tm {
   padding: 0 10px;
-  color: #fff;
 }
 
 div.calendar div.cwic-sticky-container {

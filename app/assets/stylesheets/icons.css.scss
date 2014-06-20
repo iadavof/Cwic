@@ -87,7 +87,7 @@ div#reservation-form {
 }
 
 .button[data-action="destroy"] {
-  @extend .icon-remove-sign;
+  @extend .icon-remove;
   &:before {
     @extend [class^="icon-"];
   }

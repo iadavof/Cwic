@@ -77,43 +77,65 @@ button,
   position: relative;
   width: auto;
   border: 0 none;
-  background-color: #17889d;
+  background-color: #1c9cb2;
   color: #fff;
   padding: 0.8em 1em;
   text-decoration: none;
   cursor: pointer;
-  border-radius: 3px;
+  border-radius: 1.5em;
   line-height: normal;
-  transition: background-color 0.2s ease-in-out;
-  background-image: linear-gradient(to bottom, rgba(255,255,255,.2) 0%, transparent 60%);
+  transition: 0.2s ease-in-out;
   &:before, i {
     margin: 0 0.4em 0 0;
     vertical-align: middle;
   }
-  &:hover {
-    background-color: #3194a5;
-    color: #fff;
+  &:hover, &:active, &.active {
+    color: #1c9cb2;
   }
-  &:active {
-    background-image: linear-gradient(to top, rgba(255,255,255,.2) 0%, transparent 60%);
+  &:hover {
+    background-color: #eee;
+  }
+  &:active, &.active {
+    background-color: #ddd;
+  }
+  &.active {
+    box-shadow: 0 0 3px rgba(0,0,0,0.5) inset;
   }
   &.grey {
     background-color: #666;
+    &:hover, &:active, &.active {
+      color: #666;
+    }
     &:hover {
-      background-color: #747474;
+      background-color: #eee;
+    }
+    &:active, &.active {
+      background-color: #ddd;
     }
   }
   &.green {
     background-color: #18c13d;
     font-weight: bold;
+    &:hover, &:active, &.active {
+      color: #18c13d;
+    }
     &:hover {
-      background-color: #3fc65a;
+      background-color: #eee;
+    }
+    &:active, &.active {
+      background-color: #ddd;
     }
   }
   &.red {
     background-color: #ff3520;
+    &:hover, &:active, &.active {
+      color: #ff3520;
+    }
     &:hover {
-      background-color: #ff4a37;
+      background-color: #eee;
+    }
+    &:active, &.active {
+      background-color: #ddd;
     }
   }
 }
