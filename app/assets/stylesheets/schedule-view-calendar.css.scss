@@ -91,12 +91,13 @@ div.calendar div.left-axis {
     height: 100%;
     overflow: hidden;
     padding-right: 20px;
+    padding-top: 7px;
 }
 
 div.calendar div.left-axis-row {
   position: relative;
   height: 62px;
-  padding: 1px 0;
+  padding: 2px 0;
 }
 
 div.calendar div.left-axis-row > .inner {
@@ -388,14 +389,12 @@ div.calendar div.schedule-scroll-container div.schedule-body div.column div.time
 }
 
 div.calendar div.schedule-scroll-container div.schedule-body div.row.today div.schedule-objects {
-  padding: 6px 0;
-  border-color: #17889D;
-  min-height: 76px;
+  border-color: #1c9cb2;
 }
 
 div.calendar div.schedule-scroll-container div.schedule-body div.column.today div.schedule-objects {
-  border-left: 2px solid #17889D !important;
-  border-right: 2px solid #17889D !important;
+  border-left: 2px solid #1c9cb2 !important;
+  border-right: 2px solid #1c9cb2 !important;
 }
 
 div.calendar div.left-axis div.time-axis-row {
@@ -414,7 +413,6 @@ div.calendar div.top-axis div.vertical-day-time-axis-frame.today p.date {
 
 div.calendar div.left-axis div.left-axis-row.today {
   color: #17889d;
-  height: 76px;
 }
 
 div.calendar div.day-axis div.day-axis-row {
@@ -471,7 +469,7 @@ div.calendar div.left-axis div.day-axis-row div.day-nr {
 }
 
 div.calendar div.schedule-body div.row:first-child, div.calendar div.left-axis div.left-axis-row {
-  margin-top: 3px;
+  margin-top: 10px;
 }
 
 div.calendar div.left-axis div.left-axis-row div {
