@@ -32,4 +32,9 @@ module ApplicationHelper
     text = format_text(text)
     content_tag((type == :inline ? :span : :div), content_tag(:i, '', class: 'icon-info-sign', title: text), class: 'help')
   end
+  
+  def format_address(route, street_number, postal_code, administrative_area_level_2, administrative_area_level_1, locality, country)
+    address = escape_once(route) + ' ' + escape_once(street_number) + tag('br') + escape_once(postal_code) + '&nbsp; ' + escape_once(locality).upcase + tag('br') + escape_once(country)
+    return address.html_safe
+  end
 end

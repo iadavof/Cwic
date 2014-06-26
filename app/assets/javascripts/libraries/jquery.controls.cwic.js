@@ -9,9 +9,9 @@ function CwicControl(field, options) {
 }
 
 CwicControl.prototype.detectType = function() {
-  if(this.$field.is('select:not([multiple])')) {
+  /*if(this.$field.is('select:not([multiple])')) {
     return 'dropdown';
-  } else if(this.$field.is(':radio')) {
+  } else */if(this.$field.is(':radio')) {
     return 'radio_button';
   } else if(this.$field.is(':checkbox')) {
     return 'checkbox';
@@ -42,7 +42,12 @@ CwicControl.prototype.recreate = function() {
   this.create();
 };
 
+/*
 CwicControl.prototype.create_dropdown = function() {
+  var cc = this.$field;
+  cc.select2({
+    minimumResultsForSearch: -1,
+  });
   var cc = this;
   var options = this.$field.find('option');
   var defaultOption = this.$field.find('option:selected');
@@ -56,6 +61,7 @@ CwicControl.prototype.create_dropdown = function() {
     cc.$replacement.find('.cwic-dropdown-options').append(optionReplacement);
   });
 };
+*/
 
 CwicControl.prototype.create_checkbox = function() {
   this.$replacement = $('<div class="cwic-checkbox" data-name="' + this.$field.attr('name') + '"><div class="inner"></div></div>');
@@ -117,6 +123,7 @@ CwicControl.prototype.onChangeHandler = function(event) {
   this['onChangeHandler_' + this.type]();
 };
 
+/*
 CwicControl.prototype.onChangeHandler_dropdown = function() {
   var selectedOption = this.$field.find('option:selected');
   if(selectedOption.length > 0) {
@@ -125,6 +132,7 @@ CwicControl.prototype.onChangeHandler_dropdown = function() {
     this.$replacement.find('.cwic-dropdown-option[data-value=' + APP.util.escapeForSelector(selectedOption.val()) + ']').addClass('selected');
   }
 };
+*/
 
 CwicControl.prototype.onChangeHandler_checkbox = function() {
   this.$field.is(':checked') ? this.$replacement.addClass('checked') : this.$replacement.removeClass('checked');
@@ -163,6 +171,7 @@ CwicControl.prototype.bindEvents = function() {
   this.$replacement.on('keydown', function(event) { cc.keyboardHandler.call(cc, event); });
 };
 
+/*
 CwicControl.prototype.bindEvents_dropdown = function() {
   var cc = this;
 
@@ -186,14 +195,17 @@ CwicControl.prototype.bindEvents_dropdown = function() {
   // Close dropdown when losing focus
   this.$replacement.on('blur.cwicControl', function() { cc.closeAction.call(cc); });
 };
+*/
 
 CwicControl.prototype.primaryAction = function() {
   this['primaryAction_' + this.type]();
 };
 
+/*
 CwicControl.prototype.primaryAction_dropdown = function() {
   this.$replacement.hasClass('open') ? this.$replacement.removeClass('open') : this.$replacement.addClass('open');
 };
+*/
 
 CwicControl.prototype.primaryAction_checkbox = function() {
   this.$field.prop('checked', !this.$replacement.hasClass('checked')).trigger('change');
@@ -223,6 +235,7 @@ CwicControl.prototype.pickOptionAction = function(event, direction) {
   }
 };
 
+/*
 CwicControl.prototype.pickOptionAction_dropdown = function(event, direction) {
   event.preventDefault(); // Prevent scrolling
   var options = this.$field.find('option');
@@ -232,6 +245,7 @@ CwicControl.prototype.pickOptionAction_dropdown = function(event, direction) {
     this.$field.val(option.val()).trigger('change');
   }
 };
+*/
 
 CwicControl.prototype.pickOptionAction_radio_button = function(event, direction) {
   event.preventDefault(); // Prevent scrolling
@@ -269,7 +283,7 @@ CwicControl.prototype.submitForm = function(event) {
 $.fn.cwicControl = function(operation) {
   operation = operation || 'create';
   replacedFilter = (operation == 'create' ? ':not(.replaced)' : '.replaced');
-  $(this).filter('select:not(.nocwic, .select2, [multiple]), :radio:not(.nocwic), :checkbox:not(.nocwic), input[type=file]:not(.nocwic)').filter(replacedFilter).each(function() {
+  $(this).filter(/*select:not(.nocwic, .select2, [multiple]), */':radio:not(.nocwic), :checkbox:not(.nocwic), input[type=file]:not(.nocwic)').filter(replacedFilter).each(function() {
     var field = $(this);
     if(typeof field.data('cwicControl') == 'undefined') {
       field.data('cwicControl', new CwicControl(field));

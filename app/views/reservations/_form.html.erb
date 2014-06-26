@@ -24,8 +24,8 @@
       </div>
     </fieldset>
 
-    <div class="form-columns clearfix">
-      <div class="form-column">
+    <div class="content-columns clearfix">
+      <div class="content-column">
         <h2><i class="icon-shapes"></i><%= t('.entity') %></h2>
         <div class="entity-selector">
           <h3><%= t('.selected_entity') %></h3>
@@ -57,7 +57,7 @@
         </div>
       </div>
 
-      <div class="form-column">
+      <div class="content-column">
         <h2><i class="icon-user"></i><%= t('.organisation_client') %></h2>
         <% if @reservation.new_record? %>
         <div class="organisation_client_new_existing">
@@ -88,7 +88,7 @@
         <% end %>
       </div>
 
-      <div class="form-column">
+      <div class="content-column">
         <h2><i class="icon-settingsthree-gears"></i><%= t('.settings') %></h2>
         <div class="field">
           <%= f.label :description %>

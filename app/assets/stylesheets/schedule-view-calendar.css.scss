@@ -764,20 +764,25 @@ div.calendar div.schedule-body div.column div.schedule-item-wrapper {
   background-color: rgba(255, 53, 32, 0.2);
 }
 
-div.calendar div.schedule-body div.row div.schedule-item.error-glow,
-div.calendar div.schedule-body div.column div.schedule-item.error-glow {
+div.schedule-item.item-conflict {
   border: 1px solid rgba(255, 0, 0, 0.9);
-  -webkit-box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.9);
-  -moz-box-shadow:    0px 0px 15px rgba(255, 0, 0, 0.9);
-  box-shadow:         0px 0px 15px rgba(255, 0, 0, 0.9);
+  box-shadow: 0px 0px 15px rgba(255, 0, 0, 0.9);
 }
 
-div.calendar div.schedule-body div.row div.schedule-item.slack-glow,
-div.calendar div.schedule-body div.column div.schedule-item.slack-glow {
+div.schedule-item.slack-conflict {
   border: 1px solid rgba(226, 149, 44, 0.9);
-  -webkit-box-shadow: 0px 0px 15px rgba(226, 149, 44, 0.9);
-  -moz-box-shadow:    0px 0px 15px rgba(226, 149, 44, 0.9);
-  box-shadow:         0px 0px 15px rgba(226, 149, 44, 0.9);
+  box-shadow: 0px 0px 15px rgba(226, 149, 44, 0.9);
+}
+
+div.schedule-item.edit-mode {
+  border: 1px solid rgba(24, 193, 61, 0.9);
+  box-shadow: 0px 0px 15px rgba(24, 193, 61, 0.9);
+  &.item-conflict {
+    @extend div.schedule-item.item-conflict;
+  }
+  &.slack-conflict {
+    @extend div.schedule-item.slack-conflict;
+  }
 }
 
 div.calendar div.schedule-body div.row div.schedule-item div.continue-container,

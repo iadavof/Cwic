@@ -166,6 +166,32 @@ dl {
   }
 }
 
+.content-columns {
+  .content-column {
+    width: 32%;
+    box-sizing: border-box;
+    min-width: 400px;
+    float: left;
+    border: 1px solid #ccc;
+    padding: 30px;
+    margin-left: 2%;
+    margin-bottom: 20px;
+    &:first-child {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+  &.twocol {
+    .content-column {
+      width: 49%;
+    }
+  }
+}
+
 .progress-bar {
   background-color: #6dbfce;
   -webkit-background-size: 30px 30px;

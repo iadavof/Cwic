@@ -17,30 +17,30 @@
 
   <div class="tab-wrap">
     <div id="general">
-      <dl>
-        <dt><%= OrganisationClient.human_attribute_name(:name) %></dt>
-        <dd><%= @organisation_client.first_name + (@organisation_client.infix.present? ? @organisation_client.infix + ' ' : ' ') + @organisation_client.last_name %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
-        <dd><%= @organisation_client.email %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:route) %></dt>
-        <dd><%= @organisation_client.route %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:street_number) %></dt>
-        <dd><%= @organisation_client.street_number %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:postal_code) %></dt>
-        <dd><%= @organisation_client.postal_code %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:administrative_area_level_2) %></dt>
-        <dd><%= @organisation_client.administrative_area_level_2 %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:administrative_area_level_1) %></dt>
-        <dd><%= @organisation_client.administrative_area_level_1 %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:locality) %></dt>
-        <dd><%= @organisation_client.locality %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:country) %></dt>
-        <dd><%= @organisation_client.country %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:phone) %></dt>
-        <dd><%= @organisation_client.phone %></dd>
-        <dt><%= OrganisationClient.human_attribute_name(:mobile_phone) %></dt>
-        <dd><%= @organisation_client.mobile_phone %></dd>
-      </dl>
+      <div class="content-columns twocol clearfix">
+        <div class="content-column">
+          <h2><%= t('.information') %></h2>
+          <dl>
+            <dt><%= OrganisationClient.human_attribute_name(:name) %></dt>
+            <dd><%= @organisation_client.first_name + (@organisation_client.infix.present? ? @organisation_client.infix + ' ' : ' ') + @organisation_client.last_name %></dd>
+            <dt><%= t('.address') %></dt>
+            <dd><%= format_address(@organisation_client.route, @organisation_client.street_number, @organisation_client.postal_code, @organisation_client.administrative_area_level_2, @organisation_client.administrative_area_level_1, @organisation_client.locality, @organisation_client.country) %></dd>
+            <dt><%= t('.municipality') %></dt>
+            <dd><%= @organisation_client.administrative_area_level_2 + ', ' + @organisation_client.administrative_area_level_1 %></dd>
+          </dl>
+        </div>
+        <div class="content-column">
+          <h2><%= t('.contact') %></h2>
+          <dl>
+            <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
+            <dd><%= content_tag(:a, @organisation_client.email, href: 'mailto:' + @organisation_client.email) %></dd>
+            <dt><%= OrganisationClient.human_attribute_name(:phone) %></dt>
+            <dd><%= @organisation_client.phone %></dd>
+            <dt><%= OrganisationClient.human_attribute_name(:mobile_phone) %></dt>
+            <dd><%= @organisation_client.mobile_phone %></dd>
+          </dl>
+        </div>
+      </div>
     </div>
     <div id="upcomming_reservations">
       <% if @organisation_client.upcomming_reservations(15).empty? %>
