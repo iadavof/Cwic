@@ -19,7 +19,7 @@
     <div id="general">
       <div class="content-columns twocol clearfix">
         <div class="content-column">
-          <h2><%= t('.information') %></h2>
+          <h2><i class="icon-address"></i><%= t('.Address') %></h2>
           <dl>
             <dt><%= OrganisationClient.human_attribute_name(:name) %></dt>
             <dd><%= @organisation_client.first_name + (@organisation_client.infix.present? ? @organisation_client.infix + ' ' : ' ') + @organisation_client.last_name %></dd>
@@ -30,7 +30,7 @@
           </dl>
         </div>
         <div class="content-column">
-          <h2><%= t('.contact') %></h2>
+          <h2><i class="icon-phone-call"></i><%= t('.contact') %></h2>
           <dl>
             <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
             <dd><%= content_tag(:a, @organisation_client.email, href: 'mailto:' + @organisation_client.email) %></dd>

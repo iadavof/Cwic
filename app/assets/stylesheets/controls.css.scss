@@ -16,16 +16,7 @@ input[type="file"].replaced {
   margin: 0;
 }
 
-.select2-container-active,
-.select2-dropdown-open,
-.select2-drop,
-.cwic-dropdown:focus,
-.cwic-dropdown.open .cwic-dropdown-options {
-  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
-  outline: none;
-}
-
-.cwic-dropdown, .cwic-filefield {
+.cwic-filefield {
   position: relative;
   font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
   font-size: 1em;
@@ -40,108 +31,6 @@ input[type="file"].replaced {
   line-height: normal;
   display: inline-block;
   background-color: #fff;
-}
-
-.cwic-dropdown {
-  padding: 0;
-  vertical-align: bottom;
-  text-align: left;
-  &::-moz-selection {
-    background-color: transparent;
-    color: inherit;
-  }
-  &::selection {
-    background-color: transparent;
-    color: inherit;
-  }
-  &.open, &:focus, .cwic-dropdown-options {
-    border: 1px solid #999;
-    height: auto;
-  }
-  .cwic-dropdown-options {
-    position: absolute;
-    top: -1px;
-    left: -1px;
-    background-color: #fff;
-    width: 100%;
-    z-index: 200;
-    overflow: hidden;
-    height: 0;
-    border: 0 none;
-    &:hover {
-      .cwic-dropdown-current-option {
-        &:before {
-          color: #1c9cb2;
-        }
-      }
-    }
-    .cwic-dropdown-current-option {
-      border: 0 none;
-      background-color: #fff;
-    }
-  }
-  .cwic-dropdown-current-option,
-  .cwic-dropdown-option {
-    padding: 0.8em 2em 0.8em 0.8em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    cursor: pointer;
-    white-space: nowrap;
-  }
-  .cwic-dropdown-option {
-    &:hover {
-      background-color: #f3f3f3;
-      color: #17889D;
-    }
-    &.selected {
-      background-color: #1c9cb2;
-      color: #fff;
-    }
-  }
-  .cwic-dropdown-current-option {
-    position: relative;
-    text-align: center;
-    &:before {
-      display: block;
-      font-size: 0.7em;
-      line-height: 0.7em;
-      height: 0.7em;
-      position: absolute;
-      top: 50%;
-      right: 0.9em;
-      margin-top: -0.35em;
-      transition: transform 0.3s;
-    }
-    &:hover:before {
-      color: #1c9cb2;
-    }
-  }
-  &.open {
-    .cwic-dropdown-current-option:before {
-      transform: rotate(-180deg);
-    }
-    .cwic-dropdown-options {
-      display: block;
-      height: auto;
-      border: 1px solid #999;
-    }
-  }
-  &.autosubmit-busy {
-    .cwic-dropdown-current-option {
-      &:before {
-        content: '\0a';
-        color: #fff;
-        background-image: image-url('ajax_wait.svg');
-        background-size: 100% 100%;
-        background-repeat: no-repeat;
-        width: 2em;
-        height: 2em;
-        margin-top: -1em;
-        transform: none;
-        transition: none;
-      }
-    }
-  }
 }
 
 .cwic-checkbox,
@@ -255,6 +144,7 @@ input[type="file"].replaced {
 }
 
 .select2-container {
+  line-height: normal;
   .select2-choice {
     background: #fff;
     filter: none;
@@ -269,11 +159,12 @@ input[type="file"].replaced {
     }
     > .select2-chosen {
       text-align: center;
+      margin-right: 2em;
     }
     .select2-arrow {
       background: transparent;
       filter: none;
-      width: 26px;
+      width: 2em;
       border: 0 none;
       border-radius: 0;
       color: inherit;
@@ -327,9 +218,26 @@ input[type="file"].replaced {
       border-color: #999;
     }
   }
+  &.autosubmit-busy {
+    .select2-arrow {
+      &:before {
+        content: '\0a';
+        color: #fff;
+        background-image: image-url('ajax_wait.svg');
+        background-size: 100% 100%;
+        background-repeat: no-repeat;
+        width: 2em;
+        height: 2em;
+        margin-top: -1em;
+        transform: none;
+        transition: none;
+      }
+    }
+  }
 }
 
 .select2-drop {
+  line-height: normal;
   border-radius: 0;
   color: inherit;
   &.select2-drop-above {
@@ -342,6 +250,7 @@ input[type="file"].replaced {
     }
   }
   .select2-search {
+    padding-bottom: 5px;
     input {
       background: image-url('select2.png') no-repeat scroll 100% -22px #fff;
       filter: none;
@@ -358,16 +267,19 @@ input[type="file"].replaced {
   }
   .select2-results {
     margin: 0;
-    padding: 5px 0 0 0;
+    padding: 0;
     .select2-highlighted {
       background: #1c9cb2;
       filter: none;
+    }
+    .select2-result-label {
+      padding: 0.8em 0 0.8em 0.8em;
     }
     .select2-no-results, .select2-searching, .select2-selection-limit {
       background: transparent;
       filter: none;
       font-size: 0.9em;
-      padding: 0 7px;
+      padding: 0 7px 5px 7px;
     }
   }
 }
@@ -375,4 +287,11 @@ input[type="file"].replaced {
 .select2-dropdown-open .select2-choice,
 .select2-drop {
   border-color: #999;
+}
+
+.select2-container-active,
+.select2-dropdown-open,
+.select2-drop {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.4);
+  outline: none;
 }

@@ -9,9 +9,7 @@ function CwicControl(field, options) {
 }
 
 CwicControl.prototype.detectType = function() {
-  /*if(this.$field.is('select:not([multiple])')) {
-    return 'dropdown';
-  } else */if(this.$field.is(':radio')) {
+  if(this.$field.is(':radio')) {
     return 'radio_button';
   } else if(this.$field.is(':checkbox')) {
     return 'checkbox';
@@ -41,27 +39,6 @@ CwicControl.prototype.recreate = function() {
   this.destroy();
   this.create();
 };
-
-/*
-CwicControl.prototype.create_dropdown = function() {
-  var cc = this.$field;
-  cc.select2({
-    minimumResultsForSearch: -1,
-  });
-  var cc = this;
-  var options = this.$field.find('option');
-  var defaultOption = this.$field.find('option:selected');
-  this.$replacement = $('<div class="cwic-dropdown" data-name="' + this.$field.attr('name') + '"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div><div class="cwic-dropdown-options"><div class="cwic-dropdown-current-option" data-value="' + defaultOption.attr('value') + '">' + (defaultOption.text() || '...') + '</div></div></div>');
-  options.each(function() {
-    var option = $(this);
-    var optionReplacement = $('<div class="cwic-dropdown-option" data-value="' + option.attr('value') + '">' + (option.text() || '...') + '</div>');
-    if (optionReplacement.data('value') == defaultOption.val()) {
-      optionReplacement.addClass('selected');
-    }
-    cc.$replacement.find('.cwic-dropdown-options').append(optionReplacement);
-  });
-};
-*/
 
 CwicControl.prototype.create_checkbox = function() {
   this.$replacement = $('<div class="cwic-checkbox" data-name="' + this.$field.attr('name') + '"><div class="inner"></div></div>');
@@ -123,17 +100,6 @@ CwicControl.prototype.onChangeHandler = function(event) {
   this['onChangeHandler_' + this.type]();
 };
 
-/*
-CwicControl.prototype.onChangeHandler_dropdown = function() {
-  var selectedOption = this.$field.find('option:selected');
-  if(selectedOption.length > 0) {
-    this.$replacement.find('.cwic-dropdown-current-option').text((selectedOption.text() || '...'));
-    this.$replacement.find('.cwic-dropdown-option').removeClass('selected');
-    this.$replacement.find('.cwic-dropdown-option[data-value=' + APP.util.escapeForSelector(selectedOption.val()) + ']').addClass('selected');
-  }
-};
-*/
-
 CwicControl.prototype.onChangeHandler_checkbox = function() {
   this.$field.is(':checked') ? this.$replacement.addClass('checked') : this.$replacement.removeClass('checked');
 };
@@ -171,41 +137,9 @@ CwicControl.prototype.bindEvents = function() {
   this.$replacement.on('keydown', function(event) { cc.keyboardHandler.call(cc, event); });
 };
 
-/*
-CwicControl.prototype.bindEvents_dropdown = function() {
-  var cc = this;
-
-  // Add class to autosubmit dropdowns on change
-  if (this.$field.is('.autosubmit')) {
-    this.$field.on('change.cwicControl', function(e) {
-      cc.$replacement.addClass('autosubmit-busy');
-    });
-  }
-
-  // Update select element when dropdown option is clicked
-  this.$replacement.find('.cwic-dropdown-option').each(function() {
-    var optionReplacement = $(this);
-    optionReplacement.on('click', function(e) {
-      cc.$field.val(optionReplacement.data('value')).trigger('change');
-      optionReplacement.parent('.cwic-dropdown-options').siblings('.cwic-dropdown-current-option').text(cc.$field.find('option:selected').text() || '...');
-      optionReplacement.addClass('selected').siblings('.cwic-dropdown-option').removeClass('selected');
-    });
-  });
-
-  // Close dropdown when losing focus
-  this.$replacement.on('blur.cwicControl', function() { cc.closeAction.call(cc); });
-};
-*/
-
 CwicControl.prototype.primaryAction = function() {
   this['primaryAction_' + this.type]();
 };
-
-/*
-CwicControl.prototype.primaryAction_dropdown = function() {
-  this.$replacement.hasClass('open') ? this.$replacement.removeClass('open') : this.$replacement.addClass('open');
-};
-*/
 
 CwicControl.prototype.primaryAction_checkbox = function() {
   this.$field.prop('checked', !this.$replacement.hasClass('checked')).trigger('change');
@@ -234,18 +168,6 @@ CwicControl.prototype.pickOptionAction = function(event, direction) {
     this['pickOptionAction_' + this.type](event, direction);
   }
 };
-
-/*
-CwicControl.prototype.pickOptionAction_dropdown = function(event, direction) {
-  event.preventDefault(); // Prevent scrolling
-  var options = this.$field.find('option');
-  var current = options.filter(':checked');
-  var option = this.getOptionByDirection(options, current, direction);
-  if(option.length > 0) {
-    this.$field.val(option.val()).trigger('change');
-  }
-};
-*/
 
 CwicControl.prototype.pickOptionAction_radio_button = function(event, direction) {
   event.preventDefault(); // Prevent scrolling

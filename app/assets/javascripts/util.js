@@ -72,33 +72,6 @@ APP.util = {
     APP.global.initializeSpecialFormFields(newitem);
     return newitem;
   },
-  cssTransitionsAnimate: function(selector, properties, duration, easing, complete) {
-    var $obj = $(selector);
-    duration = duration ? duration/1000 + 's' : '0.4s';
-    if (easing !== 'linear') {
-      easing = 'ease';
-    }
-    
-    $obj.css({transition: 200/1000 + 's ease'});
-    
-    if (complete) {
-      $obj.first().on('transitionend.cssTransitionsAnimateCallback webkitTransitionEnd.cssTransitionsAnimateCallback', function(event) {
-        if (event.target === event.currentTarget) {
-          $(this).off('transitionend.cssTransitionsAnimateCallback webkitTransitionEnd.cssTransitionsAnimateCallback');
-          complete();
-        }
-      });
-    }
-    
-    $obj.on('transitionend.cssTransitionsAnimate webkitTransitionEnd.cssTransitionsAnimate', function(event) {
-      if (event.target === event.currentTarget) {
-        $(this).off('transitionend.cssTransitionsAnimate webkitTransitionEnd.cssTransitionsAnimate');
-        $(this).css({transition: 'none'});
-      }
-    });
-    
-    $obj.css(properties);
-  }
 }
 
 // JavaScript and jQuery extensions

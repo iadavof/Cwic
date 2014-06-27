@@ -161,17 +161,10 @@ APP.global = {
         APP.global.closeSearchBar();
       }
     });
-    if (Modernizr.csstransitions) {
-      APP.util.cssTransitionsAnimate($belowHeader, {top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
-        $searchBar.addClass('open');
-        $(window).trigger('header-animated');
-      });
-    } else {
-      $belowHeader.animate({top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
-        $searchBar.addClass('open');
-        $(window).trigger('header-animated');
-      });
-    }
+    $belowHeader.animate({top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
+      $searchBar.addClass('open');
+      $(window).trigger('header-animated');
+    });
     $searchField.focus();
   },
   closeSearchBar: function() {
@@ -182,18 +175,10 @@ APP.global = {
     $searchField.blur().val('');
     
     $('#open-search-button').removeClass('open');
-    
-    if (Modernizr.csstransitions) {
-      APP.util.cssTransitionsAnimate($belowHeader, {top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
-        $searchBar.removeClass('open');
-        $(window).trigger('header-animated');
-      });
-    } else {
-      $belowHeader.animate({top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
-        $searchBar.removeClass('open');
-        $(window).trigger('header-animated');
-      });
-    }
+    $belowHeader.animate({top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
+      $searchBar.removeClass('open');
+      $(window).trigger('header-animated');
+    });
   },
   addProgressbarToAjax : function() {
     NProgress.configure({ container: $('div#progress-bar-container'), showSpinner: false });
@@ -259,15 +244,9 @@ APP.global = {
     switch (direction) {
       case 'in':
         if (animated) {
-          if (Modernizr.csstransitions) {
-            APP.util.cssTransitionsAnimate($mainArea, {left: 0}, duration, 'swing', function() {
-              $submenus.removeClass('selected');
-            });
-          } else {
-            $mainArea.animate({left: 0}, duration, 'swing', function() {
-              $submenus.removeClass('selected');
-            });
-          }
+          $mainArea.animate({left: 0}, duration, 'swing', function() {
+            $submenus.removeClass('selected');
+          });
         } else {
           $mainArea.css({left: 0});
           $submenus.removeClass('selected');
@@ -277,36 +256,18 @@ APP.global = {
         $submenus.removeClass('selected').css({opacity: 0});
         $submenu.addClass('selected').css({opacity: 1});
         if (animated) {
-          if (Modernizr.csstransitions) {
-            APP.util.cssTransitionsAnimate($mainArea, {left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
-          } else {
-            $mainArea.animate({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
-          }
+          $mainArea.animate({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
         } else {
           $mainArea.css({left: $submenuBox.outerWidth() + 'px'});
         }
         break;
       case 'in-out':
-        // @TODO Callback firing another animation doesn't work properly
-        /*
-        if (Modernizr.csstransitions) {
-          APP.util.cssTransitionsAnimate($submenus, {opacity: 0}, duration/3, 'swing', function() {
-            $submenus.removeClass('selected');
-            APP.util.cssTransitionsAnimate($submenus, {opacity: 1}, duration/3, 'swing', function() {
-              $submenu.addClass('selected');
-            });
+        $submenus.animate({opacity: 0}, duration/2.5, 'swing', function() {
+          $submenus.removeClass('selected');
+          $submenu.animate({opacity: 1}, duration/2.5, 'swing', function() {
+            $submenu.addClass('selected');
           });
-        } else {
-        */
-          $submenus.animate({opacity: 0}, duration/2.5, 'swing', function() {
-            $submenus.removeClass('selected');
-            $submenu.animate({opacity: 1}, duration/2.5, 'swing', function() {
-              $submenu.addClass('selected');
-            });
-          });
-        /*
-        }
-        */
+        });
         break;
     }
   },
@@ -406,7 +367,7 @@ APP.global = {
     }
     $(parent).find(':radio, :checkbox, input[type=file]').cwicControl();
     $(parent).find('select').select2({
-      width: 'resolve',
+      width: 'element',
       minimumResultsForSearch: -1,
     });
     $(parent).find('.datepicker-field').datepicker();
@@ -415,6 +376,10 @@ APP.global = {
     $(parent).find('input.with-clear').each(this.initializeInputWithClear);
 
     $(document).on('nested:fieldAdded', function(e) { APP.global.initializeSpecialFormFields(e.field); });
+    
+    $(parent).find('.select2-offscreen.autosubmit').on('change', function() {
+      $(this).prev('.select2-container').addClass('autosubmit-busy');
+    });
   },
   initializeInputWithClear: function() {
     var input = $(this);
