@@ -161,7 +161,7 @@ APP.global = {
         APP.global.closeSearchBar();
       }
     });
-    $belowHeader.animate({top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
+    $belowHeader.velocity({top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
       $searchBar.addClass('open');
       $(window).trigger('header-animated');
     });
@@ -175,7 +175,7 @@ APP.global = {
     $searchField.blur().val('');
     
     $('#open-search-button').removeClass('open');
-    $belowHeader.animate({top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
+    $belowHeader.velocity({top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
       $searchBar.removeClass('open');
       $(window).trigger('header-animated');
     });
@@ -244,7 +244,7 @@ APP.global = {
     switch (direction) {
       case 'in':
         if (animated) {
-          $mainArea.animate({left: 0}, duration, 'swing', function() {
+          $mainArea.velocity({left: 0}, duration, 'swing', function() {
             $submenus.removeClass('selected');
           });
         } else {
@@ -256,15 +256,15 @@ APP.global = {
         $submenus.removeClass('selected').css({opacity: 0});
         $submenu.addClass('selected').css({opacity: 1});
         if (animated) {
-          $mainArea.animate({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
+          $mainArea.velocity({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
         } else {
           $mainArea.css({left: $submenuBox.outerWidth() + 'px'});
         }
         break;
       case 'in-out':
-        $submenus.animate({opacity: 0}, duration/2.5, 'swing', function() {
+        $submenus.velocity({opacity: 0}, duration/2.5, 'swing', function() {
           $submenus.removeClass('selected');
-          $submenu.animate({opacity: 1}, duration/2.5, 'swing', function() {
+          $submenu.velocity({opacity: 1}, duration/2.5, 'swing', function() {
             $submenu.addClass('selected');
           });
         });

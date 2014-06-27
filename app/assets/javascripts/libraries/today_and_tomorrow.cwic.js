@@ -33,12 +33,12 @@ CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
     var descriptionHeight = $description.height();
     
     if($description.hasClass('opened')) {
-      $description.animate({height: 0}, 200, 'swing', function(){
+      $description.velocity({height: 0}, 200, 'swing', function(){
         $description.css({display: 'none', height: 'auto'}).removeClass('opened');
       });
     } else {
       $description.css({height: 0, display: 'block'});
-      $description.animate({height: descriptionHeight}, 200, 'swing', function() {
+      $description.velocity({height: descriptionHeight}, 200, 'swing', function() {
         $description.css({height: 'auto'}).addClass('opened');
       });
     }
