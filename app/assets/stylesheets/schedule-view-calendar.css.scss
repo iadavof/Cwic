@@ -978,13 +978,15 @@ div.calendar div.schedule-body div.row div.schedule-item a.open-toolbar {
 
 div.calendar div.schedule-body div.row div.schedule-item div.status {
   position: absolute;
-  top: 0;
+  top: 50%;
+  margin-top: -10px;
   left: 15px;
-  width: 15px;
-  height: 100%;
-  border-left: 1px solid #222;
-  border-right: 1px solid #222;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-radius: 3px;
   color: #222;
+  font-weight: bold;
   background-color: #ccc;
   opacity: 0.85;
   display: none;
@@ -992,12 +994,14 @@ div.calendar div.schedule-body div.row div.schedule-item div.status {
 
 div.calendar div.schedule-body div.column div.schedule-item div.status {
   position: absolute;
-  right: 0;
-  top: 0;
-  width: 15px;
-  height: 15px;
-  border: 1px solid #222;
+  right: 15px;
+  top: 15px;
+  width: 16px;
+  height: 16px;
+  border: 2px solid #fff;
+  border-radius: 3px;
   color: #222;
+  font-weight: bold;
   background-color: #ccc;
   display: none;
 }
@@ -1042,7 +1046,7 @@ div.calendar div.schedule-body div.column div.schedule-item p.item-text {
 
 div.calendar div.schedule-body div.row div.schedule-item p.item-text {
   height: 20px;
-  padding-left: 35px;
+  padding-left: 43px;
   margin-top: -10px;
 
   -moz-box-sizing: border-box;
@@ -1054,7 +1058,7 @@ div.calendar div.schedule-body div.column div.schedule-item p.item-text {
   left: 0;
   width: 100%;
   text-align: center;
-  padding: 10px 15px;
+  padding: 15px;
   overflow: hidden;
   max-height: 100%;
   box-sizing: border-box;

@@ -115,7 +115,7 @@ CwicScheduleViewItem.prototype.renderPart = function(jschobj, momentBlock) {
 
 CwicScheduleViewItem.prototype.addStatusFlag = function(scheduleItemDOM) {
   if(this.status != null) {
-    scheduleItemDOM.find('div.status').show().attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color, borderColor: this.status.text_color }).find('span').text(this.status.name.substring(0,1));
+    scheduleItemDOM.find('div.status').show().attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color}).find('span').text(this.status.name.substring(0,1));
   }
 };
 

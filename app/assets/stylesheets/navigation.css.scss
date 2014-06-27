@@ -1,7 +1,7 @@
 /* Main menu */
 
 .logo-in-app {
-  margin: 0.45em 1.45em 0.45em 0.45em;
+  margin: 0.45em 1.45em 0.45em 20px;
   display: inline-block;
   vertical-align: top;
   > img {
@@ -163,7 +163,7 @@
 /* Submenu */
 
 #submenu-box {
-  background-color: #ccc;
+  background-color: #ddd;
   color: #444;
   text-align: center;
   background-image: image-url("logo_transp.png");
@@ -264,7 +264,8 @@ html.js #submenu-box {
   background-color: #fff;
   padding: 0 0.5em 0 1em;
   position: relative;
-  box-shadow: 0 0 30px rgba(0,0,0,0.2);
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-bottom: 1px solid #ddd;
   z-index: 198;
   .button {
     margin: 0.4em 0;
