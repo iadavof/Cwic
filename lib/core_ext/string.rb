@@ -20,4 +20,8 @@ class String
   def to_tod
     self.to_time.to_tod
   end
+
+  def pl
+    return self # Temporary fix to disable the rich_pluralization gem since it is broken with the Rails 4.1.4 upgrade. TODO fix this!
+  end
 end
