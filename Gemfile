@@ -31,7 +31,7 @@ gem 'jquery-ui-rails-cdn', github: 'kreintjes/jquery-ui-rails-cdn' # Custom gem 
 gem 'modernizr-rails'
 
 # Use the gistyle gem for the Garber Irish Javascript loading implementation
-gem 'gistyle', github: 'tonytonyjan/gistyle'
+gem 'gistyle', github: 'tonytonyjan/gistyle' # Github version to add support for alias actions. Waiting for new release.
 
 # Color picker
 gem 'jquery-minicolors-rails'
@@ -60,7 +60,7 @@ end
 gem 'rails-i18n'
 
 # Plurailize
-gem 'rich_pluralization', github: 'archan937/rich_pluralization'
+gem 'rich_pluralization', github: 'archan937/rich_pluralization' # This gem is broken in combination with Rails 4.1.4. Fix it or remove it entirely.
 
 # Devise for authentication. Gems are locked on minor versions, because we use custom Devise functionality and views.
 gem 'devise', '~> 3.2.4'
@@ -112,19 +112,19 @@ gem 'pg_search', '~> 0.7.3' # Locked on minor version, because we use custom sea
 gem 'kaminari'
 
 # Websockets so we could create push notifications
-gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom websocket-rails gem because the standard version is not Windows comptabile.
+gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom gem to add Windows compatibility. Waiting for issue #186 to be fixed.
 
 # Organisation of the seeds
 gem 'seedbank'
 
-# Holidays gem to determine the dates of holidays. Custom gem to add keys and kings day
-gem 'holidays', github: 'kreintjes/holidays' #path: '~/rails/gems/holidays'github: 'kreintjes/holidays'
+# Holidays gem to determine the dates of holidays.
+gem 'holidays', github: 'kreintjes/holidays' # Custom gem to add support for identifier keys and kings day holiday
 
-# Translate numbers to words (and ordinal forms). Custom gem to add ordinal support for dutch locale.
-gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' #path: '~/rails/gems/numbers_and_words'
+# Translate numbers to words (and ordinal forms).
+gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' # Custom gem to add ordinal support for dutch locale.
 
 # Attribute normalizer to normalize/cleanup attribute values (for instance change blanks to nils)
-gem 'attribute_normalizer', '~> 1.2.0.b'
+gem 'attribute_normalizer', '~> 1.2.0.b' # Locked on new release candidate. Waiting for official release.
 
 # Ice cube gem for easy recurrence rules
 gem 'ice_cube'
