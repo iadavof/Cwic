@@ -136,7 +136,7 @@ gem 'hash_to_hidden_fields'
 gem 'validates_timeliness'
 
 # Make ActiveRecord objects deep clonable (dup) including associations
-gem 'deep_cloneable', '~> 1.6.1'
+gem 'deep_cloneable'
 
 # Factory girl to generate data for tests (this is a replacement for fixtures)
 gem 'factory_girl_rails'
