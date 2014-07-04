@@ -24,8 +24,8 @@ gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library, by default get them from cdn
 gem 'jquery-rails'
 gem 'jquery-rails-cdn'
-gem 'jquery-ui-rails', '~> 4.2.1'
-gem 'jquery-ui-rails-cdn'
+gem 'jquery-ui-rails'
+gem 'jquery-ui-rails-cdn', github: 'kreintjes/jquery-ui-rails-cdn' # Custom gem to add compatibility with jquery-ui-rails 5.0.0. Waiting for pull request to be merged.
 
 # Use Modernizr to detect support for new features
 gem 'modernizr-rails'

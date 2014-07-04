@@ -12,6 +12,13 @@ GIT
     holidays (1.0.7.pre)
 
 GIT
+  remote: git://github.com/kreintjes/jquery-ui-rails-cdn.git
+  revision: 6f237a1acb4929acca325343069f13fd3942c9d4
+  specs:
+    jquery-ui-rails-cdn (0.1.4)
+      jquery-ui-rails (>= 5.0.0)
+
+GIT
   remote: git://github.com/kreintjes/numbers_and_words.git
   revision: 7d054f7512ae5ba09d78be3a031c289b1cbd1c51
   specs:
@@ -155,10 +162,8 @@ GEM
       thor (>= 0.14, < 2.0)
     jquery-rails-cdn (1.0.3)
       jquery-rails
-    jquery-ui-rails (4.2.1)
+    jquery-ui-rails (5.0.0)
       railties (>= 3.2.16)
-    jquery-ui-rails-cdn (0.1.4)
-      jquery-ui-rails (>= 4.1.0)
     js-routes (0.9.8)
       railties (>= 3.2)
       sprockets-rails
@@ -337,8 +342,8 @@ DEPENDENCIES
   jquery-minicolors-rails
   jquery-rails
   jquery-rails-cdn
-  jquery-ui-rails (~> 4.2.1)
-  jquery-ui-rails-cdn
+  jquery-ui-rails
+  jquery-ui-rails-cdn!
   js-routes
   kaminari
   magnific-popup-rails
