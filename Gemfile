@@ -24,7 +24,7 @@ gem 'therubyracer', platforms: :ruby
 # Use jquery as the JavaScript library, by default get them from cdn
 gem 'jquery-rails'
 gem 'jquery-rails-cdn'
-gem 'jquery-ui-rails'
+gem 'jquery-ui-rails', '~> 4.2.1'
 gem 'jquery-ui-rails-cdn'
 
 # Use Modernizr to detect support for new features
@@ -136,7 +136,7 @@ gem 'hash_to_hidden_fields'
 gem 'validates_timeliness'
 
 # Make ActiveRecord objects deep clonable (dup) including associations
-gem 'deep_cloneable'
+gem 'deep_cloneable', '~> 1.6.1'
 
 # Factory girl to generate data for tests (this is a replacement for fixtures)
 gem 'factory_girl_rails'
