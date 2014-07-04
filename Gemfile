@@ -168,9 +168,6 @@ end
 group :test, :development do
   # The RSpec testing framework
   gem 'rspec-rails'
-
-  # The debugger gem
-  gem 'debugger'
 end
 
 group :test do
