@@ -34,7 +34,7 @@ class OrganisationClient < ActiveRecord::Base
   end
 
   def full_name
-    "#{first_name} #{infix.present? ? infix + ' ' : ''} #{last_name}"
+    "#{first_name} #{infix.present? ? infix + ' ' : ''}#{last_name}"
   end
 
   def instance_name
