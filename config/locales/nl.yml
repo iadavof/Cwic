@@ -103,7 +103,7 @@ nl:
         other: 'Eigenschappen'
       entity_image:
         one: 'Foto'
-        other: "Foto's"
+        other: 'Foto''s'
       reservation:
         one: 'Reservering'
         other: 'Reserveringen'
@@ -223,7 +223,7 @@ nl:
       entity_image:
         title: 'Titel'
         image: 'Foto'
-        include_entity_type_images: "Voeg foto's van objecttype toe"
+        include_entity_type_images: 'Voeg foto''s van objecttype toe'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Lokale afbeelding'
       entity_type_icon:
@@ -271,7 +271,7 @@ nl:
         organisation: 'Organisatie'
         message: 'Bericht'
         specs: 'Specificaties'
-        creating_screenshot: "Bezig met het maken van een schermafbeelding voor feedback..."
+        creating_screenshot: 'Bezig met het maken van een schermafbeelding voor feedback...'
       info_screen:
         name: 'Naam'
         public: 'Publiek'
@@ -305,10 +305,10 @@ nl:
         price: 'Prijs bij reserveerperiode'
     errors:
       messages:
-        date_blank: "datum moet opgegeven zijn"
-        tod_blank: "tijd moet opgegeven zijn"
-        not_a_date: "datum is ongeldig"
-        not_a_tod: "tijd is ongeldig"
+        date_blank: 'datum moet opgegeven zijn'
+        tod_blank: 'tijd moet opgegeven zijn'
+        not_a_date: 'datum is ongeldig'
+        not_a_tod: 'tijd is ongeldig'
       models:
         user:
           attributes:
@@ -488,11 +488,11 @@ nl:
     page_entries_info:
       one_page:
         display_entries:
-          zero: "Geen %{entry_name} gevonden"
-          one: "%{entry_name} <strong>1</strong> van <strong>%{count}</strong> wordt weergeven"
-          other: "%{entry_name} <strong>1</strong> tot en met <strong>%{count}</strong> van <strong>%{count}</strong> worden weergeven"
+          zero: 'Geen %{entry_name} gevonden'
+          one: '%{entry_name} <strong>1</strong> van <strong>%{count}</strong> wordt weergeven'
+          other: '%{entry_name} <strong>1</strong> tot en met <strong>%{count}</strong> van <strong>%{count}</strong> worden weergeven'
       more_pages:
-        display_entries: "%{entry_name} <strong>%{first}</strong> tot en met <strong>%{last}</strong> van <strong>%{total}</strong> worden weergeven"
+        display_entries: '%{entry_name} <strong>%{first}</strong> tot en met <strong>%{last}</strong> van <strong>%{total}</strong> worden weergeven'
 
   layouts:
     menu:
@@ -567,7 +567,7 @@ nl:
       awaiting_invitation_acceptance: 'Wacht op bevestiging'
       resend_invitation: 'Herstuur uitnodiging'
     new_invitation:
-      intro: 'Het systeem kent de gebruiker met het e-mailadres "%{email}" niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
+      intro: 'Het systeem kent de gebruiker met het e-mailadres ''%{email}'' niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
 
   organisation_clients:
     show:
@@ -592,7 +592,7 @@ nl:
       properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
       options: 'Opties'
       options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
-      images: "Foto's"
+      images: 'Foto''s'
       reserve_periods: 'Reserveerperioden'
       reserve_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
       entity_images_help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
@@ -622,7 +622,7 @@ nl:
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elke reservering nog afzonderlijk bij te stellen. De standaardwaarden voor speling voor dit object kunt u hieronder ingeven.'
       properties: 'Eigenschappen'
       options: 'Opties'
-      entity_images_help: "De foto's die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto's toe met een zo hoog mogelijke resolutie."
+      entity_images_help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
       entity_name_example: '4.13B, 9.5, foyer, loft'
       minutes: 'minuten'
 
