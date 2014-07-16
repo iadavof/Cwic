@@ -22,7 +22,7 @@
           <h2><i class="icon-address"></i><%= t('.Address') %></h2>
           <dl>
             <dt><%= OrganisationClient.human_attribute_name(:name) %></dt>
-            <dd><%= @organisation_client.first_name + (@organisation_client.infix.present? ? @organisation_client.infix + ' ' : ' ') + @organisation_client.last_name %></dd>
+            <dd><%= @organisation_client.full_name %></dd>
             <dt><%= t('.address') %></dt>
             <dd><%= format_address(@organisation_client.route, @organisation_client.street_number, @organisation_client.postal_code, @organisation_client.administrative_area_level_2, @organisation_client.administrative_area_level_1, @organisation_client.locality, @organisation_client.country) %></dd>
             <dt><%= t('.municipality') %></dt>
