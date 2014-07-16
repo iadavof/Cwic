@@ -33,8 +33,12 @@ class OrganisationClient < ActiveRecord::Base
     end.reorder(updated_at: :desc)
   end
 
+  def full_name
+    "#{first_name} #{infix.present? ? infix + ' ' : ''} #{last_name}"
+  end
+
   def instance_name
-    "#{first_name} #{infix.present? ? infix + ' ' : ''} #{last_name}, #{locality}"
+    "#{full_name}, #{locality}"
   end
 
   def upcomming_reservations(limit)

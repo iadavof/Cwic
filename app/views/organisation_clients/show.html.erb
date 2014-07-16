@@ -19,7 +19,7 @@
     <div id="general">
       <dl>
         <dt><%= OrganisationClient.human_attribute_name(:name) %></dt>
-        <dd><%= @organisation_client.first_name + (@organisation_client.infix.present? ? @organisation_client.infix + ' ' : ' ') + @organisation_client.last_name %></dd>
+        <dd><%= @organisation_client.full_name %></dd>
         <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
         <dd><%= @organisation_client.email %></dd>
         <dt><%= OrganisationClient.human_attribute_name(:route) %></dt>

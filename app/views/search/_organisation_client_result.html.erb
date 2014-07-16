@@ -7,7 +7,7 @@
 <div class="info clearfix">
 	<div class="column">
 			<table><tbody>
-			  <tr><th><%= OrganisationClient.human_attribute_name(:name) %></th><td><%= result.first_name + (result.infix.present? ? result.infix + ' ' : ' ') + result.last_name %></td></tr>
+			  <tr><th><%= OrganisationClient.human_attribute_name(:name) %></th><td><%= result.full_name %></td></tr>
 			  <tr><th><%= OrganisationClient.human_attribute_name(:email) %></th><td><a href="mailto:<%= result.email %>"><%= result.email %></a></td></tr>
 			  <tr><th><%= OrganisationClient.human_attribute_name(:phone) %></th><td><a href="tel:<%= result.phone %>"><%= result.phone %></a></td></tr>
 			  <tr><th><%= OrganisationClient.human_attribute_name(:mobile_phone) %></th><td><a href="tel:<%= result.mobile_phone %>"><%= result.mobile_phone %></a></td></tr>
