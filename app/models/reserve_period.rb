@@ -16,7 +16,9 @@ class ReservePeriod < ActiveRecord::Base
     period_amount * period_unit.seconds
   end
 
+  ##
   # Attribute overwrites
+  ##
 
   def name
     super.presence || default_name
