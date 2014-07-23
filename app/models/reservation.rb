@@ -25,7 +25,7 @@ class Reservation < ActiveRecord::Base
   validates :reservation_status, presence: true, if: 'self.entity.present?'
   validate :not_overlapping, if: :validate_overlapping
   validate :check_invalid_recurrences, if: :new_record?
-  validate :ensure_period_valid, if: 'self.begins_at.present? && self.ends_at.present?'
+  validate :ensure_period_valid, if: 'self.entity.present? && self.begins_at.present? && self.ends_at.present?'
 
   validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
@@ -351,6 +351,7 @@ private
     from..to
   end
 
+  # TODO this looks rather scarry. Are we sure this should be done this way?
   def check_reservation_organisation
     if self.organisation_client.present? && self.organisation_client.organisation.nil?
       self.organisation_client.organisation = self.organisation
