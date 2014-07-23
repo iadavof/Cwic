@@ -129,7 +129,7 @@ class Entity < ActiveRecord::Base
   end
 
   def reservation_matches_periods?(begins_at, ends_at)
-    reservation_cost(begins_at, ends_at).present?
+    reserve_periods.empty? || reservation_cost(begins_at, ends_at).present? # TODO for now we consider every reservation valid if there are no reserve periods defined. Is this really the desired behaviour?
   end
 
   def reservation_cost(begins_at, ends_at)
