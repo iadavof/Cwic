@@ -6,7 +6,7 @@ class Reservation < ActiveRecord::Base
   include I18n::Alchemy
   include Rails.application.routes.url_helpers
 
-  attr_accessor :validate_overlapping
+  attr_accessor :validate_overlapping # Should we validate not overlapping (default true)? Disabled for multiple edit actions.
 
   belongs_to :organisation_client
   belongs_to :entity
@@ -99,6 +99,11 @@ class Reservation < ActiveRecord::Base
     }
   end
 
+  def initialize(attributes = {})
+    super
+    @validate_overlapping = true
+  end
+
   def get_slack_before
     return read_attribute(:slack_before) if read_attribute(:slack_before).present?
     return self.entity.get_slack_before
@@ -107,11 +112,6 @@ class Reservation < ActiveRecord::Base
   def get_slack_after
     return read_attribute(:slack_after) if read_attribute(:slack_after).present?
     return self.entity.get_slack_after
-  end
-
-  def initialize(attributes = {})
-    super
-    @validate_overlapping = true
   end
 
   def length_for_day(day)
