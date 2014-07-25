@@ -48,7 +48,7 @@ class Entity < ActiveRecord::Base
   end
 
   def frontend_name
-    read_attribute(:frontend_name) || self.instance_name
+    read_attribute(:frontend_name).presence || self.instance_name
   end
 
   def default_name
