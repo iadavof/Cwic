@@ -1,5 +1,5 @@
 <div class="info-screen-entity fields">
-  <h4 class="collapse"><span class="active-sign <%= f.object.info_screen_entity_type.active && f.object.active ? 'active' : '' %>"></span><%= f.object.entity.instance_name %></h4>
+  <h4 class="collapse"><span class="active-sign <%= f.object.info_screen_entity_type.active? && f.object.active? ? 'active' : '' %>"></span><%= f.object.entity.instance_name %></h4>
   	<div class="content clearfix">
   		<div class="fields">
   			<%= f.label :active %>
