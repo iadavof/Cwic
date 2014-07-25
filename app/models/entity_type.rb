@@ -2,6 +2,7 @@ class EntityType < ActiveRecord::Base
   include PgSearch
   include Sspable
 
+  # Associations
   belongs_to :organisation
   belongs_to :icon, class_name: 'EntityTypeIcon'
 
@@ -13,6 +14,7 @@ class EntityType < ActiveRecord::Base
   has_many :info_screen_entity_types, dependent: :destroy
   has_many :reserve_periods, dependent: :destroy, inverse_of: :entity_type
 
+  # Validations
   validates :name, presence: true, length: { maximum: 255 }
   validates :reservation_statuses, presence: true
   validates :slack_before, presence: true, numericality: { greater_than_or_equal_to: 0 }
@@ -20,28 +22,26 @@ class EntityType < ActiveRecord::Base
   validates :min_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :max_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
+  # Callbacks
   after_initialize :add_default_entity_type_reservation_statuses, if: :new_record?
   after_save :create_info_screen_entity_types
   after_save :update_reservations_slack_warnings
 
+  # Nested attributes
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :options, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
   accepts_nested_attributes_for :reservation_statuses, allow_destroy: true
   accepts_nested_attributes_for :reserve_periods, allow_destroy: true
 
-  scope :with_entities, -> { where('entities_count > 0') }
-
+  # Scopes
   pg_global_search against: { name: 'A', description: 'B' }
 
-  def icon_with_default
-    if self.icon_without_default.nil?
-      EntityTypeIcon.first
-    else
-      self.icon_without_default
-    end
+  scope :with_entities, -> { where('entities_count > 0') }
+
+  def instance_name
+    self.name
   end
-  alias_method_chain :icon, :default
 
   def min_reservation_length
     super / 60 if super.present?
@@ -67,8 +67,22 @@ class EntityType < ActiveRecord::Base
     super(value.present? ? value.to_i * 60 : nil)
   end
 
-  def instance_name
-    self.name
+  def icon_with_default
+    if self.icon_without_default.nil?
+      EntityTypeIcon.first
+    else
+      self.icon_without_default
+    end
+  end
+  alias_method_chain :icon, :default
+
+private
+  def add_default_entity_type_reservation_statuses
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0)
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3)
+    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
   end
 
   def create_info_screen_entity_types
@@ -78,16 +92,6 @@ class EntityType < ActiveRecord::Base
       end
     end
   end
-
-  def add_default_entity_type_reservation_statuses
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
-  end
-
-  private
 
   def update_reservations_slack_warnings
     if self.slack_before_changed? || self.slack_after_changed?

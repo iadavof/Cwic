@@ -169,6 +169,24 @@ class Reservation < ActiveRecord::Base
     "R##{self.id.to_s}: #{desc}, #{self.organisation_client.instance_name}, #{beg} --> #{en}."
   end
 
+  def slack_before_overlapping?
+    previous_reservation = self.previous
+    return false if previous_reservation.nil?
+
+    total_slack = self.get_slack_before + previous_reservation.get_slack_after
+
+    return self.begins_at - previous_reservation.ends_at < total_slack.minutes
+  end
+
+  def slack_after_overlapping?
+    next_reservation = self.next
+    return false if next_reservation.nil?
+
+    total_slack = self.get_slack_after + next_reservation.get_slack_before
+
+    return next_reservation.begins_at - self.ends_at < total_slack.minutes
+  end
+
   def length_for_day(day)
     if day < self.begins_at.to_date || day > self.ends_at.to_date
       return 0
@@ -233,24 +251,6 @@ class Reservation < ActiveRecord::Base
     update_warning_state.update_attribute(:warning, self[:warning])
   end
 
-  def slack_before_overlapping?
-    previous_reservation = self.previous
-    return false if previous_reservation.nil?
-
-    total_slack = self.get_slack_before + previous_reservation.get_slack_after
-
-    return self.begins_at - previous_reservation.ends_at < total_slack.minutes
-  end
-
-  def slack_after_overlapping?
-    next_reservation = self.next
-    return false if next_reservation.nil?
-
-    total_slack = self.get_slack_after + next_reservation.get_slack_before
-
-    return next_reservation.begins_at - self.ends_at < total_slack.minutes
-  end
-
 private
   def fix_base_reservation_reference
     # The first reservation of a repeating set is removed!
@@ -308,9 +308,7 @@ private
   end
 
   def not_overlapping
-    if self.entity.present?
-      not_overlapping_with_set(self.entity.reservations)
-    end
+    not_overlapping_with_set(self.entity.reservations) if self.entity.present?
   end
 
   def ensure_period_valid

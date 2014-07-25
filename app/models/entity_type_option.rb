@@ -1,6 +1,8 @@
 class EntityTypeOption < ActiveRecord::Base
+  # Associations
   belongs_to :entity_type
 
+  # Validations
   validates :entity_type, presence: true
   validates :name, presence: true, length: { maximum: 50 }
   validates :description, length: { maximum: 255 }

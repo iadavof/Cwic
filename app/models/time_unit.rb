@@ -1,11 +1,19 @@
 class TimeUnit < ActiveRecord::Base
+  # Attribute modifiers
   symbolize :key
 
+  # Validations
   validates :key, presence: true, uniqueness: true, length: { maximum: 255 }
   validates :seconds, numericality: { only_integer: true }, allow_nil: true
 
-  default_scope { order('seconds ASC') }
+  # Scopes
   scope :common, -> { where(common: true) } # TODO remove this (instead just select the units you want yourself). This was going to be used in Reservation Rules, but is at the moment not used anymore.
+
+  default_scope { order('seconds ASC') }
+
+  def instance_name
+    self.key
+  end
 
   def human_name(options = {})
     options = { count: 1 }.merge!(options)
@@ -19,10 +27,6 @@ class TimeUnit < ActiveRecord::Base
 
   def human_repetition_name(options = {})
     I18n.t("time_units.#{key}.repetition_name", options)
-  end
-
-  def instance_name
-    self.key
   end
 
   def ==(other)
