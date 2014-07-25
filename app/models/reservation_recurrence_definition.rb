@@ -3,22 +3,22 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 
 	has_no_table database: :pretend_success
 
+	# Associations
 	belongs_to :reservation
 	belongs_to :repeating_unit, class_name: 'TimeUnit'
 
+	# Model definition
 	column :reservation_id, :references
 	column :repeating_unit_id, :references
-
 	column :repeating, :boolean
-
 	column :repeating_every, :integer
 	column :repeating_weekdays, :array
 	column :repeating_monthdays, :array
-
 	column :repeating_end, :string
 	column :repeating_until, :datetime
 	column :repeating_instances, :integer
 
+	# Validations
 	validates :reservation, presence: true
 	validates :repeating_unit, presence: true, if: :repeating?
 	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }, if: :repeating?
@@ -27,6 +27,26 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	validates :repeating_until, presence: true, timeliness: { type: :date }, if: "self.repeating? && self.repeating_end == 'until'"
 	validate :length_not_greater_than_repetition_unit, if: :repeating?
 	validate :repeating_end_after_reservation_end, if: 'self.repeating? && self.repeating_until.present?'
+
+	##
+	# Class methods
+	##
+
+	def self.repeating_units
+		TimeUnit.where(key: [:day, :week, :month, :year])
+	end
+
+	def self.repeating_monthdays_choices
+		(1..31).map { |i| OpenStruct.new(key: i, value: i) }
+	end
+
+	def self.repeating_weekdays_choices
+		(1..7).map { |i| OpenStruct.new(key: i, human_name: I18n.t(:"date.day_names")[i == 7 ? 0 : i]) }
+	end
+
+	##
+	# Instance methods
+	##
 
 	def generate_recurrences
 		# If we are not repeating, there is nothing to do
@@ -86,6 +106,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 		invalid_recurrences
 	end
 
+private
 	def clone_reservation(recurrence_dates)
 		reservation_length = self.reservation.length
 
@@ -104,31 +125,6 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 			new_reservations << new_reservation
 		end
 		new_reservations
-	end
-
-	def repeating_units
-		TimeUnit.where(key: [:day, :week, :month, :year])
-	end
-
-	def repeating_every_choices
-		(1..30).to_a.map { |value| [ value, value ] }
-	end
-
-	def repeating_monthdays_choices
-		(1..31).to_a.map{ |nr| OpenStruct.new(key: nr, value: nr) }
-	end
-
-	def repeating_weekdays_choices
-		current_locale_daynames = I18n.t(:"date.day_names")
-		[
-			OpenStruct.new(key: 1, human_name: current_locale_daynames[1]),
-			OpenStruct.new(key: 2, human_name: current_locale_daynames[2]),
-			OpenStruct.new(key: 3, human_name: current_locale_daynames[3]),
-			OpenStruct.new(key: 4, human_name: current_locale_daynames[4]),
-			OpenStruct.new(key: 5, human_name: current_locale_daynames[5]),
-			OpenStruct.new(key: 6, human_name: current_locale_daynames[6]),
-			OpenStruct.new(key: 7, human_name: current_locale_daynames[0]),
-		]
 	end
 
 	def length_not_greater_than_repetition_unit
