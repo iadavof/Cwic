@@ -1,27 +1,34 @@
 class EntityProperty < ActiveRecord::Base
+  # Associations
   belongs_to :entity
   belongs_to :property_type, class_name: 'EntityTypeProperty'
   has_and_belongs_to_many :values, class_name: 'EntityTypePropertyOption', join_table: 'entity_properties_values', association_foreign_key: 'value_id'
 
+  # Model extensions
+  delegate :required?, :string?, :integer?, :float?, :has_options?, :single_option?, :multiple_options?, to: :property_type
+
+  # Validations
   validates :entity, presence: true
   validates :property_type, presence: true
-
   validates :value, presence: true, if: :required?
   validates :value, length: { maximum: 255 }, allow_blank: true, if: :string?
   validates :value, numericality: { only_integer: true }, allow_blank: true, if: :integer?
   validates :value, numericality: true, allow_blank: true, if: :float?
 
-  after_initialize :init, if: :new_record?
+  # Callbacks
   after_find :cast_value
+  after_initialize :init, if: :new_record?
   before_validation :parse_value
 
-  delegate :required?, :string?, :integer?, :float?, :has_options?, :single_option?, :multiple_options?, to: :property_type
-
+  # Scopes
   default_scope { includes(:property_type).order('entity_type_properties.name') }
 
   def init
-    # Set default value if value is not already set
-    set_default_value if self.value.nil? && self.values.empty?
+    set_default_value if self.value.nil? && self.values.empty? # Set default value if value is not already set
+  end
+
+  def instance_name
+    self.property_type.instance_name
   end
 
   def formatted_value
@@ -55,16 +62,20 @@ class EntityProperty < ActiveRecord::Base
     end
   end
 
-  def instance_name
-    self.property_type.instance_name
-  end
-
   # We overwrite the errors object with our own error object to support dynamic attribute name in the errors.
   def errors
     @errors ||= EntityPropertyErrors.new(self)
   end
 
 private
+  def cast_value
+    if self.multiple_options?
+      self.value = self.values.present? # Needed to let the required validation for multiple option properties work.
+    else
+      self.value = self.property_type.cast_value(self.value)
+    end
+  end
+
   def set_default_value
     return if self.property_type.nil?
     if self.multiple_options?
@@ -75,14 +86,6 @@ private
       default = self.property_type.default_value
     end
     self.set_value(default)
-  end
-
-  def cast_value
-    if self.multiple_options?
-      self.value = self.values.present? # Needed to let the required validation for multiple option properties work.
-    else
-      self.value = self.property_type.cast_value(self.value)
-    end
   end
 
   def parse_value

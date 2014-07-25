@@ -2,6 +2,7 @@ class InfoScreen < ActiveRecord::Base
   include PgSearch
   include Sspable
 
+  # Associations
   belongs_to :organisation
 
   has_many :info_screen_entity_types, dependent: :destroy, inverse_of: :info_screen
@@ -9,12 +10,15 @@ class InfoScreen < ActiveRecord::Base
   has_many :entity_types, through: :info_screen_entity_types
   has_many :entities, through: :info_screen_entities
 
+  # Validations
   validates :name, presence: true, length: { maximum: 255 }
 
-  accepts_nested_attributes_for :info_screen_entity_types
-
+  # Callbacks
   after_initialize :init, if: :new_record?
   after_save :trigger_update_infoscreens
+
+  # Nested attributes
+  accepts_nested_attributes_for :info_screen_entity_types
 
   def init
     initialize_entity_types_and_entities if self.info_screen_entity_types.empty?

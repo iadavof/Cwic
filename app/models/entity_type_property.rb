@@ -1,41 +1,40 @@
 class EntityTypeProperty < ActiveRecord::Base
+  # Associations
   belongs_to :entity_type
   belongs_to :data_type
 
   has_many :options, class_name: 'EntityTypePropertyOption', dependent: :destroy, inverse_of: :entity_type_property
   has_many :entity_properties, foreign_key: 'property_type_id', dependent: :destroy
 
+  # Model extensions
+  delegate :string?, :integer?, :float?, :cast_value, :parse_value, :has_required?, to: :data_type
+
+  # Validations
   validates :entity_type, presence: true
   validates :name, presence: true, length: { maximum: 50 }
   validates :description, length: { maximum: 255 }
   validates :data_type_id, presence: true
   validates :data_type, presence: true, if: "data_type_id.present?"
   validates :index, presence: true, numericality: { only_integer: true }
-
   validates :default_value, length: { maximum: 255 }, allow_blank: true, if: "data_type.present? && string?"
   validates :default_value, numericality: { only_integer: true }, allow_blank: true, if: "data_type.present? && integer?"
   validates :default_value, numericality: true, allow_blank: true, if: "data_type.present? && float?"
 
+  # Callbacks
   after_find :cast_default_value
   before_validation :parse_default_value
   before_validation :clear_default_value, if: "data_type.present? && has_options?" # The default value of sets and enums are stored in the options itself, so we clear the default value here.
   before_validation :clear_options, unless: "data_type.present? && has_options?" # We are not dealing with an options data type (set or enum), so we can clear all possible (old) options.
   after_create :create_entity_properties
 
+  # Nested attributes
   accepts_nested_attributes_for :options, allow_destroy: true
 
-  delegate :string?, :integer?, :float?, :cast_value, :parse_value, :has_required?, to: :data_type
-
+  # Scopes
   default_scope { order(:index) }
 
-  def format_value(value)
-    if self.single_option?
-      # We are dealing with an option property (enum). Format it by determining the name of the corresponding option.
-      (option = self.options.where(id: value).first) ? option.instance_name : nil
-    else
-      # We are dealing with a primitive property. Format it by letting its data type format it.
-      self.data_type.format_value(value)
-    end
+  def instance_name
+    self.name
   end
 
   def has_options?
@@ -82,8 +81,14 @@ class EntityTypeProperty < ActiveRecord::Base
     end
   end
 
-  def instance_name
-    self.name
+  def format_value(value)
+    if self.single_option?
+      # We are dealing with an option property (enum). Format it by determining the name of the corresponding option.
+      (option = self.options.where(id: value).first) ? option.instance_name : nil
+    else
+      # We are dealing with a primitive property. Format it by letting its data type format it.
+      self.data_type.format_value(value)
+    end
   end
 
   # We overwrite the errors object with our own error object to support dynamic attribute name in the errors.
