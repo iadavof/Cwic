@@ -44,7 +44,7 @@ class Entity < ActiveRecord::Base
   end
 
   def full_instance_name
-    "#{self.entity_type.name}: #{self.name}"
+    "#{self.entity_type.name}: #{self.instance_name}"
   end
 
   def frontend_name
