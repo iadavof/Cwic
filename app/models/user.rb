@@ -2,33 +2,36 @@ class User < ActiveRecord::Base
   include PgSearch
   include Sspable
 
-  # Include default devise modules. Others available are:
-  # :token_authenticatable, :confirmable,
-  # :lockable, :timeoutable and :omniauthable
+  # Model extensions
   devise :invitable, :database_authenticatable, :registerable, :confirmable,
          :recoverable, :rememberable, :trackable, :validatable
 
+  # Associations
   has_many :organisation_users, inverse_of: :user, dependent: :destroy
   has_many :organisations, through: :organisation_users
   has_many :invitations, class_name: 'User', as: :invited_by
   has_many :reservation_logs
 
-  accepts_nested_attributes_for :organisations
-  accepts_nested_attributes_for :organisation_users
-
+  # Validations
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
   validates :infix, length: { maximum: 255 }
 
-  before_destroy :save_current_name_in_reservation_log # Save the current username in the logs and nullify the reference to this user
+  # Callbacks
+  before_destroy :save_current_name_in_reservation_log
 
+  # Nested attributes
+  accepts_nested_attributes_for :organisations
+  accepts_nested_attributes_for :organisation_users
+
+  # Scopes
   pg_global_search against: { last_name: 'A', email: 'A', first_name: 'B' }
 
   def instance_name
     self.first_name + ' ' + (self.infix.present? ? self.infix + ' ' : '') + self.last_name
   end
 
-  def get_status
+  def status
     if accepted_or_not_invited?
       return :active
     else
@@ -47,7 +50,8 @@ class User < ActiveRecord::Base
     end
   end
 
-  def save_current_name_in_reservation_log
+private
+  def save_current_name_in_reservation_log # Save the current username in the logs and nullify the reference to this user
     self.reservation_logs.update_all(old_user_name: instance_name, user_id: nil)
   end
 end

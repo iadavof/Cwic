@@ -91,7 +91,7 @@ after 'iada' do
   SeedHelper.create_organisation_clients(maldensteijn, 5)
 
   # Create reserverations
-  # SeedHelper.create_reservations(maldensteijn, 20) # TODO fix this so it takes the reserve periods into account
+  SeedHelper.create_reservations(maldensteijn, 25)
 
   # Create some stickies
   SeedHelper.create_stickies(maldensteijn.organisation_clients, 0.5)

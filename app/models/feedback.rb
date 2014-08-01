@@ -2,15 +2,19 @@ class Feedback < ActiveRecord::Base
 	include PgSearch
 	include Sspable
 
+  # Associations
   belongs_to :user
   belongs_to :organisation
 
+  # Attribute modifiers
+  mount_uploader :screen_capture, ScreencapUploader
+
+  # Validations
   validates :specs, presence: true
   validates :user, presence: true
   validates :screen_capture, presence: true
 
-  mount_uploader :screen_capture, ScreencapUploader
-
+  # Scopes
   pg_global_search against: { user: 'A', organisation: 'A', message: 'B' }
 
   def instance_name

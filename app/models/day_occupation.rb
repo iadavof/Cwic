@@ -1,14 +1,17 @@
-# Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
 class DayOccupation < ActiveRecord::Base
+  # Associations
   belongs_to :entity
 
+  # Validations
   validates :entity, presence: true
   validates :day, presence: true
   validates :occupation, presence: true, numericality: true
 
-  def instance_name
-    self.day
-  end
+  # Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
+
+  ##
+  # Class methods
+  ##
 
   # Recalculates all occupations in days range for the given entity
   def self.recalculate_occupations(entity, days)
@@ -29,5 +32,13 @@ class DayOccupation < ActiveRecord::Base
 
     # Finally insert all occupations
     DayOccupation.import(occupations)
+  end
+
+  ##
+  # Instance methods
+  ##
+
+  def instance_name
+    self.day
   end
 end

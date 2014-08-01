@@ -9,7 +9,7 @@ OrganisationUser.create!(organisation: iada, user: iada_user, organisation_role:
 
 # Create test entity type
 test_entity_type = EntityType.create!(organisation: iada, name: 'Object', description: 'Een test objecttype')
-test_entity_type.reserve_periods.create(period_unit: TimeUnit.find_by(key: :minute), price: 100)
+test_entity_type.reserve_periods.create(period_unit: TimeUnit.find_by(key: :half_hour), price: 100)
 
 # Create test entity
 Entity.create!(organisation: iada, entity_type: test_entity_type, name: 'Object 1', description: 'Een test object')

@@ -2,6 +2,10 @@ class Entity < ActiveRecord::Base
   include PgSearch
   include Sspable
 
+  # Associations
+  belongs_to :entity_type, counter_cache: true
+  belongs_to :organisation
+
   has_many :properties, class_name: 'EntityProperty', dependent: :destroy, inverse_of: :entity
   has_many :reservations, dependent: :destroy
   has_many :day_occupations, dependent: :destroy
@@ -10,29 +14,30 @@ class Entity < ActiveRecord::Base
   has_many :stickies, as: :stickable, dependent: :destroy, inverse_of: :stickable
   has_many :entity_images, as: :entity_imageable, dependent: :destroy
 
-  belongs_to :entity_type, counter_cache: true
-  belongs_to :organisation
+  # Model extensions
+  delegate :reserve_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
 
+  # Validations
   validates :entity_type_id, presence: true
   validates :entity_type, presence: true, if: 'entity_type_id.present?'
   validates :organisation, presence: true
   validates :color, color: true
-
   validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
 
+  # Callbacks
   after_initialize :init, if: :new_record?
   after_create :create_info_screen_entities
   after_save :update_reservations_slack_warnings
 
+  # Nested attributes
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
 
-  delegate :reserve_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
+  # Scopes
+  pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
 
   default_scope { order('id ASC') }
-
-  pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
 
   def init
     self.color ||= Cwic::Color.random_hex_color
@@ -40,23 +45,19 @@ class Entity < ActiveRecord::Base
   end
 
   def instance_name
-    self.name.present? ? self.name : self.default_name
+    name.presence || default_name
   end
 
   def full_instance_name
-    "#{self.entity_type.name}: #{self.name}"
-  end
-
-  def frontend_name
-    read_attribute(:frontend_name) || self.instance_name
+    "#{entity_type.name}: #{instance_name}"
   end
 
   def default_name
-    if self.id.present?
-      self.id.to_s
-    else
-      ''
-    end
+    id.present? ? id.to_s : ''
+  end
+
+  def frontend_name
+    read_attribute(:frontend_name).presence || self.instance_name
   end
 
   def get_slack_before
@@ -67,14 +68,6 @@ class Entity < ActiveRecord::Base
   def get_slack_after
     return read_attribute(:slack_after) if read_attribute(:slack_after).present?
     return self.entity_type.slack_after
-  end
-
-  def update_reservations_slack_warnings(force = false)
-    if force || self.slack_before_changed? || self.slack_after_changed?
-      self.reservations.each do |reservation|
-        reservation.update_warning_state!
-      end
-    end
   end
 
   def all_entity_images
@@ -89,10 +82,20 @@ class Entity < ActiveRecord::Base
     Cwic::Color.text_color(self.color)
   end
 
-  def create_info_screen_entities
-    self.organisation.info_screens.each do |is|
-      iset = InfoScreenEntityType.where('entity_type_id = ? AND info_screen_id = ?', self.entity_type.id, is.id).first;
-      InfoScreenEntity.create(entity: self, info_screen_entity_type: iset, active: iset.add_new_entities)
+  def reservation_matches_periods?(begins_at, ends_at)
+    reserve_periods.empty? || reservation_cost(begins_at, ends_at).present? # TODO for now we consider every reservation valid if there are no reserve periods defined. Is this really the desired behaviour?
+  end
+
+  def reservation_cost(begins_at, ends_at)
+    length = (ends_at - begins_at).round
+    Cwic::Knapsack.new(reserve_periods.map { |rp| { c: rp.price, w: rp.length } }).solve_minimum(length)
+  end
+
+  def update_reservations_slack_warnings(force = false)
+    if force || self.slack_before_changed? || self.slack_after_changed?
+      self.reservations.each do |reservation|
+        reservation.update_warning_state!
+      end
     end
   end
 
@@ -128,12 +131,11 @@ class Entity < ActiveRecord::Base
     property.set_value(value)
   end
 
-  def reservation_matches_periods?(begins_at, ends_at)
-    reservation_cost(begins_at, ends_at).present?
-  end
-
-  def reservation_cost(begins_at, ends_at)
-    length = (ends_at - begins_at).round
-    Cwic::Knapsack.new(reserve_periods.map { |rp| { c: rp.price, w: rp.length } }).solve_minimum(length)
+private
+  def create_info_screen_entities
+    self.organisation.info_screens.each do |is|
+      iset = InfoScreenEntityType.where('entity_type_id = ? AND info_screen_id = ?', self.entity_type.id, is.id).first;
+      InfoScreenEntity.create(entity: self, info_screen_entity_type: iset, active: iset.add_new_entities)
+    end
   end
 end

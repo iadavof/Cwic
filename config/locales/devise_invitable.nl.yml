@@ -5,12 +5,12 @@ nl:
       invitation_token_invalid: 'De uitnodigingscode is niet geldig!'
       updated: 'Je wachtwoord is succesvol ingesteld. Je bent nu ingelogd.'
       new:
-        header: "Verstuur een uitnodiging"
-        submit_button: "Verstuur uitnodiging"
+        header: 'Verstuur een uitnodiging'
+        submit_button: 'Verstuur uitnodiging'
       edit:
-        header: "Stel je wachtwoord in"
-        submit_button: "Stel wachtwoord in"
+        header: 'Stel je wachtwoord in'
+        submit_button: 'Stel wachtwoord in'
     mailer:
       invitation_instructions:
-        subject: 'Join Cwic!'
+        subject: 'Maak een account aan bij Cwic'
         # TODO translations for body of invitation mail

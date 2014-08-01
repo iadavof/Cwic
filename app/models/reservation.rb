@@ -6,37 +6,39 @@ class Reservation < ActiveRecord::Base
   include I18n::Alchemy
   include Rails.application.routes.url_helpers
 
-  attr_accessor :validate_overlapping
-
-  belongs_to :organisation_client
-  belongs_to :entity
+  # Associations
   belongs_to :organisation
+  belongs_to :entity
+  belongs_to :organisation_client
   belongs_to :reservation_status
   belongs_to :base_reservation, class_name: 'Reservation'
+
+  has_one :reservation_recurrence_definition
   has_many :stickies, as: :stickable, dependent: :destroy
   has_many :reservation_logs, dependent: :destroy
-  has_one :reservation_recurrence_definition
 
-  validates :begins_at, presence: true
-  validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
-  validates :entity, presence: true
-  validates :organisation_client, presence: true
-  validates :organisation, presence: true
-  validates :reservation_status, presence: true, if: 'self.entity.present?'
-  validate :not_overlapping, if: :validate_overlapping
-  validate :check_invalid_recurrences, if: :new_record?
-  validate :ensure_period_valid, if: 'self.begins_at.present? && self.ends_at.present?'
+  # Model extensions
+  attr_accessor :validate_overlapping # Should we validate not overlapping (default true)? Disabled for multiple edit actions.
 
-  validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
-  validates :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
-
+  # Attribute modifiers
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
-
-  accepts_nested_attributes_for :organisation_client
-  accepts_nested_attributes_for :reservation_recurrence_definition
-
   normalize_attributes :description
+
+  # Validations
+  validates :organisation, presence: true
+  validates :entity, presence: true
+  validates :organisation_client, presence: true
+  validates :reservation_status, presence: true, if: 'self.entity.present?'
+  validates :begins_at, presence: true
+  validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
+  validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
+  validate :not_overlapping, if: :validate_overlapping
+  validate :check_invalid_recurrences, if: :new_record?
+  validate :ensure_period_valid, if: 'self.entity.present? && self.begins_at.present? && self.ends_at.present?'
+
+  # Callbacks
+  after_initialize :init # new_record check is intentionally omitted since @validate_overlapping should also be initialized for already existing records
 
   before_validation :check_reservation_organisation
   before_validation :check_if_should_update_reservation_status
@@ -51,6 +53,11 @@ class Reservation < ActiveRecord::Base
   after_destroy :trigger_update_websockets
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
+  # Nested attributes
+  accepts_nested_attributes_for :organisation_client
+  accepts_nested_attributes_for :reservation_recurrence_definition
+
+  # Scopes
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
 
   scope :blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = true') }
@@ -59,6 +66,10 @@ class Reservation < ActiveRecord::Base
   scope :billable, -> { joins(:reservation_status).where('reservation_statuses.billable = true') }
 
   default_order { order(id: :desc) }
+
+  ##
+  # Class methods
+  ##
 
   # Get all reservations within the date domain.
   # Options:
@@ -99,6 +110,18 @@ class Reservation < ActiveRecord::Base
     }
   end
 
+  ##
+  # Instance methods
+  ##
+
+  def init # Note: in this case init is also executed for already existing records
+    @validate_overlapping ||= true
+  end
+
+  def instance_name
+    "R##{self.id.to_s}"
+  end
+
   def get_slack_before
     return read_attribute(:slack_before) if read_attribute(:slack_before).present?
     return self.entity.get_slack_before
@@ -109,9 +132,59 @@ class Reservation < ActiveRecord::Base
     return self.entity.get_slack_after
   end
 
-  def initialize(attributes = {})
-    super
-    @validate_overlapping = true
+  def length
+    self.ends_at - self.begins_at
+  end
+
+  def cost
+    entity.reservation_cost(self.begins_at, self.ends_at)
+  end
+
+  def days
+    period_to_days(begins_at, ends_at)
+  end
+
+  def days_was
+    begins_at_was.present? && ends_at_was.present? ? period_to_days(begins_at_was, ends_at_was) : nil
+  end
+
+  # Get the reservation directly before this reservation (for the same entity).
+  # If was = true, then the old times for this reservation will be used.
+  def previous(was = false)
+    begins_at = (was ? self.begins_at_was : self.begins_at)
+    self.entity.reservations.where('ends_at <= :begins_at', begins_at: begins_at).where.not(id: self.id).reorder(ends_at: :desc).first
+  end
+
+  # Get the reservation directly after this reservation (for the same entity).
+  # If was = true, then the old times for this reservation will be used.
+  def next(was = false)
+    ends_at = (was ? self.ends_at_was : self.ends_at)
+    self.entity.reservations.where('begins_at >= :ends_at', ends_at: ends_at).where.not(id: self.id).reorder(begins_at: :asc).first
+  end
+
+  def one_line_summary
+    desc = self.description.present? ? self.description : I18n.t('reservations.show.no_description')
+    beg = I18n.l(self.begins_at, format: :long)
+    en = I18n.l(self.ends_at, format: :long)
+    "R##{self.id.to_s}: #{desc}, #{self.organisation_client.instance_name}, #{beg} --> #{en}."
+  end
+
+  def slack_before_overlapping?
+    previous_reservation = self.previous
+    return false if previous_reservation.nil?
+
+    total_slack = self.get_slack_before + previous_reservation.get_slack_after
+
+    return self.begins_at - previous_reservation.ends_at < total_slack.minutes
+  end
+
+  def slack_after_overlapping?
+    next_reservation = self.next
+    return false if next_reservation.nil?
+
+    total_slack = self.get_slack_after + next_reservation.get_slack_before
+
+    return next_reservation.begins_at - self.ends_at < total_slack.minutes
   end
 
   def length_for_day(day)
@@ -128,35 +201,8 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def length
-    self.ends_at - self.begins_at
-  end
-
   def length_for_week(week)
     week.to_days.map { |day| self.length_for_day(day) }.sum
-  end
-
-  def days
-    period_to_days(begins_at, ends_at)
-  end
-
-  def days_was
-    begins_at_was.present? && ends_at_was.present? ? period_to_days(begins_at_was, ends_at_was) : nil
-  end
-
-  def cost
-    entity.reservation_cost(self.begins_at, self.ends_at)
-  end
-
-  def instance_name
-    "R##{self.id.to_s}"
-  end
-
-  def one_line_summary
-    desc = self.description.present? ? self.description : I18n.t('reservations.show.no_description')
-    beg = I18n.l(self.begins_at, format: :long)
-    en = I18n.l(self.ends_at, format: :long)
-    "R##{self.id.to_s}: #{desc}, #{self.organisation_client.instance_name}, #{beg} --> #{en}."
   end
 
   def recurrences
@@ -196,22 +242,8 @@ class Reservation < ActiveRecord::Base
     valid
   end
 
-  # Get the reservation directly before this reservation (for the same entity).
-  # If was = true, then the old times for this reservation will be used.
-  def previous(was = false)
-    begins_at = (was ? self.begins_at_was : self.begins_at)
-    self.entity.reservations.where('ends_at <= :begins_at', begins_at: begins_at).where.not(id: self.id).reorder(ends_at: :desc).first
-  end
-
-  # Get the reservation directly after this reservation (for the same entity).
-  # If was = true, then the old times for this reservation will be used.
-  def next(was = false)
-    ends_at = (was ? self.ends_at_was : self.ends_at)
-    self.entity.reservations.where('begins_at >= :ends_at', ends_at: ends_at).where.not(id: self.id).reorder(begins_at: :asc).first
-  end
-
   def update_warning_state
-    self.warning = slack_before_overlapping || slack_after_overlapping
+    self.warning = slack_before_overlapping? || slack_after_overlapping?
     self
   end
 
@@ -219,26 +251,7 @@ class Reservation < ActiveRecord::Base
     update_warning_state.update_attribute(:warning, self[:warning])
   end
 
-  def slack_before_overlapping
-    previous_reservation = self.previous
-    return false if previous_reservation.nil?
-
-    total_slack = self.get_slack_before + previous_reservation.get_slack_after
-
-    return self.begins_at - previous_reservation.ends_at < total_slack.minutes
-  end
-
-  def slack_after_overlapping
-    next_reservation = self.next
-    return false if next_reservation.nil?
-
-    total_slack = self.get_slack_after + next_reservation.get_slack_before
-
-    return next_reservation.begins_at - self.ends_at < total_slack.minutes
-  end
-
 private
-
   def fix_base_reservation_reference
     # The first reservation of a repeating set is removed!
     repeating_set = self.class.where(base_reservation_id: self.id).where.not(id: self.id).reorder(begins_at: :asc)
@@ -295,9 +308,7 @@ private
   end
 
   def not_overlapping
-    if self.entity.present?
-      not_overlapping_with_set(self.entity.reservations)
-    end
+    not_overlapping_with_set(self.entity.reservations) if self.entity.present?
   end
 
   def ensure_period_valid
@@ -352,6 +363,7 @@ private
   end
 
   def check_reservation_organisation
+    # TODO this looks rather scarry. Are we sure this should be done this way?
     if self.organisation_client.present? && self.organisation_client.organisation.nil?
       self.organisation_client.organisation = self.organisation
     end
