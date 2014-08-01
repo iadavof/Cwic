@@ -2,6 +2,7 @@ class Organisation < ActiveRecord::Base
   include PgSearch
   include Sspable
 
+  # Associations
   has_many :organisation_users, dependent: :destroy
   has_many :users, through: :organisation_users
   has_many :entity_types, dependent: :destroy
@@ -13,6 +14,7 @@ class Organisation < ActiveRecord::Base
   has_many :entity_images, dependent: :destroy
   has_many :info_screens, dependent: :destroy
 
+  # Validations
   validates :name, presence: true, length: { maximum: 255 }
   validates :route, presence: true, length: { maximum: 255 }
   validates :street_number, presence: true, length: { maximum: 255 }
@@ -25,6 +27,7 @@ class Organisation < ActiveRecord::Base
   validates :lng, numericality: true, allow_blank: true
   validates :lat, numericality: true, allow_blank: true
 
+  # Scopes
   pg_global_search against: { name: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone_general: 'C', phone_reservations: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
 
   def instance_name

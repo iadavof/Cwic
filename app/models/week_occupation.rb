@@ -1,15 +1,18 @@
-# Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
 class WeekOccupation < ActiveRecord::Base
+  # Associations
   belongs_to :entity
 
+  # Validations
   validates :entity, presence: true
   validates :week, presence: true, numericality: { only_integer: true }
   validates :year, presence: true, numericality: { only_integer: true }
   validates :occupation, presence: true, numericality: true
 
-  def instance_name
-    self.week
-  end
+  # Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
+
+  ##
+  # Class methods
+  ##
 
   # Recalculates all occupations in weeks range for the given entity
   def self.recalculate_occupations(entity, weeks)
@@ -30,5 +33,13 @@ class WeekOccupation < ActiveRecord::Base
 
     # Finally insert all occupations
     WeekOccupation.import(occupations)
+  end
+
+  ##
+  # Instance methods
+  ##
+
+  def instance_name
+    self.week
   end
 end

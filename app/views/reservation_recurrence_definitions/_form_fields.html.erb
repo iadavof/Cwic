@@ -6,23 +6,23 @@
 	<div class="recurrence_definition_fields">
 		<div  class="field">
 			<%= f.label :repeating_unit %>
-			<%= f.select :repeating_unit_id, f.object.repeating_units.map { |tu| [tu.human_repetition_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'repeating-unit' } %>
+			<%= f.select :repeating_unit_id, ReservationRecurrenceDefinition.repeating_units.map { |tu| [tu.human_repetition_name, tu.id, { data: { key: tu.key } }] }, { prompt: true }, data: { field: 'repeating-unit' } %>
 		</div>
 		<div class="field recurrence_definition_weekly">
 			<%= f.label :repeating_weekdays %>
 			<div class="repeating_weekdays_selector clearfix">
-				<%= f.collection_check_boxes :repeating_weekdays, f.object.repeating_weekdays_choices, :key, :human_name, {}, { class: 'nocwic' } %>
+				<%= f.collection_check_boxes :repeating_weekdays, ReservationRecurrenceDefinition.repeating_weekdays_choices, :key, :human_name, {}, { class: 'nocwic' } %>
 			</div>
 		</div>
 		<div class="field recurrence_definition_monthly">
 			<%= f.label :repeating_monthdays %>
 			<div class="repeating_monthdays_selector clearfix">
-				<%= f.collection_check_boxes :repeating_monthdays, f.object.repeating_monthdays_choices, :key, :value, {}, { class: 'nocwic' } %>
+				<%= f.collection_check_boxes :repeating_monthdays, ReservationRecurrenceDefinition.repeating_monthdays_choices, :key, :value, {}, { class: 'nocwic' } %>
 			</div>
 		</div>
 		<div  class="field">
 			<%= f.label :repeating_every %>
-			<%= f.select :repeating_every, f.object.repeating_every_choices %>
+			<%= f.select :repeating_every, (1..30) %>
 			<span id="repeating_every_unit_day" class="repeating_every_unit"><%= t('.repeating_every_unit_days') %></span>
 			<span id="repeating_every_unit_week" class="repeating_every_unit"><%= t('.repeating_every_unit_weeks') %></span>
 			<span id="repeating_every_unit_month" class="repeating_every_unit"><%= t('.repeating_every_unit_months') %></span>

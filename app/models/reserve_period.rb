@@ -1,9 +1,11 @@
 class ReservePeriod < ActiveRecord::Base
   include I18n::Alchemy
 
+  # Associations
   belongs_to :entity_type
   belongs_to :period_unit, class_name: 'TimeUnit'
 
+  # Validations
   validates :entity_type, presence: true
   validates :name, length: { maximum: 255 }
   validates :period_amount, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
@@ -11,12 +13,9 @@ class ReservePeriod < ActiveRecord::Base
   validates :period_unit, presence: true, uniqueness: { scope: [:entity_type, :period_amount] }, if: "period_unit_id.present?" # TODO uniqueness constraint does not work correctly in combination with period_amount == nil (which is actually 1). Fix this when extending this validation to also include check-in and check-out times.
   validates :price, presence: true, numericality: true
 
-  # Length of the period in seconds
-  def length
-    period_amount * period_unit.seconds
+  def instance_name
+    name
   end
-
-  # Attribute overwrites
 
   def name
     super.presence || default_name
@@ -26,8 +25,8 @@ class ReservePeriod < ActiveRecord::Base
     super || 1
   end
 
-  def instance_name
-    name
+  def length # Length of the period in seconds
+    period_amount * period_unit.seconds
   end
 
 private

@@ -1,14 +1,18 @@
 class EntityTypePropertyOption < ActiveRecord::Base
-  default_scope { order(:index) }
-
+  # Associations
   belongs_to :entity_type_property
   has_and_belongs_to_many :entity_properties, join_table: 'entity_properties_values', foreign_key: 'value_id'
 
+  # Validations
   validates :entity_type_property, presence: true
   validates :name, presence: true, length: { maximum: 255 }
   validates :index, presence: true, numericality: { only_integer: true }
 
+  # Callbacks
   after_destroy :clear_depending_entity_properties
+
+  # Scopes
+  default_scope { order(:index) }
 
   def instance_name
     self.name
