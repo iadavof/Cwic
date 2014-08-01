@@ -28,7 +28,7 @@ module MenuHelper
         info_screens: {
           index: { url: organisation_info_screens_path(current_organisation), icon: 'icon-list' },
           new: { url: new_organisation_info_screen_path(current_organisation), icon: 'icon-plus-sign' }
-        }
+        },
       },
       settings: {
         organisation_users: {
@@ -43,7 +43,7 @@ module MenuHelper
         entities: {
           index: { url: organisation_entities_path(current_organisation), icon: 'icon-list' },
           new: { url: new_organisation_entity_path(current_organisation), icon: 'icon-plus-sign' }
-        }
+        },
       },
     }
     if @admin
@@ -56,11 +56,15 @@ module MenuHelper
         },
         users: {
           index: { url: users_path, icon: 'icon-list' },
-          },
+        },
         entity_type_icons: {
           index: { url: entity_type_icons_path, icon: 'icon-list' },
           new: { url: new_entity_type_icon_path, icon: 'icon-plus-sign' }
-        }
+        },
+        intro_sections: {
+          manage: { url: manage_intro_sections_path },
+          new: { url: new_intro_section_path }
+        },
       }
     end
     menu

@@ -1,0 +1,18 @@
+<% content_for :page_title do %><%= show_title(@intro_section) %><% end %>
+
+<dl>
+  <dt><%= IntroSection.human_attribute_name(:title) %></dt>
+  <dd><%= @intro_section.title %></dd>
+  <dt><%= IntroSection.human_attribute_name(:body) %></dt>
+  <dd><%= @intro_section.body %></dd>
+  <dt><%= IntroSection.human_attribute_name(:image) %></dt>
+  <dd><%= @intro_section.image %></dd>
+  <dt><%= IntroSection.human_attribute_name(:weight) %></dt>
+  <dd><%= @intro_section.weight %></dd>
+  <dt><%= IntroSection.human_attribute_name(:background_color) %></dt>
+  <dd><%= @intro_section.background_color %></dd>
+</dl>
+
+<%= button_link_to_index(IntroSection) %>
+<%= button_link_to_edit(@intro_section) %>
+<%= button_link_to_destroy(@intro_section) %>
