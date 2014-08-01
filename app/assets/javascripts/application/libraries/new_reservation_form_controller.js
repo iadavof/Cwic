@@ -20,8 +20,35 @@ newReservationFormController.prototype.init = function() {
   this.formContainer = $('#' + this.options.container);
   this.bindOnChangeActions();
   this.bindEntitySelection();
+  this.bindSlackFieldValidation();
 
   this.performFormUpdate();
+};
+
+newReservationFormController.prototype.bindSlackFieldValidation = function() {
+  var _this = this;
+  var slackFields = this.formContainer.find('#reservation_slack_before, #reservation_slack_after');
+  slackFields.each(function() {
+    var field = $(this);
+    field.on('change', function() { _this.setSlackFieldErrorState.call(field); });
+    _this.setSlackFieldErrorState.call(field);
+  });
+};
+
+newReservationFormController.prototype.setSlackFieldErrorState = function() {
+ var field = this, current = null;
+  if(typeof field.data('max-slack') !== 'undefined') {
+    if(field.val() !== '') { // The value is not set, so we have to check the placeholder value
+      current = parseInt(field.val(), 10);
+    } else if(field.attr('placeholder') !== '') {
+      current = parseInt(field.attr('placeholder'), 10);
+    }
+  }
+  if(current != null) {
+    APP.util.setFieldErrorState(field, current <= parseInt(field.data('max-slack'), 10));
+  } else {
+    APP.util.setFieldErrorState(field, false);
+  }
 };
 
 newReservationFormController.prototype.bindEntitySelection = function() {
@@ -44,7 +71,10 @@ newReservationFormController.prototype.setEntitySelection = function() {
   // Set the hidden form field for the entity for this reservation
   this.formContainer.find('input#reservation_entity_id').val(this.selectedEntityId);
 
+  this.setMaxSlackTimes();
   this.setDefaultSlackTimes();
+  // Make sure the slack field validation is being performed by triggering the change event on these fields.
+  this.formContainer.find('#reservation_slack_before, #reservation_slack_after').trigger('change');
 };
 
 newReservationFormController.prototype.removeSelectedClassFromAvailableEntitiesListItems = function() {
@@ -54,6 +84,11 @@ newReservationFormController.prototype.removeSelectedClassFromAvailableEntitiesL
 newReservationFormController.prototype.setDefaultSlackTimes = function() {
   this.formContainer.find('input#reservation_slack_before').attr('placeholder', this.currentAvailableEntities[this.selectedEntityId].default_slack_before);
   this.formContainer.find('input#reservation_slack_after').attr('placeholder', this.currentAvailableEntities[this.selectedEntityId].default_slack_after);
+};
+
+newReservationFormController.prototype.setMaxSlackTimes = function() {
+  this.formContainer.find('input#reservation_slack_before').data('max-slack', this.currentAvailableEntities[this.selectedEntityId].max_slack_before);
+  this.formContainer.find('input#reservation_slack_after').data('max-slack', this.currentAvailableEntities[this.selectedEntityId].max_slack_after);
 };
 
 newReservationFormController.prototype.bindOnChangeActions = function() {

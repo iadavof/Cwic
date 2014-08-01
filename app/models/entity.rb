@@ -67,9 +67,27 @@ class Entity < ActiveRecord::Base
     return self.entity_type.slack_before
   end
 
+  def get_max_slack_before(begins_at)
+    previous_reservation = Reservation.new(entity: self, begins_at: begins_at).previous
+    (begins_at - previous_reservation.ends_at - previous_reservation.get_slack_after.minutes) / 1.minute if previous_reservation.present?
+  end
+
   def get_slack_after
     return read_attribute(:slack_after) if read_attribute(:slack_after).present?
     return self.entity_type.slack_after
+  end
+
+  def get_max_slack_after(ends_at)
+    next_reservation = Reservation.new(entity: self, ends_at: ends_at).next
+    (next_reservation.begins_at - next_reservation.get_slack_before.minutes - ends_at) / 1.minute if next_reservation.present?
+  end
+
+  def update_reservations_slack_warnings(force = false)
+    if force || self.slack_before_changed? || self.slack_after_changed?
+      self.reservations.each do |reservation|
+        reservation.update_warning_state!
+      end
+    end
   end
 
   def all_entity_images
@@ -133,6 +151,10 @@ class Entity < ActiveRecord::Base
     property.set_value(value)
   end
 
+  def is_available_between?(begins_at, ends_at, options = {})
+    self.reservations.by_date_domain(begins_at, ends_at, options).empty?
+  end
+
 private
   def create_info_screen_entities
     self.organisation.info_screens.each do |is|
@@ -141,19 +163,7 @@ private
     end
   end
 
-  def is_available_between?(begins_at, ends_at)
-    not self.reservations.by_date_domain(begins_at, ends_at).any?
-  end
-
-  def self.available_between(begins_at, ends_at)
-    self.all.find_all{|e| e.is_available_between?(begins_at, ends_at) }
-  end
-
-  def is_available_between?(begins_at, ends_at)
-    not self.reservations.by_date_domain(begins_at, ends_at).any?
-  end
-
-  def self.available_between(begins_at, ends_at)
-    self.all.find_all{|e| e.is_available_between?(begins_at, ends_at) }
+  def self.available_between(begins_at, ends_at, options = {})
+    self.all.find_all { |e| e.is_available_between?(begins_at, ends_at, options) }
   end
 end

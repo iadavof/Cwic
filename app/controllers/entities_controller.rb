@@ -47,22 +47,29 @@ class EntitiesController < ApplicationController
   end
 
   def availability
+    @begins_at = Time.parse(params[:begins_at])
+    @ends_at = Time.parse(params[:ends_at])
     if params[:selected_entity_id].present?
       @selected_entity = @organisation.entities.find(params[:selected_entity_id])
       if @selected_entity.present?
         @selected_entity_feedback = {
-            available: @selected_entity.is_available_between?(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]))
+          available: @selected_entity.is_available_between?(@begins_at, @ends_at),
+          max_slack_before: @selected_entity.get_max_slack_before(@begins_at),
+          max_slack_after: @selected_entity.get_max_slack_after(@ends_at),
         }
       end
     end
-    respond_with(@organisation, @entities, @selected_entity_feedback)
+    respond_with(@organisation, @entities)
   end
 
 private
   def load_resource
     case params[:action]
     when 'availability'
-      @entities = @organisation.entity_types.find(params[:entity_type_id]).entities.accessible_by(current_ability, :index).available_between(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]))
+      # All entities for this Entity type
+      @entities = @organisation.entity_types.find(params[:entity_type_id]).entities.accessible_by(current_ability, :index)
+      # Get the available entities for the time period and calculate the min/max slack simultaneously
+      @entities = @entities.available_between(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]), )
     when 'index'
       @entities = @organisation.entities.accessible_by(current_ability, :index).includes(:entity_type).ssp(params)
     when 'new', 'create'
