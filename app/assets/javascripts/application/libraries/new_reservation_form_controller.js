@@ -21,8 +21,8 @@ newReservationFormController.prototype.init = function() {
   this.bindOnChangeActions();
   this.bindEntitySelection();
   this.bindSlackFieldValidation();
-
   this.performFormUpdate();
+
 };
 
 newReservationFormController.prototype.bindSlackFieldValidation = function() {
@@ -31,24 +31,25 @@ newReservationFormController.prototype.bindSlackFieldValidation = function() {
   slackFields.each(function() {
     var field = $(this);
     field.on('change', function() { _this.setSlackFieldErrorState.call(field); });
-    _this.setSlackFieldErrorState.call(field);
   });
+  this.validateSlackFields();
 };
 
 newReservationFormController.prototype.setSlackFieldErrorState = function() {
- var field = this, current = null;
-  if(typeof field.data('max-slack') !== 'undefined') {
-    if(field.val() !== '') { // The value is not set, so we have to check the placeholder value
+  var field = this, current = null;
+  if(field.data('max-slack') != null) {
+    if(field.val() !== '') {
       current = parseInt(field.val(), 10);
-    } else if(field.attr('placeholder') !== '') {
+    } else if(field.attr('placeholder') !== '') { // The value is not set, so we have to check the placeholder value
       current = parseInt(field.attr('placeholder'), 10);
     }
+    if(current != null) {
+      APP.util.setFieldErrorState(field, current >= parseInt(field.data('max-slack'), 10));
+      return;
+    }
   }
-  if(current != null) {
-    APP.util.setFieldErrorState(field, current <= parseInt(field.data('max-slack'), 10));
-  } else {
-    APP.util.setFieldErrorState(field, false);
-  }
+
+  APP.util.setFieldErrorState(field, false);
 };
 
 newReservationFormController.prototype.bindEntitySelection = function() {
@@ -71,24 +72,36 @@ newReservationFormController.prototype.setEntitySelection = function() {
   // Set the hidden form field for the entity for this reservation
   this.formContainer.find('input#reservation_entity_id').val(this.selectedEntityId);
 
-  this.setMaxSlackTimes();
-  this.setDefaultSlackTimes();
-  // Make sure the slack field validation is being performed by triggering the change event on these fields.
-  this.formContainer.find('#reservation_slack_before, #reservation_slack_after').trigger('change');
+  this.setSelectedEntitySlack();
+
+  this.validateSlackFields();
+};
+
+newReservationFormController.prototype.validateSlackFields = function() {
+  var _this = this;
+  this.formContainer.find('#reservation_slack_before, #reservation_slack_after').each(function() {
+    _this.setSlackFieldErrorState.call($(this));
+  });
 };
 
 newReservationFormController.prototype.removeSelectedClassFromAvailableEntitiesListItems = function() {
   this.getAvailableEntitiesList().find('li').removeClass('selected');
 };
 
-newReservationFormController.prototype.setDefaultSlackTimes = function() {
-  this.formContainer.find('input#reservation_slack_before').attr('placeholder', this.currentAvailableEntities[this.selectedEntityId].default_slack_before);
-  this.formContainer.find('input#reservation_slack_after').attr('placeholder', this.currentAvailableEntities[this.selectedEntityId].default_slack_after);
+newReservationFormController.prototype.setDefaultSlackTimes = function(default_slack_before, default_slack_after) {
+  this.formContainer.find('input#reservation_slack_before').attr('placeholder', default_slack_before);
+  this.formContainer.find('input#reservation_slack_after').attr('placeholder', default_slack_after);
 };
 
-newReservationFormController.prototype.setMaxSlackTimes = function() {
-  this.formContainer.find('input#reservation_slack_before').data('max-slack', this.currentAvailableEntities[this.selectedEntityId].max_slack_before);
-  this.formContainer.find('input#reservation_slack_after').data('max-slack', this.currentAvailableEntities[this.selectedEntityId].max_slack_after);
+newReservationFormController.prototype.setMaxSlackTimes = function(max_slack_before, max_slack_after) {
+  this.formContainer.find('input#reservation_slack_before').data('max-slack', max_slack_before);
+  this.formContainer.find('input#reservation_slack_after').data('max-slack', max_slack_after);
+};
+
+newReservationFormController.prototype.setSelectedEntitySlack = function() {
+  var selEntity = this.currentAvailableEntities[this.selectedEntityId];
+  this.setDefaultSlackTimes(selEntity.default_slack_before, selEntity.default_slack_after);
+  this.setMaxSlackTimes(selEntity.max_slack_before, selEntity.max_slack_after);
 };
 
 newReservationFormController.prototype.bindOnChangeActions = function() {
@@ -231,6 +244,10 @@ newReservationFormController.prototype.updateSelectedEntityFeedback = function(f
   } else {
     selCont.addClass('available');
   }
+
+  this.setDefaultSlackTimes(feedback.default_slack_before, feedback.default_slack_after);
+  this.setMaxSlackTimes(feedback.max_slack_before, feedback.max_slack_after);
+  this.validateSlackFields();
 };
 
 newReservationFormController.prototype.clearAvailableEntitiesList = function() {

@@ -54,6 +54,8 @@ class EntitiesController < ApplicationController
       if @selected_entity.present?
         @selected_entity_feedback = {
           available: @selected_entity.is_available_between?(@begins_at, @ends_at),
+          default_slack_before: @selected_entity.get_slack_before,
+          default_slack_after: @selected_entity.get_slack_after,
           max_slack_before: @selected_entity.get_max_slack_before(@begins_at),
           max_slack_after: @selected_entity.get_max_slack_after(@ends_at),
         }
