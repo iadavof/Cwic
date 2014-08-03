@@ -1,8 +1,7 @@
 source 'http://rubygems.org'
 
 # Bundle edge Rails instead: gem 'rails', github: 'rails/rails'
-# Use rails-4-1 github branch because the gem contains a bug in ActiveRecord that gives problems with pg_search. This bug will be fixed in Rails 4.1.2, but is not yet available..
-gem 'rails', '~> 4.1.1', github: 'rails/rails', branch: '4-1-stable' # TODO update to Rails 4.1.2 as soon as it is available
+gem 'rails', '~> 4.1.4'
 
 # Use postgresql as the database for Active Record
 gem 'pg'
@@ -26,13 +25,13 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'jquery-rails-cdn'
 gem 'jquery-ui-rails'
-gem 'jquery-ui-rails-cdn'
+gem 'jquery-ui-rails-cdn', github: 'kreintjes/jquery-ui-rails-cdn' # Custom gem to add compatibility with jquery-ui-rails 5.0.0. Waiting for pull request to be merged.
 
 # Use Modernizr to detect support for new features
 gem 'modernizr-rails'
 
 # Use the gistyle gem for the Garber Irish Javascript loading implementation
-gem 'gistyle', github: 'tonytonyjan/gistyle'
+gem 'gistyle', github: 'tonytonyjan/gistyle' # Github version to add support for alias actions. Waiting for new release.
 
 # Color picker
 gem 'jquery-minicolors-rails'
@@ -61,7 +60,7 @@ end
 gem 'rails-i18n'
 
 # Plurailize
-gem 'rich_pluralization', github: 'archan937/rich_pluralization'
+gem 'rich_pluralization', github: 'archan937/rich_pluralization' # This gem is broken in combination with Rails 4.1.4. Fix it or remove it entirely.
 
 # Devise for authentication. Gems are locked on minor versions, because we use custom Devise functionality and views.
 gem 'devise', '~> 3.2.4'
@@ -113,19 +112,19 @@ gem 'pg_search', '~> 0.7.3' # Locked on minor version, because we use custom sea
 gem 'kaminari'
 
 # Websockets so we could create push notifications
-gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom websocket-rails gem because the standard version is not Windows comptabile.
+gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom gem to add Windows compatibility. Waiting for issue #186 to be fixed.
 
 # Organisation of the seeds
 gem 'seedbank'
 
-# Holidays gem to determine the dates of holidays. Custom gem to add keys and kings day
-gem 'holidays', github: 'kreintjes/holidays' #path: '~/rails/gems/holidays'github: 'kreintjes/holidays'
+# Holidays gem to determine the dates of holidays.
+gem 'holidays', github: 'kreintjes/holidays' # Custom gem to add support for identifier keys and kings day holiday
 
-# Translate numbers to words (and ordinal forms). Custom gem to add ordinal support for dutch locale.
-gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' #path: '~/rails/gems/numbers_and_words'
+# Translate numbers to words (and ordinal forms).
+gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' # Custom gem to add ordinal support for dutch locale.
 
 # Attribute normalizer to normalize/cleanup attribute values (for instance change blanks to nils)
-gem 'attribute_normalizer', '~> 1.2.0.b'
+gem 'attribute_normalizer', '~> 1.2.0.b' # Locked on new release candidate. Waiting for official release.
 
 # Ice cube gem for easy recurrence rules
 gem 'ice_cube'
