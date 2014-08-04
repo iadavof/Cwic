@@ -32,15 +32,6 @@
   font-size: inherit;
 }
 
-.cwic-dropdown {
-  .cwic-dropdown-current-option {
-    @extend .icon-chevron-down;
-    &:before {
-      @extend [class^="icon-"];
-    }
-  }
-}
-
 div#reservation-form {
   div.entity-selector {
     div.selected-entity {

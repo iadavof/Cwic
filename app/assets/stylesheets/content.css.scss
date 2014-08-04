@@ -5,7 +5,6 @@ html.js #below-header {
   left: 0;
   right: 0;
   z-index: 0;
-  transform: translate3d(0, 0, 0);
 }
 
 #main-area {
@@ -18,7 +17,9 @@ html.js #main-area {
   bottom: 0;
   left: 0;
   right: 0;
-  transform: translate3d(0, 0, 0);
+  box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
+  border-left: 1px solid #ccc;
+  border-top: 1px solid #f9f9f9;
 }
 
 #content-area {

@@ -61,12 +61,14 @@
           <h2><%= ReservationStatus.model_name.human(count: 2) %></h2>
           <%= format_help(t('.reservation_status_help')) %>
           <div class="reservation-status-header clearfix">
-            <div class="icon icon-resize-vertical sort-handle hidden"></div>
-            <div class="name"><%= ReservationStatus.human_attribute_name(:name) %></div>
-            <div class="color"><%= ReservationStatus.human_attribute_name(:color) %></div>
-            <div><%= ReservationStatus.human_attribute_name(:blocking).html_safe %></div>
-            <div><%= ReservationStatus.human_attribute_name(:info_boards).html_safe %></div>
-            <div><%= ReservationStatus.human_attribute_name(:billable).html_safe %></div>
+            <div>
+              <div class="icon icon-resize-vertical sort-handle hidden"></div>
+              <div class="name"><%= ReservationStatus.human_attribute_name(:name) %></div>
+              <div class="color"><%= ReservationStatus.human_attribute_name(:color) %></div>
+              <div><%= ReservationStatus.human_attribute_name(:blocking).html_safe %></div>
+              <div><%= ReservationStatus.human_attribute_name(:info_boards).html_safe %></div>
+              <div><%= ReservationStatus.human_attribute_name(:billable).html_safe %></div>
+            </div>
           </div>
           <ul class="nested-form" id="entity-type-reservation-statuses">
             <%= f.fields_for :reservation_statuses, @entity_type.reservation_statuses.sort_by(&:index), wrapper: false do |rsf| %>

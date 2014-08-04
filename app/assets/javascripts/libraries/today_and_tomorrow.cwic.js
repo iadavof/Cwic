@@ -33,27 +33,14 @@ CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
     var descriptionHeight = $description.height();
     
     if($description.hasClass('opened')) {
-      if (Modernizr.csstransitions) {
-        APP.util.cssTransitionsAnimate($description, {height: 0}, 200, 'swing', function(){
-          $description.css({display: 'none', height: 'auto'}).removeClass('opened');
-        });
-      } else {
-        $description.animate({height: 0}, 200, 'swing', function(){
-          $description.css({display: 'none', height: 'auto'}).removeClass('opened');
-        });
-      }
+      $description.velocity({height: 0}, 200, 'swing', function(){
+        $description.css({display: 'none', height: 'auto'}).removeClass('opened');
+      });
     } else {
-      $description.css({height: 0, display: 'block'})
-      if (Modernizr.csstransitions) {
-        APP.util.cssTransitionsAnimate($description, {height: descriptionHeight}, 200, 'swing', function() {
-          $description.css({height: 'auto'});
-        })
-      } else {
-        $description.animate({height: descriptionHeight}, 200, 'swing', function() {
-          $description.css({height: 'auto'});
-        });
-      }
-      $description.addClass('opened');
+      $description.css({height: 0, display: 'block'});
+      $description.velocity({height: descriptionHeight}, 200, 'swing', function() {
+        $description.css({height: 'auto'}).addClass('opened');
+      });
     }
   });
 };

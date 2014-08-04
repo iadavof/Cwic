@@ -30,7 +30,6 @@ form.mini-search {
 }
 
 #search-bar {
-  overflow: hidden;
   background-color: #fff;
   text-align: center;
   position: relative;
@@ -45,6 +44,7 @@ form.mini-search {
 
 #global_search {
   width: 30%;
+  vertical-align: middle;
 }
 
 #open-feedback-button {

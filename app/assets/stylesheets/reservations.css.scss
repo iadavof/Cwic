@@ -146,12 +146,6 @@ div#reservation-form {
           width: auto;
           text-align: center;
         }
-        input, textarea, select {
-          font-size: 1.3em;
-          &.replaced + div {
-            font-size: 1.3em;
-          }
-        }
       }
     }
     ul.entity-list {

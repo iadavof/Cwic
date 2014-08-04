@@ -42,10 +42,9 @@ div#entity-type-form {
       margin: 0;
     }
     div.reservation-status-header {
-      display: table-row;
-      width: 100%;
-      border: 0 none;
-      font-size: 0.9em;
+      background-color: #ddd;
+      overflow: hidden;
+      padding: 0.5em 0;
       .sort-handle {
         font-size: 1.8em;
         padding: 0 10px 0 12px;
@@ -53,30 +52,36 @@ div#entity-type-form {
         min-width: 0;
         width: auto;
       }
-      div {
-        display: table-cell;
-        font-weight: bold;
-        min-width: 8em;
-        width: 8em;
-        padding: 0 20px 0 0;
-        margin: 0;
-        text-align: center;
-        vertical-align: middle;
-      }
-      div.name {
-        min-width: 15em;
-        width: 15em;
+      > div {
+        display: table-row;
+        width: 100%;
+        border: 0 none;
+        font-size: 0.9em;
+        div {
+          display: table-cell;
+          font-weight: bold;
+          min-width: 10em;
+          width: 10em;
+          padding: 0 20px 0 0;
+          margin: 0;
+          text-align: center;
+          vertical-align: middle;
+        }
+        div.name {
+          min-width: 15em;
+          width: 15em;
+        }
       }
     }
     .reservation-status-wrapper {
       > .inner {
         position: relative;
         .bool {
-          width: 8em;
+          width: 10em;
           text-align: center;
         }
         .minicolors-theme-default .minicolors-input {
-          width: 8em;
+          width: 10em;
         }
       }
     }

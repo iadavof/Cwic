@@ -6,9 +6,6 @@ div.table-container {
     position: absolute;
     top: 0;
     right: 0;
-    div.cwic-dropdown {
-      width: auto;
-    }
   }
 }
 
@@ -20,6 +17,10 @@ table {
   max-width: 100%;
   &.multiple-edit {
     margin-bottom: 0;
+  }
+  .sortable-header-buttons {
+    display: inline-block;
+    white-space: nowrap;
   }
   thead {
     background-color: #ddd;
@@ -39,6 +40,7 @@ table {
   }
   td {
     &.icons {
+      white-space: nowrap;
       [class^="icon-"], [class*=" icon-"] {
         font-size: 18px;
         margin-left: 18px;

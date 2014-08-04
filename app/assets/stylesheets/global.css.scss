@@ -166,6 +166,36 @@ dl {
   }
 }
 
+.content-columns {
+  .content-column {
+    width: 32%;
+    box-sizing: border-box;
+    min-width: 400px;
+    float: left;
+    border: 1px solid #ccc;
+    padding: 30px;
+    margin-left: 2%;
+    margin-bottom: 20px;
+    &:first-child {
+      margin-left: 0;
+    }
+    h1, h2, h3, h4, h5, h6 {
+      &:first-child {
+        margin-top: 0;
+      }
+    }
+  }
+  &.twocol {
+    .content-column {
+      width: 49%;
+    }
+  }
+}
+
+#note-template + .content-columns {
+  margin-right: 420px;
+}
+
 .progress-bar {
   background-color: #6dbfce;
   -webkit-background-size: 30px 30px;
@@ -204,6 +234,7 @@ div.entity-images-container {
 [class^="icon-"], [class*=" icon-"] {
   &.action-button {
     display: inline-block;
+    cursor: pointer;
     text-align: center;
     font-size: 13px !important;
     color: #fff !important;
@@ -249,6 +280,34 @@ div.entity-images-container {
     }
   }
 }
+
+/*
+.action-button-dropdown {
+  position: relative;
+  display: inline-block;
+  .action-button {
+    position: relative;
+    z-index: 1;
+  }
+  .dropdown-content {
+    text-align: left;
+    position: absolute;
+    border-radius: 1.5em 0 0 0;
+    left: 10%;
+    top: 10%;
+    min-width: 14em;
+    border: 1px solid #ccc;
+    background-color: #fff;
+    .dropdown-title {
+      text-align: center;
+      padding-left: 2.2em;
+    }
+  }
+  &:hover .dropdown-content {
+    display: block;
+  }
+}
+*/
 
 html.svg.smil .ajax-wait {
   background-image: image-url('ajax_wait.svg') !important;

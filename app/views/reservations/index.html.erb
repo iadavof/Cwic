@@ -8,6 +8,18 @@
 
 <% content_for :local_menu_page do %>
   <%= render 'layouts/mini_search', current_search_type: Reservation.model_name, include_date: true %>
+  <!--
+  <% if !@reservations.empty? %>
+  <div class="action-button-dropdown">
+    <a class="icon icon-download-alt action-button"></a>
+    <div class="dropdown-content">
+      <div class="dropdown-title"><%= t('.download_as') %></div>
+      <%= link_to(t('csv'), organisation_reservations_path(@organisation, params.merge({ format: 'csv', page: false }))) %>
+      <%= link_to(t('xls'), organisation_reservations_path(@organisation, params.merge({ format: 'xls', page: false }))) %>
+    </div>
+  </div>
+  <% end %>
+  -->
 <% end %>
 
 <%= filter_summary(@organisation_client, params[:date_domain_from], params[:date_domain_to]).html_safe %>

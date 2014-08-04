@@ -46,7 +46,7 @@ module TableHelper
       class_asc  << 'active' if params[direction_key] == 'asc'
     end
 
-    content_tag(:span) do
+    content_tag(:span, class: 'sortable-header-buttons') do
       safe_join([
         link_to(icon('chevron-down'), params.merge({ sort_key => field, direction_key => 'desc', page_key => 1 }), class: class_desc),
         link_to(icon('chevron-up'), params.merge({ sort_key => field, direction_key => 'asc', page_key => 1 }), class: class_asc)

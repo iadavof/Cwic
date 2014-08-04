@@ -69,9 +69,9 @@ CwicScheduleViewItem.prototype.setSlack = function(before, after) {
   this.slack_after = after;
 };
 
-CwicScheduleViewItem.prototype.applyGlow = function(kind, on) {
+CwicScheduleViewItem.prototype.toggleClass = function(css_class, on) {
   var domObjectsSItems = $(this.getDomObjects()).find('div.schedule-item');
-  domObjectsSItems.toggleClass(kind + '-glow', on);
+  domObjectsSItems.toggleClass(css_class, on);
 };
 
 CwicScheduleViewItem.prototype.relativeSlackPercentage = function(slackBegin, begin, slackEnd) {
@@ -115,7 +115,7 @@ CwicScheduleViewItem.prototype.renderPart = function(jschobj, momentBlock) {
 
 CwicScheduleViewItem.prototype.addStatusFlag = function(scheduleItemDOM) {
   if(this.status != null) {
-    scheduleItemDOM.find('div.status').show().attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color, borderColor: this.status.text_color }).find('span').text(this.status.name.substring(0,1));
+    scheduleItemDOM.find('div.status').show().attr('title', this.status.name).css({ backgroundColor: this.status.bg_color, color: this.status.text_color}).find('span').text(this.status.name.substring(0,1));
   }
 };
 
@@ -602,8 +602,8 @@ CwicScheduleViewItem.prototype.dragAndResizeMove = function(event, context) {
 CwicScheduleViewItem.prototype.checkGlowState = function() {
   var errorGlow = this.conceptCollidesWithOthers();
   var slackGlow = this.conceptSlackCollidesWithOthers() && !errorGlow;
-  this.applyGlow('slack', slackGlow);
-  this.applyGlow('error', errorGlow);
+  this.toggleClass('slack-conflict', slackGlow);
+  this.toggleClass('item-conflict', errorGlow);
 };
 
 CwicScheduleViewItem.prototype.dragAndResizeUp = function(event, context) {

@@ -405,6 +405,7 @@ CwicScheduleView.prototype.startEditMode = function(scheduleItemDOM, notWithTool
 
   this.focusedScheduleItem.applyFocus();
   this.focusedScheduleItem.bindDragAndResizeControls();
+  this.focusedScheduleItem.toggleClass('edit-mode', true);
 };
 
 CwicScheduleView.prototype.toggleLocalMenuButtons = function(division, buttonids, state) {
@@ -428,6 +429,7 @@ CwicScheduleView.prototype.stopEditMode = function(accept) {
   // Hide context menu buttons
   this.toggleLocalMenuButtons('context', ['description', 'client', 'edit', 'remove', 'cancel', 'save'], false);
 
+  this.focusedScheduleItem.toggleClass('edit-mode', false);
   this.focusedScheduleItem.removeFocus();
   (accept) ? this.saveEditModeChanges() : this.discardEditModeChanges();
 
