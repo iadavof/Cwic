@@ -281,14 +281,15 @@ div.entity-images-container {
   }
 }
 
-.action-button-popup {
+/*
+.action-button-dropdown {
   position: relative;
   display: inline-block;
   .action-button {
     position: relative;
     z-index: 1;
   }
-  .popup-content {
+  .dropdown-content {
     text-align: left;
     position: absolute;
     border-radius: 1.5em 0 0 0;
@@ -297,15 +298,16 @@ div.entity-images-container {
     min-width: 14em;
     border: 1px solid #ccc;
     background-color: #fff;
-    .popup-title {
+    .dropdown-title {
       text-align: center;
       padding-left: 2.2em;
     }
   }
-  &:hover .popup-content {
+  &:hover .dropdown-content {
     display: block;
   }
 }
+*/
 
 html.svg.smil .ajax-wait {
   background-image: image-url('ajax_wait.svg') !important;
