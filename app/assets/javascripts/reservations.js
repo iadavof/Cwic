@@ -5,6 +5,9 @@ APP.reservations = {
   show: function() {
     APP.reservations.bindStatusSelectorControls();
   },
+  edit: function() {
+    APP.reservations.bindStatusSelectorControls();
+  },
   _new_create: function() {
     APP.reservations.bindSelectClientRadioButtons();
     APP.reservations.bindReservationRecurrenceControls();
