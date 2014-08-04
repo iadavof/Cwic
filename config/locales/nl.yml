@@ -163,6 +163,7 @@ nl:
         name: 'Naam'
         first_name: 'Voornaam'
         last_name: 'Achternaam'
+        email: 'E-mail'
         infix: 'Tussenvoegsel'
         address: 'Adres'
         route: 'Straat'
@@ -571,6 +572,10 @@ nl:
 
   organisation_clients:
     show:
+      general: 'Algemeen'
+      address: 'Adres'
+      contact: 'Contact'
+      municipality: 'Gemeente'
       upcomming_reservations: 'Aankomende reserv.'
       no_upcomming_reservations: 'Geen aankomende reserveringen'
       past_reservations: 'Eerdere reserv.'
