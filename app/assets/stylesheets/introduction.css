@@ -10,5 +10,13 @@
  *
  *= require_self
  *= require font-face
+ *= require global
+ *= require jquery-ui
+ *= require select2
+ *= require magnific-popup
+ *= require icons
+ *= require forms
+ *= require tables
+ *= require controls
  *= require_directory ./introduction
  */

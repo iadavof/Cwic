@@ -1,5 +1,10 @@
 //= require_self
+//= require modernizr
+//= require select2
+//= require select2_locale_nl
 //= require gistyle
 //= require moment
 //= require ./libraries/logo_clock.cwic
 //= require_directory ./introduction
+//= require util
+//= require ./libraries/jquery.controls.cwic

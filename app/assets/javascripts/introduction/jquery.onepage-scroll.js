@@ -1,5 +1,5 @@
 /* ===========================================================
- * jquery-onepage-scroll.js v1.2.1
+ * jquery-onepage-scroll.js v1.3
  * ===========================================================
  * Copyright 2013 Pete Rojwongsuriya.
  * http://www.thepetedesign.com
@@ -25,15 +25,16 @@
     keyboard: true,
     beforeMove: null,
     afterMove: null,
-    loop: false,
-    responsiveFallback: false
-  };
+    loop: true,
+    responsiveFallback: false,
+    direction : 'vertical'
+	};
 
-  /*------------------------------------------------*/
-  /*  Credit: Eike Send for the awesome swipe event */
-  /*------------------------------------------------*/
+	/*------------------------------------------------*/
+	/*  Credit: Eike Send for the awesome swipe event */
+	/*------------------------------------------------*/
 
-  $.fn.swipeEvents = function() {
+	$.fn.swipeEvents = function() {
       return this.each(function() {
 
         var startX,
@@ -86,6 +87,7 @@
         total = sections.length,
         status = "off",
         topPos = 0,
+        leftPos = 0,
         lastAnimation = 0,
         quietPeriod = 500,
         paginationList = "";
@@ -93,14 +95,14 @@
     $.fn.transformPage = function(settings, pos, index) {
       if (typeof settings.beforeMove == 'function') settings.beforeMove(index);
       $(this).css({
-        "-webkit-transform": "translate3d(0, " + pos + "%, 0)",
-        "-webkit-transition": "-webkit-transform " + settings.animationTime + "ms " + settings.easing,
-        "-moz-transform": "translate3d(0, " + pos + "%, 0)",
-        "-moz-transition": "-moz-transform " + settings.animationTime + "ms " + settings.easing,
-        "-ms-transform": "translate3d(0, " + pos + "%, 0)",
-        "-ms-transition": "-ms-transform " + settings.animationTime + "ms " + settings.easing,
-        "transform": "translate3d(0, " + pos + "%, 0)",
-        "transition": "transform " + settings.animationTime + "ms " + settings.easing
+        "-webkit-transform": ( settings.direction == 'horizontal' ) ? "translate3d(" + pos + "%, 0, 0)" : "translate3d(0, " + pos + "%, 0)",
+        "-webkit-transition": "all " + settings.animationTime + "ms " + settings.easing,
+        "-moz-transform": ( settings.direction == 'horizontal' ) ? "translate3d(" + pos + "%, 0, 0)" : "translate3d(0, " + pos + "%, 0)",
+        "-moz-transition": "all " + settings.animationTime + "ms " + settings.easing,
+        "-ms-transform": ( settings.direction == 'horizontal' ) ? "translate3d(" + pos + "%, 0, 0)" : "translate3d(0, " + pos + "%, 0)",
+        "-ms-transition": "all " + settings.animationTime + "ms " + settings.easing,
+        "transform": ( settings.direction == 'horizontal' ) ? "translate3d(" + pos + "%, 0, 0)" : "translate3d(0, " + pos + "%, 0)",
+        "transition": "all " + settings.animationTime + "ms " + settings.easing
       });
       $(this).one('webkitTransitionEnd otransitionend oTransitionEnd msTransitionEnd transitionend', function(e) {
         if (typeof settings.afterMove == 'function') settings.afterMove(index);
@@ -198,9 +200,29 @@
     }
 
     function responsive() {
-      if ($(window).width() < settings.responsiveFallback) {
+      //start modification
+      var valForTest = false;
+      var typeOfRF = typeof settings.responsiveFallback
+      
+      if(typeOfRF == "number"){
+      	valForTest = $(window).width() < settings.responsiveFallback;
+      }
+      if(typeOfRF == "boolean"){
+      	valForTest = settings.responsiveFallback;
+      }
+      if(typeOfRF == "function"){
+      	valFunction = settings.responsiveFallback();
+      	valForTest = valFunction;
+      	typeOFv = typeof valForTest;
+      	if(typeOFv == "number"){
+      		valForTest = $(window).width() < valFunction;
+      	}
+      }
+      
+      //end modification 
+      if (valForTest) {
         $("body").addClass("disabled-onepage-scroll");
-        $(document).unbind('mousewheel DOMMouseScroll');
+        $(document).unbind('mousewheel DOMMouseScroll MozMousePixelScroll');
         el.swipeEvents().unbind("swipeDown swipeUp");
       } else {
         if($("body").hasClass("disabled-onepage-scroll")) {
@@ -217,7 +239,7 @@
           el.moveDown();
         });
 
-        $(document).bind('mousewheel DOMMouseScroll', function(event) {
+        $(document).bind('mousewheel DOMMouseScroll MozMousePixelScroll', function(event) {
           event.preventDefault();
           var delta = event.originalEvent.wheelDelta || -event.originalEvent.detail;
           init_scroll(event, delta);
@@ -227,8 +249,8 @@
 
 
     function init_scroll(event, delta) {
-        var deltaOfInterest = delta,
-            timeNow = new Date().getTime();
+        deltaOfInterest = delta;
+        var timeNow = new Date().getTime();
         // Cancel scroll if currently animating or within quiet period
         if(timeNow - lastAnimation < quietPeriod + settings.animationTime) {
             event.preventDefault();
@@ -247,8 +269,28 @@
 
     el.addClass("onepage-wrapper").css("position","relative");
     $.each( sections, function(i) {
-      $(this).addClass("ops-section").attr("data-index", i+1);
-      topPos = topPos + 100;
+      $(this).css({
+        position: "absolute",
+        top: topPos + "%"
+      }).addClass("section").attr("data-index", i+1);
+      
+      
+      $(this).css({
+        position: "absolute",
+        left: ( settings.direction == 'horizontal' )
+          ? leftPos + "%"
+          : 0,
+        top: ( settings.direction == 'vertical' || settings.direction != 'horizontal' )
+          ? topPos + "%"
+          : 0
+      });
+      
+      if (settings.direction == 'horizontal')
+        leftPos = leftPos + 100;
+      else
+        topPos = topPos + 100;
+      
+      
       if(settings.pagination == true) {
         paginationList += "<li><a data-index='"+(i+1)+"' href='#" + (i+1) + "'></a></li>"
       }
@@ -263,37 +305,51 @@
     });
 
     // Create Pagination and Display Them
-    if(settings.pagination == true) {
-      $("<ul class='onepage-pagination'>" + paginationList + "</ul>").prependTo("body");
-      posTop = (el.find(".onepage-pagination").height() / 2) * -1;
-      el.find(".onepage-pagination").css("margin-top", posTop);
+    if (settings.pagination == true) {
+      if ($('ul.onepage-pagination').length < 1) $("<ul class='onepage-pagination'></ul>").prependTo("body");
+      
+      if( settings.direction == 'horizontal' ) {
+        posLeft = (el.find(".onepage-pagination").width() / 2) * -1;
+        el.find(".onepage-pagination").css("margin-left", posLeft);
+      } else {
+        posTop = (el.find(".onepage-pagination").height() / 2) * -1;
+        el.find(".onepage-pagination").css("margin-top", posTop);
+      }
+      $('ul.onepage-pagination').html(paginationList);
     }
 
     if(window.location.hash != "" && window.location.hash != "#1") {
       init_index =  window.location.hash.replace("#", "")
-      $(settings.sectionContainer + "[data-index='" + init_index + "']").addClass("active")
-      $("body").addClass("viewing-page-"+ init_index)
-      if(settings.pagination == true) $(".onepage-pagination li a" + "[data-index='" + init_index + "']").addClass("active");
+      
+      if (parseInt(init_index) <= total && parseInt(init_index) > 0) {
+        $(settings.sectionContainer + "[data-index='" + init_index + "']").addClass("active")
+        $("body").addClass("viewing-page-"+ init_index)
+        if(settings.pagination == true) $(".onepage-pagination li a" + "[data-index='" + init_index + "']").addClass("active");
 
-      next = $(settings.sectionContainer + "[data-index='" + (init_index) + "']");
-      if(next) {
-        next.addClass("active")
-        if(settings.pagination == true) $(".onepage-pagination li a" + "[data-index='" + (init_index) + "']").addClass("active");
-        $("body")[0].className = $("body")[0].className.replace(/\bviewing-page-\d.*?\b/g, '');
-        $("body").addClass("viewing-page-"+next.data("index"))
-        if (history.replaceState && settings.updateURL == true) {
-          var href = window.location.href.substr(0,window.location.href.indexOf('#')) + "#" + (init_index);
-          history.pushState( {}, document.title, href );
+        next = $(settings.sectionContainer + "[data-index='" + (init_index) + "']");
+        if(next) {
+          next.addClass("active")
+          if(settings.pagination == true) $(".onepage-pagination li a" + "[data-index='" + (init_index) + "']").addClass("active");
+          $("body")[0].className = $("body")[0].className.replace(/\bviewing-page-\d.*?\b/g, '');
+          $("body").addClass("viewing-page-"+next.data("index"))
+          if (history.replaceState && settings.updateURL == true) {
+            var href = window.location.href.substr(0,window.location.href.indexOf('#')) + "#" + (init_index);
+            history.pushState( {}, document.title, href );
+          }
         }
+        pos = ((init_index - 1) * 100) * -1;
+        el.transformPage(settings, pos, init_index);
+      } else {
+        $(settings.sectionContainer + "[data-index='1']").addClass("active")
+        $("body").addClass("viewing-page-1")
+        if(settings.pagination == true) $(".onepage-pagination li a" + "[data-index='1']").addClass("active");
       }
-      pos = ((init_index - 1) * 100) * -1;
-      el.transformPage(settings, pos, init_index);
-
     }else{
       $(settings.sectionContainer + "[data-index='1']").addClass("active")
       $("body").addClass("viewing-page-1")
       if(settings.pagination == true) $(".onepage-pagination li a" + "[data-index='1']").addClass("active");
     }
+    
     if(settings.pagination == true)  {
       $(".onepage-pagination li a").click(function (){
         var page_index = $(this).data("index");
@@ -302,7 +358,7 @@
     }
 
 
-    $(document).bind('mousewheel DOMMouseScroll', function(event) {
+    $(document).bind('mousewheel DOMMouseScroll MozMousePixelScroll', function(event) {
       event.preventDefault();
       var delta = event.originalEvent.wheelDelta || -event.originalEvent.detail;
       if(!$("body").hasClass("disabled-onepage-scroll")) init_scroll(event, delta);
@@ -328,6 +384,18 @@
             break;
             case 40:
               if (tag != 'input' && tag != 'textarea') el.moveDown()
+            break;
+            case 33: //pageg up
+              if (tag != 'input' && tag != 'textarea') el.moveUp()
+            break;
+            case 34: //page dwn
+              if (tag != 'input' && tag != 'textarea') el.moveDown()
+            break;
+            case 36: //home
+              el.moveTo(1);
+            break;
+            case 35: //end
+              el.moveTo(total);
             break;
             default: return;
           }

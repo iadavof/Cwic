@@ -7,13 +7,10 @@ body {
   height: 100%;
   margin: 0;
   padding: 0;
-  overflow: hidden;
   font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
-section {
-  width: 100%;
-  height: 100%;
+html.js body {
   overflow: hidden;
 }
 
@@ -35,8 +32,29 @@ section {
   width: 100%;
 }
 
-section div.text-section,
-section div.image-section {
+.onepage-scroll {
+ height: 100% !important;
+ height: 100%;
+ margin: 0 auto;
+}
+
+.onepage-scroll > section {
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  transition: margin-top 0.3s;
+  box-sizing: border-box;
+  padding-bottom: 3%;
+  margin-top: -3%;
+  box-shadow: 0 0 80px rgba(0,0,0,0.2);
+}
+
+.onepage-scroll > section:first-child {
+  margin-top: 0;
+}
+
+.onepage-scroll > section div.text-section,
+.onepage-scroll > section div.image-section {
   position: absolute;
   width: 50%;
   height: 100%;
@@ -44,39 +62,88 @@ section div.image-section {
   top: 0;
 }
 
-section:nth-child(even) div.text-section,
-section:nth-child(odd) div.image-section {
+.onepage-scroll > section div.image-section {
+  background-color: #eee;
+}
+
+.onepage-scroll > section:nth-child(even) div.text-section,
+.onepage-scroll > section:nth-child(odd) div.image-section {
   right: 0;
 }
 
-section:nth-child(odd) div.text-section,
-section:nth-child(even) div.image-section {
+.onepage-scroll > section:nth-child(odd) div.text-section,
+.onepage-scroll > section:nth-child(even) div.image-section {
   left: 0;
 }
 
-.onepage-scroll {
- height: 100% !important;
- height: 100%;
- margin: 0 auto;
-}
-
-section div.image-section {
+.onepage-scroll > section div.image-section {
   background-size: cover;
+  background-position: center center;
 }
 
-section div.text-section {
-  box-shadow: 0 0 200px rgba(0,0,0,0.3);
+.onepage-scroll > section div.text-section {
   font-size: 1.3em;
-  z-index: 2;
   padding: 5%;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
 }
 
-section div.text-section h2 {
-
+.onepage-scroll > section .onepage-next-page-link {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  left: 0;
+  top: 0;
+  display: none;
 }
 
-section div.text-section div.intro-section-body {
+.onepage-scroll > section.active + section .onepage-next-page-link {
+  display: block;
+}
 
+html.js .onepage-scroll > section {
+  margin-top: 0;
+}
+
+.onepage-wrapper > section.active + section {
+  margin-top: -3%;
+}
+
+ul.onepage-pagination {
+  right: auto;
+  top: auto;
+  left: 0;
+  top: 0;
+  display: block;
+}
+
+ul.onepage-pagination li {
+  display: block;
+  float: left;
+}
+
+ul.onepage-pagination li a {
+  height: auto;
+  width: auto;
+  transition: background-color 0.1s;
+}
+
+ul.onepage-pagination li a:before {
+  display: none;
+}
+
+ul.onepage-pagination li a.active {
+  background-color: #ff3520;
+  color: #fff;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .onepage-scroll > section div.image-section {
+    height: 50%;
+    width: 100%;
+  }
+  .onepage-scroll > section div.text-section {
+    top: 50%;
+    width: 100%;
+  }
 }

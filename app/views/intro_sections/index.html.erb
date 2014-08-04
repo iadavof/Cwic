@@ -1,10 +1,18 @@
- <section>
+<section>
   <div id="logo-container">
     <div id="logo-container-inner">
       <img src="<%= asset_path('logo.png') %>" class="logo" />
     </div>
   </div>
- </section>
-  <% @intro_sections.each do |intro_section| %>
-    <%= render partial: 'intro_sections/section', locals: {intro_section: intro_section} %>
+  <% if !user_signed_in? %>
+    <div class="sign-in-form">
+      <%= render partial: 'devise/sessions/sign_in_form' %>
+    </div>
+    <div class="sign-up-form">
+      <%= render partial: 'devise/registrations/sign_up_form' %>
+    </div>
   <% end %>
+</section>
+<% @intro_sections.each do |intro_section| %>
+  <%= render partial: 'intro_sections/section', locals: {intro_section: intro_section} %>
+<% end %>

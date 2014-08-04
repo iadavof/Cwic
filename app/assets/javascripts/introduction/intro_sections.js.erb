@@ -1,6 +1,22 @@
 APP.intro_sections = {
   index: function() {
-    var logoClock = new CwicLogoClock({container: 'logo-container-inner'});
-    $("div.onepage-scroll").onepage_scroll();
+    $('body').find('select, :radio, :checkbox, input[type=file]').cwicControl();
+    $('div.onepage-scroll').onepage_scroll({animationTime: 300, easing: 'ease-in'});
+    var $onepagePagination = $('.onepage-pagination');
+    var $onepageWrapper = $('.onepage-wrapper');
+    $onepagePagination.addClass('clearfix');
+    $onepagePagination.find('li').each(function(i) {
+      var $link = $(this).find('a:first-child');
+      var $section = $onepageWrapper.find('.ops-section[data-index="' + $link.data('index') + '"]');
+      var title = $section.find('.text-section > h2').first().text() || 'Pagina' + $link.data('index');
+      var text = i === 0 ? 'Home' : title;
+      $link.text(text);
+      var $nextPageLink = $('<a href="#' + $link.data('index') + '" class="onepage-next-page-link"></a>').on('click', function() {
+        $onepageWrapper.moveTo($link.data('index'));
+      });
+      $nextPageLink.appendTo($section);
+    });
+    $onepagePaginationWrapper = $('<div class="onepage-pagination-wrapper"></div>');
+    $onepagePagination.after($onepagePaginationWrapper).appendTo($onepagePaginationWrapper);
   },
 }
