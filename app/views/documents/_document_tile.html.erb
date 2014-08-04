@@ -1,0 +1,8 @@
+<div class="document">
+    <%= image_tag(f.object.document.thumb.url, class: 'document-thumb') %>
+    <p class="document-filename"><%= f.object.document.file.filename %></p>
+    <p class="document-created"><%= l(f.object.created_at) %></p>
+    <% if defined?(removable) && removable %>
+    <%= f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: Document.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+    <% end %>
+</div>

@@ -11,6 +11,7 @@
 <div id="tabs">
   <ul class="nav">
     <li><a href="#general" class="current"><%= t('.general') %></a></li>
+    <li><a href="#documents"><%= t('.documents') %></a></li>
     <li><a href="#upcomming_reservations"><%= t('.upcomming_reservations') %></a></li>
     <li><a href="#past_reservations"><%= t('.past_reservations') %></a></li>
   </ul>
@@ -45,6 +46,9 @@
           </div>
         </div>
       </div>
+    </div>
+    <div id="documents">
+        <%= render partial: 'documents/overview', locals: { documents: @organisation_client.documents } %>
     </div>
     <div id="upcomming_reservations">
       <% if @organisation_client.upcomming_reservations(15).empty? %>
