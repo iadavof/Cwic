@@ -2,6 +2,6 @@
   <%= content_tag(:p, t('.no_documents')) %>
 <% else %>
   <% documents.each do |doc| %>
-    <%= render partial: 'documents/document_tile', locals: { document: doc, removable: false } %>
+    <%= render partial: 'documents/document_tile', locals: { doc: doc } %>
   <% end %>
 <% end %>

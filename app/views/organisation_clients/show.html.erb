@@ -48,7 +48,9 @@
       </div>
     </div>
     <div id="documents">
-        <%= render partial: 'documents/overview', locals: { documents: @organisation_client.documents } %>
+        <div id="documents-container" class="clearfix">
+          <%= render partial: 'documents/overview', locals: { documents: @organisation_client.documents } %>
+        </div>
     </div>
     <div id="upcomming_reservations">
       <% if @organisation_client.upcomming_reservations(15).empty? %>

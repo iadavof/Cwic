@@ -1,0 +1,14 @@
+<div class="fields upload-document-fields">
+  <div class="upload-document-fields-wrapper">
+    <div class="field">
+      <%= form.label :remote_document_url %>
+      <%= form.text_field :remote_document_url %>
+    </div>
+    <div class="field">
+      <%= form.label :document_from_file %>
+      <%= form.file_field :document %>
+    </div>
+    <%= form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: Document.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+    <%= form.hidden_field :document_cache %>
+  </div>
+</div>

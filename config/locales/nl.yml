@@ -83,6 +83,9 @@ nl:
       organisation_role:
         one: 'Rol'
         other: 'Rollen'
+      document:
+        one: 'Document'
+        other: 'Documenten'
       entity_type:
         one: 'Objectsoort'
         other: 'Objectsoorten'
@@ -451,6 +454,7 @@ nl:
       date_must_be_in_future: 'moet in de toekomst liggen'
       date_must_be_after_attribute: 'moet na %{attribute_name} (%{formatted_date}) zijn'
       date_must_be_after_date: 'moet na %{formatted_date} zijn'
+      extension_white_list_error: 'Dit type bestand is niet toegestaan'
 
   devise:
     shared:
@@ -573,6 +577,7 @@ nl:
   organisation_clients:
     show:
       general: 'Algemeen'
+      documents: 'Documenten'
       address: 'Adres'
       contact: 'Contact'
       municipality: 'Gemeente'
@@ -581,9 +586,16 @@ nl:
       past_reservations: 'Eerdere reserv.'
       no_past_reservations: 'Geen eerdere reserveringen'
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
+    form:
+      general: 'Algemeen'
+      documents: 'Documenten'
     form_fields:
       address: 'Adres'
       search_address: 'Adres zoeken...'
+
+  documents:
+    overview:
+      no_documents: 'Geen documenten'
 
   entity_types:
     still_used_destroy_confirm:

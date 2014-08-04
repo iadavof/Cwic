@@ -50,6 +50,14 @@ class User < ActiveRecord::Base
     end
   end
 
+  def self.current
+    Thread.current[:user]
+  end
+
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
+
 private
   def save_current_name_in_reservation_log # Save the current username in the logs and nullify the reference to this user
     self.reservation_logs.update_all(old_user_name: instance_name, user_id: nil)

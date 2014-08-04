@@ -1,8 +1,13 @@
-<div class="document">
-    <%= image_tag(f.object.document.thumb.url, class: 'document-thumb') %>
-    <p class="document-filename"><%= f.object.document.file.filename %></p>
-    <p class="document-created"><%= l(f.object.created_at) %></p>
-    <% if defined?(removable) && removable %>
-    <%= f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: Document.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
+<div class="fields document">
+  <%= link_to(doc.document.path) do %>
+    <%= image_tag(doc.document.thumb.file ? doc.document.thumb.url : get_document_icon_url_for_extension(doc.document.file.extension), class: 'document-thumb') %>
+    <div class="document-info">
+      <p class="filename" title="<%= doc.document.file.filename %>"><%= doc.document.file.filename %></p>
+      <p class="created_at"><%= l(doc.created_at, format: :long) if doc.created_at %></p>
+      <p class="created_by" title="<%= doc.user.instance_name %>"><%= doc.user.instance_name %></p>
+    </div>
+    <% if defined?(form) %>
+    <%= form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: Document.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
     <% end %>
+  <% end %>
 </div>

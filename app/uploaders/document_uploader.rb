@@ -4,6 +4,7 @@ class DocumentUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   include CarrierWave::MiniMagick
+  include CarrierWave::MimeTypes
 
   # Choose what kind of storage to use for this uploader:
   storage :file
@@ -15,20 +16,26 @@ class DocumentUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/organisation_#{model.organisation.id}/#{model.id}"
   end
 
-  def first_page
-    manipulate! do |frame, index|
-      frame if index.zero?
+  process :set_content_type
+
+  version :thumb, :if => :convertable? do
+    # Width of 150 and the aspect ratio of A4 page
+    process :resize_to_fit => [150, 212]
+    process :convert => :png
+
+    def full_filename (for_file = model.source.file)
+      super.chomp(File.extname(super)) + '.png'
     end
   end
 
-  version :thumb do
-    process :first_page
-    process :resize_to_fit => [200, 200]
-    process :convert => :jpg
+  def convertable?(new_file)
+    new_file.content_type.include?('image') ||
+    new_file.content_type.include?('pdf') ||
+    new_file.content_type.include?('txt')
+  end
 
-    def full_filename (for_file = model.source.file)
-      super.chomp(File.extname(super)) + '.jpg'
-    end
+  def extension_white_list
+    %w(jpg jpeg gif png pdf svg xls xlsx ppt pptx doc docx html eps fla mp3 ai zip rar)
   end
 
 end

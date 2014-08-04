@@ -19,8 +19,8 @@
       </div>
 
       <div id="documents">
-        <div class="nested-form" id="documents-container">
-          <%= f.fields_for :documents, @organisation_client.documents, wrapper: false do |df| %>
+        <div class="nested-form clearfix" id="documents-container">
+          <%= f.fields_for :documents, wrapper: false do |df| %>
             <%= render partial: 'documents/document_fields', locals: { f: df } %>
           <% end %>
         </div>

@@ -2,6 +2,8 @@ require "application_responder"
 
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
+  before_action :set_current_user
+
   before_action { @admin = true }
   # check_authorization unless: :devise_controller? TODO enable this line when authorization is implemented
 
@@ -36,6 +38,10 @@ class ApplicationController < ActionController::Base
       @current_organisation = sel_organisation
     end
     redirect_to :root
+  end
+
+  def set_current_user
+    User.current = current_user
   end
 
   def set_locale
