@@ -307,6 +307,12 @@ nl:
         period_unit: 'Periode bij reserveerperiode'
         period_unit_id: 'Periode bij reserveerperiode'
         price: 'Prijs bij reserveerperiode'
+      document:
+        user: 'Toegevoegd door'
+        created_at: 'Toegevoegd op'
+        documentable: 'Gekoppeld aan'
+        file_size: 'Bestandsgrootte'
+        file_name: 'Bestandsnaam'
     errors:
       messages:
         date_blank: 'datum moet opgegeven zijn'
@@ -548,6 +554,7 @@ nl:
       search_entitytypeicon_placeholder: 'Objecticoon zoeken...'
       date_domain_from_placeholder: 'Vanaf datum...'
       date_domain_to_placeholder: 'Tot datum...'
+      search_document_placeholder: 'Document zoeken...'
       search: 'Zoeken'
 
   shared:
