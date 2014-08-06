@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="<%= I18n.locale %>">
+<html class="<% if user_signed_in? %>logged-in <% else %>not-logged-in <% end %>no-js" lang="<%= I18n.locale %>">
   <head>
     <title><%= sanitize(content_for?(:page_title) ? yield(:page_title) : t('default_title'), tags: []) %> | Cwic</title>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>

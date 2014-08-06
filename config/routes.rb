@@ -4,6 +4,7 @@ Cwic::Application.routes.draw do
   
   match 'home/index', controller: 'home', action: 'index', via: 'get'
 
+  devise_scope :user do get '/users/sign_out' => 'devise/sessions#destroy' end
   devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
 
   match 'intro_sections/manage', controller: 'intro_sections', action: 'manage', via: 'get', as: 'manage_intro_sections'

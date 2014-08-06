@@ -11,5 +11,7 @@
     <div class="onepage-scroll">
       <%= content_for?(:content) ? yield(:content) : yield %>
     </div>
+    <%= render partial: 'shared/modal' %>
+    <%= render partial: 'feedbacks/modal' %>
   </body>
 </html>

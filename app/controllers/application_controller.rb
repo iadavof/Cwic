@@ -20,6 +20,10 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, alert: exception.message
   end
+  
+  def after_sign_in_path_for(resource_or_scope)
+    home_index_path
+  end
 
   def load_organisation
     @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?

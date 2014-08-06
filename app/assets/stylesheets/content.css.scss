@@ -37,7 +37,8 @@ html.js #content-area {
   right: 0;
 }
 
-html.js body[data-current-user-id=''] {
+html.js.not-logged-in {
+  overflow: auto;
   #below-header,
   #main-area,
   #content-area {

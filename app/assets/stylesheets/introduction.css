@@ -11,6 +11,7 @@
  *= require_self
  *= require font-face
  *= require global
+ *= require flash_messages
  *= require jquery-ui
  *= require select2
  *= require magnific-popup

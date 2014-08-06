@@ -76,6 +76,7 @@ html.js body {
   left: 0;
 }
 
+.onepage-scroll > section.intro-section-home,
 .onepage-scroll > section div.image-section {
   background-size: cover;
   background-position: center center;
@@ -135,6 +136,19 @@ ul.onepage-pagination li a:before {
 ul.onepage-pagination li a.active {
   background-color: #ff3520;
   color: #fff;
+}
+
+.intro-section-home {
+  text-align: center;
+}
+
+.intro-sign-in, .intro-sign-up {
+  margin-top: 1.5em;
+}
+
+.intro-sign-up .button {
+  font-size: 1.4em;
+  font-weight: bold;
 }
 
 @media (max-aspect-ratio: 1/1) {

@@ -96,6 +96,25 @@ module LinkHelper
     options[:class] ||= 'button'
     link_to_destroy(object, options)
   end
+  
+  def button_link_to_sign_in(options = {})
+    name = options.delete(:name) || t('.sign_in')
+    options[:class] ||= 'button'
+    link_to(name, new_user_session_path, options)
+  end
+  
+  def button_link_to_sign_out(options = {})
+    name = options.delete(:name) || t('.sign_out')
+    options[:class] ||= 'button'
+    options[:method] = :delete
+    link_to(name, destroy_user_session_path, options)
+  end
+  
+  def button_link_to_sign_up(options = {})
+    name = options.delete(:name) || t('.sign_up')
+    options[:class] ||= 'button'
+    link_to(name, new_user_registration_path, options)
+  end
 
 private
   # Helpers for the link helpers
