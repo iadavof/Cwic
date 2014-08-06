@@ -97,6 +97,12 @@ module LinkHelper
     link_to_destroy(object, options)
   end
   
+  def button_link_to_app(options = {})
+    name = options.delete(:name) || t('.go_to_app')
+    options[:class] ||= 'button'
+    link_to(name, home_index_path, options)
+  end
+  
   def button_link_to_sign_in(options = {})
     name = options.delete(:name) || t('.sign_in')
     options[:class] ||= 'button'

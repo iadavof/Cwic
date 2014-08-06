@@ -10,10 +10,6 @@ body {
   font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
 }
 
-html.js body {
-  overflow: hidden;
-}
-
 #logo-container {
   background-color: #ffffff;
   padding: 40px;
@@ -33,12 +29,12 @@ html.js body {
 }
 
 .onepage-scroll {
- height: 100% !important;
  height: 100%;
  margin: 0 auto;
 }
 
 .onepage-scroll > section {
+  position: relative;
   width: 100%;
   height: 100%;
   overflow: hidden;
@@ -102,10 +98,6 @@ html.js body {
   display: block;
 }
 
-html.js .onepage-scroll > section {
-  margin-top: 0;
-}
-
 .onepage-wrapper > section.active + section {
   margin-top: -3%;
 }
@@ -142,13 +134,16 @@ ul.onepage-pagination li a.active {
   text-align: center;
 }
 
-.intro-sign-in, .intro-sign-up {
-  margin-top: 1.5em;
+.intro-sign-up, .intro-go-to-app {
+  margin-top: 3em;
+  .button {
+    font-size: 1.7em;
+    font-weight: bold;
+  }
 }
 
-.intro-sign-up .button {
-  font-size: 1.4em;
-  font-weight: bold;
+.intro-sign-in, .intro-sign-out {
+  margin-top: 2em;
 }
 
 @media (max-aspect-ratio: 1/1) {
