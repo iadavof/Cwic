@@ -1,7 +1,21 @@
 <%= form_for([@organisation, @organisation_client]) do |f| %>
   <%= render 'shared/error_messages', target: @organisation_client %>
 
-  <%= render 'form_fields', f: f %>
+  <div id="tabs">
+  <ul class="nav">
+    <li><a href="#general" class="current"><%= t('.general') %></a></li>
+  </ul>
+
+  <div class="tab-wrap">
+    <div id="general">
+      <div class="content-columns clearfix">
+        <div class="content-column">
+          tags
+        </div>
+      </div>
+      <%= render 'form_fields', f: f %>
+    </div>
+  </div>
 
   <div class="actions">
     <%= f.submit %>
