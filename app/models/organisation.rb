@@ -34,4 +34,12 @@ class Organisation < ActiveRecord::Base
   def instance_name
     self.name
   end
+
+  def self.current
+    Thread.current[:organisation]
+  end
+
+  def self.current=(organisation)
+    Thread.current[:organisation] = organisation
+  end
 end

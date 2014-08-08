@@ -256,6 +256,7 @@ nl:
         reservation_recurrence_definition: 'Herhaling:'
         reservation_status: 'Status'
         created_at: 'Aangemaakt op'
+        documents: 'Documenten'
         reservation_logs: 'Aanpassingen'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
@@ -311,8 +312,8 @@ nl:
         user: 'Toegevoegd door'
         created_at: 'Toegevoegd op'
         documentable: 'Gekoppeld aan'
-        file_size: 'Bestandsgrootte'
-        file_name: 'Bestandsnaam'
+        document_size: 'Bestandsgrootte'
+        document_filename: 'Bestandsnaam'
     errors:
       messages:
         date_blank: 'datum moet opgegeven zijn'
@@ -652,6 +653,9 @@ nl:
 
   reservations:
     show:
+      general: 'Algemeen'
+      documents: 'Documenten'
+      logs: 'Geschiedenis'
       repetitions: 'Herhalingen'
       no_description: '<geen beschrijving>'
       slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'

@@ -1,6 +1,7 @@
 class Document < ActiveRecord::Base
   include PgSearch
   include Sspable
+  include I18n::Alchemy
 
   # Associations
   belongs_to :documentable, polymorphic: true
@@ -21,7 +22,7 @@ class Document < ActiveRecord::Base
   before_validation :set_organisation, :set_user
   before_save :store_file_properties
 
-  pg_global_search associated_against: { user: { last_name: 'A', first_name: 'B' } }
+  pg_global_search against: { document_filename: 'A' }, associated_against: { user: { last_name: 'B', first_name: 'C' } }
 
   default_scope { order('id ASC') }
 
@@ -30,7 +31,7 @@ class Document < ActiveRecord::Base
   end
 
   def set_organisation
-    self.organisation = documentable.organisation
+    self.organisation = Organisation.current
   end
 
   def store_file_properties

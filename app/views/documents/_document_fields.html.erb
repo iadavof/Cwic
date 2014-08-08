@@ -3,3 +3,4 @@
   <% else %>
     <%= render partial: 'documents/upload_document_tile', locals: { doc: f.object, form: f } %>
   <% end %>
+  <%= f.hidden_field :document_cache %>

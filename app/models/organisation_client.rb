@@ -6,7 +6,7 @@ class OrganisationClient < ActiveRecord::Base
   belongs_to :organisation
   has_many :reservations, dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy
-  has_many :documents, as: :documentable, dependent: :destroy
+  has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Validations
   validates :organisation, presence: true
@@ -25,7 +25,7 @@ class OrganisationClient < ActiveRecord::Base
   validates :lat, numericality: true, allow_blank: true;
 
   # Nested attributes
-  accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: proc { |attrs| attrs['document'].blank? }
+  accepts_nested_attributes_for :documents, allow_destroy: true
 
   # Scopes
   pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }

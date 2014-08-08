@@ -9,6 +9,5 @@
       <%= form.file_field :document %>
     </div>
     <%= form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: Document.model_name.human.lcfirst), data: { confirm: t('are_you_sure') } %>
-    <%= form.hidden_field :document_cache %>
   </div>
 </div>
