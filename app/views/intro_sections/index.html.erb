@@ -12,7 +12,7 @@
       <%= button_link_to_sign_up({ name: t('.start_using_cwic'), class: 'button green' }) %>
     </div>
     <div class="intro-sign-in">
-      <%= button_link_to_sign_in({ name: t('.log_in') }) %>
+      <%= button_link_to_sign_in() %>
     </div>
   <% else %>
     <div class="intro-go-to-app">
@@ -26,3 +26,9 @@
 <% @intro_sections.each do |intro_section| %>
   <%= render partial: 'intro_sections/section', locals: {intro_section: intro_section} %>
 <% end %>
+<section class="intro-section-home" style="background-image: url('/uploads/intro_section/image/2/Tulips.jpg')">
+  <%= render partial: 'layouts/flash_messages' %>
+  <div class="intro-sign-up">
+    <%= button_link_to_sign_up({ name: t('.start_using_cwic'), class: 'button green' }) %>
+  </div>
+</section>
