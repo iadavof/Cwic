@@ -11,7 +11,26 @@
           = Document.model_name.human(count: 2)
     .tab-wrap
       #general
-        = render 'form_fields', f: f
+        .content-columns.threecol.clearfix
+          .content-column
+            h2
+              i.icon-address
+                = t('.general')
+            = render partial: 'client_form_fields', locals: { f: f }
+          .content-column
+            h2
+              i.icon-phone-call
+                = t('.contact')
+            = render partial: 'contact_form_fields', locals: { f: f }
+          .content-column
+            | Contactpersonen
+          .content-column
+            h2
+              i.icon-phone-call
+                = t('.payment_details')
+            = render partial: 'payment_form_fields', locals: { f: f }
+
+
       #documents
         #documents-container.nested-form.clearfix
           = f.fields_for :documents, wrapper: false do |df|

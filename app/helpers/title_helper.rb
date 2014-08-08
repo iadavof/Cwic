@@ -19,4 +19,15 @@ module TitleHelper
   def edit_title(object)
    t('.title_html', default: :edit_object_html, model: object.class.model_name.human.lcfirst, name: object.instance_name)
   end
+
+  def search_shortcut(object)
+    case(object.class.name)
+      when 'OrganisationClient'
+        return content_tag(:div, content_tag(:span, 'c#') + object.id.to_s, id: 'search-shortcut');
+      when 'Reservation'
+        return content_tag(:div, content_tag(:span, 'r#') + object.id.to_s, id: 'search-shortcut');
+      else
+        return ''
+    end
+  end
 end

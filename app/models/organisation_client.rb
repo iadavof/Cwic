@@ -11,8 +11,9 @@ class OrganisationClient < ActiveRecord::Base
 
   # Validations
   validates :organisation, presence: true
-  validates :first_name, presence: true
-  validates :last_name, presence: true
+  validates :first_name, presence: true, unless: 'self.business_client'
+  validates :last_name, presence: true, unless: 'self.business_client'
+  validates :company_name, presence: true, if: 'self.business_client'
   validates :email, presence: true, length: { maximum: 255 }
   validates :route, presence: true, length: { maximum: 255 }
   validates :street_number, presence: true, length: { maximum: 255 }
@@ -21,9 +22,6 @@ class OrganisationClient < ActiveRecord::Base
   validates :administrative_area_level_1, presence: true, length: { maximum: 255 }
   validates :country, presence: true, length: { maximum: 255 }
   validates :postal_code, presence: true, length: { maximum: 255 }
-  validates :address_type, length: { maximum: 255 }
-  validates :lng, numericality: true, allow_blank: true;
-  validates :lat, numericality: true, allow_blank: true;
 
   # Nested attributes
   accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
@@ -51,7 +49,11 @@ class OrganisationClient < ActiveRecord::Base
   ##
 
   def instance_name
-    "#{full_name}, #{locality}"
+    if self.business_client
+      "#{company_name}, #{locality}"
+    else
+      "#{full_name}, #{locality}"
+    end
   end
 
   def full_name

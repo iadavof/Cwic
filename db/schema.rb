@@ -242,11 +242,13 @@ ActiveRecord::Schema.define(version: 20140906104928) do
     t.string   "country"
     t.string   "administrative_area_level_2"
     t.string   "administrative_area_level_1"
-    t.string   "address_type"
-    t.float    "lat"
-    t.float    "lng"
     t.string   "phone"
     t.string   "mobile_phone"
+    t.boolean  "business_client",                       default: false
+    t.string   "company_name"
+    t.string   "tax_number"
+    t.string   "iban"
+    t.string   "iban_att"
   end
 
   add_index "organisation_clients", ["organisation_id"], name: "index_organisation_clients_on_organisation_id", using: :btree

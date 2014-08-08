@@ -22,25 +22,49 @@
         = t('.past_reservations')
   .tab-wrap
     #general
-      .content-columns.clearfix data-column-count="2"
+      .content-columns.clearfix data-column-count="3"
         .content-column
           .content-block
             h2
               i.icon-address
-              = t('.address')
+              = t('.general')
             dl
               dt
-                = OrganisationClient.human_attribute_name(:name)
+                = OrganisationClient.human_attribute_name(:id)
               dd
-                = @organisation_client.full_name
+                = "c##{@organisation_client.id}"
               dt
-                = t('.address')
+                = OrganisationClient.human_attribute_name(:business_client)
               dd
-                = format_address(@organisation_client.route, @organisation_client.street_number, @organisation_client.postal_code, @organisation_client.administrative_area_level_2, @organisation_client.administrative_area_level_1, @organisation_client.locality, @organisation_client.country)
+                = t(@organisation_client.business_client.to_s)
+              - if @organisation_client.business_client
+                dt
+                  = OrganisationClient.human_attribute_name(:company_name)
+                dd
+                  = @organisation_client.company_name
+              - else
+                dt
+                  = OrganisationClient.human_attribute_name(:name)
+                dd
+                  = @organisation_client.full_name
+          .content-block
+            h2
+              i.icon-phone-call
+              = t('.payment_details')
+            dl
               dt
-                = t('.municipality')
+                = OrganisationClient.human_attribute_name(:tax_number)
               dd
-                = @organisation_client.administrative_area_level_2 + ', ' + @organisation_client.administrative_area_level_1
+                = @organisation_client.tax_number
+              dt
+                = OrganisationClient.human_attribute_name(:iban)
+              dd
+                = @organisation_client.iban
+              dt
+                = OrganisationClient.human_attribute_name(:iban_att)
+              dd
+                = @organisation_client.iban_att
+
         .content-column
           .content-block
             h2
@@ -59,6 +83,20 @@
                 = OrganisationClient.human_attribute_name(:mobile_phone)
               dd
                 = @organisation_client.mobile_phone
+              dt
+                = t('.address')
+              dd
+                = format_address(@organisation_client.route, @organisation_client.street_number, @organisation_client.postal_code, @organisation_client.administrative_area_level_2, @organisation_client.administrative_area_level_1, @organisation_client.locality, @organisation_client.country)
+              dt
+                = t('.municipality')
+              dd
+                = "#{@organisation_client.administrative_area_level_2}, #{@organisation_client.administrative_area_level_1}"
+        .content-column
+          h2
+            i.icon-phone-call
+            = t('.contacts')
+          | Contactpersonen
+
     #documents
       #documents-container.clearfix
         = render partial: 'documents/overview', locals: { documents: @organisation_client.documents }

@@ -62,6 +62,7 @@ html.js.not-logged-in {
   #logo-container {
     display: block;
   }
+
 }
 
 #content {
@@ -131,4 +132,16 @@ html.js.not-logged-in {
 
 .logo {
   width: 100%;
+}
+
+#search-shortcut {
+  float: right;
+  color: #ff3520;
+  font-weight: bold;
+  margin-left: 1em;
+
+  span {
+    color: #444;
+    font-weight: normal;
+  }
 }

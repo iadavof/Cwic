@@ -25,8 +25,6 @@ class OrganisationClientsController < ApplicationController
 
   # GET /organisation_clients/new
   def new
-    @organisation_client.lat = @organisation.lat
-    @organisation_client.lng = @organisation.lng
     respond_with(@organisation_client)
   end
 
@@ -70,8 +68,11 @@ private
 
   def resource_params
     params.require(:organisation_client).permit(
-      :tag_list, :first_name, :infix, :last_name, :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat,
-      documents_attributes: [:id, :document, :document_cache, :remote_document_url, :_destroy])
+      :tag_list, :business_client, :first_name, :infix, :last_name, :company_name,
+      :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code,
+      :tax_number, :iban, :iban_att,
+      documents_attributes: [:id, :document, :document_cache, :remote_document_url, :_destroy]
+      )
   end
 
   def interpolation_options

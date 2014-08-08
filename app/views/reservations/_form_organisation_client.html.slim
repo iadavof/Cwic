@@ -19,7 +19,8 @@ h2
       = f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select'
   .new_organisation_client style=("display: none;" if @focus != 'new_client')
     = f.fields_for :organisation_client, @reservation.organisation_client, wrapper: false do |ocf|
-      = render 'organisation_clients/form_fields', f: ocf
+      = render 'organisation_clients/client_form_fields', f: ocf
+      = render 'organisation_clients/contact_form_fields', f: ocf
 
 - else
   .field

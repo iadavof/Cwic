@@ -164,6 +164,7 @@ nl:
         phone_general: 'Tel. algemeen'
         phone_reservations: 'Tel. reserveringen'
       organisation_client:
+        id: 'Klantnummer'
         name: 'Naam'
         first_name: 'Voornaam'
         last_name: 'Achternaam'
@@ -179,6 +180,11 @@ nl:
         country: 'Land'
         phone: 'Telefoon'
         mobile_phone: 'Mobiele tel.'
+        business_client: 'Zakelijke klant'
+        company_name: 'Bedrijsnaam'
+        tax_number: 'BTW-nummer'
+        iban: 'Rekeningnummer (IBAN)'
+        iban_att: 'Rekening ten name van'
       organisation_user:
         user: 'Gebruiker'
         user_email: 'E-mailadres'
@@ -240,6 +246,7 @@ nl:
       entity/properties:
         value: 'Eigenschap'
       reservation:
+        id: 'Reserveringsnummer'
         begins_at: 'Begint op'
         begins_at_tod: 'Begintijd'
         begins_at_date: 'Begindatum'
@@ -603,6 +610,8 @@ nl:
       general: 'Algemeen'
       address: 'Adres'
       contact: 'Contact'
+      contacts: 'Contactpersonen'
+      payment_details: 'Betalingsgegevens'
       municipality: 'Gemeente'
       upcoming_reservations: 'Aankomende reserv.'
       no_upcoming_reservations: 'Geen aankomende reserveringen'
@@ -611,8 +620,11 @@ nl:
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
     form:
       general: 'Algemeen'
-    form_fields:
       address: 'Adres'
+      contact: 'Contact'
+      contacts: 'Contactpersonen'
+      payment_details: 'Betalingsgegevens'
+    contact_form_fields:
       search_address: 'Adres zoeken...'
       edit_address: 'Adres bewerken'
 
