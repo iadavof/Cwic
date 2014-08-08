@@ -16,13 +16,4 @@ class Sticky < ActiveRecord::Base
   def instance_name
     "#{self.class.model_name.human} ##{self.id.to_s}"
   end
-
-  def json_representation
-    {
-      id: self.id,
-      author: { id: user.id, name: user.instance_name },
-      sticky_text: sticky_text,
-      created_at: created_at.strftime('%Y-%m-%d %H:%M'),
-    }
-  end
 end

@@ -22,7 +22,7 @@ div.note {
     width: 400px;
     min-height: 200px;
     z-index: 10;
-    margin: 5px;
+    margin: 1.5em 5px;
 }
 
 div.note div.note-text {
@@ -85,19 +85,16 @@ div.note a.delete-button {
     cursor: pointer;
     display: block;
     position: absolute;
-    right: 0;
-    top: 50%;
-    margin-top: -7.5px;
-    margin-right: 5px;
+    right: -.5em;
+    top: -.5em;
 }
 
 div.note a.save-button {
     cursor: pointer;
     display: none;
     position: absolute;
-    right: 0;
-    bottom: 0;
-    margin: 5px;
+    right: -.5em;
+    bottom: -.5em;
 }
 
 div.note p.saved_notification {

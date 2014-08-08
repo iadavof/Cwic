@@ -4,13 +4,8 @@ class StickiesController < ApplicationController
 
   respond_to :json
 
-  # GET /stickies_for
   def stickies_for
-    stickies = []
-    @stickies.each do |st|
-      stickies << st.json_representation
-    end
-    render json: stickies, status: :ok
+    respond_with(@stickies)
   end
 
   # POST /stickies
@@ -18,9 +13,7 @@ class StickiesController < ApplicationController
     @sticky.attributes = resource_params
     @sticky.weight = 0
     @sticky.save
-    respond_with(@organisation, @sticky) do |format|
-      format.json { render json: @sticky.json_representation }
-    end
+    respond_with(@organisation, @sticky)
   end
 
   def weight_update

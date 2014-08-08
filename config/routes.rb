@@ -20,10 +20,10 @@ Cwic::Application.routes.draw do
     resources :info_screens
     match 'info_screens/:id/reservations', controller: 'info_screens', action: 'info_screen_reservations', via: 'get', as: 'info_screen_reservations'
 
-    resources :stickies, except: [:show, :create, :new]
-    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch', as: 'edit_sticky_for_resource'
-    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'stickies_for', via: 'get', as: 'stickies_for_resource'
-    match 'stickies/:resource/:rid/new', controller: 'stickies', action: 'create', via: 'post', as: 'new_sticky_for_resource'
+    resources :stickies, except: [:show, :create, :edit, :new]
+    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch'
+    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'stickies_for', via: 'get'
+    match 'stickies/:resource/:rid/new', controller: 'stickies', action: 'create', via: 'post'
 
     # Routes for rendering the schedules
     match '/schedule_view/horizontal_calendar_day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'

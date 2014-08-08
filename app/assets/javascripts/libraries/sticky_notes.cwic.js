@@ -3,7 +3,7 @@ CwicStickyNotes.prototype.defaultNote = {
   author: { id: 0, name: '' },
   weight: 0,
   created_at: '',
-}
+};
 
 function CwicStickyNotes(options) {
   this.options = $.extend({
@@ -18,7 +18,7 @@ function CwicStickyNotes(options) {
   this.bindControls();
 
   this.getNotes();
-}
+};
 
 CwicStickyNotes.prototype.getNotes = function() {
   var sn = this;
@@ -34,7 +34,7 @@ CwicStickyNotes.prototype.getNotes = function() {
       }
     });
 
-}
+};
 
 CwicStickyNotes.prototype.saveNote = function(note_element) {
   var note = $(note_element);
@@ -71,7 +71,7 @@ CwicStickyNotes.prototype.saveNote = function(note_element) {
     note.find('img.ajax_wait').hide();
     note.find('p.saved_notification').show();
   });
-}
+};
 
 CwicStickyNotes.prototype.setTimestamps = function() {
   var timepies = $('div.notes div.note div.note-head p.created_at');
@@ -81,7 +81,7 @@ CwicStickyNotes.prototype.setTimestamps = function() {
     var timestamp = moment(p.data('timestamp'));
     p.text(timestamp.fromNow());
   });
-}
+};
 
 CwicStickyNotes.prototype.renderNotes = function(notes) {
   for(noteNr in notes) {
@@ -92,12 +92,12 @@ CwicStickyNotes.prototype.renderNotes = function(notes) {
   var schedule = this;
 
   setInterval(function(){ schedule.setTimestamps(); }, 30000);
-}
+};
 
 CwicStickyNotes.prototype.bindControls = function() {
   var sn = this;
   $('button.new-sticky').on('click', function() { sn.newNote(); });
-}
+};
 
 CwicStickyNotes.prototype.newNote = function() {
   var note = this.defaultNote;
@@ -105,7 +105,7 @@ CwicStickyNotes.prototype.newNote = function() {
   now = moment();
   note.created_at = now.format('YYYY-MM-DD HH:mm');
   this.renderNote(note);
-}
+};
 
 CwicStickyNotes.prototype.renderNote = function(note_obj) {
   var sn = this;
@@ -164,7 +164,7 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
     textarea.focus();
     textarea.select();
   }
-}
+};
 
 CwicStickyNotes.prototype.afterNoteMove = function(ui) {
   var notes = this.noteContainer.find('div.notes div.note');
@@ -182,7 +182,7 @@ CwicStickyNotes.prototype.afterNoteMove = function(ui) {
   }).fail(function(){
     window.log("Error updating note order");
   });
-}
+};
 
 CwicStickyNotes.prototype.afterNoteEdit = function(element) {
   var note = $(element).closest('div.note');
@@ -195,7 +195,7 @@ CwicStickyNotes.prototype.afterNoteEdit = function(element) {
 
     note.removeClass('focus');
   }
-}
+};
 
 CwicStickyNotes.prototype.uponNoteEdit = function(element) {
   var note = $(element).parents('div.note');
@@ -206,7 +206,7 @@ CwicStickyNotes.prototype.uponNoteEdit = function(element) {
     var textarea = note.find('textarea');
     textarea.focus();
   }
-}
+};
 
 CwicStickyNotes.prototype.deleteNote = function(element) {
   var note = $(element).parents('div.note');
@@ -224,4 +224,4 @@ CwicStickyNotes.prototype.deleteNote = function(element) {
   }
 
   note.remove();
-}
+};
