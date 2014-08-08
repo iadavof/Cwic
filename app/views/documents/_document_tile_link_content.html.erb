@@ -1,4 +1,4 @@
-<%= image_tag(doc.document.thumb.file ? doc.document.thumb.url : get_document_icon_url_for_extension(doc.document.file.extension), class: 'document-thumb') %>
+<%= image_tag(doc.document.thumb.file.exists? ? doc.document.thumb.url : get_document_icon_url_for_extension(doc.document.file.extension), class: 'document-thumb') %>
 <div class="document-info">
   <p class="filename" title="<%= doc.document.file.filename %>"><%= doc.document_filename %></p>
   <p class="created_at"><%= l(doc.created_at, format: :long) if doc.created_at %></p>

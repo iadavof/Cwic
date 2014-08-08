@@ -11,7 +11,7 @@
 <div id="tabs">
   <ul class="nav">
     <li><a href="#general" class="current"><%= t('.general') %></a></li>
-    <li><a href="#documents"><%= t('.documents') %></a></li>
+    <li><a href="#documents"><%= Document.model_name.human(count: 2) %></a></li>
     <li><a href="#upcomming_reservations"><%= t('.upcomming_reservations') %></a></li>
     <li><a href="#past_reservations"><%= t('.past_reservations') %></a></li>
   </ul>

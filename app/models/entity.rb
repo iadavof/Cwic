@@ -13,6 +13,7 @@ class Entity < ActiveRecord::Base
   has_many :info_screen_entities, dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy, inverse_of: :stickable
   has_many :entity_images, as: :entity_imageable, dependent: :destroy
+  has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Model extensions
   delegate :reserve_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
@@ -33,6 +34,7 @@ class Entity < ActiveRecord::Base
   # Nested attributes
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :entity_images, allow_destroy: true
+  accepts_nested_attributes_for :documents, allow_destroy: true
 
   # Scopes
   pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }

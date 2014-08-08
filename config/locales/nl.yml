@@ -585,7 +585,6 @@ nl:
   organisation_clients:
     show:
       general: 'Algemeen'
-      documents: 'Documenten'
       address: 'Adres'
       contact: 'Contact'
       municipality: 'Gemeente'
@@ -596,7 +595,6 @@ nl:
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
     form:
       general: 'Algemeen'
-      documents: 'Documenten'
     form_fields:
       address: 'Adres'
       search_address: 'Adres zoeken...'
@@ -654,7 +652,6 @@ nl:
   reservations:
     show:
       general: 'Algemeen'
-      documents: 'Documenten'
       logs: 'Geschiedenis'
       repetitions: 'Herhalingen'
       no_description: '<geen beschrijving>'

@@ -111,7 +111,7 @@
       </div>
 
       <div class="content-column">
-        <h2><i class="icon-document"></i><%= Reservation.human_attribute_name(:documents) %></h2>
+        <h2><i class="icon-document"></i><%= Document.model_name.human(count: 2) %></h2>
         <div id="documents">
           <div class="nested-form clearfix" id="documents-container">
             <%= f.fields_for :documents, wrapper: false do |df| %>
