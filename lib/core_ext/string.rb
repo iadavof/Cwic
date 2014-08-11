@@ -27,29 +27,16 @@ class String
 
   # Comparator to sort strings such that letters (alphabetic characters) come before numbers and other characters
   def alphasort(other)
-    length = (self.length < other.length) ? self.length : other.length
-    0.upto(length-1) do |i|
-      # normally we would just return the result of self[i] <=> other[i]. But
-      # you need a custom sorting function.
-      if self[i] == other[i]
-        next # characters the same, skip to next character.
+    0.upto((self.length < other.length ? self.length : other.length) - 1) do |i|
+      next if self[i] == other[i] # Characters the same, skip to next character.
+      if self[i] =~ /[a-zA-Z]/ && !(other[i] =~ /[a-zA-Z]/)
+        return -1  # Self is alphabetic, other is not, so self is sorted before
+      elsif !(self[i] =~ /[a-zA-Z]/) && other[i] =~ /[a-zA-Z]/
+        return 1 # Self is not alphabetic, other is, so self is sorted after
       else
-        if self[i] =~ /[a-zA-Z]/
-          if other[i] =~ /[a-zA-Z]/
-            return self[i] <=> other[i]  # both alphabetic, sort normally.
-          else
-            return -1  # self is alphabetic, other is not, so self is sorted before.
-          end
-        elsif other[i] =~ /[a-zA-Z]/
-          return 1  # self is not numeric, other is, so self is sorted after.
-        else
-          return self[i] <=> other[i] # both non-alphabetic, sort normally.
-        end
+        return self[i] <=> other[i] # Simply sort like we would normally
       end
     end
-
-    # if we got this far, the segments were identical. However, they may
-    # not be the same length. Short sorted before long.
-    return self.length <=> other.length
+    self.length <=> other.length # Segments are identical, but strings may not be of equal length. Sort short before long.
   end
 end
