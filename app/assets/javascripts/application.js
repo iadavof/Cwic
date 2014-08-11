@@ -10,9 +10,11 @@
 //= require select2
 //= require select2_locale_nl
 //= require websocket_rails/main
-//= require ./i18n/cwic/base
-//= require_tree ./i18n
-//= require_tree ./libraries
+//= require ./shared/i18n/cwic/base
+//= require_tree ./shared/i18n
+//= require_tree ./shared/libraries
+//= require_tree ./application/libraries
 //= require gistyle
-//= require global
-//= require_tree .
+//= require ./shared/util
+//= require ./application/global
+//= require_directory ./application
