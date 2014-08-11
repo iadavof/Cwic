@@ -20,5 +20,19 @@ APP.organisation_clients = {
       $(this).parents('div.auto-address-fields').find('input').removeAttr('readonly');
       return false;
     });
+  },
+  _form: function() {
+    APP.organisation_clients.bindBusinessPrivateToggle();
+  },
+  bindBusinessPrivateToggle: function() {
+    var field = $('#organisation_client_business_client');
+    field.on('change', function() {
+      APP.organisation_clients.toggleBusinessFields($(this).is(':checked'));
+    });
+    APP.organisation_clients.toggleBusinessFields.call(field);
+  },
+  toggleBusinessFields: function(show) {
+    $('.business-client').toggle(show);
+    $('.private-client').toggle(!show);
   }
 }
