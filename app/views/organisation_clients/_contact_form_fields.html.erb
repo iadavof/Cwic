@@ -1,0 +1,47 @@
+<div class="field">
+  <%= f.label :email %>
+  <%= f.email_field :email %>
+</div>
+<div class="field">
+  <%= f.label :phone %>
+  <%= f.text_field :phone %>
+</div>
+<div class="field">
+  <%= f.label :mobile_phone %>
+  <%= f.text_field :mobile_phone %>
+</div>
+<div class="field">
+  <label for="addresspicker" class="required"><%=t('.address') %></label>
+  <input type="text" id="addresspicker" placeholder="<%= t('.search_address') %>" />
+</div>
+<div class="auto-address-fields">
+  <a href="" class="icon icon-edit action-button" id="edit-auto-address-fields"></a>
+  <div class="field">
+    <%= f.label :route %>
+    <%= f.text_field :route, readonly: true, class: "addresspicker-route" %>
+  </div>
+  <div class="field">
+    <%= f.label :street_number %>
+    <%= f.text_field :street_number, readonly: true, class: "addresspicker-street-number" %>
+  </div>
+  <div class="field">
+    <%= f.label :locality %>
+    <%= f.text_field :locality, readonly: true, class: "addresspicker-locality" %>
+  </div>
+  <div class="field">
+    <%= f.label :administrative_area_level_2 %>
+    <%= f.text_field :administrative_area_level_2, readonly: true, class: "addresspicker-administrative-area-level-2" %>
+  </div>
+  <div class="field">
+    <%= f.label :administrative_area_level_1 %>
+    <%= f.text_field :administrative_area_level_1, readonly: true, class: "addresspicker-administrative-area-level-1" %>
+  </div>
+  <div class="field">
+    <%= f.label :postal_code %>
+    <%= f.text_field :postal_code, readonly: true, class: "addresspicker-postal-code" %>
+  </div>
+  <div class="field">
+    <%= f.label :country %>
+    <%= f.text_field :country, readonly: true, class: "addresspicker-country" %>
+  </div>
+</div>
