@@ -4,6 +4,8 @@
 //= require turbolinks
 //= require js-routes
 //= require modernizr
+//= require select2
+//= require select2_locale_nl
 //= require moment
 //= require moment/nl.js
 //= require magnific-popup
