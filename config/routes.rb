@@ -30,6 +30,7 @@ Cwic::Application.routes.draw do
     resources :organisation_clients do
       resources :reservations
       get :autocomplete, on: :collection
+      resources :organisation_client_contacts
     end
 
     resources :info_screens do

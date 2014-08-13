@@ -1,5 +1,16 @@
 APP.organisation_clients = {
-	afterGoogleMapsLoaded: function() {
+  show: function() {
+    var organisation_client_id = $('#organisation_client_contacts').data('organisationClientId');
+
+    new CwicContactList({
+      container: 'organisation_client_contacts',
+      backend_url: Routes.organisation_organisation_client_organisation_client_contacts_path(current_organisation, organisation_client_id),
+    });
+  },
+  _form: function() {
+    APP.organisation_clients.bindBusinessPrivateToggle();
+  },
+  afterGoogleMapsLoaded: function() {
     var addresspickerMap = $('#addresspicker').addresspicker({
       reverseGeocode: true,
       autocomplete: 'default',
@@ -20,9 +31,6 @@ APP.organisation_clients = {
       $(this).parents('div.auto-address-fields').find('input').removeAttr('readonly');
       return false;
     });
-  },
-  _form: function() {
-    APP.organisation_clients.bindBusinessPrivateToggle();
   },
   bindBusinessPrivateToggle: function() {
     var field = $('#organisation_client_business_client');

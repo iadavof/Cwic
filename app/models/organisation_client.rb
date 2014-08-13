@@ -6,6 +6,7 @@ class OrganisationClient < ActiveRecord::Base
   # Associations
   belongs_to :organisation
   has_many :reservations, dependent: :destroy
+  has_many :organisation_client_contacts, dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
@@ -22,6 +23,8 @@ class OrganisationClient < ActiveRecord::Base
   validates :administrative_area_level_1, presence: true, length: { maximum: 255 }
   validates :country, presence: true, length: { maximum: 255 }
   validates :postal_code, presence: true, length: { maximum: 255 }
+  validates :iban_att, presence: true, if: 'self.iban.present?'
+  validate :iban_valid
 
   # Nested attributes
   accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
@@ -29,7 +32,7 @@ class OrganisationClient < ActiveRecord::Base
   # Scopes
   pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
 
-  default_scope { order(:first_name, :last_name, :locality) }
+  default_scope { order(:last_name, :first_name, :locality) }
 
   ##
   # Class methods
@@ -57,7 +60,7 @@ class OrganisationClient < ActiveRecord::Base
   end
 
   def full_name
-    "#{first_name} #{infix.present? ? infix + ' ' : ''}#{last_name}"
+    "#{last_name}, #{first_name} #{infix.present? ? infix + ' ' : ''}"
   end
 
   def upcoming_reservations(limit)
@@ -70,5 +73,23 @@ class OrganisationClient < ActiveRecord::Base
     rel = self.reservations.where('begins_at <= :now AND ends_at <= :now', now: Time.now).order(ends_at: :desc)
     rel = rel.limit(limit) if limit.present?
     rel
+  end
+
+  def iban_valid
+
+    # We do not require the iban to be present
+    return true if self.iban == ''
+
+    iban_model = IBANTools::IBAN.new(self.iban)
+    iban_errors = iban_model.validation_errors
+    if iban_errors.present?
+      iban_errors.each do |e|
+        errors.add(:iban, e)
+      end
+      false
+    else
+      self.iban = iban_model.prettify
+      true
+    end
   end
 end

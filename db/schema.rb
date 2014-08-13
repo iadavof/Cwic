@@ -227,6 +227,29 @@ ActiveRecord::Schema.define(version: 20140906104928) do
     t.datetime "updated_at"
   end
 
+  create_table "organisation_client_contacts", force: true do |t|
+    t.integer  "organisation_client_id",      limit: 8
+    t.string   "first_name"
+    t.string   "infix"
+    t.string   "last_name"
+    t.string   "position"
+    t.string   "route"
+    t.string   "street_number"
+    t.string   "postal_code"
+    t.string   "locality"
+    t.string   "country"
+    t.string   "administrative_area_level_2"
+    t.string   "administrative_area_level_1"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile_phone"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organisation_client_contacts", ["organisation_client_id"], name: "index_organisation_client_contacts_on_organisation_client_id", using: :btree
+
   create_table "organisation_clients", force: true do |t|
     t.string   "first_name"
     t.string   "infix"

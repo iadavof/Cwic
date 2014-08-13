@@ -95,7 +95,7 @@
           h2
             i.icon-phone-call
             = t('.contacts')
-          | Contactpersonen
+          #organisation_client_contacts data-organisation-client-id=@organisation_client.id
 
     #documents
       #documents-container.clearfix
@@ -112,3 +112,4 @@
       - else
         = render partial: 'reservations/table', locals: { reservations: @organisation_client.past_reservations(15).includes(:reservation_status, :organisation_client, :entity) }
       = link_to(t('.all_reservations_of_client', client: @organisation_client.instance_name), organisation_organisation_client_reservations_path(@organisation, @organisation_client))
+= render partial: 'organisation_client_contacts/contact_list_template'

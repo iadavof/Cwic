@@ -114,6 +114,9 @@ nl:
       organisation_client:
         one: 'Klant'
         other: 'Klanten'
+      organisation_client_contact:
+        one: 'Contactpersoon'
+        other: 'Contactpersonen'
       entity_type_icon:
         one: 'Objecticoon'
         other: 'Objecticonen'
@@ -166,6 +169,8 @@ nl:
       organisation_client:
         id: 'Klantnummer'
         name: 'Naam'
+        address: 'Adres'
+        municipality: 'Gemeente'
         first_name: 'Voornaam'
         last_name: 'Achternaam'
         email: 'E-mail'
@@ -185,6 +190,12 @@ nl:
         tax_number: 'BTW-nummer'
         iban: 'Rekeningnummer (IBAN)'
         iban_att: 'Rekening ten name van'
+      organisation_client_contact:
+        address: 'Adres'
+        phone: 'Telefoon'
+        mobile_phone: 'Mobiel'
+        email: 'E-mail'
+        note: 'Notitie'
       organisation_user:
         user: 'Gebruiker'
         user_email: 'E-mailadres'
@@ -360,7 +371,15 @@ nl:
             repeating_until:
               invalid_date: 'ongeldige datum'
           repeating_until_before_end: 'voor herhalingsreeks valt voor het einde van de eerste reservering'
-
+        organisation_client:
+          attributes:
+            iban:
+              unknown_country_code: 'bevat een onbekende landcode'
+              bad_check_digits: 'klopt niet'
+              bad_chars: 'bevat ongeldige symbolen'
+              bad_length: 'heeft een ongeldige lengte'
+              bad_format: 'heeft een ongeldig formaat'
+              too_short: 'te kort'
   data_types:
     string:
       name: 'Regel tekst'
@@ -608,19 +627,17 @@ nl:
   organisation_clients:
     show:
       general: 'Algemeen'
-      address: 'Adres'
       contact: 'Contact'
       contacts: 'Contactpersonen'
       payment_details: 'Betalingsgegevens'
       municipality: 'Gemeente'
-      upcoming_reservations: 'Aankomende reserv.'
-      no_upcoming_reservations: 'Geen aankomende reserveringen'
+      upcomming_reservations: 'Aankomende reserv.'
+      no_upcomming_reservations: 'Geen aankomende reserveringen'
       past_reservations: 'Eerdere reserv.'
       no_past_reservations: 'Geen eerdere reserveringen'
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
     form:
       general: 'Algemeen'
-      address: 'Adres'
       contact: 'Contact'
       contacts: 'Contactpersonen'
       payment_details: 'Betalingsgegevens'
@@ -631,6 +648,10 @@ nl:
   documents:
     overview:
       no_documents: 'Geen documenten'
+
+  organisation_client_contacts:
+    contact_list_template:
+      search_organisation_client_contact: 'Contactpersoon zoeken...'
 
   entity_types:
     still_used_destroy_confirm:

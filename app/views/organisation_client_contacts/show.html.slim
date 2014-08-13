@@ -1,0 +1,67 @@
+- content_for :page_title do
+  = show_title(@organisation_client_contact)
+- content_for :local_menu_navigation do
+  = button_link_to_index([@organisation, @organisation_client, OrganisationClientContact])
+  = button_link_to_edit([@organisation, @organisation_client, @organisation_client_contact])
+  = button_link_to_destroy([@organisation, @organisation_client, @organisation_client_contact])
+dl
+  dt
+    = OrganisationClientContact.human_attribute_name(:organisation_client)
+  dd
+    = @organisation_client_contact.organisation_client
+  dt
+    = OrganisationClientContact.human_attribute_name(:first_name)
+  dd
+    = @organisation_client_contact.first_name
+  dt
+    = OrganisationClientContact.human_attribute_name(:infix)
+  dd
+    = @organisation_client_contact.infix
+  dt
+    = OrganisationClientContact.human_attribute_name(:last_name)
+  dd
+    = @organisation_client_contact.last_name
+  dt
+    = OrganisationClientContact.human_attribute_name(:position)
+  dd
+    = @organisation_client_contact.position
+  dt
+    = OrganisationClientContact.human_attribute_name(:route)
+  dd
+    = @organisation_client_contact.route
+  dt
+    = OrganisationClientContact.human_attribute_name(:street_number)
+  dd
+    = @organisation_client_contact.street_number
+  dt
+    = OrganisationClientContact.human_attribute_name(:postal_code)
+  dd
+    = @organisation_client_contact.postal_code
+  dt
+    = OrganisationClientContact.human_attribute_name(:locality)
+  dd
+    = @organisation_client_contact.locality
+  dt
+    = OrganisationClientContact.human_attribute_name(:country)
+  dd
+    = @organisation_client_contact.country
+  dt
+    = OrganisationClientContact.human_attribute_name(:administrative_area_level_2)
+  dd
+    = @organisation_client_contact.administrative_area_level_2
+  dt
+    = OrganisationClientContact.human_attribute_name(:administrative_area_level_1)
+  dd
+    = @organisation_client_contact.administrative_area_level_1
+  dt
+    = OrganisationClientContact.human_attribute_name(:phone)
+  dd
+    = @organisation_client_contact.phone
+  dt
+    = OrganisationClientContact.human_attribute_name(:mobile_phone)
+  dd
+    = @organisation_client_contact.mobile_phone
+  dt
+    = OrganisationClientContact.human_attribute_name(:note)
+  dd
+    = @organisation_client_contact.note

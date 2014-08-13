@@ -160,6 +160,9 @@ gem 'acts-as-taggable-on'
 gem 'exception_notification'
 gem 'ruby-notify-my-android'
 
+# Tools for formatting and validating IBAN numbers
+gem 'iban-tools'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
