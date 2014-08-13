@@ -13,11 +13,7 @@
  *= require jquery.minicolors
  *= require select2
  *= require magnific-popup
- *= require ./application/global
- *= require ./application/icons
- *= require ./application/forms
- *= require ./application/tables
- *= require ./application/controls
+ *= require_directory ./shared
  *= require ./application/header
  *= require ./application/content
  *= require_directory ./application

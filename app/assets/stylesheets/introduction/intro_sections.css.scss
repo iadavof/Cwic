@@ -168,15 +168,28 @@ h1 strong {
 
 .onepage-scroll > section.intro-section-last {
   min-height: 0;
-  padding: 5%;
+  padding: 5em 2em;
   background-color: #fff;
 }
 
 .onepage-scroll > section.intro-section-last .intellectual-property {
   position: absolute;
-  right: 5%;
-  bottom: 5%;
+  padding: 0.5em 0.8em;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.9em;
   color: #999;
+}
+
+table.features-comparison {
+  table-layout: fixed;
+  width: 100%;
+  th, td {
+    text-align: center;
+  }
 }
 
 .intro-sign-up, .intro-go-to-app, .intro-sign-in, .intro-sign-out {

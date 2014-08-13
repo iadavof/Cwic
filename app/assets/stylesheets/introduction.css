@@ -9,15 +9,8 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
- *= require ./application/font-face
- *= require ./application/global
- *= require ./application/flash_messages
  *= require jquery-ui
  *= require select2
- *= require magnific-popup
- *= require ./application/icons
- *= require ./application/forms
- *= require ./application/tables
- *= require ./application/controls
+ *= require_directory ./shared
  *= require_directory ./introduction
  */

@@ -44,6 +44,28 @@
   <%= render partial: 'intro_sections/section', locals: {intro_section: intro_section} %>
 <% end %>
 <section class="intro-section-last">
+  <table class="features-comparison">
+    <thead>
+      <tr>
+        <th>Light</th>
+        <th>Regular</th>
+        <th>Enterprise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          Nee
+        </td>
+        <td>
+          Ja
+        </td>
+        <td>
+          Ja
+        </td>
+      </tr>
+    </tbody>
+  </table>
   <div class="intro-sign-up">
     <%= button_link_to_sign_up({ name: t('.start_using_cwic'), class: 'button green' }) %>
   </div>
