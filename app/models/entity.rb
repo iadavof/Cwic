@@ -82,14 +82,6 @@ class Entity < ActiveRecord::Base
     (next_reservation.begins_at - next_reservation.get_slack_before.minutes - ends_at) / 1.minute if next_reservation.present?
   end
 
-  def update_reservations_slack_warnings(force = false)
-    if force || self.slack_before_changed? || self.slack_after_changed?
-      self.reservations.each do |reservation|
-        reservation.update_warning_state!
-      end
-    end
-  end
-
   def all_entity_images
     if include_entity_type_images
       entity_images + entity_type.entity_images
