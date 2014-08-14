@@ -186,6 +186,10 @@ class Reservation < ActiveRecord::Base
     end
   end
 
+  def slack_before_overlapping?
+    slack_before_overlapping.present?
+  end
+
   # Checks if the given slack after is overlapping with a next reservation.
   # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
   def slack_after_overlapping
@@ -197,6 +201,10 @@ class Reservation < ActiveRecord::Base
     if next_reservation.begins_at - self.ends_at < total_slack.minutes
       return next_reservation
     end
+  end
+
+  def slack_after_overlapping?
+    slack_after_overlapping.present?
   end
 
   def length_for_day(day)
@@ -255,7 +263,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def update_warning_state
-    self.warning = slack_before_overlapping.present? || slack_after_overlapping.present?
+    self.warning = slack_before_overlapping? || slack_after_overlapping?
     self
   end
 
