@@ -2,8 +2,8 @@ require "application_responder"
 
 class ApplicationController < ActionController::Base
   before_action :authenticate_user!
-  before_action :set_current_user
-  before_action :set_current_organisation
+  around_action :set_current_user
+  around_action :set_current_organisation
 
   before_action { @admin = true }
   # check_authorization unless: :devise_controller? TODO enable this line when authorization is implemented
@@ -43,10 +43,16 @@ class ApplicationController < ActionController::Base
 
   def set_current_user
     User.current = current_user
+    yield
+  ensure
+    User.current = nil # To address the thread variable leak issues in Puma/Thin webserver
   end
 
   def set_current_organisation
     Organisation.current = current_organisation
+    yield
+  ensure
+    Organisation.current = nil # To address the thread variable leak issues in Puma/Thin webserver
   end
 
   def set_locale
