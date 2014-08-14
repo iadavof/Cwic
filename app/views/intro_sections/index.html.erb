@@ -15,17 +15,17 @@
     <div class="intro-actions">
       <% if !user_signed_in? %>
       <div class="intro-sign-up">
-        <%= button_link_to_sign_up(name: t('.start_using_cwic'), class: 'button green') %>
+        <%= link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green') %>
       </div>
       <div class="intro-sign-in">
-        <%= button_link_to_sign_in %>
+        <%= link_to(t('.sign_in'), new_user_session_path, class: 'button') %>
       </div>
       <% else %>
       <div class="intro-go-to-app">
-        <%= button_link_to_app %>
+        <%= link_to(t('.go_to_app'), home_index_path, class: 'button') %>
       </div>
       <div class="intro-sign-out">
-        <%= button_link_to_sign_out %>
+        <%= link_to(t('.sign_out'), destroy_user_session_path, class: 'button', method: :delete) %>
       </div>
       <% end %>
     </div>
@@ -67,7 +67,7 @@
     </tbody>
   </table>
   <div class="intro-sign-up">
-    <%= button_link_to_sign_up({ name: t('.start_using_cwic'), class: 'button green' }) %>
+    <%= link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green') %>
   </div>
   <div class="intellectual-property">Cwic&reg; is een geregistreerd handelsmerk van <a href="http://iada.nl/">IADA v.o.f.</a></div>
 </section>
