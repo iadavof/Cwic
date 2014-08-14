@@ -14,12 +14,4 @@ module DocumentsHelper
     icon_name = get_document_icon_for_extension(extension)
     ActionController::Base.helpers.asset_path('images/document_icons/' + icon_name + '.png')
   end
-
-  def document_link(current_organisation, document, &block)
-    if document.id
-      link_to(organisation_document_path(current_organisation, document), target: :_blank, &block)
-    else
-      yield
-    end
-  end
 end
