@@ -697,6 +697,7 @@ nl:
       default_slack_times: 'Speling voor reservering'
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na de reservering. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Hieronder kunnen de waarden voor deze speling worden aangepast voor deze reservering.'
       minutes: 'minuten'
+      no_entities_available: 'Geen objecten beschikbaar'
     table:
       min: 'min.'
     modal_form:
