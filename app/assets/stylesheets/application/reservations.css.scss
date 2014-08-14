@@ -275,14 +275,14 @@ div.status-selector {
     }
 	}
 
-	p.saved-notification {
-	    margin: 5px;
-	    font-size: 80%;
-	    color: #666;
-	    font-style: italic;
-	    line-height: 100%;
-	    display: none;
-	    float: right;
+  p.saved-notification {
+    margin: 5px;
+    font-size: 80%;
+    color: #666;
+    font-style: italic;
+    line-height: 100%;
+    display: none;
+    float: right;
 	}
 }
 
@@ -299,7 +299,6 @@ div.status-selector.mini {
 }
 
 div.reservation-recurrence-definition-wrapper {
-
 	div.recurrence_definition_fields,
 	div.recurrence_definition_weekly,
 	div.recurrence_definition_monthly {

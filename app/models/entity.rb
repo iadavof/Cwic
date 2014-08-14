@@ -41,6 +41,18 @@ class Entity < ActiveRecord::Base
 
   default_scope { order('id ASC') }
 
+  ##
+  # Class methods
+  ##
+
+  def self.available_between(begins_at, ends_at, options = {})
+    self.all.find_all { |e| e.is_available_between?(begins_at, ends_at, options) }
+  end
+
+  ##
+  # Instance methods
+  ##
+
   def init
     self.color ||= Cwic::Color.random_hex_color
     self.build_properties if self.properties.blank?
@@ -103,7 +115,7 @@ class Entity < ActiveRecord::Base
     Cwic::Knapsack.new(reserve_periods.map { |rp| { c: rp.price, w: rp.length } }).solve_minimum(length)
   end
 
-  def update_reservations_slack_warnings(force = false)
+  def update_reservations_slack_warnings(force = false) # Also used in EntityType model so this method should be public
     if force || self.slack_before_changed? || self.slack_after_changed?
       self.reservations.each do |reservation|
         reservation.update_warning_state!
@@ -153,9 +165,5 @@ private
       iset = InfoScreenEntityType.where('entity_type_id = ? AND info_screen_id = ?', self.entity_type.id, is.id).first;
       InfoScreenEntity.create(entity: self, info_screen_entity_type: iset, active: iset.add_new_entities)
     end
-  end
-
-  def self.available_between(begins_at, ends_at, options = {})
-    self.all.find_all { |e| e.is_available_between?(begins_at, ends_at, options) }
   end
 end

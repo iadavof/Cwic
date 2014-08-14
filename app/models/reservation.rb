@@ -174,7 +174,7 @@ class Reservation < ActiveRecord::Base
   end
 
   # Checks if the given slack before is overlapping with a previous reservation.
-  # Returns nill if this is not the case, returns the overlapping reservation if this is the case.
+  # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
   def slack_before_overlapping
     previous_reservation = self.previous
     return nil if previous_reservation.nil?
@@ -187,7 +187,7 @@ class Reservation < ActiveRecord::Base
   end
 
   # Checks if the given slack after is overlapping with a next reservation.
-  # Returns nill if this is not the case, returns the overlapping reservation if this is the case.
+  # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
   def slack_after_overlapping
     next_reservation = self.next
     return nil if next_reservation.nil?
@@ -329,7 +329,6 @@ private
     if slack_after_overlap.present?
         errors.add(:slack_after, I18n.t('activerecord.errors.models.reservation.attributes.slack_before.slack_after_html', reservation_url: organisation_reservation_path(slack_after_overlap.organisation, slack_after_overlap), other_ends_at: I18n.l(slack_after_overlap.ends_at, format: :long)).html_safe)
     end
-
   end
 
   def not_overlapping

@@ -1,19 +1,17 @@
 function newReservationFormController(options) {
-    this.options = $.extend({
+  this.options = $.extend({
     container: '',
     entities_controller_url: 'url to backend',
   }, options || {});
 
+  this.formContainer = null;
+  this.beginMoment = moment();
+  this.endMoment = moment();
+  this.entityTypeId = null;
+  this.selectedEntityId = null;
+  this.currentAvailableEntities = [];
 
-    this.formContainer = null;
-    this.beginMoment = moment();
-    this.endMoment = moment();
-    this.entityTypeId = null;
-    this.selectedEntityId = null;
-
-    this.currentAvailableEntities = [];
-
-    this.init();
+  this.init();
 };
 
 newReservationFormController.prototype.init = function() {
@@ -22,7 +20,6 @@ newReservationFormController.prototype.init = function() {
   this.bindEntitySelection();
   this.bindSlackFieldValidation();
   this.performFormUpdate();
-
 };
 
 newReservationFormController.prototype.bindSlackFieldValidation = function() {
