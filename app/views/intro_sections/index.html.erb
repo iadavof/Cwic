@@ -15,17 +15,17 @@
     <div class="intro-actions">
       <% if !user_signed_in? %>
       <div class="intro-sign-up">
-        <%= button_link_to_sign_up({ name: t('.start_using_cwic'), class: 'button green' }) %>
+        <%= button_link_to_sign_up(name: t('.start_using_cwic'), class: 'button green') %>
       </div>
       <div class="intro-sign-in">
-        <%= button_link_to_sign_in() %>
+        <%= button_link_to_sign_in %>
       </div>
       <% else %>
       <div class="intro-go-to-app">
-        <%= button_link_to_app() %>
+        <%= button_link_to_app %>
       </div>
       <div class="intro-sign-out">
-        <%= button_link_to_sign_out() %>
+        <%= button_link_to_sign_out %>
       </div>
       <% end %>
     </div>
@@ -41,7 +41,7 @@
   </div>
 </section>
 <% @intro_sections.each do |intro_section| %>
-  <%= render partial: 'intro_sections/section', locals: {intro_section: intro_section} %>
+  <%= render partial: 'intro_sections/section', locals: { intro_section: intro_section } %>
 <% end %>
 <section class="intro-section-last">
   <table class="features-comparison">
