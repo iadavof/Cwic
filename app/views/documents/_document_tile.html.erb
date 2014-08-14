@@ -7,5 +7,5 @@
     <%= render partial: 'documents/document_tile_link_content', locals: { doc: doc } %>
   <% end %>
 
-  <%= form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: Document.model_name.human.lcfirst) if defined?(form) %>
+  <%= form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: Document.model_name.human.lcfirst) if local_assigns[:form].present? %>
 </div>

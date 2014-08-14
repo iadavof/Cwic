@@ -31,9 +31,9 @@ class Organisation < ActiveRecord::Base
   # Scopes
   pg_global_search against: { name: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone_general: 'C', phone_reservations: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
 
-  def instance_name
-    self.name
-  end
+  ##
+  # Class methods
+  ##
 
   def self.current
     Thread.current[:organisation]
@@ -41,5 +41,13 @@ class Organisation < ActiveRecord::Base
 
   def self.current=(organisation)
     Thread.current[:organisation] = organisation
+  end
+
+  ##
+  # Instance methods
+  ##
+
+  def instance_name
+    self.name
   end
 end

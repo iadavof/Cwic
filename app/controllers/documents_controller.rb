@@ -16,7 +16,6 @@ class DocumentsController < ApplicationController
   end
 
 private
-
   def load_resource
     case params[:action]
     when 'index'
@@ -25,5 +24,4 @@ private
       @document = @organisation.documents.find(params[:id])
     end
   end
-
 end

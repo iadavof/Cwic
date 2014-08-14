@@ -11,14 +11,15 @@
 <p><%= t('.empty', default: :empty_objects, classes: Document.model_name.human(count: 2).lcfirst) %></p>
 <% else %>
 <%= paginate @documents %>
+
 <table>
   <thead>
     <tr>
-        <%= sortable_table_head(Document, :document_filename) %>
-        <%= sortable_table_head(Document, :document_size) %>
-        <%= sortable_table_head(Document, [:user, :first_name]) %>
-        <%= table_head(Document, :documentable) %>
-        <%= sortable_table_head(Document, :created_at) %>
+      <%= sortable_table_head(Document, :document_filename) %>
+      <%= sortable_table_head(Document, :document_size) %>
+      <%= sortable_table_head(Document, [:user, :first_name]) %>
+      <%= table_head(Document, :documentable) %>
+      <%= sortable_table_head(Document, :created_at) %>
       <th></th>
     </tr>
   </thead>
@@ -38,5 +39,6 @@
     <% end %>
   </tbody>
 </table>
+
 <%= paginate @documents %>
 <% end %>

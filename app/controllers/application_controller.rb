@@ -1,15 +1,14 @@
 require "application_responder"
 
 class ApplicationController < ActionController::Base
+  before_action { @admin = true }
   before_action :authenticate_user!
+  before_action :set_locale
+  before_action :load_organisation
   around_action :set_current_user
   around_action :set_current_organisation
 
-  before_action { @admin = true }
   # check_authorization unless: :devise_controller? TODO enable this line when authorization is implemented
-
-  before_action :set_locale
-  before_action :load_organisation
 
   add_flash_types :warning
 
@@ -28,10 +27,6 @@ class ApplicationController < ActionController::Base
     home_index_path
   end
 
-  def load_organisation
-    @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
-  end
-
   def set_organisation
     sel_organisation = current_user.organisations.find(params[:organisation_id]);
     if sel_organisation.present?
@@ -39,24 +34,6 @@ class ApplicationController < ActionController::Base
       @current_organisation = sel_organisation
     end
     redirect_to :root
-  end
-
-  def set_current_user
-    User.current = current_user
-    yield
-  ensure
-    User.current = nil # To address the thread variable leak issues in Puma/Thin webserver
-  end
-
-  def set_current_organisation
-    Organisation.current = current_organisation
-    yield
-  ensure
-    Organisation.current = nil # To address the thread variable leak issues in Puma/Thin webserver
-  end
-
-  def set_locale
-    I18n.locale = params[:locale] || I18n.default_locale
   end
 
   def current_organisation
@@ -101,4 +78,27 @@ class ApplicationController < ActionController::Base
     end
   end
   helper_method :current_menu_link
+
+private
+  def load_organisation
+    @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
+  end
+
+  def set_locale
+    I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def set_current_user
+    User.current = current_user
+    yield
+  ensure
+    User.current = nil # To address the thread variable leak issues in Puma/Thin webserver
+  end
+
+  def set_current_organisation
+    Organisation.current = current_organisation
+    yield
+  ensure
+    Organisation.current = nil # To address the thread variable leak issues in Puma/Thin webserver
+  end
 end

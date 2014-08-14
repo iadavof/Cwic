@@ -27,6 +27,22 @@ class User < ActiveRecord::Base
   # Scopes
   pg_global_search against: { last_name: 'A', email: 'A', first_name: 'B' }
 
+  ##
+  # Class methods
+  ##
+
+  def self.current
+    Thread.current[:user]
+  end
+
+  def self.current=(user)
+    Thread.current[:user] = user
+  end
+
+  ##
+  # Instance methods
+  ##
+
   def instance_name
     self.first_name + ' ' + (self.infix.present? ? self.infix + ' ' : '') + self.last_name
   end
@@ -48,14 +64,6 @@ class User < ActiveRecord::Base
       # User was invited. Do not (re)send confirmation e-mail, but resend invitation e-mail instead:
       self.invite!
     end
-  end
-
-  def self.current
-    Thread.current[:user]
-  end
-
-  def self.current=(user)
-    Thread.current[:user] = user
   end
 
 private
