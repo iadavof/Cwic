@@ -34,8 +34,7 @@ module Cwic
     Dir[File.join(Rails.root, 'lib', 'core_ext', '*.rb')].each { |l| require l }
     Dir[File.join(Rails.root, 'lib', 'i18n_alchemy', '*.rb')].each { |l| require l }
 
-    config.generators do |g|
-	   g.stylesheets false
-    end
+    config.generators.stylesheets = false
+    config.generators.javascripts = false
   end
 end
