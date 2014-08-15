@@ -45,6 +45,9 @@ APP.init = function() {
   // Make select all button on tables work
   this.global.bindSelectAllCheckboxEvents();
 
+  // Add select2 in tagging mode to taggling list text field
+  this.global.LoadTaggingSelect2Box();
+
   // Auto submit limiting fields
   $('#limiting select').on('change', function() { this.form.submit(); });
 
@@ -422,5 +425,8 @@ APP.global = {
         APP[$('body').data('controller')].afterGoogleMapsLoaded();
       }
     }
+  },
+  LoadTaggingSelect2Box: function() {
+    $('.tags_field').select2({tags:[]});
   }
 };

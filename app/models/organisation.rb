@@ -15,6 +15,9 @@ class Organisation < ActiveRecord::Base
   has_many :info_screens, dependent: :destroy
   has_many :documents, dependent: :destroy
 
+  # Model extensions
+  acts_as_tagger
+
   # Validations
   validates :name, presence: true, length: { maximum: 255 }
   validates :route, presence: true, length: { maximum: 255 }

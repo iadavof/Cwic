@@ -1,7 +1,11 @@
 <div id="reservation-form" data-reservation-id="<%= @reservation.id %>">
   <%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
     <%= render 'shared/error_messages', target: @reservation %>
-
+    <div class="content-columns clearfix">
+      <div class="content-column">
+        <%= f.text_field :tag_list, class: 'tags_field' %>
+      </div>
+    </div>
     <fieldset class="begin-and-end">
       <div class="field slack-field slack-field-begin">
         <%= f.label :slack_before %><%= format_help(t('.default_slack_times_help'), :inline) %>
