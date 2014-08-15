@@ -26,82 +26,88 @@
 
     <div class="content-columns threecol clearfix">
       <div class="content-column">
-        <h2><i class="icon-shapes"></i><%= t('.entity') %></h2>
-        <div class="entity-selector">
-          <h3><%= t('.selected_entity') %></h3>
-          <div class="selected-entity available">Object 1</div>
-          <h3><%= t('.available_entities') %></h3>
-          <div class="entity-type-filter">
-            <div class="field field-entity">
-              <%= f.label :entity_type %>
-              <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
+        <div class="content-block">
+          <h2><i class="icon-shapes"></i><%= t('.entity') %></h2>
+          <div class="entity-selector">
+            <h3><%= t('.selected_entity') %></h3>
+            <div class="selected-entity available">Object 1</div>
+            <h3><%= t('.available_entities') %></h3>
+            <div class="entity-type-filter">
+              <div class="field field-entity">
+                <%= f.label :entity_type %>
+                <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
+              </div>
+            </div>
+            <ul class="entity-list">
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li class="selected"><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+              <li><a href="#">Object 1</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="content-column">
+        <div class="content-block">
+          <h2><i class="icon-user"></i><%= t('.organisation_client') %></h2>
+          <% if @reservation.new_record? %>
+          <div class="organisation_client_new_existing">
+            <div class="field">
+              <label for="organisation_client_type"><%= t('.organisation_client_type') %></label>
+              <fieldset class="inline-fieldset">
+                <%= radio_button_tag :organisation_client_type, :existing, @focus != 'new_client' %><%= label_tag(:organisation_client_type_existing, t('.existing_organisation_client')) %>
+                <%= radio_button_tag :organisation_client_type, :new, @focus == 'new_client' %><%= label_tag(:organisation_client_type_new, t('.new_organisation_client')) %>
+              </fieldset>
             </div>
           </div>
-          <ul class="entity-list">
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li class="selected"><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-            <li><a href="#">Object 1</a></li>
-          </ul>
-        </div>
-      </div>
-
-      <div class="content-column">
-        <h2><i class="icon-user"></i><%= t('.organisation_client') %></h2>
-        <% if @reservation.new_record? %>
-        <div class="organisation_client_new_existing">
-          <div class="field">
-            <label for="organisation_client_type"><%= t('.organisation_client_type') %></label>
-            <fieldset class="inline-fieldset">
-              <%= radio_button_tag :organisation_client_type, :existing, @focus != 'new_client' %><%= label_tag(:organisation_client_type_existing, t('.existing_organisation_client')) %>
-              <%= radio_button_tag :organisation_client_type, :new, @focus == 'new_client' %><%= label_tag(:organisation_client_type_new, t('.new_organisation_client')) %>
-            </fieldset>
+          <div class="existing_organisation_client" <% if @focus == 'new_client' %>style="display: none;"<% end %>>
+            <div class="field">
+              <%= f.label :organisation_client %>
+              <%= f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select' %>
+            </div>
           </div>
-        </div>
-        <div class="existing_organisation_client" <% if @focus == 'new_client' %>style="display: none;"<% end %>>
+          <div class="new_organisation_client" <% if @focus != 'new_client' %>style="display: none;"<% end %>>
+            <%= f.fields_for :organisation_client, @reservation.organisation_client, wrapper: false do |ocf| %>
+              <%= render partial: 'organisation_clients/form_fields', locals: { f: ocf } %>
+            <% end %>
+          </div>
+          <% else %>
           <div class="field">
             <%= f.label :organisation_client %>
-            <%= f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select' %>
+            <%= f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
           </div>
-        </div>
-        <div class="new_organisation_client" <% if @focus != 'new_client' %>style="display: none;"<% end %>>
-          <%= f.fields_for :organisation_client, @reservation.organisation_client, wrapper: false do |ocf| %>
-            <%= render partial: 'organisation_clients/form_fields', locals: { f: ocf } %>
           <% end %>
         </div>
-        <% else %>
-        <div class="field">
-          <%= f.label :organisation_client %>
-          <%= f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) } %>
-        </div>
-        <% end %>
       </div>
 
       <div class="content-column">
-        <h2><i class="icon-settingsthree-gears"></i><%= t('.settings') %></h2>
-        <div class="field">
-          <%= f.label :description %>
-          <div class="field-with-example-wrapper">
-            <%= f.text_field :description %>
-            <p><%= t('for_example') + ': ' + t('.reservation_description_example') %></p>
+        <div class="content-block">
+          <h2><i class="icon-settingsthree-gears"></i><%= t('.settings') %></h2>
+          <div class="field">
+            <%= f.label :description %>
+            <div class="field-with-example-wrapper">
+              <%= f.text_field :description %>
+              <p><%= t('for_example') + ': ' + t('.reservation_description_example') %></p>
+            </div>
           </div>
+          <% if @reservation.new_record? %>
+          <%= f.fields_for :reservation_recurrence_definition, @reservation.reservation_recurrence_definition, wrapper: false do |rrdf| %>
+            <%= render partial: 'reservation_recurrence_definitions/form_fields', locals: { f: rrdf } %>
+          <% end %>
+          <% end %>
         </div>
-        <% if @reservation.new_record? %>
-        <%= f.fields_for :reservation_recurrence_definition, @reservation.reservation_recurrence_definition, wrapper: false do |rrdf| %>
-          <%= render partial: 'reservation_recurrence_definitions/form_fields', locals: { f: rrdf } %>
-        <% end %>
-        <% end %>
       </div>
     </div>
     <div class="actions">

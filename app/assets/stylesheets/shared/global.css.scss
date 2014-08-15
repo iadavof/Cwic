@@ -174,16 +174,18 @@ dl {
 .content-columns {
   .content-column {
     width: 100%;
-    box-sizing: border-box;
     min-width: 400px;
     float: left;
-    border: 1px solid #ccc;
-    padding: 30px;
     margin-bottom: 20px;
-
-    h1, h2, h3, h4, h5, h6 {
-      &:first-child {
-        margin-top: 0;
+    
+    .content-block {
+      border: 1px solid #ccc;
+      padding: 30px;
+      
+      h1, h2, h3, h4, h5, h6 {
+        &:first-child {
+          margin-top: 0;
+        }
       }
     }
   }
@@ -191,11 +193,10 @@ dl {
   &.twocol {
     .content-column {
       width: 49%;
-      margin-left: 2%;
+      margin-right: 2%;
 
-      &:nth-child(2n+1) {
-        margin-left: 0;
-        clear: both;
+      &:nth-child(2n) {
+        margin-right: 0;
       }
     }
   }
@@ -203,11 +204,10 @@ dl {
   &.threecol {
     .content-column {
       width: 32%;
-      margin-left: 2%;
-
-      &:nth-child(3n+1) {
-        margin-left: 0;
-        clear: both;
+      margin-right: 2%;
+      
+      &:nth-child(3n) {
+        margin-right: 0;
       }
     }
   }

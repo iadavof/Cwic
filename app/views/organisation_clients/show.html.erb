@@ -19,26 +19,30 @@
     <div id="general">
       <div class="content-columns twocol clearfix">
         <div class="content-column">
-          <h2><i class="icon-address"></i><%= t('.address') %></h2>
-          <dl>
-            <dt><%= OrganisationClient.human_attribute_name(:name) %></dt>
-            <dd><%= @organisation_client.full_name %></dd>
-            <dt><%= t('.address') %></dt>
-            <dd><%= format_address(@organisation_client.route, @organisation_client.street_number, @organisation_client.postal_code, @organisation_client.administrative_area_level_2, @organisation_client.administrative_area_level_1, @organisation_client.locality, @organisation_client.country) %></dd>
-            <dt><%= t('.municipality') %></dt>
-            <dd><%= @organisation_client.administrative_area_level_2 + ', ' + @organisation_client.administrative_area_level_1 %></dd>
-          </dl>
+          <div class="content-block">
+            <h2><i class="icon-address"></i><%= t('.address') %></h2>
+            <dl>
+              <dt><%= OrganisationClient.human_attribute_name(:name) %></dt>
+              <dd><%= @organisation_client.full_name %></dd>
+              <dt><%= t('.address') %></dt>
+              <dd><%= format_address(@organisation_client.route, @organisation_client.street_number, @organisation_client.postal_code, @organisation_client.administrative_area_level_2, @organisation_client.administrative_area_level_1, @organisation_client.locality, @organisation_client.country) %></dd>
+              <dt><%= t('.municipality') %></dt>
+              <dd><%= @organisation_client.administrative_area_level_2 + ', ' + @organisation_client.administrative_area_level_1 %></dd>
+            </dl>
+          </div>
         </div>
         <div class="content-column">
-          <h2><i class="icon-phone-call"></i><%= t('.contact') %></h2>
-          <dl>
-            <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
-            <dd><%= content_tag(:a, @organisation_client.email, href: 'mailto:' + @organisation_client.email) %></dd>
-            <dt><%= OrganisationClient.human_attribute_name(:phone) %></dt>
-            <dd><%= @organisation_client.phone %></dd>
-            <dt><%= OrganisationClient.human_attribute_name(:mobile_phone) %></dt>
-            <dd><%= @organisation_client.mobile_phone %></dd>
-          </dl>
+          <div class="content-block">
+            <h2><i class="icon-phone-call"></i><%= t('.contact') %></h2>
+            <dl>
+              <dt><%= OrganisationClient.human_attribute_name(:email) %></dt>
+              <dd><%= content_tag(:a, @organisation_client.email, href: 'mailto:' + @organisation_client.email) %></dd>
+              <dt><%= OrganisationClient.human_attribute_name(:phone) %></dt>
+              <dd><%= @organisation_client.phone %></dd>
+              <dt><%= OrganisationClient.human_attribute_name(:mobile_phone) %></dt>
+              <dd><%= @organisation_client.mobile_phone %></dd>
+            </dl>
+          </div>
         </div>
       </div>
     </div>
