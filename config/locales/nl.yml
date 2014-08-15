@@ -314,6 +314,8 @@ nl:
         documentable: 'Gekoppeld aan'
         document_size: 'Bestandsgrootte'
         document_filename: 'Bestandsnaam'
+        document_from_file: 'Lokaal document'
+        remote_document_url: 'URL van extern document'
     errors:
       messages:
         date_blank: 'datum moet opgegeven zijn'
@@ -539,6 +541,7 @@ nl:
       users: 'Alle gebruikers'
       feedbacks: 'Feedback'
       organisations: 'Organisaties'
+      documents: 'Documenten'
     search:
       search_placeholder: 'Zoeken...'
       search: 'Zoeken'
@@ -759,7 +762,7 @@ nl:
       feedback_error: 'Verzenden feedback mislukt'
       feedback_error_explain: 'Er is helaas iet misgegaan tijdens het verzenden van de feedback. Probeert u het later nog eens.'
       close: 'Sluiten'
-      
+
   intro_sections:
     index:
       start_using_cwic: 'Ga nu Cwic gebruiken'
