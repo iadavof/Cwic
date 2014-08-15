@@ -34,12 +34,6 @@
   
   <% if @reservation.reservation_logs.present? %>
   <div class="content-column">
-    <% unless @reservation.recurrences.empty? %>
-      <div class="content-block">
-        <h2><%= t('.repetitions') %></h2>
-        <%= render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' } %>
-      </div>
-    <% end %>
     <div class="content-block">
       <h2><%= Reservation.human_attribute_name(:reservation_logs) %></h2>
       <%= render partial: 'log_table', locals: { logs: @reservation.reservation_logs.includes(:user) } %>
@@ -47,3 +41,8 @@
   </div>
   <% end %>
 </div>
+
+<% unless @reservation.recurrences.empty? %>
+  <h2><%= t('.repetitions') %></h2>
+  <%= render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' } %>
+<% end %>
