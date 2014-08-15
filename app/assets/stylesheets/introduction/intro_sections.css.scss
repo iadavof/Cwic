@@ -1,0 +1,232 @@
+html {
+  height: 100%;
+}
+
+body {
+  position: relative;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+}
+
+h1 {
+  padding: 0;
+  margin-top: 0;
+  margin-bottom: 1em;
+  font-size: 3em;
+}
+
+h1 strong {
+  color: #fff;
+}
+
+#logo-container {
+  position: relative;
+  z-index: 1;
+  background-color: #ffffff;
+  padding: 40px;
+  text-align: center;
+}
+
+#logo-container-inner {
+  position: relative;
+  display: inline-block;
+  width: 420px;
+  margin: 0 auto;
+  max-width: 100%;
+}
+
+.logo {
+  width: 100%;
+}
+
+.onepage-scroll {
+  height: 100%;
+  margin: 0 auto;
+}
+
+.onepage-scroll > section {
+  position: relative;
+  width: 100%;
+  min-height: 100%;
+  overflow: hidden;
+  transition: margin-top 0.3s;
+  box-sizing: border-box;
+  padding-bottom: 3%;
+  margin-top: -3%;
+  box-shadow: 0 0 80px rgba(0,0,0,0.2);
+  background-color: #fff;
+}
+
+.onepage-scroll > section:first-child {
+  margin-top: 0;
+}
+
+.onepage-scroll > section.intro-section-home,
+.onepage-scroll > section.intro-section-last {
+  background-color: #eee;
+}
+
+.onepage-scroll > section.intro-section-home:before {
+  display: block;
+  content: ' ';
+  width: 70%;
+  height: 100%;
+  background-image: linear-gradient(to right, rgba(0,0,0,0) 0%, rgba(0,0,0,0.5) 40%);
+  position: absolute;
+  right: 0;
+  top: 0;
+}
+
+.onepage-scroll > section.intro-section-home .background-slider {
+  position: absolute;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  z-index: 0;
+}
+
+.onepage-scroll > section.intro-section-home .background-slider > div {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top: 0;
+  left: 0;
+}
+
+.onepage-scroll > section div.home-text-section {
+  position: relative;
+}
+
+.onepage-scroll > section div.home-text-section .intro-actions {
+  position: absolute;
+  top: 50%;
+  left: 70%;
+  width: 60%;
+  box-sizing: border-box;
+  transform: translate(-50%, -50%);
+  text-align: center;
+  border-radius: 1000px;
+}
+
+.onepage-scroll > section div.home-text-section .home-intro-text {
+  padding: 5%;
+  width: 40%;
+  box-sizing: border-box;
+  color: #fff;
+  text-shadow: 0 0 0.8em rgba(0,0,0,0.8);
+  font-size: 1.3em;
+}
+
+.onepage-scroll > section div.text-section,
+.onepage-scroll > section div.image-section {
+  overflow: hidden;
+  top: 0;
+}
+
+.onepage-scroll > section div.image-section {
+  width: 50%;
+  background-color: #eee;
+  height: 100%;
+  position: absolute;
+}
+
+.onepage-scroll > section div.text-section {
+  font-size: 1.3em;
+  padding: 5%;
+  box-sizing: border-box;
+  padding-right: 55%;
+}
+
+.onepage-scroll > section div.image-section {
+  right: 0;
+}
+
+.onepage-scroll > section:nth-child(even) div.image-section {
+  right: auto;
+  left: 0;
+}
+
+.onepage-scroll > section:nth-child(even) div.text-section {
+  padding-right: 5%;
+  padding-left: 55%;
+}
+
+.onepage-scroll > section.intro-section-home .background-slider > div,
+.onepage-scroll > section.intro-section-last,
+.onepage-scroll > section div.image-section {
+  background-size: cover;
+  background-position: center center;
+}
+
+.onepage-scroll > section div.text-section > h2 {
+  margin-top: 0;
+  font-size: 2.2em;
+}
+
+.onepage-scroll > section.intro-section-last {
+  min-height: 0;
+  padding: 5em 2em;
+  background-color: #fff;
+}
+
+.onepage-scroll > section.intro-section-last .intellectual-property {
+  position: absolute;
+  padding: 0.5em 0.8em;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  box-sizing: border-box;
+  text-align: center;
+  font-size: 0.9em;
+  color: #999;
+}
+
+table.features-comparison {
+  table-layout: fixed;
+  width: 100%;
+  th, td {
+    text-align: center;
+  }
+}
+
+.intro-sign-up, .intro-go-to-app, .intro-sign-in, .intro-sign-out {
+  text-align: center;
+  .button {
+    section.intro-section-home & {
+      box-shadow: 0 0 0.8em rgba(0,0,0,0.5);
+    }
+  }
+}
+
+.intro-sign-up, .intro-go-to-app {
+  .button {
+    font-size: 1.7em;
+    font-weight: bold;
+  }
+}
+
+.intro-sign-in, .intro-sign-out {
+  margin-top: 2em;
+}
+
+@media (max-aspect-ratio: 1/1) {
+  .onepage-scroll > section div.image-section {
+    height: 50%;
+    width: 100%;
+  }
+  .onepage-scroll > section div.text-section,
+  .onepage-scroll > section:nth-child(even) div.text-section {
+    position: relative;
+    width: 100%;
+    padding: 5%;
+    &:before {
+      display: block;
+      content: '.';
+      height: 200px;
+      width: 100%;
+    }
+  }
+}

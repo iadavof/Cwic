@@ -739,6 +739,13 @@ nl:
       feedback_error: 'Verzenden feedback mislukt'
       feedback_error_explain: 'Er is helaas iet misgegaan tijdens het verzenden van de feedback. Probeert u het later nog eens.'
       close: 'Sluiten'
+      
+  intro_sections:
+    index:
+      start_using_cwic: 'Ga nu Cwic gebruiken'
+      go_to_app: 'Ga naar de applicatie'
+      sign_in: 'Inloggen'
+      sign_out: 'Uitloggen'
 
   stickies:
     resource_stickies:

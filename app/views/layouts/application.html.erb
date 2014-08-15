@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html class="no-js" lang="<%= I18n.locale %>">
+<html class="no-js <%= (user_signed_in? ? 'logged-in' : 'not-logged-in') %>" lang="<%= I18n.locale %>">
   <head>
     <title><%= sanitize(content_for?(:page_title) ? yield(:page_title) : t('default_title'), tags: []) %> | Cwic</title>
     <%= stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true %>
@@ -14,7 +14,9 @@
     <% if !user_signed_in? %>
     <div id="logo-container">
       <div id="logo-container-inner">
-        <img src="<%= asset_path('logo.png') %>" class="logo" />
+        <%= link_to(root_path) do %>
+          <img src="<%= asset_path('logo.png') %>" class="logo" />
+        <% end %>
       </div>
     </div>
     <% end %>

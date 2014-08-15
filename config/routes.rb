@@ -1,9 +1,15 @@
 Cwic::Application.routes.draw do
-  get "home/index"
-  root to: 'home#index'
+  get "intro_sections/index"
+  root to: 'intro_sections#index'
+  
+  match 'home/index', controller: 'home', action: 'index', via: 'get'
 
+  devise_scope :user do get '/users/sign_out' => 'devise/sessions#destroy' end
   devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
 
+  match 'intro_sections/manage', controller: 'intro_sections', action: 'manage', via: 'get', as: 'manage_intro_sections'
+  resources :intro_sections
+  
   resources :users, except: [:new]
   resources :entity_type_icons # admin page for managing the entity type icons
   resources :feedbacks, except: [:new, :edit]

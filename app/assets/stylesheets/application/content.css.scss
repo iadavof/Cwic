@@ -22,6 +22,10 @@ html.js #main-area {
   border-top: 1px solid #f9f9f9;
 }
 
+html.js.not-logged-in #main-area {
+  box-shadow: none;
+}
+
 #content-area {
   overflow: auto !important;
   > .inner {
@@ -37,7 +41,8 @@ html.js #content-area {
   right: 0;
 }
 
-html.js body[data-current-user-id=''] {
+html.js.not-logged-in {
+  overflow: auto;
   #below-header,
   #main-area,
   #content-area {

@@ -1,0 +1,73 @@
+<section class="intro-section-home">
+  <div class="background-slider cycle-slideshow" data-cycle-auto-height="false" data-cycle-slides="> div" data-cycle-speed="800">
+    <div style="background-image: url('<%= asset_path('perfect-hotel-wallpaper-hd-widescreen.jpg') %>')"></div>
+    <div style="background-image: url('<%= asset_path('logo.png') %>')"></div>
+  </div>
+  <div id="logo-container">
+    <div id="logo-container-inner">
+      <%= link_to(root_path) do %>
+        <img src="<%= asset_path('logo.png') %>" class="logo" />
+      <% end %>
+    </div>
+  </div>
+  <%= render partial: 'layouts/flash_messages' %>
+  <div class="home-text-section">
+    <div class="intro-actions">
+      <% if !user_signed_in? %>
+      <div class="intro-sign-up">
+        <%= link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green') %>
+      </div>
+      <div class="intro-sign-in">
+        <%= link_to(t('.sign_in'), new_user_session_path, class: 'button') %>
+      </div>
+      <% else %>
+      <div class="intro-go-to-app">
+        <%= link_to(t('.go_to_app'), home_index_path, class: 'button') %>
+      </div>
+      <div class="intro-sign-out">
+        <%= link_to(t('.sign_out'), destroy_user_session_path, class: 'button', method: :delete) %>
+      </div>
+      <% end %>
+    </div>
+    <div class="home-intro-text">
+      <h1>De <strong>nieuwe</strong> manier van reserveringen beheren</h1>
+      <p>
+        U wilt geen tijd kwijt zijn aan ingewikkelde reserveringssoftware. U wilt geen enorme ICT-afdeling nodig hebben om uw reserveringen digitaal te beheren. En u wilt niet voor elke activiteit een apart reserveringssysteem hoeven gebruiken. Dan is Cwic voor u gemaakt. Cwic is <strong>flexibel</strong>, <strong>gebruiksvriendelijk</strong> en <strong>online</strong> - dus overal bereikbaar en altijd up-to-date. Cwic is geschikt voor alle organisaties, van klein tot groot.
+      </p>
+      <p>
+        <strong>Cwic komt binnen de komende 10 à 20 jaar in besloten bèta</strong>. Wilt u Cwic als eerste uitproberen? <strong>Meld u dan aan via de knop <em>Ga nu Cwic gebruiken</em></strong>.
+      </p>
+    </div>
+  </div>
+</section>
+<% @intro_sections.each do |intro_section| %>
+  <%= render partial: 'intro_sections/section', locals: { intro_section: intro_section } %>
+<% end %>
+<section class="intro-section-last">
+  <table class="features-comparison">
+    <thead>
+      <tr>
+        <th>Light</th>
+        <th>Regular</th>
+        <th>Enterprise</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          Nee
+        </td>
+        <td>
+          Ja
+        </td>
+        <td>
+          Ja
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <div class="intro-sign-up">
+    <%= link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green') %>
+  </div>
+  <div class="intellectual-property">Cwic&reg; is een geregistreerd handelsmerk van <a href="http://iada.nl/">IADA v.o.f.</a></div>
+</section>

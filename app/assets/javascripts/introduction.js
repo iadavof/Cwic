@@ -1,0 +1,15 @@
+//= require jquery_ujs
+//= require turbolinks
+//= require js-routes
+//= require modernizr
+//= require select2
+//= require select2_locale_nl
+//= require moment
+//= require moment/nl.js
+//= require gistyle
+//= require_tree ./shared/i18n
+//= require_tree ./shared/libraries
+//= require_tree ./introduction/i18n
+//= require_tree ./introduction/libraries
+//= require_directory ./shared
+//= require_directory ./introduction

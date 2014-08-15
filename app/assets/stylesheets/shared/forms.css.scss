@@ -61,7 +61,7 @@ button,
   padding: 0.8em 1em;
   text-decoration: none;
   cursor: pointer;
-  border-radius: 1.5em;
+  border-radius: 9999px; /* 1.5em */
   line-height: normal;
   transition: 0.2s ease-in-out;
   &:before, i {

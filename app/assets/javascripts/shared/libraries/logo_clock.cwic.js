@@ -28,7 +28,7 @@ CwicLogoClock.prototype.createFace = function() {
       position: 'absolute',
       backgroundColor: 'white',
       left: '21.6%',
-      top: '48%',
+      top: '50%',
       marginTop: -radius + 'px',
       marginLeft: -radius + 'px',
       borderRadius: radius + 'px',
@@ -36,7 +36,24 @@ CwicLogoClock.prototype.createFace = function() {
       width: 2*radius,
       height: 2*radius,
     });
-
+    
+    var faceMiddle = $('<div>').css({
+      position: 'absolute',
+      borderRadius: '50%',
+      width: '11%',
+      height: '11%',
+      backgroundColor: '#ff3520',
+      top: '50%',
+      left: '50%',
+      '-webkit-transform' : 'translate(-50%, -50%)',
+         '-moz-transform' : 'translate(-50%, -50%)',
+          '-ms-transform' : 'translate(-50%, -50%)',
+           '-o-transform' : 'translate(-50%, -50%)',
+              'transform' : 'translate(-50%, -50%)',
+                   'zoom' : 1,
+    });
+    
+    faceMiddle.appendTo(face);
     this.clockContainer.append(face);
     this.createArms(face);
   }
@@ -54,37 +71,33 @@ CwicLogoClock.prototype.createArms = function(face) {
   this.hourArm.css({
     position: 'absolute',
     backgroundColor: '#ff3520',
-    height: armHeight/1.5,
-    width: armWidth,
-    marginLeft: -armWidth/2 + 'px',
-    marginTop: -armHeight/20,
-    borderRadius: armWidth/2 + 'px',
+    height: '46%',
+    width: '11%',
+    borderRadius: '0 0 1000px 1000px',
     zIndex: 5,
     left: '50%',
     top: '50%',
-    '-webkit-transform-origin' : 'center ' + armWidth/2 + 'px',
-     '-moz-transform-origin' : 'center ' + armWidth/2 + 'px',
-      '-ms-transform-origin' : 'center ' + armWidth/2 + 'px',
-       '-o-transform-origin' : 'center ' + armWidth/2 + 'px',
-          'transform-origin' : 'center ' + armWidth/2 + 'px',
+    '-webkit-transform-origin' : 'center 0',
+     '-moz-transform-origin' : 'center 0',
+      '-ms-transform-origin' : 'center 0',
+       '-o-transform-origin' : 'center 0',
+          'transform-origin' : 'center 0',
   });
 
   this.minuteArm.css({
     position: 'absolute',
     backgroundColor: '#ff3520',
-    height: armHeight,
-    width: armWidth,
-    marginLeft: -armWidth/2 + 'px',
-    marginTop: -armHeight/20,
-    borderRadius: armWidth/2 + 'px',
+    height: '38%',
+    width: '11%',
+    borderRadius: '0 0 1000px 1000px',
     zIndex: 5,
     left: '50%',
     top: '50%',
-    '-webkit-transform-origin' : 'center 5%',
-     '-moz-transform-origin' : 'center 5%',
-      '-ms-transform-origin' : 'center 5%',
-       '-o-transform-origin' : 'center 5%',
-          'transform-origin' : 'center 5%',
+    '-webkit-transform-origin' : 'center 0',
+     '-moz-transform-origin' : 'center 0',
+      '-ms-transform-origin' : 'center 0',
+       '-o-transform-origin' : 'center 0',
+          'transform-origin' : 'center 0',
   });
 
   face.append(this.hourArm);
@@ -101,20 +114,20 @@ CwicLogoClock.prototype.setCurrentTime = function() {
   minuteDeg = ((minute / 60.0) * 360) - 180;
 
   this.hourArm.css({
-  '-webkit-transform' : 'rotate('+hourDeg+'deg)',
-     '-moz-transform' : 'rotate('+hourDeg+'deg)',
-      '-ms-transform' : 'rotate('+hourDeg+'deg)',
-       '-o-transform' : 'rotate('+hourDeg+'deg)',
-          'transform' : 'rotate('+hourDeg+'deg)',
+  '-webkit-transform' : 'translate(-50%, 0) rotate('+hourDeg+'deg)',
+     '-moz-transform' : 'translate(-50%, 0) rotate('+hourDeg+'deg)',
+      '-ms-transform' : 'translate(-50%, 0) rotate('+hourDeg+'deg)',
+       '-o-transform' : 'translate(-50%, 0) rotate('+hourDeg+'deg)',
+          'transform' : 'translate(-50%, 0) rotate('+hourDeg+'deg)',
                'zoom' : 1
     });
 
   this.minuteArm.css({
-  '-webkit-transform' : 'rotate('+minuteDeg+'deg)',
-     '-moz-transform' : 'rotate('+minuteDeg+'deg)',
-      '-ms-transform' : 'rotate('+minuteDeg+'deg)',
-       '-o-transform' : 'rotate('+minuteDeg+'deg)',
-          'transform' : 'rotate('+minuteDeg+'deg)',
+  '-webkit-transform' : 'translate(-50%, 0) rotate('+minuteDeg+'deg)',
+     '-moz-transform' : 'translate(-50%, 0) rotate('+minuteDeg+'deg)',
+      '-ms-transform' : 'translate(-50%, 0) rotate('+minuteDeg+'deg)',
+       '-o-transform' : 'translate(-50%, 0) rotate('+minuteDeg+'deg)',
+          'transform' : 'translate(-50%, 0) rotate('+minuteDeg+'deg)',
                'zoom' : 1
     });
 }
