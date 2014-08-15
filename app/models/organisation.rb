@@ -13,6 +13,7 @@ class Organisation < ActiveRecord::Base
   has_many :stickies, dependent: :destroy
   has_many :entity_images, dependent: :destroy
   has_many :info_screens, dependent: :destroy
+  has_many :documents, dependent: :destroy
 
   # Validations
   validates :name, presence: true, length: { maximum: 255 }
@@ -29,6 +30,22 @@ class Organisation < ActiveRecord::Base
 
   # Scopes
   pg_global_search against: { name: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone_general: 'C', phone_reservations: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
+
+  ##
+  # Class methods
+  ##
+
+  def self.current
+    Thread.current[:organisation]
+  end
+
+  def self.current=(organisation)
+    Thread.current[:organisation] = organisation
+  end
+
+  ##
+  # Instance methods
+  ##
 
   def instance_name
     self.name

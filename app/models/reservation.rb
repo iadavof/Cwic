@@ -16,6 +16,7 @@ class Reservation < ActiveRecord::Base
   has_one :reservation_recurrence_definition
   has_many :stickies, as: :stickable, dependent: :destroy
   has_many :reservation_logs, dependent: :destroy
+  has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Model extensions
   attr_accessor :validate_overlapping # Should we validate not overlapping (default true)? Disabled for multiple edit actions.
@@ -56,6 +57,7 @@ class Reservation < ActiveRecord::Base
   # Nested attributes
   accepts_nested_attributes_for :organisation_client
   accepts_nested_attributes_for :reservation_recurrence_definition
+  accepts_nested_attributes_for :documents, allow_destroy: true
 
   # Scopes
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }

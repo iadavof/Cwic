@@ -83,6 +83,9 @@ nl:
       organisation_role:
         one: 'Rol'
         other: 'Rollen'
+      document:
+        one: 'Document'
+        other: 'Documenten'
       entity_type:
         one: 'Objectsoort'
         other: 'Objectsoorten'
@@ -253,6 +256,7 @@ nl:
         reservation_recurrence_definition: 'Herhaling:'
         reservation_status: 'Status'
         created_at: 'Aangemaakt op'
+        documents: 'Documenten'
         reservation_logs: 'Aanpassingen'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
@@ -304,6 +308,14 @@ nl:
         period_unit: 'Periode bij reserveerperiode'
         period_unit_id: 'Periode bij reserveerperiode'
         price: 'Prijs bij reserveerperiode'
+      document:
+        user: 'Toegevoegd door'
+        created_at: 'Toegevoegd op'
+        documentable: 'Gekoppeld aan'
+        document_size: 'Bestandsgrootte'
+        document_filename: 'Bestandsnaam'
+        document_from_file: 'Lokaal document'
+        remote_document_url: 'URL van extern document'
     errors:
       messages:
         date_blank: 'datum moet opgegeven zijn'
@@ -451,6 +463,7 @@ nl:
       date_must_be_in_future: 'moet in de toekomst liggen'
       date_must_be_after_attribute: 'moet na %{attribute_name} (%{formatted_date}) zijn'
       date_must_be_after_date: 'moet na %{formatted_date} zijn'
+      extension_white_list_error: 'Dit type bestand is niet toegestaan'
 
   devise:
     shared:
@@ -528,6 +541,7 @@ nl:
       users: 'Alle gebruikers'
       feedbacks: 'Feedback'
       organisations: 'Organisaties'
+      documents: 'Documenten'
     search:
       search_placeholder: 'Zoeken...'
       search: 'Zoeken'
@@ -544,6 +558,7 @@ nl:
       search_entitytypeicon_placeholder: 'Objecticoon zoeken...'
       date_domain_from_placeholder: 'Vanaf datum...'
       date_domain_to_placeholder: 'Tot datum...'
+      search_document_placeholder: 'Document zoeken...'
       search: 'Zoeken'
 
   shared:
@@ -581,9 +596,15 @@ nl:
       past_reservations: 'Eerdere reserv.'
       no_past_reservations: 'Geen eerdere reserveringen'
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
+    form:
+      general: 'Algemeen'
     form_fields:
       address: 'Adres'
       search_address: 'Adres zoeken...'
+
+  documents:
+    overview:
+      no_documents: 'Geen documenten'
 
   entity_types:
     still_used_destroy_confirm:
@@ -633,6 +654,8 @@ nl:
 
   reservations:
     show:
+      general: 'Algemeen'
+      logs: 'Geschiedenis'
       repetitions: 'Herhalingen'
       no_description: '<geen beschrijving>'
       slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'
@@ -739,7 +762,7 @@ nl:
       feedback_error: 'Verzenden feedback mislukt'
       feedback_error_explain: 'Er is helaas iet misgegaan tijdens het verzenden van de feedback. Probeert u het later nog eens.'
       close: 'Sluiten'
-      
+
   intro_sections:
     index:
       start_using_cwic: 'Ga nu Cwic gebruiken'

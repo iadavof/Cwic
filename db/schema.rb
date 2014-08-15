@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140604082538) do
+ActiveRecord::Schema.define(version: 20140806123046) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -33,6 +33,23 @@ ActiveRecord::Schema.define(version: 20140604082538) do
   end
 
   add_index "day_occupations", ["entity_id"], name: "index_day_occupations_on_entity_id", using: :btree
+
+  create_table "documents", force: true do |t|
+    t.integer  "documentable_id",   limit: 8
+    t.string   "documentable_type"
+    t.string   "string"
+    t.integer  "organisation_id",   limit: 8
+    t.integer  "user_id",           limit: 8
+    t.string   "document"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "document_filename"
+    t.integer  "document_size"
+  end
+
+  add_index "documents", ["documentable_id"], name: "index_documents_on_documentable_id", using: :btree
+  add_index "documents", ["organisation_id"], name: "index_documents_on_organisation_id", using: :btree
+  add_index "documents", ["user_id"], name: "index_documents_on_user_id", using: :btree
 
   create_table "entities", force: true do |t|
     t.integer  "organisation_id",            limit: 8

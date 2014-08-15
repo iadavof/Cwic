@@ -44,6 +44,9 @@ module MenuHelper
           index: { url: organisation_entities_path(current_organisation), icon: 'icon-list' },
           new: { url: new_organisation_entity_path(current_organisation), icon: 'icon-plus-sign' }
         },
+        documents: {
+          index: { url: organisation_documents_path(current_organisation), icon: 'icon-list' }
+        }
       },
     }
     if @admin

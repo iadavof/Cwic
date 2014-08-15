@@ -1,21 +1,31 @@
-<%= form_for([@organisation, @organisation_client]) do |f| %>
+<%= nested_form_for([@organisation, @organisation_client]) do |f| %>
   <%= render 'shared/error_messages', target: @organisation_client %>
-
   <div id="tabs">
-  <ul class="nav">
-    <li><a href="#general" class="current"><%= t('.general') %></a></li>
-  </ul>
+    <ul class="nav">
+      <li><a href="#general" class="current"><%= t('.general') %></a></li>
+      <li><a href="#documents"><%= Document.model_name.human(count: 2) %></a></li>
+    </ul>
 
-  <div class="tab-wrap">
-    <div id="general">
-      <div class="content-columns clearfix">
-        <div class="content-column">
-          <div class="content-block">
-            tags
+    <div class="tab-wrap">
+      <div id="general">
+        <div class="content-columns clearfix">
+          <div class="content-column">
+            <div class="content-block">
+              tags
+            </div>
           </div>
         </div>
+        <%= render 'form_fields', f: f %>
       </div>
-      <%= render 'form_fields', f: f %>
+
+      <div id="documents">
+        <div class="nested-form clearfix" id="documents-container">
+          <%= f.fields_for :documents, wrapper: false do |df| %>
+            <%= render partial: 'documents/document_fields', locals: { f: df } %>
+          <% end %>
+        </div>
+        <%= f.link_to_add '', :documents, data: { target: '#documents-container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: Document.model_name.human.lcfirst) %>
+      </div>
     </div>
   </div>
 

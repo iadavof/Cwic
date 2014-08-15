@@ -12,37 +12,52 @@
 
 <%= render partial: 'stickies/resource_stickies', locals: { resource: @reservation } %>
 
-<div class="content-columns twocol clearfix">
-  <div class="content-column">
-    <div class="content-block">
-      <dl>
-        <dt><%= Reservation.human_attribute_name(:begins_at) %></dt>
-          <dd><%= l(@reservation.begins_at, format: :long) %> <%= slack_before_overlap_warning(@reservation) %></dd>
-        <dt><%= Reservation.human_attribute_name(:ends_at) %></dt>
-          <dd><%= l(@reservation.ends_at, format: :long) %> <%= slack_after_overlap_warning(@reservation) %></dd>
-        <dt><%= Reservation.human_attribute_name(:entity) %></dt>
-          <dd><%= link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity)) %></dd>
-        <dt><%= Reservation.human_attribute_name(:organisation_client) %></dt>
-          <dd><%= link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client)) %></dd>
-        <dt><%= Reservation.human_attribute_name(:cost) %></dt>
-          <dd><%= number_to_currency(@reservation.cost) %></dd>
-        <dt><%= Reservation.human_attribute_name(:created_at) %></dt>
-          <dd><%= l(@reservation.created_at, format: :long) %></dd>
-      </dl>
+<div id="tabs">
+  <ul class="nav">
+    <li><a href="#general" class="current"><%= t('.general') %></a></li>
+    <li><a href="#documents"><%= Document.model_name.human(count: 2) %></a></li>
+    <li><a href="#logs"><%= t('.logs') %></a></li>
+  </ul>
+
+  <div class="tab-wrap">
+    <div id="general">
+      <div class="content-columns twocol clearfix">
+        <div class="content-column">
+          <div class="content-block">
+            <dl>
+              <dt><%= Reservation.human_attribute_name(:begins_at) %></dt>
+                <dd><%= l(@reservation.begins_at, format: :long) %> <%= slack_before_overlap_warning(@reservation) %></dd>
+              <dt><%= Reservation.human_attribute_name(:ends_at) %></dt>
+                <dd><%= l(@reservation.ends_at, format: :long) %> <%= slack_after_overlap_warning(@reservation) %></dd>
+              <dt><%= Reservation.human_attribute_name(:entity) %></dt>
+                <dd><%= link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity)) %></dd>
+              <dt><%= Reservation.human_attribute_name(:organisation_client) %></dt>
+                <dd><%= link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client)) %></dd>
+              <dt><%= Reservation.human_attribute_name(:cost) %></dt>
+                <dd><%= number_to_currency(@reservation.cost) %></dd>
+              <dt><%= Reservation.human_attribute_name(:created_at) %></dt>
+                <dd><%= l(@reservation.created_at, format: :long) %></dd>
+            </dl>
+          </div>
+        </div>
+
+        <% unless @reservation.recurrences.empty? %>
+          <h2><%= t('.repetitions') %></h2>
+          <%= render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' } %>
+        <% end %>
+      </div>
     </div>
-  </div>
-  
-  <% if @reservation.reservation_logs.present? %>
-  <div class="content-column">
-    <div class="content-block">
+
+    <div id="documents">
+      <div id="documents-container" class="clearfix">
+        <%= render partial: 'documents/overview', locals: { documents: @reservation.documents } %>
+      </div>
+    </div>
+
+    <div id="logs">
       <h2><%= Reservation.human_attribute_name(:reservation_logs) %></h2>
       <%= render partial: 'log_table', locals: { logs: @reservation.reservation_logs.includes(:user) } %>
     </div>
   </div>
   <% end %>
 </div>
-
-<% unless @reservation.recurrences.empty? %>
-  <h2><%= t('.repetitions') %></h2>
-  <%= render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' } %>
-<% end %>

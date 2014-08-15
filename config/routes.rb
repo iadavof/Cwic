@@ -68,5 +68,7 @@ Cwic::Application.routes.draw do
     resources :entity_type_icons
 
     match '/search/results', controller: 'search', action: 'results', via: 'get'
+
+    resources :documents, except: [:new, :edit]
   end
 end

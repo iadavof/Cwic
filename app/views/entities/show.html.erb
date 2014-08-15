@@ -19,6 +19,7 @@
     <% if @entity.properties.present? %>
     <li><a href="#properties"><%= EntityProperty.model_name.human(count: 2) %></a></li>
     <% end %>
+    <li><a href="#documents"><%= Document.model_name.human(count: 2) %></a></li>
     <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>
   </ul>
 
@@ -44,6 +45,12 @@
       </dl>
     </div>
     <% end %>
+
+    <div id="documents">
+        <div id="documents-container" class="clearfix">
+          <%= render partial: 'documents/overview', locals: { documents: @entity.documents } %>
+        </div>
+    </div>
 
     <div id="entity-images">
       <h2><%= EntityImage.model_name.human(count: 2) %></h2>

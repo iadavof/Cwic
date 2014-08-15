@@ -3,7 +3,6 @@
 class EntityImageUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
-  # include CarrierWave::RMagick
   include CarrierWave::MiniMagick
   include CarrierWave::MimeTypes
 
@@ -21,13 +20,8 @@ class EntityImageUploader < CarrierWave::Uploader::Base
 
   # Process files as they are uploaded:
   process resize_to_limit: [1920, 1080]
-  #
-  # def scale(width, height)
-  #   # do something
-  # end
 
   # Create different versions of your uploaded files:
-
   version :thumb do
      process resize_to_fit: [150, 150]
    end
@@ -37,11 +31,5 @@ class EntityImageUploader < CarrierWave::Uploader::Base
   def extension_white_list
     %w(jpg jpeg gif png)
   end
-
-  # Override the filename of the uploaded files:
-  # Avoid using model.id or version_name here, see uploader/store.rb for details.
-  # def filename
-  #   "something.jpg" if original_filename
-  # end
 
 end
