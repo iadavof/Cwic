@@ -11,6 +11,8 @@
  *= require_self
  *= require jquery-ui
  *= require select2
+ *= require ./shared/icons
+ *= require ./shared/global
  *= require_directory ./shared
  *= require_directory ./introduction
  */

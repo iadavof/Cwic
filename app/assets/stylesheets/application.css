@@ -13,6 +13,8 @@
  *= require jquery.minicolors
  *= require select2
  *= require magnific-popup
+ *= require ./shared/icons
+ *= require ./shared/global
  *= require_directory ./shared
  *= require ./application/header
  *= require ./application/content
