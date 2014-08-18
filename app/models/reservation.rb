@@ -37,7 +37,6 @@ class Reservation < ActiveRecord::Base
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validate :not_overlapping, if: :validate_overlapping
-  #validate :slack_not_greater_than_max_slack, if: -> { self.entity.present? } # Temporary disable this validation to revert to the old behaviour (slack may overlap with other slack or reservation)
   validate :check_invalid_recurrences, if: :new_record?
   validate :ensure_period_valid, if: -> { entity.present? && begins_at.present? && ends_at.present? }
 
@@ -336,18 +335,6 @@ private
           end
         end
       end
-    end
-  end
-
-  def slack_not_greater_than_max_slack
-    slack_before_overlap = self.slack_before_overlapping
-    if slack_before_overlap.present?
-        errors.add(:slack_before, I18n.t('activerecord.errors.models.reservation.attributes.slack_before.slack_before_html', reservation_url: organisation_reservation_path(slack_before_overlap.organisation, slack_before_overlap), other_ends_at: I18n.l(slack_before_overlap.ends_at, format: :long)).html_safe)
-    end
-
-    slack_after_overlap = self.slack_after_overlapping
-    if slack_after_overlap.present?
-        errors.add(:slack_after, I18n.t('activerecord.errors.models.reservation.attributes.slack_before.slack_after_html', reservation_url: organisation_reservation_path(slack_after_overlap.organisation, slack_after_overlap), other_ends_at: I18n.l(slack_after_overlap.ends_at, format: :long)).html_safe)
     end
   end
 
