@@ -1,4 +1,4 @@
-<div id="reservation-form">
+<div id="reservation-form" data-reservation-id="<%= @reservation.id %>">
   <%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
     <%= render 'shared/error_messages', target: @reservation %>
 

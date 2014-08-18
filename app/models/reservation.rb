@@ -79,6 +79,7 @@ class Reservation < ActiveRecord::Base
   # Options:
   # - delocalize: delocalize dates with the current locale if they are strings
   # - include_edges: indicates that we also want the reservations directly outside the scope. This can be useful to check for collisions.
+  # - ignore_reservations: exclude the listed reservations or reservation ids. This can be useful to check if an entity is available when editting a reservation.
   def self.by_date_domain(from, to, options = {})
     # Delocalize or parse from and to as date (if strings)
     from = (options[:delocalize] ? Date.strptime(from, I18n.t('date.formats.default')) : from.to_date) if from.present? && from.is_a?(String)
@@ -98,6 +99,7 @@ class Reservation < ActiveRecord::Base
     rel = self.all
     rel = rel.where('ends_at > :begin', begin: from) if from.present?
     rel = rel.where('begins_at <= :end', end: to) if to.present?
+    rel = rel.where.not(id: options[:ignore_reservations]) if options[:ignore_reservations].present?
     rel
   end
 

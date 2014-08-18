@@ -7,6 +7,7 @@ function reservationFormController(options) {
   this.formContainer = null;
   this.beginMoment = moment();
   this.endMoment = moment();
+  this.reservationId = null;
   this.entityTypeId = null;
   this.selectedEntityId = null;
   this.currentAvailableEntities = [];
@@ -16,6 +17,7 @@ function reservationFormController(options) {
 
 reservationFormController.prototype.init = function() {
   this.formContainer = $('#' + this.options.container);
+  this.reservationId = this.formContainer.data('reservation-id');
   this.bindOnChangeActions();
   this.bindEntitySelection();
   this.bindSlackFieldValidation();
@@ -181,6 +183,7 @@ reservationFormController.prototype.updateAvailableEntities = function() {
     type: 'POST',
     url: this.options.entities_controller_url + '/availability.json',
     data: {
+      ignore_reservation_ids: _this.reservationId,
       selected_entity_id: _this.selectedEntityId,
       entity_type_id: _this.entityTypeId,
       begins_at: _this.beginMoment.toJSON(),

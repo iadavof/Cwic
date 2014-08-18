@@ -59,8 +59,8 @@ private
     when 'availability'
       # All entities for this Entity type
       @entities = @organisation.entity_types.find(params[:entity_type_id]).entities.accessible_by(current_ability, :index)
-      # Get the available entities for the time period and calculate the min/max slack simultaneously
-      @entities = @entities.available_between(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]), )
+      # Get the available entities for the time period
+      @entities = @entities.available_between(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]), ignore_reservations: params[:ignore_reservation_ids])
     when 'index'
       @entities = @organisation.entities.accessible_by(current_ability, :index).includes(:entity_type).ssp(params)
     when 'new', 'create'
