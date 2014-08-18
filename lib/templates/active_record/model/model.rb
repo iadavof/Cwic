@@ -22,7 +22,7 @@ class <%= class_name %> < <%= parent_class_name.classify %>
   validates :<%= attribute.name %>, presence: true, numericality: true
 <% elsif attribute.reference? -%>
   validates :<%= attribute.name %>_id, presence: true
-  validates :<%= attribute.name %>, presence: true, if: "<%= attribute.name %>_id.present?"
+  validates :<%= attribute.name %>, presence: true, if: -> { <%= attribute.name %>_id.present? }
 <% else -%>
   validates :<%= attribute.name %>, presence: true
 <% end -%>

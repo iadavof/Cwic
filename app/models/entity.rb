@@ -20,7 +20,7 @@ class Entity < ActiveRecord::Base
 
   # Validations
   validates :entity_type_id, presence: true
-  validates :entity_type, presence: true, if: 'entity_type_id.present?'
+  validates :entity_type, presence: true, if: -> { entity_type_id.present? }
   validates :organisation, presence: true
   validates :color, color: true
   validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }

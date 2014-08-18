@@ -23,10 +23,10 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	validates :repeating_unit, presence: true, if: :repeating?
 	validates :repeating_every, numericality: { greater_than_or_equal_to: 1 }, if: :repeating?
 	validates :repeating_end, presence: true, if: :repeating?
-	validates :repeating_instances, presence: true, numericality: { greater_than_or_equal_to: 1 }, if: "self.repeating? && self.repeating_end == 'instances'"
-	validates :repeating_until, presence: true, timeliness: { type: :date }, if: "self.repeating? && self.repeating_end == 'until'"
+	validates :repeating_instances, presence: true, numericality: { greater_than_or_equal_to: 1 }, if: -> { self.repeating? && self.repeating_end == 'instances' }
+	validates :repeating_until, presence: true, timeliness: { type: :date }, if: -> { self.repeating? && self.repeating_end == 'until' }
 	validate :length_not_greater_than_repetition_unit, if: :repeating?
-	validate :repeating_end_after_reservation_end, if: 'self.repeating? && self.repeating_until.present?'
+	validate :repeating_end_after_reservation_end, if: -> { self.repeating? && self.repeating_until.present? }
 
 	##
 	# Class methods

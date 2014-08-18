@@ -31,14 +31,14 @@ class Reservation < ActiveRecord::Base
   validates :organisation, presence: true
   validates :entity, presence: true
   validates :organisation_client, presence: true
-  validates :reservation_status, presence: true, if: 'self.entity.present?'
+  validates :reservation_status, presence: true
   validates :begins_at, presence: true
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validate :not_overlapping, if: :validate_overlapping
-  #validate :slack_not_greater_than_max_slack, if: 'self.entity.present?' # Temporary disable this validation to revert to the old behaviour (slack may overlap with other slack or reservation)
+  #validate :slack_not_greater_than_max_slack, if: -> { self.entity.present? } # Temporary disable this validation to revert to the old behaviour (slack may overlap with other slack or reservation)
   validate :check_invalid_recurrences, if: :new_record?
-  validate :ensure_period_valid, if: 'self.entity.present? && self.begins_at.present? && self.ends_at.present?'
+  validate :ensure_period_valid, if: -> { entity.present? && begins_at.present? && ends_at.present? }
 
   # Callbacks
   after_initialize :init # new_record check is intentionally omitted since @validate_overlapping should also be initialized for already existing records
@@ -52,7 +52,7 @@ class Reservation < ActiveRecord::Base
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_websockets
 
-  before_destroy :fix_base_reservation_reference, if: 'self.base_reservation_id == self.id'
+  before_destroy :fix_base_reservation_reference, if: -> { base_reservation_id == id }
   after_destroy :trigger_update_websockets
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 

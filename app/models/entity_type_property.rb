@@ -14,17 +14,17 @@ class EntityTypeProperty < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 50 }
   validates :description, length: { maximum: 255 }
   validates :data_type_id, presence: true
-  validates :data_type, presence: true, if: "data_type_id.present?"
+  validates :data_type, presence: true, if: -> { data_type_id.present? }
   validates :index, presence: true, numericality: { only_integer: true }
-  validates :default_value, length: { maximum: 255 }, allow_blank: true, if: "data_type.present? && string?"
-  validates :default_value, numericality: { only_integer: true }, allow_blank: true, if: "data_type.present? && integer?"
-  validates :default_value, numericality: true, allow_blank: true, if: "data_type.present? && float?"
+  validates :default_value, length: { maximum: 255 }, allow_blank: true, if: -> { data_type.present? && string? }
+  validates :default_value, numericality: { only_integer: true }, allow_blank: true, if: -> { data_type.present? && integer? }
+  validates :default_value, numericality: true, allow_blank: true, if: -> { data_type.present? && float? }
 
   # Callbacks
   after_find :cast_default_value
   before_validation :parse_default_value
-  before_validation :clear_default_value, if: "data_type.present? && has_options?" # The default value of sets and enums are stored in the options itself, so we clear the default value here.
-  before_validation :clear_options, unless: "data_type.present? && has_options?" # We are not dealing with an options data type (set or enum), so we can clear all possible (old) options.
+  before_validation :clear_default_value, if: -> { data_type.present? && has_options? } # The default value of sets and enums are stored in the options itself, so we clear the default value here.
+  before_validation :clear_options, unless: -> { data_type.present? && has_options? } # We are not dealing with an options data type (set or enum), so we can clear all possible (old) options.
   after_create :create_entity_properties
 
   # Nested attributes

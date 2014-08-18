@@ -16,12 +16,12 @@ class OrganisationUser < ActiveRecord::Base
   # Validations
   validates :organisation, presence: true
   validates :user_email, presence: true, format: { with: Devise::email_regexp, allow_blank: true }, if: :by_email
-  validates :user, presence: { unless: "by_email" }, uniqueness: { scope: :organisation_id, allow_nil: true }
+  validates :user, presence: { unless: -> { by_email } }, uniqueness: { scope: :organisation_id, allow_nil: true }
   validates :organisation_role, presence: true
 
   # Callbacks
-  before_validation :set_user_by_email, on: :create, if: 'self.user_email.present?'
-  before_validation :set_organisation_role_first_user, on: :create, if: 'self.organisation_role.nil?'
+  before_validation :set_user_by_email, on: :create, if: -> { self.user_email.present? }
+  before_validation :set_organisation_role_first_user, on: :create, if: -> { self.organisation_role.nil? }
 
   # Scopes
   pg_global_search associated_against: { user: { last_name: 'A', email: 'A', first_name: 'B' } }

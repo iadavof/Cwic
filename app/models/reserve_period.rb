@@ -10,7 +10,7 @@ class ReservePeriod < ActiveRecord::Base
   validates :name, length: { maximum: 255 }
   validates :period_amount, numericality: { only_integer: true, greater_than_or_equal_to: 1 }
   validates :period_unit_id, presence: true
-  validates :period_unit, presence: true, uniqueness: { scope: [:entity_type, :period_amount] }, if: "period_unit_id.present?" # TODO uniqueness constraint does not work correctly in combination with period_amount == nil (which is actually 1). Fix this when extending this validation to also include check-in and check-out times.
+  validates :period_unit, presence: true, uniqueness: { scope: [:entity_type, :period_amount] }, if: -> { period_unit_id.present? } # TODO uniqueness constraint does not work correctly in combination with period_amount == nil (which is actually 1). Fix this when extending this validation to also include check-in and check-out times.
   validates :price, presence: true, numericality: true
 
   def instance_name

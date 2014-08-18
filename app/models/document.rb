@@ -13,11 +13,11 @@ class Document < ActiveRecord::Base
 
   # Validations
   validates :organisation_id, presence: true
-  validates :organisation, presence: true, if: "organisation_id.present?"
+  validates :organisation, presence: true, if: -> { organisation_id.present? }
   validates :documentable, presence: true
   validates :documentable_type, presence: true, length: { maximum: 255 }
   validates :user_id, presence: true
-  validates :user, presence: true, if: "user_id.present?"
+  validates :user, presence: true, if: -> { user_id.present? }
   validates :document, presence: true
 
   # Callbacks

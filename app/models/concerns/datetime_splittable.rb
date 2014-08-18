@@ -24,8 +24,8 @@ module DatetimeSplittable
           validates "#{attribute}_date", presence: { message: :date_blank }
           validates "#{attribute}_tod", presence: { message: :tod_blank }
         end
-        validates "#{attribute}_date", date: true, if: "#{attribute}_date.present?"
-        validates "#{attribute}_tod", time_of_day: true, if: "#{attribute}_tod.present?"
+        validates "#{attribute}_date", date: true, if: -> { send("#{attribute}_date").present? }
+        validates "#{attribute}_tod", time_of_day: true, if: -> { send("#{attribute}_tod").present? }
 
         after_initialize "set_default_#{attribute}", if: :new_record?
         before_validation "join_#{attribute}"
