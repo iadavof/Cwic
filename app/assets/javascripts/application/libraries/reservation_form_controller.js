@@ -1,7 +1,7 @@
-function newReservationFormController(options) {
+function reservationFormController(options) {
   this.options = $.extend({
     container: '',
-    entities_controller_url: 'url to backend',
+    entities_controller_url: 'url to backend'
   }, options || {});
 
   this.formContainer = null;
@@ -12,9 +12,9 @@ function newReservationFormController(options) {
   this.currentAvailableEntities = [];
 
   this.init();
-};
+}
 
-newReservationFormController.prototype.init = function() {
+reservationFormController.prototype.init = function() {
   this.formContainer = $('#' + this.options.container);
   this.bindOnChangeActions();
   this.bindEntitySelection();
@@ -22,7 +22,7 @@ newReservationFormController.prototype.init = function() {
   this.performFormUpdate();
 };
 
-newReservationFormController.prototype.bindSlackFieldValidation = function() {
+reservationFormController.prototype.bindSlackFieldValidation = function() {
   var _this = this;
   var slackFields = this.formContainer.find('#reservation_slack_before, #reservation_slack_after');
   slackFields.each(function() {
@@ -32,7 +32,7 @@ newReservationFormController.prototype.bindSlackFieldValidation = function() {
   this.validateSlackFields();
 };
 
-newReservationFormController.prototype.setSlackFieldErrorState = function() {
+reservationFormController.prototype.setSlackFieldErrorState = function() {
   var field = this, current = null;
   if(field.data('max-slack') != null) {
     if(field.val() !== '') {
@@ -49,7 +49,7 @@ newReservationFormController.prototype.setSlackFieldErrorState = function() {
   APP.util.setFieldErrorState(field, false);
 };
 
-newReservationFormController.prototype.bindEntitySelection = function() {
+reservationFormController.prototype.bindEntitySelection = function() {
   var _this = this;
   this.getAvailableEntitiesList().on('click', 'li', function() {
     selectedLi = $(this);
@@ -60,7 +60,7 @@ newReservationFormController.prototype.bindEntitySelection = function() {
   });
 };
 
-newReservationFormController.prototype.setEntitySelection = function() {
+reservationFormController.prototype.setEntitySelection = function() {
   var selCont = this.formContainer.find('div.selected-entity');
   selCont.text(this.currentAvailableEntities[this.selectedEntityId].name);
   selCont.removeClass('available unavailable warning-available');
@@ -74,48 +74,48 @@ newReservationFormController.prototype.setEntitySelection = function() {
   this.validateSlackFields();
 };
 
-newReservationFormController.prototype.validateSlackFields = function() {
+reservationFormController.prototype.validateSlackFields = function() {
   var _this = this;
   this.formContainer.find('#reservation_slack_before, #reservation_slack_after').each(function() {
     _this.setSlackFieldErrorState.call($(this));
   });
 };
 
-newReservationFormController.prototype.removeSelectedClassFromAvailableEntitiesListItems = function() {
+reservationFormController.prototype.removeSelectedClassFromAvailableEntitiesListItems = function() {
   this.getAvailableEntitiesList().find('li').removeClass('selected');
 };
 
-newReservationFormController.prototype.setDefaultSlackTimes = function(default_slack_before, default_slack_after) {
+reservationFormController.prototype.setDefaultSlackTimes = function(default_slack_before, default_slack_after) {
   this.formContainer.find('input#reservation_slack_before').attr('placeholder', default_slack_before);
   this.formContainer.find('input#reservation_slack_after').attr('placeholder', default_slack_after);
 };
 
-newReservationFormController.prototype.setMaxSlackTimes = function(max_slack_before, max_slack_after) {
+reservationFormController.prototype.setMaxSlackTimes = function(max_slack_before, max_slack_after) {
   this.formContainer.find('input#reservation_slack_before').data('max-slack', max_slack_before);
   this.formContainer.find('input#reservation_slack_after').data('max-slack', max_slack_after);
 };
 
-newReservationFormController.prototype.setSelectedEntitySlack = function() {
+reservationFormController.prototype.setSelectedEntitySlack = function() {
   var selEntity = this.currentAvailableEntities[this.selectedEntityId];
   this.setDefaultSlackTimes(selEntity.default_slack_before, selEntity.default_slack_after);
   this.setMaxSlackTimes(selEntity.max_slack_before, selEntity.max_slack_after);
 };
 
-newReservationFormController.prototype.bindOnChangeActions = function() {
+reservationFormController.prototype.bindOnChangeActions = function() {
   var _this = this;
   this.formContainer.find('input#begins_at_date, input#begins_at_tod, input#ends_at_date, input#ends_at_tod, select#entity_type_id').on('change', function() {
     _this.performFormUpdate.call(_this);
   });
 };
 
-newReservationFormController.prototype.performFormUpdate = function() {
+reservationFormController.prototype.performFormUpdate = function() {
   this.parseSelectedEntityFormField();
   if(this.parseBeginAndEndFromFormFields() && this.parseEntityTypeFormFields()) {
     this.updateAvailableEntities();
   }
 };
 
-newReservationFormController.prototype.parseSelectedEntityFormField = function() {
+reservationFormController.prototype.parseSelectedEntityFormField = function() {
   var selE  = this.formContainer.find('input#reservation_entity_id').val();
   if($.isNumeric(selE)) {
     this.selectedEntityId = parseInt(selE, 10);
@@ -124,7 +124,7 @@ newReservationFormController.prototype.parseSelectedEntityFormField = function()
   }
 };
 
-newReservationFormController.prototype.parseEntityTypeFormFields = function() {
+reservationFormController.prototype.parseEntityTypeFormFields = function() {
   var entitySelector = this.formContainer.find('select#entity_type_id');
   if(entitySelector.val() != '') {
     this.entityTypeId = parseInt(entitySelector.val(), 10);
@@ -135,7 +135,7 @@ newReservationFormController.prototype.parseEntityTypeFormFields = function() {
   return false;
 };
 
-newReservationFormController.prototype.parseBeginAndEndFromFormFields = function() {
+reservationFormController.prototype.parseBeginAndEndFromFormFields = function() {
   var beginsAtDateField = this.formContainer.find('input#begins_at_date');
   var beginsAtTodField = this.formContainer.find('input#begins_at_tod');
   var endsAtDateField = this.formContainer.find('input#ends_at_date');
@@ -168,14 +168,14 @@ newReservationFormController.prototype.parseBeginAndEndFromFormFields = function
   return beginValid && endValid;
 };
 
-newReservationFormController.prototype.updateMomentWithTime = function(moment, timeString) {
+reservationFormController.prototype.updateMomentWithTime = function(moment, timeString) {
   var hours = parseInt(timeString.split(':')[0], 10);
   var minutes = parseInt(timeString.split(':')[1], 10);
   moment.hours(hours);
   moment.minutes(minutes);
 };
 
-newReservationFormController.prototype.updateAvailableEntities = function() {
+reservationFormController.prototype.updateAvailableEntities = function() {
   var _this = this;
   $.ajax({
     type: 'POST',
@@ -194,7 +194,7 @@ newReservationFormController.prototype.updateAvailableEntities = function() {
   });
 };
 
-newReservationFormController.prototype.updateAvailableEntitiesList = function(entities) {
+reservationFormController.prototype.updateAvailableEntitiesList = function(entities) {
   var _this = this;
   this.clearAvailableEntitiesList();
 
@@ -227,11 +227,11 @@ newReservationFormController.prototype.updateAvailableEntitiesList = function(en
   });
 };
 
-newReservationFormController.prototype.showNoAvailableEntitiesListMessage = function(visible) {
+reservationFormController.prototype.showNoAvailableEntitiesListMessage = function(visible) {
   this.formContainer.find('div.entity-selector div.no-entities-available')[visible ? 'show' : 'hide']();
 };
 
-newReservationFormController.prototype.updateSelectedEntityFeedback = function(feedback) {
+reservationFormController.prototype.updateSelectedEntityFeedback = function(feedback) {
   var selCont = this.formContainer.find('div.selected-entity');
   selCont.removeClass('available warning-available unavailable');
   if(!feedback.available) {
@@ -247,10 +247,10 @@ newReservationFormController.prototype.updateSelectedEntityFeedback = function(f
   this.validateSlackFields();
 };
 
-newReservationFormController.prototype.clearAvailableEntitiesList = function() {
+reservationFormController.prototype.clearAvailableEntitiesList = function() {
   this.getAvailableEntitiesList().html('');
 };
 
-newReservationFormController.prototype.getAvailableEntitiesList = function() {
+reservationFormController.prototype.getAvailableEntitiesList = function() {
   return this.formContainer.find('div.entity-selector ul.entity-list');
 };
