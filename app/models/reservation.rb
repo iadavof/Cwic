@@ -175,38 +175,24 @@ class Reservation < ActiveRecord::Base
     "R##{self.id.to_s}: #{desc}, #{self.organisation_client.instance_name}, #{beg} --> #{en}."
   end
 
-  # Checks if the given slack before is overlapping with a previous reservation.
-  # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
-  def slack_before_overlapping
+  # Checks if the slack before is overlapping with (the slack of) a previous reservation.
+  def slack_before_overlapping?
     previous_reservation = self.previous
-    return nil if previous_reservation.nil?
+    return false if previous_reservation.nil?
 
     total_slack = self.get_slack_before + previous_reservation.get_slack_after
 
-    if self.begins_at - previous_reservation.ends_at < total_slack.minutes
-      return previous_reservation
-    end
+    self.begins_at - previous_reservation.ends_at < total_slack.minutes
   end
 
-  def slack_before_overlapping?
-    slack_before_overlapping.present?
-  end
-
-  # Checks if the given slack after is overlapping with a next reservation.
-  # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
-  def slack_after_overlapping
+  # Checks if the slack after is overlapping with (the slack of) a next reservation.
+  def slack_after_overlapping?
     next_reservation = self.next
-    return nil if next_reservation.nil?
+    return false if next_reservation.nil?
 
     total_slack = self.get_slack_after + next_reservation.get_slack_before
 
-    if next_reservation.begins_at - self.ends_at < total_slack.minutes
-      return next_reservation
-    end
-  end
-
-  def slack_after_overlapping?
-    slack_after_overlapping.present?
+    next_reservation.begins_at - self.ends_at < total_slack.minutes
   end
 
   def length_for_day(day)
