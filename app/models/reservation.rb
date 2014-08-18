@@ -251,7 +251,6 @@ class Reservation < ActiveRecord::Base
       # No complete overlap, but maybe just the ends_at overlaps
       ends_at_overlap = relation.where('begins_at < :ends_at AND :ends_at <= ends_at', ends_at: ends_at).first
       if ends_at_overlap.present?
-        #errors.add(:ends_at, :ends_at_html, reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long))
         errors.add(:ends_at, I18n.t('activerecord.errors.models.reservation.attributes.ends_at.ends_at_html', reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long)).html_safe)
         valid = false
       end
