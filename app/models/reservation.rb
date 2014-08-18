@@ -36,7 +36,7 @@ class Reservation < ActiveRecord::Base
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validate :not_overlapping, if: :validate_overlapping
-  validate :slack_not_greater_than_max_slack, if: 'self.entity.present?'
+  #validate :slack_not_greater_than_max_slack, if: 'self.entity.present?' # Temporary disable this validation to revert to the old behaviour (slack may overlap with other slack or reservation)
   validate :check_invalid_recurrences, if: :new_record?
   validate :ensure_period_valid, if: 'self.entity.present? && self.begins_at.present? && self.ends_at.present?'
 
