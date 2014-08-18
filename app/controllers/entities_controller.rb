@@ -49,19 +49,8 @@ class EntitiesController < ApplicationController
   def availability
     @begins_at = Time.parse(params[:begins_at])
     @ends_at = Time.parse(params[:ends_at])
-    if params[:selected_entity_id].present?
-      @selected_entity = @organisation.entities.find(params[:selected_entity_id])
-      if @selected_entity.present?
-        @selected_entity_feedback = {
-          available: @selected_entity.is_available_between?(@begins_at, @ends_at),
-          default_slack_before: @selected_entity.get_slack_before,
-          default_slack_after: @selected_entity.get_slack_after,
-          max_slack_before: @selected_entity.get_max_slack_before(@begins_at),
-          max_slack_after: @selected_entity.get_max_slack_after(@ends_at),
-        }
-      end
-    end
-    respond_with(@organisation, @entities)
+    @selected_entity = @organisation.entities.find(params[:selected_entity_id]) if params[:selected_entity_id].present?
+    respond_with(@organisation, @entities, @selected_entity)
   end
 
 private
