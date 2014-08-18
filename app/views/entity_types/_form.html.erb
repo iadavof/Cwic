@@ -14,6 +14,11 @@
 
       <div class="tab-wrap">
         <div id="general">
+          <div class="content-columns clearfix">
+            <div class="content-column">
+              <%= render partial: 'tags/form', locals: { f: f } %>
+            </div>
+          </div>
           <h2><%= t('.general') %></h2>
           <div class="field">
             <%= f.label :name %>

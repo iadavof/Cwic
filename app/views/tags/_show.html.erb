@@ -1,0 +1,9 @@
+<div class="tag-list">
+<% if tags.empty? %>
+  <%= t('no_tags_defined') %>
+<% else %>
+  <% tags.each do |tag| %>
+    <%= link_to(tag.name.ucfirst, organisation_search_tag_search_path(current_organisation, params: { tag_query: tag.name }), title: t('search_for_tag', { tag: tag.name }), class: 'tag' ) %>
+  <% end %>
+<% end %>
+</div>

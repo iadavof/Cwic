@@ -1,0 +1,47 @@
+div.tag-list {
+  border-color: #e1e1e1;
+}
+
+div.tag-list {
+  a.tag {
+    display: block;
+    font-size: 1.5em;
+    margin: 7.5px;
+    padding: .5em 1em;
+    float: left;
+    background-color: #1c9cb2;
+    color: #fff;
+    text-decoration: none;
+  }
+}
+
+div.tags-field {
+  width: auto;
+  display: block;
+}
+
+div.tags-field {
+  ul.select2-choices {
+    padding: 7.5px;
+    border-color: #e1e1e1;
+    background-image: none;
+  }
+
+  ul.select2-choices {
+    li.select2-search-choice {
+      background-color: #1c9cb2;
+      color: #fff;
+    }
+
+    li.select2-search-field input,
+    li.select2-search-choice {
+      font-size: 1.5em;
+      background-image: none;
+      border: none;
+      border-radius: 0;
+      line-height: normal;
+      margin: 7.5px;
+      padding: .5em 1em;
+    }
+  }
+}

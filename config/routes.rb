@@ -1,7 +1,7 @@
 Cwic::Application.routes.draw do
   get "intro_sections/index"
   root to: 'intro_sections#index'
-  
+
   match 'home/index', controller: 'home', action: 'index', via: 'get'
 
   devise_scope :user do get '/users/sign_out' => 'devise/sessions#destroy' end
@@ -9,12 +9,13 @@ Cwic::Application.routes.draw do
 
   match 'intro_sections/manage', controller: 'intro_sections', action: 'manage', via: 'get', as: 'manage_intro_sections'
   resources :intro_sections
-  
+
   resources :users, except: [:new]
   resources :entity_type_icons # admin page for managing the entity type icons
   resources :feedbacks, except: [:new, :edit]
 
   match '/set_organisation/:organisation_id/', controller: 'application', action: 'set_organisation', via: 'get', as: 'set_organisation'
+  match '/organisations/:id/tag_search', controller: 'organisations', action: 'tag_search', via: 'post', as: 'organisation_tag_search'
   resources :organisations do
     resources :organisation_users, except: :show
     match '/organisation_users/send_invitation', controller: 'organisation_users', action: 'send_invitation', via: 'post'
@@ -67,9 +68,9 @@ Cwic::Application.routes.draw do
       resources :reservations
     end
     resources :entity_type_icons
-
-    match '/search/results', controller: 'search', action: 'results', via: 'get'
-
     resources :documents, except: [:new, :edit]
+
+    match '/search/global_search', controller: 'search', action: 'global_search', via: 'get'
+    match '/search/tag_search', controller: 'search', action: 'tag_search', via: 'get'
   end
 end

@@ -71,7 +71,7 @@ private
 
   def resource_params
     params.require(:organisation_client).permit(
-      :first_name, :infix, :last_name, :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat,
+      :tag_list, :first_name, :infix, :last_name, :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :address_type, :lng, :lat,
       documents_attributes: [:id, :document, :document_cache, :remote_document_url, :_destroy])
   end
 

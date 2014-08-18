@@ -1,6 +1,7 @@
 class EntityType < ActiveRecord::Base
   include PgSearch
   include Sspable
+  include Taggable
 
   # Associations
   belongs_to :organisation

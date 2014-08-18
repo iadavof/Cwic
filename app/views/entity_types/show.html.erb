@@ -20,6 +20,11 @@
 
   <div class="tab-wrap">
     <div id="general">
+      <div class="content-columns clearfix">
+        <div class="content-column">
+          <%= render partial: 'tags/show', locals: { tags: @entity_type.tags } %>
+        </div>
+      </div>
       <%= image_tag(@entity_type.icon.image.medium_icon.url) %>
       <dl>
         <dt><%= EntityType.human_attribute_name(:name) %></dt>

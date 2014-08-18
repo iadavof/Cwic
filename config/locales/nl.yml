@@ -50,6 +50,8 @@ nl:
   for_example: 'Bijv.'
   default_title: 'Titel'
   unlimited: 'Onbeperkt'
+  search_for_tag: 'Zoeken naar alle items met de tag "%{tag}"'
+  no_tags_defined: 'Er zijn nog geen tags opgegeven voor dit item, klik op bewerken om tags toe te voegen.'
   multiple:
     delete: 'Verwijderen'
     edit: 'Bewerken'
@@ -781,10 +783,14 @@ nl:
       add_note: 'Notitie toevoegen'
 
   search:
-    results:
+    global_search:
       results: 'resultaten'
       title_html: 'Resultaten voor <strong>%{query}</strong>'
       title_htm_of: 'Resultaten voor <strong>%{query}</strong> van %{instance_name}'
+      item: 'Item'
+    tag_search:
+      results: 'resultaten'
+      title_html: 'Resultaten voor de tag <strong>%{query}</strong>'
       item: 'Item'
     organisation_client_result:
       past_reservations: 'Eerdere reserveringen'

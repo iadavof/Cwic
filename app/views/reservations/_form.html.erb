@@ -3,7 +3,7 @@
     <%= render 'shared/error_messages', target: @reservation %>
     <div class="content-columns clearfix">
       <div class="content-column">
-        <%= f.text_field :tag_list, class: 'tags_field' %>
+        <%= render partial: 'tags/form', locals: { f: f } %>
       </div>
     </div>
     <fieldset class="begin-and-end">

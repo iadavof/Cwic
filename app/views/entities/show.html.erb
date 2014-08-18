@@ -25,6 +25,12 @@
 
   <div class="tab-wrap">
     <div id="general">
+    <div class="content-columns clearfix">
+      <div class="content-column">
+        <%= render partial: 'tags/show', locals: { tags: @entity.tags } %>
+      </div>
+    </div>
+
       <dl>
         <dt><%= Entity.human_attribute_name(:name) %></dt>
         <dd><%= @entity.instance_name %></dd>

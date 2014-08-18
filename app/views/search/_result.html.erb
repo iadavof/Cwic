@@ -5,5 +5,5 @@
     </div>
     <%= render "#{result.class.name.underscore}_result", result: result %>
   </div>
-  <div class="rank"><div class="inner" style="width: <%= result.pg_search_rank * 100 %>%;"></div></div>
+  <div class="rank"><div class="inner" style="width: <%= result.pg_search_rank * 100 if result.pg_search_rank.present? %>%;"></div></div>
 </div>
