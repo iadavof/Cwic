@@ -14,6 +14,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :base_reservation, class_name: 'Reservation'
 
   has_one :reservation_recurrence_definition
+  has_one :entity_type, through: :entity
   has_many :stickies, as: :stickable, dependent: :destroy
   has_many :reservation_logs, dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
@@ -35,6 +36,7 @@ class Reservation < ActiveRecord::Base
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validate :not_overlapping, if: :validate_overlapping
+  #validate :slack_not_greater_than_max_slack, if: 'self.entity.present?' # Temporary disable this validation to revert to the old behaviour (slack may overlap with other slack or reservation)
   validate :check_invalid_recurrences, if: :new_record?
   validate :ensure_period_valid, if: 'self.entity.present? && self.begins_at.present? && self.ends_at.present?'
 
@@ -77,6 +79,7 @@ class Reservation < ActiveRecord::Base
   # Options:
   # - delocalize: delocalize dates with the current locale if they are strings
   # - include_edges: indicates that we also want the reservations directly outside the scope. This can be useful to check for collisions.
+  # - ignore_reservations: exclude the listed reservations or reservation ids. This can be useful to check if an entity is available when editting a reservation.
   def self.by_date_domain(from, to, options = {})
     # Delocalize or parse from and to as date (if strings)
     from = (options[:delocalize] ? Date.strptime(from, I18n.t('date.formats.default')) : from.to_date) if from.present? && from.is_a?(String)
@@ -96,6 +99,7 @@ class Reservation < ActiveRecord::Base
     rel = self.all
     rel = rel.where('ends_at > :begin', begin: from) if from.present?
     rel = rel.where('begins_at <= :end', end: to) if to.present?
+    rel = rel.where.not(id: options[:ignore_reservations]) if options[:ignore_reservations].present?
     rel
   end
 
@@ -171,22 +175,38 @@ class Reservation < ActiveRecord::Base
     "R##{self.id.to_s}: #{desc}, #{self.organisation_client.instance_name}, #{beg} --> #{en}."
   end
 
-  def slack_before_overlapping?
+  # Checks if the given slack before is overlapping with a previous reservation.
+  # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
+  def slack_before_overlapping
     previous_reservation = self.previous
-    return false if previous_reservation.nil?
+    return nil if previous_reservation.nil?
 
     total_slack = self.get_slack_before + previous_reservation.get_slack_after
 
-    return self.begins_at - previous_reservation.ends_at < total_slack.minutes
+    if self.begins_at - previous_reservation.ends_at < total_slack.minutes
+      return previous_reservation
+    end
   end
 
-  def slack_after_overlapping?
+  def slack_before_overlapping?
+    slack_before_overlapping.present?
+  end
+
+  # Checks if the given slack after is overlapping with a next reservation.
+  # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
+  def slack_after_overlapping
     next_reservation = self.next
-    return false if next_reservation.nil?
+    return nil if next_reservation.nil?
 
     total_slack = self.get_slack_after + next_reservation.get_slack_before
 
-    return next_reservation.begins_at - self.ends_at < total_slack.minutes
+    if next_reservation.begins_at - self.ends_at < total_slack.minutes
+      return next_reservation
+    end
+  end
+
+  def slack_after_overlapping?
+    slack_after_overlapping.present?
   end
 
   def length_for_day(day)
@@ -306,6 +326,18 @@ private
           end
         end
       end
+    end
+  end
+
+  def slack_not_greater_than_max_slack
+    slack_before_overlap = self.slack_before_overlapping
+    if slack_before_overlap.present?
+        errors.add(:slack_before, I18n.t('activerecord.errors.models.reservation.attributes.slack_before.slack_before_html', reservation_url: organisation_reservation_path(slack_before_overlap.organisation, slack_before_overlap), other_ends_at: I18n.l(slack_before_overlap.ends_at, format: :long)).html_safe)
+    end
+
+    slack_after_overlap = self.slack_after_overlapping
+    if slack_after_overlap.present?
+        errors.add(:slack_after, I18n.t('activerecord.errors.models.reservation.attributes.slack_before.slack_after_html', reservation_url: organisation_reservation_path(slack_after_overlap.organisation, slack_after_overlap), other_ends_at: I18n.l(slack_after_overlap.ends_at, format: :long)).html_safe)
     end
   end
 

@@ -9,58 +9,70 @@ div#reservation-form {
     -moz-box-sizing: border-box;
     height: 100%;
     width: 16em;
+
     &.slack-field-begin {
       left: 0;
     }
+
     &.slack-field-end {
       right: 0;
     }
+
     span {
       margin: 0 10px;
     }
+
     input {
       width: 5.5em;
       border-color: #99d2dd;
+
       &:focus {
         border-color: #6dbfce;
       }
     }
+
     label {
       display: inline-block;
       color: #1c9cb2;
     }
+
     .suffix {
       font-size: 1.3em;
       font-weight: bold;
       color: #1c9cb2;
     }
   }
-  
+
   fieldset.begin-and-end {
     position: relative;
     display: block;
     border: 1px solid #6dbfce;
-    padding: 0 17em 3.5em 17em;
-    margin: 0 0 30px 0;
+    padding: 0 17em 3.5em;
+    margin: 0 0 30px;
     text-align: center;
     background-color: #6dbfce;
+
     label, .suffix, label + span.help, .suffix + span.help {
       padding: 0.8em 0;
       vertical-align: middle;
     }
+
     label + span.help, .suffix + span.help {
       margin-top: -0.1em;
       margin-right: 0;
     }
+
     input, textarea, select {
       text-align: center;
       font-size: 1.4em;
       font-weight: 500;
       border: 1px solid #1c9cb2;
       color: #17889d;
+
       &:focus {
         border-color: #17889d;
       }
+
       &.replaced + div {
         text-align: center;
         font-size: 1.4em;
@@ -68,26 +80,31 @@ div#reservation-form {
         color: #17889d;
       }
     }
+
     .field_with_errors {
       input, textarea, select {
         border-color: #ff3520;
+
         &.replaced + div {
           border-color: #ff3520;
         }
       }
     }
+
     .timepicker-field {
       margin-left: 5px;
     }
+
     i.until-icon {
       color: #fff;
       display: inline-block;
       vertical-align: middle;
       font-size: 3.2em;
       line-height: 180%;
-      margin: -0.2em 0 0 0;
+      margin: -0.2em 0 0;
       padding: 0;
     }
+
     label {
       display: block;
       width: auto;
@@ -95,6 +112,7 @@ div#reservation-form {
       font-size: 1.3em;
     }
   }
+
   div.field.field-begins-at, div.field.field-ends-at {
     display: inline-block;
     vertical-align: baseline;
@@ -102,14 +120,17 @@ div#reservation-form {
     text-align: center;
     padding: 0 5%;
     margin: 0;
+
     label {
       text-align: left;
       color: #fff;
+
       &:after {
         color: #fff;
       }
     }
   }
+
   div.entity-selector {
     div.selected-entity {
       position: relative;
@@ -118,6 +139,8 @@ div#reservation-form {
       font-size: 1.8em;
       font-weight: bold;
       padding: 0.8em 2.5em 0.8em 0.8em;
+      min-height: 1.2em;
+
       &:before {
         position: absolute;
         right: 0.8em;
@@ -125,22 +148,31 @@ div#reservation-form {
         top: 50%;
         transform: translate(0, -50%);
       }
+
       &.available {
         background-color: #18c13d;
       }
+
+      &.warning-available {
+        background-color: #ff8d20;
+      }
+
       &.unavailable {
         background-color: #ff3520;
       }
     }
+
     div.entity-type-filter {
       padding-bottom: 1em;
       margin-bottom: 10px;
       text-align: center;
       background-color: #eee;
-      div.field.field-entity {
+
+      div.field.field-entity-type {
         display: inline-block;
         text-align: left;
         font-weight: 500;
+
         label {
           display: block;
           width: auto;
@@ -148,36 +180,72 @@ div#reservation-form {
         }
       }
     }
+
+    div.no-entities-available {
+      background-color: #ff3520;
+      color: #fff;
+      font-size: 1.8em;
+      font-weight: bold;
+      padding: .8em;
+      display: none;
+
+      &:before {
+        margin-right: 1em;
+      }
+    }
+
     ul.entity-list {
       display: block;
       list-style-type: none;
       padding: 0;
       margin: 0;
       max-height: 20.5em;
-      overflow: scroll;
+      overflow: auto;
       overflow-x: hidden;
+      min-height: 100px;
+
       li {
         display: block;
-        margin: 0 0 2px 0;
+        margin: 0 0 2px;
         background-color: #eee;
-        > a {
-          display: block;
-          padding: 0.5em;
-          color: inherit;
-          text-decoration: none;
-          &:hover {
-            color: #1c9cb2;
-          }
+        display: block;
+        padding: 0.5em 2.5em 0.5em 0.5em;
+        color: inherit;
+        text-decoration: none;
+        border-left: 10px solid #1c5eaf;
+        cursor: pointer;
+        position: relative;
+
+        &:hover {
+          color: #1c9cb2;
         }
+
         &.selected {
           background-color: #1c9cb2;
-          > a {
-            color: #fff;
+          color: #fff;
+        }
+
+        span.icon-warning-sign {
+          background-color: #ff8d20;
+          color: #fff;
+          position: absolute;
+          right: 0;
+          top: 0;
+          height: 100%;
+          width: 2em;
+          padding: 0.5em;
+          box-sizing: border-box;
+
+          &:before {
+            position: absolute;
+            top: 50%;
+            transform: translate(0,-50%);
           }
         }
       }
     }
   }
+
   div.actions {
     padding: 10px 0;
     clear: both;
@@ -187,34 +255,34 @@ div#reservation-form {
 div.status-selector {
 	div.statuses {
     border-radius: 3px;
-  
+
 		a.status-button {
 		  background-color: #ccc;
 		  color: inherit;
-		  opacity: 0.2;
+		  opacity: .2;
 		}
-    
+
 		a.status-button:hover {
-			opacity: 0.5;
+			opacity: .5;
 		}
 
 		a.status-button.active {
 			opacity: 1;
 		}
-    
+
     a.status-button:last-child:before {
       display: none;
     }
 	}
 
-	p.saved-notification {
-	    margin: 5px;
-	    font-size: 80%;
-	    color: #666;
-	    font-style: italic;
-	    line-height: 100%;
-	    display: none;
-	    float: right;
+  p.saved-notification {
+    margin: 5px;
+    font-size: 80%;
+    color: #666;
+    font-style: italic;
+    line-height: 100%;
+    display: none;
+    float: right;
 	}
 }
 
@@ -231,7 +299,6 @@ div.status-selector.mini {
 }
 
 div.reservation-recurrence-definition-wrapper {
-
 	div.recurrence_definition_fields,
 	div.recurrence_definition_weekly,
 	div.recurrence_definition_monthly {
@@ -264,7 +331,8 @@ div.reservation-recurrence-definition-wrapper {
 			-moz-box-sizing: border-box;
 			box-sizing: border-box;
 		}
-		label::-moz-selection {
+
+  	label::-moz-selection {
 		  background-color: transparent;
 		  color: inherit;
 		}
@@ -295,7 +363,6 @@ div.reservation-recurrence-definition-wrapper {
 	}
 }
 
-
 div.slack-warning {
   display: inline-block;
 	margin: 0 10px;
@@ -316,8 +383,8 @@ div.multiple-edit-form {
 		margin-right: 20px;
 	}
 
-	input#begins_at_tod,
-	input#ends_at_tod {
+	#begins_at_tod,
+	#ends_at_tod {
 		margin: 0;
 	}
 }

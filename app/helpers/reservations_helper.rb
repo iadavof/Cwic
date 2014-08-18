@@ -24,18 +24,14 @@ module ReservationsHelper
       content_tag(:div, class: 'slack-warning') do
         content_tag(:i, '', class: 'icon-warning-sign') + t('.slack_before_overlaps_with_html', reservation: link_to(reservation.previous.instance_name, organisation_reservation_path(@organisation, reservation.previous)))
       end
-    else
-      ''
     end
   end
 
   def slack_after_overlap_warning(reservation)
     if reservation.slack_after_overlapping?
       content_tag(:div, class: 'slack-warning') do
-       content_tag(:i, '', class: 'icon-warning-sign') + t('.slack_after_overlaps_with_html', reservation: link_to(reservation.next.instance_name, organisation_reservation_path(@organisation, reservation.next)))
+        content_tag(:i, '', class: 'icon-warning-sign') + t('.slack_after_overlaps_with_html', reservation: link_to(reservation.next.instance_name, organisation_reservation_path(@organisation, reservation.next)))
       end
-    else
-      ''
     end
   end
 end

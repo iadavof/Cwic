@@ -35,6 +35,10 @@
                 <dd><%= link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client)) %></dd>
               <dt><%= Reservation.human_attribute_name(:cost) %></dt>
                 <dd><%= number_to_currency(@reservation.cost) %></dd>
+              <dt><%= Reservation.human_attribute_name(:slack_before) %></dt>
+                <dd><%= @reservation.get_slack_before %> <%= t('.min') %></dd>
+              <dt><%= Reservation.human_attribute_name(:slack_after) %></dt>
+                <dd><%= @reservation.get_slack_after %> <%= t('.min') %></dd>
               <dt><%= Reservation.human_attribute_name(:created_at) %></dt>
                 <dd><%= l(@reservation.created_at, format: :long) %></dd>
             </dl>

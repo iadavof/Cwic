@@ -250,9 +250,13 @@ nl:
         slack_after: 'Speling achteraf'
         entity: 'Object'
         entity_id: 'Object'
+        entity_type: 'Objectsoort'
         description: 'Beschrijving'
         organisation_client: 'Klant'
         organisation_client_id: 'Klant'
+        slack_before: 'Speling vooraf'
+        slack_after: 'Speling achteraf'
+        cost: 'Kosten'
         reservation_recurrence_definition: 'Herhaling:'
         reservation_status: 'Status'
         created_at: 'Aangemaakt op'
@@ -344,6 +348,10 @@ nl:
               begins_at_html: 'overlapt met een <a href="%{reservation_url}">andere reservering</a> welke eindigt op %{other_ends_at}'
             ends_at:
               ends_at_html: 'overlapt met een <a href="%{reservation_url}">andere reservering</a> welke begint op %{other_begins_at}'
+            slack_before:
+              slack_before_html: 'overlapt met een <a href="%{reservation_url}">andere reservering</a> welke eindigt op %{other_ends_at}'
+            slack_after:
+              slack_after_html: 'overlapt met een <a href="%{reservation_url}">andere reservering</a> welke begint op %{other_begins_at}'
         reservation_recurrence_definition:
           recurrence_collides_with_itself: 'De ingestelde herhalingen overlappen elkaar.'
           repeating_end: 'niet opgegeven'
@@ -639,6 +647,8 @@ nl:
       remove_icon: 'Icoon verwijderen'
 
   entities:
+    index:
+      min: 'min.'
     show:
       general: 'Algemeen'
     form:
@@ -650,7 +660,7 @@ nl:
       options: 'Opties'
       entity_images_help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
       entity_name_example: '4.13B, 9.5, foyer, loft'
-      minutes: 'minuten'
+      min: 'Minuten'
 
   reservations:
     show:
@@ -660,6 +670,7 @@ nl:
       no_description: '<geen beschrijving>'
       slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'
       slack_after_overlaps_with_html: 'Speling achteraf overlapt met %{reservation}'
+      min: 'min.'
     index:
       reservations_of_from_to: 'De reserveringen van <strong>%{of}</strong> in de periode tussen <strong>%{from}</strong> en <strong>%{to}</strong> worden nu getoond.'
       reservations_of_from: 'De reserveringen van <strong>%{of}</strong> vanaf <strong>%{from}</strong> worden nu getoond.'
@@ -675,6 +686,7 @@ nl:
       entity: 'Object'
       entity_type: 'Objectsoort'
       selected_entity: 'Geselecteerd object'
+      no_entity_selected: 'Geen object geselecteerd'
       available_entities: 'Beschikbare objecten'
       organisation_client: 'Klant'
       organisation_client_type: 'Soort klant'
@@ -685,6 +697,9 @@ nl:
       default_slack_times: 'Speling voor reservering'
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na de reservering. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Hieronder kunnen de waarden voor deze speling worden aangepast voor deze reservering.'
       minutes: 'minuten'
+      no_entities_available: 'Geen objecten beschikbaar'
+    table:
+      min: 'min.'
     modal_form:
       new_organisation_client: 'Nieuwe klant'
       full_form: 'Meer opties'

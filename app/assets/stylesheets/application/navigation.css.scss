@@ -171,12 +171,14 @@
   background-position: left bottom; /* fallback for older browsers */
   background-position: left bottom -50px;
   background-size: 300px auto;
+
   > .submenu {
     display: inline-block;
     vertical-align: top;
     text-align: left;
     padding: 20px;
     margin: 0;
+
     > h2 {
       display: none;
       padding: 0;
@@ -237,7 +239,8 @@
 }
 
 html.js #submenu-box {
-  overflow: auto;
+  overflow-y: auto;
+  overflow-x: hidden;
   position: absolute;
   top: 0;
   left: 0;

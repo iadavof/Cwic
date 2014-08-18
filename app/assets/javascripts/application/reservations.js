@@ -8,12 +8,18 @@ APP.reservations = {
   edit: function() {
     APP.reservations.bindStatusSelectorControls();
   },
+  multiple: function() {
+    APP.reservations.bindSelectEditFields();
+  },
   _new_create: function() {
     APP.reservations.bindSelectClientRadioButtons();
     APP.reservations.bindReservationRecurrenceControls();
   },
-  multiple: function() {
-    APP.reservations.bindSelectEditFields();
+  _form: function() {
+    new reservationFormController({
+      entities_controller_url: Routes.organisation_entities_path(current_organisation),
+      container: 'reservation-form'
+    });
   },
   afterGoogleMapsLoaded: function() {
     APP.organisations.afterGoogleMapsLoaded();

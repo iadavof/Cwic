@@ -22,6 +22,7 @@ Cwic::Application.routes.draw do
     resources :entity_types
 
     resources :entities
+    match '/entities/availability', controller: 'entities', action: 'availability', via: 'post'
 
     resources :info_screens
     match 'info_screens/:id/reservations', controller: 'info_screens', action: 'info_screen_reservations', via: 'get', as: 'info_screen_reservations'

@@ -39,12 +39,19 @@ div#reservation-form {
       &.available {
         @extend .icon-ok;
       }
+      &.warning-available {
+        @extend .icon-warning-sign;
+      }
       &.unavailable {
         @extend .icon-remove;
       }
       &:before {
         @extend [class^="icon-"];
       }
+    }
+
+    div.no-entities-available {
+      @extend .icon-remove;
     }
   }
 }

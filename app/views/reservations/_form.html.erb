@@ -1,4 +1,4 @@
-<div id="reservation-form">
+<div id="reservation-form" data-reservation-id="<%= @reservation.id %>">
   <%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
     <%= render 'shared/error_messages', target: @reservation %>
 
@@ -30,31 +30,17 @@
           <h2><i class="icon-shapes"></i><%= t('.entity') %></h2>
           <div class="entity-selector">
             <h3><%= t('.selected_entity') %></h3>
-            <div class="selected-entity available">Object 1</div>
+            <div class="selected-entity <%= (@reservation.warning ? 'warning-available' : 'available') if @reservation.entity.present? %>"><%= @reservation.entity.instance_name rescue t('.no_entity_selected') %></div>
+            <%= f.hidden_field :entity_id %>
             <h3><%= t('.available_entities') %></h3>
             <div class="entity-type-filter">
-              <div class="field field-entity">
+              <div class="field field-entity-type">
                 <%= f.label :entity_type %>
-                <%= f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose') %>
+                <%= select_tag :entity_type_id, options_for_select(@organisation.entity_types.sort.collect { |et| [et.name, et.id] }, @reservation.entity.try(:entity_type_id)), { prompt: t('prompt_choose') } %>
               </div>
             </div>
-            <ul class="entity-list">
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li class="selected"><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-              <li><a href="#">Object 1</a></li>
-            </ul>
+            <div class="no-entities-available"><%= t('.no_entities_available') %></div>
+            <ul class="entity-list"></ul>
           </div>
         </div>
       </div>

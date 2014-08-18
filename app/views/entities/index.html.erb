@@ -22,6 +22,8 @@
       <%= sortable_table_head(Entity, :name) %>
       <%= table_head(Entity, :entity_type) %>
       <%= sortable_table_head(Entity, :description) %>
+      <%= table_head(Entity, :slack_before) %>
+      <%= table_head(Entity, :slack_after) %>
       <th></th>
     </tr>
   </thead>
@@ -33,6 +35,8 @@
       <td><%= name_link_to_show([@organisation, entity]) %></td>
       <td><%= name_link_to_show([@organisation, entity.entity_type], title: format_description_title(entity.entity_type)) %></td>
       <td><%= format_description(entity.description) %></td>
+      <td><%= entity.get_slack_before %> <%= t('.min') %></td>
+      <td><%= entity.get_slack_after %> <%= t('.min') %></td>
       <td class="icons">
         <%= icon_link_to_edit([@organisation, entity]) %>
         <%= icon_link_to_destroy([@organisation, entity]) %>
