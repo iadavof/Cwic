@@ -50,8 +50,8 @@ APP.init = function() {
 
   // Replace AJAX spinner with svg version if SMIL animations are available
   if(Modernizr.backgroundsize && Modernizr.smil) {
-    $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
-    $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
+    //$('img.ajax-wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
+    //$('.ajax-wait:not(img)').css('background-image', 'url("<%= asset_path('ajax_wait.svg') %>") !important');
   }
 
   this.global.bindHelpModalEvents();

@@ -51,7 +51,7 @@ CwicStickyNotes.prototype.saveNote = function(note_element) {
     var url = this.options.backend_url + '/' + note.attr('id').split('_')[1] + '.json';
     var method = 'PATCH';
   }
-  note.find('img.ajax_wait').show();
+  note.find('img.ajax-wait').show();
   $.ajax({
     type: method,
     url: url,
@@ -68,7 +68,7 @@ CwicStickyNotes.prototype.saveNote = function(note_element) {
       note.find('p.created_at').data('timestamp', response.created_at);
       note.find('p.created_at').attr('title', moment(response.created_at).format('LLLL'));
     }
-    note.find('img.ajax_wait').hide();
+    note.find('img.ajax-wait').hide();
     note.find('p.saved_notification').show();
   });
 };

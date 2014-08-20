@@ -109,7 +109,7 @@ div.note p.saved_notification {
     line-height: 100%;
 }
 
-div.note img.ajax_wait {
+div.note img.ajax-wait {
     display: none;
     position: absolute;
     right: 0;
