@@ -16,7 +16,7 @@ APP.reservations = {
     APP.reservations.bindReservationRecurrenceControls();
   },
   _form: function() {
-    new reservationFormController({
+    new CwicReservationFormController({
       entities_controller_url: Routes.organisation_entities_path(current_organisation),
       container: 'reservation-form'
     });
