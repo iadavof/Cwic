@@ -7,5 +7,5 @@
 <div id="results">
   <%= render partial: 'result', collection: @taggables %>
 </div>
-<%= paginate(@results) %>
+<%= paginate(@raw_results) %>
 <% end %>

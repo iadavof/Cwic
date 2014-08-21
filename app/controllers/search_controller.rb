@@ -45,17 +45,20 @@ class SearchController < ApplicationController
     # Map result ids to objects
     @results = results.map { |res| objects[res[:type]][res[:id]].tap { |o| o.pg_search_rank = res[:rank] } }
 
-    respond_with(@results)
+    # Get the tags that are like the query
+    @tag_suggestions = @organisation.get_owned_tags_with_part(@query)
+
+    respond_with(@raw_results, @results, @tag_suggestions)
   end
 
   def tag_search
     @tag_query = params[:tag_query].downcase
     @taggables = []
     if ActsAsTaggableOn::Tag.find_by(name: @tag_query).present?
-      @results = ActsAsTaggableOn::Tag.find_by(name: @tag_query).taggings.where(tagger_type: 'Organisation', tagger_id: 1, taggable_type: SEARCHABLE).page(params[:page])
-      @taggables = @results.map(&:taggable)
+      @raw_results = ActsAsTaggableOn::Tag.find_by(name: @tag_query).taggings.where(tagger_type: 'Organisation', tagger_id: 1, taggable_type: SEARCHABLE).page(params[:page])
+      @taggables = @raw_results.map(&:taggable)
     end
-    respond_with(@results, @taggables)
+    respond_with(@raw_results, @taggables)
   end
 
 private

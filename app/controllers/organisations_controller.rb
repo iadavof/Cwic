@@ -44,7 +44,7 @@ class OrganisationsController < ApplicationController
   end
 
   def tag_search
-    @tags = @organisation.owned_tags.where('name ILIKE ?', "%#{params[:tag_part]}%")
+    @tags = @organisation.get_owned_tags_with_part(params[:tag_part])
     respond_with(@tags)
   end
 
