@@ -141,7 +141,7 @@ ui-timepicker-table td {
 
 .ui-tabs .ui-state-default a,
 .ui-tabs .ui-state-hover a {
-  color: inherit;
+  color: inherit !important;
 }
 
 .ui-tabs .ui-state-hover {
@@ -150,7 +150,7 @@ ui-timepicker-table td {
   border: 0 none;
 }
 
-.ui-widget-content.ui-tabs a {
+.ui-widget-content.ui-tabs a:not(.select2-choice) {
   color: #ff3520;
 }
 
