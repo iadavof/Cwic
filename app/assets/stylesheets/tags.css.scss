@@ -1,28 +1,56 @@
 div.tag-list {
   border-color: #e1e1e1;
+  background-color: #fff;
+  margin-top: -1px;
 }
 
+
 div.tag-list {
+  div.tag-list-label {
+    position: relative;
+    background-color: #FF3520;
+    display: inline-block;
+    height: 100%;
+    color: #fff;
+    float: left;
+    padding: .5em 1em;
+    font-size: 1.5em;
+    font-weight: bold;
+    margin-top: 1px;
+  }
+  div.tag-list-label:after{
+    position: absolute;
+    content:"";
+    width: 0;
+    height: 0;
+    left: 100%;
+    top: 50%;
+    margin-top:-10px;
+    border-top: 10px solid transparent;
+    border-bottom: 10px solid transparent;
+    border-left: 10px solid #FF3520;
+}
+
   a.tag {
     display: block;
     font-size: 1.5em;
-    margin: 7.5px;
     padding: .5em 1em;
     float: left;
     background-color: #1c9cb2;
     color: #fff;
     text-decoration: none;
+    margin: 1px;
   }
 }
 
 div.tags-field {
   width: auto;
   display: block;
+  margin-bottom: 40px;
 }
 
 div.tags-field {
   ul.select2-choices {
-    padding: 7.5px;
     border-color: #e1e1e1;
     background-image: none;
   }
@@ -40,8 +68,8 @@ div.tags-field {
       border: none;
       border-radius: 0;
       line-height: normal;
-      margin: 7.5px;
       padding: .5em 1em;
+      box-shadow: none;
     }
   }
 }

@@ -1,5 +1,9 @@
 <% content_for :page_title do %><%= show_title(@reservation) %><% end %>
 
+<% content_for :top_content do %>
+  <%= render partial: 'tags/show', locals: { tags: @reservation.tags } %>
+<% end %>
+
 <% content_for :local_menu_navigation do %>
   <%= button_link_to_index([@organisation, Reservation]) %>
   <%= button_link_to_edit([@organisation, @reservation]) %>

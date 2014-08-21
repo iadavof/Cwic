@@ -1,5 +1,8 @@
 <%= nested_form_for([@organisation, @organisation_client]) do |f| %>
+  <%= render partial: 'tags/form', locals: { f: f } %>
+
   <%= render 'shared/error_messages', target: @organisation_client %>
+
   <div id="tabs">
     <ul class="nav">
       <li><a href="#general" class="current"><%= t('.general') %></a></li>
@@ -8,13 +11,6 @@
 
     <div class="tab-wrap">
       <div id="general">
-        <div class="content-columns clearfix">
-          <div class="content-column">
-            <div class="content-block">
-              <%= render partial: 'tags/form', locals: { f: f } %>
-            </div>
-          </div>
-        </div>
         <%= render 'form_fields', f: f %>
       </div>
 

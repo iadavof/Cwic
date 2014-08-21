@@ -1,6 +1,9 @@
+<%= nested_form_for([@organisation, @entity]) do |f| %>
+  <%= render partial: 'tags/form', locals: { f: f } %>
+
+  <%= render 'shared/error_messages', target: @entity %>
+
 <div id="entity-form">
-  <%= nested_form_for([@organisation, @entity]) do |f| %>
-    <%= render 'shared/error_messages', target: @entity %>
 
     <% if @organisation.entity_types.empty? %>
     <p class="no_entity_types_found"><%= t('.no_entity_types_found_html', { link: link_to_new([@organisation, EntityType]) }) %></p>
@@ -18,11 +21,6 @@
 
       <div class="tab-wrap">
         <div id="general">
-          <div class="content-columns clearfix">
-            <div class="content-column">
-              <%= render partial: 'tags/form', locals: { f: f } %>
-            </div>
-          </div>
           <div class="field autosubmit">
             <%= f.label :entity_type %>
             <%= f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" } %>

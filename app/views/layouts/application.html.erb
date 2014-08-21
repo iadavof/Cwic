@@ -35,6 +35,7 @@
         <div id="content-area">
           <div class="inner">
             <h1 id="page-title"><%= content_for?(:page_title) ? yield(:page_title) : t('default_title') %></h1>
+            <%= yield(:top_content) if content_for?(:top_content) %>
             <div id="content">
               <div class="inner clearfix">
                 <%= render partial: 'layouts/flash_messages' %>

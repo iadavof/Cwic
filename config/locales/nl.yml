@@ -51,7 +51,7 @@ nl:
   default_title: 'Titel'
   unlimited: 'Onbeperkt'
   search_for_tag: 'Zoeken naar alle items met de tag "%{tag}"'
-  no_tags_defined: 'Er zijn nog geen tags opgegeven voor dit item, klik op bewerken om tags toe te voegen.'
+  tags: 'Tags'
   multiple:
     delete: 'Verwijderen'
     edit: 'Bewerken'
