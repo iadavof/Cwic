@@ -43,7 +43,7 @@ reservationFormController.prototype.setSlackFieldErrorState = function() {
       current = parseInt(field.attr('placeholder'), 10);
     }
     if(current != null) {
-      APP.util.setFieldErrorState(field, current >= parseInt(field.data('max-slack'), 10));
+      APP.util.setFieldErrorState(field, current > parseInt(field.data('max-slack'), 10));
       return;
     }
   }
