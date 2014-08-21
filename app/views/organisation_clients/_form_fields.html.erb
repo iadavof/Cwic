@@ -30,7 +30,7 @@
       <input type="text" id="addresspicker" placeholder="<%= t('.search_address') %>" />
     </div>
     <div class="auto-address-fields">
-      <a href="" class="icon icon-edit action-button" id="edit-auto-address-fields"></a>
+      <a href="javascript:void(0)" class="icon icon-edit action-button" id="edit-auto-address-fields" title="<%= t('.edit_address') %>"></a>
       <div class="field">
         <%= f.label :route %>
         <%= f.text_field :route, readonly: true, class: "addresspicker-route" %>

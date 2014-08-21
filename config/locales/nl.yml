@@ -583,6 +583,7 @@ nl:
     form_fields:
       address: 'Adres'
       search_address: 'Adres zoeken...'
+      edit_address: 'Adres bewerken'
 
   organisation_users:
     index:
@@ -609,6 +610,7 @@ nl:
     form_fields:
       address: 'Adres'
       search_address: 'Adres zoeken...'
+      edit_address: 'Adres bewerken'
 
   documents:
     overview:

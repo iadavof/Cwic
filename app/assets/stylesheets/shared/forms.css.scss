@@ -74,8 +74,22 @@ button,
   }
   &.grey {
     background-color: #666;
+    font-weight: normal;
     &:hover, &:active, &.active {
       color: #666;
+    }
+    &:hover {
+      background-color: #eee;
+    }
+    &:active, &.active {
+      background-color: #ddd;
+    }
+  }
+  &.blue {
+    background-color: #1c9cb2;
+    font-weight: normal;
+    &:hover, &:active, &.active {
+      color: #1c9cb2;
     }
     &:hover {
       background-color: #eee;
@@ -99,6 +113,7 @@ button,
   }
   &.red {
     background-color: #ff3520;
+    font-weight: normal;
     &:hover, &:active, &.active {
       color: #ff3520;
     }
