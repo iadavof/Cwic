@@ -437,6 +437,8 @@ APP.global = {
         initSelection : function(element, callback) {
           saved && callback(saved);
         },
+        tokenSeparators: [','],
+        multiple: true,
         ajax: {
           type: 'POST',
           url: Routes.organisation_tag_search_path(current_organisation),
