@@ -23,7 +23,7 @@ APP.init = function() {
 
   // Load the api for the local menu
   this.global.loadLocalMenu();
-  
+
   // Load Google if needed
   $(document).on('page:load', APP.global.initializeGoogleMapsFunctions);
 
@@ -53,9 +53,9 @@ APP.init = function() {
     $('img.ajax_wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('div.ajax-wait').css('background-image', '<%= asset_path('ajax_wait.svg') %>');
   }
-  
+
   this.global.bindHelpModalEvents();
-  
+
   this.global.contentAreaResize();
   $(window).on('resize', function() {
     APP.global.contentAreaResize();
@@ -120,7 +120,7 @@ APP.global = {
     $('#main-menu > li > a').on('click', function() {
       return APP.global.slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
     });
-    
+
     /* Highlight shortcut letters */
     $menuItems.children('a').each(function(){
       var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
@@ -152,9 +152,9 @@ APP.global = {
     var $searchBar = $('#search-bar');
     var $belowHeader = $('#below-header');
     var $searchField = $('#global_search');
-    
+
     $('#open-search-button').addClass('open');
-    
+
     $(document).keydown(function(event) {
       /* Close search bar when esc button is pressed */
       if(event.keyCode == 27) {
@@ -171,9 +171,9 @@ APP.global = {
     var $searchBar = $('#search-bar');
     var $belowHeader = $('#below-header');
     var $searchField = $('#global_search');
-    
+
     $searchField.blur().val('');
-    
+
     $('#open-search-button').removeClass('open');
     $belowHeader.velocity({top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
       $searchBar.removeClass('open');
@@ -194,7 +194,7 @@ APP.global = {
   slideSubMenuByMenuItem: function(htmlId, animated) {
     var $menuItem = $('#' + htmlId);
     var $relatedSubmenu = $('#submenu-box > .submenu[data-main-menu-relation="' + htmlId + '"]').first();
-    
+
     if (!htmlId || $relatedSubmenu.length == 0 || $menuItem.length == 0) {
       return true;
     } else {
@@ -240,7 +240,7 @@ APP.global = {
     var $submenus = $('#submenu-box > .submenu');
     var $submenu = $(submenu);
     var duration = 200;
-    
+
     switch (direction) {
       case 'in':
         if (animated) {
@@ -376,7 +376,7 @@ APP.global = {
     $(parent).find('input.with-clear').each(this.initializeInputWithClear);
 
     $(document).on('nested:fieldAdded', function(e) { APP.global.initializeSpecialFormFields(e.field); });
-    
+
     $(parent).find('.select2-offscreen.autosubmit').on('change', function() {
       $(this).prev('.select2-container').addClass('autosubmit-busy');
     });

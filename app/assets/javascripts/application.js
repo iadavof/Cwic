@@ -12,10 +12,10 @@
 //= require websocket_rails/main
 //= require gistyle
 //= require ./shared/i18n/cwic/base
-//= require_tree ./shared/i18n
 //= require_tree ./shared/libraries
-//= require_tree ./application/i18n
+//= require_tree ./shared/i18n
 //= require_tree ./application/libraries
+//= require_tree ./application/i18n
 //= require_directory ./shared
 //= require ./application/global
 //= require_directory ./application
