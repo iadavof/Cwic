@@ -92,10 +92,11 @@
               dd
                 = "#{@organisation_client.administrative_area_level_2}, #{@organisation_client.administrative_area_level_1}"
         .content-column
-          h2
-            i.icon-phone-call
-            = t('.contacts')
-          #organisation_client_contacts data-organisation-client-id=@organisation_client.id
+          .content-block
+            h2
+              i.icon-phone-call
+              = t('.contacts')
+            #organisation_client_contacts data-organisation-client-id=@organisation_client.id
 
     #documents
       #documents-container.clearfix

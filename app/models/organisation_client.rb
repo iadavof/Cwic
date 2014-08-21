@@ -78,7 +78,7 @@ class OrganisationClient < ActiveRecord::Base
   def iban_valid
 
     # We do not require the iban to be present
-    return true if self.iban == ''
+    return true if iban.nil? || self.iban == ''
 
     iban_model = IBANTools::IBAN.new(self.iban)
     iban_errors = iban_model.validation_errors
