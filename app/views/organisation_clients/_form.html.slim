@@ -31,8 +31,9 @@
               = render partial: 'contact_form_fields', locals: { f: f }
           .content-column
             .content-block
-              | Contactpersonen
-
+              #organisation_clients_container.nested-form
+                = f.fields_for :contacts, wrapper: false do |occf|
+                  = render partial: 'organisation_client_contacts/form_fields', locals: { f: occf }
       #documents
         #documents-container.nested-form.clearfix
           = f.fields_for :documents, wrapper: false do |df|

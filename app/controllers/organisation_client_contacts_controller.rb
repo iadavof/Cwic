@@ -48,16 +48,16 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @organisation_client_contacts = @organisation_client.organisation_client_contacts.accessible_by(current_ability, :index)
+      @organisation_client_contacts = @organisation_client.contacts.accessible_by(current_ability, :index)
     when 'new', 'create'
-      @organisation_client_contact = @organisation_client.organisation_client_contacts.build
+      @organisation_client_contact = @organisation_client.contacts.build
     else
-      @organisation_client_contact = @organisation_client.organisation_client_contacts.find(params[:id])
+      @organisation_client_contact = @organisation_client.contacts.find(params[:id])
     end
   end
 
   def resource_params
-    params.require(:organisation_client_contact).permit(:organisation_client_id, :first_name, :infix, :last_name, :position, :route, :street_number, :postal_code, :locality, :country, :administrative_area_level_2, :administrative_area_level_1, :email, :phone, :mobile_phone, :note)
+    params.require(:organisation_client_contact).permit(:first_name, :infix, :last_name, :position, :route, :street_number, :postal_code, :locality, :country, :administrative_area_level_2, :administrative_area_level_1, :email, :phone, :mobile_phone, :note)
   end
 
   def load_organisation_client

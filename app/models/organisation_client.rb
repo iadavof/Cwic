@@ -6,7 +6,7 @@ class OrganisationClient < ActiveRecord::Base
   # Associations
   belongs_to :organisation
   has_many :reservations, dependent: :destroy
-  has_many :organisation_client_contacts, dependent: :destroy
+  has_many :contacts, class_name: 'OrganisationClientContact', dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
@@ -28,9 +28,10 @@ class OrganisationClient < ActiveRecord::Base
 
   # Nested attributes
   accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :contacts, allow_destroy: true
 
   # Scopes
-  pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
+  pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' }, contacts: { last_name: 'C', first_name: 'D', position: 'D' } }
 
   default_scope { order(:last_name, :first_name, :locality) }
 

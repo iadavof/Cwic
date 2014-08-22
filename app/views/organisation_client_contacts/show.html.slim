@@ -6,10 +6,6 @@
   = button_link_to_destroy([@organisation, @organisation_client, @organisation_client_contact])
 dl
   dt
-    = OrganisationClientContact.human_attribute_name(:organisation_client)
-  dd
-    = @organisation_client_contact.organisation_client
-  dt
     = OrganisationClientContact.human_attribute_name(:first_name)
   dd
     = @organisation_client_contact.first_name
