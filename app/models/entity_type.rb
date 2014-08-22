@@ -30,7 +30,7 @@ class EntityType < ActiveRecord::Base
   # Nested attributes
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :options, allow_destroy: true
-  accepts_nested_attributes_for :entity_images, allow_destroy: true
+  accepts_nested_attributes_for :entity_images, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :reservation_statuses, allow_destroy: true
   accepts_nested_attributes_for :reserve_periods, allow_destroy: true
 

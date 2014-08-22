@@ -59,7 +59,7 @@ class Reservation < ActiveRecord::Base
   # Nested attributes
   accepts_nested_attributes_for :organisation_client
   accepts_nested_attributes_for :reservation_recurrence_definition
-  accepts_nested_attributes_for :documents, allow_destroy: true
+  accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
 
   # Scopes
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }

@@ -33,8 +33,8 @@ class Entity < ActiveRecord::Base
 
   # Nested attributes
   accepts_nested_attributes_for :properties, allow_destroy: true
-  accepts_nested_attributes_for :entity_images, allow_destroy: true
-  accepts_nested_attributes_for :documents, allow_destroy: true
+  accepts_nested_attributes_for :entity_images, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
 
   # Scopes
   pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
