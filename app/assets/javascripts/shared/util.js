@@ -72,13 +72,12 @@ APP.util = {
     APP.global.initializeSpecialFormFields(newitem);
     return newitem;
   },
-  setFieldErrorState:  function(field, error) {
-    if(field.parent().hasClass('field_with_errors')) {
-      field.unwrap();
+  setFieldErrorState: function(field, error, options) {
+    var options = $.extend({ label: true }, options || {});
+    if(options.label) {
+     $('label[for="'+ field.attr('id') +'"]').toggleClass('validation-error', error)
     }
-    if(error) {
-      field.wrap($('<div>', {'class': 'field_with_errors'}));
-    }
+    field.toggleClass('validation-error', error);
   }
 }
 

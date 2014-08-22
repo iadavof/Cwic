@@ -81,16 +81,6 @@ div#reservation-form {
       }
     }
 
-    .field_with_errors {
-      input, textarea, select {
-        border-color: #ff3520;
-
-        &.replaced + div {
-          border-color: #ff3520;
-        }
-      }
-    }
-
     .timepicker-field {
       margin-left: 5px;
     }
