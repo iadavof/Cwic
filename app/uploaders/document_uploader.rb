@@ -59,7 +59,7 @@ class DocumentUploader < CarrierWave::Uploader::Base
     # Web extensions
     %w(htm html xml) +
     # Document extensions
-    %w(txt rtf) +
+    %w(txt rtf csv) +
     # OpenDocument extensions
     %w(odt ods odp odg odc odf odi odm ott ots otp otg otc otf oti oth) +
     # Microsoft Office extensions
