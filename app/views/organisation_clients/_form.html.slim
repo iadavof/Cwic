@@ -13,23 +13,25 @@
       #general
         .content-columns.threecol.clearfix
           .content-column
-            h2
-              i.icon-address
+            .content-block
+              h2
+                i.icon-address
                 = t('.general')
-            = render partial: 'client_form_fields', locals: { f: f }
-          .content-column
-            h2
-              i.icon-phone-call
-                = t('.contact')
-            = render partial: 'contact_form_fields', locals: { f: f }
-          .content-column
-            | Contactpersonen
-          .content-column
-            h2
-              i.icon-phone-call
+              = render partial: 'client_form_fields', locals: { f: f }
+            .content-block
+              h2
+                i.icon-phone-call
                 = t('.payment_details')
-            = render partial: 'payment_form_fields', locals: { f: f }
-
+              = render partial: 'payment_form_fields', locals: { f: f }
+          .content-column
+            .content-block
+              h2
+                i.icon-phone-call
+                = t('.contact')
+              = render partial: 'contact_form_fields', locals: { f: f }
+          .content-column
+            .content-block
+              | Contactpersonen
 
       #documents
         #documents-container.nested-form.clearfix
