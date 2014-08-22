@@ -2,6 +2,8 @@ class OrganisationsController < ApplicationController
   before_action :load_resource
   authorize_resource
 
+  respond_to :json, only: :tag_search
+
   # GET /organisations
   def index
     respond_with(@organisations)
@@ -39,6 +41,11 @@ class OrganisationsController < ApplicationController
   def update
     @organisation.update_attributes(resource_params)
     respond_with(@organisation)
+  end
+
+  def tag_search
+    @tags = @organisation.get_owned_tags_with_part(params[:tag_part])
+    respond_with(@tags)
   end
 
 private

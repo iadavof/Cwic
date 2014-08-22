@@ -78,6 +78,9 @@ APP.util = {
      $('label[for="'+ field.attr('id') +'"]').toggleClass('validation-error', error)
     }
     field.toggleClass('validation-error', error);
+  },
+  ucFirst: function(string) {
+    return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
   }
 }
 

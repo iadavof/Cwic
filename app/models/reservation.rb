@@ -3,6 +3,7 @@ class Reservation < ActiveRecord::Base
   include Sspable
   include Exportable
   include DatetimeSplittable
+  include Taggable
   include I18n::Alchemy
   include Rails.application.routes.url_helpers
 

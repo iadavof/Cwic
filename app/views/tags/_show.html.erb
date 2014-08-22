@@ -1,0 +1,10 @@
+<div class="tag-list clearfix">
+  <% unless tags.empty? %>
+    <div class="tag-list-label">
+    <%= t('tags') %>
+    </div>
+    <% tags.each do |tag| %>
+      <%= link_to(tag.name.ucfirst, organisation_search_tag_search_path(current_organisation, params: { tag_query: tag.name }), title: t('search_for_tag', { tag: tag.name }), class: 'tag' ) %>
+    <% end %>
+  <% end %>
+</div>

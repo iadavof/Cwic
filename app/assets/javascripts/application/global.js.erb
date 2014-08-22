@@ -45,6 +45,9 @@ APP.init = function() {
   // Make select all button on tables work
   this.global.bindSelectAllCheckboxEvents();
 
+  // Add select2 in tagging mode to taggling list text field
+  this.global.loadTaggingSelect2Box();
+
   // Auto submit limiting fields
   $('#limiting select').on('change', function() { this.form.submit(); });
 
@@ -422,5 +425,40 @@ APP.global = {
         APP[$('body').data('controller')].afterGoogleMapsLoaded();
       }
     }
+  },
+  loadTaggingSelect2Box: function() {
+    $('.tags-field').each(function() {
+      var tagField = $(this);
+      var saved = tagField.data('saved').map(function(item) { return { id: item, name: item } });
+      tagField.select2({
+        tags: true,
+        placeholder: jsLang.global.add_tags,
+        minimumInputLength: 1,
+        initSelection : function(element, callback) {
+          saved && callback(saved);
+        },
+        tokenSeparators: [','],
+        multiple: true,
+        ajax: {
+          type: 'POST',
+          url: Routes.organisation_tag_search_path(current_organisation),
+          dataType: 'json',
+          quietMillis: 200,
+          data:    function(term) { return { tag_part: term }; },
+          results: function(data) { return { results: data.map(function(item) { return { id: item.name, name: item.name } }) }; }
+        },
+        createSearchChoice: function(term, data) {
+          var filterFunction = function() {
+              return this.name.localeCompare(term) === 0;
+          };
+
+          if($(data).filter(filterFunction).length === 0) {
+              return { id: term.toLowerCase(), name: term.toLowerCase() };
+          }
+        },
+        formatResult:    function(item, page){ return APP.util.ucFirst(item.name); },
+        formatSelection: function(item, page){ return APP.util.ucFirst(item.name); }
+      });
+    });
   }
 };

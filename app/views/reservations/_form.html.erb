@@ -1,5 +1,7 @@
-<div id="reservation-form" data-reservation-id="<%= @reservation.id %>">
+<div id="reservation-form">
   <%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
+    <%= render partial: 'tags/form', locals: { f: f } %>
+
     <%= render 'shared/error_messages', target: @reservation %>
 
     <fieldset class="begin-and-end">

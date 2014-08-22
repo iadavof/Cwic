@@ -1,6 +1,7 @@
 class Entity < ActiveRecord::Base
   include PgSearch
   include Sspable
+  include Taggable
 
   # Associations
   belongs_to :entity_type, counter_cache: true

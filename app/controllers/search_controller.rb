@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   SEARCHABLE = [OrganisationClient, Reservation, Entity, EntityType]
 
-  def results
+  def global_search
     @query = params[:global_search]
 
     # Determine the object types to search in
@@ -45,14 +45,27 @@ class SearchController < ApplicationController
     # Map result ids to objects
     @results = results.map { |res| objects[res[:type]][res[:id]].tap { |o| o.pg_search_rank = res[:rank] } }
 
-    respond_with(@results)
+    # Get the tags that are like the query
+    @tag_suggestions = @organisation.get_owned_tags_with_part(@query)
+
+    respond_with(@raw_results, @results, @tag_suggestions)
+  end
+
+  def tag_search
+    @tag_query = params[:tag_query].downcase
+    @taggables = []
+    if ActsAsTaggableOn::Tag.find_by(name: @tag_query).present?
+      @raw_results = ActsAsTaggableOn::Tag.find_by(name: @tag_query).taggings.where(tagger_type: 'Organisation', tagger_id: 1, taggable_type: SEARCHABLE).page(params[:page])
+      @taggables = @raw_results.map(&:taggable)
+    end
+    respond_with(@raw_results, @taggables)
   end
 
 private
   def generate_search_key
     # Generate new unique search key
     begin
-      search_key = rand(10000)
+      search_key = rand(1000000000)
     end while Rails.cache.exist?(get_cache_key(search_key))
     search_key
   end

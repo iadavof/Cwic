@@ -13,6 +13,7 @@ jsLangs['nl'] = {
     and_connector: ' en ',
     expand_menu: 'Menu uitklappen',
     contract_menu: 'Menu inklappen',
+    add_tags: 'Voer hier tags in...',
   },
   controls: {
     dropdown: {

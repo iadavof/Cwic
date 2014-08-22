@@ -150,6 +150,9 @@ gem 'tzinfo-data', platforms: [:mingw, :mswin]
 # Symbolizes Active Record attributes and validates them against a list
 gem 'symbolize'
 
+# Tagging solution
+gem 'acts-as-taggable-on'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'

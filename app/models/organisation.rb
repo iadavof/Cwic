@@ -15,6 +15,9 @@ class Organisation < ActiveRecord::Base
   has_many :info_screens, dependent: :destroy
   has_many :documents, dependent: :destroy
 
+  # Model extensions
+  acts_as_tagger
+
   # Validations
   validates :name, presence: true, length: { maximum: 255 }
   validates :route, presence: true, length: { maximum: 255 }
@@ -49,5 +52,9 @@ class Organisation < ActiveRecord::Base
 
   def instance_name
     self.name
+  end
+
+  def get_owned_tags_with_part(part)
+    @tags = self.owned_tags.where('name ILIKE ?', "%#{part}%")
   end
 end
