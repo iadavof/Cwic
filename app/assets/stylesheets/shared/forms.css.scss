@@ -21,20 +21,12 @@ div.actions {
   margin-left: 10px;
 }
 
-.field > .with_errors {
-  display: inline-block;
+label.validation-error {
   color: #ff3520;
 }
 
-.field_with_errors {
-  display: inline-block;
-  vertical-align: top;
-  > label {
-    color: #ff3520;
-  }
-  > input, > select, > textarea {
-    border: 2px solid #ff3520;
-  }
+input.validation-error, select.validation-error, textarea.validation-error, .select2-container.validation-error, input.validation-error.replaced + div div.inner {
+  border: 2px solid #ff3520;
 }
 
 div.field-with-example-wrapper {
@@ -225,10 +217,7 @@ div.field-with-clear {
     color: #fff;
     background-color: #FF3520;
     vertical-align: middle;
-    margin-right: 5px;
-    margin-left: -2px;
-    margin-top: -1px;
-    margin-right: 5px;
+    margin: -1px 5px 0 -2px;
     text-align: center;
     padding: 4px;
     border: 1px solid #ccc;
@@ -242,12 +231,13 @@ div.field-with-clear {
   }
 }
 
-.field_with_errors > div.field-with-clear {
-  > input {
+div.field-with-clear {
+  > input.validation-error {
     border: 2px solid #ff3520;
     border-right: 0 none;
   }
-  > span {
+
+  > input.validation-error + span {
     border: 2px solid #ff3520;
     border-left: 0 none;
   }
