@@ -73,6 +73,10 @@ APP.util = {
     return newitem;
   },
   setFieldErrorState: function(field, error, options) {
+    var options = $.extend({ label: true }, options || {});
+    if(options.label) {
+     $('label[for="'+ field.attr('id') +'"]').toggleClass('validation-error', error)
+    }
     field.toggleClass('validation-error', error);
   }
 }
