@@ -76,6 +76,17 @@
           </div>
           <% end %>
         </div>
+        <div class="content-block">
+          <h2><i class="icon-document"></i><%= Document.model_name.human(count: 2) %></h2>
+          <div id="documents">
+            <div class="nested-form clearfix" id="documents-container">
+              <%= f.fields_for :documents, wrapper: false do |df| %>
+                <%= render partial: 'documents/document_fields', locals: { f: df } %>
+              <% end %>
+            </div>
+            <%= f.link_to_add '', :documents, data: { target: '#documents-container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: Document.model_name.human.lcfirst) %>
+          </div>
+        </div>
       </div>
 
       <div class="content-column">
@@ -93,18 +104,6 @@
             <%= render partial: 'reservation_recurrence_definitions/form_fields', locals: { f: rrdf } %>
           <% end %>
           <% end %>
-        </div>
-      </div>
-
-      <div class="content-column">
-        <h2><i class="icon-document"></i><%= Document.model_name.human(count: 2) %></h2>
-        <div id="documents">
-          <div class="nested-form clearfix" id="documents-container">
-            <%= f.fields_for :documents, wrapper: false do |df| %>
-              <%= render partial: 'documents/document_fields', locals: { f: df } %>
-            <% end %>
-          </div>
-          <%= f.link_to_add '', :documents, data: { target: '#documents-container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: Document.model_name.human.lcfirst) %>
         </div>
       </div>
     </div>

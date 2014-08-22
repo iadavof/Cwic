@@ -48,7 +48,24 @@ class DocumentUploader < CarrierWave::Uploader::Base
   end
 
   def extension_white_list
-    %w(jpg jpeg gif png pdf svg xls xlsx ppt pptx doc docx html eps fla mp3 ai zip rar)
+    # Archive extensions
+    %w(tar zip rar gz 7z bz2) +
+    # Bitmap image extensions
+    %w(jpg jpeg gif png bmp) +
+    # Vector image extensions
+    %w(svg wmf emf) +
+    # Audio extensions
+    %w(mp3) +
+    # Web extensions
+    %w(htm html xml) +
+    # Document extensions
+    %w(txt rtf csv) +
+    # OpenDocument extensions
+    %w(odt ods odp odg odc odf odi odm ott ots otp otg otc otf oti oth) +
+    # Microsoft Office extensions
+    %w(doc docx docm docb xls xlm xlw xlsx xlsm xlsb ppt pps pptx pptm ppsx ppsm sldx sldm dot dotx dotm xlt xltx xltm pot potx potm) +
+    # Adobe extensions
+    %w(psd ai eps indd pdf)
   end
 
 end
