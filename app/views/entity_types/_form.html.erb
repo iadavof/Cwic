@@ -5,11 +5,11 @@
     <div id="tabs">
       <ul class="nav">
         <li><a href="#general" class="current"><%= t('.general') %></a></li>
-        <li><a href="#properties"><%= t('.properties') %></a></li>
-        <li><a href="#options"><%= t('.options') %></a></li>
-        <li><a href="#reservation-statuses"><%= t('.reservation_statuses') %></a></li>
-        <li><a href="#images"><%= t('.images') %></a></li>
-        <li><a href="#reserve-periods"><%= t('.reserve_periods') %></a></li>
+        <li><a href="#properties"><%= EntityTypeProperty.model_name.human(count: 2) %></a></li>
+        <li><a href="#options"><%= EntityTypeOption.model_name.human(count: 2) %></a></li>
+        <li><a href="#reservation-statuses"><%= ReservationStatus.model_name.human(count: 2) %></a></li>
+        <li><a href="#images"><%= EntityImage.model_name.human(count: 2) %></a></li>
+        <li><a href="#reserve-periods"><%= ReservePeriod.model_name.human(count: 2) %></a></li>
       </ul>
 
       <div class="tab-wrap">

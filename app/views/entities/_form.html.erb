@@ -10,7 +10,7 @@
       <ul class="nav">
         <li><a href="#general" class="current"><%= t('.general') %></a></li>
         <% if @entity.properties.present? %>
-        <li><a href="#properties"><%= t('.properties') %></a></li>
+        <li><a href="#properties"><%= EntityProperty.model_name.human(count: 2) %></a></li>
         <% end %>
         <li><a href="#documents"><%= Document.model_name.human(count: 2) %></a></li>
         <li><a href="#entity-images"><%= EntityImage.model_name.human(count: 2) %></a></li>

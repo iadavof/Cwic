@@ -27,7 +27,7 @@
     <div class="content-columns threecol clearfix">
       <div class="content-column">
         <div class="content-block">
-          <h2><i class="icon-shapes"></i><%= t('.entity') %></h2>
+          <h2><i class="icon-shapes"></i><%= Entity.model_name.human(count: 1) %></h2>
           <div class="entity-selector">
             <h3><%= t('.selected_entity') %></h3>
             <div class="selected-entity <%= (@reservation.warning ? 'warning-available' : 'available') if @reservation.entity.present? %>"><%= @reservation.entity.instance_name rescue t('.no_entity_selected') %></div>
@@ -47,7 +47,7 @@
 
       <div class="content-column">
         <div class="content-block">
-          <h2><i class="icon-user"></i><%= t('.organisation_client') %></h2>
+          <h2><i class="icon-user"></i><%= OrganisationClient.model_name.human(count: 1) %></h2>
           <% if @reservation.new_record? %>
           <div class="organisation_client_new_existing">
             <div class="field">
