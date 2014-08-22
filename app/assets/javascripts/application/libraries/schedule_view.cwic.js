@@ -1239,7 +1239,7 @@ CwicScheduleView.prototype.createScheduleItem = function(reservationForm, resetN
           for(index in result.errors) {
             var item = result.errors[index];
             if($.isArray(item.messages) && item.messages.length > 0) {
-              jreservationForm.find('label[for="reservation_'+ index +'"]').wrap($('<div>', {'class': 'field_with_errors'}));
+              jreservationForm.find('label[for="reservation_'+ index +'"]').addClass('validation-error');
               for(itemIndex in item.messages) {
                 errorList.append($('<li>', { html: item.messages[itemIndex] }));
               }
