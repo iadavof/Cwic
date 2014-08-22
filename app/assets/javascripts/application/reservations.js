@@ -47,6 +47,8 @@ APP.reservations = {
     $(':radio[name="organisation_client_type"]').trigger('change');
   },
   bindOnSubmitMiniSearch: function() {
+    // TODO the checkDateAndSubmit function is not used ever, since it is not called when date fields change (the onchange callback submits the form without invoking the form's on submit callbacks).
+    // The function should be bound on the date fields directly and then let the function submit the form if the fields are valid
     $('form.mini-search.with-date').on('submit.date-domain', APP.reservations.checkDateAndSubmit);
   },
   checkDateAndSubmit: function(e) {
