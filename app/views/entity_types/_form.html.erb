@@ -1,9 +1,9 @@
-<%= nested_form_for([@organisation, @entity_type]) do |f| %>
-  <%= render partial: 'tags/form', locals: { f: f } %>
-
-  <%= render 'shared/error_messages', target: @entity_type %>
-
 <div id="entity-type-form">
+  <%= nested_form_for([@organisation, @entity_type]) do |f| %>
+    <%= render partial: 'tags/form', locals: { f: f } %>
+
+    <%= render 'shared/error_messages', target: @entity_type %>
+
     <div id="tabs">
       <ul class="nav">
         <li><a href="#general" class="current"><%= t('.general') %></a></li>

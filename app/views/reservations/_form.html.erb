@@ -1,8 +1,9 @@
-<%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
-
 <div id="reservation-form">
+  <%= nested_form_for([@organisation, @reservation.localized]) do |f| %>
     <%= render partial: 'tags/form', locals: { f: f } %>
+
     <%= render 'shared/error_messages', target: @reservation %>
+
     <fieldset class="begin-and-end">
       <div class="field slack-field slack-field-begin">
         <%= f.label :slack_before %><%= format_help(t('.default_slack_times_help'), :inline) %>
