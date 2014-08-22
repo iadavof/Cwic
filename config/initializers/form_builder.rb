@@ -20,3 +20,14 @@ class ActionView::Helpers::FormBuilder
     self.orig_label(method, content, options || {}, &block)
   end
 end
+
+# Add a error class to fields with 'errors' instead of wrapping them with a div with class 'field_with_errors'
+ActionView::Base.field_error_proc = Proc.new do |html_tag, instance|
+  class_attr_index = html_tag.index 'class="'
+
+  if class_attr_index
+    html_tag.insert class_attr_index+7, 'validation-error '
+  else
+    html_tag.insert html_tag.index('>'), ' class="validation-error"'
+  end
+end
