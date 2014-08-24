@@ -80,3 +80,16 @@ Cwic::Application.configure do
 
   config.action_mailer.default_url_options = { host: 'cwic.nl' }
 end
+
+Cwic::Application.config.middleware.use ExceptionNotification::Rack,
+ email: {
+  email_prefix: '[Exception] ',
+  sender_addres: %{"Flyblown" <flyblown@cwic.nl>},
+  exception_receipients: %w{info@iada.nl}
+ },
+ notify_my_android: {
+  api_keys: ['7522222f8f35745ffc1a1ef518020e8cfeb853869f1c7159'],
+  priority: NMA::Priority::HIGH,
+  application: '[Flyblown] Cwic',
+  event: 'Exception occured'
+ }

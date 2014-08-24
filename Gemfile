@@ -153,6 +153,10 @@ gem 'symbolize'
 # Tagging solution
 gem 'acts-as-taggable-on'
 
+# Alert us on application exception, by e-mail and push notification
+gem 'exception_notification'
+gem 'ruby-notify-my-android'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'
