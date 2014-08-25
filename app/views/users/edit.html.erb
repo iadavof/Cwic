@@ -1,8 +1,0 @@
-<% content_for :page_title do %><%= edit_title(@user) %><% end %>
-
-<% content_for :local_menu_navigation do %>
-  <%= button_link_to_show(@user) %>
-  <%= button_link_to_index(User) %>
-<% end %>
-
-<%= render 'form' %>

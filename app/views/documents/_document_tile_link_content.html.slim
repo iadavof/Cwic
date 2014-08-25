@@ -1,0 +1,6 @@
+span.filename title=doc.document_filename
+  = doc.document_filename
+span.created_at
+  = l(doc.created_at, format: :long) if doc.created_at
+span.created_by title=doc.user.instance_name
+  = doc.user.instance_name

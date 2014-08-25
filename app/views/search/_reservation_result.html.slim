@@ -1,0 +1,38 @@
+h3
+  = result.class.model_name.human
+  | :
+  = name_link_to_show([@organisation, result])
+  = result.description
+.result-icon style=(result.reservation_status.present? ? 'background-color: ' + result.reservation_status.color : '')
+i.icon-time
+.extra-controls
+  = render partial: 'reservations/status_controls', locals: { reservation: result, extra_css_class: 'mini' }
+.info.clearfix
+  .column
+    table
+      tbody
+        tr
+          th
+            = Reservation.human_attribute_name(:begins_at)
+          td
+            = content_tag(:i, '', class: 'icon icon-calendar') + ' ' +  link_to(l(result.begins_at, format: :long), organisation_horizontal_calendar_day_entity_date_path(@organisation, result.entity, result.begins_at.year, result.begins_at.mon, result.begins_at.mday))
+        tr
+          th
+            = Reservation.human_attribute_name(:ends_at)
+          td
+            = content_tag(:i, '', class: 'icon icon-calendar') + ' ' + link_to(l(result.ends_at, format: :long), organisation_horizontal_calendar_day_entity_date_path(@organisation, result.entity, result.ends_at.year, result.ends_at.mon, result.ends_at.mday))
+        tr
+          th
+            = Reservation.human_attribute_name(:organisation_client)
+          td
+            = name_link_to_show([@organisation, result.organisation_client])
+        tr
+          th
+            = Reservation.human_attribute_name(:entity)
+          td
+            = name_link_to_show([@organisation, result.entity], name: result.entity.full_instance_name)
+  .column
+    h4
+      = t('.options')
+  .column
+    |  column 3

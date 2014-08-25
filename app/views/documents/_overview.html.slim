@@ -1,0 +1,5 @@
+- if documents.empty?
+  = content_tag(:p, t('.no_documents'))
+- else
+  - documents.each do |doc|
+    = render partial: 'documents/document_tile', locals: { doc: doc }

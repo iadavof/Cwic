@@ -1,0 +1,42 @@
+.info-screen-entity.fields
+  h4.collapse
+    span class=("active-sign " + (f.object.info_screen_entity_type.active? && f.object.active? ? 'active' : ''))
+    = f.object.entity.instance_name
+  .content.clearfix
+    .fields
+      = f.label :active
+      = f.check_box :active, class: 'info-screen-entity-active'
+    = f.hidden_field :entity_id
+    div.direction-chars style=(f.object.info_screen_entity_type.info_screen.direction_char_visible ? 'display: block;' : 'display: none;')
+      = f.label :direction_char, class: 'direction-char-label'
+      = f.hidden_field :direction_char
+      div class=("wayfinding " + (f.object.direction_char.nil? || f.object.direction_char == '' ? 'active' : ''))
+        i
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-up' ? 'active' : ''))
+        i.symbol-arrow-up
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-up-right' ? 'active' : ''))
+        i.symbol-arrow-up-right
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-right' ? 'active' : ''))
+        i.symbol-arrow-right
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-down-right' ? 'active' : ''))
+        i.symbol-arrow-down-right
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-down' ? 'active' : ''))
+        i.symbol-arrow-down
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-down-left' ? 'active' : ''))
+        i.symbol-arrow-down-left
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-left' ? 'active' : ''))
+        i.symbol-arrow-left
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-up-left' ? 'active' : ''))
+        i.symbol-arrow-up-left
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-stairs-up' ? 'active' : ''))
+        i.symbol-stairs-up
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-stairs-down' ? 'active' : ''))
+        i.symbol-stairs-down
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-escalator-up' ? 'active' : ''))
+        i.symbol-escalator-up
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-escalator-down' ? 'active' : ''))
+        i.symbol-escalator-down
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-elevator-up' ? 'active' : ''))
+        i.symbol-elevator-up
+      div class=("wayfinding " + (f.object.direction_char == 'symbol-elevator-down' ? 'active' : ''))
+        i.symbol-elevator-down

@@ -1,6 +1,6 @@
 function CwicLogoClock(options) {
   this.options = $.extend({
-    container: 'clock-container',
+    container: 'clock-container'
   }, options || {});
 
   this.clockContainer = $('#' + this.options.container);
@@ -34,9 +34,9 @@ CwicLogoClock.prototype.createFace = function() {
       borderRadius: radius + 'px',
       zIndex: 5,
       width: 2*radius,
-      height: 2*radius,
+      height: 2*radius
     });
-    
+
     var faceMiddle = $('<div>').css({
       position: 'absolute',
       borderRadius: '50%',
@@ -50,17 +50,17 @@ CwicLogoClock.prototype.createFace = function() {
           '-ms-transform' : 'translate(-50%, -50%)',
            '-o-transform' : 'translate(-50%, -50%)',
               'transform' : 'translate(-50%, -50%)',
-                   'zoom' : 1,
+                   'zoom' : 1
     });
-    
+
     faceMiddle.appendTo(face);
     this.clockContainer.append(face);
     this.createArms(face);
   }
-}
+};
 
 CwicLogoClock.prototype.createArms = function(face) {
-  var face = $(face);
+  face = $(face);
 
   this.hourArm = $('<div>');
   this.minuteArm = $('<div>');
@@ -81,7 +81,7 @@ CwicLogoClock.prototype.createArms = function(face) {
      '-moz-transform-origin' : 'center 0',
       '-ms-transform-origin' : 'center 0',
        '-o-transform-origin' : 'center 0',
-          'transform-origin' : 'center 0',
+          'transform-origin' : 'center 0'
   });
 
   this.minuteArm.css({
@@ -97,13 +97,13 @@ CwicLogoClock.prototype.createArms = function(face) {
      '-moz-transform-origin' : 'center 0',
       '-ms-transform-origin' : 'center 0',
        '-o-transform-origin' : 'center 0',
-          'transform-origin' : 'center 0',
+          'transform-origin' : 'center 0'
   });
 
   face.append(this.hourArm);
   face.append(this.minuteArm);
   this.setCurrentTime();
-}
+};
 
 CwicLogoClock.prototype.setCurrentTime = function() {
   var now = moment();
@@ -130,4 +130,4 @@ CwicLogoClock.prototype.setCurrentTime = function() {
           'transform' : 'translate(-50%, 0) rotate('+minuteDeg+'deg)',
                'zoom' : 1
     });
-}
+};

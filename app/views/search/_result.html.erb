@@ -1,9 +1,0 @@
-<div class="result result-<%= result.class.name.underscore.dasherize %>">
-  <div class="inner">
-    <div class="controls">
-      <%= icon_link_to_edit([@organisation, result]) %>
-    </div>
-    <%= render "#{result.class.name.underscore}_result", result: result %>
-  </div>
-  <div class="rank"><div class="inner" style="width: <%= result.pg_search_rank * 100 if result.pg_search_rank.present? %>%;"></div></div>
-</div>

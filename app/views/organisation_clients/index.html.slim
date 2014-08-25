@@ -1,0 +1,60 @@
+- content_for :page_title do
+  = index_title(OrganisationClient)
+- content_for :local_menu_navigation do
+  = button_link_to_new([@organisation, OrganisationClient])
+- content_for :local_menu_page do
+  = render 'layouts/mini_search', current_search_type: OrganisationClient.model_name
+
+- if @organisation_clients.empty? && params[:mini_search].present?
+  p
+    = t('empty_for_search', classes: OrganisationClient.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
+    = link_to(t('remove_search'), organisation_organisation_clients_path(current_organisation))
+- elsif @organisation_clients.empty?
+  p
+    = t('.empty', default: :empty_objects, classes: OrganisationClient.model_name.human(count: 2).lcfirst)
+- else
+  = paginate @organisation_clients
+  table
+    thead
+      tr
+        th
+        = sortable_table_head(OrganisationClient, :first_name)
+        = sortable_table_head(OrganisationClient, :last_name)
+        = sortable_table_head(OrganisationClient, :email)
+        = sortable_table_head(OrganisationClient, :route)
+        = sortable_table_head(OrganisationClient, :street_number)
+        = sortable_table_head(OrganisationClient, :postal_code)
+        = sortable_table_head(OrganisationClient, :locality)
+        = sortable_table_head(OrganisationClient, :country)
+        = sortable_table_head(OrganisationClient, :phone)
+        = sortable_table_head(OrganisationClient, :mobile_phone)
+        th
+    tbody
+      - @organisation_clients.each do |organisation_client|
+        tr
+          td
+            = name_link_to_show([@organisation, organisation_client])
+          td
+            = organisation_client.first_name
+          td
+            = organisation_client.last_name
+          td
+            = organisation_client.email
+          td
+            = organisation_client.route
+          td
+            = organisation_client.street_number
+          td
+            = organisation_client.postal_code
+          td
+            = organisation_client.locality
+          td
+            = organisation_client.country
+          td
+            = organisation_client.phone
+          td
+            = organisation_client.mobile_phone
+          td.icons
+            = icon_link_to_edit([@organisation, organisation_client])
+            = icon_link_to_destroy([@organisation, organisation_client])
+  = paginate @organisation_clients

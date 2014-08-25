@@ -1,0 +1,7 @@
+div class="result result-#{result.class.name.underscore.dasherize}"
+.inner
+  .controls
+    = icon_link_to_edit([@organisation, result])
+  = render "#{result.class.name.underscore}_result", result: result
+.rank
+ .inner style="width:#{result.pg_search_rank * 100 if result.pg_search_rank.present?}

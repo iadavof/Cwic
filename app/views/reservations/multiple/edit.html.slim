@@ -1,0 +1,15 @@
+- content_for :page_title do
+  = t('multiple.edit')
+= form_for @reservation.localized, url: organisation_reservations_multiple_path(@organisation) do |f|
+  = t('multiple.edit_is_applied_to_the_following')
+  ul
+    - @reservations.each do |r|
+      li
+        = r.one_line_summary
+  = render 'reservations/multiple/form', f: f
+  - @reservations.each do |r|
+    = hidden_field_tag 'reservation_ids[]', r.id
+  = hidden_field_tag 'process', 'process'
+  a.button href=@return_url
+    = t('back')
+  = f.submit t('multiple.save'), name: 'edit'

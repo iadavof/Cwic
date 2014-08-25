@@ -1,0 +1,5 @@
+div.entity-type-container id="entity_type_#{entity_type.id}"
+  = image_tag(entity_type.icon.image.icon.url, { class: 'entity_type_icon' })
+  h2
+    = entity_type.name.pl
+  = render partial: 'today_and_tomorrow/entity_block', collection: entity_type.entities, as: :entity

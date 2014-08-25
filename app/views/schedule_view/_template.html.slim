@@ -1,0 +1,156 @@
+#calendar.clearfix data={ target_year: @year, target_week: @week, target_month: @month, target_day: @day, target_entity: @sel_entity }
+
+script#scheduleContainerTemplate type="text/template"
+  .schedule
+    .fast-select.clearfix
+      a#selectNone.button
+        =t('.select_none')
+      a#selectAll.button
+        =t('.select_all')
+
+    .entity-container.clearfix
+      div#entity-showcase-tabs
+        ul.nav
+        .tab-wrap.clearfix
+      p.no_entities_found
+        = t('.no_entities_found', link: link_to_new([@organisation, Entity])).html_safe
+
+    .left-axis
+    .schedule-scroll-container
+      / TODO: Move sticky header to local menu area
+      .top-axis.clearfix
+        .axis-parts.clearfix
+        .description-bubble
+
+    .schedule-body
+      .grid
+
+script#gridItemTemplate type="text/template"
+  .grid-item
+
+script#hourTimeAxisFrameTemplate type="text/template"
+  .hour-time-axis-frame
+    p.time
+
+script#sixHourTimeAxisFrameTemplate type="text/template"
+  .six-hour-time-axis-frame
+    p.time
+
+script#dayTimeAxisFrameTemplate type="text/template"
+  .day-time-axis-frame
+    p.name
+
+script#verticalDayTimeAxisFrameTemplate type="text/template"
+  .vertical-day-time-axis-frame
+    p.name
+    p.date
+
+script#entityButtonTemplate type="text/template"
+  .entity-button
+    img.entity-icon
+    p.entity-name
+
+script#rowTemplate type="text/template"
+  .row
+    .schedule-objects
+
+script#columnTemplate type="text/template"
+  .column
+    .schedule-objects
+
+script#dayAxisRowTemplate type="text/template"
+  .left-axis-row
+    .inner
+      .day-name
+        p
+      .day-nr
+        p
+      .month-name
+        p
+
+script#weekAxisRowTemplate type="text/template"
+  .left-axis-row
+    .inner
+      .week-begin
+        p
+      .week-nr
+        p
+      .week-end
+
+script#timeAxisRowTemplate type="text/template"
+  .time-axis-row
+    .inner
+      .time
+
+script#scheduleItemTemplate type="text/template"
+  .schedule-item-wrapper
+    .schedule-item
+      .plus
+        span
+          | +
+      .ok
+        span
+          | ✓
+      .status
+        span
+          | ?
+      .resizer.left
+        i.icon-resize-horizontal
+      .resizer.right
+        i.icon-resize-horizontal
+      .resizer.top
+        i.icon-resize-vertical
+      .resizer.bottom
+        i.icon-resize-vertical
+      .continue-container
+        .continue.left
+          i.icon-arrow-right
+        .continue.right
+          i.icon-arrow-right
+        .continue.top
+          i.icon-arrow-down
+        .continue.bottom
+          i.icon-arrow-down
+      p.item-text
+
+script#scheduleEntityItemPartsTemplate type="text/template"
+  .schedule-object-item-parts
+    p.name
+    p.name style="left: 25%;"
+    p.name style="left: 50%;"
+    p.name style="left: 75%;"
+
+script#contextButtonDescription type="text/template"
+  i.icon-info-sign
+    span
+      = t('.description')
+
+script#contextButtonClient type="text/template"
+  i.icon-user
+    span
+      = t('.organisation_client')
+
+script#contextButtonEdit type="text/template"
+  i.icon-edit
+    span
+      = t('.edit')
+
+script#contextButtonRemove type="text/template"
+  i.icon-remove
+    span
+      = t('.delete')
+
+script#contextButtonSave type="text/template"
+  i.icon-ok
+    span
+      = t('save')
+
+script#contextButtonCancel type="text/template"
+  i.icon-fatundo
+    span
+      = t('cancel')
+
+script#ajaxNotification type="text/template"
+  .ajax-notification.clearfix
+    .ajax-wait
+      .message

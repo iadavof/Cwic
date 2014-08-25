@@ -1,0 +1,5 @@
+- if f.object.document.present?
+  = render partial: 'documents/document_tile', locals: { doc: f.object, form: f }
+- else
+  = render partial: 'documents/upload_document_tile', locals: { doc: f.object, form: f }
+= f.hidden_field :document_cache

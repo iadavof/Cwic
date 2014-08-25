@@ -1,0 +1,38 @@
+- content_for :page_title do
+  = @title
+- content_for :local_menu_navigation do
+  = button_link_to_new([@organisation, Reservation], { location: nil, class: 'button new-reservation', id: 'open-new-reservation-modal-button' })
+  .control-container.navigation
+    a#previous.button
+      i.icon-chevron-left
+    a#current.button
+      = t('.today')
+    a#next.button
+      i.icon-chevron-right
+- content_for :local_menu_page do
+  .control-container.domain
+    a#dayMode.button.scope
+      i.icon-calendar style="margin-right: 5px;"
+      = t('.day')
+    a#weekMode.button.scope
+      i.icon-calendar style="margin-right: 5px;"
+      = t('.week')
+    a#monthMode.button.scope
+      i.icon-calendar style="margin-right: 5px;"
+      = t('.month')
+    a#yearMode.button.scope
+      i.icon-calendar style="margin-right: 5px;"
+      = t('.year')
+    a#customMode.button.scope
+      i.icon-calendar style="margin-right: 5px;"
+      = t('.custom')
+  .control-container.domain-custom
+    input#scheduleBeginDate type="text" style="position: relative; z-index: 100;" autocomplete="off"
+    span.tm
+      = t('.tm')
+    input#scheduleEndDate type="text" style="position: relative; z-index: 100;" autocomplete="off"
+    a#scheduleDateUpdate.button
+      = t('.set')
+
+= render partial: 'schedule_view/template'
+= content_tag(:div, nil, { id: 'reservation-form-modal-blueprint', data: { blueprint: render('reservations/modal_form').to_str }})

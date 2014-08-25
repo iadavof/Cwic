@@ -1,8 +1,0 @@
-<% content_for :page_title do %><%= edit_title(@entity_type_icon) %><% end %>
-
-<% content_for :local_menu_navigation do %>
-  <%= button_link_to_show(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon) %>
-  <%= button_link_to_index(@organisation.present? ? [@organisation, EntityTypeIcon] : EntityTypeIcon) %>
-<% end %>
-
-<%= render 'form' %>

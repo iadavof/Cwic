@@ -1,0 +1,73 @@
+.fields.nested-object-wrapper.property-wrapper data-valid=(f.object.persisted? && f.object.valid?)
+  .view.clearfix
+    .horizontal-block.icon.icon-resize-vertical.sort-handle title=t('order_nested_object', classes: EntityTypeProperty.model_name.human(count: 2).lcfirst)
+    .field.horizontal-block.name
+      .label
+        = EntityTypeProperty.human_attribute_name(:name)
+      .value data-field="name"
+        = format_text(f.object.name)
+    .field.horizontal-block.description
+      .label
+        = EntityTypeProperty.human_attribute_name(:description)
+      .ellipsis
+        .value data-field="description"
+          = format_text(f.object.description)
+    .horizontal-block.extra
+      dl
+        dt
+          = EntityTypeProperty.human_attribute_name(:data_type)
+        dd data-field="data-type"
+          = f.object.data_type.try(:human_name)
+        dt.required
+          = EntityTypeProperty.human_attribute_name(:required)
+        dd.required data-field="required"
+          = format_bool(f.object.required)
+        dt.property-options
+          = EntityTypePropertyOption.model_name.human(count: 2)
+        dd.property-options data-field="property-options"
+          = f.object.options.sort_by(&:index).map(&:name).to_sentence
+        dt
+          = EntityTypeProperty.human_attribute_name(:default_value)
+        dd data-field="default-value"
+          = format_text(f.object.formatted_default_value)
+    .actions
+      = link_to '', 'javascript:void(0)', class: 'icon icon-edit action-button', title: t('edit_nested_object', class: EntityTypeProperty.model_name.human.lcfirst)
+      = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }
+  .form.clearfix
+    .field.horizontal-block.name
+      = f.text_field :name, placeholder: EntityTypeProperty.human_attribute_name(:name), title: EntityTypeProperty.human_attribute_name(:name), data: { field: 'name' }
+    .field.horizontal-block.description
+      = f.text_area :description, placeholder: EntityTypeProperty.human_attribute_name(:description), title: EntityTypeProperty.human_attribute_name(:description), data: { field: 'description' }
+    .horizontal-block.extra
+      .field
+        = f.label :data_type_id
+        = f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, data: { key:  dt.key } }] }, { prompt: true }, data: { field: 'data-type' }
+      .field.required
+        = f.label :required, title: t('.required_expl')
+        = f.check_box :required, data: { field: 'required' }
+      .field.default-value
+        = f.label :default_value
+        span.default-value-formatted-field
+        = f.hidden_field :default_value, value: f.object.form_default_value, class: 'default-value-parsed-field'
+    .actions
+      = link_to '', 'javascript:void(0)', class: 'icon icon-ok action-button', title: t('done_nested_object', class: EntityTypeProperty.model_name.human.lcfirst)
+      = link_to '', 'javascript:void(0)', class: 'icon icon-remove action-button remove-nested-fields-extra', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst)
+    .nested-form.property-options
+      h4
+        = EntityTypePropertyOption.model_name.human(count: 2)
+      table
+        thead
+          tr
+            th
+            th
+              = EntityTypePropertyOption.human_attribute_name(:name)
+            th.default
+              = EntityTypePropertyOption.human_attribute_name(:default)
+              a.clear-default-link[href="javascript:void(0);"]
+                = t('.clear')
+            th
+        tbody.target
+          = f.fields_for :options, f.object.options.sort_by(&:index), wrapper: false do |of|
+            = render partial: 'property_option_fields', locals: { f: of }
+      = f.link_to_add '', :options, class: 'icon icon-plus action-button', title: t('add_nested_object', class: EntityTypePropertyOption.model_name.human.lcfirst)
+  = f.hidden_field :index, class: 'index-field'

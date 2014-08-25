@@ -1,0 +1,32 @@
+.nested-object-wrapper
+  .view.clearfix
+    .horizontal-block.name
+      .label
+        = EntityTypeProperty.human_attribute_name(:name)
+      .value
+        = entity_type_property.name
+    .horizontal-block.description
+      .label
+        = EntityTypeProperty.human_attribute_name(:description)
+      .value
+        = entity_type_property.description
+    .horizontal-block.extra
+      dl
+        dt
+          = EntityTypeProperty.human_attribute_name(:data_type)
+        dd title=entity_type_property.data_type.human_description
+          = entity_type_property.data_type.human_name
+        - if entity_type_property.has_required?
+          dt
+            = EntityTypeProperty.human_attribute_name(:required)
+          dd
+            = format_bool(entity_type_property.required)
+        - if entity_type_property.has_options?
+          dt
+            = EntityTypePropertyOption.model_name.human(count: 2)
+          dd
+            = entity_type_property.options.map(&:name).to_sentence
+        dt
+          = EntityTypeProperty.human_attribute_name(:default_value)
+        dd
+          = format_text(entity_type_property.formatted_default_value)

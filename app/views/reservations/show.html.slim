@@ -1,0 +1,76 @@
+- content_for :page_title do
+  = show_title(@reservation)
+- content_for :top_content do
+  = render partial: 'tags/show', locals: { tags: @reservation.tags }
+- content_for :local_menu_navigation do
+  = button_link_to_index([@organisation, Reservation])
+  = button_link_to_edit([@organisation, @reservation])
+  = button_link_to_destroy([@organisation, @reservation])
+- content_for :local_menu_context do
+  = render partial: 'reservations/status_controls', locals: { reservation: @reservation }
+
+= render partial: 'stickies/resource_stickies', locals: { resource: @reservation }
+#tabs
+  ul.nav
+    li
+      a.current href="#general"
+        = t('.general')
+    li
+      a href="#documents"
+        = Document.model_name.human(count: 2)
+    li
+      a href="#logs"
+        = t('.logs')
+  .tab-wrap
+    #general
+      .content-columns.twocol.clearfix
+        .content-column
+          .content-block
+            dl
+              dt
+                = Reservation.human_attribute_name(:begins_at)
+              dd
+                = l(@reservation.begins_at, format: :long)
+                = slack_before_overlap_warning(@reservation)
+              dt
+                = Reservation.human_attribute_name(:ends_at)
+              dd
+                = l(@reservation.ends_at, format: :long)
+                = slack_after_overlap_warning(@reservation)
+              dt
+                = Reservation.human_attribute_name(:entity)
+              dd
+                = link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity))
+              dt
+                = Reservation.human_attribute_name(:organisation_client)
+              dd
+                = link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client))
+              dt
+                = Reservation.human_attribute_name(:cost)
+              dd
+                = number_to_currency(@reservation.cost)
+              dt
+                = Reservation.human_attribute_name(:slack_before)
+              dd
+                = @reservation.get_slack_before
+                = t('.min')
+              dt
+                = Reservation.human_attribute_name(:slack_after)
+              dd
+                = @reservation.get_slack_after
+                = t('.min')
+              dt
+                = Reservation.human_attribute_name(:created_at)
+              dd
+                = l(@reservation.created_at, format: :long)
+        - unless @reservation.recurrences.empty?
+        h2
+          = t('.repetitions')
+        = render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' }
+    #documents
+      #documents-container.clearfix
+        = render partial: 'documents/overview', locals: { documents: @reservation.documents }
+    #logs
+      h2
+        = Reservation.human_attribute_name(:reservation_logs)
+      = render partial: 'log_table', locals: { logs: @reservation.reservation_logs.includes(:user) }

@@ -1,0 +1,51 @@
+- content_for :page_title do
+  = index_title(Organisation)
+- content_for :local_menu_navigation do
+  = button_link_to_new(Organisation)
+- content_for :local_menu_page do
+  = render 'layouts/mini_search', current_search_type: Organisation.model_name
+
+- if @organisations.empty? && params[:mini_search].present?
+  p
+    = t('empty_for_search', classes: Organisation.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
+    = link_to(t('remove_search'), organisations_path())
+- elsif @organisations.empty?
+  p
+    = t('.empty', default: :empty_objects, classes: Organisation.model_name.human(count: 2).lcfirst)
+- else
+  = paginate @organisations
+  table
+    thead
+      tr
+        = sortable_table_head(Organisation, :name)
+        = sortable_table_head(Organisation, :route)
+        = sortable_table_head(Organisation, :street_number)
+        = sortable_table_head(Organisation, :locality)
+        = sortable_table_head(Organisation, :postal_code)
+        = sortable_table_head(Organisation, :country)
+        = sortable_table_head(Organisation, :phone_general)
+        = sortable_table_head(Organisation, :phone_reservations)
+        th
+    tbody
+      - @organisations.each do |organisation|
+        tr
+          td
+            = name_link_to_show(organisation)
+          td
+            = organisation.route
+          td
+            = organisation.street_number
+          td
+            = organisation.postal_code
+          td
+            = organisation.locality
+          td
+            = organisation.country
+          td
+            = organisation.phone_general
+          td
+            = organisation.phone_reservations
+          td.icons
+            = icon_link_to_edit(organisation)
+            = icon_link_to_destroy(organisation)
+  = paginate @organisations

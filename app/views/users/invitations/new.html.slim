@@ -1,0 +1,24 @@
+- content_for :page_title do
+  = t "devise.invitations.new.header"
+= form_for resource, as: resource_name, url: invitation_path(resource_name), html: {method: :post} do |f|
+  = devise_error_messages!
+  - resource.class.invite_key_fields.each do |field|
+    .field
+      = f.label field
+      = f.text_field field, readonly: true
+  = f.fields_for :organisation_users do |organisation_user|
+    = organisation_user.hidden_field :organisation_id
+    .field
+      = organisation_user.label :organisation_role
+      = organisation_user.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, prompt: t('prompt_choose')
+  .field
+    = f.label :first_name
+    = f.text_field :first_name
+  .field
+    = f.label :infix
+    = f.text_field :infix
+  .field
+    = f.label :last_name
+    = f.text_field :last_name
+  .actions
+    = f.submit t("devise.invitations.new.submit_button")

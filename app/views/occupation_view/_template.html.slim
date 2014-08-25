@@ -1,0 +1,41 @@
+#occupation-container
+
+script#occupationContainerTemplate type="text/template"
+  div.occupation-container
+    div.control-container.clearfix
+      div style="float: left;"
+        a#previous.button
+          i.icon-chevron-left
+        a#current.button
+          span.year
+            = t('.current_year')
+          span.month
+            = t('.current_month')
+        a#next.button
+          i.icon-chevron-right
+      div style="float: right;"
+        = select_month(Date.today, { field_name: 'current_month' })
+        = select_year(Date.today, { field_name: 'current_year' })
+    .top-axis.clearfix
+      p.axis-part-name.clearfix
+    .entity-axis
+    .occupation-matrix-body
+
+script#entityRowTemplate type="text/template"
+  div.entity-row
+    img.entity-icon
+
+script#occupationMatrixRowTemplate type="text/template"
+  div.occupation-matrix-row.clearfix
+
+script#entityRowTitleTemplate type="text/template"
+  div.entity-row-title.clearfix
+    p.entity-name
+
+script#occupationMatrixBlockTemplate type="text/template"
+  div.occupation-matrix-block
+    p.percent
+
+script#topAxisFrameTemplate type="text/template"
+  div.top-axis-frame
+    p.nr

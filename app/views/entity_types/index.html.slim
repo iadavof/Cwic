@@ -1,0 +1,35 @@
+- content_for :page_title do
+  = index_title(EntityType)
+- content_for :local_menu_navigation do
+  = button_link_to_new([@organisation, EntityType])
+- content_for :local_menu_page do
+  = render 'layouts/mini_search', current_search_type: EntityType.model_name
+- if @entity_types.empty? && params[:mini_search].present?
+  p
+    = t('empty_for_search', classes: EntityType.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
+    = link_to(t('remove_search'), organisation_entity_types_path(current_organisation))
+- elsif @entity_types.empty?
+  p
+    = t('.empty', default: :empty_objects, classes: EntityType.model_name.human(count: 2).lcfirst)
+- else
+  = paginate @entity_types
+  table
+    thead
+      tr
+        th
+        = sortable_table_head(EntityType, :name)
+        = sortable_table_head(EntityType, :description)
+        th
+    tbody
+      - @entity_types.each do |entity_type|
+        tr
+          td
+            = image_tag(entity_type.icon.image.icon.url)
+          td
+            = name_link_to_show([@organisation, entity_type])
+          td
+            = format_description(entity_type.description)
+          td.icons
+            = icon_link_to_edit([@organisation, entity_type])
+            = icon_link_to_destroy([@organisation, entity_type], confirm: destroy_confirm(entity_type))
+  = paginate @entity_types
