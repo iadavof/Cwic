@@ -26,7 +26,7 @@ label.validation-error {
 }
 
 input.validation-error, select.validation-error, textarea.validation-error, .select2-container.validation-error, input.validation-error.replaced + div div.inner {
-  border: 2px solid #ff3520;
+  border: 2px solid #ff3520 !important;
 }
 
 div.field-with-example-wrapper {
