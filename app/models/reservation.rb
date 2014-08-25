@@ -224,7 +224,7 @@ class Reservation < ActiveRecord::Base
 
   def not_overlapping_with_set(set_reservations)
     valid = true
-    relation = set_reservations.joins(:reservation_status).where('reservations.id <> ? AND reservation_statuses.blocking = true', self.id.to_i)
+    relation = set_reservations.blocking.where('reservations.id <> ?', self.id.to_i)
     total_overlap = relation.where('(:begins_at <= begins_at AND :ends_at >= ends_at) OR (:begins_at >= begins_at AND :ends_at <= ends_at)', begins_at: begins_at, ends_at: ends_at).first
     if total_overlap.present?
       # Total overlap means this reservation is completely within another reservation or completely over another reserveration, so we do not know whether it is best to change the begins_at or the ends_at to fix this problem.
