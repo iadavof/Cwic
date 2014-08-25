@@ -36,7 +36,7 @@ CwicReservationFormController.prototype.updateSlackFieldsWarningState = function
 CwicReservationFormController.prototype.updateSlackFieldWarningState = function(which) {
   var value = this.slackValue(which);
   var maxSlack = this.maxSlack(which);
-  APP.util.setFieldErrorState(this.slackField(which), (maxSlack !== null && value > maxSlack));
+  APP.util.setFieldWarningState(this.slackField(which), (maxSlack !== null && value > maxSlack));
 };
 
 CwicReservationFormController.prototype.bindEntitySelection = function() {
@@ -72,7 +72,7 @@ CwicReservationFormController.prototype.bindOnChangeActions = function() {
     _this.performFormUpdate();
   });
   this.formContainer.find('input#reservation_slack_before, input#reservation_slack_after').on('change', function() {
-    _this.updateAllSlackWarnings();
+    _this.slackFieldsChanged();
   });
 };
 
