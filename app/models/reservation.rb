@@ -274,6 +274,16 @@ class Reservation < ActiveRecord::Base
     update_warning_state.update_attribute(:warning, self[:warning])
   end
 
+  def current_progress
+    progress_wrt_time_point(Time.now)
+  end
+
+  def progress_wrt_time_point(point)
+    seconds = self.ends_at.to_time.to_i - self.begins_at.to_time.to_i
+    seconds_past = point.to_i - self.begins_at.to_time.to_i
+    (seconds_past.to_f / seconds.to_f * 100.00).round(2)
+  end
+
 private
   def fix_base_reservation_reference
     # The first reservation of a repeating set is removed!

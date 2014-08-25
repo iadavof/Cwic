@@ -56,28 +56,6 @@ class ScheduleViewController < ApplicationController
     respond_with(@entity_types)
   end
 
-  def calculate_current_progress(reservation)
-    time_point_to_reservation_progress(reservation, Time.now)
-  end
-
-  def time_point_to_reservation_progress(reservation, point)
-    seconds = reservation.ends_at.to_time.to_i - reservation.begins_at.to_time.to_i
-    seconds_past = point.to_i - reservation.begins_at.to_time.to_i
-    (seconds_past.to_f / seconds.to_f * 100.00).round(2)
-  end
-
-  def reservation_day_change_at(reservation)
-    dateChangeAt = []
-    point = reservation.begins_at.end_of_day
-    dateChangeAt << point.to_time
-
-    while(point + 1.day < reservation.ends_at)
-      point = point + 1.day
-      dateChangeAt << point.to_time
-    end
-    dateChangeAt.map { |p| time_point_to_reservation_progress(reservation, p) }
-  end
-
   def get_selected_entity_from_url
     if params[:entity].present?
       @sel_entity = params[:entity].to_i

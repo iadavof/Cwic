@@ -39,7 +39,7 @@ class TodayAndTomorrowController < ApplicationController
         begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
         end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
         description: r.instance_name + (r.description.present? ? (' : ' + r.description) : '') + ', ' + r.organisation_client.instance_name,
-        progress: calculate_current_progress(r),
+        progress: r.current_progress,
       }
       if r.begins_at.to_date != r.ends_at.to_date
         current[:day_separators] = reservation_day_change_at(r)
@@ -81,5 +81,17 @@ class TodayAndTomorrowController < ApplicationController
       when 'update'
         @entity_types = @organisation.entity_types.with_entities.includes(:entities)
       end
+    end
+
+    def reservation_day_change_at(reservation)
+      dateChangeAt = []
+      point = reservation.begins_at.end_of_day
+      dateChangeAt << point.to_time
+
+      while(point + 1.day < reservation.ends_at)
+        point = point + 1.day
+        dateChangeAt << point.to_time
+      end
+      dateChangeAt.map { |p| reservation.progress_wrt_time_point(p) }
     end
 end
