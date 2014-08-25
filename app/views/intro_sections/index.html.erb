@@ -1,7 +1,8 @@
 <section class="intro-section-home">
   <div class="background-slider">
-    <div style="background-image: url('<%= asset_path('perfect-hotel-wallpaper-hd-widescreen.jpg') %>')"></div>
-    <div style="background-image: url('<%= asset_path('logo.png') %>')"></div>
+    <% get_intro_background_images(5).each do |image| %>
+      <div style="background-image: url('<%= asset_path(image) %>')"></div>
+    <% end %>
   </div>
   <div id="logo-container">
     <div id="logo-container-inner">
