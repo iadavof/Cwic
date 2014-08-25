@@ -20,6 +20,10 @@ function CwicReservationFormController(options) {
 
 CwicReservationFormController.prototype.init = function() {
   this.formContainer = $('#' + this.options.container);
+  this.beginsAtDateField = this.formContainer.find('input#begins_at_date');
+  this.beginsAtTodField = this.formContainer.find('input#begins_at_tod');
+  this.endsAtDateField = this.formContainer.find('input#ends_at_date');
+  this.endsAtTodField = this.formContainer.find('input#ends_at_tod');
   this.slackBeforeField = this.formContainer.find('input#reservation_slack_before');
   this.slackAfterField = this.formContainer.find('input#reservation_slack_after');
   this.reservationId = this.formContainer.data('reservation-id');
@@ -37,6 +41,16 @@ CwicReservationFormController.prototype.updateSlackFieldWarningState = function(
   var value = this.slackValue(which);
   var maxSlack = this.maxSlack(which);
   APP.util.setFieldWarningState(this.slackField(which), (maxSlack !== null && value > maxSlack));
+};
+
+CwicReservationFormController.prototype.updatePeriodFieldsWarningState = function() {
+  var beginsAtWarning = this.maxSlack('before') < 0;
+  APP.util.setFieldWarningState(this.beginsAtDateField, beginsAtWarning);
+  APP.util.setFieldWarningState(this.beginsAtTodField, beginsAtWarning);
+
+  var endsAtWarning = this.maxSlack('after') < 0;
+  APP.util.setFieldWarningState(this.endsAtDateField, endsAtWarning);
+  APP.util.setFieldWarningState(this.endsAtTodField, endsAtWarning);
 };
 
 CwicReservationFormController.prototype.bindEntitySelection = function() {
@@ -104,34 +118,29 @@ CwicReservationFormController.prototype.parseEntityTypeFormFields = function() {
 };
 
 CwicReservationFormController.prototype.parseBeginAndEndFromFormFields = function() {
-  var beginsAtDateField = this.formContainer.find('input#begins_at_date');
-  var beginsAtTodField = this.formContainer.find('input#begins_at_tod');
-  var endsAtDateField = this.formContainer.find('input#ends_at_date');
-  var endsAtTodField = this.formContainer.find('input#ends_at_tod');
+  var beginValid = this.beginsAtDateField.val() !== '' && this.beginsAtTodField.val() !== '';
 
-  var beginValid = beginsAtDateField.val() !== '' && beginsAtTodField.val() !== '';
-
-  var newBeginMoment = moment(beginsAtDateField.datepicker('getDate'));
-  this.updateMomentWithTime(newBeginMoment, beginsAtTodField.timepicker('getTime'));
+  var newBeginMoment = moment(this.beginsAtDateField.datepicker('getDate'));
+  this.updateMomentWithTime(newBeginMoment, this.beginsAtTodField.timepicker('getTime'));
 
   beginValid = beginValid && newBeginMoment.isValid();
   if(beginValid) {
     this.beginMoment = newBeginMoment;
   }
-  APP.util.setFieldErrorState(beginsAtDateField, !beginValid);
-  APP.util.setFieldErrorState(beginsAtTodField, !beginValid);
+  APP.util.setFieldErrorState(this.beginsAtDateField, !beginValid);
+  APP.util.setFieldErrorState(this.beginsAtTodField, !beginValid);
 
-  var endValid = endsAtDateField.val() !== '' && endsAtTodField.val() !== '';
+  var endValid = this.endsAtDateField.val() !== '' && this.endsAtTodField.val() !== '';
 
-  var newEndMoment = moment(endsAtDateField.datepicker('getDate'));
-  this.updateMomentWithTime(newEndMoment, endsAtTodField.timepicker('getTime'));
+  var newEndMoment = moment(this.endsAtDateField.datepicker('getDate'));
+  this.updateMomentWithTime(newEndMoment, this.endsAtTodField.timepicker('getTime'));
 
   endValid = endValid && newEndMoment.isValid();
   if(endValid) {
     this.endMoment = newEndMoment;
   }
-  APP.util.setFieldErrorState(endsAtDateField, !endValid);
-  APP.util.setFieldErrorState(endsAtTodField, !endValid);
+  APP.util.setFieldErrorState(this.endsAtDateField, !endValid);
+  APP.util.setFieldErrorState(this.endsAtTodField, !endValid);
 
   return beginValid && endValid;
 };
@@ -213,6 +222,7 @@ CwicReservationFormController.prototype.showNoAvailableEntitiesListMessage = fun
 CwicReservationFormController.prototype.selectedEntityDataChanged = function() {
   this.updateSlackFieldsPlaceholder();
   this.updateSlackFieldsWarningState();
+  this.updatePeriodFieldsWarningState();
   this.updateSelectedEntityClass();
 };
 
