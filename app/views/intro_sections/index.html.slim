@@ -1,7 +1,7 @@
 section.intro-section-home
   .background-slider
-    div style="background-image: url('#{asset_path('perfect-hotel-wallpaper-hd-widescreen.jpg')});"
-    div style="background-image: url('#{asset_path('logo.png')});"
+    - get_intro_background_images(5).each do |image|
+      div style="background-image: url('#{asset_path(image)}')"
   #logo-container
     #logo-container-inner
       = link_to(root_path) do
