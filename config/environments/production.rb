@@ -90,7 +90,8 @@ Cwic::Application.config.middleware.use ExceptionNotification::Rack,
  notify_my_android: {
   api_keys: [
               '7522222f8f35745ffc1a1ef518020e8cfeb853869f1c7159', # Christiaan
-              'ecda7552d2e19c00478fb44afab3c045122973fddfaaa78f' # Floris
+              'ecda7552d2e19c00478fb44afab3c045122973fddfaaa78f', # Floris
+              'd22f789b5ee1ec740dc8b845741397698e8c85ef' # Kevin
             ],
   priority: NMA::Priority::HIGH,
   application: '[Flyblown] Cwic',
