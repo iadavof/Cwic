@@ -92,13 +92,13 @@ class Reservation < ActiveRecord::Base
     if options[:include_edges]
       # Include reservations directly before and after the scope as well. If there are no reservations found, then simply use the given date.
       from = self.where('ends_at <= :begin', begin: from).reorder(ends_at: :desc).first.try(:begins_at) || from if from.present?
-      to = self.where('begins_at > :end', end: to).reorder(begins_at: :asc).first.try(:ends_at) || to if to.present?
+      to = self.where('begins_at >= :end', end: to).reorder(begins_at: :asc).first.try(:ends_at) || to if to.present?
     end
 
     # Get reservations in domain
     rel = self.all
     rel = rel.where('ends_at > :begin', begin: from) if from.present?
-    rel = rel.where('begins_at <= :end', end: to) if to.present?
+    rel = rel.where('begins_at < :end', end: to) if to.present?
     rel = rel.where.not(id: options[:ignore_reservations]) if options[:ignore_reservations].present?
     rel
   end
