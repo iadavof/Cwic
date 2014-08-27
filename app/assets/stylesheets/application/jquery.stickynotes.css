@@ -9,10 +9,6 @@
     min-width: 400px;
 }
 
-#note-template {
-    display: none;
-}
-
 div.note {
     position: relative;
     background-color: #fef4ac;
