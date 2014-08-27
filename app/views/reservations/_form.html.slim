@@ -33,66 +33,66 @@
           .entity-selector
             h3
               = t('.selected_entity')
-            div class="selected-entity " + (@reservation.warning ? 'warning-available' : 'available') if @reservation.entity.present?
+            div class="selected-entity #{(@reservation.warning ? 'warning-available' : 'available') if @reservation.entity.present?}"
               = @reservation.entity.instance_name rescue t('.no_entity_selected')
             = f.hidden_field :entity_id
-          h3
-            = t('.available_entities')
-          .entity-type-filter
-            .field.field-entity-type
-              = f.label :entity_type
-              = select_tag :entity_type_id, options_for_select(@organisation.entity_types.sort.collect { |et| [et.name, et.id] }, @reservation.entity.try(:entity_type_id)), { prompt: t('prompt_choose') }
-          .no-entities-available
-            = t('.no_entities_available')
-          ul.entity-list
-    .content-column
-      .content-block
-        h2
-          i.icon-user
-          = OrganisationClient.model_name.human(count: 1)
-        - if @reservation.new_record?
-          .organisation_client_new_existing
-            .field
-              label for="organisation_client_type"
-                = t('.organisation_client_type')
-              fieldset.inline-fieldset
-                = radio_button_tag :organisation_client_type, :existing, @focus != 'new_client'
-                = label_tag :organisation_client_type_existing, t('.existing_organisation_client')
-                = radio_button_tag :organisation_client_type, :new, @focus == 'new_client'
-                = label_tag :organisation_client_type_new, t('.new_organisation_client')
-          .existing_organisation_client style=("display: none;" if @focus == 'new_client')
+            h3
+              = t('.available_entities')
+            .entity-type-filter
+              .field.field-entity-type
+                = f.label :entity_type
+                = select_tag :entity_type_id, options_for_select(@organisation.entity_types.sort.collect { |et| [et.name, et.id] }, @reservation.entity.try(:entity_type_id)), { prompt: t('prompt_choose') }
+            .no-entities-available
+              = t('.no_entities_available')
+            ul.entity-list
+      .content-column
+        .content-block
+          h2
+            i.icon-user
+            = OrganisationClient.model_name.human(count: 1)
+          - if @reservation.new_record?
+            .organisation_client_new_existing
+              .field
+                label for="organisation_client_type"
+                  = t('.organisation_client_type')
+                fieldset.inline-fieldset
+                  = radio_button_tag :organisation_client_type, :existing, @focus != 'new_client'
+                  = label_tag :organisation_client_type_existing, t('.existing_organisation_client')
+                  = radio_button_tag :organisation_client_type, :new, @focus == 'new_client'
+                  = label_tag :organisation_client_type_new, t('.new_organisation_client')
+            .existing_organisation_client style=("display: none;" if @focus == 'new_client')
+              .field
+                = f.label :organisation_client
+                = f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select'
+            .new_organisation_client style=("display: none;" if @focus != 'new_client')
+              = f.fields_for :organisation_client, @reservation.organisation_client, wrapper: false do |ocf|
+                = render partial: 'organisation_clients/form_fields', locals: { f: ocf }
+          - else
             .field
               = f.label :organisation_client
-              = f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select'
-          .new_organisation_client style=("display: none;" if @focus != 'new_client')
-            = f.fields_for :organisation_client, @reservation.organisation_client, wrapper: false do |ocf|
-              = render partial: 'organisation_clients/form_fields', locals: { f: ocf }
-        - else
+              = f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) }
+        .content-block
+          h2
+            i.icon-document
+            = Document.model_name.human(count: 2)
+          #documents
+            #documents-container.nested-form.clearfix
+              = f.fields_for :documents, wrapper: false do |df|
+                = render partial: 'documents/document_fields', locals: { f: df }
+            = f.link_to_add '', :documents, data: { target: '#documents-container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: Document.model_name.human.lcfirst)
+      .content-column
+        .content-block
+          h2
+            i.icon-settingsthree-gears
+            = t('.settings')
           .field
-            = f.label :organisation_client
-            = f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) }
-      .content-block
-        h2
-          i.icon-document
-          = Document.model_name.human(count: 2)
-        #documents
-          #documents-container.nested-form.clearfix
-            = f.fields_for :documents, wrapper: false do |df|
-              = render partial: 'documents/document_fields', locals: { f: df }
-          = f.link_to_add '', :documents, data: { target: '#documents-container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: Document.model_name.human.lcfirst)
-    .content-column
-      .content-block
-        h2
-          i.icon-settingsthree-gears
-          = t('.settings')
-        .field
-          = f.label :description
-          .field-with-example-wrapper
-            = f.text_field :description
-            p
-              = t('for_example') + ': ' + t('.reservation_description_example')
-        - if @reservation.new_record?
-          = f.fields_for :reservation_recurrence_definition, @reservation.reservation_recurrence_definition, wrapper: false do |rrdf|
-            = render partial: 'reservation_recurrence_definitions/form_fields', locals: { f: rrdf }
+            = f.label :description
+            .field-with-example-wrapper
+              = f.text_field :description
+              p
+                = t('for_example') + ': ' + t('.reservation_description_example')
+          - if @reservation.new_record?
+            = f.fields_for :reservation_recurrence_definition, @reservation.reservation_recurrence_definition, wrapper: false do |rrdf|
+              = render partial: 'reservation_recurrence_definitions/form_fields', locals: { f: rrdf }
     .actions
       = f.submit
