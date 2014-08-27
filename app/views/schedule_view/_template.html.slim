@@ -18,12 +18,12 @@ script#scheduleContainerTemplate type="text/template"
     .left-axis
     .schedule-scroll-container
       / TODO: Move sticky header to local menu area
-      .top-axis.clearfix
-        .axis-parts.clearfix
-        .description-bubble
+      /.top-axis.clearfix
+      /  .axis-parts.clearfix
+      /  .description-bubble
 
-    .schedule-body
-      .grid
+      .schedule-body
+        .grid
 
 script#gridItemTemplate type="text/template"
   .grid-item
@@ -76,6 +76,7 @@ script#weekAxisRowTemplate type="text/template"
       .week-nr
         p
       .week-end
+        p
 
 script#timeAxisRowTemplate type="text/template"
   .time-axis-row
@@ -122,33 +123,33 @@ script#scheduleEntityItemPartsTemplate type="text/template"
 
 script#contextButtonDescription type="text/template"
   i.icon-info-sign
-    span
-      = t('.description')
+  span
+    = t('.description')
 
 script#contextButtonClient type="text/template"
   i.icon-user
-    span
-      = t('.organisation_client')
+  span
+    = t('.organisation_client')
 
 script#contextButtonEdit type="text/template"
   i.icon-edit
-    span
-      = t('.edit')
+  span
+    = t('.edit')
 
 script#contextButtonRemove type="text/template"
   i.icon-remove
-    span
-      = t('.delete')
+  span
+    = t('.delete')
 
 script#contextButtonSave type="text/template"
   i.icon-ok
-    span
-      = t('save')
+  span
+    = t('save')
 
 script#contextButtonCancel type="text/template"
   i.icon-fatundo
-    span
-      = t('cancel')
+  span
+    = t('cancel')
 
 script#ajaxNotification type="text/template"
   .ajax-notification.clearfix
