@@ -52,21 +52,19 @@
               dt
                 = Reservation.human_attribute_name(:slack_before)
               dd
-                = @reservation.get_slack_before
-                = t('.min')
+                = @reservation.get_slack_before.to_s + ' ' + t('.min')
               dt
                 = Reservation.human_attribute_name(:slack_after)
               dd
-                = @reservation.get_slack_after
-                = t('.min')
+                = @reservation.get_slack_after.to_s + ' ' + t('.min')
               dt
                 = Reservation.human_attribute_name(:created_at)
               dd
                 = l(@reservation.created_at, format: :long)
         - unless @reservation.recurrences.empty?
-        h2
-          = t('.repetitions')
-        = render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' }
+          h2
+            = t('.repetitions')
+          = render partial: 'reservations/table', locals: { reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences' }
     #documents
       #documents-container.clearfix
         = render partial: 'documents/overview', locals: { documents: @reservation.documents }
