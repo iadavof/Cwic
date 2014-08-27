@@ -32,7 +32,7 @@
             = document.user.instance_name
           td
             = document.documentable.class.model_name.human(count: 1)
-            | :
+            ' :
             = name_link_to_show([@organisation, document.documentable])
           td
             = l(document.created_at, format: :long)

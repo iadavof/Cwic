@@ -15,6 +15,6 @@
 - else
   div
     = t('.download_as')
-    = link_to(t('csv'), organisation_reservations_path(@organisation, params.merge({ format: 'csv', page: false })))
-    = link_to(t('xls'), organisation_reservations_path(@organisation, params.merge({ format: 'xls', page: false })))
+    =< link_to(t('csv'), organisation_reservations_path(@organisation, params.merge({ format: 'csv', page: false })))
+    =< link_to(t('xls'), organisation_reservations_path(@organisation, params.merge({ format: 'xls', page: false })))
   = render partial: 'reservations/table', locals: { reservations: @reservations, include_date: true }
