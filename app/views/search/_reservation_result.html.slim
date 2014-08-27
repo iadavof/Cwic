@@ -1,10 +1,9 @@
 h3
-  = result.class.model_name.human
-  | :
+  = "#{result.class.model_name.human}: "
   = name_link_to_show([@organisation, result])
-  = result.description
+  = " #{result.description}"
 .result-icon style=(result.reservation_status.present? ? 'background-color: ' + result.reservation_status.color : '')
-i.icon-time
+  i.icon-time
 .extra-controls
   = render partial: 'reservations/status_controls', locals: { reservation: result, extra_css_class: 'mini' }
 .info.clearfix

@@ -650,6 +650,7 @@ nl:
       min: 'min.'
     show:
       general: 'Algemeen'
+      no_entity_images: "Geen objectfoto's"
     form:
       no_entity_types_found_html: 'Er zijn nog een objectsoorten toegevoegd. %{link} om een object van een bepaald objectsoort aan te kunnen maken.'
       general: 'Algemeen'

@@ -1,8 +1,7 @@
 .result-icon
   i.icon-user
 h3
-  = result.class.model_name.human
-  | :
+  = "#{result.class.model_name.human}: "
   = name_link_to_show([@organisation, result])
 .info.clearfix
   .column

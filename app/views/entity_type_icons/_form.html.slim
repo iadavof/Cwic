@@ -7,21 +7,21 @@
     .field
       = f.label :organisation_id
       = f.collection_select :organisation_id, Organisation.all.sort, :id, :instance_name, { include_blank: t('all_organisations') }
-.field
-  = f.label :entity_type_icon_image
-  .entity-type-icon-image
-    = image_tag(@entity_type_icon.image.medium_icon.url)
-  - if @entity_type_icon.image.present?
-    .field
-      label
-        = t('.remove_icon')
-      = f.check_box :remove_image
-.field
-  = f.label :remote_image_url
-  = f.text_field :remote_image_url
-.field
-  = f.label :image_from_file
-  = f.file_field :image
-= f.hidden_field :image_cache
-.actions
-  = f.submit
+  .field
+    = f.label :entity_type_icon_image
+    .entity-type-icon-image
+      = image_tag(@entity_type_icon.image.medium_icon.url)
+    - if @entity_type_icon.image.present?
+      .field
+        label
+          = t('.remove_icon')
+        = f.check_box :remove_image
+  .field
+    = f.label :remote_image_url
+    = f.text_field :remote_image_url
+  .field
+    = f.label :image_from_file
+    = f.file_field :image
+  = f.hidden_field :image_cache
+  .actions
+    = f.submit

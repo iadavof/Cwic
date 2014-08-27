@@ -1,14 +1,13 @@
 h3
-  = result.class.model_name.human
-  | : 
+  = "#{result.class.model_name.human}: "
   = name_link_to_show([@organisation, result])
 .result-icon
   i.icon-mimetype
 .info.clearfix
   .column
-    |  column 1 
+    |  column 1
   .column
-    |  column 2 
+    |  column 2
   .column
     h4
       = EntityImage.model_name.human(count: 2)
