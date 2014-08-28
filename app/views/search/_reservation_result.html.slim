@@ -1,7 +1,7 @@
 h3
-  = "#{result.class.model_name.human}: "
+  => "#{result.class.model_name.human}:"
   = name_link_to_show([@organisation, result])
-  = " #{result.description}"
+  =< result.description
 .result-icon style=(result.reservation_status.present? ? 'background-color: ' + result.reservation_status.color : '')
   i.icon-time
 .extra-controls
@@ -34,4 +34,4 @@ h3
     h4
       = t('.options')
   .column
-    |  column 3
+    | column 3

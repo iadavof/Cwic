@@ -52,11 +52,13 @@
               dt
                 = Reservation.human_attribute_name(:slack_before)
               dd
-                = @reservation.get_slack_before.to_s + ' ' + t('.min')
+                => @reservation.get_slack_before
+                = t('.min')
               dt
                 = Reservation.human_attribute_name(:slack_after)
               dd
-                = @reservation.get_slack_after.to_s + ' ' + t('.min')
+                => @reservation.get_slack_after
+                = t('.min')
               dt
                 = Reservation.human_attribute_name(:created_at)
               dd
