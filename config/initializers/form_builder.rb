@@ -1,24 +1,21 @@
 class ActionView::Helpers::FormBuilder
-  alias :orig_label :label
-
-  # add a 'required' CSS class to the field label if the field is required
-  def label(method, content_or_options = nil, options = nil, &block)
-    if content_or_options && content_or_options.class == Hash
-      options = content_or_options
+  def label_with_required_class(method, text_or_options = nil, options = {}, &block)
+    if text_or_options && text_or_options.class == Hash
+      options = text_or_options
     else
-      content = content_or_options
+      text = text_or_options
     end
 
-    if object.class.validators_on(method).map(&:class).include? ActiveRecord::Validations::PresenceValidator
-      if options.class != Hash
-        options = {class: "required"}
-      else
-        options[:class] = ((options[:class] || "") + " required").split(" ").uniq.join(" ")
-      end
+    # Add a 'required' CSS class to the field label if the field is required
+    if object.class.validators_on(method).map(&:class).include?(ActiveRecord::Validations::PresenceValidator)
+      classes = options[:class].is_a?(String) ? options[:class].split(' ') : Array(options[:class]) # Classes as array with one item for each class
+      classes << 'required'
+      options[:class] = classes.uniq
     end
 
-    self.orig_label(method, content, options || {}, &block)
+    self.label_without_required_class(method, text, options, &block)
   end
+  alias_method_chain :label, :required_class
 end
 
 # Add a error class to fields with 'errors' instead of wrapping them with a div with class 'field_with_errors'
