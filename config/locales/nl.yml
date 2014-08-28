@@ -785,6 +785,7 @@ nl:
       title_html: 'Resultaten voor <strong>%{query}</strong>'
       title_htm_of: 'Resultaten voor <strong>%{query}</strong> van %{instance_name}'
       item: 'Item'
+      matching_tags: 'De volgende tags komen overeen met uw zoekopdracht:'
     tag_search:
       results: 'resultaten'
       title_html: 'Resultaten voor de tag <strong>%{query}</strong>'

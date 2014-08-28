@@ -370,7 +370,7 @@ APP.global = {
     }
     $(parent).find(':radio, :checkbox, input[type=file]').cwicControl();
     $(parent).find('select').select2({
-      width: 'element',
+      width: 'resolve',
       minimumResultsForSearch: -1,
     });
     $(parent).find('.datepicker-field').datepicker();

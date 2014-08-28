@@ -1,13 +1,12 @@
 - content_for :page_title do
   = show_title(@entity_type)
-- content_for :top_content do
-  = render partial: 'tags/show', locals: { tags: @entity_type.tags }
 - content_for :local_menu_navigation do
   = button_link_to_index([@organisation, EntityType])
   = button_link_to_edit([@organisation, @entity_type])
   = button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type))
 - if @entity_type.entity_images.present?
   = render partial: 'entities/ken_burns_slideshow', locals: {images: @entity_type.entity_images}
+= render partial: 'tags/show', locals: { tags: @entity_type.tags }
 #tabs
   ul.nav
     li

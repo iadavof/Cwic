@@ -34,11 +34,6 @@ html.js.introduction-page body {
   overflow: auto;
 }
 
-::-moz-selection {
-  background-color: #1c9cb2;
-  color: #fff;
-}
-
 ::selection {
   background-color: #1c9cb2;
   color: #fff;
@@ -189,24 +184,15 @@ dl {
       }
     }
   }
+}
 
-  &.twocol {
+@for $i from 2 through 10 {
+  .content-columns[data-column-count="#{$i}"] {
     .content-column {
-      width: 49%;
+      width: (100% - ($i - 1) * 2%) / $i;
       margin-right: 2%;
 
-      &:nth-child(2n) {
-        margin-right: 0;
-      }
-    }
-  }
-
-  &.threecol {
-    .content-column {
-      width: 32%;
-      margin-right: 2%;
-      
-      &:nth-child(3n) {
+      &:nth-child(#{$i}n) {
         margin-right: 0;
       }
     }
@@ -219,12 +205,8 @@ dl {
 
 .progress-bar {
   background-color: #6dbfce;
-  -webkit-background-size: 30px 30px;
-  -moz-background-size: 30px 30px;
   background-size: 30px 30px;
   background-image: linear-gradient(135deg, rgba(255, 255, 255, .3) 25%, transparent 25%, transparent 50%, rgba(255, 255, 255, 0.3) 50%, rgba(255, 255, 255, 0.3) 75%, transparent 75%, transparent);
-  -webkit-animation: animate-stripes-30 1.5s linear 0s infinite normal;
-  -moz-animation: animate-stripes-30 1.5s linear 0s infinite normal;
   animation: animate-stripes-30 1.5s linear 0s infinite normal;
 }
 
@@ -235,7 +217,6 @@ div.entity-images-container {
     border: 1px solid #ccc;
     margin: 10px;
     outline: none;
-    -webkit-box-shadow:  2px 2px 2px 1px rgba(0, 0, 0, 0.1);
     box-shadow:  2px 2px 2px 1px rgba(0, 0, 0, 0.1);
     img {
       border: 5px solid #fff;
