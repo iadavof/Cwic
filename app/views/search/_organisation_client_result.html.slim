@@ -21,13 +21,13 @@ h3
           td = link_to(result.mobile_phone, "tel:#{result.mobile_phone}") if result.mobile_phone.present?
   .column
     h4
-      = t('.upcomming_reservations')
-    - if result.upcomming_reservations(3).empty?
+      = t('.upcoming_reservations')
+    - if result.upcoming_reservations(3).empty?
       p
         = t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst)
     - else
       dl
-        - result.upcomming_reservations(3).includes(:entity).each do |res|
+        - result.upcoming_reservations(3).includes(:entity).each do |res|
           dt title=l(res.begins_at, format: :long)
             => res.begins_at <= Time.now ? t('now') : t('.in_about')
             = distance_of_time_in_words_to_now(res.begins_at)

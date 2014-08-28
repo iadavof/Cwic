@@ -17,8 +17,8 @@
       a href="#documents"
         = Document.model_name.human(count: 2)
     li
-      a href="#upcomming_reservations"
-        = t('.upcomming_reservations')
+      a href="#upcoming_reservations"
+        = t('.upcoming_reservations')
     li
       a href="#past_reservations"
         = t('.past_reservations')
@@ -64,11 +64,11 @@
     #documents
       #documents-container.clearfix
         = render partial: 'documents/overview', locals: { documents: @organisation_client.documents }
-    #upcomming_reservations
-      - if @organisation_client.upcomming_reservations(15).empty?
-        = content_tag(:p, t('.no_upcomming_reservations'))
+    #upcoming_reservations
+      - if @organisation_client.upcoming_reservations(15).empty?
+        = content_tag(:p, t('.no_upcoming_reservations'))
       - else
-        = render partial: 'reservations/table', locals: { reservations: @organisation_client.upcomming_reservations(15).includes(:reservation_status, :organisation_client, :entity) }
+        = render partial: 'reservations/table', locals: { reservations: @organisation_client.upcoming_reservations(15).includes(:reservation_status, :organisation_client, :entity) }
       = link_to(t('.all_reservations_of_client', client: @organisation_client.instance_name), organisation_organisation_client_reservations_path(@organisation, @organisation_client))
     #past_reservations
       - if @organisation_client.past_reservations(15).empty?

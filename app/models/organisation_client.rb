@@ -57,7 +57,7 @@ class OrganisationClient < ActiveRecord::Base
     "#{first_name} #{infix.present? ? infix + ' ' : ''}#{last_name}"
   end
 
-  def upcomming_reservations(limit)
+  def upcoming_reservations(limit)
     rel = self.reservations.where('ends_at >= :now', now: Time.now).order(:ends_at)
     rel = rel.limit(limit) if limit.present?
     rel
