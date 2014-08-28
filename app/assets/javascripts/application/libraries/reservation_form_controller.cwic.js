@@ -53,6 +53,16 @@ CwicReservationFormController.prototype.updatePeriodFieldsWarningState = functio
   APP.util.setFieldWarningState(this.endsAtTodField, endsAtWarning);
 };
 
+CwicReservationFormController.prototype.updatePeriodFieldsErrorState = function() {
+  var beginsAtError = this.selectedEntityData.begins_at_error;
+  APP.util.setFieldErrorState(this.beginsAtDateField, beginsAtError);
+  APP.util.setFieldErrorState(this.beginsAtTodField, beginsAtError);
+
+  var endsAtError = this.selectedEntityData.ends_at_error;
+  APP.util.setFieldErrorState(this.endsAtDateField, endsAtError);
+  APP.util.setFieldErrorState(this.endsAtTodField, endsAtError);
+};
+
 CwicReservationFormController.prototype.bindEntitySelection = function() {
   var _this = this;
   this.getAvailableEntitiesList().on('click', 'li', function() {
@@ -65,7 +75,7 @@ CwicReservationFormController.prototype.bindEntitySelection = function() {
 
 CwicReservationFormController.prototype.setSelectedEntity = function(entityId) {
   this.selectedEntityId = entityId;
-  this.selectedEntityData = this.availableEntities[this.selectedEntityId];
+  this.selectedEntityData = $.extend(this.availableEntities[this.selectedEntityId], { available: true, begins_at_error: false, ends_at_error: false });
   this.formContainer.find('input#reservation_entity_id').val(this.selectedEntityId); // Set the hidden form field for the entity for this reservation
   this.formContainer.find('div.selected-entity').text(this.selectedEntityData.name);
   this.selectedEntityDataChanged();
@@ -158,7 +168,7 @@ CwicReservationFormController.prototype.updateAvailableEntities = function() {
     type: 'POST',
     url: this.options.entities_controller_url + '/availability.json',
     data: {
-      ignore_reservation_ids: _this.reservationId,
+      reservation_id: _this.reservationId,
       selected_entity_id: _this.selectedEntityId,
       entity_type_id: _this.entityTypeId,
       begins_at: _this.beginMoment.toJSON(),
@@ -223,6 +233,7 @@ CwicReservationFormController.prototype.selectedEntityDataChanged = function() {
   this.updateSlackFieldsPlaceholder();
   this.updateSlackFieldsWarningState();
   this.updatePeriodFieldsWarningState();
+  this.updatePeriodFieldsErrorState();
   this.updateSelectedEntityClass();
 };
 
