@@ -1,8 +1,0 @@
-<%% content_for :page_title do %><%%= edit_title(@<%= singular_table_name %>) %><%% end %>
-
-<%% content_for :local_menu_navigation do %>
-  <%%= button_link_to_show(@<%= singular_table_name %>) %>
-  <%%= button_link_to_index(<%= class_name %>) %>
-<%% end %>
-
-<%%= render 'form' %>

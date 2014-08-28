@@ -1,0 +1,35 @@
+- content_for :page_title do
+  = index_title(<%= class_name %>)
+
+- content_for :local_menu_navigation do
+  = button_link_to_new(<%= class_name %>)
+
+- if @<%= plural_table_name %>.empty?
+  p = t('.empty', default: :empty_objects, classes: <%= class_name %>.model_name.human(count: 2).lcfirst)
+- else
+  table
+    thead
+      tr
+<% attributes.reject(&:password_digest?).each do |attribute| -%>
+        th = <%= class_name %>.human_attribute_name(:<%= attribute.name %>)
+<% end -%>
+        th
+
+    tbody
+      - @<%= plural_table_name %>.each do |<%= singular_table_name %>|
+        tr
+<% if attributes.any? -%>
+          td = name_link_to_show(<%= singular_table_name %>)
+<% attributes.from(1).each do |attribute| -%>
+<% if [:integer, :float, :decimal].include?(attribute.type) -%>
+          td = number_with_delimiter(<%= singular_table_name %>.<%= attribute.name %>)
+<% elsif [:date, :time, :datetime, :timestamp].include?(attribute.type) -%>
+          td = l(<%= singular_table_name %>.<%= attribute.name %>)
+<% else -%>
+          td = <%= singular_table_name %>.<%= attribute.name %>
+<% end -%>
+<% end -%>
+<% end -%>
+          td.icons
+            = icon_link_to_edit(<%= singular_table_name %>)
+            = icon_link_to_destroy(<%= singular_table_name %>)
