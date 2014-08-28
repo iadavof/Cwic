@@ -26,8 +26,8 @@
             td
               = content_tag(:i, '', class: 'icon-warning-sign table-warning-icon') if reservation.warning
             - if reservation.reservation_status.present?
-                td style="opacity: 0.7; background-color:#{reservation.reservation_status.color}; color: #{Cwic::Color.text_color(reservation.reservation_status.color)};"
-                  = reservation.reservation_status.name
+              td style="opacity: 0.7; background-color:#{reservation.reservation_status.color}; color: #{Cwic::Color.text_color(reservation.reservation_status.color)};"
+                = reservation.reservation_status.name
             - else
               td
             td
