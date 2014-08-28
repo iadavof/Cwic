@@ -1,0 +1,48 @@
+- content_for :page_title do
+  = t('.today_and_tomorrow')
+- content_for :local_menu_navigation do
+  = button_link_to_new([@organisation, Reservation])
+div#today-and-tomorrow-container.clearfix.today-and-tomorrow-container data-organisation-id=current_organisation.id
+  - if @entity_types.empty?
+    p.no_entities_found
+      = t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe
+  - else
+    - if @entity_types.count == 1
+      = render partial: 'today_and_tomorrow/entity_block', collection: @entity_types.first.entities, as: :entity
+    - else
+      = render partial: 'today_and_tomorrow/entity_type_block', collection: @entity_types, as: :entity_type
+
+script#reservationLineTemplate type="text/template"
+  p.reservation-line
+    span.time
+      | 88:88 - 88:88
+    span.description
+      | Text
+
+script#noReservationsTemplate type="text/template"
+  p.no-reservations
+    = t('.no_reservations')
+
+script#currentReservationTemplate type="text/template"
+  .reservation-now
+    p.reservation-description
+      | Text
+    .time-info
+      .begin-time
+        | 88:88
+      .end-time
+        | 88:88
+    .progress-bar-container
+      span.progress-bar style="width: 40%"
+    .date-info
+      .begin-date
+        | 00-00-0000
+      .end-date
+        | 00-00-0000
+
+script#tomorrowLineTemplate type="text/template"
+  h4
+    = t('.tomorrow')
+
+script#nextReservationsTemplate type="text/template"
+  .reservation-next

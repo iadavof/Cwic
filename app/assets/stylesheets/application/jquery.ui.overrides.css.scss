@@ -9,15 +9,15 @@
 }
 
 .ui-datepicker .ui-widget-header {
-  background: #ffffff;
-  margin: -0.1em -0.1em 0 -0.1em;
+  background: #fff;
+  margin: -0.1em -0.1em 0;
 }
 
 .ui-timepicker .ui-state-default, .ui-timepicker .ui-widget-content .ui-state-default, .ui-timepicker .ui-widget-header .ui-state-default,
 .ui-datepicker .ui-state-default, .ui-datepicker .ui-widget-content .ui-state-default, .ui-datepicker .ui-widget-header .ui-state-default {
-  background: #ffffff;
+  background: #fff;
   color: #ff3520;
-  border-color: #ffffff;
+  border-color: #fff;
   font-weight: bold;
 }
 
@@ -60,16 +60,16 @@ ui-timepicker-table td {
 .ui-timepicker .ui-widget-content .ui-timepicker-minutes .ui-state-default.ui-state-active,
 .ui-datepicker .ui-datepicker-calendar .ui-state-default.ui-state-active {
   background: #ff3520;
-  color: #ffffff;
+  color: #fff;
   border-color: #ff3520;
   font-weight: bold;
 }
 
 .ui-timepicker .ui-widget-content {
   color: inherit;
-  border-color: #B5B5B5;
+  border-color: #b5b5b5;
   border-radius: 0;
-  background: #dddddd;
+  background: #ddd;
 }
 
 .ui-timepicker .ui-timepicker-table table {
@@ -83,22 +83,22 @@ ui-timepicker-table td {
 }
 
 .ui-timepicker .ui-timepicker-minutes {
-  background: #ffffff;
+  background: #fff;
 }
 
 .ui-timepicker .ui-widget-content .ui-timepicker-minutes .ui-state-default {
-  background: #dddddd;
-  border-color: #dddddd;
+  background: #ddd;
+  border-color: #ddd;
 }
 
 .ui-datepicker {
-  background: #dddddd;
+  background: #ddd;
   border-radius: 0;
-  border-color: #B5B5B5;
+  border-color: #b5b5b5;
 }
 
 .ui-datepicker-calendar {
-  background: #dddddd;
+  background: #ddd;
   border: 0 none;
 }
 
@@ -108,12 +108,12 @@ ui-timepicker-table td {
 .ui-tabs {
   background: #eee;
   border: 0 none;
-  padding: 0 5px 5px 5px;
+  padding: 0 5px 5px;
   border-radius: 0;
   margin-bottom: 1em;
 }
 
-#note-template + .ui-tabs {
+#note-container + .ui-tabs {
   margin-right: 420px;
 }
 
@@ -159,7 +159,7 @@ ui-timepicker-table td {
 }
 
 .ui-widget-content.ui-tabs a.button {
-  color: #ffffff;
+  color: #fff;
 }
 
 .ui-tabs .ui-tabs-nav li {

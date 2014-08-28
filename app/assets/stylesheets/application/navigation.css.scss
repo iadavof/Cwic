@@ -290,14 +290,12 @@ html.js body[data-current-user-id=''] #local-menu {
   overflow: hidden;
   box-sizing: border-box;
   padding: 0 0.6em;
-  margin: 0.3em 0;
   display: block;
   position: relative;
   float: left;
   min-width: 250px;
-  &:empty {
-    background-color: transparent;
-    margin: 0;
+  > .inner {
+    padding: 0.3em 0;
   }
 }
 

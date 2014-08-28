@@ -1,0 +1,9 @@
+.fields.upload-document-fields
+  .upload-document-fields-wrapper
+    .field
+      = form.label :remote_document_url
+      = form.text_field :remote_document_url
+    .field
+      = form.label :document_from_file
+      = form.file_field :document
+    = form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: Document.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }

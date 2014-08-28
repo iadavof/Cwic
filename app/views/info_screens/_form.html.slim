@@ -1,0 +1,33 @@
+= form_for([@organisation, @info_screen]) do |f|
+  = render 'shared/error_messages', target: @info_screen
+  .field
+    = f.label :name
+    .field-with-example-wrapper
+      = f.text_field :name
+      p
+        = t('for_example') + ': ' + t('.info_screen_name_example')
+  .field
+    = f.label :public
+    = f.check_box :public
+  .field
+    = f.label :show_reservation_number
+    = f.check_box :show_reservation_number
+  .field
+    = f.label :add_new_entity_types
+    = f.check_box :add_new_entity_types
+  .field
+    = f.label :clock_header
+    = f.check_box :clock_header
+  .field
+    = f.label :direction_char_visible
+    = f.check_box :direction_char_visible, id: 'direction_char_visible'
+  h2
+    = t('.selected_entity_types')
+  .info-screen-entity-types
+    - if @info_screen.info_screen_entity_types.present?
+      = f.fields_for :info_screen_entity_types, @info_screen.info_screen_entity_types do |etf|
+        = render partial: 'info_screen_entity_type_fields', locals: { f: etf }
+    - else
+      = t('.no_info_screen_entity_type')
+  .actions
+    = f.submit

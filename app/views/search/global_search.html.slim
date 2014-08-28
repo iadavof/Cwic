@@ -1,0 +1,13 @@
+- content_for :page_title do
+  = t('.title_html', query: @query)
+- content_for :top_content do
+  = render partial: 'tags/show', locals: { tags: @tag_suggestions }
+- if @results.empty?
+  p
+    = t('.empty', default: :empty_objects, classes: t('.results'))
+- else
+  #results
+    = render partial: 'result', collection: @results
+  p
+    = page_entries_info(@raw_results, entry_name: t('.item'))
+    = paginate(@raw_results, params: { search_key: @search_key })

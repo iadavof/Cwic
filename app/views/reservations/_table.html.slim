@@ -1,0 +1,59 @@
+= paginate reservations, prefix: local_assigns[:prefix] if reservations.respond_to?(:current_page)
+.table-container
+  = limiting prefix: local_assigns[:prefix]
+  = form_tag organisation_reservations_multiple_path(@organisation) do
+    table.multiple-edit
+      thead
+        tr
+          th
+            = check_box_tag 'select_all_reservations', '', false, class: 'select-all-checkbox'
+          th
+          = sortable_table_head(Reservation, [:reservation_status, :index], prefix: local_assigns[:prefix])
+          = sortable_table_head(Reservation, :id, prefix: local_assigns[:prefix])
+          = sortable_table_head(Reservation, :description, prefix: local_assigns[:prefix])
+          = sortable_table_head(Reservation, [:organisation_client, :first_name], prefix: local_assigns[:prefix])
+          = sortable_table_head(Reservation, [:entity, :name], prefix: local_assigns[:prefix])
+          = sortable_table_head(Reservation, :begins_at, prefix: local_assigns[:prefix])
+          = sortable_table_head(Reservation, :ends_at, prefix: local_assigns[:prefix])
+          = table_head(Reservation, :slack_before)
+          = table_head(Reservation, :slack_after)
+          th
+      tbody
+        - reservations.each do |reservation|
+          = content_tag(:tr, class: (local_assigns[:highlight].present? && highlight.include?(reservation)) ?  'highlight' : nil) do
+            td
+              = check_box_tag "reservation_ids[]", reservation.id, false, class: 'select-all-child', id: 'reservation_ids_' + reservation.id.to_s
+            td
+              = content_tag(:i, '', class: 'icon-warning-sign table-warning-icon') if reservation.warning
+            - if reservation.reservation_status.present?
+                td style="opacity: 0.7; background-color:#{reservation.reservation_status.color}; color: #{Cwic::Color.text_color(reservation.reservation_status.color)};"
+                  = reservation.reservation_status.name
+            - else
+              td
+            td
+              = name_link_to_show([@organisation, reservation])
+            td
+              = reservation.description
+            td
+              = name_link_to_show([@organisation, reservation.organisation_client])
+            td
+              = name_link_to_show([@organisation, reservation.entity])
+            td
+              = l(reservation.begins_at, format: :long)
+            td
+              = l(reservation.ends_at, format: :long)
+            td
+              => reservation.get_slack_before
+              = t('.min')
+            td
+              => reservation.get_slack_after
+              = t('.min')
+            td.icons
+              = icon_link_to_edit([@organisation, reservation])
+              = icon_link_to_destroy([@organisation, reservation])
+    .multiple-edit-controls
+      span.multiple-edit
+        = t('multiple.with_selected')
+      = submit_tag t('multiple.edit'), name: 'edit'
+      = submit_tag t('multiple.delete'), name: 'delete'
+= paginate reservations, prefix: local_assigns[:prefix] if reservations.respond_to?(:current_page)

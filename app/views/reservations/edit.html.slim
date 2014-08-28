@@ -1,0 +1,8 @@
+- content_for :page_title do
+  = edit_title(@reservation)
+- content_for :local_menu_navigation do
+  = button_link_to_show([@organisation, @reservation])
+  = button_link_to_index([@organisation, Reservation])
+- content_for :local_menu_context do
+  = render partial: 'reservations/status_controls', locals: { reservation: @reservation }
+= render 'form'

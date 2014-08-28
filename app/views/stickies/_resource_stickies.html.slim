@@ -1,0 +1,22 @@
+#note-container[
+  data-resource-class-name=resource.class.name
+  data-resource-id=resource.id
+]
+  .control-container.clearfix
+    button.new-sticky
+      = t('.add_note')
+  .notes
+
+  script#note-template type="text/template"
+    .note
+      .note-head
+        .inner.clearfix
+          p.author
+          p.created_at
+          a.delete-button.icon.icon-remove.action-button
+      .note-text
+        textarea
+      a.save-button.icon.icon-ok.action-button
+      p.saved_notification
+        =t('.saved')
+      img.ajax-wait src="/assets/ajax_wait.gif"

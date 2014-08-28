@@ -1,0 +1,13 @@
+#local-menu.clearfix
+  .navigation-actions
+    - if content_for?(:local_menu_navigation)
+      .inner.clearfix
+        = yield(:local_menu_navigation)
+  .context-actions
+    - if content_for?(:local_menu_context)
+      .inner.clearfix
+        = yield(:local_menu_context)
+  .page-actions
+    - if content_for?(:local_menu_page)
+      .inner.clearfix
+        = yield(:local_menu_page)

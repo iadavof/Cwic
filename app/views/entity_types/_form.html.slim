@@ -1,0 +1,125 @@
+#entity-type-form
+  = nested_form_for([@organisation, @entity_type]) do |f|
+    = render partial: 'tags/form', locals: { f: f }
+    = render 'shared/error_messages', target: @entity_type
+    #tabs
+      ul.nav
+        li
+          a.current href="#general"
+            = t('.general')
+        li
+          a href="#properties"
+            = EntityTypeProperty.model_name.human(count: 2)
+        li
+          a href="#options"
+            = EntityTypeOption.model_name.human(count: 2)
+        li
+          a href="#reservation-statuses"
+            = ReservationStatus.model_name.human(count: 2)
+        li
+          a href="#images"
+            = EntityImage.model_name.human(count: 2)
+        li
+          a href="#reserve-periods"
+            = ReservePeriod.model_name.human(count: 2)
+      .tab-wrap
+        #general
+          h2
+            = t('.general')
+          .field
+            = f.label :name
+            .field-with-example-wrapper
+              = f.text_field :name
+              p
+                = t('for_example') + ': ' + t('.entity_type_name_example')
+          .field
+            = f.label :description
+            = f.text_area :description
+          = f.label :icon
+          .field.field-icon-select.clearfix
+            - EntityTypeIcon.where('organisation_id = ? OR organisation_id IS NULL', @organisation).each do |eti|
+              = f.radio_button :icon_id, eti.id, class: 'nocwic'
+              = f.label "icon_id_#{eti.id}", eti.name, { style: "background-image: url('#{eti.image.icon.url}');", class: (eti.id == @entity_type.icon.id) ? 'active' : ''}
+          div
+            = link_to(t('.objecticoon toevoegen'), new_organisation_entity_type_icon_path(@organisation))
+          h2
+            = t('.default_slack_times')
+          = format_help(t('.default_slack_times_help'))
+          .field
+            = f.label :slack_before
+            = f.number_field :slack_before, min: 0
+            span.field-suffix
+              = t('.minutes')
+          .field
+            = f.label :slack_after
+            = f.number_field :slack_after, min: 0
+            span.field-suffix
+              = t('.minutes')
+        #properties.hide
+          h2
+            = EntityTypeProperty.model_name.human(count: 2)
+          = format_help(t('.properties_help'))
+          #entity-type-properties.nested-form
+            = f.fields_for :properties, @entity_type.properties.sort_by(&:index), wrapper: false do |pf|
+              = render partial: 'property_fields', locals: { f: pf }
+          = f.link_to_add '', :properties, data: { target: '#entity-type-properties' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst)
+        #reservation-statuses.hide
+          h2
+            = ReservationStatus.model_name.human(count: 2)
+          = format_help(t('.reservation_status_help'))
+          .reservation-status-header.clearfix
+            div
+              .icon.icon-resize-vertical.sort-handle.hidden
+              .name
+                = ReservationStatus.human_attribute_name(:name)
+              .color
+                = ReservationStatus.human_attribute_name(:color)
+              div
+                = ReservationStatus.human_attribute_name(:blocking).html_safe
+              div
+                = ReservationStatus.human_attribute_name(:info_boards).html_safe
+              div
+                = ReservationStatus.human_attribute_name(:billable).html_safe
+          ul#entity-type-reservation-statuses.nested-form
+            = f.fields_for :reservation_statuses, @entity_type.reservation_statuses.sort_by(&:index), wrapper: false do |rsf|
+              = render partial: 'reservation_status_fields', locals: { f: rsf }
+          = f.link_to_add '', :reservation_statuses, data: { target: '#entity-type-reservation-statuses' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: ReservationStatus.model_name.human.lcfirst)
+        #options.hide
+          h2
+            = EntityTypeOption.model_name.human(count: 2)
+          = format_help(t('.options_help'))
+          #entity-type-options.nested-form
+            = f.fields_for :options, @entity_type.options.sort_by(&:index), wrapper: false do |of|
+              = render partial: 'option_fields', locals: { f: of }
+          = f.link_to_add '', :options, data: { target: '#entity-type-options' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityTypeOption.model_name.human.lcfirst)
+        #images.hide
+          h2
+            = EntityImage.model_name.human(count: 2)
+          = format_help(t('.entity_images_help'))
+          #entity-images.nested-form
+            = f.fields_for :entity_images, wrapper: false do |eif|
+              = render partial: 'entities/entity_image_fields', locals: { f: eif }
+          = f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst)
+        #reserve-periods.hide
+          h2
+            = ReservePeriod.model_name.human(count: 2)
+          = format_help(t('.reserve_periods_help'))
+          #entity-type-reserve-periods.nested-form
+            = f.fields_for :reserve_periods, wrapper: false do |rpf|
+              = render partial: 'reserve_period_fields', locals: { f: rpf }
+          = f.link_to_add '', :reserve_periods, data: { target: '#entity-type-reserve-periods' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: ReservePeriod.model_name.human.lcfirst)
+          h2
+            = t('.reservation_length_limitations')
+          div
+            .field
+              = f.label :min_reservation_length
+              = f.number_field :min_reservation_length, min: 0
+              span.field-suffix
+                = t('.minutes')
+            .field
+              = f.label :max_reservation_length
+              = f.number_field :max_reservation_length, min: 0
+              span.field-suffix
+                = t('.minutes')
+    .actions
+      = f.submit

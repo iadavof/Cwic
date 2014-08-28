@@ -3,11 +3,11 @@ function CwicTodayAndTomorrow(options) {
     container: 'schedule-container',
     backend_url: 'url to backend',
     organisation_id: 0,
-    websocket_url: 'url to websocket',
+    websocket_url: 'url to websocket'
   }, options || {});
 
   this.renderTodayAndTomorrow();
-};
+}
 
 CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   this.scheduleContainer = $('#' + this.options.container);
@@ -31,7 +31,7 @@ CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
   this.scheduleContainer.find('p.entity-name').on('click', function() {
     var $description = $(this).siblings('.entity-description');
     var descriptionHeight = $description.height();
-    
+
     if($description.hasClass('opened')) {
       $description.velocity({height: 0}, 200, 'swing', function(){
         $description.css({display: 'none', height: 'auto'}).removeClass('opened');
@@ -80,7 +80,7 @@ CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_
 
 CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
   if(entity.current_reservation == null && entity.upcoming_reservations.today.length  <= 0 && entity.upcoming_reservations.tomorrow.length <= 0) {
-    parentdiv.append(this.getTemplateClone('noReservationsTemplate'));
+    parentdiv.append(APP.util.getTemplateClone('noReservationsTemplate'));
     return;
   }
 
@@ -90,7 +90,7 @@ CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv
     var begin_moment = moment(reservation.begin_moment);
     var end_moment = moment(reservation.end_moment);
 
-    var currentInfo = this.getTemplateClone('currentReservationTemplate');
+    var currentInfo = APP.util.getTemplateClone('currentReservationTemplate');
 
     currentInfo.find('.reservation-description').text(reservation.description);
     currentInfo.find('.begin-time').text(begin_moment.format('HH:mm'));
@@ -121,19 +121,19 @@ CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv
   }
 
   if(entity.upcoming_reservations.today.length  > 0 || entity.upcoming_reservations.tomorrow.length  > 0) {
-    var nextInfo = this.getTemplateClone('nextReservationsTemplate');
+    var nextInfo = APP.util.getTemplateClone('nextReservationsTemplate');
 
     for(up_nr in entity.upcoming_reservations.today) {
-      var line = this.getTemplateClone('reservationLineTemplate');
+      var line = APP.util.getTemplateClone('reservationLineTemplate');
       line.find('span.time').text(moment(entity.upcoming_reservations.today[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.today[up_nr].end_moment).format('HH:mm'));
       line.find('span.description').text(entity.upcoming_reservations.today[up_nr].description);
       nextInfo.append(line);
     }
 
     if(entity.upcoming_reservations.tomorrow.length  > 0) {
-      nextInfo.append(this.getTemplateClone('tomorrowLineTemplate'));
+      nextInfo.append(APP.util.getTemplateClone('tomorrowLineTemplate'));
       for(up_nr in entity.upcoming_reservations.tomorrow) {
-        var line = this.getTemplateClone('reservationLineTemplate');
+        var line = APP.util.getTemplateClone('reservationLineTemplate');
         line.find('span.time').text(moment(entity.upcoming_reservations.tomorrow[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.tomorrow[up_nr].end_moment).format('HH:mm'));
         line.find('span.description').text(entity.upcoming_reservations.tomorrow[up_nr].description);
         nextInfo.append(line);
@@ -141,11 +141,4 @@ CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv
     }
     parentdiv.append(nextInfo);
   }
-};
-
-CwicTodayAndTomorrow.prototype.getTemplateClone = function(id) {
-  var newitem = $('#tat-templates').find('#' + id).clone();
-  newitem.removeAttr('id');
-  newitem.show();
-  return newitem;
 };

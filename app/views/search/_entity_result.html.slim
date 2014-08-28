@@ -1,0 +1,20 @@
+h3
+  => "#{result.class.model_name.human}:"
+  = name_link_to_show([@organisation, result], name: result.instance_name + ' (' + result.entity_type.instance_name + ')')
+.result-icon style="background-color: #{result.color};"
+  i.icon-shapes style="color: #{Cwic::Color.text_color(result.color)};"
+.info.clearfix
+  .column
+    | column 1
+  .column
+    | column 2
+  .column
+    h4
+      = EntityImage.model_name.human(count: 2)
+    dl
+      - if result.entity_images.present?
+        .entity-images-container.clearfix
+          - result.entity_images.each do |eimage|
+            = link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url)
+      - else
+        = t('.no_entity_images')

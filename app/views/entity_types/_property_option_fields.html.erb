@@ -1,6 +1,0 @@
-<tr class="fields property-option-wrapper">
-  <td><div class="icon icon-resize-vertical option-sort-handle" title="<%= t('order_nested_object', classes: EntityTypePropertyOption.model_name.human(count: 2).lcfirst) %>"></div></td>
-  <td><%= f.text_field :name, class: 'name-field' %></td>
-  <td class="default"><%= f.check_box :default, class: 'default-field', title: EntityTypePropertyOption.human_attribute_name(:default) %></td>
-  <td><%= f.hidden_field :index, class: 'index-field' %><%= f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: EntityTypePropertyOption.model_name.human.lcfirst) %></td>
-</tr>

@@ -9,6 +9,9 @@ gem 'pg'
 # Use SCSS for stylesheets
 gem 'sass-rails'
 
+# Templating engine
+gem 'slim-rails'
+
 # Use autoprefixer to add browser prefixes to css rules
 gem 'autoprefixer-rails'
 

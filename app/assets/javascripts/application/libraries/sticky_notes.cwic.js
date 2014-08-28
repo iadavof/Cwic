@@ -2,7 +2,7 @@ CwicStickyNotes.prototype.defaultNote = {
   id: null,
   author: { id: 0, name: '' },
   weight: 0,
-  created_at: '',
+  created_at: ''
 };
 
 function CwicStickyNotes(options) {
@@ -10,7 +10,7 @@ function CwicStickyNotes(options) {
     container: 'note-container',
     backend_url: 'url to backend',
     resource: { class_name: '', id: 0},
-    current_author: { id: 0, name: 'Name' },
+    current_author: { id: 0, name: 'Name' }
   }, options || {});
 
   this.noteContainer = $('#' + this.options.container);
@@ -18,14 +18,14 @@ function CwicStickyNotes(options) {
   this.bindControls();
 
   this.getNotes();
-};
+}
 
 CwicStickyNotes.prototype.getNotes = function() {
   var sn = this;
 
   $.ajax({
       type: 'GET',
-      url: this.options.backend_url + '/' + this.options.resource.class_name + '/' + this.options.resource.id + '.json',
+      url: this.options.backend_url + '/' + this.options.resource.class_name + '/' + this.options.resource.id + '.json'
     }).fail(function(){
       window.log("Error getting notes");
     }).success(function(response) {
@@ -41,15 +41,16 @@ CwicStickyNotes.prototype.saveNote = function(note_element) {
   var new_note = false;
   var textarea = note.find('textarea');
 
+  var url, method;
   if(typeof(note.attr('id')) == 'undefined') {
     //new note
     new_note = true;
-    var url = this.options.backend_url + '/' + this.options.resource.class_name + '/' + this.options.resource.id + '/new.json';
-    var method = 'POST';
+    url = this.options.backend_url + '/' + this.options.resource.class_name + '/' + this.options.resource.id + '/new.json';
+    method = 'POST';
   } else {
     //old note
-    var url = this.options.backend_url + '/' + note.attr('id').split('_')[1] + '.json';
-    var method = 'PATCH';
+    url = this.options.backend_url + '/' + note.attr('id').split('_')[1] + '.json';
+    method = 'PATCH';
   }
   note.find('img.ajax-wait').show();
   $.ajax({
@@ -57,9 +58,9 @@ CwicStickyNotes.prototype.saveNote = function(note_element) {
     url: url,
     data: {
       sticky: {
-        sticky_text: textarea.val(),
-      },
-    },
+        sticky_text: textarea.val()
+      }
+    }
   }).fail(function(){
     window.log("Error saving");
   }).success(function(response) {
@@ -109,8 +110,7 @@ CwicStickyNotes.prototype.newNote = function() {
 
 CwicStickyNotes.prototype.renderNote = function(note_obj) {
   var sn = this;
-  var temp = $("#note-template").html();
-  var note = $("<div class='note'></div>").html(temp);
+  var note = APP.util.getTemplateClone('note-template');
   var textarea = note.find('textarea');
 
   // add id
@@ -150,7 +150,7 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
     stop: function(e, ui) {
       sn.afterNoteMove(ui);
     },
-    placeholder: "ui-state-highlight",
+    placeholder: "ui-state-highlight"
   });
 
   if(note_obj.id == null) {
@@ -177,7 +177,7 @@ CwicStickyNotes.prototype.afterNoteMove = function(ui) {
     type: 'PATCH',
     url: this.options.backend_url + '/' + this.options.resource.class_name + '/' + this.options.resource.id + '.json',
     data: {
-      new_weight_ids: noteOrder,
+      new_weight_ids: noteOrder
     }
   }).fail(function(){
     window.log("Error updating note order");
@@ -217,7 +217,7 @@ CwicStickyNotes.prototype.deleteNote = function(element) {
     var id = note.attr('id').split('_')[1];
     $.ajax({
       type: 'DELETE',
-      url: this.options.backend_url + '/' + id + '.json',
+      url: this.options.backend_url + '/' + id + '.json'
     }).fail(function(){
       window.log("Error deleting note");
     });

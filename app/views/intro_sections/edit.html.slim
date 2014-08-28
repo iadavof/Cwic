@@ -1,0 +1,5 @@
+- content_for :page_title do
+  = edit_title(@intro_section)
+= render 'form'
+= button_link_to_show(@intro_section)
+= button_link_to_index(IntroSection)

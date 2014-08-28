@@ -1,0 +1,9 @@
+- if target.errors.any?
+  #error-explanation
+    p.error-head
+      i.icon-remove-sign
+      = t('.fix_the_errors', count: target.errors.count)
+    ul
+      - target.errors.full_messages.each do |msg|
+        li
+          = msg

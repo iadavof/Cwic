@@ -1,0 +1,36 @@
+- content_for :page_title do
+  = show_title(@info_screen)
+  div#info-screen-container data-info-screen-id=@info_screen.id data-organisation-id=current_organisation.id
+.info-screen-header.clearfix style="display: none;"
+  .current-time
+ul#realtime-list
+#info-screen-templates style="display: none;"
+  li#listItemTemplate.infoScreenListItem
+    .inner.clearfix
+      .info-container.clearfix
+        .inner.clearfix
+          .wayfinding
+            i.
+          .reservation-dates-wrapper
+            table.reservation-dates
+              tr.datebox.from
+                td.from
+                  span
+                    i.icon-time
+                td.date
+                  span.day
+                  span.day-full
+                td.time
+                  span
+              tr.datebox.until
+                td.until
+                  span
+                    i.icon-raceflag
+                td.date
+                  span.day
+                  span.day-full
+                td.time
+                  span
+      h2
+      .availability style="display: none;"
+      .object

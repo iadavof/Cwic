@@ -1,0 +1,7 @@
+- content_for :page_title do
+  = edit_title(@info_screen)
+- content_for :local_menu_navigation do
+  = button_link_to_show([@organisation, @info_screen])
+  = button_link_to_index([@organisation, InfoScreen])
+
+= render 'form'

@@ -1,0 +1,20 @@
+- content_for :page_title do
+  = @organisation_client.present? ? index_title_of(Reservation, @organisation_client.instance_name).html_safe : index_title(Reservation).html_safe
+- content_for :local_menu_navigation do
+  = button_link_to_new([@organisation, Reservation])
+- content_for :local_menu_page do
+  = render 'layouts/mini_search', current_search_type: Reservation.model_name, include_date: true
+= filter_summary(@organisation_client, params[:date_domain_from], params[:date_domain_to]).html_safe
+- if @reservations.empty? && params[:mini_search].present?
+  p
+    = t('empty_for_search', classes: Reservation.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe
+    = link_to(t('remove_search'), @organisation_client.present? ? organisation_organisation_client_reservations_path(current_organisation, @organisation_client) : organisation_reservations_path(current_organisation))
+- elsif @reservations.empty?
+  p
+    = t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst)
+- else
+  div
+    = t('.download_as')
+    =< link_to(t('csv'), organisation_reservations_path(@organisation, params.merge({ format: 'csv', page: false })))
+    =< link_to(t('xls'), organisation_reservations_path(@organisation, params.merge({ format: 'xls', page: false })))
+  = render partial: 'reservations/table', locals: { reservations: @reservations, include_date: true }

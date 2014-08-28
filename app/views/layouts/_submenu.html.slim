@@ -1,0 +1,13 @@
+#submenu-box.clearfix
+  - menu.each_with_index do |(category_name, category_content), index|
+    - unless category_content[:url].present? # With subitems
+      .submenu.clearfix data-main-menu-relation="main-menu-item-#{index + 1}"
+        h2
+          = t(".#{category_name}")
+        - category_content.each do |sub_category_name, sub_category_content|
+          .submenu-block
+            = content_tag(:h3, t(".#{sub_category_name}"), class: (sub_category_matches?(category_name, sub_category_name) ? "active" : nil))
+            ul
+              - sub_category_content.each do |link_name, link_content|
+                = content_tag(:li, class: (link_matches?(category_name, sub_category_name, link_name) ? "active" : nil)) do
+                  = link_to((link_content[:name].present? ? content_tag(:i, nil, class: link_content[:icon].present? ? link_content[:icon] : 'icon-moonfull') + link_content[:name] : content_tag(:i, nil, class: link_content[:icon].present? ? link_content[:icon] : 'icon-moonfull') + t(".#{link_name}")), link_content[:url], link_content.except(:name, :icon, :url))
