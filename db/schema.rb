@@ -331,6 +331,62 @@ ActiveRecord::Schema.define(version: 20140906104928) do
   add_index "reservation_logs", ["reservation_id"], name: "index_reservation_logs_on_reservation_id", using: :btree
   add_index "reservation_logs", ["user_id"], name: "index_reservation_logs_on_user_id", using: :btree
 
+  create_table "reservation_rule_scope_spans", force: true do |t|
+    t.integer  "scope_id",     limit: 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "year_from"
+    t.integer  "month_from"
+    t.integer  "dom_from"
+    t.integer  "week_from"
+    t.integer  "dow_from"
+    t.integer  "hour_from"
+    t.integer  "minute_from"
+    t.integer  "year_to"
+    t.integer  "month_to"
+    t.integer  "dom_to"
+    t.integer  "week_to"
+    t.integer  "dow_to"
+    t.integer  "hour_to"
+    t.integer  "minute_to"
+    t.string   "holiday_from"
+    t.integer  "nrom_from"
+    t.string   "holiday_to"
+    t.integer  "nrom_to"
+  end
+
+  add_index "reservation_rule_scope_spans", ["scope_id"], name: "index_reservation_rule_scope_spans_on_scope_id", using: :btree
+
+  create_table "reservation_rule_scopes", force: true do |t|
+    t.integer  "entity_id",          limit: 8
+    t.string   "name"
+    t.integer  "repetition_unit_id", limit: 8
+    t.string   "ancestry"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.string   "span_selector"
+  end
+
+  add_index "reservation_rule_scopes", ["entity_id"], name: "index_reservation_rule_scopes_on_entity_id", using: :btree
+  add_index "reservation_rule_scopes", ["repetition_unit_id"], name: "index_reservation_rule_scopes_on_repetition_unit_id", using: :btree
+
+  create_table "reservation_rules", force: true do |t|
+    t.integer  "entity_id",      limit: 8
+    t.integer  "period_unit_id", limit: 8
+    t.integer  "period_amount",                                     default: 1
+    t.integer  "min_periods",                                       default: 1
+    t.integer  "max_periods"
+    t.decimal  "price",                    precision: 16, scale: 2, default: 0.0
+    t.datetime "created_at"
+    t.datetime "updated_at"
+    t.integer  "scope_id",       limit: 8
+    t.boolean  "closed"
+  end
+
+  add_index "reservation_rules", ["entity_id"], name: "index_reservation_rules_on_entity_id", using: :btree
+  add_index "reservation_rules", ["period_unit_id"], name: "index_reservation_rules_on_period_unit_id", using: :btree
+  add_index "reservation_rules", ["scope_id"], name: "index_reservation_rules_on_scope_id", using: :btree
+
   create_table "reservation_statuses", force: true do |t|
     t.string   "name"
     t.integer  "index"
@@ -395,6 +451,26 @@ ActiveRecord::Schema.define(version: 20140906104928) do
   add_index "stickies", ["stickable_id"], name: "index_stickies_on_stickable_id", using: :btree
   add_index "stickies", ["user_id"], name: "index_stickies_on_user_id", using: :btree
 
+  create_table "taggings", force: true do |t|
+    t.integer  "tag_id",        limit: 8
+    t.integer  "taggable_id",   limit: 8
+    t.string   "taggable_type"
+    t.integer  "tagger_id",     limit: 8
+    t.string   "tagger_type"
+    t.string   "context",       limit: 128
+    t.datetime "created_at"
+  end
+
+  add_index "taggings", ["tag_id", "taggable_id", "taggable_type", "context", "tagger_id", "tagger_type"], name: "taggings_idx", unique: true, using: :btree
+  add_index "taggings", ["taggable_id", "taggable_type", "context"], name: "index_taggings_on_taggable_id_and_taggable_type_and_context", using: :btree
+
+  create_table "tags", force: true do |t|
+    t.string  "name"
+    t.integer "taggings_count", default: 0
+  end
+
+  add_index "tags", ["name"], name: "index_tags_on_name", unique: true, using: :btree
+
   create_table "time_units", force: true do |t|
     t.string   "key"
     t.boolean  "common",         default: true
@@ -430,7 +506,7 @@ ActiveRecord::Schema.define(version: 20140906104928) do
     t.datetime "invitation_accepted_at"
     t.integer  "invitation_limit"
     t.integer  "invited_by_id",          limit: 8
-    t.string   "invited_by_type"
+    t.string   "invited_by_type",        limit: 8
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree

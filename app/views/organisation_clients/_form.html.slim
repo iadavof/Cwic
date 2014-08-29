@@ -15,23 +15,26 @@
           .content-column
             .content-block
               h2
-                i.icon-address
+                i.icon-home
                 = t('.general')
               = render partial: 'client_form_fields', locals: { f: f }
             .content-block
               h2
-                i.icon-phone-call
+                i.icon-value-coins
                 = t('.payment_details')
               = render partial: 'payment_form_fields', locals: { f: f }
           .content-column
             .content-block
               h2
-                i.icon-phone-call
+                i.icon-address
                 = t('.contact')
               = render partial: 'contact_form_fields', locals: { f: f }
           .content-column
             .content-block
               #organisation_client_contacts_container.nested-form
+                h2
+                  i.icon-phone-call
+                  = t('.contacts')
                 = f.fields_for :contacts, wrapper: false do |occf|
                   = render partial: 'organisation_client_contacts/form_fields', locals: { f: occf }
       #documents
