@@ -1,3 +1,35 @@
 - content_for :page_title do
   = t('.sign_up', default: "Sign up")
-= render partial: 'devise/registrations/sign_up_form'
+
+= form_for(resource, as: resource_name, url: registration_path(resource_name)) do |f|
+  = devise_error_messages!
+
+  h2 = t('.your_info')
+  .field
+    = f.label :first_name
+    = f.text_field :first_name, autofocus: true
+  .field
+    = f.label :infix
+    = f.text_field :infix
+  .field
+    = f.label :last_name
+    = f.text_field :last_name
+  .field
+    = f.label :email
+    = f.email_field :email
+  .field
+    = f.label :password
+    = f.password_field :password
+  .field
+    = f.label :password_confirmation
+    = f.password_field :password_confirmation
+
+  h2 = Organisation.model_name.human
+  = f.fields_for :organisations do |organisations|
+    = render 'organisations/form_fields', f: organisations
+
+  .actions
+    = f.submit t('.sign_up', default: "Sign up")
+
+= render "devise/shared/links"
+
