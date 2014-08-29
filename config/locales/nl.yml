@@ -195,7 +195,7 @@ nl:
       entity_type/properties:
         name: 'Eigenschapnaam'
         description: 'Omschrijving bij eigenschap'
-        data_type_id: 'Datatype bij eigenschap'
+        data_type: 'Datatype bij eigenschap'
         default_value: 'Standaardwaarde bij eigenschap'
       entity_type/properties/options:
         name: 'Optiewaarde bij eigenschap'
@@ -203,7 +203,6 @@ nl:
         name: 'Naam'
         description: 'Omschrijving'
         data_type: 'Datatype'
-        data_type_id: 'Datatype'
         required: 'Verplicht'
         default_value: 'Standaardwaarde'
       entity_type_property_option:
@@ -235,7 +234,6 @@ nl:
       entity_type_icon:
         name: 'Naam'
         organisation: 'Organisatie'
-        organisation_id: 'Organisatie'
         entity_type_icon_image: 'Icoon'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Lokale afbeelding'
@@ -251,11 +249,9 @@ nl:
         slack_before: 'Speling vooraf'
         slack_after: 'Speling achteraf'
         entity: 'Object'
-        entity_id: 'Object'
         entity_type: 'Objectsoort'
         description: 'Beschrijving'
         organisation_client: 'Klant'
-        organisation_client_id: 'Klant'
         slack_before: 'Speling vooraf'
         slack_after: 'Speling achteraf'
         cost: 'Kosten'
@@ -307,12 +303,10 @@ nl:
         name: 'Naam'
         period_amount: 'Periode aantal'
         period_unit: 'Periode eenheid'
-        period_unit_id: 'Periode eenheid'
         price: 'Prijs'
       entity_type/reserve_periods:
         period_amount: 'Periode bij reserveerperiode'
         period_unit: 'Periode bij reserveerperiode'
-        period_unit_id: 'Periode bij reserveerperiode'
         price: 'Prijs bij reserveerperiode'
       document:
         user: 'Toegevoegd door'
