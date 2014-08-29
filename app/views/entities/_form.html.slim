@@ -23,6 +23,8 @@
               = EntityImage.model_name.human(count: 2)
         .tab-wrap
           #general
+            h2
+              = t('.general')
             .field.autosubmit
               = f.label :entity_type
               = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
@@ -64,6 +66,8 @@
               = f.fields_for :properties do |pf|
                 = render partial: 'property_fields', locals: { f: pf }
           #documents
+            h2
+              = Document.model_name.human(count: 2)
             #documents-container.nested-form.clearfix
               = f.fields_for :documents, wrapper: false do |df|
                 = render partial: 'documents/document_fields', locals: { f: df }
