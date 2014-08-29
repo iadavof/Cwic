@@ -20,8 +20,7 @@ class Entity < ActiveRecord::Base
   delegate :reserve_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
 
   # Validations
-  validates :entity_type_id, presence: true
-  validates :entity_type, presence: true, if: -> { entity_type_id.present? }
+  validates :entity_type, presence: true
   validates :organisation, presence: true
   validates :color, color: true
   validates :slack_before, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
