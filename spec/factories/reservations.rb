@@ -1,4 +1,4 @@
-# Let op: deze factory wordt ook gebruikt door de SeedHelper
+# Note: this factory is used by the SeedHelper
 FactoryGirl.define do
   factory :reservation do
     organisation
