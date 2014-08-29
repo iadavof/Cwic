@@ -4,7 +4,7 @@
       = f.label :name
       = f.text_field :name, placeholder: f.object.name
     .field
-      = f.label :period_unit_id, t('.period')
+      = f.label :period_unit, t('.period')
       => f.number_field :period_amount, placeholder: 1, min: 1
       = f.collection_select :period_unit_id, TimeUnit.where(key: [:minute, :quarter, :half_hour, :hour, :day, :week]), :id, :human_name, prompt: true
     .field

@@ -5,7 +5,7 @@
     = f.text_field :name
   - unless @organisation.present?
     .field
-      = f.label :organisation_id
+      = f.label :organisation
       = f.collection_select :organisation_id, Organisation.all.sort, :id, :instance_name, { include_blank: t('all_organisations') }
   .field
     = f.label :entity_type_icon_image
