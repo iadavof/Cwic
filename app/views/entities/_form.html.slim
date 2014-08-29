@@ -1,91 +1,34 @@
 #entity-form
   = nested_form_for([@organisation, @entity]) do |f|
-    - if @organisation.entity_types.empty?
-      p.no_entity_types_found
-        = t('.no_entity_types_found_html', { link: link_to_new([@organisation, EntityType]) })
-    - elsif @entity.entity_type.present?
-      = render partial: 'tags/form', locals: { f: f }
-      = render 'shared/error_messages', target: @entity
-      #tabs
-        ul.nav
+    = render 'tags/form', f: f
+    = render 'shared/error_messages', target: @entity
+
+    #tabs
+      ul.nav
+        li
+          a.current href="#general"
+            = t('general')
+        - if @entity.properties.present?
           li
-            a.current href="#general"
-              = t('.general')
-          - if @entity.properties.present?
-            li
-              a href="#properties"
-                = EntityProperty.model_name.human(count: 2)
-          li
-            a href="#documents"
-              = Document.model_name.human(count: 2)
-          li
-            a href="#entity-images"
-              = EntityImage.model_name.human(count: 2)
-        .tab-wrap
-          #general
-            h2
-              = t('.general')
-            .field.autosubmit
-              = f.label :entity_type
-              = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
-            .field
-              = f.label :name
-              .field-with-example-wrapper
-                = f.text_field :name, placeholder: @entity.default_name
-                p
-                  = t('for_example') + ': ' + t('.entity_name_example')
-            .field
-              = f.label :frontend_name
-              .field-with-example-wrapper
-                = f.text_field :frontend_name, placeholder: @entity.instance_name
-                p
-                  = t('for_example') + ': ' + t('.entity_name_example')
-            .field
-              = f.label :color
-              = f.text_field :color
-            .field
-              = f.label :description
-              = f.text_area :description
-            h2
-              = t('.default_slack_times')
-            = format_help(t('.default_slack_times_help'))
-            .field
-              = f.label :slack_before
-              = f.number_field :slack_before, placeholder: @entity.entity_type.slack_before, min: 0
-              span.field-suffix
-                = t('.minutes')
-            .field
-              = f.label :slack_after
-              = f.number_field :slack_after, placeholder: @entity.entity_type.slack_after, min: 0
-              span.field-suffix
-                = t('.minutes')
-          - if @entity.properties.present?
-            #properties
-              h2
-                = EntityProperty.model_name.human(count: 2)
-              = f.fields_for :properties do |pf|
-                = render partial: 'property_fields', locals: { f: pf }
-          #documents
-            h2
-              = Document.model_name.human(count: 2)
-            #documents-container.nested-form.clearfix
-              = f.fields_for :documents, wrapper: false do |df|
-                = render partial: 'documents/document_fields', locals: { f: df }
-            = f.link_to_add '', :documents, data: { target: '#documents-container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: Document.model_name.human.lcfirst)
-          #entity-images.hide
-            h2
-              = EntityImage.model_name.human(count: 2)
-            = format_help(t('.entity_images_help'))
-            .field
-              = f.label :include_entity_type_images
-              = f.check_box :include_entity_type_images
-            #entity-images.nested-form
-              = f.fields_for :entity_images, @entity.entity_images, wrapper: false do |eif|
-                = render partial: 'entity_image_fields', locals: { f: eif }
-            = f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst)
-      .actions
-        = f.submit
-    - else
-      .field.autosubmit
-        = f.label :entity_type
-        = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
+            a href="#properties"
+              = EntityProperty.model_name.human(count: 2)
+        li
+          a href="#documents"
+            = Document.model_name.human(count: 2)
+        li
+          a href="#images"
+            = EntityImage.model_name.human(count: 2)
+
+      .tab-wrap
+        #general
+          = render 'form_general', f: f
+        - if @entity.properties.present?
+          #properties
+            = render 'form_properties', f: f
+        #documents
+          = render 'form_documents', f: f
+        #images.hide
+          = render 'form_images', f: f
+
+    .actions
+      = f.submit

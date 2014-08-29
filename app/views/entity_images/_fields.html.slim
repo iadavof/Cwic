@@ -15,4 +15,5 @@
       = f.label :image_from_file
       = f.file_field :image
   = f.hidden_field :image_cache
+
   = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: EntityImage.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }

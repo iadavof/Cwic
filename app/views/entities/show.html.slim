@@ -1,19 +1,23 @@
 - content_for :page_title do
   = t('.title_html', default: :show_object_html, class: @entity.class.model_name.human, name: @entity.instance_name + ' (' + @entity.entity_type.instance_name + ')')
+
 - content_for :local_menu_navigation do
   = button_link_to_index([@organisation, Entity])
   = button_link_to_edit([@organisation, @entity])
   = button_link_to_destroy([@organisation, @entity])
 
 - if @entity.all_entity_images.present?
-  = render partial: 'entities/ken_burns_slideshow', locals: { images: @entity.all_entity_images }
-= render partial: 'tags/show', locals: { tags: @entity.tags }
-= render partial: 'stickies/resource_stickies', locals: { resource: @entity }
+  = render 'entities/ken_burns_slideshow', images: @entity.all_entity_images
+
+= render 'tags/show', tags: @entity.tags
+
+= render 'stickies/resource_stickies', resource: @entity
+
 #tabs
   ul.nav
     li
       a.current href="#general"
-        = t('.general')
+        = t('general')
     - if @entity.properties.present?
       li
         a href="#properties"
@@ -22,43 +26,16 @@
       a href="#documents"
         = Document.model_name.human(count: 2)
     li
-      a href="#entity-images"
+      a href="#images"
         = EntityImage.model_name.human(count: 2)
+
   .tab-wrap
     #general
-      dl
-        dt
-          = Entity.human_attribute_name(:name)
-        dd
-          = @entity.instance_name
-        dt
-          = Entity.human_attribute_name(:frontend_name)
-        dd
-          = @entity.frontend_name
-        dt
-          = Entity.human_attribute_name(:entity_type)
-        dd
-          = name_link_to_show([@organisation, @entity.entity_type], title: format_description_title(@entity.entity_type))
-        dt
-          = Entity.human_attribute_name(:description)
-        dd
-          = simple_format(@entity.description)
+      = render 'show_general'
     - if @entity.properties.present?
       #properties
-        h2
-          = EntityProperty.model_name.human(count: 2)
-        dl
-          = render @entity.properties
+        = render 'show_properties'
     #documents
-      #documents-container.clearfix
-        = render partial: 'documents/overview', locals: { documents: @entity.documents }
-    #entity-images
-      h2
-        = EntityImage.model_name.human(count: 2)
-      dl
-        - if @entity.all_entity_images.present?
-          .entity-images-container.clearfix
-            - @entity.all_entity_images.each do |eimage|
-              = link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url)
-        - else
-          = t('.no_entity_images')
+      = render 'show_documents'
+    #images
+      = render 'show_images'

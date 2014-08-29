@@ -1,0 +1,33 @@
+h2 = t('general')
+
+.field.autosubmit
+  = f.label :entity_type
+  = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
+.field
+  = f.label :name
+  .field-with-example-wrapper
+    = f.text_field :name, placeholder: @entity.default_name
+    p = "#{t('for_example')}: #{t('.entity_name_example')}"
+.field
+  = f.label :frontend_name
+  .field-with-example-wrapper
+    = f.text_field :frontend_name, placeholder: @entity.instance_name
+    p = "#{t('for_example')}: #{t('.entity_name_example')}"
+.field
+  = f.label :color
+  = f.text_field :color
+.field
+  = f.label :description
+  = f.text_area :description
+
+h2 = t('.default_slack_times')
+
+= format_help(t('.default_slack_times_help'))
+.field
+  = f.label :slack_before
+  = f.number_field :slack_before, placeholder: @entity.entity_type.slack_before, min: 0
+  span.field-suffix = t('.minutes')
+.field
+  = f.label :slack_after
+  = f.number_field :slack_after, placeholder: @entity.entity_type.slack_after, min: 0
+  span.field-suffix = t('.minutes')

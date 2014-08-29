@@ -1,0 +1,11 @@
+h2 = t('general')
+
+dl
+  dt = Entity.human_attribute_name(:name)
+  dd = @entity.instance_name
+  dt = Entity.human_attribute_name(:frontend_name)
+  dd = @entity.frontend_name
+  dt = Entity.human_attribute_name(:entity_type)
+  dd = name_link_to_show([@organisation, @entity.entity_type], title: format_description_title(@entity.entity_type))
+  dt = Entity.human_attribute_name(:description)
+  dd = simple_format(@entity.description)

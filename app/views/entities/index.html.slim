@@ -1,45 +1,19 @@
 - content_for :page_title do
   = index_title(Entity)
+
 - content_for :local_menu_navigation do
   = button_link_to_new([@organisation, Entity])
+
 - content_for :local_menu_page do
   = render 'layouts/mini_search', current_search_type: Entity.model_name
+
 - if @entities.empty? && params[:mini_search].present?
   p
     = t('empty_for_search', classes: Entity.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
     = link_to(t('remove_search'), organisation_entities_path(current_organisation))
+
 - elsif @entities.empty?
-  p
-    = t('.empty', default: :empty_objects, classes: Entity.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, classes: Entity.model_name.human(count: 2).lcfirst)
+
 - else
-  - paginate @entities
-  table
-    thead
-      tr
-        th style="padding: 5px;"
-        = sortable_table_head(Entity, :name)
-        = table_head(Entity, :entity_type)
-        = sortable_table_head(Entity, :description)
-        = table_head(Entity, :slack_before)
-        = table_head(Entity, :slack_after)
-        th
-    tbody
-      - @entities.each do |entity|
-        tr
-          td style="padding: 5px; background-color: #{entity.color};"
-          td
-            = name_link_to_show([@organisation, entity])
-          td
-            = name_link_to_show([@organisation, entity.entity_type], title: format_description_title(entity.entity_type))
-          td
-            = format_description(entity.description)
-          td
-            => entity.get_slack_before
-            = t('.min')
-          td
-            => entity.get_slack_after
-            = t('.min')
-          td.icons
-            = icon_link_to_edit([@organisation, entity])
-            = icon_link_to_destroy([@organisation, entity])
-  - paginate @entities
+  = render 'table'
