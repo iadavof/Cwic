@@ -13,7 +13,7 @@ class Entity < ActiveRecord::Base
   has_many :week_occupations, dependent: :destroy
   has_many :info_screen_entities, dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy, inverse_of: :stickable
-  has_many :entity_images, as: :entity_imageable, dependent: :destroy
+  has_many :entity_images, as: :entity_imageable, dependent: :destroy, inverse_of: :entity_imageable
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Model extensions
