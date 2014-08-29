@@ -1,3 +1,5 @@
 = form_for([@organisation, @organisation_client, @organisation_client_contact]) do |f|
   = render 'shared/error_messages', target: @organisation_client_contact
   = render partial: 'organisation_client_contacts/form_fields', locals: { f: f }
+	.actions
+	  = f.submit
