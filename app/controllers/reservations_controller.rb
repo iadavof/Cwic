@@ -189,10 +189,9 @@ private
       form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
     else
       reservations.each do |res|
-        puts res.inspect
         # Disable standard overlapping validation (which possibly includes reservation which are also being edited with this multiple edit action)
         res.validate_overlapping = false
-        unless res.valid? && res.not_overlapping_with_set(res.entity.reservations.where.not(id: reservations.ids))
+        unless res.valid? && res.not_overlapping(res.entity.reservations.blocking.where.not(id: reservations.ids))
           res.errors.full_messages.each do |ir_message|
             if ir_message
               valid = false

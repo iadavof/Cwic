@@ -1,4 +1,4 @@
-#reservation-form
+#reservation-form data-reservation-id=@reservation.id
   = nested_form_for([@organisation, @reservation.localized]) do |f|
     = render partial: 'tags/form', locals: { f: f }
     = render 'shared/error_messages', target: @reservation

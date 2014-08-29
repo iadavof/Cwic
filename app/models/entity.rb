@@ -46,6 +46,7 @@ class Entity < ActiveRecord::Base
   ##
 
   def self.available_between(begins_at, ends_at, options = {})
+    # Note: there might be a more efficient way. Especially in combination with the max slack before and after retrieval used in EntitiesController#availability.
     self.all.find_all { |e| e.is_available_between?(begins_at, ends_at, options) }
   end
 
@@ -79,6 +80,8 @@ class Entity < ActiveRecord::Base
     return self.entity_type.slack_before
   end
 
+  # The maximum slack_before such that there is no collision with (the slack of) another reservation before the begins_at time
+  # This value could be negative, indicating that the begins_at value always collides with (the slack of) another reservation
   def get_max_slack_before(begins_at)
     previous_reservation = Reservation.new(entity: self, begins_at: begins_at).previous
     (begins_at - previous_reservation.ends_at - previous_reservation.get_slack_after.minutes) / 1.minute if previous_reservation.present?
@@ -89,6 +92,8 @@ class Entity < ActiveRecord::Base
     return self.entity_type.slack_after
   end
 
+  # The maximum slack_after such that there is no collision with (the slack of) another reservation after the ends_at time
+  # This value could be negative, indicating that the ends_at value always collides with (the slack of) another reservation
   def get_max_slack_after(ends_at)
     next_reservation = Reservation.new(entity: self, ends_at: ends_at).next
     (next_reservation.begins_at - next_reservation.get_slack_before.minutes - ends_at) / 1.minute if next_reservation.present?

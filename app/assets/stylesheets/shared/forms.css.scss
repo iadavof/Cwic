@@ -25,7 +25,12 @@ label.validation-error {
   color: #ff3520;
 }
 
+input.validation-warning, select.validation-warning, textarea.validation-warning, .select2-container.validation-warning, input.validation-warning.replaced + div div.inner {
+  border: 2px solid #ff8d20 !important;
+}
+
 input.validation-error, select.validation-error, textarea.validation-error, .select2-container.validation-error, input.validation-error.replaced + div div.inner {
+  // Validation-error is defined later so it takes precedence over warnings
   border: 2px solid #ff3520 !important;
 }
 

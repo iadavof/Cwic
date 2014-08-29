@@ -36,8 +36,7 @@ class Reservation < ActiveRecord::Base
   validates :begins_at, presence: true
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
-  validate :not_overlapping, if: :validate_overlapping
-  #validate :slack_not_greater_than_max_slack, if: -> { self.entity.present? } # Temporary disable this validation to revert to the old behaviour (slack may overlap with other slack or reservation)
+  validate :not_overlapping, if: -> { entity.present? && validate_overlapping }
   validate :check_invalid_recurrences, if: :new_record?
   validate :ensure_period_valid, if: -> { entity.present? && begins_at.present? && ends_at.present? }
 
@@ -93,13 +92,13 @@ class Reservation < ActiveRecord::Base
     if options[:include_edges]
       # Include reservations directly before and after the scope as well. If there are no reservations found, then simply use the given date.
       from = self.where('ends_at <= :begin', begin: from).reorder(ends_at: :desc).first.try(:begins_at) || from if from.present?
-      to = self.where('begins_at > :end', end: to).reorder(begins_at: :asc).first.try(:ends_at) || to if to.present?
+      to = self.where('begins_at >= :end', end: to).reorder(begins_at: :asc).first.try(:ends_at) || to if to.present?
     end
 
     # Get reservations in domain
     rel = self.all
     rel = rel.where('ends_at > :begin', begin: from) if from.present?
-    rel = rel.where('begins_at <= :end', end: to) if to.present?
+    rel = rel.where('begins_at < :end', end: to) if to.present?
     rel = rel.where.not(id: options[:ignore_reservations]) if options[:ignore_reservations].present?
     rel
   end
@@ -176,38 +175,24 @@ class Reservation < ActiveRecord::Base
     "R##{self.id.to_s}: #{desc}, #{self.organisation_client.instance_name}, #{beg} --> #{en}."
   end
 
-  # Checks if the given slack before is overlapping with a previous reservation.
-  # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
-  def slack_before_overlapping
+  # Checks if the slack before is overlapping with (the slack of) a previous reservation.
+  def slack_before_overlapping?
     previous_reservation = self.previous
-    return nil if previous_reservation.nil?
+    return false if previous_reservation.nil?
 
     total_slack = self.get_slack_before + previous_reservation.get_slack_after
 
-    if self.begins_at - previous_reservation.ends_at < total_slack.minutes
-      return previous_reservation
-    end
+    self.begins_at - previous_reservation.ends_at < total_slack.minutes
   end
 
-  def slack_before_overlapping?
-    slack_before_overlapping.present?
-  end
-
-  # Checks if the given slack after is overlapping with a next reservation.
-  # Returns nil if this is not the case, returns the overlapping reservation if this is the case.
-  def slack_after_overlapping
+  # Checks if the slack after is overlapping with (the slack of) a next reservation.
+  def slack_after_overlapping?
     next_reservation = self.next
-    return nil if next_reservation.nil?
+    return false if next_reservation.nil?
 
     total_slack = self.get_slack_after + next_reservation.get_slack_before
 
-    if next_reservation.begins_at - self.ends_at < total_slack.minutes
-      return next_reservation
-    end
-  end
-
-  def slack_after_overlapping?
-    slack_after_overlapping.present?
+    next_reservation.begins_at - self.ends_at < total_slack.minutes
   end
 
   def length_for_day(day)
@@ -237,32 +222,33 @@ class Reservation < ActiveRecord::Base
       end
   end
 
-  def not_overlapping_with_set(set_reservations)
-    valid = true
-    relation = set_reservations.joins(:reservation_status).where('reservations.id <> ? AND reservation_statuses.blocking = true', self.id.to_i)
-    total_overlap = relation.where('(:begins_at <= begins_at AND :ends_at >= ends_at) OR (:begins_at >= begins_at AND :ends_at <= ends_at)', begins_at: begins_at, ends_at: ends_at).first
+  # Check if the reservation is not overlapping with other reservations for the same entity.
+  # It is possible to overwrite the set of reservations to check in. This is useful for multiple edit actions.
+  def not_overlapping(set = nil)
+    not_overlapping = true
+    set = self.entity.reservations.blocking.where('reservations.id <> ?', self.id.to_i) if set.nil?
+    total_overlap = set.where('(:begins_at <= begins_at AND :ends_at >= ends_at) OR (:begins_at >= begins_at AND :ends_at <= ends_at)', begins_at: begins_at, ends_at: ends_at).first
     if total_overlap.present?
       # Total overlap means this reservation is completely within another reservation or completely over another reserveration, so we do not know whether it is best to change the begins_at or the ends_at to fix this problem.
       errors.add(:base, I18n.t('activerecord.errors.models.reservation.total_overlap_html', reservation_url: organisation_reservation_path(total_overlap.organisation, total_overlap), other_begins_at: I18n.l(total_overlap.begins_at, format: :long), other_ends_at: I18n.l(total_overlap.ends_at, format: :long)).html_safe)
       errors.add(:begins_at, false)
       errors.add(:ends_at, false)
-      valid = false
+      not_overlapping = false
     else
       # No complete overlap, but maybe just the ends_at overlaps
-      ends_at_overlap = relation.where('begins_at < :ends_at AND :ends_at <= ends_at', ends_at: ends_at).first
+      ends_at_overlap = set.where('begins_at < :ends_at AND :ends_at <= ends_at', ends_at: ends_at).first
       if ends_at_overlap.present?
-        #errors.add(:ends_at, :ends_at_html, reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long))
         errors.add(:ends_at, I18n.t('activerecord.errors.models.reservation.attributes.ends_at.ends_at_html', reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long)).html_safe)
-        valid = false
+        not_overlapping = false
       end
       # Or just the begins_at overlaps
-      begins_at_overlap = relation.where('begins_at <= :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
+      begins_at_overlap = set.where('begins_at <= :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
       if begins_at_overlap.present?
         errors.add(:begins_at, I18n.t('activerecord.errors.models.reservation.attributes.begins_at.begins_at_html', reservation_url: organisation_reservation_path(begins_at_overlap.organisation, begins_at_overlap), other_ends_at: I18n.l(begins_at_overlap.ends_at, format: :long)).html_safe)
-        valid = false
+        not_overlapping = false
       end
     end
-    valid
+    not_overlapping
   end
 
   def update_warning_state
@@ -338,22 +324,6 @@ private
         end
       end
     end
-  end
-
-  def slack_not_greater_than_max_slack
-    slack_before_overlap = self.slack_before_overlapping
-    if slack_before_overlap.present?
-        errors.add(:slack_before, I18n.t('activerecord.errors.models.reservation.attributes.slack_before.slack_before_html', reservation_url: organisation_reservation_path(slack_before_overlap.organisation, slack_before_overlap), other_ends_at: I18n.l(slack_before_overlap.ends_at, format: :long)).html_safe)
-    end
-
-    slack_after_overlap = self.slack_after_overlapping
-    if slack_after_overlap.present?
-        errors.add(:slack_after, I18n.t('activerecord.errors.models.reservation.attributes.slack_before.slack_after_html', reservation_url: organisation_reservation_path(slack_after_overlap.organisation, slack_after_overlap), other_ends_at: I18n.l(slack_after_overlap.ends_at, format: :long)).html_safe)
-    end
-  end
-
-  def not_overlapping
-    not_overlapping_with_set(self.entity.reservations) if self.entity.present?
   end
 
   def ensure_period_valid

@@ -55,7 +55,7 @@ APP.util = {
     var output = new Array();
     var counter = 0;
     for (i in input) {
-        output[counter++] = i;
+      output[counter++] = i;
     }
     return output;
   },
@@ -63,7 +63,7 @@ APP.util = {
     var output = new Array();
     var counter = 0;
     for (i in input) {
-        output[counter++] = input[i];
+      output[counter++] = input[i];
     }
     return output;
   },
@@ -72,12 +72,18 @@ APP.util = {
     APP.global.initializeSpecialFormFields(newitem);
     return newitem;
   },
-  setFieldErrorState: function(field, error, options) {
-    var options = $.extend({ label: true }, options || {});
+  setFieldErrorState: function(field, state, options) {
+    this.setFieldValidationState(field, 'error', state, options);
+  },
+  setFieldWarningState: function(field, state, options) {
+    this.setFieldValidationState(field, 'warning', state, options);
+  },
+  setFieldValidationState: function(field, type, state, options) {
+    options = $.extend({ label: true }, options || {});
     if(options.label) {
-     $('label[for="'+ field.attr('id') +'"]').toggleClass('validation-error', error)
+     $('label[for="'+ field.attr('id') +'"]').toggleClass('validation-'+ type, state);
     }
-    field.toggleClass('validation-error', error);
+    field.toggleClass('validation-'+ type, state);
   },
   ucFirst: function(string) {
     return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();

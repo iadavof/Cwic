@@ -52,6 +52,11 @@ class EntitiesController < ApplicationController
     @begins_at = Time.parse(params[:begins_at])
     @ends_at = Time.parse(params[:ends_at])
     @selected_entity = @organisation.entities.find(params[:selected_entity_id]) if params[:selected_entity_id].present?
+    if @selected_entity.present?
+      @selected_entity_reservation = (params[:reservation_id].present? ? Reservation.find(params[:reservation_id]) : Reservation.new)
+      @selected_entity_reservation.assign_attributes(entity: @selected_entity, begins_at: @begins_at, ends_at: @ends_at)
+      @selected_entity_reservation.valid? # Set the errors
+    end
     respond_with(@organisation, @entities, @selected_entity)
   end
 
@@ -62,7 +67,7 @@ private
       # All entities for this Entity type
       @entities = @organisation.entity_types.find(params[:entity_type_id]).entities.accessible_by(current_ability, :index)
       # Get the available entities for the time period
-      @entities = @entities.available_between(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]), ignore_reservations: params[:ignore_reservation_ids])
+      @entities = @entities.available_between(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]), ignore_reservations: params[:reservation_id])
     when 'index'
       @entities = @organisation.entities.accessible_by(current_ability, :index).includes(:entity_type).ssp(params)
     when 'new', 'create'
