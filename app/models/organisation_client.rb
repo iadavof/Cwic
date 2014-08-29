@@ -39,6 +39,7 @@ class OrganisationClient < ActiveRecord::Base
 
   # Search OrganisationClients for autocomplete. Finds all clients for which one of the columns matches the query. Multiple query words limit the results.
   def self.autocomplete_search(query)
+    # PERFORMANCE: use indexes to improve performance
     query.split(' ').inject(self) do |relation, subquery|
       subquery = subquery.gsub(/[^a-zA-Z0-9]/, '') + '%' # Remove all punctuation marks from the query and add % wildcard
       relation.where('first_name ILIKE :subquery OR last_name ILIKE :subquery OR locality ILIKE :subquery', subquery: subquery)

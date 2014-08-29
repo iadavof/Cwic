@@ -47,6 +47,8 @@ class EntitiesController < ApplicationController
   end
 
   def availability
+    # PERFORMANCE: in this action (and espacially in its view) many queries are performed to check for overlap, get max slack values, etcetera.
+    # Since this action is often called by the Reservation form JavaScript, it might be desired to optimize its performance.
     @begins_at = Time.parse(params[:begins_at])
     @ends_at = Time.parse(params[:ends_at])
     @selected_entity = @organisation.entities.find(params[:selected_entity_id]) if params[:selected_entity_id].present?
