@@ -20,9 +20,6 @@ class <%= class_name %> < <%= parent_class_name.classify %>
   validates :<%= attribute.name %>, presence: true, numericality: { only_integer: true }
 <% elsif attribute.type == :decimal || attribute.type == :float -%>
   validates :<%= attribute.name %>, presence: true, numericality: true
-<% elsif attribute.reference? -%>
-  validates :<%= attribute.name %>_id, presence: true
-  validates :<%= attribute.name %>, presence: true, if: -> { <%= attribute.name %>_id.present? }
 <% else -%>
   validates :<%= attribute.name %>, presence: true
 <% end -%>
