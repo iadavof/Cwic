@@ -1,7 +1,9 @@
 - content_for :page_title do
   = index_title(EntityTypeIcon)
+
 - content_for :local_menu_navigation do
   = button_link_to_new(@organisation.present? ? [@organisation, EntityTypeIcon] : EntityTypeIcon)
+
 - content_for :local_menu_page do
   = render 'layouts/mini_search', current_search_type: EntityTypeIcon.model_name
 
@@ -9,30 +11,9 @@
   p
     = t('empty_for_search', classes: EntityTypeIcon.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
     = link_to(t('remove_search'), entity_type_icons_path())
+
 - elsif @entity_type_icons.empty?
-  p
-    = t('.empty', default: :empty_objects, classes: EntityTypeIcon.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, classes: EntityTypeIcon.model_name.human(count: 2).lcfirst)
+
 - else
-  = paginate @entity_type_icons
-  table
-    thead
-      tr
-        th
-        = sortable_table_head(EntityTypeIcon, :name)
-        - if @admin
-          = sortable_table_head(EntityTypeIcon, :organisation)
-        th
-    tbody
-      - @entity_type_icons.each do |entity_type_icon|
-        tr
-          td
-            = image_tag(entity_type_icon.image.icon.url)
-          td
-            = name_link_to_show(entity_type_icon)
-          - if @admin
-            td
-              = entity_type_icon.organisation.present? ? entity_type_icon.organisation.name : t('all_organisations')
-          td.icons
-            = icon_link_to_edit(@organisation.present? ? [@organisation, entity_type_icon] : entity_type_icon)
-            = icon_link_to_destroy(@organisation.present? ? [@organisation, entity_type_icon] : entity_type_icon)
-  = paginate @entity_type_icons
+  = render 'table'

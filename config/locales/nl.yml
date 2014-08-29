@@ -237,7 +237,8 @@ nl:
       entity_type_icon:
         name: 'Naam'
         organisation: 'Organisatie'
-        entity_type_icon_image: 'Icoon'
+        image: 'Afbeelding'
+        remove_image: 'Verwijder afbeelding'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Lokale afbeelding'
       entity/properties:
