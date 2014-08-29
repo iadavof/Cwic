@@ -4,10 +4,8 @@ class ReservationLog < ActiveRecord::Base
   belongs_to :reservation
 
   # Validations
-  validates :user_id, presence: true
-  validates :user, presence: true, if: -> { user_id.present? }
-  validates :reservation_id, presence: true
-  validates :reservation, presence: true, if: -> { reservation_id.present? }
+  validates :user, presence: true
+  validates :reservation, presence: true
 
   # Scopes
   default_scope { order('created_at DESC') }

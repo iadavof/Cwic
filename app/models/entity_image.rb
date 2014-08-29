@@ -10,8 +10,7 @@ class EntityImage < ActiveRecord::Base
   validates :title, length: { maximum: 255 }
   validates :entity_imageable, presence: true
   validates :entity_imageable_type, presence: true, length: { maximum: 255 }
-  validates :organisation_id, presence: true
-  validates :organisation, presence: true, if: -> { organisation_id.present? }
+  validates :organisation, presence: true
   validates :image, presence: true
 
   # Callbacks
