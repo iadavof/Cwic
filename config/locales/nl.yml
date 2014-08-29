@@ -225,10 +225,10 @@ nl:
         color: 'Kleur'
         slack_before: 'Speling vooraf'
         slack_after: 'Speling achteraf'
+        include_entity_type_images: 'Voeg objecttype foto''s toe'
       entity_image:
         title: 'Titel'
         image: 'Foto'
-        include_entity_type_images: 'Voeg foto''s van objecttype toe'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Lokale afbeelding'
       entity_type_icon:
