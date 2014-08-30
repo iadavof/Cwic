@@ -1,0 +1,18 @@
+h4 = EntityTypePropertyOption.model_name.human(count: 2)
+
+table
+  thead
+    tr
+      th
+      th = EntityTypePropertyOption.human_attribute_name(:name)
+      th.default
+        = EntityTypePropertyOption.human_attribute_name(:default)
+        a.clear-default-link[href="javascript:void(0);"]
+          = t('.clear')
+      th
+
+  tbody.target
+    = f.fields_for :options, f.object.options.sort_by(&:index), wrapper: false do |of|
+      = render 'entity_type_properties/property_option_fields', f: of
+
+= f.link_to_add '', :options, class: 'icon icon-plus action-button', title: t('add_nested_object', class: EntityTypePropertyOption.model_name.human.lcfirst)

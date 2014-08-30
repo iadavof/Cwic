@@ -11,6 +11,8 @@ li.fields.nested-object-wrapper.reservation-status-wrapper.clearfix
       = f.check_box :info_boards
     .field.horizontal-block.bool
       = f.check_box :billable
+
     .actions
       = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: ReservationStatus.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }
+
     = f.hidden_field :index, class: 'index-field'

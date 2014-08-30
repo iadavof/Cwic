@@ -623,24 +623,32 @@ nl:
     still_used_destroy_confirm:
       one: 'Objectsoort %{name} wordt nog gebruikt door een object. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
       other: 'Objectsoort %{name} wordt nog gebruikt door %{count} objecten. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
-    form:
-      general: 'Algemeen'
-      default_slack_times: 'Standaard speling voor en na reserveringen van deze objectsoort'
-      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elk object afzonderlijk in te stellen. De standaardwaarden voor speling voor deze objectsoort kunt u hieronder ingeven.'
-      properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
-      options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
-      reserve_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
-      entity_images_help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
+    form_general:
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
-      reservation_status_help: 'Met reserveringsstatussen kunt u aangeven waar een reservering zich bevindt in het verwerkingsproces. U kunt hier zelf statussen aanmaken die aansluiten bij uw werkwijze en instellen welke consequenties aan individuele statussen moeten worden verbonden (bijvoorbeeld of er nieuwe reserveringen kunnen worden aangemaakt die overlappen met een andere reservering met de status ''geannuleerd'').'
+      default_slack_times: 'Standaard speling voor en na reserveringen van deze objectsoort'
+      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van deze objectsoort. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elk object afzonderlijk in te stellen. De standaardwaarden voor speling voor deze objectsoort kunt u hieronder ingeven.'
       minutes: 'minuten'
+    form_properties:
+      properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
+    form_options:
+      options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
+    form_reservation_statuses:
+      reservation_status_help: 'Met reserveringsstatussen kunt u aangeven waar een reservering zich bevindt in het verwerkingsproces. U kunt hier zelf statussen aanmaken die aansluiten bij uw werkwijze en instellen welke consequenties aan individuele statussen moeten worden verbonden (bijvoorbeeld of er nieuwe reserveringen kunnen worden aangemaakt die overlappen met een andere reservering met de status ''geannuleerd'').'
+    form_images:
+      entity_images_help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
+    form_reserve_periods:
+      reserve_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
       reservation_length_limitations: 'Duurbeperkingen'
-    property_fields:
-      required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
-      clear: 'Leegmaken'
+      minutes: 'minuten'
     reserve_period_fields:
       period: 'Periode'
       per_period: 'per periode'
+
+  entity_type_properties:
+    fields_form:
+      required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
+    property_options_fields:
+      clear: 'Leegmaken'
 
   entity_type_icons:
     form:

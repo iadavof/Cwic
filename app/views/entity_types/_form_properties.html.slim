@@ -1,0 +1,8 @@
+h2 = EntityTypeProperty.model_name.human(count: 2)
+= format_help(t('.properties_help'))
+
+#entity-type-properties.nested-form
+  = f.fields_for :properties, @entity_type.properties.sort_by(&:index), wrapper: false do |pf|
+    = render 'entity_type_properties/fields', f: pf
+
+= f.link_to_add '', :properties, data: { target: '#entity-type-properties' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityTypeProperty.model_name.human.lcfirst)

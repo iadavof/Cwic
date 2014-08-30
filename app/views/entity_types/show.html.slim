@@ -1,49 +1,47 @@
 - content_for :page_title do
   = show_title(@entity_type)
+
 - content_for :local_menu_navigation do
   = button_link_to_index([@organisation, EntityType])
   = button_link_to_edit([@organisation, @entity_type])
   = button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type))
+
 - if @entity_type.entity_images.present?
-  = render partial: 'entities/ken_burns_slideshow', locals: {images: @entity_type.entity_images}
-= render partial: 'tags/show', locals: { tags: @entity_type.tags }
+  = render 'entities/ken_burns_slideshow', images: @entity_type.entity_images
+
+= render 'tags/show', tags: @entity_type.tags
+
 #tabs
   ul.nav
     li
       a.current href="#general"
-        = t('.general')
-    - if @entity_type.properties.present?
-      li
-        a href="#properties"
-          = EntityTypeProperty.model_name.human(count: 2)
+        = t('general')
     li
-      a href="#entity-images"
+      a href="#properties"
+        = EntityTypeProperty.model_name.human(count: 2)
+    li
+      a href="#options"
+        = EntityTypeOption.model_name.human(count: 2)
+    li
+      a href="#reservation-statuses"
+        = ReservationStatus.model_name.human(count: 2)
+    li
+      a href="#images"
         = EntityImage.model_name.human(count: 2)
+    li
+      a href="#reserve-periods"
+        = ReservePeriod.model_name.human(count: 2)
+
   .tab-wrap
     #general
-      = image_tag(@entity_type.icon.image.medium_icon.url)
-      dl
-        dt
-          = EntityType.human_attribute_name(:name)
-        dd
-          = @entity_type.name
-        dt
-          = EntityType.human_attribute_name(:description)
-        dd
-          = @entity_type.description
-    - if @entity_type.properties.present?
-      #properties
-        h2
-          = EntityTypeProperty.model_name.human(count: 2)
-        #entity-type-properties
-          = render @entity_type.properties
-    #entity-images
-      h2
-        = EntityImage.model_name.human(count: 2)
-      dl
-        - if @entity_type.entity_images.present?
-          .entity-images-container.clearfix
-            - @entity_type.entity_images.each do |eimage|
-              = link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url)
-        - else
-          = t('.no_entity_images')
+      = render 'show_general'
+    #properties
+      = render 'show_properties'
+    #options
+      = render 'show_options'
+    #reservation-statuses
+      = render 'show_reservation_statuses'
+    #images
+      = render 'show_images'
+    #reserve-periods
+      = render 'show_reserve_periods'

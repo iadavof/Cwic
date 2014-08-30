@@ -1,0 +1,17 @@
+.field.horizontal-block.name
+  = f.text_field :name, placeholder: EntityTypeOption.human_attribute_name(:name), title: EntityTypeOption.human_attribute_name(:name), data: { field: 'name' }
+
+.field.horizontal-block.description
+  = f.text_area :description, placeholder: EntityTypeOption.human_attribute_name(:description), title: EntityTypeOption.human_attribute_name(:description), data: { field: 'description' }
+
+.horizontal-block.extra
+  .field
+    = f.label :amount_relevant
+    = f.check_box :amount_relevant, data: { field: 'amount-relevant' }
+  .field
+    = f.label :default_price
+    = f.text_field :default_price, data: { field: 'default-price' }
+
+.actions
+  = link_to '', 'javascript:void(0)', class: 'icon icon-ok action-button', title: t('done_nested_object', class: EntityTypeOption.model_name.human.lcfirst)
+  = link_to '', 'javascript:void(0)', class: 'icon icon-remove action-button remove-nested-fields-extra', title: t('remove_nested_object', class: EntityTypeOption.model_name.human.lcfirst)

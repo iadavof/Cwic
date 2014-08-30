@@ -1,0 +1,19 @@
+h2 = ReservePeriod.model_name.human(count: 2)
+= format_help(t('.reserve_periods_help'))
+
+#entity-type-reserve-periods.nested-form
+  = f.fields_for :reserve_periods, wrapper: false do |rpf|
+    = render 'reserve_period_fields', f: rpf
+
+= f.link_to_add '', :reserve_periods, data: { target: '#entity-type-reserve-periods' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: ReservePeriod.model_name.human.lcfirst)
+
+h2 = t('.reservation_length_limitations')
+
+.field
+  = f.label :min_reservation_length
+  = f.number_field :min_reservation_length, min: 0
+  span.field-suffix = t('.minutes')
+.field
+  = f.label :max_reservation_length
+  = f.number_field :max_reservation_length, min: 0
+  span.field-suffix = t('.minutes')

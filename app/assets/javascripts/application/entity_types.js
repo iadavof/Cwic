@@ -29,8 +29,8 @@ APP.entity_types = {
     reservationStatusWrapper.find('.reservation_status_color').minicolors();
   },
   initIconSelector: function() {
-    $(".field.field-icon-select").on('click', 'label', function() {
-      $(".field.field-icon-select label").removeClass('active');
+    $(".field-icon-select").on('click', 'label', function() {
+      $(".field-icon-select label").removeClass('active');
         $(this).addClass('active');
     });
   },
