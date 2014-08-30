@@ -527,6 +527,7 @@ nl:
       feedback: 'Feedback'
       logout: 'Uitloggen'
       organisation: 'Organisatie'
+    user_menu:
       actions: 'Acties'
     submenu:
       home: 'Home'

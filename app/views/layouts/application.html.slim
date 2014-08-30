@@ -1,4 +1,5 @@
 doctype html
+
 html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I18n.locale
   head
     title
@@ -10,6 +11,7 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
     = javascript_include_tag "application", "data-turbolinks-track" => true
     meta name="viewport" content="width=device-width, user-scalable=no"
     = csrf_meta_tags
+
   body[
     class="controller-#{controller_name} action-#{action_name}"
     data-controller=controller_name
@@ -24,6 +26,7 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
         #logo-container-inner
           = link_to(root_path) do
             img.logo src=asset_path('logo.png')
+
     #below-header
       #header
         - if user_signed_in?
@@ -31,16 +34,20 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
         #progress-bar-container
       - if user_signed_in?
         = render "layouts/submenu"
+
       #main-area
         = render "layouts/local_menu"
         #content-area
           .inner
             h1#page-title
               = content_for?(:page_title) ? yield(:page_title) : t('default_title')
+
             = yield(:top_content) if content_for?(:top_content)
+
             #content
               .inner.clearfix
-                = render partial: 'layouts/flash_messages'
+                = render 'layouts/flash_messages'
                 = content_for?(:content) ? yield(:content) : yield
-    = render partial: 'shared/modal'
-    = render partial: 'feedbacks/modal'
+
+    = render 'shared/modal'
+    = render 'feedbacks/modal'

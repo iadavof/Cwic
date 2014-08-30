@@ -2,8 +2,7 @@
   - menu.each_with_index do |(category_name, category_content), index|
     - unless category_content[:url].present? # With subitems
       .submenu.clearfix data-main-menu-relation="main-menu-item-#{index + 1}"
-        h2
-          = t(".#{category_name}")
+        h2 = t(".#{category_name}")
         - category_content.each do |sub_category_name, sub_category_content|
           .submenu-block
             = content_tag(:h3, t(".#{sub_category_name}"), class: (sub_category_matches?(category_name, sub_category_name) ? "active" : nil))
