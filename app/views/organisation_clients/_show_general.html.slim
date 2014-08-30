@@ -1,0 +1,28 @@
+.content-columns.clearfix data-column-count="2"
+  .content-column
+    .content-block
+      h2
+        i.icon-address
+        = t('.address')
+
+      dl
+        dt = OrganisationClient.human_attribute_name(:name)
+        dd = @organisation_client.full_name
+        dt = OrganisationClient.human_attribute_name(:address)
+        dd = format_address(@organisation_client.route, @organisation_client.street_number, @organisation_client.postal_code, @organisation_client.administrative_area_level_2, @organisation_client.administrative_area_level_1, @organisation_client.locality, @organisation_client.country)
+        dt = OrganisationClient.human_attribute_name(:administrative_area_level_2)
+        dd = "#{@organisation_client.administrative_area_level_2}, #{@organisation_client.administrative_area_level_1}"
+
+  .content-column
+    .content-block
+      h2
+        i.icon-phone-call
+        = t('.contact')
+
+      dl
+        dt = OrganisationClient.human_attribute_name(:email)
+        dd = mail_to(@organisation_client.email)
+        dt = OrganisationClient.human_attribute_name(:phone)
+        dd = @organisation_client.phone
+        dt = OrganisationClient.human_attribute_name(:mobile_phone)
+        dd = @organisation_client.mobile_phone
