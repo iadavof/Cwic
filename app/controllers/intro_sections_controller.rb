@@ -1,14 +1,9 @@
 class IntroSectionsController < ApplicationController
-  skip_before_filter :authenticate_user!, only: :index
   before_action :load_resource
   authorize_resource
 
   # GET /intro_sections
   def index
-    respond_with(@intro_sections, layout: 'introduction')
-  end
-
-  def manage
     respond_with(@intro_sections)
   end
 
@@ -31,25 +26,25 @@ class IntroSectionsController < ApplicationController
   def create
     @intro_section.attributes = resource_params
     @intro_section.save
-    respond_with(@intro_section, location: manage_intro_sections_path)
+    respond_with(@intro_section)
   end
 
   # PATCH/PUT /intro_sections/1
   def update
     @intro_section.update_attributes(resource_params)
-    respond_with(@intro_section, location: manage_intro_sections_path)
+    respond_with(@intro_section)
   end
 
   # DELETE /intro_sections/1
   def destroy
     @intro_section.destroy
-    respond_with(@intro_section, location: manage_intro_sections_path)
+    respond_with(@intro_section)
   end
 
 private
   def load_resource
     case params[:action]
-    when 'index', 'manage'
+    when 'index'
       @intro_sections = IntroSection.accessible_by(current_ability, :index)
     when 'new', 'create'
       @intro_section = IntroSection.new

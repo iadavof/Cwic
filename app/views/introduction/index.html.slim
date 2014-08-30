@@ -1,0 +1,72 @@
+section.intro-section-home
+  .background-slider
+    - get_intro_background_images(5).each do |image|
+      div style="background-image: url('#{asset_path(image)}')"
+  #logo-container
+    #logo-container-inner
+      = link_to(root_path) do
+        img.logo src=asset_path('logo.png')
+  = render partial: 'layouts/flash_messages'
+  .home-text-section
+    .intro-actions
+      - unless user_signed_in?
+        .intro-sign-up
+          = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
+        .intro-sign-in
+          = link_to(t('.sign_in'), new_user_session_path, class: 'button')
+      - else
+        .intro-go-to-app
+          = link_to(t('.go_to_app'), home_index_path, class: 'button')
+        .intro-sign-out
+          = link_to(t('.sign_out'), destroy_user_session_path, class: 'button', method: :delete)
+    .home-intro-text
+      h1
+        | De
+        strong<>
+          | nieuwe
+        | manier van reserveringen beheren
+      p
+        | U wilt geen tijd kwijt zijn aan ingewikkelde reserveringssoftware. U wilt geen enorme ICT-afdeling nodig hebben om uw reserveringen digitaal te beheren. En u wilt niet voor elke activiteit een apart reserveringssysteem hoeven gebruiken. Dan is Cwic voor u gemaakt. Cwic is
+        strong<
+          | flexibel
+        | ,
+        strong<>
+          | gebruiksvriendelijk
+        | en
+        strong<>
+          | online
+        | - dus overal bereikbaar en altijd up-to-date. Cwic is geschikt voor alle organisaties, van klein tot groot.
+      p
+        strong
+          | Cwic komt binnen de komende 10 à 20 jaar in besloten bèta
+        | . Wilt u Cwic als eerste uitproberen?
+        strong<
+          | Meld u dan aan via de knop
+          em<
+            | Ga nu Cwic gebruiken
+        | .
+= render @intro_sections
+section.intro-section-last
+  table.features-comparison
+    thead
+      tr
+        th
+          | Light
+        th
+          | Regular
+        th
+          | Enterprise
+    tbody
+      tr
+        td
+          | Nee
+        td
+          | Ja
+        td
+          | Ja
+  .intro-sign-up
+    = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
+  .intellectual-property
+    | Cwic&reg; is een geregistreerd handelsmerk van
+    a< href="http://iada.nl/"
+      | IADA v.o.f.
