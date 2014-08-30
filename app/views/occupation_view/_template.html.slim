@@ -13,11 +13,14 @@ script#occupationContainerTemplate type="text/template"
             = t('.current_month')
         a#next.button
           i.icon-chevron-right
+
       div style="float: right;"
         = select_month(Date.today, { field_name: 'current_month' })
         = select_year(Date.today, { field_name: 'current_year' })
+
     .top-axis.clearfix
       p.axis-part-name.clearfix
+
     .entity-axis
     .occupation-matrix-body
 
