@@ -1,5 +1,6 @@
 = form_for(@intro_section) do |f|
   = render 'shared/error_messages', target: @intro_section
+
   .field
     = f.label :title
     = f.text_field :title
@@ -28,5 +29,6 @@
     = f.label :image_from_file
     = f.file_field :image
   = f.hidden_field :image_cache
+
   .actions
     = f.submit
