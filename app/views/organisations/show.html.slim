@@ -1,47 +1,29 @@
 - content_for :page_title do
   = show_title(@organisation)
+
 - content_for :local_menu_navigation do
   = button_link_to_index(Organisation)
   = button_link_to_edit(@organisation)
   = button_link_to_destroy(@organisation)
+
 dl
-  dt
-    = Organisation.human_attribute_name(:name)
-  dd
-    = @organisation.name
-  dt
-    = Organisation.human_attribute_name(:route)
-  dd
-    = @organisation.route
-  dt
-    = Organisation.human_attribute_name(:street_number)
-  dd
-    = @organisation.street_number
-  dt
-    = Organisation.human_attribute_name(:postal_code)
-  dd
-    = @organisation.postal_code
-  dt
-    = Organisation.human_attribute_name(:administrative_area_level_2)
-  dd
-    = @organisation.administrative_area_level_2
-  dt
-    = Organisation.human_attribute_name(:administrative_area_level_1)
-  dd
-    = @organisation.administrative_area_level_1
-  dt
-    = Organisation.human_attribute_name(:locality)
-  dd
-    = @organisation.locality
-  dt
-    = Organisation.human_attribute_name(:country)
-  dd
-    = @organisation.country
-  dt
-    = Organisation.human_attribute_name(:phone_general)
-  dd
-    = @organisation.phone_general
-  dt
-    = Organisation.human_attribute_name(:phone_reservations)
-  dd
-    = @organisation.phone_reservations
+  dt = Organisation.human_attribute_name(:name)
+  dd = @organisation.name
+  dt = Organisation.human_attribute_name(:route)
+  dd = @organisation.route
+  dt = Organisation.human_attribute_name(:street_number)
+  dd = @organisation.street_number
+  dt = Organisation.human_attribute_name(:postal_code)
+  dd = @organisation.postal_code
+  dt = Organisation.human_attribute_name(:administrative_area_level_2)
+  dd = @organisation.administrative_area_level_2
+  dt = Organisation.human_attribute_name(:administrative_area_level_1)
+  dd = @organisation.administrative_area_level_1
+  dt = Organisation.human_attribute_name(:locality)
+  dd = @organisation.locality
+  dt = Organisation.human_attribute_name(:country)
+  dd = @organisation.country
+  dt = Organisation.human_attribute_name(:phone_general)
+  dd = @organisation.phone_general
+  dt = Organisation.human_attribute_name(:phone_reservations)
+  dd = @organisation.phone_reservations

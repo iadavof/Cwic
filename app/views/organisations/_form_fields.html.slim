@@ -10,11 +10,10 @@
       = f.label :phone_reservations
       = f.text_field :phone_reservations
     .field
-      label.required for="addresspicker"
-        =t('.address')
-      input#addresspicker type="text" placeholder=t('.search_address')
+      = label_tag(:addresspicker, t('.address'), class: 'required')
+      = text_field_tag(:addresspicker, nil, placeholder: t('.search_address'))
     .auto-address-fields
-      a#edit-auto-address-fields.icon.icon-edit.action-button href="javascript:void(0)" title=t('.edit_address')
+      = link_to('', 'javascript:;', id: 'edit-auto-address-fields', class: 'icon icon-edit action-button', title: t('.edit_address'))
       .field
         = f.label :route
         = f.text_field :route, readonly: true, class: "addresspicker-route"
@@ -36,8 +35,9 @@
       .field
         = f.label :country
         = f.text_field :country, readonly: true, class: "addresspicker-country"
-    = f.hidden_field :address_type, class: "addresspicker-address-type"
-    = f.hidden_field :lng, class: "addresspicker-lng"
-    = f.hidden_field :lat, class: "addresspicker-lat"
+      = f.hidden_field :address_type, class: "addresspicker-address-type"
+      = f.hidden_field :lng, class: "addresspicker-lng"
+      = f.hidden_field :lat, class: "addresspicker-lat"
+
   #addresspicker-map.address-map
     img.ajax-wait
