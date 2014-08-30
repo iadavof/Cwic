@@ -1,0 +1,17 @@
+h2#review-feedback
+  i.icon-preview
+  = t('.review_feedback')
+
+.feedback-screenshot-wrapper
+  img#screenshot_preview[src="" alt="screenshot"]
+
+.feedback-tech-info
+  h3
+    = t('.technical_info')
+  p#tech-info-summary
+
+p#feedback-message-summary
+  a#edit_feedback_button.icon.icon-edit.action-button title=t('.edit_feedback') href="#"
+
+button#send-feedback.feedback-button.green
+  = t('.send')

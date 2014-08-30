@@ -763,15 +763,17 @@ nl:
       current_year: 'Dit jaar'
 
   feedbacks:
-    modal:
+    modal_text:
       open_feedback: 'Geef ons feedback!'
-      creating_screenshot: 'Schermafbeelding genereren...'
       feedback_intro: 'Bent u een fout in het systeem tegengekomen? Of heeft u een suggestie voor verbetering? Vul dan het volgende formulier in.'
+      next: 'Volgende'
+    modal_review:
       review_feedback: 'Controleer feedback'
       technical_info: 'Technische informatie'
-      send: 'Verzenden'
-      next: 'Volgende'
       edit_feedback: 'Bewerk feedback'
+      send: 'Verzenden'
+    modal_status:
+      creating_screenshot: 'Schermafbeelding genereren...'
       feedback_success: 'Bedankt voor uw feedback!'
       feedback_success_explain: 'Wij hebben uw feedback ontvangen, bedankt voor uw bijdrage.'
       feedback_error: 'Verzenden feedback mislukt'
