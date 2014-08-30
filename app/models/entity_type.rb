@@ -16,7 +16,7 @@ class EntityType < ActiveRecord::Base
   has_many :reserve_periods, dependent: :destroy, inverse_of: :entity_type
 
   # Validations
-  validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
+  validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :organisation }
   validates :reservation_statuses, presence: true
   validates :slack_before, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :slack_after, presence: true, numericality: { greater_than_or_equal_to: 0 }
