@@ -581,6 +581,7 @@ nl:
   home:
     index:
       welcome_html: 'Welkom bij <strong>Cwic</strong>'
+      todo_dashboard: 'Hier komt waarschijnlijk ooit een dashboard...'
 
   organisations:
     form_fields:
