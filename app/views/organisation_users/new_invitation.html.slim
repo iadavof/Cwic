@@ -1,17 +1,18 @@
 - content_for :page_title do
   = t('devise.invitations.new.header')
+
 = form_for(@user, url: { action: 'send_invitation' }) do |f|
-  p
-    = t('.intro', email: @user.email)
+  p = t('.intro', email: @user.email)
   = render 'shared/error_messages', target: @user
+
   .field
     = f.label :email
     = f.text_field :email, readonly: true
   = f.fields_for :organisation_users do |ouf|
-    = ouf.hidden_field :organisation_id
     .field
       = ouf.label :organisation_role
       = ouf.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, { prompt: t('prompt_choose') }, { readonly: true }
+    = ouf.hidden_field :organisation_id
   .field
     = f.label :first_name
     = f.text_field :first_name
@@ -21,5 +22,6 @@
   .field
     = f.label :last_name
     = f.text_field :last_name
+
   .actions
     = f.submit t("devise.invitations.new.submit_button")

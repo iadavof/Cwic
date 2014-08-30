@@ -1,39 +1,14 @@
 - content_for :page_title do
   = index_title(OrganisationUser)
+
 - content_for :local_menu_navigation do
   = button_link_to_new([@organisation, OrganisationUser])
+
 - content_for :local_menu_page do
   = render 'layouts/mini_search', current_search_type: OrganisationUser.model_name
 
 - if @organisation_users.empty?
-  p
-    = t('.empty', default: :empty_objects, classes: OrganisationUser.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, classes: OrganisationUser.model_name.human(count: 2).lcfirst)
+
 - else
-  = paginate @organisation_users
-  table
-    thead
-      tr
-        th
-          = User.human_attribute_name(:name)
-        th
-          = User.human_attribute_name(:email)
-        th
-          = OrganisationUser.human_attribute_name(:organisation_role)
-        th
-          = t('.status')
-        th
-    tbody
-      - @organisation_users.each do |organisation_user|
-        tr
-          td
-            = organisation_user.instance_name
-          td
-            = mail_to(organisation_user.user.email)
-          td
-            = organisation_user.organisation_role.name
-          td
-            = status_actions_for_user(organisation_user)
-          td.icons
-            = icon_link_to_edit([@organisation, organisation_user])
-            = icon_link_to_destroy([@organisation, organisation_user])
-  = paginate @organisation_users
+  = render 'table'
