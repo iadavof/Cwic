@@ -131,8 +131,8 @@ nl:
         one: 'Object'
         other: 'Objecten'
       info_screen_entity_type:
-        one: 'Objecttype'
-        other: 'Objecttypen'
+        one: 'Objectsoort'
+        other: 'Objectsoorten'
       reservation_status:
         one: 'Reserveringsstatus'
         other: 'Reserveringsstatussen'
@@ -288,7 +288,7 @@ nl:
         public: 'Publiek'
         show_reservation_number: 'Reserveringsnr. tonen'
         active_entities: 'Actieve objecten'
-        add_new_entity_types: 'Nieuwe objecttypen toevoegen'
+        add_new_entity_types: 'Nieuwe objectsoorten toevoegen'
         direction_char_visible: 'Toon wegwijzers'
         clock_header: 'Toon klok bovenaan'
       info_screen_entity_type:
@@ -717,10 +717,10 @@ nl:
 
   info_screens:
     form:
-      selected_entity_types: 'Geselecteerde objecttypen'
+      selected_entity_types: 'Geselecteerde objectsoorten'
       info_screen_name_example: 'scherm bij voordeur, directie, beamerscherm foyer enz.'
     info_screen_entity_type_fields:
-      selected_entities: 'Geselecteerde Objecten'
+      selected_entities: 'Geselecteerde objecten'
 
   today_and_tomorrow:
     entity_block:

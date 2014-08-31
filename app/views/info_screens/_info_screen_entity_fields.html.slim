@@ -2,14 +2,16 @@
   h4.collapse
     span class=("active-sign " + (f.object.info_screen_entity_type.active? && f.object.active? ? 'active' : ''))
     = f.object.entity.instance_name
+
   .content.clearfix
     .fields
       = f.label :active
       = f.check_box :active, class: 'info-screen-entity-active'
-    = f.hidden_field :entity_id
+
     div.direction-chars style=(f.object.info_screen_entity_type.info_screen.direction_char_visible ? 'display: block;' : 'display: none;')
       = f.label :direction_char, class: 'direction-char-label'
       = f.hidden_field :direction_char
+
       div class=("wayfinding " + (f.object.direction_char.nil? || f.object.direction_char == '' ? 'active' : ''))
         i
       div class=("wayfinding " + (f.object.direction_char == 'symbol-arrow-up' ? 'active' : ''))
@@ -40,3 +42,5 @@
         i.symbol-elevator-up
       div class=("wayfinding " + (f.object.direction_char == 'symbol-elevator-down' ? 'active' : ''))
         i.symbol-elevator-down
+
+  = f.hidden_field :entity_id
