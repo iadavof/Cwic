@@ -1,13 +1,14 @@
 - content_for :page_title do
   = t('.today_and_tomorrow')
+
 - content_for :local_menu_navigation do
   = button_link_to_new([@organisation, Reservation])
+
 div#today-and-tomorrow-container.clearfix.today-and-tomorrow-container data-organisation-id=current_organisation.id
   - if @entity_types.empty?
-    p.no_entities_found
-      = t('.no_entities_found', {link: link_to_new([@organisation, Entity])}).html_safe
+    p.no_entities_found = t('empty_objects_add_first_html', { classes: Entity.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, Entity]) })
   - else
-    - if @entity_types.count == 1
+    - if @entity_types.one?
       = render partial: 'today_and_tomorrow/entity_block', collection: @entity_types.first.entities, as: :entity
     - else
       = render partial: 'today_and_tomorrow/entity_type_block', collection: @entity_types, as: :entity_type
@@ -41,8 +42,7 @@ script#currentReservationTemplate type="text/template"
         | 00-00-0000
 
 script#tomorrowLineTemplate type="text/template"
-  h4
-    = t('.tomorrow')
+  h4 = t('.tomorrow')
 
 script#nextReservationsTemplate type="text/template"
   .reservation-next
