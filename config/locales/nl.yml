@@ -666,8 +666,8 @@ nl:
 
   reservations:
     show:
-      general: 'Algemeen'
       logs: 'Geschiedenis'
+    show_general:
       repetitions: 'Herhalingen'
       no_description: '<geen beschrijving>'
       slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'
@@ -684,25 +684,28 @@ nl:
       download_as: 'Downloaden als:'
     status_controls:
       saved: 'Opgeslagen'
-    form:
-      selected_entity: 'Geselecteerd object'
-      no_entity_selected: 'Geen object geselecteerd'
-      available_entities: 'Beschikbare objecten'
-      organisation_client_type: 'Soort klant'
-      existing_organisation_client: 'Bestaande klant'
-      new_organisation_client: 'Nieuwe klant'
-      settings: 'Instellingen'
-      reservation_description_example: 'tekenles, receptie, bloemschikken enz.'
+    form_begin_and_end:
       default_slack_times: 'Speling voor reservering'
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na de reservering. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Hieronder kunnen de waarden voor deze speling worden aangepast voor deze reservering.'
       minutes: 'minuten'
+    form_entity:
+      selected_entity: 'Geselecteerd object'
+      no_entity_selected: 'Geen object geselecteerd'
+      available_entities: 'Beschikbare objecten'
       no_entities_available: 'Geen objecten beschikbaar'
+    form_organisation_client:
+      organisation_client_type: 'Soort klant'
+      existing_organisation_client: 'Bestaande klant'
+      new_organisation_client: 'Nieuwe klant'
+    form_settings:
+      settings: 'Instellingen'
+      reservation_description_example: 'tekenles, receptie, bloemschikken enz.'
     table:
       min: 'min.'
     modal_form:
       new_organisation_client: 'Nieuwe klant'
       full_form: 'Meer opties'
-    multiple_edit:
+    multiple:
       delete:
         are_you_sure_you_want_delete: 'Weet je het zeker dat je onderstaande reserveringen wilt verwijderen?'
 
