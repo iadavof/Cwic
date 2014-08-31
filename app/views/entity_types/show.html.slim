@@ -9,7 +9,7 @@
 - if @entity_type.entity_images.present?
   = render 'entities/ken_burns_slideshow', images: @entity_type.entity_images
 
-= render 'tags/show', tags: @entity_type.tags
+= render 'tags/list', tags: @entity_type.tags
 
 #tabs
   ul.nav

@@ -51,8 +51,6 @@ nl:
   for_example: 'Bijv.'
   default_title: 'Titel'
   unlimited: 'Onbeperkt'
-  search_for_tag: 'Zoeken naar alle items met de tag "%{tag}"'
-  tags: 'Tags'
   general: 'Algemeen'
 
   multiple:
@@ -821,3 +819,9 @@ nl:
       ready: 'Gereed'
       canceled: 'Geannuleerd'
       not_used: 'Niet gebruikt'
+
+  tags:
+    show:
+      tags: 'Tags'
+    tag:
+      search_for_tag: 'Zoeken naar alle items met de tag "%{tag}"'

@@ -9,7 +9,7 @@
 - content_for :local_menu_context do
   = render'reservations/status_controls', reservation: @reservation
 
-= render 'tags/show', tags: @reservation.tags
+= render 'tags/list', tags: @reservation.tags
 
 = render 'stickies/resource_stickies', resource: @reservation
 

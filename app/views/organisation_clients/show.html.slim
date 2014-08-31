@@ -6,7 +6,7 @@
   = button_link_to_edit([@organisation, @organisation_client])
   = button_link_to_destroy([@organisation, @organisation_client])
 
-= render 'tags/show', tags: @organisation_client.tags
+= render 'tags/list', tags: @organisation_client.tags
 
 = render 'stickies/resource_stickies', resource: @organisation_client
 

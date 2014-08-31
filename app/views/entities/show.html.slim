@@ -9,7 +9,7 @@
 - if @entity.all_entity_images.present?
   = render 'entities/ken_burns_slideshow', images: @entity.all_entity_images
 
-= render 'tags/show', tags: @entity.tags
+= render 'tags/list', tags: @entity.tags
 
 = render 'stickies/resource_stickies', resource: @entity
 
