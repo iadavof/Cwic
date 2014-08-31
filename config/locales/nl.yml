@@ -254,8 +254,6 @@ nl:
         entity_type: 'Objectsoort'
         description: 'Beschrijving'
         organisation_client: 'Klant'
-        slack_before: 'Speling vooraf'
-        slack_after: 'Speling achteraf'
         cost: 'Kosten'
         reservation_recurrence_definition: 'Herhaling:'
         reservation_status: 'Status'
