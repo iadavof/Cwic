@@ -81,7 +81,7 @@ private
     params.require(:entity).permit(
       :tag_list, :name, :frontend_name, :color, :description, :entity_type_id, :organisation_id, :include_entity_type_images, :slack_before, :slack_after,
       properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []],
-      entity_images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
+      images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
       documents_attributes: [:id, :document, :document_cache, :remote_document_url, :_destroy]
     )
   end

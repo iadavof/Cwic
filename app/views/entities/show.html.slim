@@ -6,8 +6,8 @@
   = button_link_to_edit([@organisation, @entity])
   = button_link_to_destroy([@organisation, @entity])
 
-- if @entity.all_entity_images.present?
-  = render 'entities/ken_burns_slideshow', images: @entity.all_entity_images
+- if @entity.images.present?
+  = render 'entities/ken_burns_slideshow', images: @entity.images
 
 = render 'tags/list', tags: @entity.tags
 

@@ -15,8 +15,8 @@ h3
   .column
     h4 = EntityImage.model_name.human(count: 2)
     dl
-      - if result.entity_images.present?
-        .entity-images-container.clearfix
-          = render result.entity_images
+      - if result.images.present?
+        .images-container.clearfix
+          = render result.images
       - else
         = t('empty_objects', classes: EntityImage.model_name.human(count: 2).lcfirst)

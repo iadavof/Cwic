@@ -1,8 +1,8 @@
 h2 = EntityImage.model_name.human(count: 2)
 = format_help(t('entity_images.form.help'))
 
-#entity-images.nested-form
-  = f.fields_for :entity_images, wrapper: false do |eif|
+#images.nested-form
+  = f.fields_for :images, wrapper: false do |eif|
     = render 'entity_images/fields', f: eif
 
-= f.link_to_add '', :entity_images, data: { target: '#entity-images' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst)
+= f.link_to_add '', :images, data: { target: '#images' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: EntityImage.model_name.human.lcfirst)

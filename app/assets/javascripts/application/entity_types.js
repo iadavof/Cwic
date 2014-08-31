@@ -1,7 +1,4 @@
 APP.entity_types = {
-  show: function() {
-    $('div.entity-images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery: { enabled: true } });
-  },
   _form: function() {
     var form = $('form.new_entity_type, form.edit_entity_type');
     form.submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })

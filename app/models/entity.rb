@@ -13,7 +13,7 @@ class Entity < ActiveRecord::Base
   has_many :week_occupations, dependent: :destroy
   has_many :info_screen_entities, dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy, inverse_of: :stickable
-  has_many :entity_images, as: :entity_imageable, dependent: :destroy, inverse_of: :entity_imageable
+  has_many :images, class_name: 'EntityImage', as: :imageable, dependent: :destroy, inverse_of: :imageable
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Model extensions
@@ -33,7 +33,7 @@ class Entity < ActiveRecord::Base
 
   # Nested attributes
   accepts_nested_attributes_for :properties, allow_destroy: true
-  accepts_nested_attributes_for :entity_images, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
 
   # Scopes
@@ -99,11 +99,11 @@ class Entity < ActiveRecord::Base
     (next_reservation.begins_at - next_reservation.get_slack_before.minutes - ends_at) / 1.minute if next_reservation.present?
   end
 
-  def all_entity_images
-    if include_entity_type_images
-      entity_images + entity_type.entity_images
+  def images(all = true)
+    if all && include_entity_type_images
+      super + entity_type.images
     else
-      entity_images
+      super
     end
   end
 

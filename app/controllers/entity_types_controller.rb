@@ -61,7 +61,7 @@ private
         options_attributes: [:id, :name, :default, :index, :_destroy]
       ],
       options_attributes: [:id, :name, :description, :amount_relevant, :default_price, :index, :_destroy],
-      entity_images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
+      images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
       reservation_statuses_attributes: [:id, :name, :color, :index, :blocking, :info_boards, :billable, :_destroy],
       reserve_periods_attributes: [:id, :name, :period_amount, :period_unit_id, :min_periods, :max_periods, :price, :_destroy],
     )

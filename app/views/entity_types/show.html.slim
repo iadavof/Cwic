@@ -6,8 +6,8 @@
   = button_link_to_edit([@organisation, @entity_type])
   = button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type))
 
-- if @entity_type.entity_images.present?
-  = render 'entities/ken_burns_slideshow', images: @entity_type.entity_images
+- if @entity_type.images.present?
+  = render 'entities/ken_burns_slideshow', images: @entity_type.images
 
 = render 'tags/list', tags: @entity_type.tags
 
