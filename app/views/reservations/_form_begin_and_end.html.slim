@@ -1,6 +1,6 @@
 .field.slack-field.slack-field-begin
   = f.label :slack_before
-  = format_help(t('.default_slack_times_help'), :inline)
+  = format_help(t('.slack_times_help'), :inline)
   = f.number_field :slack_before, placeholder: @reservation.entity.try(:get_slack_before), min: 0
   .suffix = t('minutes').lcfirst
 .field.field-begins-at
@@ -14,6 +14,6 @@ i.icon-arrow-right.until-icon
   = f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field'
 .field.slack-field.slack-field-end
   = f.label :slack_after
-  = format_help(t('.default_slack_times_help'), :inline)
+  = format_help(t('.slack_times_help'), :inline)
   = f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after), min: 0
   .suffix = t('minutes').lcfirst
