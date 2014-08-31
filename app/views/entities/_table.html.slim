@@ -18,8 +18,8 @@ table
         td = name_link_to_show([@organisation, entity])
         td = name_link_to_show([@organisation, entity.entity_type], title: format_description_title(entity.entity_type))
         td = format_description(entity.description)
-        td = "#{entity.get_slack_before} #{t('.min')}"
-        td = "#{entity.get_slack_after} #{t('.min')}"
+        td = "#{entity.get_slack_before} #{t('minutes_abbr').lcfirst}"
+        td = "#{entity.get_slack_after} #{t('minutes_abbr').lcfirst}"
         td.icons
           = icon_link_to_edit([@organisation, entity])
           = icon_link_to_destroy([@organisation, entity])

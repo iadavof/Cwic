@@ -12,8 +12,8 @@ h2 = t('.reservation_length_limitations')
 .field
   = f.label :min_reservation_length
   = f.number_field :min_reservation_length, min: 0
-  span.field-suffix = t('.minutes')
+  span.field-suffix = t('minutes').lcfirst
 .field
   = f.label :max_reservation_length
   = f.number_field :max_reservation_length, min: 0
-  span.field-suffix = t('.minutes')
+  span.field-suffix = t('minutes').lcfirst

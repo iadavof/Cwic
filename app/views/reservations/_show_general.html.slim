@@ -17,9 +17,9 @@
         dt = Reservation.human_attribute_name(:cost)
         dd = number_to_currency(@reservation.cost)
         dt = Reservation.human_attribute_name(:slack_before)
-        dd = "#{@reservation.get_slack_before} #{t('.min')}"
+        dd = "#{@reservation.get_slack_before} #{t('minutes').lcfirst}"
         dt = Reservation.human_attribute_name(:slack_after)
-        dd = "#{@reservation.get_slack_after} #{t('.min')}"
+        dd = "#{@reservation.get_slack_after} #{t('minutes').lcfirst}"
         dt = Reservation.human_attribute_name(:created_at)
         dd = l(@reservation.created_at, format: :long)
 

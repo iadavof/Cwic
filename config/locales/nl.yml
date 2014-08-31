@@ -52,6 +52,8 @@ nl:
   default_title: 'Titel'
   unlimited: 'Onbeperkt'
   general: 'Algemeen'
+  minutes: 'Minuten'
+  minutes_abbr: 'Min.'
 
   multiple:
     delete: 'Verwijderen'
@@ -622,7 +624,6 @@ nl:
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
       default_slack_times: 'Standaard speling voor en na reserveringen van deze objectsoort'
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van deze objectsoort. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elk object afzonderlijk in te stellen. De standaardwaarden voor speling voor deze objectsoort kunt u hieronder ingeven.'
-      minutes: 'minuten'
     form_properties:
       properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
     form_options:
@@ -632,7 +633,6 @@ nl:
     form_reserve_periods:
       reserve_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
       reservation_length_limitations: 'Duurbeperkingen'
-      minutes: 'minuten'
     reserve_period_fields:
       period: 'Periode'
       per_period: 'per periode'
@@ -648,14 +648,10 @@ nl:
       remove_icon: 'Icoon verwijderen'
 
   entities:
-    table:
-      min: 'min.'
     form_general:
       entity_name_example: '4.13B, 9.5, foyer, loft'
       default_slack_times: 'Standaard speling voor en na reserveringen van dit object'
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elke reservering nog afzonderlijk bij te stellen. De standaardwaarden voor speling voor dit object kunt u hieronder ingeven.'
-      minutes: 'Minuten'
-
   entity_images:
     form:
       help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
@@ -668,7 +664,6 @@ nl:
       no_description: '<geen beschrijving>'
       slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'
       slack_after_overlaps_with_html: 'Speling achteraf overlapt met %{reservation}'
-      min: 'min.'
     index:
       reservations_of_from_to: 'De reserveringen van <strong>%{of}</strong> in de periode tussen <strong>%{from}</strong> en <strong>%{to}</strong> worden nu getoond.'
       reservations_of_from: 'De reserveringen van <strong>%{of}</strong> vanaf <strong>%{from}</strong> worden nu getoond.'
@@ -696,8 +691,6 @@ nl:
     form_settings:
       settings: 'Instellingen'
       reservation_description_example: 'tekenles, receptie, bloemschikken enz.'
-    table:
-      min: 'min.'
     modal_form:
       new_organisation_client: 'Nieuwe klant'
       full_form: 'Meer opties'

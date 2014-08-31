@@ -23,8 +23,8 @@ h2 = t('.default_slack_times')
 .field
   = f.label :slack_before
   = f.number_field :slack_before, min: 0
-  span.field-suffix = t('.minutes')
+  span.field-suffix = t('minutes').lcfirst
 .field
   = f.label :slack_after
   = f.number_field :slack_after, min: 0
-  span.field-suffix = t('.minutes')
+  span.field-suffix = t('minutes').lcfirst

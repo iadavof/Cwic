@@ -2,7 +2,7 @@
   = f.label :slack_before
   = format_help(t('.default_slack_times_help'), :inline)
   = f.number_field :slack_before, placeholder: @reservation.entity.try(:get_slack_before), min: 0
-  .suffix = t('.minutes')
+  .suffix = t('minutes').lcfirst
 .field.field-begins-at
   = f.label :begins_at
   = f.text_field :begins_at_date, id: 'begins_at_date', class: 'datepicker-field'
@@ -16,4 +16,4 @@ i.icon-arrow-right.until-icon
   = f.label :slack_after
   = format_help(t('.default_slack_times_help'), :inline)
   = f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after), min: 0
-  .suffix = t('.minutes')
+  .suffix = t('minutes').lcfirst
