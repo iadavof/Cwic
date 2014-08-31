@@ -1,35 +1,23 @@
 - content_for :page_title do
   = show_title(@user)
+
 - content_for :local_menu_navigation do
   = button_link_to_index(User)
   = button_link_to_edit(@user)
   = button_link_to_destroy(@user)
+
 dl
-  dt
-    = User.human_attribute_name(:first_name)
-  dd
-    = @user.first_name
-  dt
-    = User.human_attribute_name(:infix)
-  dd
-    = @user.infix
-  dt
-    = User.human_attribute_name(:last_name)
-  dd
-    = @user.last_name
-  dt
-    = User.human_attribute_name(:email)
-  dd
-    = @user.email
-  dt
-    = User.human_attribute_name(:sign_in_count)
-  dd
-    = @user.sign_in_count
-  dt
-    = User.human_attribute_name(:created_at)
-  dd
-    =l(@user.created_at, format: :long)
-  dt
-    = User.human_attribute_name(:last_sign_in_at)
-  dd
-    =l(@user.last_sign_in_at, format: :long) if @user.last_sign_in_at.present?
+  dt = User.human_attribute_name(:first_name)
+  dd = @user.first_name
+  dt = User.human_attribute_name(:infix)
+  dd = @user.infix
+  dt = User.human_attribute_name(:last_name)
+  dd = @user.last_name
+  dt = User.human_attribute_name(:email)
+  dd = @user.email
+  dt  = User.human_attribute_name(:sign_in_count)
+  dd = @user.sign_in_count
+  dt = User.human_attribute_name(:created_at)
+  dd =l(@user.created_at, format: :long)
+  dt = User.human_attribute_name(:last_sign_in_at)
+  dd =l(@user.last_sign_in_at, format: :long) if @user.last_sign_in_at.present?

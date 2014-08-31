@@ -1,49 +1,16 @@
 - content_for :page_title do
   = index_title(User)
+
 - content_for :local_menu_page do
   = render 'layouts/mini_search', current_search_type: User.model_name
+
 - if @users.empty? && params[:mini_search].present?
   p
     = t('empty_for_search', classes: User.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
     = link_to(t('remove_search'), users_path())
+
 - elsif @users.empty?
-  p
-    = t('.empty', default: :empty_objects, classes: User.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, classes: User.model_name.human(count: 2).lcfirst)
+
 - else
-  = paginate @users
-  table
-    thead
-      tr
-        th
-          | #
-        = sortable_table_head(User, :first_name)
-        = table_head(User, :infix)
-        = sortable_table_head(User, :last_name)
-        = sortable_table_head(User, :email)
-        = sortable_table_head(User, :sign_in_count)
-        = sortable_table_head(User, :created_at)
-        = sortable_table_head(User, :last_sign_in_at)
-        th
-    tbody
-      - @users.each do |user|
-        tr
-          td
-            = name_link_to_show(user, {name: user.id.to_s})
-          td
-            = user.first_name
-          td
-            = user.infix
-          td
-            = user.last_name
-          td
-            = user.email
-          td
-            = user.sign_in_count
-          td
-            =l(user.created_at, format: :long)
-          td
-            =l(user.last_sign_in_at, format: :long) if user.last_sign_in_at.present?
-          td.icons
-            = icon_link_to_edit(user)
-            = icon_link_to_destroy(user)
-  = paginate @users
+  = render 'table'

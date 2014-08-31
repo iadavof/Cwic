@@ -1,8 +1,9 @@
 - content_for :page_title do
-  = t 'devise.invitations.edit.header'
+  = t('devise.invitations.edit.header')
+
 = form_for resource, as: resource_name, url: invitation_path(resource_name), html: { method: :put } do |f|
   = devise_error_messages!
-  = f.hidden_field :invitation_token
+
   .field
     = f.label :first_name
     = f.text_field :first_name
@@ -18,5 +19,7 @@
   .field
     = f.label :password_confirmation
     = f.password_field :password_confirmation
+  = f.hidden_field :invitation_token
+
   .actions
-    = f.submit t("devise.invitations.edit.submit_button")
+    = f.submit t('devise.invitations.edit.submit_button')
