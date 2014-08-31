@@ -1,8 +1,10 @@
 .result-icon
   i.icon-user
+
 h3
   => "#{result.class.model_name.human}:"
   = name_link_to_show([@organisation, result])
+
 .info.clearfix
   .column
     table
@@ -19,37 +21,9 @@ h3
         tr
           th = OrganisationClient.human_attribute_name(:mobile_phone)
           td = link_to(result.mobile_phone, "tel:#{result.mobile_phone}") if result.mobile_phone.present?
+
   .column
-    h4
-      = t('.upcoming_reservations')
-    - if result.upcoming_reservations(3).empty?
-      p
-        = t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst)
-    - else
-      dl
-        - result.upcoming_reservations(3).includes(:entity).each do |res|
-          dt title=l(res.begins_at, format: :long)
-            => res.begins_at <= Time.now ? t('now') : t('.in_about')
-            = distance_of_time_in_words_to_now(res.begins_at)
-          dd
-            = name_link_to_show([@organisation, res.entity], name: res.entity.full_instance_name)
-            ' :
-            = name_link_to_show([@organisation, res])
-            = res.description
+    = render 'organisation_client_result_reservations', type: :upcoming, result: result
+
   .column
-    h4
-      = t('.past_reservations')
-    - if result.past_reservations(3).empty?
-      p
-        = t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst)
-    - else
-      dl
-        - result.past_reservations(3).includes(:entity).each do |res|
-          dt title=l(res.ends_at, format: :long)
-            => time_ago_in_words(res.ends_at)
-            = t('.ago')
-          dd
-            = name_link_to_show([@organisation, res.entity], name: res.entity.full_instance_name)
-            ' :
-            = name_link_to_show([@organisation, res])
-            = res.description
+    = render 'organisation_client_result_reservations', type: :past, result: result

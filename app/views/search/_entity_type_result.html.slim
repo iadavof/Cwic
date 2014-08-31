@@ -1,20 +1,22 @@
 h3
   => "#{result.class.model_name.human}:"
   = name_link_to_show([@organisation, result])
+
 .result-icon
   i.icon-mimetype
+
 .info.clearfix
   .column
     | column 1
+
   .column
     | column 2
+
   .column
-    h4
-      = EntityImage.model_name.human(count: 2)
+    h4 = EntityImage.model_name.human(count: 2)
     dl
       - if result.entity_images.present?
         .entity-images-container.clearfix
-          - result.entity_images.each do |eimage|
-            = link_to(image_tag(eimage.image.thumb.url, {alt: eimage.title, title: eimage.title}), eimage.image.url)
+          = render result.entity_images
       - else
-        = t('.no_entity_images')
+        = t('empty_objects', classes: EntityImage.model_name.human(count: 2).lcfirst)
