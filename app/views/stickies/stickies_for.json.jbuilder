@@ -1,3 +1,3 @@
 json.array! @stickies do |sticky|
-  json.partial! 'stickies/sticky', sticky: sticky
+  json.partial! 'sticky', sticky: sticky
 end
