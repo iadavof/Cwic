@@ -1,7 +1,5 @@
 - content_for :page_title do
   = t('.title_html', default: :show_object_html, class: @entity.class.model_name.human, name: @entity.instance_name + ' (' + @entity.entity_type.instance_name + ')')
-- content_for :top_content do
-  = render partial: 'tags/show', locals: { tags: @entity.tags }
 - content_for :local_menu_navigation do
   = button_link_to_index([@organisation, Entity])
   = button_link_to_edit([@organisation, @entity])
@@ -9,6 +7,7 @@
 
 - if @entity.all_entity_images.present?
   = render partial: 'entities/ken_burns_slideshow', locals: { images: @entity.all_entity_images }
+= render partial: 'tags/show', locals: { tags: @entity.tags }
 = render partial: 'stickies/resource_stickies', locals: { resource: @entity }
 #tabs
   ul.nav

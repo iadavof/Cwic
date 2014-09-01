@@ -24,7 +24,7 @@
         = f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after), min: 0
         .suffix
           = t('.minutes')
-    .content-columns.threecol.clearfix
+    .content-columns.clearfix data-column-count="3"
       .content-column
         .content-block
           h2

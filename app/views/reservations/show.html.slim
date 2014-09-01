@@ -1,7 +1,5 @@
 - content_for :page_title do
   = show_title(@reservation)
-- content_for :top_content do
-  = render partial: 'tags/show', locals: { tags: @reservation.tags }
 - content_for :local_menu_navigation do
   = button_link_to_index([@organisation, Reservation])
   = button_link_to_edit([@organisation, @reservation])
@@ -9,6 +7,7 @@
 - content_for :local_menu_context do
   = render partial: 'reservations/status_controls', locals: { reservation: @reservation }
 
+= render partial: 'tags/show', locals: { tags: @reservation.tags }
 = render partial: 'stickies/resource_stickies', locals: { resource: @reservation }
 #tabs
   ul.nav
@@ -23,7 +22,7 @@
         = t('.logs')
   .tab-wrap
     #general
-      .content-columns.twocol.clearfix
+      .content-columns.clearfix data-column-count="2"
         .content-column
           .content-block
             dl
