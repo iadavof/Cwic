@@ -5,8 +5,8 @@
     span.position data-field="position"
       = f.object.position
     .actions
-      = link_to '', 'javascript:void(0)', class: 'icon icon-edit action-button', title: t('edit_nested_object', class: OrganisationClientContact.model_name.human)
-      = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: OrganisationClientContact.model_name.human)
+      = link_to '', 'javascript:void(0)', class: 'icon icon-edit action-button', title: t('edit_nested_object', model: OrganisationClientContact.model_name.human)
+      = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: OrganisationClientContact.model_name.human)
   .form.clearfix
     .field
       = f.label :first_name
@@ -55,5 +55,5 @@
       = f.text_area :note
     .actions
       = link_to '', 'javascript:void(0)', class: 'icon icon-ok action-button', title: t('done_nested_object')
-      = link_to '', 'javascript:void(0)', class: 'icon icon-remove action-button remove-nested-fields-extra', title: t('remove_nested_object', class: OrganisationClientContact.model_name.human)
+      = link_to '', 'javascript:void(0)', class: 'icon icon-remove action-button remove-nested-fields-extra', title: t('remove_nested_object', model: OrganisationClientContact.model_name.human)
 

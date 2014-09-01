@@ -1,0 +1,11 @@
+h2
+  i.icon-value-coins
+  = t('organisation_clients.sections.payment_details')
+
+dl
+  dt = OrganisationClient.human_attribute_name(:tax_number)
+  dd = @organisation_client.tax_number
+  dt = OrganisationClient.human_attribute_name(:iban)
+  dd = @organisation_client.iban
+  dt = OrganisationClient.human_attribute_name(:iban_att)
+  dd = @organisation_client.iban_att

@@ -170,7 +170,6 @@ nl:
         id: 'Klantnummer'
         name: 'Naam'
         address: 'Adres'
-        municipality: 'Gemeente'
         first_name: 'Voornaam'
         last_name: 'Achternaam'
         email: 'E-mail'
@@ -625,22 +624,16 @@ nl:
       intro: 'Het systeem kent de gebruiker met het e-mailadres ''%{email}'' niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
 
   organisation_clients:
+    sections:
+      contact: 'Contactgegevens'
+      payment_details: 'Betalingsgegevens'
     show:
-      general: 'Algemeen'
-      contact: 'Contact'
-      contacts: 'Contactpersonen'
-      payment_details: 'Betalingsgegevens'
-      municipality: 'Gemeente'
-      upcomming_reservations: 'Aankomende reserv.'
-      no_upcomming_reservations: 'Geen aankomende reserveringen'
+      upcoming_reservations: 'Aankomende reserv.'
       past_reservations: 'Eerdere reserv.'
-      no_past_reservations: 'Geen eerdere reserveringen'
+    show_reservations:
+      upcoming_reservations: 'Aankomende reserveringen'
+      past_reservations: 'Eerdere reserveringen'
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
-    form:
-      general: 'Algemeen'
-      contact: 'Contact'
-      contacts: 'Contactpersonen'
-      payment_details: 'Betalingsgegevens'
     contact_form_fields:
       search_address: 'Adres zoeken...'
       edit_address: 'Adres bewerken'

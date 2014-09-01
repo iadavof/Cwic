@@ -1,0 +1,8 @@
+h2 = t(".#{type}_reservations")
+
+- if @organisation_client.send("#{type}_reservations", 15).empty?
+  p = t('.empty', default: :empty_objects, models: Reservation.model_name.human(count: 2).lcfirst)
+- else
+  = render 'reservations/table', reservations: @organisation_client.send("#{type}_reservations", 15).includes(:reservation_status, :organisation_client, :entity)
+
+= link_to(t('.all_reservations_of_client', client: @organisation_client.instance_name), organisation_organisation_client_reservations_path(@organisation, @organisation_client))
