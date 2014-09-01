@@ -10,13 +10,13 @@ class EntityType < ActiveRecord::Base
   has_many :entities, dependent: :destroy
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type
   has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
-  has_many :entity_images, as: :entity_imageable, dependent: :destroy, inverse_of: :entity_imageable
+  has_many :images, class_name: 'EntityImage', as: :imageable, dependent: :destroy, inverse_of: :imageable
   has_many :reservation_statuses, dependent: :destroy, inverse_of: :entity_type
   has_many :info_screen_entity_types, dependent: :destroy
   has_many :reserve_periods, dependent: :destroy, inverse_of: :entity_type
 
   # Validations
-  validates :name, presence: true, length: { maximum: 255 }, uniqueness: true
+  validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :organisation }
   validates :reservation_statuses, presence: true
   validates :slack_before, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :slack_after, presence: true, numericality: { greater_than_or_equal_to: 0 }
@@ -31,7 +31,7 @@ class EntityType < ActiveRecord::Base
   # Nested attributes
   accepts_nested_attributes_for :properties, allow_destroy: true
   accepts_nested_attributes_for :options, allow_destroy: true
-  accepts_nested_attributes_for :entity_images, allow_destroy: true, reject_if: :all_blank
+  accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :reservation_statuses, allow_destroy: true
   accepts_nested_attributes_for :reserve_periods, allow_destroy: true
 

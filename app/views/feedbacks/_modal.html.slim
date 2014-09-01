@@ -1,39 +1,9 @@
 #feedback-templates style="display: none;"
   #feedbackTextTemplate.feedback-text
-    h2#open-feedback
-      i.icon-comment
-      = t('.open_feedback')
-    p#feedback-intro
-      = t('.feedback_intro')
-    textarea#feedback-message
-    button#next-feedback.feedback-button
-      = t('.next')
+    = render 'feedbacks/modal_text'
+
   #feedbackReviewTemplate.feedback-review
-    h2#review-feedback
-      i.icon-preview
-      = t('.review_feedback')
-    .feedback-screenshot-wrapper
-      img#screenshot_preview[src="" alt="screenshot"]
-    .feedback-tech-info
-      h3
-        = t('.technical_info')
-      p#tech-info-summary
-    p#feedback-message-summary
-      a#edit_feedback_button.icon.icon-edit.action-button title=t('.edit_feedback') href="#"
-    button#send-feedback.feedback-button.green
-      = t('.send')
+    = render 'feedbacks/modal_review'
+
   #feedbackStatusTemplate.feedback-status
-    p#creating_screenshot
-      =t('.creating_screenshot')
-    h2#feedback-success
-      i.icon-ok.green
-      = t('.feedback_success')
-    h2#feedback-error
-      i.icon-remove.red
-      = t('.feedback_error')
-    p#feedback-success-explain
-      = t('.feedback_success_explain')
-    p#feedback-error-explain
-      = t('.feedback_error_explain')
-    button#close-feedback.feedback-button
-      = t('.close')
+    = render 'feedbacks/modal_status'

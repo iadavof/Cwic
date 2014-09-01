@@ -5,6 +5,7 @@
   .control-container.clearfix
     button.new-sticky
       = t('.add_note')
+
   .notes
 
   script#note-template type="text/template"
@@ -18,5 +19,5 @@
         textarea
       a.save-button.icon.icon-ok.action-button
       p.saved_notification
-        =t('.saved')
+        = t('.saved')
       img.ajax-wait src="/assets/ajax_wait.gif"

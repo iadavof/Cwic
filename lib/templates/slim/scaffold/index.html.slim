@@ -5,7 +5,8 @@
   = button_link_to_new(<%= class_name %>)
 
 - if @<%= plural_table_name %>.empty?
-  p = t('.empty', default: :empty_objects, classes: <%= class_name %>.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: <%= class_name %>.model_name.human(count: 2).lcfirst)
+
 - else
   table
     thead

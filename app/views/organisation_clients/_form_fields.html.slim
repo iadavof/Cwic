@@ -19,34 +19,34 @@
       = f.label :mobile_phone
       = f.text_field :mobile_phone
     .field
-      label.required for="addresspicker"
-        =t('.address')
-      input type="text" id="addresspicker" placeholder=t('.search_address')
+      = label_tag(:addresspicker, OrganisationClient.human_attribute_name(:address))
+      = text_field_tag(:addresspicker, nil, placeholder: t('.search_address'))
     .auto-address-fields
-      a#edit-auto-address-fields.icon.icon-edit.action-button href="javascript:void(0)" title=t('.edit_address')
+      = link_to('', 'javascript:;', id: 'edit-auto-address-fields', class: 'icon icon-edit action-button', title: t('.edit_address'))
       .field
         = f.label :route
-        = f.text_field :route, readonly: true, class: "addresspicker-route"
+        = f.text_field :route, readonly: true, class: 'addresspicker-route'
       .field
         = f.label :street_number
-        = f.text_field :street_number, readonly: true, class: "addresspicker-street-number"
+        = f.text_field :street_number, readonly: true, class: 'addresspicker-street-number'
       .field
         = f.label :locality
-        = f.text_field :locality, readonly: true, class: "addresspicker-locality"
+        = f.text_field :locality, readonly: true, class: 'addresspicker-locality'
       .field
         = f.label :administrative_area_level_2
-        = f.text_field :administrative_area_level_2, readonly: true, class: "addresspicker-administrative-area-level-2"
+        = f.text_field :administrative_area_level_2, readonly: true, class: 'addresspicker-administrative-area-level-2'
       .field
         = f.label :administrative_area_level_1
-        = f.text_field :administrative_area_level_1, readonly: true, class: "addresspicker-administrative-area-level-1"
+        = f.text_field :administrative_area_level_1, readonly: true, class: 'addresspicker-administrative-area-level-1'
       .field
         = f.label :postal_code
-        = f.text_field :postal_code, readonly: true, class: "addresspicker-postal-code"
+        = f.text_field :postal_code, readonly: true, class: 'addresspicker-postal-code'
       .field
         = f.label :country
-        = f.text_field :country, readonly: true, class: "addresspicker-country"
-    = f.hidden_field :address_type, class: "addresspicker-address-type"
-    = f.hidden_field :lng, class: "addresspicker-lng"
-    = f.hidden_field :lat, class: "addresspicker-lat"
+        = f.text_field :country, readonly: true, class: 'addresspicker-country'
+      = f.hidden_field :address_type, class: 'addresspicker-address-type'
+      = f.hidden_field :lng, class: 'addresspicker-lng'
+      = f.hidden_field :lat, class: 'addresspicker-lat'
+
   #addresspicker-map.address-map
-    img.ajax-wait
+      img.ajax-wait

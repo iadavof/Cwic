@@ -1,6 +1,6 @@
 class EntityImage < ActiveRecord::Base
   # Associations
-  belongs_to :entity_imageable, polymorphic: true
+  belongs_to :imageable, polymorphic: true
   belongs_to :organisation
 
   # Attribute modifiers
@@ -8,8 +8,8 @@ class EntityImage < ActiveRecord::Base
 
   # Validations
   validates :title, length: { maximum: 255 }
-  validates :entity_imageable, presence: true
-  validates :entity_imageable_type, presence: true, length: { maximum: 255 }
+  validates :imageable, presence: true
+  validates :imageable_type, presence: true, length: { maximum: 255 }
   validates :organisation, presence: true
   validates :image, presence: true
 
@@ -22,6 +22,6 @@ class EntityImage < ActiveRecord::Base
 
 private
   def set_organisation
-    self.organisation = self.entity_imageable.organisation
+    self.organisation = self.imageable.organisation
   end
 end

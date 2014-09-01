@@ -1,0 +1,13 @@
+h2
+  i.icon-settingsthree-gears
+  = t('.settings')
+
+.field
+  = f.label :description
+  .field-with-example-wrapper
+    = f.text_field :description
+    p = "#{t('for_example')} : #{t('.reservation_description_example')}"
+
+- if @reservation.new_record?
+  = f.fields_for :reservation_recurrence_definition, @reservation.reservation_recurrence_definition, wrapper: false do |rrdf|
+    = render 'reservation_recurrence_definitions/form_fields', f: rrdf

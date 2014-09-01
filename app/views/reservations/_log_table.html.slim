@@ -1,16 +1,15 @@
-table.multiple-edit
+table.user-log
   thead
     tr
       = table_head(ReservationLog, :user)
       = table_head(ReservationLog, :created_at)
+
   tbody
     - logs.each do |log|
       tr
         - if log.user.present?
-          td
-            = log.user.instance_name
+          td = log.user.instance_name
         - else
-          td style="color: red;"
-            = log.old_user_name.present? ? log.old_user_name : ''
+          td.old-user = log.old_user_name
         td
           = l(log.created_at, format: :long)

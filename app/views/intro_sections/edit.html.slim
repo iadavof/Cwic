@@ -1,5 +1,8 @@
 - content_for :page_title do
   = edit_title(@intro_section)
+
+- content_for :local_menu_navigation do
+  = button_link_to_show(@intro_section)
+  = button_link_to_index(IntroSection)
+
 = render 'form'
-= button_link_to_show(@intro_section)
-= button_link_to_index(IntroSection)

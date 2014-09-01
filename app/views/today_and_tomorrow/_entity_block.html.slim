@@ -1,10 +1,12 @@
 div.entity-container id="entity_#{entity.id}"
   p.entity-name style="color: #{entity.text_color}; background-color: #{entity.color};" title=t('.click_for_description')
-    = entity.name
+    = entity.instance_name
+
   .entity-description
     p
       - if entity.description?
         = entity.description
       - else
         = t('.no_description')
+
   .updated-info

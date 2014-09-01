@@ -79,9 +79,9 @@ private
     when 'Reservation'
       [:reservation_status, :entity, :organisation_client]
     when 'Entity'
-      [:entity_type, :entity_images]
+      [:entity_type, :images]
     when 'EntityType'
-      [:entity_images]
+      [:images]
     end
   end
 end

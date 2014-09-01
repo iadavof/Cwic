@@ -1,5 +1,5 @@
 div#entity-type-form {
-  div.field.field-icon-select label {
+  div.field-icon-select label {
     float: left;
     border: 2px solid #ccc;
     display: block;
@@ -18,11 +18,11 @@ div#entity-type-form {
     cursor: pointer;
   }
 
-  div.field.field-icon-select label.active {
+  div.field-icon-select label.active {
       border: 2px solid #1c9cb2;
   }
 
-  div.field.field-icon-select input[type="radio"] {
+  div.field-icon-select input[type="radio"] {
     float: left;
     width: 40px;
     height: 40px;

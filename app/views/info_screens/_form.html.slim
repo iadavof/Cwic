@@ -1,11 +1,11 @@
 = form_for([@organisation, @info_screen]) do |f|
   = render 'shared/error_messages', target: @info_screen
+
   .field
     = f.label :name
     .field-with-example-wrapper
       = f.text_field :name
-      p
-        = t('for_example') + ': ' + t('.info_screen_name_example')
+      p = t('for_example') + ': ' + t('.info_screen_name_example')
   .field
     = f.label :public
     = f.check_box :public
@@ -21,13 +21,14 @@
   .field
     = f.label :direction_char_visible
     = f.check_box :direction_char_visible, id: 'direction_char_visible'
-  h2
-    = t('.selected_entity_types')
+
+  h2 = t('.selected_entity_types')
   .info-screen-entity-types
     - if @info_screen.info_screen_entity_types.present?
       = f.fields_for :info_screen_entity_types, @info_screen.info_screen_entity_types do |etf|
-        = render partial: 'info_screen_entity_type_fields', locals: { f: etf }
+        = render 'info_screen_entity_type_fields', f: etf
     - else
-      = t('.no_info_screen_entity_type')
+      p = t('empty_objects_add_first_html', { models: EntityType.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, EntityType]) })
+
   .actions
     = f.submit

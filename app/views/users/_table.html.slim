@@ -1,0 +1,32 @@
+= paginate @users
+
+table
+  thead
+    tr
+      th
+        | #
+      = sortable_table_head(User, :first_name)
+      = table_head(User, :infix)
+      = sortable_table_head(User, :last_name)
+      = sortable_table_head(User, :email)
+      = sortable_table_head(User, :sign_in_count)
+      = sortable_table_head(User, :created_at)
+      = sortable_table_head(User, :last_sign_in_at)
+      th
+
+  tbody
+    - @users.each do |user|
+      tr
+        td = name_link_to_show(user, {name: user.id.to_s})
+        td = user.first_name
+        td = user.infix
+        td = user.last_name
+        td = user.email
+        td = user.sign_in_count
+        td =l(user.created_at, format: :long)
+        td =l(user.last_sign_in_at, format: :long) if user.last_sign_in_at.present?
+        td.icons
+          = icon_link_to_edit(user)
+          = icon_link_to_destroy(user)
+
+  = paginate @users

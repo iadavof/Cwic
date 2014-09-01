@@ -1,0 +1,19 @@
+.field.slack-field.slack-field-begin
+  = f.label :slack_before
+  = format_help(t('.slack_times_help'), :inline)
+  = f.number_field :slack_before, placeholder: @reservation.entity.try(:get_slack_before), min: 0
+  .suffix = t('minutes').lcfirst
+.field.field-begins-at
+  = f.label :begins_at
+  = f.text_field :begins_at_date, id: 'begins_at_date', class: 'datepicker-field'
+  = f.text_field :begins_at_tod, id: 'begins_at_tod', class: 'timepicker-field'
+i.icon-arrow-right.until-icon
+.field.field-ends-at
+  = f.label :ends_at
+  = f.text_field :ends_at_date, id: 'ends_at_date', class: 'datepicker-field'
+  = f.text_field :ends_at_tod, id: 'ends_at_tod', class: 'timepicker-field'
+.field.slack-field.slack-field-end
+  = f.label :slack_after
+  = format_help(t('.slack_times_help'), :inline)
+  = f.number_field :slack_after, placeholder: @reservation.entity.try(:get_slack_after), min: 0
+  .suffix = t('minutes').lcfirst

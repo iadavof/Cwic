@@ -1,0 +1,5 @@
+- unless tags.empty?
+  .tag-list.clearfix
+    .tag-list-label = t('.tags')
+
+    = render partial: 'tags/tag', collection: tags

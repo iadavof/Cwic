@@ -1,41 +1,16 @@
 - content_for :page_title do
   = index_title(Document)
+
 - content_for :local_menu_page do
   = render 'layouts/mini_search', current_search_type: Document.model_name
 
 - if @documents.empty? && params[:mini_search].present?
   p
-    = t('empty_for_search', classes: Document.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
+    = t('empty_for_search', models: Document.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
     = link_to(t('remove_search'), organisation_documents_path(@organisation))
+
 - elsif @documents.empty?
-  p
-    = t('.empty', default: :empty_objects, classes: Document.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: Document.model_name.human(count: 2).lcfirst)
+
 - else
-  = paginate @documents
-  table
-    thead
-      tr
-        = sortable_table_head(Document, :document_filename)
-        = sortable_table_head(Document, :document_size)
-        = sortable_table_head(Document, [:user, :first_name])
-        = table_head(Document, :documentable)
-        = sortable_table_head(Document, :created_at)
-        th
-    tbody
-      - @documents.each do |document|
-        tr
-          td
-            = name_link_to_show([@organisation, document], target: :_blank)
-          td
-            = number_to_human_size(document.document_size)
-          td
-            = document.user.instance_name
-          td
-            = document.documentable.class.model_name.human(count: 1)
-            ' :
-            = name_link_to_show([@organisation, document.documentable])
-          td
-            = l(document.created_at, format: :long)
-          td.icons
-            = icon_link_to_destroy([@organisation, document])
-  = paginate @documents
+  = render 'table'

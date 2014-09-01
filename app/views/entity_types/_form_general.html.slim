@@ -1,0 +1,30 @@
+h2 = t('general')
+
+.field
+  = f.label :name
+  .field-with-example-wrapper
+    = f.text_field :name
+    p = t('for_example') + ': ' + t('.entity_type_name_example')
+.field
+  = f.label :description
+  = f.text_area :description
+.field
+  = f.label :icon
+  .field-icon-select.clearfix
+    - EntityTypeIcon.where('organisation_id = ? OR organisation_id IS NULL', @organisation).each do |eti|
+      = f.radio_button :icon_id, eti.id, class: 'nocwic'
+      = f.label "icon_id_#{eti.id}", eti.name, { style: "background-image: url('#{eti.image.icon.url}');", class: (eti.id == @entity_type.icon.id) ? 'active' : ''}
+  div
+    = link_to(t('.objecticoon toevoegen'), new_organisation_entity_type_icon_path(@organisation))
+
+h2 = t('.default_slack_times')
+= format_help(t('.default_slack_times_help'))
+
+.field
+  = f.label :slack_before
+  = f.number_field :slack_before, min: 0
+  span.field-suffix = t('minutes').lcfirst
+.field
+  = f.label :slack_after
+  = f.number_field :slack_after, min: 0
+  span.field-suffix = t('minutes').lcfirst

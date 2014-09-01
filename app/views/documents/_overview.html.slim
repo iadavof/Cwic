@@ -1,5 +1,5 @@
 - if documents.empty?
-  = content_tag(:p, t('.no_documents'))
+  p = t('.empty', default: :empty_objects, models: Document.model_name.human(count: 2).lcfirst)
+
 - else
-  - documents.each do |doc|
-    = render partial: 'documents/document_tile', locals: { doc: doc }
+  = render documents

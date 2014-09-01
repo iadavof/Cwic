@@ -1,5 +1,6 @@
 - content_for :page_title do
   = show_title(@entity_type_icon)
+
 - content_for :local_menu_navigation do
   = button_link_to_index(@organisation.present? ? [@organisation, EntityTypeIcon] : EntityTypeIcon)
   = button_link_to_edit(@organisation.present? ? [@organisation, @entity_type_icon] : @entity_type_icon)
@@ -7,12 +8,9 @@
 
 .entity-type-icon-image
   = image_tag(@entity_type_icon.image.medium_icon.url)
+
 dl
-  dt
-    = EntityTypeIcon.human_attribute_name(:name)
-  dd
-    = @entity_type_icon.name
-  dt
-    = EntityTypeIcon.human_attribute_name(:organisation)
-  dd
-    = @entity_type_icon.organisation ? @entity_type_icon.organisation.name : t('all_organisations')
+  dt = EntityTypeIcon.human_attribute_name(:name)
+  dd = @entity_type_icon.name
+  dt = EntityTypeIcon.human_attribute_name(:organisation)
+  dd = @entity_type_icon.organisation ? @entity_type_icon.organisation.name : t('all_organisations')

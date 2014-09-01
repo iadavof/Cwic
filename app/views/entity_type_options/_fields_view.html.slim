@@ -1,0 +1,21 @@
+.horizontal-block.icon.icon-resize-vertical.sort-handle title=t('order_nested_objects', models: EntityTypeOption.model_name.human(count: 2).lcfirst)
+
+.field.horizontal-block.name
+  .label = EntityTypeOption.human_attribute_name(:name)
+  .value data-field="name" = format_text(f.object.name)
+
+.field.horizontal-block.description
+  .label = EntityTypeOption.human_attribute_name(:description)
+  .ellipsis
+    .value data-field="description" = format_text(f.object.description)
+
+.horizontal-block.extra
+  dl
+    dt = EntityTypeOption.human_attribute_name(:amount_relevant)
+    dd data-field="amount-relevant" = format_bool(f.object.amount_relevant)
+    dt = EntityTypeOption.human_attribute_name(:default_price)
+    dd data-field="default-price" = format_text(f.object.default_price)
+
+.actions
+  = link_to '', 'javascript:void(0)', class: 'icon icon-edit action-button', title: t('edit_nested_object', model: EntityTypeOption.model_name.human)
+  = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: EntityTypeOption.model_name.human), data: { confirm: t('are_you_sure') }

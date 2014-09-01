@@ -34,4 +34,9 @@ module ReservationsHelper
       end
     end
   end
+
+  def name_link_with_description(reservation)
+    description = ": #{reservation.description}" if reservation.description.present?
+    "#{name_link_to_show([@organisation, reservation])}#{description}".html_safe
+  end
 end

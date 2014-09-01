@@ -1,38 +1,11 @@
 - content_for :page_title do
   = index_title(InfoScreen)
+
 - content_for :local_menu_navigation do
   = button_link_to_new([@organisation, InfoScreen])
+
 - if @info_screens.empty?
-  p
-    = t('.empty', default: :empty_objects, classes: InfoScreen.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: InfoScreen.model_name.human(count: 2).lcfirst)
+
 - else
-  = paginate @info_screens
-  table
-    thead
-      tr
-        = sortable_table_head(InfoScreen, :name)
-        = table_head(InfoScreen, :publc)
-        = table_head(InfoScreen, :show_reservation_number)
-        = table_head(InfoScreen, :active_entities)
-        = table_head(InfoScreen, :clock_header)
-        = table_head(InfoScreen, :direction_char_visible)
-        th
-    tbody
-      - @info_screens.each do |info_screen|
-        tr
-          td
-            = name_link_to_show([@organisation, info_screen], target: :blank)
-          td
-            = format_bool(info_screen.public)
-          td
-            = format_bool(info_screen.show_reservation_number)
-          td
-            = info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active.map(&:instance_name).join(', ')
-          td
-            = format_bool(info_screen.clock_header)
-          td
-            = format_bool(info_screen.direction_char_visible)
-          td.icons
-            = icon_link_to_edit([@organisation, info_screen])
-            = icon_link_to_destroy([@organisation, info_screen])
-  = paginate @info_screens
+  = render 'table'

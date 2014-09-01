@@ -1,6 +1,17 @@
 - content_for :page_title do
   = new_title(Entity)
+
 - content_for :local_menu_navigation do
   = button_link_to_index([@organisation, Entity])
 
-= render 'form'
+- if @organisation.entity_types.empty? # There are no EntityTypes to select from: show error
+  p = t('empty_objects_add_first_html', { models: EntityType.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, EntityType]) })
+
+- elsif @entity.entity_type.blank? # No EntityType selected yet: show EntityType selection form
+ = nested_form_for([@organisation, @entity]) do |f|
+  .field.autosubmit
+    = f.label :entity_type
+    = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
+
+- else # EntityType selected: render normal form
+  = render 'form'

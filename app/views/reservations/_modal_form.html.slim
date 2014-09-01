@@ -20,8 +20,8 @@
     = f.label :organisation_client
     = f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) }
     div style="text-align: right;"
-      a#new_organisation_client_link href=""
-        = t('.new_organisation_client')
+      = link_to(t('.new_organisation_client'), '', id: 'new_organisation_client_link')
+
   .actions
     = f.submit
     = f.submit t('.full_form'), name: "full", style: "float: right;", class: "blue"

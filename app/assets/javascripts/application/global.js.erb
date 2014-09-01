@@ -48,6 +48,9 @@ APP.init = function() {
   // Add select2 in tagging mode to taggling list text field
   this.global.loadTaggingSelect2Box();
 
+  // Initialize Images containers
+  $('div.images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery: { enabled: true } });
+
   // Auto submit limiting fields
   $('#limiting select').on('change', function() { this.form.submit(); });
 

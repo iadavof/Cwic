@@ -171,12 +171,12 @@ dl {
     width: 100%;
     min-width: 400px;
     float: left;
-    
+
     .content-block {
       border: 1px solid #ccc;
       padding: 30px;
       margin-bottom: 20px;
-      
+
       h1, h2, h3, h4, h5, h6 {
         &:first-child {
           margin-top: 0;
@@ -210,7 +210,7 @@ dl {
   animation: animate-stripes-30 1.5s linear 0s infinite normal;
 }
 
-div.entity-images-container {
+div.images-container {
   a {
     position: relative;
     float: left;

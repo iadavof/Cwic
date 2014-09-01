@@ -1,0 +1,20 @@
+h4 = t(".#{type}_reservations")
+
+- if result.send("#{type}_reservations", 3).empty?
+  p = t('.empty', default: :empty_objects, models: Reservation.model_name.human(count: 2).lcfirst)
+
+- else
+  dl
+    - result.send("#{type}_reservations", 3).includes(:entity).each do |reservation|
+      - if type == :upcoming
+        dt title=l(reservation.begins_at, format: :long)
+          => reservation.begins_at <= Time.now ? t('now') : t('.in_about')
+          = distance_of_time_in_words_to_now(reservation.begins_at)
+      - else
+        dt title=l(reservation.ends_at, format: :long)
+          => time_ago_in_words(reservation.ends_at)
+          = t('.ago')
+      dd
+        => name_link_to_show([@organisation, reservation.entity], name: reservation.entity.full_instance_name)
+        ' -
+        = name_link_with_description(reservation)

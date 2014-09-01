@@ -1,21 +1,21 @@
 = nested_form_for([@organisation, @organisation_client]) do |f|
-  = render partial: 'tags/form', locals: { f: f }
+  = render 'tags/form', f: f
   = render 'shared/error_messages', target: @organisation_client
+
   #tabs
     ul.nav
       li
         a.current href="#general"
-          = t('.general')
+          = t('general')
       li
         a href="#documents"
           = Document.model_name.human(count: 2)
+
     .tab-wrap
       #general
-        = render 'form_fields', f: f
+        = render 'form_general', f: f
       #documents
-        #documents-container.nested-form.clearfix
-          = f.fields_for :documents, wrapper: false do |df|
-            = render partial: 'documents/document_fields', locals: { f: df }
-        = f.link_to_add '', :documents, data: { target: '#documents-container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: Document.model_name.human.lcfirst)
+        = render 'form_documents',f: f
+
   .actions
     = f.submit

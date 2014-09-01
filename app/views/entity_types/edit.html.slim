@@ -1,6 +1,8 @@
 - content_for :page_title do
   = edit_title(@entity_type)
+
 - content_for :local_menu_navigation do
   = button_link_to_show([@organisation, @entity_type])
   = button_link_to_index([@organisation, EntityType])
+
 = render 'form'

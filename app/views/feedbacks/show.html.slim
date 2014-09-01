@@ -1,25 +1,18 @@
 - content_for :page_title do
   = show_title(@feedback)
+
+- content_for :local_menu_navigation do
+  = button_link_to_index(Feedback)
+  = button_link_to_destroy(@feedback)
+
 dl
-  dt
-    = Feedback.human_attribute_name(:user)
-  dd
-    = name_link_to_show(@feedback.user) if @feedback.user.present?
-  dt
-    = Feedback.human_attribute_name(:organisation)
-  dd
-    = name_link_to_show(@feedback.organisation) if @feedback.organisation.present?
-  dt
-    = Feedback.human_attribute_name(:message)
-  dd
-    = @feedback.message
-  dt
-    = Feedback.human_attribute_name(:specs)
-  dd
-    = @feedback.specs
-  dt
-    = Feedback.human_attribute_name(:screen_capture)
-  dd
-    = link_to(image_tag(@feedback.screen_capture.url, {style: "max-width: 500px; max-height: 500px;"}), @feedback.screen_capture.url)
-= button_link_to_index(Feedback)
-= button_link_to_destroy(@feedback)
+  dt = Feedback.human_attribute_name(:user)
+  dd = name_link_to_show(@feedback.user) if @feedback.user.present?
+  dt = Feedback.human_attribute_name(:organisation)
+  dd = name_link_to_show(@feedback.organisation) if @feedback.organisation.present?
+  dt = Feedback.human_attribute_name(:message)
+  dd = @feedback.message
+  dt = Feedback.human_attribute_name(:specs)
+  dd = @feedback.specs
+  dt = Feedback.human_attribute_name(:screen_capture)
+  dd = link_to(image_tag(@feedback.screen_capture.url, {style: "max-width: 500px; max-height: 500px;"}), @feedback.screen_capture.url)

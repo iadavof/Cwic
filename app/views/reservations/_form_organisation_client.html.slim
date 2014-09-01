@@ -1,0 +1,27 @@
+h2
+  i.icon-user
+  = OrganisationClient.model_name.human(count: 1)
+
+- if @reservation.new_record?
+  .organisation_client_new_existing
+    .field
+      label for="organisation_client_type"
+        = t('.organisation_client_type')
+      fieldset.inline-fieldset
+        = radio_button_tag :organisation_client_type, :existing, @focus != 'new_client'
+        = label_tag :organisation_client_type_existing, t('.existing_organisation_client')
+        = radio_button_tag :organisation_client_type, :new, @focus == 'new_client'
+        = label_tag :organisation_client_type_new, t('.new_organisation_client')
+
+  .existing_organisation_client style=("display: none;" if @focus == 'new_client')
+    .field
+      = f.label :organisation_client
+      = f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select'
+  .new_organisation_client style=("display: none;" if @focus != 'new_client')
+    = f.fields_for :organisation_client, @reservation.organisation_client, wrapper: false do |ocf|
+      = render 'organisation_clients/form_fields', f: ocf
+
+- else
+  .field
+    = f.label :organisation_client
+    = f.hidden_field :organisation_client_id, class: 'select2 organisation_client_select', data: {:'prev-selected' => f.object.try(:organisation_client).try(:instance_name) }

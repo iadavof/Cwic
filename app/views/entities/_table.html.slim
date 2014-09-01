@@ -1,0 +1,27 @@
+= paginate @entities
+
+table
+  thead
+    tr
+      th style="padding: 5px;"
+      = sortable_table_head(Entity, :name)
+      = table_head(Entity, :entity_type)
+      = sortable_table_head(Entity, :description)
+      = table_head(Entity, :slack_before)
+      = table_head(Entity, :slack_after)
+      th
+
+  tbody
+    - @entities.each do |entity|
+      tr
+        td style="padding: 5px; background-color: #{entity.color};"
+        td = name_link_to_show([@organisation, entity])
+        td = name_link_to_show([@organisation, entity.entity_type], title: format_description_title(entity.entity_type))
+        td = format_description(entity.description)
+        td = "#{entity.get_slack_before} #{t('minutes_abbr').lcfirst}"
+        td = "#{entity.get_slack_after} #{t('minutes_abbr').lcfirst}"
+        td.icons
+          = icon_link_to_edit([@organisation, entity])
+          = icon_link_to_destroy([@organisation, entity])
+
+= paginate @entities

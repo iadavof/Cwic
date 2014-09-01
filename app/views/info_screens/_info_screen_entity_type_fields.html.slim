@@ -1,20 +1,22 @@
 .info-screen-entity-type.fields data-collapse=''
   h3.collapse
     span class=("active-sign " + (f.object.active? ? 'active' : ''))
-    = f.object.entity_type.name.pl
+    = f.object.entity_type.instance_name.pl
+
   .content
     .field
       = f.label :active
       = f.check_box :active, class: 'info-screen-entity-type-active'
-    = f.hidden_field :entity_type_id
     .field
       = f.label :add_new_entities
       = f.check_box :add_new_entities
-    h3
-      = t('.selected_entities')
+
+    h3 = t('.selected_entities')
     .info-screen-entities
       - if f.object.info_screen_entities.present?
         = f.fields_for :info_screen_entities, wrapper: false do |ef|
-          = render partial: 'info_screen_entity_fields', locals: { f: ef }
+          = render 'info_screen_entity_fields', f: ef
       - else
-        = t('.no_info_screen_entities')
+        p = t('empty_objects_add_first_html', { models: Entity.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, Entity]) })
+
+  = f.hidden_field :entity_type_id

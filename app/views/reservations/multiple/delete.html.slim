@@ -1,14 +1,18 @@
 - content_for :page_title do
   = t('multiple.delete')
+
 = form_tag organisation_reservations_multiple_path(@organisation) do
   = t('.are_you_sure_you_want_delete')
   ul
     - @reservations.each do |r|
       li
         = r.one_line_summary
-  a.button href=@return_url
-    = t('no')
-  = submit_tag t('yes'), name: 'delete'
+
   - @reservations.each do |r|
     = hidden_field_tag "reservation_ids[]", r.id
+
   = hidden_field_tag 'confirm', 'confirm'
+
+  = link_to(t('no'), @return_url, class: 'button')
+
+  = submit_tag t('yes'), name: 'delete'

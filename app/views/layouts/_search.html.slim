@@ -1,6 +1,6 @@
 = content_tag(:div, id: 'search-bar', class: (controller_name == 'search' ? 'open' : nil)) do
   .inner
     = form_tag(organisation_search_global_search_path(current_organisation), method: :get) do
-      = text_field_tag(:global_search, params[:global_search], placeholder: t('.search_placeholder'))
-      =< select_tag(:global_search_type, options_for_select(SearchController::SEARCHABLE.map { |option| [option.model_name.human, option.to_s] }, params[:global_search_type]), prompt: t('.search_all'))
+      => text_field_tag(:global_search, params[:global_search], placeholder: t('.search_placeholder'))
+      = select_tag(:global_search_type, options_for_select(SearchController::SEARCHABLE.map { |option| [option.model_name.human, option.to_s] }, params[:global_search_type]), prompt: t('.search_all'))
       = submit_tag(t('.search'))

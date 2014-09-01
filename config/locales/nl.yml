@@ -5,32 +5,29 @@ nl:
   edit: 'Bewerken'
   destroy: 'Verwijderen'
   update: 'Updaten'
-  index_objects_html: 'Lijst met <strong>%{classes}</strong>'
-  index_objects_html_of: 'Lijst met <strong>%{classes}</strong> van <strong>%{instance_name}</strong>'
-  empty_objects: 'Geen %{classes}'
-  empty_for_search: 'Geen %{classes} gevonden voor de zoekopdracht <strong>%{search}</strong>.'
+  index_objects_html: 'Lijst met <strong>%{models}</strong>'
+  index_objects_html_of: 'Lijst met <strong>%{models}</strong> van <strong>%{name}</strong>'
+  empty_objects: 'Geen %{models}'
+  empty_for_search: 'Geen %{models} gevonden voor de zoekopdracht <strong>%{search}</strong>.'
+  empty_objects_add_first_html: 'Om deze optie te kunnen gebruiken moeten er eerst %{models} worden aangemaakt: %{to_new_object_link}.'
   remove_search: 'Zoekopdracht verwijderen'
-  new_object_html: 'Nieuwe <strong>%{class}</strong>'
-  show_object_html: '%{class}: <strong>%{name}</strong>'
-  edit_object_html: 'Bewerk %{class}: <strong>%{name}</strong>'
-  to_index_objects: 'Lijst met %{classes}'
-  to_new_object: '%{class} toevoegen'
+  new_object_html: '<strong>%{model}</strong> toevoegen'
+  show_object_html: '%{model}: <strong>%{name}</strong>'
+  edit_object_html: 'Bewerk %{model}: <strong>%{name}</strong>'
+  to_index_objects: 'Lijst met %{models}'
+  to_new_object: '%{model} toevoegen'
   to_show_object: '%{name} bekijken'
   to_edit_object: 'Bewerken'
   to_destroy_object: 'Verwijderen'
   to_destroy_object_confirm: 'Weet u zeker dat u %{name} wilt verwijderen?'
-  icon_to_new_object: '%{class} aanmaken'
+  icon_to_new_object: '%{model} toevoegen'
   icon_to_edit_object: '%{name} bewerken'
   icon_to_destroy_object: '%{name} verwijderen'
-  to_close_object: 'Sluiten'
-  to_open_object: 'Openen'
-  icon_to_close_object: '%{name} sluiten'
-  icon_to_open_object: '%{name} openen'
-  add_nested_object: '%{class} toevoegen'
-  remove_nested_object: '%{class} verwijderen'
-  order_nested_object: 'Volgorde van %{classes} aanpassen'
-  edit_nested_object: '%{class} bewerken'
+  add_nested_object: '%{model} toevoegen'
+  edit_nested_object: '%{model} bewerken'
   done_nested_object: 'Klaar met bewerken'
+  remove_nested_object: '%{model} verwijderen'
+  order_nested_objects: 'Volgorde van %{models} aanpassen'
   settings: 'Instellingen'
   include_blank_none: 'Geen'
   prompt_choose: 'Kies...'
@@ -50,8 +47,10 @@ nl:
   for_example: 'Bijv.'
   default_title: 'Titel'
   unlimited: 'Onbeperkt'
-  search_for_tag: 'Zoeken naar alle items met de tag "%{tag}"'
-  tags: 'Tags'
+  general: 'Algemeen'
+  minutes: 'Minuten'
+  minutes_abbr: 'Min.'
+
   multiple:
     delete: 'Verwijderen'
     edit: 'Bewerken'
@@ -128,8 +127,8 @@ nl:
         one: 'Object'
         other: 'Objecten'
       info_screen_entity_type:
-        one: 'Objecttype'
-        other: 'Objecttypen'
+        one: 'Objectsoort'
+        other: 'Objectsoorten'
       reservation_status:
         one: 'Reserveringsstatus'
         other: 'Reserveringsstatussen'
@@ -218,23 +217,24 @@ nl:
         description: 'Omschrijving bij optie'
         default_price: 'Standaardprijs bij optie'
       entity:
-        entity_type: 'Objecttype'
+        entity_type: 'Objectsoort'
         name: 'Naam'
         frontend_name: 'Publieke naam'
         description: 'Omschrijving'
         color: 'Kleur'
         slack_before: 'Speling vooraf'
         slack_after: 'Speling achteraf'
+        include_entity_type_images: 'Voeg objectsoort foto''s toe'
       entity_image:
         title: 'Titel'
         image: 'Foto'
-        include_entity_type_images: 'Voeg foto''s van objecttype toe'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Lokale afbeelding'
       entity_type_icon:
         name: 'Naam'
         organisation: 'Organisatie'
-        entity_type_icon_image: 'Icoon'
+        image: 'Afbeelding'
+        remove_image: 'Verwijder afbeelding'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Lokale afbeelding'
       entity/properties:
@@ -252,8 +252,6 @@ nl:
         entity_type: 'Objectsoort'
         description: 'Beschrijving'
         organisation_client: 'Klant'
-        slack_before: 'Speling vooraf'
-        slack_after: 'Speling achteraf'
         cost: 'Kosten'
         reservation_recurrence_definition: 'Herhaling:'
         reservation_status: 'Status'
@@ -284,7 +282,7 @@ nl:
         public: 'Publiek'
         show_reservation_number: 'Reserveringsnr. tonen'
         active_entities: 'Actieve objecten'
-        add_new_entity_types: 'Nieuwe objecttypen toevoegen'
+        add_new_entity_types: 'Nieuwe objectsoorten toevoegen'
         direction_char_visible: 'Toon wegwijzers'
         clock_header: 'Toon klok bovenaan'
       info_screen_entity_type:
@@ -523,6 +521,7 @@ nl:
       feedback: 'Feedback'
       logout: 'Uitloggen'
       organisation: 'Organisatie'
+    user_menu:
       actions: 'Acties'
     submenu:
       home: 'Home'
@@ -577,6 +576,7 @@ nl:
   home:
     index:
       welcome_html: 'Welkom bij <strong>Cwic</strong>'
+      todo_dashboard: 'Hier komt waarschijnlijk ooit een dashboard...'
 
   organisations:
     form_fields:
@@ -585,7 +585,7 @@ nl:
       edit_address: 'Adres bewerken'
 
   organisation_users:
-    index:
+    table:
       status: 'Status'
       active: 'Actief'
       awaiting_invitation_acceptance: 'Wacht op bevestiging'
@@ -595,19 +595,16 @@ nl:
 
   organisation_clients:
     show:
-      general: 'Algemeen'
+      upcoming_reservations: 'Aankomende reserv.'
+      past_reservations: 'Eerdere reserv.'
+    show_general:
       address: 'Adres'
       contact: 'Contact'
-      municipality: 'Gemeente'
-      upcoming_reservations: 'Aankomende reserv.'
-      no_upcoming_reservations: 'Geen aankomende reserveringen'
-      past_reservations: 'Eerdere reserv.'
-      no_past_reservations: 'Geen eerdere reserveringen'
+    show_reservations:
+      upcoming_reservations: 'Aankomende reserveringen'
+      past_reservations: 'Eerdere reserveringen'
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
-    form:
-      general: 'Algemeen'
     form_fields:
-      address: 'Adres'
       search_address: 'Adres zoeken...'
       edit_address: 'Adres bewerken'
 
@@ -619,53 +616,50 @@ nl:
     still_used_destroy_confirm:
       one: 'Objectsoort %{name} wordt nog gebruikt door een object. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
       other: 'Objectsoort %{name} wordt nog gebruikt door %{count} objecten. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
-    form:
-      general: 'Algemeen'
-      default_slack_times: 'Standaard speling voor en na reserveringen van deze objectsoort'
-      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elk object afzonderlijk in te stellen. De standaardwaarden voor speling voor deze objectsoort kunt u hieronder ingeven.'
-      properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
-      options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
-      reserve_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
-      entity_images_help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
+    form_general:
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
+      default_slack_times: 'Standaard speling'
+      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van deze objectsoort. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elk object afzonderlijk in te stellen. De standaardwaarden voor speling voor deze objectsoort kunt u hieronder ingeven.'
+    form_properties:
+      properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
+    form_options:
+      options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
+    form_reservation_statuses:
       reservation_status_help: 'Met reserveringsstatussen kunt u aangeven waar een reservering zich bevindt in het verwerkingsproces. U kunt hier zelf statussen aanmaken die aansluiten bij uw werkwijze en instellen welke consequenties aan individuele statussen moeten worden verbonden (bijvoorbeeld of er nieuwe reserveringen kunnen worden aangemaakt die overlappen met een andere reservering met de status ''geannuleerd'').'
-      minutes: 'minuten'
+    form_reserve_periods:
+      reserve_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
       reservation_length_limitations: 'Duurbeperkingen'
-    property_fields:
-      required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
-      clear: 'Leegmaken'
     reserve_period_fields:
       period: 'Periode'
       per_period: 'per periode'
+
+  entity_type_properties:
+    fields_form:
+      required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
+    property_options_fields:
+      clear: 'Leegmaken'
 
   entity_type_icons:
     form:
       remove_icon: 'Icoon verwijderen'
 
   entities:
-    index:
-      min: 'min.'
-    show:
-      general: 'Algemeen'
-      no_entity_images: "Geen objectfoto's"
-    form:
-      no_entity_types_found_html: 'Er zijn nog een objectsoorten toegevoegd. %{link} om een object van een bepaald objectsoort aan te kunnen maken.'
-      general: 'Algemeen'
-      default_slack_times: 'Standaard speling voor en na reserveringen van dit object'
-      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elke reservering nog afzonderlijk bij te stellen. De standaardwaarden voor speling voor dit object kunt u hieronder ingeven.'
-      entity_images_help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
+    form_general:
       entity_name_example: '4.13B, 9.5, foyer, loft'
-      min: 'Minuten'
+      default_slack_times: 'Standaard speling'
+      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elke reservering nog afzonderlijk bij te stellen. De standaardwaarden voor speling voor dit object kunt u hieronder ingeven.'
+  entity_images:
+    form:
+      help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
 
   reservations:
     show:
-      general: 'Algemeen'
       logs: 'Geschiedenis'
+    show_general:
       repetitions: 'Herhalingen'
       no_description: '<geen beschrijving>'
       slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'
       slack_after_overlaps_with_html: 'Speling achteraf overlapt met %{reservation}'
-      min: 'min.'
     index:
       reservations_of_from_to: 'De reserveringen van <strong>%{of}</strong> in de periode tussen <strong>%{from}</strong> en <strong>%{to}</strong> worden nu getoond.'
       reservations_of_from: 'De reserveringen van <strong>%{of}</strong> vanaf <strong>%{from}</strong> worden nu getoond.'
@@ -677,25 +671,24 @@ nl:
       download_as: 'Downloaden als:'
     status_controls:
       saved: 'Opgeslagen'
-    form:
+    form_begin_and_end:
+      slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na de reservering. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Hieronder kunnen de waarden voor deze speling worden aangepast voor deze reservering.'
+    form_entity:
       selected_entity: 'Geselecteerd object'
       no_entity_selected: 'Geen object geselecteerd'
       available_entities: 'Beschikbare objecten'
+      no_entities_available: 'Geen objecten beschikbaar'
+    form_organisation_client:
       organisation_client_type: 'Soort klant'
       existing_organisation_client: 'Bestaande klant'
       new_organisation_client: 'Nieuwe klant'
+    form_settings:
       settings: 'Instellingen'
       reservation_description_example: 'tekenles, receptie, bloemschikken enz.'
-      default_slack_times: 'Speling voor reservering'
-      default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na de reservering. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Hieronder kunnen de waarden voor deze speling worden aangepast voor deze reservering.'
-      minutes: 'minuten'
-      no_entities_available: 'Geen objecten beschikbaar'
-    table:
-      min: 'min.'
     modal_form:
       new_organisation_client: 'Nieuwe klant'
       full_form: 'Meer opties'
-    multiple_edit:
+    multiple:
       delete:
         are_you_sure_you_want_delete: 'Weet je het zeker dat je onderstaande reserveringen wilt verwijderen?'
 
@@ -708,10 +701,10 @@ nl:
 
   info_screens:
     form:
-      selected_entity_types: 'Geselecteerde objecttypen'
+      selected_entity_types: 'Geselecteerde objectsoorten'
       info_screen_name_example: 'scherm bij voordeur, directie, beamerscherm foyer enz.'
     info_screen_entity_type_fields:
-      selected_entities: 'Geselecteerde Objecten'
+      selected_entities: 'Geselecteerde objecten'
 
   today_and_tomorrow:
     entity_block:
@@ -755,22 +748,24 @@ nl:
       current_year: 'Dit jaar'
 
   feedbacks:
-    modal:
+    modal_text:
       open_feedback: 'Geef ons feedback!'
-      creating_screenshot: 'Schermafbeelding genereren...'
       feedback_intro: 'Bent u een fout in het systeem tegengekomen? Of heeft u een suggestie voor verbetering? Vul dan het volgende formulier in.'
+      next: 'Volgende'
+    modal_review:
       review_feedback: 'Controleer feedback'
       technical_info: 'Technische informatie'
-      send: 'Verzenden'
-      next: 'Volgende'
       edit_feedback: 'Bewerk feedback'
+      send: 'Verzenden'
+    modal_status:
+      creating_screenshot: 'Schermafbeelding genereren...'
       feedback_success: 'Bedankt voor uw feedback!'
       feedback_success_explain: 'Wij hebben uw feedback ontvangen, bedankt voor uw bijdrage.'
       feedback_error: 'Verzenden feedback mislukt'
       feedback_error_explain: 'Er is helaas iet misgegaan tijdens het verzenden van de feedback. Probeert u het later nog eens.'
       close: 'Sluiten'
 
-  intro_sections:
+  introduction:
     index:
       start_using_cwic: 'Ga nu Cwic gebruiken'
       go_to_app: 'Ga naar de applicatie'
@@ -793,7 +788,7 @@ nl:
       results: 'resultaten'
       title_html: 'Resultaten voor de tag <strong>%{query}</strong>'
       item: 'Item'
-    organisation_client_result:
+    organisation_client_result_reservations:
       past_reservations: 'Eerdere reserveringen'
       upcoming_reservations: 'Aankomende reserveringen'
       ago: 'geleden'
@@ -809,3 +804,9 @@ nl:
       ready: 'Gereed'
       canceled: 'Geannuleerd'
       not_used: 'Niet gebruikt'
+
+  tags:
+    show:
+      tags: 'Tags'
+    tag:
+      search_for_tag: 'Zoeken naar alle items met de tag "%{tag}"'
