@@ -595,16 +595,19 @@ nl:
 
   organisation_clients:
     show:
-      upcoming_reservations: 'Aankomende reserv.'
-      past_reservations: 'Eerdere reserv.'
-    show_general:
+      general: 'Algemeen'
       address: 'Adres'
       contact: 'Contact'
-    show_reservations:
-      upcoming_reservations: 'Aankomende reserveringen'
-      past_reservations: 'Eerdere reserveringen'
+      municipality: 'Gemeente'
+      upcoming_reservations: 'Aankomende reserv.'
+      no_upcoming_reservations: 'Geen aankomende reserveringen'
+      past_reservations: 'Eerdere reserv.'
+      no_past_reservations: 'Geen eerdere reserveringen'
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
+    form:
+      general: 'Algemeen'
     form_fields:
+      address: 'Adres'
       search_address: 'Adres zoeken...'
       edit_address: 'Adres bewerken'
 
