@@ -6,4 +6,4 @@
     .field
       = form.label :document_from_file
       = form.file_field :document
-    = form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: Document.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }
+    = form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: Document.model_name.human), data: { confirm: t('are_you_sure') }

@@ -14,4 +14,4 @@ ul#entity-type-reservation-statuses.nested-form
   = f.fields_for :reservation_statuses, @entity_type.reservation_statuses.sort_by(&:index), wrapper: false do |rsf|
     = render 'reservation_status_fields', f: rsf
 
-= f.link_to_add '', :reservation_statuses, data: { target: '#entity-type-reservation-statuses' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', model: ReservationStatus.model_name.human.lcfirst)
+= f.link_to_add '', :reservation_statuses, data: { target: '#entity-type-reservation-statuses' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', model: ReservationStatus.model_name.human)

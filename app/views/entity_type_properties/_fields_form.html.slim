@@ -18,7 +18,7 @@
 
 .actions
   = link_to '', 'javascript:void(0)', class: 'icon icon-ok action-button', title: t('done_nested_object', model: EntityTypeProperty.model_name.human.lcfirst)
-  = link_to '', 'javascript:void(0)', class: 'icon icon-remove action-button remove-nested-fields-extra', title: t('remove_nested_object', model: EntityTypeProperty.model_name.human.lcfirst)
+  = link_to '', 'javascript:void(0)', class: 'icon icon-remove action-button remove-nested-fields-extra', title: t('remove_nested_object', model: EntityTypeProperty.model_name.human)
 
 .nested-form.property-options
   = render 'entity_type_properties/property_options_fields', f: f

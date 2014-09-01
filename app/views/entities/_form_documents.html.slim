@@ -4,4 +4,4 @@ h2 = Document.model_name.human(count: 2)
   = f.fields_for :documents, wrapper: false do |df|
     = render 'documents/document_fields', f: df
 
-= f.link_to_add '', :documents, data: { target: '#documents-container' }, model: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', model: Document.model_name.human.lcfirst)
+= f.link_to_add '', :documents, data: { target: '#documents-container' }, model: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', model: Document.model_name.human)

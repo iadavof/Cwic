@@ -10,7 +10,7 @@ module LinkHelper
   end
 
   def link_to_new(object, options = {})
-    name =  options.delete(:name) || t('.to_new', default: :to_new_object, model: object_class_name(object).lcfirst)
+    name =  options.delete(:name) || t('.to_new', default: :to_new_object, model: object_class_name(object))
     location_query = options.delete(:location_query) || {}
     location = options.delete(:location) || new_polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'new' })
@@ -53,7 +53,7 @@ module LinkHelper
   def icon_link_to_new(object, options = {})
     options[:name] = ''
     options[:class] ||= 'icon icon-plus action-button'
-    options[:title] ||= t('.to_new', default: :icon_to_new_object, model: object_class_name(object).lcfirst, name: object_name(object))
+    options[:title] ||= t('.to_new', default: :icon_to_new_object, model: object_class_name(object))
     link_to_new(object, options)
   end
 

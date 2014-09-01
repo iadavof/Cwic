@@ -9,4 +9,4 @@
     .document-info
       = render 'documents/document_link_content', document: document
 
-  = form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: Document.model_name.human.lcfirst) if local_assigns[:form].present?
+  = form.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: Document.model_name.human) if local_assigns[:form].present?
