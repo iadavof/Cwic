@@ -9,10 +9,12 @@ APP.organisation_clients = {
   },
   _form: function() {
     APP.organisation_clients.bindBusinessPrivateToggle();
+    var form = $('form.new_organisation_client, form.edit_organisation_client');
+    form.find('.contact-wrapper').each(function () { APP.organisation_clients.initContactWrapper($(this)); });
+    $(document).on('nested:fieldAdded:contacts', function(event) { APP.organisation_clients.initContactWrapper(event.field); });
   },
   afterGoogleMapsLoaded: function() {
     var addresspickerMap = $('#addresspicker').addresspicker({
-      reverseGeocode: true,
       autocomplete: 'default',
       regionBias: $('body').data('current-locale'),
       elements: {
@@ -22,8 +24,8 @@ APP.organisation_clients = {
         administrative_area_level_2: '.addresspicker-administrative-area-level-2',
         administrative_area_level_1: '.addresspicker-administrative-area-level-1',
         postal_code: '.addresspicker-postal-code',
-        country: '.addresspicker-country',
-      },
+        country: '.addresspicker-country'
+      }
     });
 
     $('div.auto-address-fields').on('click', 'a#edit-auto-address-fields', function(e) {
@@ -42,5 +44,14 @@ APP.organisation_clients = {
   toggleBusinessFields: function(show) {
     $('.business-client').toggle(show);
     $('.private-client').toggle(!show);
+  },
+  initContactWrapper: function(contactWrapper) {
+    APP.global.nested_objects.initWrapper(contactWrapper);
+    contactWrapper.find('.icon-ok').off('click').on('click', function() { APP.organisation_clients.finishContactWrapper(contactWrapper); });
+  },
+  finishContactWrapper: function(contactWrapper) {
+    var instance_name = contactWrapper.find('.form [data-field="last_name"]').val() + ', ' + contactWrapper.find('.form [data-field="first_name"]').val() + ' ' + contactWrapper.find('.form [data-field="infix"]').val();
+    contactWrapper.find('.view [data-field="instance_name"]').text(instance_name);
+    APP.global.nested_objects.finishWrapper(contactWrapper);
   }
 }

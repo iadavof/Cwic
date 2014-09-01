@@ -31,12 +31,13 @@
               = render partial: 'contact_form_fields', locals: { f: f }
           .content-column
             .content-block
-              #organisation_client_contacts_container.nested-form
+              #contacts_container.nested-form
                 h2
                   i.icon-phone-call
                   = t('.contacts')
                 = f.fields_for :contacts, wrapper: false do |occf|
                   = render partial: 'organisation_client_contacts/form_fields', locals: { f: occf }
+              = f.link_to_add '', :contacts, data: { target: '#contacts_container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', class: OrganisationClientContact.model_name.human.lcfirst)
       #documents
         #documents-container.nested-form.clearfix
           = f.fields_for :documents, wrapper: false do |df|

@@ -1,13 +1,3 @@
-div.address-map {
-	width: 400px;
-	height: 400px;
-	position: relative;
-	float: left;
-	padding: 10px;
-	margin-left: 40px;
-	border: 1px solid #ccc;
-}
-
 div.auto-address-fields {
 	position: relative;
 	border: 1px solid #ccc;
@@ -15,14 +5,81 @@ div.auto-address-fields {
 	margin-bottom: 10px;
 }
 
-div.auto-address-fields input[readonly="readonly"]
-{
+div.auto-address-fields input[readonly="readonly"] {
     background-color: #eee;
 }
 
-a#edit-auto-address-fields {
+#edit-auto-address-fields {
 	position: absolute;
 	right: 10px;
 	top: 10px;
 	outline: none;
+}
+
+div.contact-wrapper {
+	padding: 0;
+  font-size: 1em;
+  border-width: 1px;
+}
+
+div.contact-wrapper {
+	div.view {
+	}
+
+	div.view {
+    .name,
+    .position {
+      padding: 1em;
+      line-height: 1em;
+      min-height: 3em;
+      cursor: pointer;
+      display: inline-block;
+      box-sizing: border-box;
+    }
+
+    .name {
+      display: block;
+      max-width: 50%;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .position {
+      position: absolute;
+      display: block;
+      left: 50%;
+      top: 0;
+      width: 30%;
+      background-color: #1c9cb2;
+      color: #fff;
+      font-weight: bold;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .actions {
+    	position: absolute;
+      display: block;
+      right: 0;
+      top: 0;
+    	width: 20%;
+    	margin: .4em;
+
+    	a {
+    		float: right;
+    	}
+    }
+  }
+
+  div.form {
+  	padding: 10px;
+  }
+
+  div.form {
+  	.actions {
+  		margin: .4em;
+  	}
+  }
 }
