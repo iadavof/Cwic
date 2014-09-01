@@ -4,7 +4,7 @@ APP.organisation_clients = {
 
     new CwicContactList({
       container: 'organisation_client_contacts',
-      backend_url: Routes.organisation_organisation_client_organisation_client_contacts_path(current_organisation, organisation_client_id),
+      backend_url: Routes.organisation_organisation_client_organisation_client_contacts_path(current_organisation, organisation_client_id)
     });
   },
   _form: function() {
@@ -35,11 +35,11 @@ APP.organisation_clients = {
     });
   },
   bindBusinessPrivateToggle: function() {
-    var field = $('#organisation_client_business_client');
+    var field = $('.business-client-toggle');
     field.on('change', function() {
-      APP.organisation_clients.toggleBusinessFields($(this).is(':checked'));
+      APP.organisation_clients.toggleBusinessFields(field.is(':checked'));
     });
-    APP.organisation_clients.toggleBusinessFields.call(field);
+    APP.organisation_clients.toggleBusinessFields(field.is(':checked'));
   },
   toggleBusinessFields: function(show) {
     $('.business-client').toggle(show);

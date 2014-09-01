@@ -13,6 +13,7 @@ APP.reservations = {
   },
   _new_create: function() {
     APP.reservations.bindSelectClientRadioButtons();
+    APP.organisation_clients.bindBusinessPrivateToggle();
     APP.reservations.bindReservationRecurrenceControls();
   },
   _form: function() {
