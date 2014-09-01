@@ -61,7 +61,7 @@ class OrganisationClient < ActiveRecord::Base
   end
 
   def full_name
-    "#{last_name}, #{first_name}#{infix.present? ? ' ' + infix : ''}"
+    "#{last_name}, #{first_name}#{infix.present? ? (' ' + infix) : ''}"
   end
 
   def upcoming_reservations(limit)

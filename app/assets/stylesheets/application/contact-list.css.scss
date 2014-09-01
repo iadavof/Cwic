@@ -119,6 +119,19 @@
           background-size: 40px 40px;
           background-position: center center;
         }
+
+        a.vcard-download {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          text-decoration: none;
+        }
+
+        a.vcard-download {
+          i {
+            font-size: 3em;
+          }
+        }
       }
     }
   }

@@ -52,7 +52,7 @@ CwicContactList.prototype.bindShowContactAction = function() {
     if(contact_info_container.hasClass('open')) {
       contact_info_container.removeClass('open');
     } else {
-      contact_info_container.html('');
+      contact_info_container.find('dl').remove();
       contact_info_container.addClass('open ajax_wait');
 
       var contact_id = contact.data('OrganisationClientContactId');
@@ -64,10 +64,10 @@ CwicContactList.prototype.bindShowContactAction = function() {
 CwicContactList.prototype.afterContactShowRequest = function(response, contact_info_container) {
   var _this = this;
   contact_info_container.removeClass('ajax-wait');
+  contact_info_container.find('a.vcard-download').attr('href', response.vcard_url);
+
   var dl = $('<dl>');
-  $.each(response, function(key, list_item) {
-
-
+  $.each(response.list_items, function(key, list_item) {
     dl.append($('<dt>', { text: list_item.label }));
     dl.append($('<dd>', { html: _this.linkyfy(key, list_item) }));
   });

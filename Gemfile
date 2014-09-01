@@ -132,6 +132,9 @@ gem 'attribute_normalizer', '~> 1.2.0.b' # Locked on new release candidate. Wait
 # Ice cube gem for easy recurrence rules
 gem 'ice_cube'
 
+# export vCard files
+gem 'vcard'
+
 # Repeat (filter) get fields as hidden fields
 gem 'hash_to_hidden_fields'
 

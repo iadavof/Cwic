@@ -1,4 +1,6 @@
 class OrganisationClientContactsController < ApplicationController
+  require 'vcard/vcard'
+
   before_action :load_organisation_client
   before_action :load_resource
   authorize_resource
@@ -7,7 +9,7 @@ class OrganisationClientContactsController < ApplicationController
 
   # GET /organisation_client_contacts
   def index
-    respond_with(@organisation, @organisation_client, @organisation_client_contacts)
+    respond_with(@organisation_client_contacts)
   end
 
   # GET /organisation_client_contacts/1
@@ -15,33 +17,9 @@ class OrganisationClientContactsController < ApplicationController
     respond_with(@organisation, @organisation_client, @organisation_client_contact)
   end
 
-  # GET /organisation_client_contacts/new
-  def new
-    respond_with(@organisation, @organisation_client, @organisation_client_contact)
-  end
-
-  # GET /organisation_client_contacts/1/edit
-  def edit
-    respond_with(@organisation, @organisation_client, @organisation_client_contact)
-  end
-
-  # POST /organisation_client_contacts
-  def create
-    @organisation_client_contact.attributes = resource_params
-    @organisation_client_contact.save
-    respond_with(@organisation, @organisation_client, @organisation_client_contact)
-  end
-
-  # PATCH/PUT /organisation_client_contacts/1
-  def update
-    @organisation_client_contact.update_attributes(resource_params)
-    respond_with(@organisation, @organisation_client, @organisation_client_contact)
-  end
-
-  # DELETE /organisation_client_contacts/1
-  def destroy
-    @organisation_client_contact.destroy
-    respond_with(@organisation, @organisation_client, OrganisationClientContact)
+  # GET /organisation_client_contact/1/vcard
+  def vcard
+    send_data generate_vcard.to_s, type: 'text/x-vcard', filename: URI::encode(@organisation_client_contact.instance_name.gsub(/\s+/, "_").gsub(/[^0-9a-z_]/i, '')) + '.vcf'
   end
 
 private
@@ -49,8 +27,6 @@ private
     case params[:action]
     when 'index'
       @organisation_client_contacts = @organisation_client.contacts.accessible_by(current_ability, :index)
-    when 'new', 'create'
-      @organisation_client_contact = @organisation_client.contacts.build
     else
       @organisation_client_contact = @organisation_client.contacts.find(params[:id])
     end
@@ -68,5 +44,35 @@ private
 
   def interpolation_options
     { resource_name: @organisation_client_contact.instance_name }
+  end
+
+  def generate_vcard
+    card = Vcard::Vcard::Maker.make2 do |maker|
+
+      #setting up name
+      maker.add_name do |name|
+        name.prefix = @organisation_client_contact.infix
+        name.given = @organisation_client_contact.first_name
+        name.family = @organisation_client_contact.last_name
+      end
+
+      # setting up address.
+      maker.add_addr do |addr|
+        addr.street = @organisation_client_contact.route + ' ' +  @organisation_client_contact.street_number
+        addr.postalcode = @organisation_client_contact.postal_code
+        addr.locality =  @organisation_client_contact.locality
+        addr.region =  @organisation_client_contact.administrative_area_level_2 + ', ' + @organisation_client_contact.administrative_area_level_1
+        addr.country =  @organisation_client_contact.country
+      end
+
+      maker.org = @organisation_client_contact.organisation_client.instance_name
+      maker.title = (@organisation_client_contact.position)
+      maker.add_tel(@organisation_client_contact.phone) { |e| e.location = 'work'}
+      maker.add_tel(@organisation_client_contact.mobile_phone) { |e| e.location = 'cell'}
+
+      maker.add_note(@organisation_client_contact.note)
+
+      maker.add_email(@organisation_client_contact.email) { |e| e.location = 'work' }
+    end
   end
 end

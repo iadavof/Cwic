@@ -28,9 +28,11 @@ Cwic::Application.routes.draw do
     end
 
     resources :organisation_clients do
-      resources :reservations
       get :autocomplete, on: :collection
-      resources :organisation_client_contacts
+      resources :organisation_client_contacts, only: [:show, :index] do
+        get :vcard, on: :member
+      end
+      resources :reservations
     end
 
     resources :info_screens do
