@@ -37,4 +37,15 @@ module ApplicationHelper
     address = escape_once(route) + ' ' + escape_once(street_number) + tag('br') + escape_once(postal_code) + '&nbsp; ' + escape_once(locality).upcase + tag('br') + escape_once(country)
     return address.html_safe
   end
+
+  def call_to(telephone_number, name = nil, html_options = {}, &block)
+    telephone_number = ERB::Util.html_escape(telephone_number)
+
+    html_options, name = name, nil if block_given?
+    html_options = (html_options || {}).stringify_keys
+
+    html_options["href"] = "tel:#{telephone_number}".html_safe
+
+    content_tag(:a, name || telephone_number.html_safe, html_options, &block)
+  end
 end

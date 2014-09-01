@@ -6,7 +6,7 @@ module Taggable
     before_save :set_tag_owner
 
     def tag_list
-      if @tag_list.present?
+      if @tag_list
         @tag_list
       else
         tags_from(self.organisation)
