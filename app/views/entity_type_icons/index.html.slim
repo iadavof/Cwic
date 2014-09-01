@@ -9,11 +9,11 @@
 
 - if @entity_type_icons.empty? && params[:mini_search].present?
   p
-    = t('empty_for_search', classes: EntityTypeIcon.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
+    = t('empty_for_search', models: EntityTypeIcon.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
     = link_to(t('remove_search'), entity_type_icons_path())
 
 - elsif @entity_type_icons.empty?
-  p = t('.empty', default: :empty_objects, classes: EntityTypeIcon.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: EntityTypeIcon.model_name.human(count: 2).lcfirst)
 
 - else
   = render 'table'

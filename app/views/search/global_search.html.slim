@@ -7,7 +7,7 @@
     = render 'tags/list', tags: @tag_suggestions
 
 - if @results.empty?
-  p = t('.empty', default: :empty_objects, classes: t('.results'))
+  p = t('.empty', default: :empty_objects, models: t('.results'))
 
 - else
   p

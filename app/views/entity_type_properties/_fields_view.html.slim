@@ -1,4 +1,4 @@
-.horizontal-block.icon.icon-resize-vertical.sort-handle title=t('order_nested_object', classes: EntityTypeProperty.model_name.human(count: 2).lcfirst)
+.horizontal-block.icon.icon-resize-vertical.sort-handle title=t('order_nested_object', models: EntityTypeProperty.model_name.human(count: 2).lcfirst)
 
 .field.horizontal-block.name
   .label = EntityTypeProperty.human_attribute_name(:name)
@@ -20,5 +20,5 @@
     dd data-field="default-value" = format_text(f.object.formatted_default_value)
 
 .actions
-  = link_to '', 'javascript:void(0)', class: 'icon icon-edit action-button', title: t('edit_nested_object', class: EntityTypeProperty.model_name.human.lcfirst)
-  = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: EntityTypeProperty.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }
+  = link_to '', 'javascript:void(0)', class: 'icon icon-edit action-button', title: t('edit_nested_object', model: EntityTypeProperty.model_name.human.lcfirst)
+  = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: EntityTypeProperty.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }

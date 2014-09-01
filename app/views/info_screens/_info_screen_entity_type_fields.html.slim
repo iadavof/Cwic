@@ -17,6 +17,6 @@
         = f.fields_for :info_screen_entities, wrapper: false do |ef|
           = render 'info_screen_entity_fields', f: ef
       - else
-        p = t('empty_objects_add_first_html', { classes: Entity.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, Entity]) })
+        p = t('empty_objects_add_first_html', { models: Entity.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, Entity]) })
 
   = f.hidden_field :entity_type_id

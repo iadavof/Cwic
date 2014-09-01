@@ -19,4 +19,4 @@ h3
         .images-container.clearfix
           = render result.images
       - else
-        = t('empty_objects', classes: EntityImage.model_name.human(count: 2).lcfirst)
+        = t('empty_objects', models: EntityImage.model_name.human(count: 2).lcfirst)

@@ -28,7 +28,7 @@
       = f.fields_for :info_screen_entity_types, @info_screen.info_screen_entity_types do |etf|
         = render 'info_screen_entity_type_fields', f: etf
     - else
-      p = t('empty_objects_add_first_html', { classes: EntityType.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, EntityType]) })
+      p = t('empty_objects_add_first_html', { models: EntityType.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, EntityType]) })
 
   .actions
     = f.submit

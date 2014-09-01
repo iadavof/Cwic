@@ -5,7 +5,7 @@
   = button_link_to_new(IntroSection)
 
 - if @intro_sections.empty?
-  p = t('.empty', default: :empty_objects, classes: IntroSection.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: IntroSection.model_name.human(count: 2).lcfirst)
 
 - else
   table

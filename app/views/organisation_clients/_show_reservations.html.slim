@@ -1,7 +1,7 @@
 h2 = t(".#{type}_reservations")
 
 - if @organisation_client.send("#{type}_reservations", 15).empty?
-  p = t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: Reservation.model_name.human(count: 2).lcfirst)
 - else
   = render 'reservations/table', reservations: @organisation_client.send("#{type}_reservations", 15).includes(:reservation_status, :organisation_client, :entity)
 

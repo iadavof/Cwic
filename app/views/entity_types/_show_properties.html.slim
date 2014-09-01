@@ -5,4 +5,4 @@ h2 = EntityTypeProperty.model_name.human(count: 2)
     = render @entity_type.properties
 
 - else
-  p = t('.empty', default: :empty_objects, classes: EntityTypeProperty.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: EntityTypeProperty.model_name.human(count: 2).lcfirst)

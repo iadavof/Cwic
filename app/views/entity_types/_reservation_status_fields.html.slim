@@ -1,6 +1,6 @@
 li.fields.nested-object-wrapper.reservation-status-wrapper.clearfix
   .inner
-    .icon.icon-resize-vertical.horizontal-block.sort-handle title=t('order_nested_object', classes: ReservationStatus.model_name.human(count: 2).lcfirst)
+    .icon.icon-resize-vertical.horizontal-block.sort-handle title=t('order_nested_object', models: ReservationStatus.model_name.human(count: 2).lcfirst)
     .field.horizontal-block
       = f.text_field :name
     .field.horizontal-block
@@ -13,6 +13,6 @@ li.fields.nested-object-wrapper.reservation-status-wrapper.clearfix
       = f.check_box :billable
 
     .actions
-      = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', class: ReservationStatus.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }
+      = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: ReservationStatus.model_name.human.lcfirst), data: { confirm: t('are_you_sure') }
 
     = f.hidden_field :index, class: 'index-field'

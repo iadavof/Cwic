@@ -5,7 +5,7 @@
   = button_link_to_new([@organisation, InfoScreen])
 
 - if @info_screens.empty?
-  p = t('.empty', default: :empty_objects, classes: InfoScreen.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: InfoScreen.model_name.human(count: 2).lcfirst)
 
 - else
   = render 'table'

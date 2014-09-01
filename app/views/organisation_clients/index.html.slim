@@ -9,11 +9,11 @@
 
 - if @organisation_clients.empty? && params[:mini_search].present?
   p
-    = t('empty_for_search', classes: OrganisationClient.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
+    = t('empty_for_search', models: OrganisationClient.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
     = link_to(t('remove_search'), organisation_organisation_clients_path(current_organisation))
 
 - elsif @organisation_clients.empty?
-  p = t('.empty', default: :empty_objects, classes: OrganisationClient.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: OrganisationClient.model_name.human(count: 2).lcfirst)
 
 - else
   = render 'table'

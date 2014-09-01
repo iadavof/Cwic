@@ -2,7 +2,7 @@ module LinkHelper
   # Link helper for default links to scaffold (CRUD) pages
   # Link to object helpers
   def link_to_index(object, options = {})
-    name = options.delete(:name) || t('.to_index', default: :to_index_objects, classes: object_classes_name(object).lcfirst)
+    name = options.delete(:name) || t('.to_index', default: :to_index_objects, models: object_classes_name(object).lcfirst)
     location_query = options.delete(:location_query) || {}
     location = options.delete(:location) || polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'index' })
@@ -10,7 +10,7 @@ module LinkHelper
   end
 
   def link_to_new(object, options = {})
-    name =  options.delete(:name) || t('.to_new', default: :to_new_object, class: object_class_name(object).lcfirst)
+    name =  options.delete(:name) || t('.to_new', default: :to_new_object, model: object_class_name(object).lcfirst)
     location_query = options.delete(:location_query) || {}
     location = options.delete(:location) || new_polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'new' })
@@ -18,7 +18,7 @@ module LinkHelper
   end
 
   def link_to_show(object, options = {})
-    name = options.delete(:name) || t('.to_show', default: :to_show_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    name = options.delete(:name) || t('.to_show', default: :to_show_object, model: object_class_name(object).lcfirst, name: object_name(object))
     location_query = options.delete(:location_query) || {}
     location = options.delete(:location) || polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'show' })
@@ -26,7 +26,7 @@ module LinkHelper
   end
 
   def link_to_edit(object, options = {})
-    name = options.delete(:name) || t('.to_edit', default: :to_edit_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    name = options.delete(:name) || t('.to_edit', default: :to_edit_object, model: object_class_name(object).lcfirst, name: object_name(object))
     location_query = options.delete(:location_query) || {}
     location = options.delete(:location) || edit_polymorphic_path(object, location_query)
     options = options.merge(data: { action: 'edit' })
@@ -34,10 +34,10 @@ module LinkHelper
   end
 
   def link_to_destroy(object, options = {})
-    name = options.delete(:name) || t('.to_destroy', default: :to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    name = options.delete(:name) || t('.to_destroy', default: :to_destroy_object, model: object_class_name(object).lcfirst, name: object_name(object))
     location_query = options.delete(:location_query) || {}
     location = options.delete(:location) || polymorphic_path(object, location_query)
-    confirm = options.delete(:confirm) || t('.to_destroy_confirm', default: :to_destroy_object_confirm, class: object_class_name(object).lcfirst, name: object_name(object))
+    confirm = options.delete(:confirm) || t('.to_destroy_confirm', default: :to_destroy_object_confirm, model: object_class_name(object).lcfirst, name: object_name(object))
     options = options.merge(method: :delete, data: { confirm: confirm, action: 'destroy' })
     link_to_if(can?(:destroy, relevant_object(object)), name, location, options) {}
   end
@@ -45,7 +45,7 @@ module LinkHelper
   # Name link to object helpers
   def name_link_to_show(object, options = {})
     options[:name] ||= object_name(object)
-    options[:title] ||= t('.to_show', default: :to_show_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    options[:title] ||= t('.to_show', default: :to_show_object, model: object_class_name(object).lcfirst, name: object_name(object))
     link_to_show(object, options)
   end
 
@@ -53,21 +53,21 @@ module LinkHelper
   def icon_link_to_new(object, options = {})
     options[:name] = ''
     options[:class] ||= 'icon icon-plus action-button'
-    options[:title] ||= t('.to_new', default: :icon_to_new_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    options[:title] ||= t('.to_new', default: :icon_to_new_object, model: object_class_name(object).lcfirst, name: object_name(object))
     link_to_new(object, options)
   end
 
   def icon_link_to_edit(object, options = {})
     options[:name] = ''
     options[:class] ||= 'icon icon-edit action-button'
-    options[:title] ||= t('.to_edit', default: :icon_to_edit_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    options[:title] ||= t('.to_edit', default: :icon_to_edit_object, model: object_class_name(object).lcfirst, name: object_name(object))
     link_to_edit(object, options)
   end
 
   def icon_link_to_destroy(object, options = {})
     options[:name] = ''
     options[:class] ||= 'icon icon-remove action-button'
-    options[:title] ||= t('.to_destroy', default: :icon_to_destroy_object, class: object_class_name(object).lcfirst, name: object_name(object))
+    options[:title] ||= t('.to_destroy', default: :icon_to_destroy_object, model: object_class_name(object).lcfirst, name: object_name(object))
     link_to_destroy(object, options)
   end
 

@@ -1,7 +1,7 @@
 h4 = t(".#{type}_reservations")
 
 - if result.send("#{type}_reservations", 3).empty?
-  p = t('.empty', default: :empty_objects, classes: Reservation.model_name.human(count: 2).lcfirst)
+  p = t('.empty', default: :empty_objects, models: Reservation.model_name.human(count: 2).lcfirst)
 
 - else
   dl

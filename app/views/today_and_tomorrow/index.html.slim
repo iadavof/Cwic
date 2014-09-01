@@ -6,7 +6,7 @@
 
 div#today-and-tomorrow-container.clearfix.today-and-tomorrow-container data-organisation-id=current_organisation.id
   - if @entity_types.empty?
-    p.no_entities_found = t('empty_objects_add_first_html', { classes: Entity.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, Entity]) })
+    p.no_entities_found = t('empty_objects_add_first_html', { models: Entity.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, Entity]) })
   - else
     - if @entity_types.one?
       = render partial: 'today_and_tomorrow/entity_block', collection: @entity_types.first.entities, as: :entity
