@@ -42,8 +42,6 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
             h1#page-title
               = content_for?(:page_title) ? yield(:page_title) : t('default_title')
 
-            = yield(:top_content) if content_for?(:top_content)
-
             #content
               .inner.clearfix
                 = render 'layouts/flash_messages'
