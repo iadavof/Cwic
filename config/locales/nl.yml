@@ -516,6 +516,8 @@ nl:
     menu:
       overview: 'Overzicht'
       reservations: 'Reserveringen'
+      organisation_clients: 'Klanten'
+      entities: 'Objecten'
       settings: 'Instellingen'
       admin: 'Admin'
       feedback: 'Feedback'
@@ -546,6 +548,7 @@ nl:
       feedbacks: 'Feedback'
       organisations: 'Organisaties'
       documents: 'Documenten'
+      manage: 'Instellen'
     search:
       search_placeholder: 'Zoeken...'
       search: 'Zoeken'

@@ -35,11 +35,15 @@ CwicLocalMenu.prototype.addButton = function(division, id, content, weight) {
   weight = weight || 0;
 
   if($.inArray(division, APP.util.arrayKeys(this.divisionDoms)) > -1) {
+  
+    if (this.divisionDoms[division].find('> .inner').length < 1) {
+      this.divisionDoms[division].append('<div class="inner">');
+    }
 
     var newButton = $('<a>', { 'class': 'button', html: content, id: id });
     newButton.data('weight', weight);
     var added = false;
-    this.divisionDoms[division].children().each(
+    this.divisionDoms[division].find('> .inner').children().each(
       function(){
         var current = $(this);
         var currentWeightData = typeof current.data('weight') == 'undefined' ? 0 : current.data('weight');
@@ -52,7 +56,7 @@ CwicLocalMenu.prototype.addButton = function(division, id, content, weight) {
     );
 
     if(!added) {
-      this.divisionDoms[division].append(newButton);
+      this.divisionDoms[division].find('> .inner').append(newButton);
     }
 
     // Update the height
