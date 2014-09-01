@@ -186,6 +186,18 @@ dl {
   }
 }
 
+html.flexbox .content-columns {
+  display: flex;
+  flex-flow: row wrap;
+  align-items: stretch;
+  
+  .content-column {
+    width: auto;
+    float: none;
+    flex: 1 1 100%;
+  }
+}
+
 @for $i from 2 through 10 {
   .content-columns[data-column-count="#{$i}"] {
     .content-column {
@@ -195,6 +207,12 @@ dl {
       &:nth-child(#{$i}n) {
         margin-right: 0;
       }
+    }
+  }
+  html.flexbox .content-columns[data-column-count="#{$i}"] {
+    .content-column {
+      width: auto;
+      flex-basis: (100% - ($i - 1) * 2%) / $i;
     }
   }
 }

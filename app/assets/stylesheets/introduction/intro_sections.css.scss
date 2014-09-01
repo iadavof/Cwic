@@ -93,8 +93,8 @@ h1 strong {
 .onepage-scroll > section.intro-section-home .background-slider > div:after {
   display: block;
   content: ' ';
-  background-image: linear-gradient(to right, rgba(28,156,178,0.78) 0%, rgba(28,156,178,0.78) 35%, rgba(240,240,240,0) 65%, rgba(240,240,240,0) 100%);
-  background-color: rgba(240,240,240,0.22);
+  background-image: linear-gradient(60deg, rgba(#1c9cb2,0.53) 0%, rgba(#1c9cb2,0.5) 30%, rgba(#1c9cb2,0) 60%, rgba(255,255,255,0) 100%);
+  background-color: rgba(167,160,155,0.35);
   position: absolute;
   top: 0;
   bottom: 0;
@@ -123,12 +123,12 @@ h1 strong {
   width: 40%;
   box-sizing: border-box;
   color: #fff;
-  text-shadow: 0 0 0.8em rgba(0,0,0,0.8);
+  text-shadow: 0 0 0.36em rgba(0,0,0,1);
   font-size: 1.3em;
 }
 
 .onepage-scroll > section div.home-text-section .home-intro-text > h1 {
-  text-shadow: 0 0 0.6em rgba(0,0,0,0.6);
+  text-shadow: 0 0 0.6em rgba(0,0,0,0.8);
 }
 
 .onepage-scroll > section div.text-section,
