@@ -46,6 +46,12 @@
   }
 
   .list {
+
+    p.no-contacts {
+      text-align: center;
+      color: #666;
+    }
+
     .letter,
     .contact {
       box-sizing: border-box;

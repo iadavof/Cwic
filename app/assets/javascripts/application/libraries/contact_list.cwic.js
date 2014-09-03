@@ -95,6 +95,9 @@ CwicContactList.prototype.sortContacts = function(contacts) {
 
 CwicContactList.prototype.afterGetContacts = function(response) {
   this.contacts = response;
+  if(response.length > 0) {
+    this.contactListContainer.find('p.no-contacts').remove();
+  }
   this.buildContactsList(this.contacts);
 };
 

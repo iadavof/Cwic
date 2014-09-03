@@ -646,6 +646,7 @@ nl:
     contact_list_template:
       search_organisation_client_contact: 'Contactpersoon zoeken...'
       download_vcard: 'Download de vCard voor deze contactpersoon'
+      no_contacts_present: 'Er zijn geen contactpersonen opgegeven'
 
   entity_types:
     still_used_destroy_confirm:
