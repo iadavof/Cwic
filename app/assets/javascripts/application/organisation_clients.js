@@ -12,6 +12,7 @@ APP.organisation_clients = {
     var form = $('form.new_organisation_client, form.edit_organisation_client');
     form.find('.contact-wrapper').each(function () { APP.organisation_clients.initContactWrapper($(this)); });
     $(document).on('nested:fieldAdded:contacts', function(event) { APP.organisation_clients.initContactWrapper(event.field); });
+    APP.organisation_clients.initCommunicationRecordForm();
   },
   afterGoogleMapsLoaded: function() {
     var addresspickerMap = $('#addresspicker').addresspicker({
@@ -53,5 +54,21 @@ APP.organisation_clients = {
     var instance_name = contactWrapper.find('.form [data-field="last_name"]').val() + ', ' + contactWrapper.find('.form [data-field="first_name"]').val() + ' ' + contactWrapper.find('.form [data-field="infix"]').val();
     contactWrapper.find('.view [data-field="instance_name"]').text(instance_name);
     APP.global.nested_objects.finishWrapper(contactWrapper);
+  },
+  initCommunicationRecordForm: function() {
+    // Add auto size to textareas
+    $('.communication-record').find('textarea.summary').autosize();
+
+    // Add auto size to textarea when a new communication_record is added
+    $(document).on('nested:fieldAdded:communication_records', function(event) {
+      $(event.field).find('textarea.summary').autosize();
+    });
+
+    $('#communication-records-container').on('click', 'div.methods>div, div.emotions>div', function() {
+      var icon = $(this), iconParent = icon.closest('div.methods, div.emotions'), selection = icon.data('value');
+      iconParent.children().removeClass('active');
+      icon.addClass('active');
+      iconParent.find('input').val(selection);
+    });
   }
 }

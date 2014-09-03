@@ -8,12 +8,17 @@
         a.current href="#general"
           = t('general')
       li
+        a href="#communication"
+          = CommunicationRecord.model_name.human(count: 2)
+      li
         a href="#documents"
           = Document.model_name.human(count: 2)
 
     .tab-wrap
       #general
         = render 'form_general', f: f
+      #communication
+        = render 'form_communication',f: f
       #documents
         = render 'form_documents',f: f
 

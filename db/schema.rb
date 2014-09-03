@@ -16,6 +16,22 @@ ActiveRecord::Schema.define(version: 20140906104928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "communication_records", force: true do |t|
+    t.integer  "organisation_client_id", limit: 8
+    t.integer  "user_id",                limit: 8
+    t.text     "summary"
+    t.string   "emotion"
+    t.string   "method"
+    t.integer  "reservation_id",         limit: 8
+    t.integer  "contact_id",             limit: 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "communication_records", ["organisation_client_id"], name: "index_communication_records_on_organisation_client_id", using: :btree
+  add_index "communication_records", ["reservation_id"], name: "index_communication_records_on_reservation_id", using: :btree
+  add_index "communication_records", ["user_id"], name: "index_communication_records_on_user_id", using: :btree
+
   create_table "data_types", force: true do |t|
     t.string   "key"
     t.string   "rails_type"

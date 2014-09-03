@@ -31,6 +31,7 @@ nl:
   settings: 'Instellingen'
   include_blank_none: 'Geen'
   prompt_choose: 'Kies...'
+  prompt_choose_model: 'Kies een %{model}...'
   all_organisations: 'Alle organisaties'
   are_you_sure: 'Weet u het zeker?'
   unknown_html: '<em>Onbekend</em>'
@@ -117,6 +118,9 @@ nl:
       organisation_client_contact:
         one: 'Contactpersoon'
         other: 'Contactpersonen'
+      communication_record:
+        one: 'Communicatieverslag'
+        other: 'Communicatieverslagen'
       entity_type_icon:
         one: 'Objecticoon'
         other: 'Objecticonen'
@@ -637,6 +641,16 @@ nl:
     contact_form_fields:
       search_address: 'Adres zoeken...'
       edit_address: 'Adres bewerken'
+
+  communication_records:
+    form_fields:
+      method:
+        phone: 'Telefonisch'
+        email: 'Per e-mail'
+        mail: 'Per post'
+        chat: 'Via chat'
+        desk: 'Persoonlijk contact'
+      summary_placeholder: 'Type hier een verslag van de communicatie met de klant...'
 
   documents:
     overview:

@@ -72,6 +72,7 @@ private
       :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code,
       :tax_number, :iban, :iban_att,
       documents_attributes: [:id, :document, :document_cache, :remote_document_url, :_destroy],
+      communication_records_attributes: [:id, :method, :emotion, :summary, :contact_id, :reservation_id, :_destroy],
       contacts_attributes: [:id, :first_name, :infix, :last_name, :position,
         :email, :phone, :mobile_phone, :note,
         :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code, :_destroy ],

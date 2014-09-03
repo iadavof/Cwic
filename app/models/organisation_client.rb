@@ -9,6 +9,7 @@ class OrganisationClient < ActiveRecord::Base
   has_many :contacts, class_name: 'OrganisationClientContact', dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
+  has_many :communication_records, dependent: :destroy
 
   # Validations
   validates :organisation, presence: true
@@ -29,9 +30,10 @@ class OrganisationClient < ActiveRecord::Base
   # Nested attributes
   accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :contacts, allow_destroy: true
+  accepts_nested_attributes_for :communication_records, allow_destroy: true, reject_if: :all_blank
 
   # Scopes
-  pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' }, contacts: { last_name: 'C', first_name: 'D', position: 'D' } }
+  pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
 
   default_scope { order(:last_name, :first_name, :locality) }
 

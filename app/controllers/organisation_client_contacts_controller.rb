@@ -47,7 +47,7 @@ private
   end
 
   def generate_vcard
-    card = Vcard::Vcard::Maker.make2 do |maker|
+    Vcard::Vcard::Maker.make2 do |maker|
 
       #setting up name
       maker.add_name do |name|

@@ -124,18 +124,24 @@ class Reservation < ActiveRecord::Base
   end
 
   def instance_name
-    "R##{self.id.to_s}"
+    "R##{self.id}"
   end
 
-  def full_instance_name(number: true, description: true, client: true, time_span: false)
+  def full_instance_name(number: true, description: true, client: true, begins_at: false, ends_at: false)
     name = ""
     name << instance_name if number
     name << "#{': ' if name.present?}#{self.description}" if description && self.description.present?
     name << "#{' | ' if name.present?}#{organisation_client.instance_name}" if client && organisation_client.present?
-    if time_span && begins_at.present? && ends_at.present?
-      beg = I18n.l(begins_at)
-      en = I18n.l(ends_at)
+    if begins_at && ends_at && self.begins_at.present? && self.ends_at.present?
+      beg = I18n.l(self.begins_at)
+      en = I18n.l(self.ends_at)
       name << "#{' | ' if name.present?}#{beg} -> #{en}"
+    elsif begins_at && self.begins_at.present?
+      beg = I18n.l(self.begins_at)
+      name = "#{beg} #{name}"
+    elsif ends_at && self.ends_at.present?
+      en = I18n.l(self.ends_at)
+      name = "#{en} #{name}"
     end
     name
   end
