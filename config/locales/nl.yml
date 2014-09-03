@@ -634,6 +634,8 @@ nl:
     show:
       upcoming_reservations: 'Aankomende reserv.'
       past_reservations: 'Eerdere reserv.'
+    show_general_address:
+      download_vcard: 'Download de vCard van deze klant'
     show_reservations:
       upcoming_reservations: 'Aankomende reserveringen'
       past_reservations: 'Eerdere reserveringen'

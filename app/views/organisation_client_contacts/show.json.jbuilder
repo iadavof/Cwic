@@ -1,4 +1,4 @@
-json.vcard_url organisation_organisation_client_organisation_client_contact_vcard_path(@organisation, @organisation_client_contact.organisation_client, @organisation_client_contact)
+json.vcard_url vcard_organisation_organisation_client_organisation_client_contact_path(@organisation, @organisation_client_contact.organisation_client, @organisation_client_contact)
 json.list_items do |json|
   json.address do |json|
     json.label OrganisationClientContact.human_attribute_name(:address)

@@ -29,6 +29,7 @@ Cwic::Application.routes.draw do
 
     resources :organisation_clients do
       get :autocomplete, on: :collection
+      get :vcard, on: :member
       resources :organisation_client_contacts, only: [:show, :index] do
         get :vcard, on: :member
       end

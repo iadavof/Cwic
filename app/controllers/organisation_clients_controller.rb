@@ -23,6 +23,11 @@ class OrganisationClientsController < ApplicationController
     respond_with(@organisation_client)
   end
 
+  # GET /organisation_clients/1/vcard
+  def vcard
+    send_data @organisation_client.vcard.to_s, type: 'text/x-vcard', filename: URI::encode(@organisation_client.instance_name.gsub(/\s+/, "_").gsub(/[^0-9a-z_]/i, '')) + '.vcf'
+  end
+
   # GET /organisation_clients/new
   def new
     respond_with(@organisation_client)

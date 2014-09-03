@@ -95,4 +95,37 @@ class OrganisationClient < ActiveRecord::Base
       true
     end
   end
+
+  def vcard
+    Vcard::Vcard::Maker.make2 do |maker|
+
+      # Setting up name
+      if business_client
+        # Vcard standard requires a name, so use the company name as the last name
+        maker.add_name do |name|
+          name.family = company_name
+        end
+        maker.org = company_name
+      else
+        maker.add_name do |name|
+          name.prefix = infix if infix.present?
+          name.given = first_name
+          name.family = last_name
+        end
+      end
+
+      # Setting up address.
+      maker.add_addr do |addr|
+        addr.street = route + ' ' +  street_number
+        addr.postalcode = postal_code
+        addr.locality = locality
+        addr.region = administrative_area_level_2 + ', ' + administrative_area_level_1
+        addr.country = country
+      end
+
+      maker.add_tel(phone) { |e| e.location = 'work'}
+      maker.add_tel(mobile_phone) { |e| e.location = 'cell'}
+      maker.add_email(email) { |e| e.location = 'work' }
+    end
+  end
 end
