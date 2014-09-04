@@ -18,8 +18,8 @@ module MenuHelper
           today_and_tomorrow: { url: organisation_today_and_tomorrow_index_path(current_organisation), icon: 'icon-time' }
         },
         occupation_view: {
-          day_occupation: { url: organisation_occupation_view_day_occupation_path(current_organisation), icon: 'icon-stocks' },
-          week_occupation: { url: organisation_occupation_view_week_occupation_path(current_organisation), icon: 'icon-stocks' }
+          day: { url: organisation_occupation_view_day_path(current_organisation), icon: 'icon-stocks' },
+          week: { url: organisation_occupation_view_week_path(current_organisation), icon: 'icon-stocks' }
         },
       },
       organisation_clients: {

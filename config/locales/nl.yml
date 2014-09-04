@@ -741,10 +741,10 @@ nl:
       delete: 'Verwijderen'
 
   occupation_view:
-    day_occupation:
-      day_occupation: 'Dagbezetting'
-    week_occupation:
-      week_occupation: 'Weekbezetting'
+    day:
+      title: 'Dagbezetting'
+    week:
+      title: 'Weekbezetting'
     template:
       current_month: 'Deze maand'
       current_year: 'Dit jaar'

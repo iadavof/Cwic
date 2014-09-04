@@ -1,5 +1,5 @@
 APP.occupation_view = {
-  day_occupation: function() {
+  day: function() {
     new CwicOccupationView({
       container: 'occupation-container',
       backend_url: Routes.organisation_occupation_view_path(current_organisation),
@@ -7,7 +7,7 @@ APP.occupation_view = {
       schedule_url: Routes.organisation_schedule_view_horizontal_calendar_day_path(current_organisation),
     });
   },
-  week_occupation: function() {
+  week: function() {
     new CwicOccupationView({
       container: 'occupation-container',
       backend_url: Routes.organisation_occupation_view_path(current_organisation),

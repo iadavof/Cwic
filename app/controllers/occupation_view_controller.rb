@@ -1,15 +1,15 @@
 class OccupationViewController < ApplicationController
 	before_action :load_resource
 
-	respond_to :html, only: [:day_occupation, :week_occupation]
-	respond_to :json, except: [:day_occupation, :week_occupation]
+	respond_to :html, only: [:day, :week]
+	respond_to :json, except: [:day, :week]
 
-	def day_occupation
-		render :day_occupation
+	def day
+		render
 	end
 
-	def week_occupation
-		render :week_occupation
+	def week
+		render
 	end
 
 	def entities

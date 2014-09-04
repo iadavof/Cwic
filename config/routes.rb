@@ -73,8 +73,8 @@ Cwic::Application.routes.draw do
     end
 
     controller :occupation_view do
-      get 'occupation_view/day_occupation'
-      get 'occupation_view/week_occupation'
+      get 'occupation_view/day'
+      get 'occupation_view/week'
 
       # AJAX routes
       post 'occupation_view/entities' # TODO GET route?
