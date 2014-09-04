@@ -27,7 +27,7 @@ class OrganisationUsersController < ApplicationController
       @user = User.new
       @user.email = @organisation_user.user_email
       @user.organisation_users << @organisation_user
-      render :new_invitation
+      render :invite_form
     else
       # User with e-mail already exists: try to save the organisation user and render the normal response.
       # The before_validation will automatically set the user based on the user_email field.
@@ -36,18 +36,18 @@ class OrganisationUsersController < ApplicationController
     end
   end
 
-  def send_invitation
+  def invite
     @current_menu_link = :create # Set current_menu_link to create, since we actually are still creating a new organisation user.
     # The invite call on the user will also calls the save method on this user object and stores the organisation_users relation
     @user = User.invite!(invite_params, current_user)
     if @user.valid?
       respond_with(@organisation, @organisation_user, location: organisation_organisation_users_path(@organisation))
     else
-      render :new_invitation
+      render :invite_form
     end
   end
 
-  def resend_invitation
+  def reinvite
     @organisation_user.user.invite!
     respond_with(@organisation, @organisation_user, location: organisation_organisation_users_path(@organisation))
   end
@@ -69,7 +69,7 @@ private
     case params[:action]
     when 'index'
       @organisation_users = @organisation.organisation_users.accessible_by(current_ability, :index).includes(:user).ssp(params)
-    when 'new', 'create', 'send_invitation'
+    when 'new', 'create', 'invite'
       @organisation_user = @organisation.organisation_users.build
     else
       @organisation_user = @organisation.organisation_users.find(params[:id])
@@ -85,7 +85,7 @@ private
   end
 
   def interpolation_options
-    user = (params[:action] == 'send_invitation' ? @user : @organisation_user.user)
+    user = (params[:action] == 'invite' ? @user : @organisation_user.user)
     if user.present?
       { resource_name: user.instance_name, resource_email: user.email }
     else

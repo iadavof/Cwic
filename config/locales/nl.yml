@@ -487,9 +487,9 @@ nl:
     organisation_users:
       create:
         notice: '%{resource_name} (%{resource_email}) is toegevoegd.'
-      send_invitation:
+      invite:
         notice: '%{resource_name} (%{resource_email}) is uitgenodigd.'
-      resend_invitation:
+      reinvite:
         notice: '%{resource_name} (%{resource_email}) is opnieuw uitgenodigd.'
 
   views:
@@ -589,8 +589,8 @@ nl:
       status: 'Status'
       active: 'Actief'
       awaiting_invitation_acceptance: 'Wacht op bevestiging'
-      resend_invitation: 'Herstuur uitnodiging'
-    new_invitation:
+      reinvite: 'Herstuur uitnodiging'
+    invite_form:
       intro: 'Het systeem kent de gebruiker met het e-mailadres ''%{email}'' niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
 
   organisation_clients:

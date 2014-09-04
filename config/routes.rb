@@ -16,8 +16,8 @@ Cwic::Application.routes.draw do
   match '/organisations/:id/tag_search', controller: 'organisations', action: 'tag_search', via: 'post', as: 'organisation_tag_search'
   resources :organisations do
     resources :organisation_users, except: :show
-    match '/organisation_users/send_invitation', controller: 'organisation_users', action: 'send_invitation', via: 'post'
-    match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
+    match '/organisation_users/invite', controller: 'organisation_users', action: 'invite', via: 'post'
+    match '/organisation_users/:id/reinvite', controller: 'organisation_users', action: 'reinvite', via: 'post', as: 'organisation_user_reinvite'
     resources :entity_types
 
     resources :entities
