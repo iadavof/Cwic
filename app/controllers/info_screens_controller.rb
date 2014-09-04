@@ -57,7 +57,6 @@ class InfoScreensController < ApplicationController
   end
 
 private
-
   def load_resource
     case params[:action]
     when 'index'
