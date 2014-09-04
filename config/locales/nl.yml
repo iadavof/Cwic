@@ -660,7 +660,6 @@ nl:
       logs: 'Geschiedenis'
     show_general:
       repetitions: 'Herhalingen'
-      no_description: '<geen beschrijving>'
       slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'
       slack_after_overlaps_with_html: 'Speling achteraf overlapt met %{reservation}'
     index:

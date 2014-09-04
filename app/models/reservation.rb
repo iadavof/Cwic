@@ -128,6 +128,19 @@ class Reservation < ActiveRecord::Base
     "R##{self.id.to_s}"
   end
 
+  def full_instance_name(number: true, description: true, client: true, time_span: false)
+    name = ""
+    name << instance_name if number
+    name << "#{': ' if name.present?}#{self.description}" if description && self.description.present?
+    name << "#{' | ' if name.present?}#{organisation_client.instance_name}" if client && organisation_client.present?
+    if time_span && begins_at.present? && ends_at.present?
+      beg = I18n.l(begins_at)
+      en = I18n.l(ends_at)
+      name << "#{' | ' if name.present?}#{beg} -> #{en}"
+    end
+    name
+  end
+
   def slack_before
     super.present? ? super : entity.try(:slack_before)
   end
@@ -164,13 +177,6 @@ class Reservation < ActiveRecord::Base
   def next(was = false)
     ends_at = (was ? self.ends_at_was : self.ends_at)
     self.entity.reservations.where('begins_at >= :ends_at', ends_at: ends_at).where.not(id: self.id).reorder(begins_at: :asc).first
-  end
-
-  def one_line_summary
-    desc = self.description.present? ? self.description : I18n.t('reservations.show.no_description')
-    beg = I18n.l(self.begins_at, format: :long)
-    en = I18n.l(self.ends_at, format: :long)
-    "R##{self.id.to_s}: #{desc}, #{self.organisation_client.instance_name}, #{beg} --> #{en}."
   end
 
   # Checks if the slack before is overlapping with (the slack of) a previous reservation.

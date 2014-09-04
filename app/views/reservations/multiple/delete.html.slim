@@ -6,7 +6,7 @@
   ul
     - @reservations.each do |r|
       li
-        = r.one_line_summary
+        = r.full_instance_name(time_span: true)
 
   - @reservations.each do |r|
     = hidden_field_tag "reservation_ids[]", r.id

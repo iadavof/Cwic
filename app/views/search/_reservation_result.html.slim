@@ -1,6 +1,6 @@
 h3
   => "#{result.class.model_name.human}:"
-  = name_link_with_description(result)
+  = name_link_to_show([@organisation, result], name: result.full_instance_name(client: false))
 
 .result-icon style=(result.reservation_status.present? ? 'background-color: ' + result.reservation_status.color : '')
   i.icon-time

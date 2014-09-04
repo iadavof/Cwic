@@ -56,7 +56,7 @@ private
         item_id: r.id,
         begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
         end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
-        description: r.instance_name + (r.description.present? ? (' : ' + r.description) : '') + ', ' + r.organisation_client.instance_name,
+        description: r.full_instance_name,
         progress: r.current_progress,
       }
       current[:day_separators] = reservation_day_change_at(r) unless r.begins_at.to_date == r.ends_at.to_date
@@ -92,7 +92,7 @@ private
       item_id: r.id,
       begin_moment: r.begins_at.strftime('%Y-%m-%d %H:%M'),
       end_moment: r.ends_at.strftime('%Y-%m-%d %H:%M'),
-      description: r.instance_name + (r.description.present? ? (' : ' + r.description) : '') + ', ' + r.organisation_client.instance_name,
+      description: r.full_instance_name,
     }
     end
     res

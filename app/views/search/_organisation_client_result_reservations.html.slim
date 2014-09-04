@@ -17,4 +17,4 @@ h4 = t(".#{type}_reservations")
       dd
         => name_link_to_show([@organisation, reservation.entity], name: reservation.entity.full_instance_name)
         ' -
-        = name_link_with_description(reservation)
+        = name_link_to_show([@organisation, reservation], name: reservation.full_instance_name(client: false))
