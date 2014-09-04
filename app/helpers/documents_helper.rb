@@ -1,5 +1,5 @@
 module DocumentsHelper
-  def get_document_icon_for_extension(extension)
+  def document_icon_for_extension(extension)
     extension = extension.downcase
     if (%w(tar zip rar gz 7z bz2)).include?(extension)
       return 'zip'
@@ -24,8 +24,8 @@ module DocumentsHelper
     end
   end
 
-  def get_document_icon_url_for_extension(extension)
-    icon_name = get_document_icon_for_extension(extension)
-    ActionController::Base.helpers.asset_url('document_icons/' + icon_name + '.png')
+  def document_icon_url_for_extension(extension)
+    icon_name = document_icon_for_extension(extension)
+    asset_url("document_icons/#{icon_name}.png")
   end
 end

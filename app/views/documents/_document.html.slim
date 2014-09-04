@@ -1,6 +1,6 @@
 .fields.document
   - if document.persisted?
-    = link_to(organisation_document_path(current_organisation, document), class: 'document-link', target: :_blank, style: "background-image: url('#{document.document.thumb.file.try(:exists?) ? document.document.thumb.url : get_document_icon_url_for_extension(document.document.file.extension)}')") do
+    = link_to(organisation_document_path(current_organisation, document), class: 'document-link', target: :_blank, style: "background-image: url('#{document.document.thumb.file.try(:exists?) ? document.document.thumb.url : document_icon_url_for_extension(document.document.file.extension)}')") do
       span.document-extension
         = document.document.file.extension
     = link_to(organisation_document_path(current_organisation, document), class: 'document-info', target: :_blank) do
