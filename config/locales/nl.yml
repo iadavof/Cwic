@@ -519,10 +519,10 @@ nl:
       settings: 'Instellingen'
       admin: 'Admin'
       feedback: 'Feedback'
-      logout: 'Uitloggen'
       organisation: 'Organisatie'
     user_menu:
       actions: 'Acties'
+      logout: 'Uitloggen'
     submenu:
       home: 'Home'
       reservations: 'Reserveringen'
