@@ -72,6 +72,13 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, @reservation)
   end
 
+  # PATCH/PUT /reservations/1
+  def update
+    @reservation.localized.update_attributes(resource_params)
+    ReservationLog.create(reservation: @reservation, user: current_user)
+    respond_with(@organisation, @reservation)
+  end
+
   # PATCH/PUT /reservations/1/multiple
   def multiple
     session[:return_to] ||= request.referer
@@ -82,13 +89,6 @@ class ReservationsController < ApplicationController
       return
     end
     send multiple_action
-  end
-
-  # PATCH/PUT /reservations/1
-  def update
-    @reservation.localized.update_attributes(resource_params)
-    ReservationLog.create(reservation: @reservation, user: current_user)
-    respond_with(@organisation, @reservation)
   end
 
   # PATCH/PUT /reservations/1/update_status
