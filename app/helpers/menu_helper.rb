@@ -15,11 +15,11 @@ module MenuHelper
           horizontal_calendar_day: { url: organisation_schedule_view_horizontal_calendar_day_path(current_organisation), icon: 'icon-alignleftedge' },
           horizontal_calendar_week: { url: organisation_schedule_view_horizontal_calendar_week_path(current_organisation), icon: 'icon-alignleftedge' },
           vertical_calendar_day: { url: organisation_schedule_view_vertical_calendar_day_path(current_organisation), icon: 'icon-aligntopedge' },
-          today_and_tomorrow: { url: organisation_today_and_tomorrow_path(current_organisation), icon: 'icon-time' }
+          today_and_tomorrow: { url: organisation_today_and_tomorrow_index_path(current_organisation), icon: 'icon-time' }
         },
         occupation_view: {
-          day_occupation: { url: organisation_day_occupation_path(current_organisation), icon: 'icon-stocks' },
-          week_occupation: { url: organisation_week_occupation_path(current_organisation), icon: 'icon-stocks' }
+          day_occupation: { url: organisation_occupation_view_day_occupation_path(current_organisation), icon: 'icon-stocks' },
+          week_occupation: { url: organisation_occupation_view_week_occupation_path(current_organisation), icon: 'icon-stocks' }
         },
       },
       organisation_clients: {

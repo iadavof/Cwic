@@ -2,7 +2,7 @@ APP.schedule_view = {
   horizontal_calendar_day: function() {
     new CwicScheduleView({
       container: 'calendar',
-      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      backend_url: Routes.organisation_schedule_view_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
@@ -13,7 +13,7 @@ APP.schedule_view = {
   horizontal_calendar_week: function() {
     new CwicScheduleView({
       container: 'calendar',
-      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      backend_url: Routes.organisation_schedule_view_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
@@ -24,7 +24,7 @@ APP.schedule_view = {
   vertical_calendar_day: function() {
     new CwicScheduleView({
       container: 'calendar',
-      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      backend_url: Routes.organisation_schedule_view_path(current_organisation),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'verticalCalendar',

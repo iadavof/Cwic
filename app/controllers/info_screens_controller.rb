@@ -2,8 +2,8 @@ class InfoScreensController < ApplicationController
   before_action :load_resource
   authorize_resource
 
-  respond_to :html, except: :info_screen_reservations
-  respond_to :json, only: :info_screen_reservations
+  respond_to :html, except: :reservations
+  respond_to :json, only: :reservations
 
   # GET /info_screens
   def index
@@ -16,7 +16,7 @@ class InfoScreensController < ApplicationController
   end
 
   # GET /info_screens/1/reservations.json
-  def info_screen_reservations
+  def reservations
     @reservations = []
     @active_ises = @info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active.includes(:entity)
     @active_ises.each do |ise|

@@ -89,7 +89,7 @@ APP.reservations = {
 
       $.ajax({
         type: 'PATCH',
-        url: Routes.organisation_reservations_update_status_path(current_organisation, selectorDiv.data('reservation-id')) + '.json',
+        url: Routes.update_status_organisation_reservation_path(current_organisation, selectorDiv.data('reservation-id')) + '.json',
         data: {
           status_id: new_status_id
         }

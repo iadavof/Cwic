@@ -1,7 +1,7 @@
 class SearchController < ApplicationController
   SEARCHABLE = [OrganisationClient, Reservation, Entity, EntityType]
 
-  def global_search
+  def global
     @query = params[:global_search]
 
     # Determine the object types to search in
@@ -51,7 +51,7 @@ class SearchController < ApplicationController
     respond_with(@raw_results, @results, @tag_suggestions)
   end
 
-  def tag_search
+  def tag
     @tag_query = params[:tag_query].downcase
     @taggables = []
     if ActsAsTaggableOn::Tag.find_by(name: @tag_query).present?
