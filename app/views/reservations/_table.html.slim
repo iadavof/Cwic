@@ -35,8 +35,8 @@
             td = name_link_to_show([@organisation, reservation.entity])
             td = l(reservation.begins_at, format: :long)
             td = l(reservation.ends_at, format: :long)
-            td = "#{reservation.get_slack_before} #{t('minutes_abbr').lcfirst}"
-            td = "#{reservation.get_slack_after} #{t('minutes_abbr').lcfirst}"
+            td = "#{reservation.slack_before} #{t('minutes_abbr').lcfirst}"
+            td = "#{reservation.slack_after} #{t('minutes_abbr').lcfirst}"
             td.icons
               = icon_link_to_edit([@organisation, reservation])
               = icon_link_to_destroy([@organisation, reservation])

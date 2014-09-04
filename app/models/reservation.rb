@@ -128,14 +128,12 @@ class Reservation < ActiveRecord::Base
     "R##{self.id.to_s}"
   end
 
-  def get_slack_before
-    return read_attribute(:slack_before) if read_attribute(:slack_before).present?
-    return self.entity.get_slack_before
+  def slack_before
+    super.present? ? super : entity.try(:slack_before)
   end
 
-  def get_slack_after
-    return read_attribute(:slack_after) if read_attribute(:slack_after).present?
-    return self.entity.get_slack_after
+  def slack_after
+    super.present? ? super : entity.try(:slack_after)
   end
 
   def length
@@ -180,7 +178,7 @@ class Reservation < ActiveRecord::Base
     previous_reservation = self.previous
     return false if previous_reservation.nil?
 
-    total_slack = self.get_slack_before + previous_reservation.get_slack_after
+    total_slack = self.slack_before + previous_reservation.slack_after
 
     self.begins_at - previous_reservation.ends_at < total_slack.minutes
   end
@@ -190,7 +188,7 @@ class Reservation < ActiveRecord::Base
     next_reservation = self.next
     return false if next_reservation.nil?
 
-    total_slack = self.get_slack_after + next_reservation.get_slack_before
+    total_slack = self.slack_after + next_reservation.slack_before
 
     next_reservation.begins_at - self.ends_at < total_slack.minutes
   end
