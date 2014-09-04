@@ -26,6 +26,10 @@ class TodayAndTomorrowController < ApplicationController
     :planning
   end
 
+  def current_menu_link
+    :today_and_tomorrow
+  end
+
 private
   def load_resource
     case params[:action]
