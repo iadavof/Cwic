@@ -2,6 +2,7 @@ class OrganisationsController < ApplicationController
   before_action :load_resource
   authorize_resource
 
+  respond_to :html, except: :tag_search
   respond_to :json, only: :tag_search
 
   # GET /organisations

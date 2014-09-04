@@ -4,7 +4,7 @@ class ReservationsController < ApplicationController
   authorize_resource
 
   respond_to :html, except: :update_status
-  respond_to :json
+  respond_to :json, only: [:create, :update, :destroy]
   respond_to :csv, :xls, only: :index
 
   # GET /reservations

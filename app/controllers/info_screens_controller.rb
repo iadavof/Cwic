@@ -2,7 +2,8 @@ class InfoScreensController < ApplicationController
   before_action :load_resource
   authorize_resource
 
-  respond_to :html, :json
+  respond_to :html, except: :info_screen_reservations
+  respond_to :json, only: :info_screen_reservations
 
   # GET /info_screens
   def index

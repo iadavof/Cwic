@@ -1,7 +1,8 @@
 class OccupationViewController < ApplicationController
 	before_action :load_resource
 
-	respond_to :html, :json
+	respond_to :html, only: [:day_occupation, :week_occupation]
+	respond_to :json, except: [:day_occupation, :week_occupation]
 
 	def day_occupation
 		render :day_occupation
