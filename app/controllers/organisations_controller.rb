@@ -45,7 +45,7 @@ class OrganisationsController < ApplicationController
   end
 
   def tag_search
-    @tags = @organisation.get_owned_tags_with_part(params[:tag_part])
+    @tags = @organisation.owned_tags_with_part(params[:tag_part])
     respond_with(@tags)
   end
 

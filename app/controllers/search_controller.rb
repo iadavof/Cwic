@@ -46,7 +46,7 @@ class SearchController < ApplicationController
     @results = results.map { |res| objects[res[:type]][res[:id]].tap { |o| o.pg_search_rank = res[:rank] } }
 
     # Get the tags that are like the query
-    @tag_suggestions = @organisation.get_owned_tags_with_part(@query)
+    @tag_suggestions = @organisation.owned_tags_with_part(@query)
 
     respond_with(@raw_results, @results, @tag_suggestions)
   end
