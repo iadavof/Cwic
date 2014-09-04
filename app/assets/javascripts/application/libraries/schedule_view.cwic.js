@@ -911,7 +911,7 @@ CwicScheduleView.prototype.loadscheduleEntities = function() {
       type: 'POST',
       url: this.options.backend_url  + '/index_domain',
       data: {
-        entity_ids: this.selectedEntities.join(','),
+        entity_ids: this.selectedEntities,
         schedule_begin: this.beginDate.format('YYYY-MM-DD'),
         schedule_end: this.endDate.format('YYYY-MM-DD')
       }

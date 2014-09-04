@@ -1,5 +1,5 @@
 - content_for :page_title do
-  = @title
+  = t("schedule_view.#{params[:action]}")
 
 - content_for :local_menu_navigation do
   = button_link_to_new([@organisation, Reservation], { location: nil, class: 'button new-reservation', id: 'open-new-reservation-modal-button' })

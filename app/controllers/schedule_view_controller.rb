@@ -1,42 +1,28 @@
 class ScheduleViewController < ApplicationController
   before_action :load_resource
+  before_action :set_calendar_data, only: [:horizontal_calendar_day, :horizontal_calendar_week, :vertical_calendar_day]
 
-  respond_to :html, except: [:index_domain, :entities]
-  respond_to :json, only: [:index_domain, :entities]
+  respond_to :html, except: [:entities, :index_domain]
+  respond_to :json, only: [:entities, :index_domain]
 
   def horizontal_calendar_day
-    get_selected_entity_from_url
-    get_selected_day_from_url
-
-    # creating new reservation for the option to add one in this view
-    @reservation = @organisation.reservations.build
-    @title = I18n.t('schedule_view.horizontal_schedule_day');
     render 'schedule_view'
   end
 
   def horizontal_calendar_week
-    get_selected_entity_from_url
-    get_selected_week_from_url
-
-    # creating new reservation for the option to add one in this view
-    @reservation = @organisation.reservations.build
-    @title = I18n.t('schedule_view.horizontal_schedule_week');
     render 'schedule_view'
   end
 
   def vertical_calendar_day
-    get_selected_entity_from_url
-    get_selected_day_from_url
-
-    # creating new reservation for the option to add one in this view
-    @reservation = @organisation.reservations.build
-    @title = I18n.t('schedule_view.vertical_schedule_day');
     render 'schedule_view'
   end
 
+  def entities
+    respond_with(@entity_types)
+  end
+
   def index_domain
-    if params[:entity_ids].present?
-      entity_ids = params[:entity_ids].split(',')
+    if @entities.present?
       if params[:schedule_begin].present? && params[:schedule_end].present?
         @begin_date = params[:schedule_begin].to_date
         @end_date = params[:schedule_end].to_date
@@ -44,36 +30,10 @@ class ScheduleViewController < ApplicationController
         @begin_date = Date.today
         @end_date = (Date.today + 1.weeks)
       end
-      @entities = @organisation.entities.where(id: entity_ids)
+
       respond_with(@entities)
     else
       render json: { error: 'no entity selected' }, status: :not_found
-    end
-  end
-
-  def entities
-    @entity_types = @organisation.entity_types.where('entities_count > 0')
-    respond_with(@entity_types)
-  end
-
-  def get_selected_entity_from_url
-    if params[:entity].present?
-      @sel_entity = params[:entity].to_i
-    end
-  end
-
-  def get_selected_day_from_url
-    if params[:year].present? && params[:month].present? && params[:day].present?
-      @year = params[:year].to_i
-      @month = params[:month].to_i
-      @day = params[:day].to_i
-    end
-  end
-
-  def get_selected_week_from_url
-    if params[:year].present? && params[:week].present?
-      @year = params[:year].to_i
-      @week = params[:week].to_i
     end
   end
 
@@ -84,10 +44,22 @@ class ScheduleViewController < ApplicationController
 private
   def load_resource
     case params[:action]
-    when 'today_and_tomorrow'
-      @entity_types = @organisation.entity_types.with_entities.includes(:entities, :icon)
-    when 'today_tomorrow_update'
+    when 'entities'
       @entity_types = @organisation.entity_types.with_entities.includes(:entities)
+    when 'index_domain'
+      @entities = @organisation.entities.where(id: params[:entity_ids])
     end
+  end
+
+  def set_calendar_data
+    @sel_entity = params[:entity].to_i if params[:entity].present?
+
+    @year = params[:year].try(:to_i) # Used for the both the day and week calendars
+    @month = params[:month].try(:to_i) # Used for the day calendars
+    @day = params[:day].try(:to_i) # Used for the day calendars
+    @week = params[:week].try(:to_i) # Used for the week calendars
+
+    # Build new reservation for add reservation modal
+    @reservation = @organisation.reservations.build
   end
 end

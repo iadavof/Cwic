@@ -720,9 +720,9 @@ nl:
       no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'
 
   schedule_view:
-    horizontal_schedule_day: 'Horizontale dagkalender'
-    horizontal_schedule_week: 'Horizontale weekkalender'
-    vertical_schedule_day: 'Verticale dagkalender'
+    horizontal_calendar_day: 'Horizontale dagkalender'
+    horizontal_calendar_week: 'Horizontale weekkalender'
+    vertical_calendar_day: 'Verticale dagkalender'
     schedule_view:
       set: 'Stel in'
       tm: t/m
