@@ -1,20 +1,20 @@
 class ScheduleViewController < ApplicationController
   before_action :load_resource
-  before_action :set_calendar_data, only: [:horizontal_calendar_day, :horizontal_calendar_week, :vertical_calendar_day]
+  before_action :set_data, only: [:horizontal_day, :horizontal_week, :vertical_day]
 
   respond_to :html, except: [:entities, :index_domain]
   respond_to :json, only: [:entities, :index_domain]
 
-  def horizontal_calendar_day
-    render 'schedule_view'
+  def horizontal_day
+    render :schedule_view
   end
 
-  def horizontal_calendar_week
-    render 'schedule_view'
+  def horizontal_week
+    render :schedule_view
   end
 
-  def vertical_calendar_day
-    render 'schedule_view'
+  def vertical_day
+    render :schedule_view
   end
 
   def entities
@@ -51,7 +51,7 @@ private
     end
   end
 
-  def set_calendar_data
+  def set_data
     @sel_entity = params[:entity].to_i if params[:entity].present?
 
     @year = params[:year].try(:to_i) # Used for the both the day and week calendars

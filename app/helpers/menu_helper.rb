@@ -12,9 +12,9 @@ module MenuHelper
           new: { url: new_organisation_reservation_path(current_organisation), icon: 'icon-plus-sign' }
         },
         planning: {
-          horizontal_calendar_day: { url: organisation_schedule_view_horizontal_calendar_day_path(current_organisation), icon: 'icon-alignleftedge' },
-          horizontal_calendar_week: { url: organisation_schedule_view_horizontal_calendar_week_path(current_organisation), icon: 'icon-alignleftedge' },
-          vertical_calendar_day: { url: organisation_schedule_view_vertical_calendar_day_path(current_organisation), icon: 'icon-aligntopedge' },
+          horizontal_day: { url: organisation_schedule_view_horizontal_day_path(current_organisation), icon: 'icon-alignleftedge' },
+          horizontal_week: { url: organisation_schedule_view_horizontal_week_path(current_organisation), icon: 'icon-alignleftedge' },
+          vertical_day: { url: organisation_schedule_view_vertical_day_path(current_organisation), icon: 'icon-aligntopedge' },
           today_and_tomorrow: { url: organisation_today_and_tomorrow_index_path(current_organisation), icon: 'icon-time' }
         },
         occupation_view: {

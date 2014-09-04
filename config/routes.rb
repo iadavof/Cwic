@@ -47,19 +47,19 @@ Cwic::Application.routes.draw do
 
     controller :schedule_view do
       # Horizontal day calendar
-      get 'schedule_view/horizontal_calendar_day'
-      get 'schedule_view/horizontal_calendar_day/entity/:entity/:year/:month/:day', action: :horizontal_calendar_day, as: :schedule_view_horizontal_calendar_day_entity_date
-      get 'schedule_view/horizontal_calendar_day/:year/:month/:day', action: :horizontal_calendar_day, as: :schedule_view_horizontal_calendar_day_date
+      get 'schedule_view/horizontal_day'
+      get 'schedule_view/horizontal_day/entity/:entity/:year/:month/:day', action: :horizontal_day, as: :schedule_view_horizontal_day_entity_date
+      get 'schedule_view/horizontal_day/:year/:month/:day', action: :horizontal_day, as: :schedule_view_horizontal_day_date
 
       # Horizontal week calendar
-      get 'schedule_view/horizontal_calendar_week'
-      get 'schedule_view/horizontal_calendar_week/entity/:entity/:year/:week', action: :horizontal_calendar_week, as: :schedule_view_horizontal_calendar_week_entity_date
-      get 'schedule_view/horizontal_calendar_week/:year/:week', action: :horizontal_calendar_week, as: :schedule_view_horizontal_calendar_week_date
+      get 'schedule_view/horizontal_week'
+      get 'schedule_view/horizontal_week/entity/:entity/:year/:week', action: :horizontal_week, as: :schedule_view_horizontal_week_entity_date
+      get 'schedule_view/horizontal_week/:year/:week', action: :horizontal_week, as: :schedule_view_horizontal_week_date
 
       # Vertical day calendar
-      get 'schedule_view/vertical_calendar_day'
-      get 'schedule_view/vertical_calendar_day/entity/:entity/:year/:month/:day', action: :vertical_calendar_day, as: :schedule_view_vertical_calendar_day_entity_date
-      get 'schedule_view/vertical_calendar_day/:year/:month/:day', action: :vertical_calendar_day, as: :schedule_view_vertical_calendar_day_date
+      get 'schedule_view/vertical_day'
+      get 'schedule_view/vertical_day/entity/:entity/:year/:month/:day', action: :vertical_day, as: :schedule_view_vertical_day_entity_date
+      get 'schedule_view/vertical_day/:year/:month/:day', action: :vertical_day, as: :schedule_view_vertical_day_date
 
       # AJAX routes
       post 'schedule_view/index_domain' # TODO GET route?

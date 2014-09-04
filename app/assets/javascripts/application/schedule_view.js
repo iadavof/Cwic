@@ -1,5 +1,5 @@
 APP.schedule_view = {
-  horizontal_calendar_day: function() {
+  horizontal_day: function() {
     new CwicScheduleView({
       container: 'calendar',
       backend_url: Routes.organisation_schedule_view_path(current_organisation),
@@ -10,7 +10,7 @@ APP.schedule_view = {
     });
     this.bind_new_reservation_modal_button();
   },
-  horizontal_calendar_week: function() {
+  horizontal_week: function() {
     new CwicScheduleView({
       container: 'calendar',
       backend_url: Routes.organisation_schedule_view_path(current_organisation),
@@ -21,7 +21,7 @@ APP.schedule_view = {
     });
     this.bind_new_reservation_modal_button();
   },
-  vertical_calendar_day: function() {
+  vertical_day: function() {
     new CwicScheduleView({
       container: 'calendar',
       backend_url: Routes.organisation_schedule_view_path(current_organisation),
