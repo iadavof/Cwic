@@ -167,11 +167,13 @@ dl {
 }
 
 .content-columns {
+  margin-right: -20px;
   .content-column {
     width: 100%;
-    min-width: 400px;
+    min-width: 33em;
     float: left;
-
+    margin-right: 20px;
+    
     .content-block {
       border: 1px solid #ccc;
       padding: 30px;
@@ -202,11 +204,6 @@ html.flexbox .content-columns {
   .content-columns[data-column-count="#{$i}"] {
     .content-column {
       width: (100% - ($i - 1) * 2%) / $i;
-      margin-right: 2%;
-
-      &:nth-child(#{$i}n) {
-        margin-right: 0;
-      }
     }
   }
   html.flexbox .content-columns[data-column-count="#{$i}"] {

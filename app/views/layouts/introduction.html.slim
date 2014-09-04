@@ -8,9 +8,6 @@ html.no-js.introduction-page
     = javascript_include_tag "introduction", "data-turbolinks-track" => true
     = csrf_meta_tags
 
-  body[
-    data-controller=controller_name
-    data-action=action_name
-  ]
+  body data-controller=controller_name data-action=action_name
     .onepage-scroll
       = content_for?(:content) ? yield(:content) : yield
