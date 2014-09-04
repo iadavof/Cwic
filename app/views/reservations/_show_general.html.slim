@@ -1,27 +1,26 @@
-.content-columns.clearfix data-column-count="2"
-  .content-column
-    .content-block
-      dl
-        dt = Reservation.human_attribute_name(:begins_at)
-        dd
-          = l(@reservation.begins_at, format: :long)
-          = slack_before_overlap_warning(@reservation)
-        dt = Reservation.human_attribute_name(:ends_at)
-        dd
-          = l(@reservation.ends_at, format: :long)
-          = slack_after_overlap_warning(@reservation)
-        dt = Reservation.human_attribute_name(:entity)
-        dd = link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity))
-        dt = Reservation.human_attribute_name(:organisation_client)
-        dd = link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client))
-        dt = Reservation.human_attribute_name(:cost)
-        dd = number_to_currency(@reservation.cost)
-        dt = Reservation.human_attribute_name(:slack_before)
-        dd = "#{@reservation.get_slack_before} #{t('minutes').lcfirst}"
-        dt = Reservation.human_attribute_name(:slack_after)
-        dd = "#{@reservation.get_slack_after} #{t('minutes').lcfirst}"
-        dt = Reservation.human_attribute_name(:created_at)
-        dd = l(@reservation.created_at, format: :long)
+h2 = t('general')
+
+dl
+  dt = Reservation.human_attribute_name(:begins_at)
+  dd
+    = l(@reservation.begins_at, format: :long)
+    = slack_before_overlap_warning(@reservation)
+  dt = Reservation.human_attribute_name(:ends_at)
+  dd
+    = l(@reservation.ends_at, format: :long)
+    = slack_after_overlap_warning(@reservation)
+  dt = Reservation.human_attribute_name(:entity)
+  dd = link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity))
+  dt = Reservation.human_attribute_name(:organisation_client)
+  dd = link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client))
+  dt = Reservation.human_attribute_name(:cost)
+  dd = number_to_currency(@reservation.cost)
+  dt = Reservation.human_attribute_name(:slack_before)
+  dd = "#{@reservation.get_slack_before} #{t('minutes').lcfirst}"
+  dt = Reservation.human_attribute_name(:slack_after)
+  dd = "#{@reservation.get_slack_after} #{t('minutes').lcfirst}"
+  dt = Reservation.human_attribute_name(:created_at)
+  dd = l(@reservation.created_at, format: :long)
 
 - unless @reservation.recurrences.empty?
   h2 = t('.repetitions')
