@@ -11,7 +11,7 @@ class SearchController < ApplicationController
     @search_key = (params[:search_key].present? ? params[:search_key] : generate_search_key())
 
     # Get the raw results
-    results = Rails.cache.fetch(get_cache_key(@search_key), expires_in: 5.minutes) do
+    results = Rails.cache.fetch(cache_key(@search_key), expires_in: 5.minutes) do
       # Determine matching object ids. First build the query parts
       sql_parts = []
       types.each do |t|
@@ -66,11 +66,11 @@ private
     # Generate new unique search key
     begin
       search_key = rand(1000000000)
-    end while Rails.cache.exist?(get_cache_key(search_key))
+    end while Rails.cache.exist?(cache_key(search_key))
     search_key
   end
 
-  def get_cache_key(search_key)
+  def cache_key(search_key)
     "search_results_#{request.session_options[:id]}_#{search_key}"
   end
 
