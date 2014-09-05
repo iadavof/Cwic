@@ -23,3 +23,6 @@
 
 # Precompiled assets
 /public/assets
+
+# Personal TODO list
+/personal_todo.txt
