@@ -62,9 +62,8 @@ Cwic::Application.routes.draw do
       get 'schedule_view/vertical_day/:year/:month/:day', action: :vertical_day, as: :schedule_view_vertical_day_date
 
       # AJAX routes
-      post 'schedule_view/index_domain' # TODO GET route?
       get 'schedule_view/entities'
-      get 'schedule_view', as: :schedule_view # TODO this is actually no route, but is only included to support the two routes above
+      get 'schedule_view/reservations'
     end
 
     controller :today_and_tomorrow do

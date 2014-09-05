@@ -2,8 +2,8 @@ class ScheduleViewController < ApplicationController
   before_action :load_resource
   before_action :set_data, only: [:horizontal_day, :horizontal_week, :vertical_day]
 
-  respond_to :html, except: [:entities, :index_domain]
-  respond_to :json, only: [:entities, :index_domain]
+  respond_to :html, except: [:entities, :reservations]
+  respond_to :json, only: [:entities, :reservations]
 
   def horizontal_day
     render :schedule_view
@@ -21,7 +21,7 @@ class ScheduleViewController < ApplicationController
     respond_with(@entity_types)
   end
 
-  def index_domain
+  def reservations
     if @entities.present?
       if params[:schedule_begin].present? && params[:schedule_end].present?
         @begin_date = params[:schedule_begin].to_date
@@ -46,7 +46,7 @@ private
     case params[:action]
     when 'entities'
       @entity_types = @organisation.entity_types.with_entities.includes(:entities)
-    when 'index_domain'
+    when 'reservations'
       @entities = @organisation.entities.where(id: params[:entity_ids])
     end
   end
