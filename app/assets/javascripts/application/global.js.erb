@@ -157,7 +157,7 @@ APP.global = {
   openSearchBar: function() {
     var $searchBar = $('#search-bar');
     var $belowHeader = $('#below-header');
-    var $searchField = $('#global_search');
+    var $searchField = $('#global_search_query');
 
     $('#open-search-button').addClass('open');
 
@@ -176,7 +176,7 @@ APP.global = {
   closeSearchBar: function() {
     var $searchBar = $('#search-bar');
     var $belowHeader = $('#below-header');
-    var $searchField = $('#global_search');
+    var $searchField = $('#global_search_query');
 
     $searchField.blur().val('');
 

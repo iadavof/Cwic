@@ -1,5 +1,5 @@
 - content_for :page_title do
-  = t('.title_html', query: @query)
+  = t('.title_html', query: @search[:query])
 
 - unless @tag_suggestions.empty?
   div.search-tag-suggestions
@@ -12,11 +12,11 @@
 - else
   p
     = page_entries_info(@raw_results, entry_name: t('.item'))
-    = paginate(@raw_results, params: { search_key: @search_key })
+    = paginate(@raw_results, params: { key: @search[:key] })
 
   #results
     = render partial: 'result', collection: @results
 
   p
     = page_entries_info(@raw_results, entry_name: t('.item'))
-    = paginate(@raw_results, params: { search_key: @search_key })
+    = paginate(@raw_results, params: { key: @search[:key] })
