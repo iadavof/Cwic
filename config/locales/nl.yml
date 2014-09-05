@@ -119,8 +119,8 @@ nl:
         one: 'Contactpersoon'
         other: 'Contactpersonen'
       communication_record:
-        one: 'Communicatieverslag'
-        other: 'Communicatieverslagen'
+        one: 'Communicatie'
+        other: 'Communicatie'
       entity_type_icon:
         one: 'Objecticoon'
         other: 'Objecticonen'
@@ -645,6 +645,9 @@ nl:
       edit_address: 'Adres bewerken'
 
   communication_records:
+    communication_record:
+      linked_contact: 'Gekoppeld contactpersoon'
+      linked_reservation: 'Gekoppelde reservering'
     form_fields:
       method:
         phone: 'Telefonisch'

@@ -5,33 +5,32 @@
 
 .communication-record {
 
-  .action-button {
-    position: absolute;
-    right: -.5em;
-    top: -.5em;
-  }
-
   .head {
     border-color: #ccc;
     border-style: solid;
     border-width: 2px 2px 0;
-    padding-right: 2em;
+    line-height: normal;
+  }
+
+  .methods,
+  .emotions {
+    width: 10%;
+  }
+
+  .author,
+  .reservation-reference,
+  .contact-reference {
+    width: 26.66666%;
   }
 
   .methods,
   .emotions,
+  .author,
   .reservation-reference,
   .contact-reference {
-    width: 25%;
     float: left;
     padding: 5px;
     box-sizing: border-box;
-  }
-
-  .reservation-reference {
-    .select2-container {
-      width: 100% !important;
-    }
   }
 
   .summary {
@@ -39,6 +38,9 @@
     margin: 0;
     border: 2px solid #ccc;
     resize: none;
+    box-sizing: border-box;
+    padding: 1em;
+    line-height: 200%;
   }
 
   .methods > div,
@@ -53,9 +55,9 @@
     font-size: 2.5em;
     float: left;
     margin: 0 .2em;
-    cursor: pointer;
   }
 
+  .method,
   .methods {
 
     div.active,
@@ -84,6 +86,7 @@
     }
   }
 
+  .method,
   .emotions {
     .angry:before {
       content:'\f6a3';
@@ -129,6 +132,37 @@
     .superhappy.active,
     .superhappy:hover {
       color: #66b132;
+    }
+  }
+}
+
+.communication-record.fields {
+  .methods,
+  .emotions,
+  .reservation-reference,
+  .contact-reference {
+    width: 25%;
+  }
+
+  .methods > div,
+  .emotions > div {
+    cursor: pointer;
+  }
+
+  .head {
+    padding-right: 2em;
+  }
+
+  .action-button {
+    position: absolute;
+    right: -.5em;
+    top: -.5em;
+  }
+
+  .contact-reference,
+  .reservation-reference {
+    .select2-container {
+      width: 100% !important;
     }
   }
 }

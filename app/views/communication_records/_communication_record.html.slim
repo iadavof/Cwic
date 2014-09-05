@@ -1,0 +1,25 @@
+.communication-record
+  .head.clearfix
+    .methods
+      div class="#{communication_record.method} active"
+    .emotions
+      div class="#{communication_record.emotion} active"
+    .author
+      div
+        = communication_record.user.instance_name
+      div
+        = l(communication_record.created_at, format: :long)
+    .contact-reference
+      - if communication_record.contact.present?
+        strong
+          = OrganisationClientContact.model_name.human
+        div
+          = communication_record.contact.try(:instance_name)
+    .reservation-reference
+      - if communication_record.reservation.present?
+        strong
+          = t('.linked_reservation')
+        div
+          = link_to(communication_record.reservation.instance_name, organisation_reservation_path(@organisation, communication_record.reservation))
+  .summary
+    = communication_record.summary
