@@ -165,7 +165,6 @@ CwicReservationFormController.prototype.updateMomentWithTime = function(moment, 
 CwicReservationFormController.prototype.updateAvailableEntities = function() {
   var _this = this;
   $.ajax({
-    type: 'GET',
     url: this.options.available_entities_url,
     data: {
       reservation_id: _this.reservationId,

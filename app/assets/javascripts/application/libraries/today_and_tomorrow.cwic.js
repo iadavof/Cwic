@@ -48,7 +48,6 @@ CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
 CwicTodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
   var tat = this;
   $.ajax({
-    type: 'GET',
     url: this.options.backend_url,
     data: {
 

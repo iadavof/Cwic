@@ -241,7 +241,6 @@ CwicScheduleView.prototype.createEntityShowCase = function() {
   }
 
   $.ajax({
-    type: 'GET',
     url: this.options.entities_url
   }).success(function(response) {
     schedule.afterEntitiesLoad(response);
@@ -909,7 +908,6 @@ CwicScheduleView.prototype.loadscheduleEntities = function() {
     schedule = this;
 
     $.ajax({
-      type: 'GET',
       url: this.options.reservations_url,
       data: {
         entity_ids: this.selectedEntities,
