@@ -646,7 +646,6 @@ nl:
 
   communication_records:
     communication_record:
-      linked_contact: 'Gekoppeld contactpersoon'
       linked_reservation: 'Gekoppelde reservering'
     form_fields:
       method:
