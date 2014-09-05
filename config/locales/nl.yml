@@ -793,7 +793,7 @@ nl:
       matching_tags: 'De volgende tags komen overeen met uw zoekopdracht:'
     tag:
       results: 'resultaten'
-      title_html: 'Resultaten voor de tag <strong>%{query}</strong>'
+      title_html: 'Resultaten voor de tag <strong>%{tag}</strong>'
       item: 'Item'
     organisation_client_result_reservations:
       past_reservations: 'Eerdere reserveringen'

@@ -1,4 +1,4 @@
-= content_tag(:div, id: 'search-bar', class: (controller_name == 'search' ? 'open' : nil)) do
+div#search-bar class=('open' if controller_name == 'search' && action_name == 'global')
   .inner
     = form_tag(organisation_search_global_path(current_organisation), method: :get) do
       => text_field_tag(:global_search, params[:global_search], placeholder: t('.search_placeholder'))

@@ -52,13 +52,9 @@ class SearchController < ApplicationController
   end
 
   def tag
-    @tag_query = params[:tag_query].downcase
-    @taggables = []
-    if ActsAsTaggableOn::Tag.find_by(name: @tag_query).present?
-      @raw_results = ActsAsTaggableOn::Tag.find_by(name: @tag_query).taggings.where(tagger_type: 'Organisation', tagger_id: 1, taggable_type: SEARCHABLE).page(params[:page])
-      @taggables = @raw_results.map(&:taggable)
-    end
-    respond_with(@raw_results, @taggables)
+    @tag = ActsAsTaggableOn::Tag.find(params[:id])
+    @results = @tag.taggings.where(tagger_type: 'Organisation', tagger_id: 1, taggable_type: SEARCHABLE).page(params[:page])
+    respond_with(@results)
   end
 
 private

@@ -1,17 +1,17 @@
 - content_for :page_title do
-  = t('.title_html', query: @tag_query.ucfirst)
+  = t('.title_html', tag: @tag.name.ucfirst)
 
-- if @taggables.empty?
+- if @results.empty?
   p = t('.empty', default: :empty_objects, models: t('.results'))
 
 - else
   p
-    = page_entries_info(@raw_results, entry_name: t('.item'))
-    = paginate(@raw_results)
+    = page_entries_info(@results, entry_name: t('.item'))
+    = paginate(@results)
 
   #results
-    = render partial: 'result', collection: @taggables
+    = render partial: 'result', collection: @results.map(&:taggable)
 
   p
-    = page_entries_info(@raw_results, entry_name: t('.item'))
-    = paginate(@raw_results)
+    = page_entries_info(@results, entry_name: t('.item'))
+    = paginate(@results)
