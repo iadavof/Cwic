@@ -17,7 +17,7 @@ APP.reservations = {
   },
   _form: function() {
     new CwicReservationFormController({
-      entities_controller_url: Routes.organisation_entities_path(current_organisation),
+      available_entities_url: Routes.available_organisation_entities_path(current_organisation, { format: 'json' }),
       container: 'reservation-form'
     });
   },

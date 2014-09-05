@@ -19,7 +19,7 @@ Cwic::Application.routes.draw do
     resources :entity_type_icons
 
     resources :entities do
-      post :availability, on: :collection # TODO GET route?
+      get :available, on: :collection
     end
 
     resources :reservations do
