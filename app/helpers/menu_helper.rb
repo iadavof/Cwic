@@ -11,7 +11,7 @@ module MenuHelper
           index: { url: organisation_reservations_path(current_organisation), icon: 'icon-list' },
           new: { url: new_organisation_reservation_path(current_organisation), icon: 'icon-plus-sign' }
         },
-        planning: {
+        schedule_view: {
           horizontal_day: { url: organisation_schedule_view_horizontal_day_path(current_organisation), icon: 'icon-alignleftedge' },
           horizontal_week: { url: organisation_schedule_view_horizontal_week_path(current_organisation), icon: 'icon-alignleftedge' },
           vertical_day: { url: organisation_schedule_view_vertical_day_path(current_organisation), icon: 'icon-aligntopedge' },

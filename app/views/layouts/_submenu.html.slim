@@ -3,7 +3,7 @@
     - unless category_content[:url].present? # With subitems
       .submenu.clearfix data-main-menu-relation="main-menu-item-#{index + 1}"
         - category_content.each do |sub_category_name, sub_category_content|
-          = content_tag(:h3, t(".#{sub_category_name}"), class: (sub_category_matches?(category_name, sub_category_name) ? 'active' : nil))
+          = content_tag(:h3, t(".categories.#{sub_category_name}"), class: (sub_category_matches?(category_name, sub_category_name) ? 'active' : nil))
           ul
             - sub_category_content.each do |link_name, link_content|
               = content_tag(:li, class: (link_matches?(category_name, sub_category_name, link_name) ? 'active' : nil)) do
@@ -13,4 +13,4 @@
                     = link_content[:name]
                   - else
                     i> class=(link_content[:icon] || 'icon-moonfull')
-                    = t(".#{link_name}")
+                    = t(".links.#{sub_category_name}.#{link_name}", default: t(".links.#{link_name}"))

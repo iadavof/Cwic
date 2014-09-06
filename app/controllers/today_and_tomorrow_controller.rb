@@ -23,11 +23,7 @@ class TodayAndTomorrowController < ApplicationController
   end
 
   def current_menu_sub_category
-    :planning
-  end
-
-  def current_menu_link
-    :today_and_tomorrow
+    :schedule_view
   end
 
 private

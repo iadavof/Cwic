@@ -36,10 +36,6 @@ class ScheduleViewController < ApplicationController
     end
   end
 
-  def current_menu_sub_category
-    :planning
-  end
-
 private
   def load_resource
     case params[:action]
