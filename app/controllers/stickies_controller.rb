@@ -16,20 +16,20 @@ class StickiesController < ApplicationController
     respond_with(@organisation, @sticky)
   end
 
-  def weight_update
-    @stickies.each do |st|
-      st.weight = params[:new_weight_ids].index(st.id.to_s)
-      st.save
-    end
-    render json: nil, status: :ok
-  end
-
   # PATCH/PUT /stickies/1
   def update
     @sticky.update_attributes(resource_params)
     respond_with(@organisation, @sticky) do |format|
       format.json { render json: nil }
     end
+  end
+
+  def weight_update
+    @stickies.each do |st|
+      st.weight = params[:new_weight_ids].index(st.id.to_s)
+      st.save
+    end
+    render json: nil, status: :ok
   end
 
   # DELETE /stickies/1
