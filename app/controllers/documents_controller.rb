@@ -12,7 +12,7 @@ class DocumentsController < ApplicationController
   end
 
   def show
-    send_file(@document.document.path, :disposition => 'attachment', :url_based_filename => false)
+    send_file(@document.document.path, disposition: 'attachment', url_based_filename: false)
   end
 
 private
