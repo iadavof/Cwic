@@ -29,7 +29,7 @@ class ApplicationController < ActionController::Base
 
   def switch_organisation
     session[:current_organisation_id] = params[:id].to_i
-    redirect_to :root
+    redirect_to home_index_path
   end
 
   def current_organisation
