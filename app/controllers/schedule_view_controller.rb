@@ -30,7 +30,6 @@ class ScheduleViewController < ApplicationController
         @begin_date = Date.today
         @end_date = (Date.today + 1.weeks)
       end
-
       respond_with(@entities)
     else
       render json: { error: 'no entity selected' }, status: :not_found

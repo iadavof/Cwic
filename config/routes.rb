@@ -74,17 +74,11 @@ Cwic::Application.routes.draw do
     controller :occupation_view do
       get 'occupation_view/day'
       get 'occupation_view/week'
-
-      # AJAX routes
-      post 'occupation_view/entities' # TODO GET route?
-      post 'occupation_view/day_occupation_percentages' # TODO GET route?
-      post 'occupation_view/week_occupation_percentages' # TODO GET route?
-      get 'occupation_view', as: :occupation_view # TODO this is actually no route, but is only included to support the two routes above
     end
 
     controller :search do
       get 'search/global'
-      get 'search/tag'
+      get 'search/tag/:id', action: :tag, as: :search_tag
     end
   end
 

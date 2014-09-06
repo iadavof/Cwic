@@ -5,16 +5,16 @@ class DayOccupation < ActiveRecord::Base
   # Validations
   validates :entity, presence: true
   validates :day, presence: true
-  validates :occupation, presence: true, numericality: true
+  validates :percentage, presence: true, numericality: true
 
-  # Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
+  # Note: delete_all is used in recalculate, so destroy callbacks will not be called.
 
   ##
   # Class methods
   ##
 
   # Recalculates all occupations in days range for the given entity
-  def self.recalculate_occupations(entity, days)
+  def self.recalculate(entity, days)
     # Delete all old occupations
     entity.day_occupations.where(day: days).delete_all
 
@@ -25,9 +25,9 @@ class DayOccupation < ActiveRecord::Base
     occupations = []
     days.each do |day|
       matches = reservations.select { |r| r.begins_at < (day + 1.day) && r.ends_at > day } # Get relevant reservations for this day
-      occupation_length = matches.map { |r| r.length_for_day(day) }.sum # Calculate the total time for all reservations on this day
-      occupation_percent = (occupation_length.to_f / 1.day.to_i) * 100 # Translate it to a percentage
-      occupations << DayOccupation.new(entity: entity, day: day, occupation: occupation_percent) if occupation_percent > 0 # And add the row
+      length = matches.map { |r| r.length_for_day(day) }.sum # Calculate the total time for all reservations on this day
+      percentage = (length.to_f / 1.day.to_i) * 100 # Translate it to a percentage
+      occupations << DayOccupation.new(entity: entity, day: day, percentage: percentage) if percentage > 0 # And add the row
     end
 
     # Finally insert all occupations
@@ -39,6 +39,10 @@ class DayOccupation < ActiveRecord::Base
   ##
 
   def instance_name
-    self.day
+    day
+  end
+
+  def nr
+    day.day # The number in the container, in this case the number in the month
   end
 end

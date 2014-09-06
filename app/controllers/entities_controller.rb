@@ -3,7 +3,7 @@ class EntitiesController < ApplicationController
   authorize_resource through: :organisation
 
   respond_to :html, except: [:available]
-  respond_to :json, only: [:available]
+  respond_to :json, only: [:index, :available]
 
   # GET /entities
   def index
@@ -64,7 +64,7 @@ private
   def load_resource
     case params[:action]
     when 'index'
-      @entities = @organisation.entities.accessible_by(current_ability, :index).includes(:entity_type).ssp(params)
+      @entities = @organisation.entities.accessible_by(current_ability, :index).includes(entity_type: :icon).ssp(params)
     when 'available'
       # All entities for this Entity type
       @entities = @organisation.entity_types.find(params[:entity_type_id]).entities.accessible_by(current_ability, :index)

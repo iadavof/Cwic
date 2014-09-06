@@ -354,14 +354,14 @@ private
     # Note: this code could be more optimized for updates (for example, when we move a reservation in the same day, then no recalculations are necessary)
     if self.days_was.present?
       # Perform recalculations for old range
-      DayOccupation.recalculate_occupations(self.entity, days_was)
-      WeekOccupation.recalculate_occupations(self.entity, Week.from_date(days_was.min)..Week.from_date(days_was.max))
+      DayOccupation.recalculate(self.entity, days_was)
+      WeekOccupation.recalculate(self.entity, Week.from_date(days_was.min)..Week.from_date(days_was.max))
     end
 
     unless self.destroyed?
       # Perform recalculations for new range
-      DayOccupation.recalculate_occupations(self.entity, days)
-      WeekOccupation.recalculate_occupations(self.entity, Week.from_date(days.min)..Week.from_date(days.max))
+      DayOccupation.recalculate(self.entity, days)
+      WeekOccupation.recalculate(self.entity, Week.from_date(days.min)..Week.from_date(days.max))
     end
   end
 
