@@ -25,8 +25,8 @@ section.intro-section-home
 
     .home-intro-text
       h1
-        = t('.intro_title').html_safe
-      = t('.intro_text').html_safe
+        = t('.intro_title_html')
+      = t('.intro_text_html')
 
 = render @intro_sections
 
@@ -47,4 +47,4 @@ section.intro-section-last
     = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
 
   .intellectual-property
-    = t('.intellectual_property').html_safe
+    = t('.intellectual_property_html')
