@@ -26,7 +26,6 @@ class Reservation < ActiveRecord::Base
   # Attribute modifiers
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
   split_datetime :ends_at, default: Time.now.ceil_to(1.hour) + 1.hour
-  normalize_attributes :description
 
   # Validations
   validates :organisation, presence: true
