@@ -28,7 +28,7 @@ gem 'therubyracer', platforms: :ruby
 gem 'jquery-rails'
 gem 'jquery-rails-cdn'
 gem 'jquery-ui-rails'
-gem 'jquery-ui-rails-cdn', github: 'kreintjes/jquery-ui-rails-cdn' # Custom gem to add compatibility with jquery-ui-rails 5.0.0. Waiting for pull request to be merged.
+gem 'jquery-ui-rails-cdn'
 
 # Use Modernizr to detect support for new features
 gem 'modernizr-rails'
