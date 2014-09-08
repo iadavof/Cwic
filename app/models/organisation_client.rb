@@ -11,19 +11,22 @@ class OrganisationClient < ActiveRecord::Base
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
   has_many :communication_records, dependent: :destroy
 
+    # Attribute modifiers
+  normalize_attributes :first_name, :infix, :last_name, :company_name, :email, :position, :route, :street_number, :postal_code, :locality, :country, :administrative_area_level_2, :administrative_area_level_1, :phone, :mobile_phone, :tax_number, :iban_att
+
   # Validations
   validates :organisation, presence: true
   validates :first_name, presence: true, unless: 'self.business_client'
   validates :last_name, presence: true, unless: 'self.business_client'
   validates :company_name, presence: true, if: 'self.business_client'
-  validates :email, presence: true, length: { maximum: 255 }
-  validates :route, presence: true, length: { maximum: 255 }
-  validates :street_number, presence: true, length: { maximum: 255 }
-  validates :locality, presence: true, length: { maximum: 255 }
-  validates :administrative_area_level_2, presence: true, length: { maximum: 255 }
-  validates :administrative_area_level_1, presence: true, length: { maximum: 255 }
-  validates :country, presence: true, length: { maximum: 255 }
-  validates :postal_code, presence: true, length: { maximum: 255 }
+  validates :email, length: { maximum: 255 }
+  validates :route, length: { maximum: 255 }
+  validates :street_number, length: { maximum: 255 }
+  validates :locality, length: { maximum: 255 }
+  validates :administrative_area_level_2, length: { maximum: 255 }
+  validates :administrative_area_level_1, length: { maximum: 255 }
+  validates :country, length: { maximum: 255 }
+  validates :postal_code, length: { maximum: 255 }
   validates :iban_att, presence: true, if: 'self.iban.present?'
   validate :iban_valid
 
@@ -64,6 +67,10 @@ class OrganisationClient < ActiveRecord::Base
 
   def full_name
     "#{last_name}, #{first_name}#{infix.present? ? (' ' + infix) : ''}"
+  end
+
+  def municipality
+    "#{administrative_area_level_2}#{administrative_area_level_1.present? ? (', ' + administrative_area_level_1) : ''}"
   end
 
   def upcoming_reservations(limit)
@@ -119,13 +126,13 @@ class OrganisationClient < ActiveRecord::Base
         addr.street = route + ' ' +  street_number
         addr.postalcode = postal_code
         addr.locality = locality
-        addr.region = administrative_area_level_2 + ', ' + administrative_area_level_1
+        addr.region = municipality
         addr.country = country
       end
 
-      maker.add_tel(phone) { |e| e.location = 'work'}
-      maker.add_tel(mobile_phone) { |e| e.location = 'cell'}
-      maker.add_email(email) { |e| e.location = 'work' }
+      maker.add_tel(phone) { |e| e.location = 'work'} if phone.present?
+      maker.add_tel(mobile_phone) { |e| e.location = 'cell'} if mobile_phone.present?
+      maker.add_email(email) { |e| e.location = 'work' }  if email.present?
     end
   end
 end

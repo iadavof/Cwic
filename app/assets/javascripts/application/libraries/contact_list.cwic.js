@@ -187,7 +187,7 @@ CwicContactList.prototype.appendContactEntry = function(id, name, position) {
   var contactEntry = APP.util.getTemplateClone('contactListEntry');
   contactEntry.data('OrganisationClientContactId', id);
   contactEntry.find('span.name').text(name);
-  contactEntry.find('span.position').text(position != null ? position : '');
+  contactEntry.find('span.position').text(position ? position : jsLang.global.none);
   this.contactListContainer.find('.list').append(contactEntry);
 };
 

@@ -1,8 +1,10 @@
 json.vcard_url vcard_organisation_organisation_client_organisation_client_contact_path(@organisation, @organisation_client_contact.organisation_client, @organisation_client_contact)
 json.list_items do |json|
-  json.address do |json|
-    json.label OrganisationClientContact.human_attribute_name(:address)
-    json.value format_address(@organisation_client_contact.route, @organisation_client_contact.street_number, @organisation_client_contact.postal_code, @organisation_client_contact.administrative_area_level_2, @organisation_client_contact.administrative_area_level_1, @organisation_client_contact.locality, @organisation_client_contact.country)
+  if format_address(@organisation_client_contact).present?
+    json.address do |json|
+      json.label OrganisationClientContact.human_attribute_name(:address)
+      json.value format_address(@organisation_client_contact)
+    end
   end
 
   if @organisation_client_contact.phone.present?

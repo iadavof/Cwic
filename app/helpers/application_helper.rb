@@ -33,9 +33,11 @@ module ApplicationHelper
     content_tag((type == :inline ? :span : :div), content_tag(:i, '', class: 'icon-info-sign', title: text), class: 'help')
   end
 
-  def format_address(route, street_number, postal_code, administrative_area_level_2, administrative_area_level_1, locality, country)
-    address = escape_once(route) + ' ' + escape_once(street_number) + tag('br') + escape_once(postal_code) + '&nbsp; ' + escape_once(locality).upcase + tag('br') + escape_once(country)
-    return address.html_safe
+  def format_address(item)
+    if item.route || item.street_number || item.postal_code || item.administrative_area_level_2 || item.administrative_area_level_1 || item.locality || item.country
+      address = escape_once(item.route) + ' ' + escape_once(item.street_number) + tag('br') + escape_once(item.postal_code) + '&nbsp; ' + escape_once(item.locality).upcase + tag('br') + escape_once(item.country)
+      address.html_safe
+    end
   end
 
   def call_to(telephone_number, name = nil, html_options = {}, &block)

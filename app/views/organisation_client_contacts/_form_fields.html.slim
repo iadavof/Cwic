@@ -3,7 +3,7 @@
     span.name data-field="instance_name"
       = f.object.instance_name
     span.position data-field="position"
-      = f.object.position
+      = f.object.position.present? ? f.object.position : t('none')
     .actions
       = link_to '', 'javascript:void(0)', class: 'icon icon-edit action-button', title: t('edit_nested_object', model: OrganisationClientContact.model_name.human)
       = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: OrganisationClientContact.model_name.human)

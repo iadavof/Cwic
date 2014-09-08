@@ -5,6 +5,7 @@ nl:
   edit: 'Bewerken'
   destroy: 'Verwijderen'
   update: 'Updaten'
+  none: 'Geen'
   index_objects_html: 'Lijst met <strong>%{models}</strong>'
   index_objects_html_of: 'Lijst met <strong>%{models}</strong> van <strong>%{name}</strong>'
   empty_objects: 'Geen %{models}'
