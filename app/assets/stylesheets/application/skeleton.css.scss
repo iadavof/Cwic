@@ -154,17 +154,17 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
     flex: 0 0 auto;
     display: flex;
     flex-flow: row wrap;
+    justify-content: space-between;
     align-items: stretch;
+    
+    &.clearfix:after {
+      display: none;
+    }
     
     .navigation-actions, .context-actions, .page-actions {
       width: auto;
       min-width: 0;
-    }
-    .navigation-actions, .page-actions {
       flex: 0 0 auto;
-    }
-    .context-actions {
-      flex: 1 1 auto;
     }
   }
   
