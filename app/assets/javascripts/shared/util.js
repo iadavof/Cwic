@@ -1,7 +1,7 @@
 APP.util = {
   // Fills 'dropdown' with 'items' considering 'options'. More or less similar to Rails' options_for_select helper.
   fillDropdownWithItems: function(dropdown, items, options) {
-    var options = $.extend({ prompt: false, empty: true }, options || {});
+    options = $.extend({ prompt: false, empty: true }, options || {});
     if(options['empty']) {
       dropdown.empty();
     }
@@ -87,13 +87,16 @@ APP.util = {
   },
   ucFirst: function(string) {
     return string.substring(0, 1).toUpperCase() + string.substring(1).toLowerCase();
+  },
+  escapeRegExp: function(str) {
+    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
   }
-}
+};
 
 // JavaScript and jQuery extensions
 $.size = function(obj) {
   if(typeof Object.keys !== 'undefined') {
-    return Object.keys(obj).length
+    return Object.keys(obj).length;
   } else {
     var size = 0, key;
     for(key in obj) {

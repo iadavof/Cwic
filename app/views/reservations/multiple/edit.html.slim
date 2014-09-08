@@ -6,7 +6,7 @@
   ul
     - @reservations.each do |r|
       li
-        = r.full_instance_name(time_span: true)
+        = r.full_instance_name(begins_at: true, ends_at: true)
 
   = render 'reservations/multiple/form', f: f
 

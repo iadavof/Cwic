@@ -241,6 +241,13 @@ div.images-container {
   }
 }
 
+div.ajax-wait {
+  background-image: image-url('ajax_wait.gif');
+  background-size: 100% 100%;
+  background-position: center center;
+  background-repeat: no-repeat;
+}
+
 #confirm {
   a.button {
     min-width: 50px;

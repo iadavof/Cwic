@@ -67,7 +67,7 @@ div.calendar div.top-axis .description-bubble {
   left: 0;
   width: 300px;
   height: 150px;
-  background-color: #ffffff;
+  background-color: #fff;
   border: 2px solid #17889d;
   display: none;
 }
@@ -82,13 +82,9 @@ div.calendar div.top-axis .description-bubble {
 .ajax-notification .ajax-wait {
   position: relative;
   float: left;
-  height: 25px;
-  width: 25px;
-  background-image: image-url('ajax_wait.gif');
-  background-size: 25px 25px;
-  background-position: center center;
-  background-repeat: no-repeat;
   margin: 0 5px;
+  width: 25px;
+  height: 25px;
 }
 
 .ajax-notification .message {

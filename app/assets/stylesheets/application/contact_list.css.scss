@@ -1,0 +1,142 @@
+.contact-list-container {
+  .contact-search {
+  }
+
+  .contact-search {
+    input {
+      width: 100%;
+    }
+  }
+
+  .alphabet {
+    height: 5%;
+    border-left: 1px solid #ccc;
+    border-right: 1px solid #ccc;
+  }
+
+  .alphabet {
+    span {
+      display: block;
+      width: 7.14286%;
+      height: 100%;
+      float: left;
+      background-color: #eee;
+      text-align: center;
+      border-bottom: 1px solid #ccc;
+      box-sizing: border-box;
+      color: #999;
+    }
+
+    span.active {
+      background-color: #1c9cb2;
+      color: #fff;
+      border-color: #fff;
+      cursor: pointer;
+    }
+  }
+
+  .list {
+    position: relative;
+    height: 400px;
+    border-width: 0 1px 1px;
+    border-style: solid;
+    border-color: #ccc;
+    overflow-x: hidden;
+    overflow-y: auto;
+  }
+
+  .list {
+    p.no-contacts {
+      text-align: center;
+      color: #666;
+    }
+
+    .letter,
+    .contact {
+      box-sizing: border-box;
+    }
+
+    .letter {
+      width: 100%;
+      padding: 10px 20px;
+      border-bottom: 1px solid #eee;
+    }
+
+    .letter {
+      font-size: 2em;
+      color: #FF3520;
+      border-bottom-width: 5px;
+    }
+
+    .contact {
+      position: relative;
+      border-bottom: 1px solid #eee;
+    }
+
+    .contact {
+      .name,
+      .position {
+        padding: 5px 10px;
+        line-height: 1em;
+        cursor: pointer;
+      }
+
+      .name {
+        display: block;
+        max-width: 60%;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+        box-sizing: border-box;
+      }
+
+      .position {
+        position: absolute;
+        display: block;
+        right: 0;
+        top: 0;
+        width: 40%;
+        background-color: #1c9cb2;
+        color: #fff;
+        font-weight: bold;
+        box-sizing: border-box;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .contact-info {
+        position: relative;
+        background-color: #f1f1f1;
+        overflow: hidden;
+        height: 0;
+      }
+
+      .contact-info {
+        &.open {
+          padding: 0 20px;
+          height: auto;
+          min-height: 200px;
+        }
+
+        &.ajax-wait {
+          background-size: 40px 40px;
+          background-position: center center;
+        }
+
+        a.vcard-download {
+          position: absolute;
+          right: 10px;
+          top: 10px;
+          text-decoration: none;
+        }
+
+        a.vcard-download {
+          i {
+            font-size: 1em;
+          }
+        }
+      }
+    }
+  }
+}

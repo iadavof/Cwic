@@ -18,20 +18,18 @@ APP.global.nested_objects = {
   finishWrapper: function(wrapper) {
     // Copy all data from input fields to corresponding containers in view
     wrapper.find('.view [data-field]').each(function () {
-      var input = wrapper.find('.form [data-field="' + $(this).attr('data-field') + '"]');
+      var value = '', input = wrapper.find('.form [data-field="' + $(this).attr('data-field') + '"]');
       if(input) {
         if(input.is('select')) {
           // We are dealing with a checkbox field
-          var value = (input.val() ? input.find(':selected').text() : '');
+          value = (input.val() ? input.find(':selected').text() : '');
         } else if(input.is('input') && input.attr('type') == 'checkbox') {
           // We are dealing with a checkbox field
-          var value = input.is(':checked') ? jsLang.global.yes : jsLang.global.no;
+          value = input.is(':checked') ? jsLang.global.yes : jsLang.global.no;
         } else {
           // We are dealing with a normal field
-          var value = input.val();
+          value = input.val();
         }
-      } else {
-        var value = '';
       }
       $(this).html(APP.util.formatText(value));
     });

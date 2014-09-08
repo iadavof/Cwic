@@ -16,6 +16,22 @@ ActiveRecord::Schema.define(version: 20140906104928) do
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
+  create_table "communication_records", force: true do |t|
+    t.integer  "organisation_client_id", limit: 8
+    t.integer  "user_id",                limit: 8
+    t.text     "summary"
+    t.string   "emotion"
+    t.string   "method"
+    t.integer  "reservation_id",         limit: 8
+    t.integer  "contact_id",             limit: 8
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "communication_records", ["organisation_client_id"], name: "index_communication_records_on_organisation_client_id", using: :btree
+  add_index "communication_records", ["reservation_id"], name: "index_communication_records_on_reservation_id", using: :btree
+  add_index "communication_records", ["user_id"], name: "index_communication_records_on_user_id", using: :btree
+
   create_table "data_types", force: true do |t|
     t.string   "key"
     t.string   "rails_type"
@@ -227,6 +243,29 @@ ActiveRecord::Schema.define(version: 20140906104928) do
     t.datetime "updated_at"
   end
 
+  create_table "organisation_client_contacts", force: true do |t|
+    t.integer  "organisation_client_id",      limit: 8
+    t.string   "first_name"
+    t.string   "infix"
+    t.string   "last_name"
+    t.string   "position"
+    t.string   "route"
+    t.string   "street_number"
+    t.string   "postal_code"
+    t.string   "locality"
+    t.string   "country"
+    t.string   "administrative_area_level_2"
+    t.string   "administrative_area_level_1"
+    t.string   "email"
+    t.string   "phone"
+    t.string   "mobile_phone"
+    t.text     "note"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "organisation_client_contacts", ["organisation_client_id"], name: "index_organisation_client_contacts_on_organisation_client_id", using: :btree
+
   create_table "organisation_clients", force: true do |t|
     t.string   "first_name"
     t.string   "infix"
@@ -242,11 +281,13 @@ ActiveRecord::Schema.define(version: 20140906104928) do
     t.string   "country"
     t.string   "administrative_area_level_2"
     t.string   "administrative_area_level_1"
-    t.string   "address_type"
-    t.float    "lat"
-    t.float    "lng"
     t.string   "phone"
     t.string   "mobile_phone"
+    t.boolean  "business_client",                       default: false
+    t.string   "company_name"
+    t.string   "tax_number"
+    t.string   "iban"
+    t.string   "iban_att"
   end
 
   add_index "organisation_clients", ["organisation_id"], name: "index_organisation_clients_on_organisation_id", using: :btree

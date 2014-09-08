@@ -1,0 +1,45 @@
+script#contactListContainer type="text/template"
+  .contact-search
+    input#contactSearchInput type="text" placeholder=t('.search_organisation_client_contact')
+  .alphabet.clearfix
+    span#contact-start-a A
+    span#contact-start-b B
+    span#contact-start-c C
+    span#contact-start-d D
+    span#contact-start-e E
+    span#contact-start-f F
+    span#contact-start-g G
+    span#contact-start-h H
+    span#contact-start-i I
+    span#contact-start-j J
+    span#contact-start-k K
+    span#contact-start-l L
+    span#contact-start-m M
+    span#contact-start-n N
+    span#contact-start-o O
+    span#contact-start-p P
+    span#contact-start-q Q
+    span#contact-start-r R
+    span#contact-start-s S
+    span#contact-start-t T
+    span#contact-start-u U
+    span#contact-start-v V
+    span#contact-start-w W
+    span#contact-start-x X
+    span#contact-start-y Y
+    span#contact-start-z Z
+    span#contact-start-other ...
+    span &nbsp;
+  .list
+    p.no-contacts = t('.no_contacts_present')
+
+script#contactListLetter type="text/template"
+  .letter
+
+script#contactListEntry type="text/template"
+  .contact
+    span.name
+    span.position
+    div.contact-info.ajax-wait
+      a.vcard-download title=t('.download_vcard') target="_blank"
+        i.icon-contact-businesscard

@@ -73,5 +73,13 @@ class SeedHelper
         FactoryGirl.create(:sticky, organisation: organisation, stickable: stickable, user: user)
       end
     end
+
+    def create_organisation_client_contacts(organisation_clients, amount, options = {})
+      organisation_clients.each do |oc|
+        amount.times do
+          FactoryGirl.create(:organisation_client_contact, organisation_client: oc)
+        end
+      end
+    end
   end
 end

@@ -1,0 +1,9 @@
+#contacts_container.nested-form
+  h2
+    i.icon-phone-call
+    = OrganisationClientContact.model_name.human(count: 2)
+
+  = f.fields_for :contacts, wrapper: false do |cf|
+    = render 'organisation_client_contacts/fields', f: cf
+
+= f.link_to_add '', :contacts, data: { target: '#contacts_container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', model: OrganisationClientContact.model_name.human.lcfirst)
