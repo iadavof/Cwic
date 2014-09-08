@@ -9,7 +9,7 @@
 
   .field
     = f.label :organisation_role
-    = f.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, prompt: t('prompt_choose')
+    = f.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, prompt: t('prompt_choose_reservation')
 
   .actions
     = f.submit

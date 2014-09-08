@@ -24,6 +24,6 @@ dl
   dt = Organisation.human_attribute_name(:country)
   dd = @organisation.country
   dt = Organisation.human_attribute_name(:phone_general)
-  dd = @organisation.phone_general
+  dd = call_to(@organisation.phone_general)
   dt = Organisation.human_attribute_name(:phone_reservations)
-  dd = @organisation.phone_reservations
+  dd = call_to(@organisation.phone_reservations)

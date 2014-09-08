@@ -81,7 +81,7 @@ gem 'i18n_alchemy'
 gem 'responders'
 
 # Nested forms helpers
-gem 'nested_form'
+gem 'nested_form', github: 'ramonsnir/nested_form'
 
 # Image uploads
 gem 'mini_magick'
@@ -132,6 +132,9 @@ gem 'attribute_normalizer', '~> 1.2.0.b' # Locked on new release candidate. Wait
 # Ice cube gem for easy recurrence rules
 gem 'ice_cube'
 
+# export vCard files
+gem 'vcard'
+
 # Repeat (filter) get fields as hidden fields
 gem 'hash_to_hidden_fields'
 
@@ -159,6 +162,9 @@ gem 'acts-as-taggable-on'
 # Alert us on application exception, by e-mail and push notification
 gem 'exception_notification'
 gem 'ruby-notify-my-android'
+
+# Tools for formatting and validating IBAN numbers
+gem 'iban-tools'
 
 group :development do
   # Disable messages about assets in development

@@ -1,0 +1,16 @@
+= link_to '', vcard_organisation_organisation_client_path(@organisation, @organisation_client), class: 'vcard-download icon icon-contact-businesscard', target: :_blank, title: t('.download_vcard')
+h2
+  i.icon-address
+  = t('organisation_clients.sections.contact')
+
+dl
+  dt = OrganisationClient.human_attribute_name(:email)
+  dd = mail_to(@organisation_client.email)
+  dt = OrganisationClient.human_attribute_name(:phone)
+  dd = call_to(@organisation_client.phone)
+  dt = OrganisationClient.human_attribute_name(:mobile_phone)
+  dd = call_to(@organisation_client.mobile_phone)
+  dt = OrganisationClient.human_attribute_name(:address)
+  dd = format_address(@organisation_client)
+  dt = OrganisationClient.human_attribute_name(:administrative_area_level_2)
+  dd = @organisation_client.municipality

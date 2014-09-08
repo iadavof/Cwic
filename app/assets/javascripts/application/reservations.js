@@ -13,6 +13,7 @@ APP.reservations = {
   },
   _new_create: function() {
     APP.reservations.bindSelectClientRadioButtons();
+    APP.organisation_clients.bindBusinessPrivateToggle();
     APP.reservations.bindReservationRecurrenceControls();
   },
   _form: function() {
@@ -22,7 +23,7 @@ APP.reservations = {
     });
   },
   afterGoogleMapsLoaded: function() {
-    APP.organisations.afterGoogleMapsLoaded();
+    APP.organisation_clients.afterGoogleMapsLoaded();
   },
   bindSelectEditFields: function() {
     var fields = $('div.field input, div.field select div.field textarea').on('focus', function(){
@@ -35,9 +36,6 @@ APP.reservations = {
         if($(this).val() == 'new') {
           $('div.existing_organisation_client').hide();
           $('div.new_organisation_client').show();
-          $('#addresspicker').addresspicker("updatePosition");
-          google.maps.event.trigger($('#addresspicker').addresspicker('getMap'), 'resize');
-          $('#addresspicker').addresspicker("reloadPosition");
         } else if($(this).val() == 'existing') {
           $('div.new_organisation_client').hide();
           $('div.existing_organisation_client').show();

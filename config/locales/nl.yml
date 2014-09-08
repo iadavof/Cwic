@@ -5,6 +5,7 @@ nl:
   edit: 'Bewerken'
   destroy: 'Verwijderen'
   update: 'Updaten'
+  none: 'Geen'
   index_objects_html: 'Lijst met <strong>%{models}</strong>'
   index_objects_html_of: 'Lijst met <strong>%{models}</strong> van <strong>%{name}</strong>'
   empty_objects: 'Geen %{models}'
@@ -31,6 +32,7 @@ nl:
   settings: 'Instellingen'
   include_blank_none: 'Geen'
   prompt_choose: 'Kies...'
+  prompt_choose_model: 'Kies een %{model}...'
   all_organisations: 'Alle organisaties'
   are_you_sure: 'Weet u het zeker?'
   unknown_html: '<em>Onbekend</em>'
@@ -50,7 +52,6 @@ nl:
   general: 'Algemeen'
   minutes: 'Minuten'
   minutes_abbr: 'Min.'
-
   multiple:
     delete: 'Verwijderen'
     edit: 'Bewerken'
@@ -114,6 +115,12 @@ nl:
       organisation_client:
         one: 'Klant'
         other: 'Klanten'
+      organisation_client_contact:
+        one: 'Contactpersoon'
+        other: 'Contactpersonen'
+      communication_record:
+        one: 'Communicatie'
+        other: 'Communicatie'
       entity_type_icon:
         one: 'Objecticoon'
         other: 'Objecticonen'
@@ -164,11 +171,15 @@ nl:
         phone_general: 'Tel. algemeen'
         phone_reservations: 'Tel. reserveringen'
       organisation_client:
+        id: 'Klantnummer'
         name: 'Naam'
+        address: 'Adres'
         first_name: 'Voornaam'
+        infix: 'Tussenvoegsel'
         last_name: 'Achternaam'
         email: 'E-mail'
-        infix: 'Tussenvoegsel'
+        phone: 'Telefoon'
+        mobile_phone: 'Mobiele tel.'
         address: 'Adres'
         route: 'Straat'
         street_number: 'Huisnummer'
@@ -177,8 +188,35 @@ nl:
         administrative_area_level_1: 'Provincie'
         postal_code: 'Postcode'
         country: 'Land'
+        business_client: 'Zakelijke klant'
+        company_name: 'Bedrijsnaam'
+        tax_number: 'BTW-nummer'
+        iban: 'Rekeningnummer (IBAN)'
+        iban_att: 'Rekening ten name van'
+      organisation_client/contacts:
+        first_name: 'Contactpersoon voornaam'
+        last_name: 'Contactpersoon achternaam'
+      organisation_client/communication_records:
+        reservation_id: 'Communicatie reserveringsnummer'
+        contact: 'Communicatie contactpersoon'
+        summary: 'Communicatie verslag'
+      organisation_client_contact:
+        first_name: 'Voornaam'
+        infix: 'Tussenvoegsel'
+        last_name: 'Achternaam'
+        position: 'Functie'
+        email: 'E-mail'
         phone: 'Telefoon'
         mobile_phone: 'Mobiele tel.'
+        address: 'Adres'
+        route: 'Straat'
+        street_number: 'Huisnummer'
+        locality: 'Plaats'
+        administrative_area_level_2: 'Gemeente'
+        administrative_area_level_1: 'Provincie'
+        postal_code: 'Postcode'
+        country: 'Land'
+        note: 'Notitie'
       organisation_user:
         user: 'Gebruiker'
         user_email: 'E-mailadres'
@@ -240,6 +278,7 @@ nl:
       entity/properties:
         value: 'Eigenschap'
       reservation:
+        id: 'Reserveringsnummer'
         begins_at: 'Begint op'
         begins_at_tod: 'Begintijd'
         begins_at_date: 'Begindatum'
@@ -353,6 +392,15 @@ nl:
             repeating_until:
               invalid_date: 'ongeldige datum'
           repeating_until_before_end: 'voor herhalingsreeks valt voor het einde van de eerste reservering'
+        organisation_client:
+          attributes:
+            iban:
+              unknown_country_code: 'bevat een onbekende landcode'
+              bad_check_digits: 'klopt niet'
+              bad_chars: 'bevat ongeldige symbolen'
+              bad_length: 'heeft een ongeldige lengte'
+              bad_format: 'heeft een ongeldig formaat'
+              too_short: 'te kort'
 
   data_types:
     string:
@@ -599,26 +647,44 @@ nl:
       intro: 'Het systeem kent de gebruiker met het e-mailadres ''%{email}'' niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
 
   organisation_clients:
+    sections:
+      contact: 'Contactgegevens'
+      payment_details: 'Betalingsgegevens'
     show:
-      general: 'Algemeen'
-      address: 'Adres'
-      contact: 'Contact'
-      municipality: 'Gemeente'
       upcoming_reservations: 'Aankomende reserv.'
-      no_upcoming_reservations: 'Geen aankomende reserveringen'
       past_reservations: 'Eerdere reserv.'
-      no_past_reservations: 'Geen eerdere reserveringen'
+    show_general_address:
+      download_vcard: 'Download de vCard van deze klant'
+    show_reservations:
+      upcoming_reservations: 'Aankomende reserveringen'
+      past_reservations: 'Eerdere reserveringen'
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
-    form:
-      general: 'Algemeen'
-    form_fields:
-      address: 'Adres'
+    contact_form_fields:
       search_address: 'Adres zoeken...'
       edit_address: 'Adres bewerken'
+
+  communication_records:
+    communication_record:
+      linked_reservation: 'Gekoppelde reservering'
+    fields:
+      method:
+        phone: 'Telefonisch'
+        email: 'Per e-mail'
+        mail: 'Per post'
+        chat: 'Via chat'
+        desk: 'Persoonlijk contact'
+      summary_placeholder: 'Type hier een verslag van de communicatie met de klant...'
+      reservation_number: 'Reserveringsnummer...'
 
   documents:
     overview:
       no_documents: 'Geen documenten'
+
+  organisation_client_contacts:
+    contact_list_template:
+      search_organisation_client_contact: 'Contactpersoon zoeken...'
+      download_vcard: 'Download de vCard voor deze contactpersoon'
+      no_contacts_present: 'Er zijn geen contactpersonen opgegeven'
 
   entity_types:
     still_used_destroy_confirm:

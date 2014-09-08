@@ -1,0 +1,177 @@
+.communication-record {
+  position: relative;
+  margin: 1em 0;
+}
+
+.communication-record {
+  .head {
+    border-color: #ccc;
+    border-style: solid;
+    border-width: 2px 2px 0;
+    line-height: normal;
+  }
+
+  .methods,
+  .emotions {
+    width: 10%;
+  }
+
+  .author,
+  .reservation-reference,
+  .contact-reference {
+    width: 26.66666%;
+  }
+
+  .methods,
+  .emotions,
+  .author,
+  .reservation-reference,
+  .contact-reference {
+    float: left;
+    padding: 5px;
+    box-sizing: border-box;
+  }
+
+  .reservation-reference {
+    span {
+      width: 20%;
+      display: inline-block;
+      text-align: center;
+    }
+    input {
+      width: 80%;
+    }
+  }
+
+  .summary {
+    width: 100%;
+    margin: 0;
+    border: 2px solid #ccc;
+    resize: none;
+    box-sizing: border-box;
+    padding: 1em;
+    line-height: 200%;
+  }
+
+  .methods > div,
+  .emotions > div {
+    font-family: 'WebHostingHub-Glyphs';
+    background: none;
+    width: auto;
+    height: auto;
+    font-style: normal;
+    line-height: normal;
+    color: #ccc;
+    font-size: 2.5em;
+    float: left;
+    margin: 0 .2em;
+  }
+
+  .method,
+  .methods {
+    div.active,
+    div:hover {
+      color: #1c9cb2;
+    }
+
+    .phone:before {
+      content:'\f15b';
+    }
+
+    .email:before {
+      content:'\40';
+    }
+
+    .mail:before {
+      content:'\f028';
+    }
+
+    .chat:before {
+      content:'\f162';
+    }
+
+    .desk:before {
+      content:'\f134';
+    }
+  }
+
+  .method,
+  .emotions {
+    .angry:before {
+      content:'\f6a3';
+    }
+
+    .angry.active,
+    .angry:hover {
+      color: #ff2814;
+    }
+
+    .sad:before {
+      content:'\f13d';
+    }
+
+    .sad.active,
+    .sad:hover {
+      color: #ff530b;
+    }
+
+
+    .blank:before {
+      content:'\f13e';
+    }
+
+    .blank.active,
+    .blank:hover {
+      color: #1c9cb2;
+    }
+
+    .happy:before {
+      content:'\f13c';
+    }
+
+    .happy.active,
+    .happy:hover {
+      color: #fabd02;
+    }
+
+    .superhappy:before {
+      content:'\f69f';
+    }
+
+    .superhappy.active,
+    .superhappy:hover {
+      color: #66b132;
+    }
+  }
+}
+
+.communication-record.fields {
+  .methods,
+  .emotions,
+  .reservation-reference,
+  .contact-reference {
+    width: 25%;
+  }
+
+  .methods > div,
+  .emotions > div {
+    cursor: pointer;
+  }
+
+  .head {
+    padding-right: 2em;
+  }
+
+  .action-button {
+    position: absolute;
+    right: -.5em;
+    top: -.5em;
+  }
+
+  .contact-reference,
+  .reservation-reference {
+    .select2-container {
+      width: 100% !important;
+    }
+  }
+}

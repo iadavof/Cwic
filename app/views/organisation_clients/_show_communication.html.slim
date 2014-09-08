@@ -1,0 +1,4 @@
+h2 = CommunicationRecord.model_name.human(count: 2)
+
+#communication-records-container.clearfix
+  = render 'communication_records/overview', communication_records: @organisation_client.communication_records.includes(:user, :contact, :reservation)

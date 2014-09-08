@@ -93,6 +93,9 @@ after 'iada' do
   # Create reserverations
   SeedHelper.create_reservations(maldensteijn, 25)
 
+  # Create organisation client contacts
+  SeedHelper.create_organisation_client_contacts(maldensteijn.organisation_clients, 20)
+
   # Create some stickies
   SeedHelper.create_stickies(maldensteijn.organisation_clients, 0.5)
   SeedHelper.create_stickies(maldensteijn.reservations, 1)

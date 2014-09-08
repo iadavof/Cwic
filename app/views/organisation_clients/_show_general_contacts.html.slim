@@ -1,0 +1,7 @@
+h2
+  i.icon-phone-call
+  = OrganisationClientContact.model_name.human(count: 2)
+
+#organisation_client_contacts data-organisation-client-id=@organisation_client.id
+
+= render 'organisation_client_contacts/contact_list_template'

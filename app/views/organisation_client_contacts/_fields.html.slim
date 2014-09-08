@@ -1,0 +1,7 @@
+.fields.nested-object-wrapper.contact-wrapper data-valid=(f.object.persisted? && f.object.valid?)
+  .view.clearfix
+    = render 'organisation_client_contacts/fields_view', f: f
+
+  .form.clearfix
+    = render 'organisation_client_contacts/fields_form', f: f
+

@@ -1,0 +1,9 @@
+h2
+  i.icon-document
+  = Document.model_name.human(count: 2)
+
+#documents-container.nested-form.clearfix
+  = f.fields_for :documents, wrapper: false do |df|
+    = render 'documents/document_fields', f: df
+
+= f.link_to_add '', :documents, data: { target: '#documents-container' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', model: Document.model_name.human)
