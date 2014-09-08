@@ -21,6 +21,12 @@ class OrganisationClientContactsController < ApplicationController
   end
 
 private
+  def load_organisation_client
+    if params[:organisation_client_id].present?
+      @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id])
+    end
+  end
+
   def load_resource
     case params[:action]
     when 'index'
@@ -32,12 +38,6 @@ private
 
   def resource_params
     params.require(:organisation_client_contact).permit(:first_name, :infix, :last_name, :position, :route, :street_number, :postal_code, :locality, :country, :administrative_area_level_2, :administrative_area_level_1, :email, :phone, :mobile_phone, :note)
-  end
-
-  def load_organisation_client
-    if params[:organisation_client_id].present?
-      @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id])
-    end
   end
 
   def interpolation_options

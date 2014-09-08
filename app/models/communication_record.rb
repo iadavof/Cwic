@@ -1,4 +1,7 @@
 class CommunicationRecord < ActiveRecord::Base
+  POSSIBLE_EMOTIONS = [:angry, :sad, :blank, :happy, :superhappy]
+  POSSIBLE_METHODS = [:phone, :email, :mail, :chat, :desk]
+
   # Associations
   belongs_to :organisation_client
   belongs_to :user
@@ -18,18 +21,6 @@ class CommunicationRecord < ActiveRecord::Base
 
   # Scopes
   default_scope { order(created_at: :desc) }
-
-  ##
-  # Class methods
-  ##
-
-  def self.possible_emotions
-    [:angry, :sad, :blank, :happy, :superhappy]
-  end
-
-  def self.possible_methods
-    [:phone, :email, :mail, :chat, :desk]
-  end
 
   ##
   # Instance methods

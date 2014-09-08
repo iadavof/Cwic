@@ -1,2 +1,0 @@
-module OrganisationClientContactsHelper
-end

@@ -36,7 +36,6 @@ class OrganisationClientContact < ActiveRecord::Base
 
   def vcard
     Vcard::Vcard::Maker.make2 do |maker|
-
       # Setting up name
       maker.add_name do |name|
         name.prefix = infix  if infix.present?

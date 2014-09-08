@@ -6,16 +6,16 @@ class OrganisationClient < ActiveRecord::Base
   # Associations
   belongs_to :organisation
   has_many :reservations, dependent: :destroy
-  has_many :contacts, class_name: 'OrganisationClientContact', dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy
+  has_many :contacts, class_name: 'OrganisationClientContact', dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
   has_many :communication_records, dependent: :destroy, inverse_of: :organisation_client
 
   # Validations
   validates :organisation, presence: true
-  validates :first_name, presence: true, unless: 'self.business_client'
-  validates :last_name, presence: true, unless: 'self.business_client'
-  validates :company_name, presence: true, if: 'self.business_client'
+  validates :first_name, presence: true, unless: -> { business_client }
+  validates :last_name, presence: true, unless: -> { business_client }
+  validates :company_name, presence: true, if: -> { business_client }
   validates :email, length: { maximum: 255 }
   validates :route, length: { maximum: 255 }
   validates :street_number, length: { maximum: 255 }
@@ -24,8 +24,8 @@ class OrganisationClient < ActiveRecord::Base
   validates :administrative_area_level_1, length: { maximum: 255 }
   validates :country, length: { maximum: 255 }
   validates :postal_code, length: { maximum: 255 }
-  validates :iban_att, presence: true, if: 'self.iban.present?'
-  validate :iban_valid
+  validates :iban_att, presence: true, if: -> { iban.present? }
+  validate :iban_valid, if: -> { iban.present? }
 
   # Nested attributes
   accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
@@ -83,10 +83,6 @@ class OrganisationClient < ActiveRecord::Base
   end
 
   def iban_valid
-
-    # We do not require the iban to be present
-    return true if iban.nil? || self.iban == ''
-
     iban_model = IBANTools::IBAN.new(self.iban)
     iban_errors = iban_model.validation_errors
     if iban_errors.present?
@@ -102,7 +98,6 @@ class OrganisationClient < ActiveRecord::Base
 
   def vcard
     Vcard::Vcard::Maker.make2 do |maker|
-
       # Setting up name
       if business_client
         # Vcard standard requires a name, so use the company name as the last name
@@ -118,7 +113,7 @@ class OrganisationClient < ActiveRecord::Base
         end
       end
 
-      # Setting up address.
+      # Setting up address
       maker.add_addr do |addr|
         addr.street = route + ' ' +  street_number
         addr.postalcode = postal_code

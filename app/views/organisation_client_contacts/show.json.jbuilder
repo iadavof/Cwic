@@ -1,4 +1,5 @@
 json.vcard_url vcard_organisation_organisation_client_organisation_client_contact_path(@organisation, @organisation_client_contact.organisation_client, @organisation_client_contact)
+
 json.list_items do |json|
   if format_address(@organisation_client_contact).present?
     json.address do |json|

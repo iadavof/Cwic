@@ -387,6 +387,7 @@ nl:
               bad_length: 'heeft een ongeldige lengte'
               bad_format: 'heeft een ongeldig formaat'
               too_short: 'te kort'
+
   data_types:
     string:
       name: 'Regel tekst'
@@ -651,7 +652,7 @@ nl:
   communication_records:
     communication_record:
       linked_reservation: 'Gekoppelde reservering'
-    form_fields:
+    fields:
       method:
         phone: 'Telefonisch'
         email: 'Per e-mail'

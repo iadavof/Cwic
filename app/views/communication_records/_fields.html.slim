@@ -1,12 +1,13 @@
 .communication-record.fields
   = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: CommunicationRecord.model_name.human)
+
   .head.clearfix
     .methods
-      - CommunicationRecord.possible_methods.each do |method|
-        div class="#{method}#{(f.object.method == method.to_s) ? ' active' : ''}" data-value=method title=t('.method.' + method.to_s)
+      - CommunicationRecord::POSSIBLE_METHODS.each do |method|
+        div class="#{method}#{(f.object.method == method.to_s) ? ' active' : ''}" data-value=method title=t(".method.#{method}")
       = f.hidden_field :method
     .emotions
-      - CommunicationRecord.possible_emotions.each do |emo|
+      - CommunicationRecord::POSSIBLE_EMOTIONS.each do |emo|
         div class="#{emo}#{(f.object.emotion == emo.to_s) ? ' active' : ''}" data-value=emo
       = f.hidden_field :emotion
     .contact-reference
@@ -14,4 +15,5 @@
     .reservation-reference
       span R#
       = f.text_field :reservation_id, placeholder: t('.reservation_number')
+
   = f.text_area :summary, class: "summary", placeholder: t('.summary_placeholder')

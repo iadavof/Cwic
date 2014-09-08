@@ -15,5 +15,6 @@
       - if communication_record.reservation.present?
         strong = t('.linked_reservation')
         div = link_to(communication_record.reservation.instance_name, organisation_reservation_path(@organisation, communication_record.reservation))
+
   .summary
     = communication_record.summary

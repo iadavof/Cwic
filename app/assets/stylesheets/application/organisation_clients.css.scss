@@ -6,7 +6,6 @@
   }
 }
 
-
 a.vcard-download {
   position: absolute;
   right: 10px;
@@ -23,7 +22,7 @@ div.auto-address-fields {
 }
 
 div.auto-address-fields input[readonly="readonly"] {
-    background-color: #eee;
+  background-color: #eee;
 }
 
 #edit-auto-address-fields {
@@ -34,16 +33,13 @@ div.auto-address-fields input[readonly="readonly"] {
 }
 
 div.contact-wrapper {
-	padding: 0;
+  padding: 0;
   font-size: 1em;
   border-width: 1px;
 }
 
 div.contact-wrapper {
-	div.view {
-	}
-
-	div.view {
+  div.view {
     .name,
     .position {
       padding: 1em;
