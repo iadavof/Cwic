@@ -62,11 +62,11 @@ CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
 
   cancel = window.localMenu.addButton('context', 'cancel', APP.util.getTemplateClone('contextButtonCancel'), 5);
   cancel.addClass('red');
-  cancel.on('click', function() { schedule.stopEditMode.call(schedule, false); } );
+  cancel.on('click', function() { schedule.stopEditMode.call(schedule); } );
 
   save = window.localMenu.addButton('context', 'save', APP.util.getTemplateClone('contextButtonSave'), 6);
   save.addClass('green');
-  save.on('click', function() { schedule.stopEditMode.call(schedule, true); } );
+  save.on('click', function() { schedule.stopEditMode.call(schedule, 'save'); } );
 
   // Hide all buttons on init
   this.toggleLocalMenuButtons('context', ['description', 'client', 'edit', 'remove', 'cancel', 'save'], false);
@@ -364,12 +364,12 @@ CwicScheduleView.prototype.bindStartStopEditModeOnClick = function() {
         schedule.startEditMode(possibleScheduleItem);
       } else if(possibleScheduleItem.data('scheduleItemID') != null && schedule.focusedScheduleItem.item_id != parseInt(possibleScheduleItem.data('scheduleItemID'), 10)) {
         // A schedule item is currently being edited
-        schedule.stopEditMode(false);
+        schedule.stopEditMode();
         schedule.startEditMode(possibleScheduleItem);
       }
     } else {
       // Clicked outside the schedule item, revert the edit
-      schedule.stopEditMode(false);
+      schedule.stopEditMode();
     }
   });
 };
@@ -414,12 +414,11 @@ CwicScheduleView.prototype.setLocalMenuButtonHrefs = function() {
   localMenu.getButton('client').attr('href', Routes.organisation_organisation_client_path(current_organisation, this.focusedScheduleItem.client_id));
 };
 
-CwicScheduleView.prototype.stopEditMode = function(accept) {
+CwicScheduleView.prototype.stopEditMode = function(action) {
   var schedule = this;
-  accept = accept || false;
 
   if(this.focusedScheduleItem === null) {
-    // Nothing focussed, return
+    // Nothing focused, return
     return;
   }
 
@@ -430,7 +429,14 @@ CwicScheduleView.prototype.stopEditMode = function(accept) {
 
   this.focusedScheduleItem.toggleClass('edit-mode', false);
   this.focusedScheduleItem.removeFocus();
-  (accept) ? this.saveEditModeChanges() : this.discardEditModeChanges();
+
+  if(action == 'save') {
+    this.saveEditModeChanges();
+  } else if(action == 'delete') {
+    schedule.focusedScheduleItem.destroy();
+  } else {
+    this.discardEditModeChanges();
+  }
 
   schedule.focusedScheduleItem = null;
 };
@@ -635,7 +641,7 @@ CwicScheduleView.prototype.bindPlusOneAction = function() {
       var container = schedule.getContainerForPoint(event);
       var rel = schedule.getPointerRel(event, container);
       var scheduleEntity = schedule.scheduleEntities[container.data('scheduleEntityID')];
-      var focusMoment =  schedule.nearestMomentPoint(rel, container);
+      var focusMoment = schedule.nearestMomentPoint(rel, container);
       schedule.focusedScheduleItem = scheduleEntity.createNewScheduleItem();
       schedule.focusedScheduleItem.conceptBegin = moment(focusMoment).subtract(schedule.getSnapLength(), 'minutes');
       schedule.focusedScheduleItem.conceptEnd = moment(focusMoment).add(schedule.getSnapLength(), 'minutes');
@@ -1184,8 +1190,7 @@ CwicScheduleView.prototype.removeScheduleItem = function(link) {
         type: 'DELETE',
         success: function(result) {
           schedule.showStatusMessage(jsLang.schedule_view.deleted, false, 5000);
-          schedule.stopEditMode();
-          schedule.focusedScheduleItem.destroy();
+          schedule.stopEditMode('delete');
         },
         fail: function() {
           schedule.showStatusMessage(jsLang.schedule_view.error_deleting, false, 10000);

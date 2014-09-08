@@ -533,9 +533,9 @@ CwicScheduleViewItem.prototype.unbindDragAndResizeControls = function() {
 
 CwicScheduleViewItem.prototype.dragAndResizeEsc = function(event, context) {
   if (event.keyCode == 27) { // ESC
-    this.schedule.stopEditMode(false);
+    this.schedule.stopEditMode();
   } else if(event.keyCode == 13) { // ENTER
-    this.schedule.stopEditMode(true);
+    this.schedule.stopEditMode('save');
   }
 };
 
@@ -617,7 +617,7 @@ CwicScheduleViewItem.prototype.dragAndResizeUp = function(event, context) {
     var currentPoint = this.schedule.getPointerRel(event, context.container);
     // Euclidean distance
     if(Math.sqrt(Math.pow(event.originalEvent.pageX - context.pointerDownPoint.pageX, 2) + Math.pow(event.originalEvent.pageY - context.pointerDownPoint.pageY, 2)) < 10) {
-      this.schedule.stopEditMode(true);
+      this.schedule.stopEditMode('save');
     }
 
     if(this.conceptCollidesWithOthers() || !this.checkEndAfterBegin(true)) {
