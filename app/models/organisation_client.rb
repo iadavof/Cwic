@@ -55,11 +55,9 @@ class OrganisationClient < ActiveRecord::Base
   ##
 
   def instance_name
-    if self.business_client
-      "#{company_name}, #{locality}"
-    else
-      "#{full_name}, #{locality}"
-    end
+    name = (self.business_client ? company_name : full_name)
+    name << ", #{locality}" if locality.present?
+    name
   end
 
   def full_name
