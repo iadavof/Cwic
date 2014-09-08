@@ -4,7 +4,7 @@ class ReservationsController < ApplicationController
   authorize_resource
 
   respond_to :html, except: :update_status
-  respond_to :json
+  respond_to :json, only: [:create, :update, :destroy]
   respond_to :csv, :xls, only: :index
 
   # GET /reservations
@@ -108,7 +108,6 @@ class ReservationsController < ApplicationController
   end
 
 private
-
   def multiple_action
     # Check if a parameter key edit or delete is defined, this is the name of the submit button that is clicked
     action = %w(edit delete).detect { |a| params[a] }

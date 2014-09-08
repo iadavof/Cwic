@@ -54,7 +54,7 @@ class Organisation < ActiveRecord::Base
     self.name
   end
 
-  def get_owned_tags_with_part(part)
+  def owned_tags_with_part(part)
     @tags = self.owned_tags.where('name ILIKE ?', "%#{part}%")
   end
 end

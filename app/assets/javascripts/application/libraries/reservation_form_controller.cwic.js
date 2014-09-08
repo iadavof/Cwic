@@ -1,7 +1,7 @@
 function CwicReservationFormController(options) {
   this.options = $.extend({
     container: '',
-    entities_controller_url: 'url to backend'
+    available_entities_url: 'url to backend'
   }, options || {});
 
   this.formContainer = null;
@@ -165,8 +165,7 @@ CwicReservationFormController.prototype.updateMomentWithTime = function(moment, 
 CwicReservationFormController.prototype.updateAvailableEntities = function() {
   var _this = this;
   $.ajax({
-    type: 'POST',
-    url: this.options.entities_controller_url + '/availability.json',
+    url: this.options.available_entities_url,
     data: {
       reservation_id: _this.reservationId,
       selected_entity_id: _this.selectedEntityId,

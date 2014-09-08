@@ -128,14 +128,25 @@ class Reservation < ActiveRecord::Base
     "R##{self.id.to_s}"
   end
 
-  def get_slack_before
-    return read_attribute(:slack_before) if read_attribute(:slack_before).present?
-    return self.entity.get_slack_before
+  def full_instance_name(number: true, description: true, client: true, time_span: false)
+    name = ""
+    name << instance_name if number
+    name << "#{': ' if name.present?}#{self.description}" if description && self.description.present?
+    name << "#{' | ' if name.present?}#{organisation_client.instance_name}" if client && organisation_client.present?
+    if time_span && begins_at.present? && ends_at.present?
+      beg = I18n.l(begins_at)
+      en = I18n.l(ends_at)
+      name << "#{' | ' if name.present?}#{beg} -> #{en}"
+    end
+    name
   end
 
-  def get_slack_after
-    return read_attribute(:slack_after) if read_attribute(:slack_after).present?
-    return self.entity.get_slack_after
+  def slack_before
+    super.present? ? super : entity.try(:slack_before)
+  end
+
+  def slack_after
+    super.present? ? super : entity.try(:slack_after)
   end
 
   def length
@@ -168,19 +179,12 @@ class Reservation < ActiveRecord::Base
     self.entity.reservations.where('begins_at >= :ends_at', ends_at: ends_at).where.not(id: self.id).reorder(begins_at: :asc).first
   end
 
-  def one_line_summary
-    desc = self.description.present? ? self.description : I18n.t('reservations.show.no_description')
-    beg = I18n.l(self.begins_at, format: :long)
-    en = I18n.l(self.ends_at, format: :long)
-    "R##{self.id.to_s}: #{desc}, #{self.organisation_client.instance_name}, #{beg} --> #{en}."
-  end
-
   # Checks if the slack before is overlapping with (the slack of) a previous reservation.
   def slack_before_overlapping?
     previous_reservation = self.previous
     return false if previous_reservation.nil?
 
-    total_slack = self.get_slack_before + previous_reservation.get_slack_after
+    total_slack = self.slack_before + previous_reservation.slack_after
 
     self.begins_at - previous_reservation.ends_at < total_slack.minutes
   end
@@ -190,7 +194,7 @@ class Reservation < ActiveRecord::Base
     next_reservation = self.next
     return false if next_reservation.nil?
 
-    total_slack = self.get_slack_after + next_reservation.get_slack_before
+    total_slack = self.slack_after + next_reservation.slack_before
 
     next_reservation.begins_at - self.ends_at < total_slack.minutes
   end
@@ -350,14 +354,14 @@ private
     # Note: this code could be more optimized for updates (for example, when we move a reservation in the same day, then no recalculations are necessary)
     if self.days_was.present?
       # Perform recalculations for old range
-      DayOccupation.recalculate_occupations(self.entity, days_was)
-      WeekOccupation.recalculate_occupations(self.entity, Week.from_date(days_was.min)..Week.from_date(days_was.max))
+      DayOccupation.recalculate(self.entity, days_was)
+      WeekOccupation.recalculate(self.entity, Week.from_date(days_was.min)..Week.from_date(days_was.max))
     end
 
     unless self.destroyed?
       # Perform recalculations for new range
-      DayOccupation.recalculate_occupations(self.entity, days)
-      WeekOccupation.recalculate_occupations(self.entity, Week.from_date(days.min)..Week.from_date(days.max))
+      DayOccupation.recalculate(self.entity, days)
+      WeekOccupation.recalculate(self.entity, Week.from_date(days.min)..Week.from_date(days.max))
     end
   end
 

@@ -5,7 +5,7 @@
     - if current_user.organisations.count > 1
       - current_user.organisations.each do |org|
         li class=("selected" if current_organisation == org)
-          = link_to(content_tag(:i, nil, class: current_organisation == org ? 'icon icon-ok' : 'icon') + ' ' + org.instance_name, set_organisation_path(org))
+          = link_to(content_tag(:i, nil, class: current_organisation == org ? 'icon icon-ok' : 'icon') + ' ' + org.instance_name, switch_organisation_path(org))
 .section
   h2.user-menu-section-title
     = t('.actions')

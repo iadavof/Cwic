@@ -1,8 +1,9 @@
 function CwicScheduleView(options) {
   this.options = $.extend({
     container: 'schedule-container',
-    backend_url: 'url to backend',
-    patch_reservation_url: 'url to reservations controller',
+    entities_url: 'url for getting entities',
+    reservations_url: 'url for getting reservations data for current scope',
+    patch_reservation_url: 'url for updating a reservation',
     view: 'horizontalCalendar',
     snap_part: '0.5',
     zoom: 'day',
@@ -240,8 +241,7 @@ CwicScheduleView.prototype.createEntityShowCase = function() {
   }
 
   $.ajax({
-    type: 'GET',
-    url: this.options.backend_url  + '/entities'
+    url: this.options.entities_url
   }).success(function(response) {
     schedule.afterEntitiesLoad(response);
   });
@@ -908,10 +908,9 @@ CwicScheduleView.prototype.loadscheduleEntities = function() {
     schedule = this;
 
     $.ajax({
-      type: 'POST',
-      url: this.options.backend_url  + '/index_domain',
+      url: this.options.reservations_url,
       data: {
-        entity_ids: this.selectedEntities.join(','),
+        entity_ids: this.selectedEntities,
         schedule_begin: this.beginDate.format('YYYY-MM-DD'),
         schedule_end: this.endDate.format('YYYY-MM-DD')
       }

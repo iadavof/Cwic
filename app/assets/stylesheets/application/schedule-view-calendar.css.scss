@@ -1126,9 +1126,7 @@ div.calendar div.entity-container div.entity-button p.entity-name {
   html {
     background-color: transparent;
   }
-  body.controller-schedule_view.action-horizontal_calendar_day,
-  body.controller-schedule_view.action-horizontal_calendar_week,
-  body.controller-schedule_view.action-vertical_calendar_day {
+  body.controller-schedule_view {
     color: #000;
 
     #header,

@@ -1,7 +1,7 @@
 - content_for :page_title do
   = t('devise.invitations.new.header')
 
-= form_for(@user, url: { action: 'send_invitation' }) do |f|
+= form_for(@user, url: { action: 'invite' }) do |f|
   p = t('.intro', email: @user.email)
   = render 'shared/error_messages', target: @user
 

@@ -12,6 +12,6 @@ json.reservations @reservations do |r|
   json.begin_unix r.begins_at.to_i
   json.end_moment r.ends_at.strftime('%Y-%m-%d %H:%M')
   json.end_unix r.ends_at.to_i
-  json.description (!r.description.present? || @info_screen.show_reservation_number) ? "#{r.instance_name} #{r.description}" : r.description.to_s
+  json.description r.full_instance_name(number: @info_screen.show_reservation_number || r.description.blank?, client: false)
   json.direction_char @active_ises.detect { |ise| ise.entity_id == r.entity_id }.direction_char
 end

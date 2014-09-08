@@ -20,6 +20,6 @@
           - if category_content[:url].present? # No subitems
             = link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url), { data: { shortcut_for: "#{category_name}" } })
           - else # With subitems
-            = link_to(t(".#{category_name}"), '#', {data: { shortcut_for: "#{category_name}" }})
+            = link_to(t(".categories.#{category_name}"), '#', {data: { shortcut_for: "#{category_name}" }})
 
     = content_tag(:a, content_tag(:i, nil, class: 'icon-search'), id: 'open-search-button', class: (controller_name == 'search' ? 'open' : nil), href: '#')

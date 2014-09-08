@@ -2,6 +2,7 @@ class OrganisationsController < ApplicationController
   before_action :load_resource
   authorize_resource
 
+  respond_to :html, except: :tag_search
   respond_to :json, only: :tag_search
 
   # GET /organisations
@@ -44,7 +45,7 @@ class OrganisationsController < ApplicationController
   end
 
   def tag_search
-    @tags = @organisation.get_owned_tags_with_part(params[:tag_part])
+    @tags = @organisation.owned_tags_with_part(params[:tag_part])
     respond_with(@tags)
   end
 

@@ -157,7 +157,7 @@ APP.global = {
   openSearchBar: function() {
     var $searchBar = $('#search-bar');
     var $belowHeader = $('#below-header');
-    var $searchField = $('#global_search');
+    var $searchField = $('#global_search_query');
 
     $('#open-search-button').addClass('open');
 
@@ -176,7 +176,7 @@ APP.global = {
   closeSearchBar: function() {
     var $searchBar = $('#search-bar');
     var $belowHeader = $('#below-header');
-    var $searchField = $('#global_search');
+    var $searchField = $('#global_search_query');
 
     $searchField.blur().val('');
 
@@ -410,7 +410,7 @@ APP.global = {
       minimumInputLength: 1,
       width: 'resolve',
       ajax: {
-        url: Routes.organisation_organisation_clients_autocomplete_search_path(current_organisation, { format: 'json' }),
+        url: Routes.autocomplete_organisation_organisation_clients_path(current_organisation, { format: 'json' }),
         dataType: 'json',
         quietMillis: 500,
         data: function(term, page) {
@@ -444,7 +444,7 @@ APP.global = {
         multiple: true,
         ajax: {
           type: 'POST',
-          url: Routes.organisation_tag_search_path(current_organisation),
+          url: Routes.tag_search_organisation_path(current_organisation),
           dataType: 'json',
           quietMillis: 200,
           data:    function(term) { return { tag_part: term }; },

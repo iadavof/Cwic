@@ -1,8 +1,9 @@
 APP.schedule_view = {
-  horizontal_calendar_day: function() {
+  horizontal_day: function() {
     new CwicScheduleView({
       container: 'calendar',
-      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      entities_url: Routes.organisation_schedule_view_entities_path(current_organisation, { format: 'json' }),
+      reservations_url: Routes.organisation_schedule_view_reservations_path(current_organisation, { format: 'json' }),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
@@ -10,10 +11,11 @@ APP.schedule_view = {
     });
     this.bind_new_reservation_modal_button();
   },
-  horizontal_calendar_week: function() {
+  horizontal_week: function() {
     new CwicScheduleView({
       container: 'calendar',
-      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      entities_url: Routes.organisation_schedule_view_entities_path(current_organisation, { format: 'json' }),
+      reservations_url: Routes.organisation_schedule_view_reservations_path(current_organisation, { format: 'json' }),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
@@ -21,10 +23,11 @@ APP.schedule_view = {
     });
     this.bind_new_reservation_modal_button();
   },
-  vertical_calendar_day: function() {
+  vertical_day: function() {
     new CwicScheduleView({
       container: 'calendar',
-      backend_url: Routes.organisation_schedule_view_index_path(current_organisation),
+      entities_url: Routes.organisation_schedule_view_entities_path(current_organisation, { format: 'json' }),
+      reservations_url: Routes.organisation_schedule_view_reservations_path(current_organisation, { format: 'json' }),
       patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
       organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'verticalCalendar',

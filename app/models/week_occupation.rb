@@ -6,16 +6,16 @@ class WeekOccupation < ActiveRecord::Base
   validates :entity, presence: true
   validates :week, presence: true, numericality: { only_integer: true }
   validates :year, presence: true, numericality: { only_integer: true }
-  validates :occupation, presence: true, numericality: true
+  validates :percentage, presence: true, numericality: true
 
-  # Note: delete_all is used in recalculate_occupations, so destroy callbacks will not be called.
+  # Note: delete_all is used in recalculate, so destroy callbacks will not be called.
 
   ##
   # Class methods
   ##
 
   # Recalculates all occupations in weeks range for the given entity
-  def self.recalculate_occupations(entity, weeks)
+  def self.recalculate(entity, weeks)
     # Delete all old occupations
     entity.week_occupations.where('CONCAT(year, week) BETWEEN :min AND :max', min: weeks.min.to_s, max: weeks.max.to_s).delete_all
 
@@ -26,9 +26,9 @@ class WeekOccupation < ActiveRecord::Base
     occupations = []
     weeks.each do |week|
       matches = reservations.select { |r| r.begins_at < (week.to_end_date + 1.day) && r.ends_at > week.to_begin_date } # Get relevant reservations for this week
-      occupation_length = matches.map { |r| r.length_for_week(week) }.sum # Calculate the total time for all reservations in this week
-      occupation_percent = (occupation_length.to_f / 1.week.to_i) * 100 # Translate it to a percentage
-      occupations << WeekOccupation.new(entity: entity, week: week.week, year: week.year, occupation: occupation_percent) if occupation_percent > 0 # And add the row
+      length = matches.map { |r| r.length_for_week(week) }.sum # Calculate the total time for all reservations in this week
+      percentage = (length.to_f / 1.week.to_i) * 100 # Translate it to a percentage
+      occupations << WeekOccupation.new(entity: entity, week: week.week, year: week.year, percentage: percentage) if percentage > 0 # And add the row
     end
 
     # Finally insert all occupations
@@ -40,6 +40,10 @@ class WeekOccupation < ActiveRecord::Base
   ##
 
   def instance_name
-    self.week
+    week
+  end
+
+  def nr
+    week # The number in the container, in this case the number in the year
   end
 end

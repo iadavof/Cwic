@@ -6,7 +6,8 @@ CwicOccupationView.prototype.occupationContainer = null;
 function CwicOccupationView(options) {
   this.options = $.extend({
     container: 'schedule-container',
-    backend_url: 'url to backend',
+    entities_url: 'url for getting entities',
+    occupations_url: 'url for getting occupations data',
     view: 'dayOccupation'
   }, options || {});
 
@@ -37,7 +38,7 @@ CwicOccupationView.prototype.bindControls = function() {
   var occ = this;
 
   if(this.options.view == 'weekOccupation') {
-    this.occupationContainer.find('select#date_current_month, select#date_current_month + .cwic-dropdown').hide();
+    this.occupationContainer.find('select#date_current_month').select2('destroy').hide();
     this.occupationContainer.find('div.control-container a#current span.year').show();
   } else {
     this.occupationContainer.find('div.control-container a#current span.month').show();
@@ -123,60 +124,40 @@ CwicOccupationView.prototype.updateOccupationView = function() {
     this.generateMatrixBlocks(weeksInYear, weekBlockWidth);
   }
 
-  this.getPercentages();
+  this.getOccupations();
 };
 
 CwicOccupationView.prototype.getEntities = function() {
   var occ = this;
   $.ajax({
-    type: 'POST',
-    url: this.options.backend_url  + '/entities',
-    data: {
-
-    }
+    url: this.options.entities_url
   }).success(function(response) {
     occ.createRows(response);
   });
 };
 
-CwicOccupationView.prototype.getPercentages = function() {
-  if(this.options.view == 'dayOccupation') {
-    var url = this.options.backend_url + '/day_occupation_percentages.json';
-    var data = {
-      year: this.currentYear,
-      month: this.currentMonth,
-    }
-  } else if(this.options.view == 'weekOccupation') {
-    var url = this.options.backend_url + '/week_occupation_percentages.json';
-    var data = {
-      year: this.currentYear,
-    }
-  }
-
+CwicOccupationView.prototype.getOccupations = function() {
   var occ = this;
   $.ajax({
-    type: 'POST',
-    url: url,
-    data: data,
+    url: this.options.occupations_url,
+    data: {
+      year: this.currentYear,
+      month: this.currentMonth,
+    },
   }).success(function(response) {
     occ.fillPercentages(response);
   });
 };
 
 CwicOccupationView.prototype.fillPercentages = function(response) {
-  for(var ent_nr in response.entities) {
-    var entity = response.entities[ent_nr].entity_id;
-    var percentageItems = response.entities[ent_nr][ (this.options.view == 'dayOccupation') ? 'days' : 'weeks'];
-    for(var item_nr in percentageItems) {
-      var item = percentageItems[item_nr];
-      this.occupationContainer.find('.occupation-matrix-row#or_' + entity)
-      .find('.occupation-matrix-block.nr_' + item.nr)
-      .attr('title', this.getBlockTitle(item.nr, item.percent))
-      .css('background-color', this.getColorForPercentage(item.percent, 0.4))
-      .find('p.percent').text(Math.round(item.percent) + '%');
-      this.occupationContainer;
-    }
-  }
+  var occ = this;
+  $.each(response.occupations, function(index, occupation) {
+    occ.occupationContainer.find('.occupation-matrix-row#or_' + occupation.entity_id)
+      .find('.occupation-matrix-block.nr_' + occupation.nr)
+      .attr('title', occ.getBlockTitle(occupation.nr, occupation.percentage))
+      .css('background-color', occ.getColorForPercentage(occupation.percentage, 0.4))
+      .find('p.percent').text(Math.round(occupation.percentage) + '%');
+  });
 };
 
 CwicOccupationView.prototype.getBlockTitle = function(nr, percent) {

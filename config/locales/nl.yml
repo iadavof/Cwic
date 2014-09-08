@@ -487,9 +487,9 @@ nl:
     organisation_users:
       create:
         notice: '%{resource_name} (%{resource_email}) is toegevoegd.'
-      send_invitation:
+      invite:
         notice: '%{resource_name} (%{resource_email}) is uitgenodigd.'
-      resend_invitation:
+      reinvite:
         notice: '%{resource_name} (%{resource_email}) is opnieuw uitgenodigd.'
 
   views:
@@ -512,42 +512,47 @@ nl:
 
   layouts:
     menu:
-      overview: 'Overzicht'
-      reservations: 'Reserveringen'
-      organisation_clients: 'Klanten'
-      entities: 'Objecten'
-      settings: 'Instellingen'
-      admin: 'Admin'
+      categories:
+        overview: 'Overzicht'
+        reservations: 'Reserveringen'
+        organisation_clients: 'Klanten'
+        entities: 'Objecten'
+        settings: 'Instellingen'
+        admin: 'Admin'
       feedback: 'Feedback'
-      logout: 'Uitloggen'
       organisation: 'Organisatie'
     user_menu:
       actions: 'Acties'
+      logout: 'Uitloggen'
     submenu:
-      home: 'Home'
-      reservations: 'Reserveringen'
-      organisation_clients: 'Klanten'
-      organisation_users: 'Gebruikers'
-      entity_types: 'Objectsoorten'
-      custom_icons: 'Objecticonen'
-      entities: 'Objecten'
-      index: 'Lijst'
-      new: 'Nieuw'
-      planning: 'Planning'
-      today_and_tomorrow: 'Vandaag en morgen'
-      horizontal_calendar_day: 'Horizontale dagkalender'
-      horizontal_calendar_week: 'Horizontale weekkalender'
-      vertical_calendar_day: 'Verticale kalender'
-      occupation_view: 'Bezetting'
-      day_occupation: 'Dagbezetting'
-      week_occupation: 'Weekbezetting'
-      info_screens: 'Informatieschermen'
-      entity_type_icons: 'Objecticonen'
-      users: 'Alle gebruikers'
-      feedbacks: 'Feedback'
-      organisations: 'Organisaties'
-      documents: 'Documenten'
-      manage: 'Instellen'
+      categories:
+        home: 'Home'
+        reservations: 'Reserveringen'
+        schedule_view: 'Planning'
+        occupation_view: 'Bezetting'
+        organisation_clients: 'Klanten'
+        entities: 'Objecten'
+        organisation_users: 'Gebruikers'
+        entity_types: 'Objectsoorten'
+        documents: 'Documenten'
+        info_screens: 'Informatieschermen'
+        organisations: 'Organisaties'
+        users: 'Alle gebruikers'
+        feedbacks: 'Feedback'
+        entity_type_icons: 'Objecticonen'
+      links:
+        index: 'Lijst'
+        new: 'Nieuw'
+        schedule_view:
+          horizontal_day: 'Horizontale dagkalender'
+          horizontal_week: 'Horizontale weekkalender'
+          today_and_tomorrow: 'Vandaag en morgen'
+          vertical_day: 'Verticale kalender'
+        occupation_view:
+          day: 'Dagbezetting'
+          week: 'Weekbezetting'
+        entity_types:
+          custom_icons: 'Objecticonen'
     search:
       search_placeholder: 'Zoeken...'
       search: 'Zoeken'
@@ -589,8 +594,8 @@ nl:
       status: 'Status'
       active: 'Actief'
       awaiting_invitation_acceptance: 'Wacht op bevestiging'
-      resend_invitation: 'Herstuur uitnodiging'
-    new_invitation:
+      reinvite: 'Herstuur uitnodiging'
+    invite_form:
       intro: 'Het systeem kent de gebruiker met het e-mailadres ''%{email}'' niet. Gebruik het formulier hieronder om deze persoon een uitnodiging te sturen voor het systeem.'
 
   organisation_clients:
@@ -660,7 +665,6 @@ nl:
       logs: 'Geschiedenis'
     show_general:
       repetitions: 'Herhalingen'
-      no_description: '<geen beschrijving>'
       slack_before_overlaps_with_html: 'Speling vooraf overlapt met %{reservation}'
       slack_after_overlaps_with_html: 'Speling achteraf overlapt met %{reservation}'
     index:
@@ -720,9 +724,9 @@ nl:
       no_entities_found: 'Er zijn nog geen objecten aangemaakt. %{link} om deze kalender te gebruiken.'
 
   schedule_view:
-    horizontal_schedule_day: 'Horizontale dagkalender'
-    horizontal_schedule_week: 'Horizontale weekkalender'
-    vertical_schedule_day: 'Verticale dagkalender'
+    horizontal_day: 'Horizontale dagkalender'
+    horizontal_week: 'Horizontale weekkalender'
+    vertical_day: 'Verticale dagkalender'
     schedule_view:
       set: 'Stel in'
       tm: t/m
@@ -742,10 +746,10 @@ nl:
       delete: 'Verwijderen'
 
   occupation_view:
-    day_occupation:
-      day_occupation: 'Dagbezetting'
-    week_occupation:
-      week_occupation: 'Weekbezetting'
+    day:
+      title: 'Dagbezetting'
+    week:
+      title: 'Weekbezetting'
     template:
       current_month: 'Deze maand'
       current_year: 'Dit jaar'
@@ -781,15 +785,15 @@ nl:
       add_note: 'Notitie toevoegen'
 
   search:
-    global_search:
+    global:
       results: 'resultaten'
       title_html: 'Resultaten voor <strong>%{query}</strong>'
       title_htm_of: 'Resultaten voor <strong>%{query}</strong> van %{instance_name}'
       item: 'Item'
       matching_tags: 'De volgende tags komen overeen met uw zoekopdracht:'
-    tag_search:
+    tag:
       results: 'resultaten'
-      title_html: 'Resultaten voor de tag <strong>%{query}</strong>'
+      title_html: 'Resultaten voor de tag <strong>%{tag}</strong>'
       item: 'Item'
     organisation_client_result_reservations:
       past_reservations: 'Eerdere reserveringen'

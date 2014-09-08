@@ -1,74 +1,90 @@
 Cwic::Application.routes.draw do
   get 'introduction/index'
+  get 'home/index'
   root to: 'introduction#index'
 
-  match 'home/index', controller: 'home', action: 'index', via: 'get'
+  devise_for :users, controllers: { registrations: 'users/registrations', invitations: 'users/invitations' }
 
-  devise_scope :user do get '/users/sign_out' => 'devise/sessions#destroy' end
-  devise_for :users, controllers: { registrations: "users/registrations", invitations: 'users/invitations' }
+  get 'switch_organisation/:id/', controller: :application, action: :switch_organisation, as: :switch_organisation
 
-  resources :users, except: [:new]
-  resources :intro_sections
-  resources :entity_type_icons # Admin page for managing the entity type icons
-  resources :feedbacks, except: [:new, :edit]
-
-  match '/set_organisation/:organisation_id/', controller: 'application', action: 'set_organisation', via: 'get', as: 'set_organisation'
-  match '/organisations/:id/tag_search', controller: 'organisations', action: 'tag_search', via: 'post', as: 'organisation_tag_search'
   resources :organisations do
-    resources :organisation_users, except: :show
-    match '/organisation_users/send_invitation', controller: 'organisation_users', action: 'send_invitation', via: 'post'
-    match '/organisation_users/:id/resend_invitation', controller: 'organisation_users', action: 'resend_invitation', via: 'post', as: 'organisation_user_resend_invitation'
+    post :tag_search, on: :member
+
+    resources :organisation_users, except: :show do
+      post :invite, on: :new
+      post :reinvite, on: :member
+    end
+
     resources :entity_types
+    resources :entity_type_icons
 
-    resources :entities
-    match '/entities/availability', controller: 'entities', action: 'availability', via: 'post'
+    resources :entities do
+      get :available, on: :collection
+    end
 
-    resources :info_screens
-    match 'info_screens/:id/reservations', controller: 'info_screens', action: 'info_screen_reservations', via: 'get', as: 'info_screen_reservations'
+    resources :reservations do
+      post :multiple, on: :collection
+      patch :update_status, on: :member
+    end
 
-    resources :stickies, except: [:show, :create, :edit, :new]
-    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'weight_update', via: 'patch'
-    match 'stickies/:resource/:rid/', controller: 'stickies', action: 'stickies_for', via: 'get'
-    match 'stickies/:resource/:rid/new', controller: 'stickies', action: 'create', via: 'post'
-
-    # Routes for rendering the schedules
-    match '/schedule_view/horizontal_calendar_day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get'
-    match '/schedule_view/horizontal_calendar_day/entity/:entity/:year/:month/:day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get', as: 'horizontal_calendar_day_entity_date'
-    match '/schedule_view/horizontal_calendar_day/:year/:month/:day', controller: 'schedule_view', action: 'horizontal_calendar_day', via: 'get', as: 'horizontal_calendar_day_date'
-    match '/schedule_view/horizontal_calendar_week', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get'
-    match '/schedule_view/horizontal_calendar_week/entity/:entity/:year/:week', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get', as: 'horizontal_calendar_week_entity_date'
-    match '/schedule_view/horizontal_calendar_week/:year/:week', controller: 'schedule_view', action: 'horizontal_calendar_week', via: 'get', as: 'horizontal_calendar_week_date'
-    match '/schedule_view/vertical_calendar_day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get'
-    match '/schedule_view/vertical_calendar_day/entity/:entity/:year/:month/:day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get', as: 'vertical_calendar_day_entity_date'
-    match '/schedule_view/vertical_calendar_day/:year/:month/:day', controller: 'schedule_view', action: 'vertical_calendar_day', via: 'get', as: 'vertical_calendar_day_date'
-
-    match '/today_and_tomorrow', controller: 'today_and_tomorrow', action: 'index', via: 'get'
-    match '/today_and_tomorrow/update', controller: 'today_and_tomorrow', action: 'update', via: 'get'
-
-    # JSON routes for schedules
-    match '/schedule_view/index_domain', controller: 'schedule_view', action: 'index_domain', via: 'post', as: 'reservations_domain_json'
-    match '/schedule_view/entities', controller: 'schedule_view', action: 'entities', via: 'get', as: 'schedule_entities_json'
-    match '/schedule_view', controller: 'schedule_view', action: 'index', via: 'get', as: 'schedule_view_index'
-
-    # Routes for dayOccupation
-    match '/occupation_view', controller: 'occupation_view', action: 'index', via: 'get', as: 'occupation_view'
-    match '/occupation_view/entities', controller: 'occupation_view', action: 'entities', via: 'post', as: 'occupation_view_entities_json'
-    match '/occupation_view/day_occupation_percentages', controller: 'occupation_view', action: 'day_occupation_percentages', via: 'post', as: 'occupation_view_day_occupation_percentages'
-    match '/occupation_view/week_occupation_percentages', controller: 'occupation_view', action: 'week_occupation_percentages', via: 'post', as: 'occupation_view_week_occupation_percentages'
-    match '/day_occupation', controller: 'occupation_view', action: 'day_occupation', via: 'get'
-    match '/week_occupation', controller: 'occupation_view', action: 'week_occupation', via: 'get'
-
-    match 'reservations/multiple', controller: 'reservations', action: 'multiple', via: 'post', as: 'reservations_multiple'
-    match 'reservations/:id/update_status', controller: 'reservations', action: 'update_status', via: 'patch', as: 'reservations_update_status'
-    resources :reservations
-    match '/organisation_clients/autocomplete_search', controller: 'organisation_clients', action: 'autocomplete_search', via: 'get'
     resources :organisation_clients do
       resources :reservations
+      get :autocomplete, on: :collection
     end
-    resources :entity_type_icons
+
+    resources :info_screens do
+      get :reservations, on: :member
+    end
+
     resources :documents, except: [:new, :edit]
 
-    match '/search/global_search', controller: 'search', action: 'global_search', via: 'get'
-    match '/search/tag_search', controller: 'search', action: 'tag_search', via: 'get'
+    # TODO rewrite this so stickies are routed through their parent
+    resources :stickies, only: [:index, :update, :destroy] do
+      get ':resource/:rid/', action: :stickies_for, on: :collection
+      post ':resource/:rid/new', action: :create, on: :collection
+      patch ':resource/:rid/', action: :weight_update, on: :collection
+    end
+
+    controller :schedule_view do
+      # Horizontal day calendar
+      get 'schedule_view/horizontal_day'
+      get 'schedule_view/horizontal_day/entity/:entity/:year/:month/:day', action: :horizontal_day, as: :schedule_view_horizontal_day_entity_date
+      get 'schedule_view/horizontal_day/:year/:month/:day', action: :horizontal_day, as: :schedule_view_horizontal_day_date
+
+      # Horizontal week calendar
+      get 'schedule_view/horizontal_week'
+      get 'schedule_view/horizontal_week/entity/:entity/:year/:week', action: :horizontal_week, as: :schedule_view_horizontal_week_entity_date
+      get 'schedule_view/horizontal_week/:year/:week', action: :horizontal_week, as: :schedule_view_horizontal_week_date
+
+      # Vertical day calendar
+      get 'schedule_view/vertical_day'
+      get 'schedule_view/vertical_day/entity/:entity/:year/:month/:day', action: :vertical_day, as: :schedule_view_vertical_day_entity_date
+      get 'schedule_view/vertical_day/:year/:month/:day', action: :vertical_day, as: :schedule_view_vertical_day_date
+
+      # AJAX routes
+      get 'schedule_view/entities'
+      get 'schedule_view/reservations'
+    end
+
+    controller :today_and_tomorrow do
+      get 'today_and_tomorrow/index'
+      get 'today_and_tomorrow/update'
+    end
+
+    controller :occupation_view do
+      get 'occupation_view/day'
+      get 'occupation_view/week'
+    end
+
+    controller :search do
+      get 'search/global'
+      get 'search/tag/:id', action: :tag, as: :search_tag
+    end
   end
+
+  # Admin pages
+  resources :users, except: :new
+  resources :intro_sections
+  resources :entity_type_icons
+  resources :feedbacks, except: [:new, :edit]
 end

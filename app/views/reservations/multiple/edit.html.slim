@@ -1,12 +1,12 @@
 - content_for :page_title do
   = t('multiple.edit')
 
-= form_for @reservation.localized, url: organisation_reservations_multiple_path(@organisation) do |f|
+= form_for @reservation.localized, url: multiple_organisation_reservations_path(@organisation) do |f|
   = t('multiple.edit_is_applied_to_the_following')
   ul
     - @reservations.each do |r|
       li
-        = r.one_line_summary
+        = r.full_instance_name(time_span: true)
 
   = render 'reservations/multiple/form', f: f
 

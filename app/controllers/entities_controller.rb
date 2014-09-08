@@ -2,8 +2,8 @@ class EntitiesController < ApplicationController
   before_action :load_resource
   authorize_resource through: :organisation
 
-  respond_to :html, except: [:availability]
-  respond_to :json, only: [:availability]
+  respond_to :html, except: [:available]
+  respond_to :json, only: [:index, :available]
 
   # GET /entities
   def index
@@ -46,7 +46,7 @@ class EntitiesController < ApplicationController
     respond_with(@organisation, @entity)
   end
 
-  def availability
+  def available
     # PERFORMANCE: in this action (and espacially in its view) many queries are performed to check for overlap, get max slack values, etcetera.
     # Since this action is often called by the Reservation form JavaScript, it might be desired to optimize its performance.
     @begins_at = Time.parse(params[:begins_at])
@@ -63,13 +63,13 @@ class EntitiesController < ApplicationController
 private
   def load_resource
     case params[:action]
-    when 'availability'
+    when 'index'
+      @entities = @organisation.entities.accessible_by(current_ability, :index).includes(entity_type: :icon).ssp(params)
+    when 'available'
       # All entities for this Entity type
       @entities = @organisation.entity_types.find(params[:entity_type_id]).entities.accessible_by(current_ability, :index)
       # Get the available entities for the time period
       @entities = @entities.available_between(Time.parse(params[:begins_at]), Time.parse(params[:ends_at]), ignore_reservations: params[:reservation_id])
-    when 'index'
-      @entities = @organisation.entities.accessible_by(current_ability, :index).includes(:entity_type).ssp(params)
     when 'new', 'create'
       @entity = @organisation.entities.build
     else

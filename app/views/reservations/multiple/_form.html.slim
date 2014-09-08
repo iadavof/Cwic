@@ -6,7 +6,7 @@
     = f.label :description
     .field-with-example-wrapper
       = f.text_field :description
-      p = t('for_example') + ': ' + t('reservations.form.reservation_description_example')
+      p = t('for_example') + ': ' + t('reservations.form_settings.reservation_description_example')
   .field
     = check_box_tag "edit_fields[]", :begins_at_date, false, class: 'edit_field_checkbox', id: 'edit_fields_begins_at_date'
     = f.label :begins_at_date

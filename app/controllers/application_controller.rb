@@ -22,18 +22,14 @@ class ApplicationController < ActionController::Base
   rescue_from CanCan::AccessDenied do |exception|
     redirect_to root_url, alert: exception.message
   end
-  
+
   def after_sign_in_path_for(resource_or_scope)
     home_index_path
   end
 
-  def set_organisation
-    sel_organisation = current_user.organisations.find(params[:organisation_id]);
-    if sel_organisation.present?
-      session[:current_organisation_id] = sel_organisation.id
-      @current_organisation = sel_organisation
-    end
-    redirect_to :root
+  def switch_organisation
+    session[:current_organisation_id] = params[:id].to_i
+    redirect_to home_index_path
   end
 
   def current_organisation
