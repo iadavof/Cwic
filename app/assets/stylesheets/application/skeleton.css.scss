@@ -32,7 +32,13 @@ body {
   z-index: 198;
 }
 
-html.js {
+html.logged-in {
+  #logo-container {
+    display: none;
+  }
+}
+
+html.logged-in.js {
   body {
     padding-top: 0.01px;
     margin-top: -0.01px;
@@ -94,7 +100,7 @@ html.js {
   }
 }
 
-html.flexbox, html.js.flexbox {
+html.logged-in.flexbox, html.logged-in.js.flexbox {
   body {
     padding-top: 0.01px;
     margin-top: -0.01px;
@@ -164,5 +170,11 @@ html.flexbox, html.js.flexbox {
   
   #content-area {
     flex: 1 1 auto;
+  }
+}
+
+html.not-logged-in {
+  body {
+    overflow: visible;
   }
 }

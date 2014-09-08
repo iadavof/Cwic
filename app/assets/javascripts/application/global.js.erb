@@ -216,8 +216,8 @@ APP.global = {
         break;
     }
   },
-  addProgressbarToAjax : function() {
-    NProgress.configure({ container: $('div#progress-bar-container'), showSpinner: false });
+  addProgressbarToAjax: function() {
+    NProgress.configure({ container: $('#progress-bar-container'), showSpinner: false });
 
     $(document).ajaxStart(function() {
       NProgress.stackPush();

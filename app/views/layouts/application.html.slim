@@ -21,13 +21,13 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
     data-current-organisation-id=current_organisation.try(:id)
     data-current-locale=I18n.locale
   ]
-    - unless user_signed_in?
-      #logo-container
-        #logo-container-inner
-          = link_to(root_path) do
-            img.logo src=asset_path('logo.png')
-
     #page-wrapper
+      - unless user_signed_in?
+        #logo-container
+          #logo-container-inner
+            = link_to(root_path) do
+              img.logo src=asset_path('logo.png')
+
       #header
         - if user_signed_in?
           = render "layouts/menu"

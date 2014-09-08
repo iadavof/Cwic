@@ -2,7 +2,7 @@
   background-color: #eee;
 }
 
-html.js #main-area {
+html.js.logged-in #main-area {
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
   border-left: 1px solid #ccc;
   border-top: 1px solid #f9f9f9;
@@ -22,9 +22,9 @@ html.js.not-logged-in {
     display: inline-block;
     text-align: left;
   }
-
-  #logo-container {
-    display: block;
+  
+  #local-menu, &.flexbox #local-menu {
+    display: none;
   }
 }
 
@@ -80,8 +80,7 @@ html.js.not-logged-in {
 
 #logo-container {
   background-color: #fff;
-  padding: 20px;
-  display: none;
+  padding: 40px;
   text-align: center;
 }
 
