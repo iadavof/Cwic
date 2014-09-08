@@ -23,5 +23,5 @@
       = link_to(t('.new_organisation_client'), '', id: 'new_organisation_client_link')
 
   .actions
-    = f.submit
-    = f.submit t('.full_form'), name: "full", style: "float: right;", class: "blue"
+    = f.submit t('.full_form'), name: "full", class: "blue"
+    = f.submit nil, style: "float: right;"

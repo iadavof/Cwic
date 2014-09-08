@@ -6,7 +6,7 @@ section.intro-section-home
   #logo-container
     #logo-container-inner
       = link_to(root_path) do
-        img.logo src=asset_path('logo.png')
+        img.logo src=asset_path('logo.png') alt="Cwic"
 
   = render 'layouts/flash_messages'
 
@@ -25,30 +25,8 @@ section.intro-section-home
 
     .home-intro-text
       h1
-        ' De
-        strong>
-          | nieuwe
-        | manier van reserveringen beheren
-      p
-        ' U wilt geen tijd kwijt zijn aan ingewikkelde reserveringssoftware. U wilt geen enorme ICT-afdeling nodig hebben om uw reserveringen digitaal te beheren. En u wilt niet voor elke activiteit een apart reserveringssysteem hoeven gebruiken. Dan is Cwic voor u gemaakt. Cwic is
-        strong
-          | flexibel
-        ' ,
-        strong>
-          | gebruiksvriendelijk
-        ' en
-        strong>
-          | online
-        | - dus overal bereikbaar en altijd up-to-date. Cwic is geschikt voor alle organisaties, van klein tot groot.
-      p
-        strong
-          | Cwic komt binnen de komende 10 à 20 jaar in besloten bèta
-        ' . Wilt u Cwic als eerste uitproberen?
-        strong
-          ' Meld u dan aan via de knop
-          em
-            | Ga nu Cwic gebruiken
-        | .
+        = t('.intro_title_html')
+      = t('.intro_text_html')
 
 = render @intro_sections
 
@@ -69,5 +47,4 @@ section.intro-section-last
     = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
 
   .intellectual-property
-    ' Cwic&reg; is een geregistreerd handelsmerk van
-    = link_to('IADA v.o.f.', 'http://iada.nl/')
+    = t('.intellectual_property_html')

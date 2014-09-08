@@ -71,7 +71,7 @@ CwicLocalMenu.prototype.addButton = function(division, id, content, weight) {
 
 CwicLocalMenu.prototype.getDivision = function(division) {
   if(this.isDivision(division)) {
-    return this.divisionDoms[division];
+    return this.divisionDoms[division].find('> .inner');
   }
 };
 
@@ -99,7 +99,7 @@ CwicLocalMenu.prototype.isDivision = function(division) {
 };
 
 CwicLocalMenu.prototype.removeButton = function(division, id) {
-  this.divisionDoms[division].find('a#' . id);
+  this.divisionDoms[division].find('> .inner a#' . id);
 
   // Update the height
   this.updateHeightSettings();
@@ -131,7 +131,7 @@ CwicLocalMenu.prototype.toggleButtons = function(division, buttonids, newState) 
 
   for(buttonidi in buttonids) {
     var buttonid = buttonids[buttonidi];
-    this.divisionDoms[division].find('#' + buttonid)[newState ? 'show' : 'hide']();
+    this.divisionDoms[division].find('> .inner #' + buttonid)[newState ? 'show' : 'hide']();
   }
 
   // Update the height
@@ -158,7 +158,7 @@ CwicLocalMenu.prototype.clearAllDivisions = function() {
 // Get the weight of the utmost left item
 CwicLocalMenu.prototype.getWeightMin = function(division) {
   if(this.isDivision(division)) {
-    var mostLeft = this.divisionDoms[division].children().first();
+    var mostLeft = this.divisionDoms[division].find('> .inner').children().first();
     mostLeftWeight = typeof mostLeft.data('weight') == 'undefined' ? 0 : mostLeft.data('weight');
     return mostLeftWeight;
   }
@@ -167,7 +167,7 @@ CwicLocalMenu.prototype.getWeightMin = function(division) {
 // Get the weight of the utmost right item
 CwicLocalMenu.prototype.getWeightMax = function(division) {
   if(this.isDivision(division)) {
-    var mostRight = this.divisionDoms[division].children().last();
+    var mostRight = this.divisionDoms[division].find('> .inner').children().last();
     mostRightWeight = typeof mostRight.data('weight') == 'undefined' ? 0 : mostRight.data('weight');
     return mostRightWeight;
   }
