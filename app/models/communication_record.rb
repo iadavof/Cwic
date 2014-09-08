@@ -14,7 +14,7 @@ class CommunicationRecord < ActiveRecord::Base
   # Validations
   validates :organisation_client, presence: true
   validates :user, presence: true
-  validates :reservation_id, inclusion: { in: -> cr { cr.organisation_client.reservation_ids } }, if: -> { organisation_client.present? }
+  validates :reservation_id, inclusion: { in: -> cr { cr.organisation_client.reservation_ids } }, if: -> { organisation_client.present? }, allow_nil: true
   validates :summary, presence: true
   validates :emotion, length: { maximum: 255 }, inclusion: { in: POSSIBLE_EMOTIONS }, allow_nil: true
   validates :method, length: { maximum: 255 }, inclusion: { in: POSSIBLE_METHODS }, allow_nil: true
