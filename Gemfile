@@ -81,7 +81,7 @@ gem 'i18n_alchemy'
 gem 'responders'
 
 # Nested forms helpers
-gem 'nested_form'
+gem 'nested_form', github: 'ramonsnir/nested_form'
 
 # Image uploads
 gem 'mini_magick'
