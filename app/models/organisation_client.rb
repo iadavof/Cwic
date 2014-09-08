@@ -7,7 +7,7 @@ class OrganisationClient < ActiveRecord::Base
   belongs_to :organisation
   has_many :reservations, dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy
-  has_many :contacts, class_name: 'OrganisationClientContact', dependent: :destroy
+  has_many :contacts, class_name: 'OrganisationClientContact', dependent: :destroy, inverse_of: :organisation_client
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
   has_many :communication_records, dependent: :destroy, inverse_of: :organisation_client
 

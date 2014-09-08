@@ -3,8 +3,7 @@ class OrganisationClientContact < ActiveRecord::Base
   belongs_to :organisation_client
 
   # Validations
-  validates :organisation_client_id, presence: true
-  validates :organisation_client, presence: true, if: "organisation_client_id.present?"
+  validates :organisation_client, presence: true
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :infix, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
