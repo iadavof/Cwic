@@ -411,7 +411,7 @@ CwicScheduleViewItem.prototype.render = function(concept) {
   for(var parti in parts) {
     var part = parts[parti];
     var partBegin = moment(part).startOf(this.schedule.options.zoom);
-    var partEnd = moment(part).endOf(this.schedule.options.zoom);
+    var partEnd = moment(part).endOf(this.schedule.options.zoom).add(1, 'minute');
 
     // The momentJS min and max functions work like a lowerbound and upperboud limit function and not really like min and max
     var partMomentBlock = {
@@ -450,10 +450,14 @@ CwicScheduleViewItem.prototype.render = function(concept) {
     schedulePartWrapper.find('div.plus')[this.item_id == null ? 'show' : 'hide']();
     schedulePartWrapper.find('div.ok')[this.item_id !== null && this.conceptDiffersWithOriginal() ? 'show' : 'hide']();
 
-    if(momentBlock.begin.isAfter(partBegin) && momentBlock.begin.isBefore(partEnd) && momentBlock.end.isAfter(partBegin) && momentBlock.end.isBefore(partEnd)) {
+    if((momentBlock.begin.isAfter(partBegin) || momentBlock.begin.isSame(partBegin))
+      && momentBlock.begin.isBefore(partEnd)
+      && momentBlock.end.isAfter(partBegin)
+      && momentBlock.end.isBefore(partEnd)) {
       this.showResizers(schedulePartWrapper, true, true);
       this.showContinues(schedulePartWrapper, false, false);
-    } else if(momentBlock.begin.isAfter(partBegin) && momentBlock.begin.isBefore(partEnd)) {
+    } else if((momentBlock.begin.isAfter(partBegin) || momentBlock.begin.isSame(partBegin))
+      && momentBlock.begin.isBefore(partEnd)) {
       // ScheduleItem begin is in current part
       this.showContinues(schedulePartWrapper, false, true);
       this.showResizers(schedulePartWrapper, true, false);
