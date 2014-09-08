@@ -20,16 +20,10 @@
           cwic_sticky_header.destroySticky(container, substituteContainer);
         }
       });
-      $(window).on('resize.cwic_sticky header-animated.cwic_sticky', function(e) {
-        cwic_sticky_header.updateCss(container, substituteContainer);
-      });
       $(window).on('header-start-animation.cwic_sticky', function(e) {
         if (substituteContainer.css('display') != 'none') {
           container.css({visibility: 'hidden'});
         }
-      });
-      $(window).on('header-animated.cwic_sticky', function(e) {
-        container.css({visibility: 'visible'});
       });
       $(document).on('page:before-change.cwic_sticky', function() {
         cwic_sticky_header.destroySticky(container, substituteContainer);

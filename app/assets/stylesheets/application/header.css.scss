@@ -1,18 +1,5 @@
 #header {
   box-shadow: 0 1px 15px rgba(0,0,0,0.2);
-  position: relative;
-  z-index: 199;
-}
-
-html.js #header {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 100%;
-}
-
-html.js.csstransforms #header {
-  transform: translate(0, -100%);
 }
 
 /* Search */
@@ -39,6 +26,19 @@ form.mini-search {
   }
   input[type="submit"] {
     margin-left: 10px;
+  }
+}
+
+html.js.flexbox {
+  #search-bar {
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: flex-end;
+    height: 0;
+    overflow: hidden;
+    > .inner {
+      flex: 0 0 100%;
+    }
   }
 }
 

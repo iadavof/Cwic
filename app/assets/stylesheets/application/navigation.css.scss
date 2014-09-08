@@ -229,13 +229,6 @@
 }
 
 html.js #submenu-box {
-  overflow-y: auto;
-  overflow-x: hidden;
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300px;
-  bottom: 0;
   > .submenu {
     display: none;
     width: 260px;
@@ -251,10 +244,8 @@ html.js #submenu-box {
 #local-menu {
   background-color: #fff;
   padding: 0 0.5em 0 1em;
-  position: relative;
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
   border-bottom: 1px solid #ddd;
-  z-index: 198;
   .button {
     margin: 0.4em 0;
     padding: 0.6em 0.8em;

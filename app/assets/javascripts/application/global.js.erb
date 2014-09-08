@@ -62,10 +62,12 @@ APP.init = function() {
 
   this.global.bindHelpModalEvents();
 
-  this.global.contentAreaResize();
-  $(window).on('resize', function() {
-    APP.global.contentAreaResize();
-  });
+  if (!Modernizr.flexbox) {
+    this.global.contentAreaResize();
+    $(window).on('resize', function() {
+      APP.global.contentAreaResize();
+    });
+  }
 };
 
 // Add progress bar for Turbolink requests
@@ -111,7 +113,10 @@ APP.global = {
     });
   },
   contentAreaResize: function(location) {
-    $('#below-header').css({top: $('#search-bar').is('.open') ? $('#header').outerHeight() + 'px' : $('#header').outerHeight() - $('#search-bar').outerHeight() + 'px'});
+    if(Modernizr.flexbox) {
+      return;
+    }
+    $('#page-wrapper').css({top: $('#search-bar').is('.open') ? $('#header').outerHeight() + 'px' : $('#header').outerHeight() - $('#search-bar').outerHeight() + 'px'});
     if (!Modernizr.csstransforms) {
       $('#header').css({top: -$('#header').outerHeight() + 'px'});
     }
@@ -147,44 +152,69 @@ APP.global = {
     $('#open-search-button').on('click', function() {
       $(window).trigger('header-start-animation');
       if(!$searchBar.hasClass('open')) {
-        APP.global.openSearchBar();
+        APP.global.slideSearchBar('open');
       } else {
-        APP.global.closeSearchBar();
+        APP.global.slideSearchBar('close');
       }
       return false;
     });
   },
-  openSearchBar: function() {
+  slideSearchBar: function(action) {
     var $searchBar = $('#search-bar');
-    var $belowHeader = $('#below-header');
+    var $pageWrapper = $('#page-wrapper');
     var $searchField = $('#global_search_query');
-
-    $('#open-search-button').addClass('open');
-
-    $(document).keydown(function(event) {
-      /* Close search bar when esc button is pressed */
-      if(event.keyCode == 27) {
-        APP.global.closeSearchBar();
-      }
-    });
-    $belowHeader.velocity({top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
-      $searchBar.addClass('open');
-      $(window).trigger('header-animated');
-    });
-    $searchField.focus();
-  },
-  closeSearchBar: function() {
-    var $searchBar = $('#search-bar');
-    var $belowHeader = $('#below-header');
-    var $searchField = $('#global_search_query');
-
-    $searchField.blur().val('');
-
-    $('#open-search-button').removeClass('open');
-    $belowHeader.velocity({top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
-      $searchBar.removeClass('open');
-      $(window).trigger('header-animated');
-    });
+    var duration = 150;
+    
+    switch(action) {
+      case 'open':
+        var complete = function() {
+          $searchBar.addClass('open');
+          $(window).trigger('header-animated');
+        };
+        
+        $('#open-search-button').addClass('open');
+        
+        $(document).keydown(function(event) {
+          /* Close search bar when esc button is pressed */
+          if(event.keyCode == 27) {
+            APP.global.slideSearchBar('close');
+          }
+        });
+        
+        if (Modernizr.flexbox) {
+          $searchBar.hide().css({height: 'auto'}).data('height', $searchBar.height()).css({height: 0}).show();
+          $searchBar.velocity({height: $searchBar.data('height') + 'px'}, duration, 'swing', function() {
+            complete();
+          });
+        } else {
+          $pageWrapper.velocity({top: $('#header').outerHeight() + 'px'}, duration, 'swing', function() {
+            complete();
+          });
+        }
+        
+        $searchField.focus();
+        break;
+      case 'close':
+        var complete = function() {
+          $searchBar.removeClass('open');
+          $(window).trigger('header-animated');
+        };
+        
+        $searchField.blur().val('');
+        
+        $('#open-search-button').removeClass('open');
+        
+        if (Modernizr.flexbox) {
+          $searchBar.velocity({height: 0}, duration, 'swing', function() {
+            complete();
+          });
+        } else {
+          $pageWrapper.velocity({top: $('#menu-bar').outerHeight() + 'px'}, duration, 'swing', function() {
+            complete();
+          });
+        }
+        break;
+    }
   },
   addProgressbarToAjax : function() {
     NProgress.configure({ container: $('div#progress-bar-container'), showSpinner: false });
@@ -204,76 +234,108 @@ APP.global = {
     if (!htmlId || $relatedSubmenu.length == 0 || $menuItem.length == 0) {
       return true;
     } else {
-      var $mainArea = $('#main-area');
-      var $submenus = $('#submenu-box > .submenu');
+      var $submenuBox = $('#submenu-box');
       var $menuItems = $('#main-menu > li');
 
       if ($menuItem.hasClass('selected')) {
-        if (!$mainArea.is(':animated')) {
-          /* Contract submenu if clicked menu item is the selected one */
+        /* Contract submenu if clicked menu item is the selected one */
+        APP.global.slideSubMenu($relatedSubmenu, 'close', animated, function() {
           $menuItems.removeClass('selected');
-          APP.global.slideSubMenu($relatedSubmenu, 'in', animated);
-        } else {
-          return false;
-        }
+        });
       } else {
-        if (parseFloat($mainArea.css('left')) > 0) {
-          if (!$submenus.is(':animated')) {
-            $menuItems.removeClass('selected');
-            $menuItem.addClass('selected');
-            /* Contract expanded submenu first, then expand requested submenu */
-            APP.global.slideSubMenu($relatedSubmenu, 'in-out', animated);
-          } else {
-            return false;
-          }
+        if ($submenuBox.hasClass('open')) {
+          /* Contract expanded submenu first, then expand requested submenu */
+          APP.global.slideSubMenu($relatedSubmenu, 'switch', animated, function() {
+            $menuItems.removeClass('selected'); $menuItem.addClass('selected');
+          });
         } else {
-          if (!$mainArea.is(':animated')) {
-            $menuItems.removeClass('selected');
-            $menuItem.addClass('selected');
-            /* Expand requested submenu */
-            APP.global.slideSubMenu($relatedSubmenu, 'out', animated);
-          } else {
-            return false;
-          }
+          /* Expand requested submenu */
+          APP.global.slideSubMenu($relatedSubmenu, 'open', animated, function() {
+            $menuItems.removeClass('selected'); $menuItem.addClass('selected');
+          });
         }
       }
       return false;
     }
   },
-  slideSubMenu: function(submenu, direction, animated) {
+  slideSubMenu: function(submenu, action, animated, executeBefore, executeAfter) {
     var $submenuBox = $('#submenu-box');
     var $mainArea = $('#main-area');
     var $submenus = $('#submenu-box > .submenu');
     var $submenu = $(submenu);
+    var executeBefore = executeBefore ? executeBefore : function() {};
+    var executeAfter = executeAfter ? executeAfter : function() {};
     var duration = 200;
 
-    switch (direction) {
-      case 'in':
-        if (animated) {
-          $mainArea.velocity({left: 0}, duration, 'swing', function() {
-            $submenus.removeClass('selected');
-          });
-        } else {
-          $mainArea.css({left: 0});
-          $submenus.removeClass('selected');
-        }
-        break;
-      case 'out':
+    switch (action) {
+      case 'open':
+        executeBefore();
         $submenus.removeClass('selected').css({opacity: 0});
         $submenu.addClass('selected').css({opacity: 1});
         if (animated) {
-          $mainArea.velocity({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
+          if (Modernizr.flexbox) {
+            $submenuBox.addClass('open');
+            $submenuBox.hide().css({width: ''}).data('width', $submenuBox.width()).css({width: 0}).show().velocity({width: $submenuBox.data('width') + 'px'}, duration, 'swing', function() {
+              $submenuBox.css({width: ''});
+              executeAfter();
+            });
+          } else {
+            $submenuBox.addClass('open');
+            $mainArea.velocity({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing', function() {
+              executeAfter();
+            });
+          }
         } else {
-          $mainArea.css({left: $submenuBox.outerWidth() + 'px'});
+          if (Modernizr.flexbox) {
+            $submenuBox.css({width: ''}).addClass('open');
+          } else {
+            $submenuBox.addClass('open');
+            $mainArea.css({left: $submenuBox.outerWidth() + 'px'});
+          }
+          executeAfter();
         }
         break;
-      case 'in-out':
-        $submenus.velocity({opacity: 0}, duration/2.5, 'swing', function() {
-          $submenus.removeClass('selected');
-          $submenu.velocity({opacity: 1}, duration/2.5, 'swing', function() {
-            $submenu.addClass('selected');
+      case 'switch':
+        executeBefore();
+        if (animated) {
+          $submenus.velocity({opacity: 0}, duration/2.5, 'swing', function() {
+            $submenus.removeClass('selected');
+            $submenu.velocity({opacity: 1}, duration/2.5, 'swing', function() {
+              $submenu.addClass('selected');
+              executeAfter();
+            });
           });
-        });
+        } else {
+          $submenus.css({opacity: 0}).removeClass('selected');
+          $submenu.css({opacity: 1}).addClass('selected');
+          executeAfter();
+        }
+        break;
+      case 'close':
+        executeBefore();
+        var complete = function() {
+          $submenus.removeClass('selected');
+          $submenuBox.removeClass('open');
+          executeAfter();
+        };
+        if (animated) {
+          if (Modernizr.flexbox) {
+            $submenuBox.velocity({width: 0}, duration, 'swing', function() {
+              complete();
+            });
+          } else {
+            $mainArea.velocity({left: 0}, duration, 'swing', function() {
+              complete();
+            });
+          }
+        } else {
+          if (Modernizr.flexbox) {
+            $submenuBox.css({width: 0});
+          } else {
+            $mainArea.css({left: 0});
+          }
+          complete();
+        }
         break;
     }
   },

@@ -22,7 +22,9 @@ CwicLocalMenu.prototype.init = function() {
     }
   );
 
-  this.bindOnResize();
+  if (!Modernizr.flexbox) {
+    this.bindOnResize();
+  }
 };
 
 CwicLocalMenu.prototype.bindOnResize = function() {
@@ -80,6 +82,9 @@ CwicLocalMenu.prototype.getButton = function(buttonid) {
 };
 
 CwicLocalMenu.prototype.updateHeightSettings = function() {
+  if (Modernizr.flexbox) {
+    return;
+  }
   var maxHeight = 0;
   $.each(this.divisionDoms,
     function(){

@@ -1,54 +1,18 @@
-html.js #below-header {
-  position: absolute;
-  top: 80px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  z-index: 0;
-}
-
-#main-area {
+#below-header {
   background-color: #eee;
 }
 
 html.js #main-area {
-  position: absolute;
-  top: 0;
-  bottom: 0;
-  left: 0;
-  right: 0;
   box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
   border-left: 1px solid #ccc;
   border-top: 1px solid #f9f9f9;
 }
 
-html.js.not-logged-in #main-area {
+html.js.not-logged-in #below-header {
   box-shadow: none;
 }
 
-#content-area {
-  overflow: auto !important;
-  > .inner {
-    position: relative;
-  }
-}
-
-html.js #content-area {
-  position: absolute;
-  top: 50px;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
-
 html.js.not-logged-in {
-  overflow: auto;
-  #below-header,
-  #main-area,
-  #content-area {
-    position: static;
-  }
-
   #content,
   #page-title {
     text-align: center;

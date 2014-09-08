@@ -27,25 +27,26 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
           = link_to(root_path) do
             img.logo src=asset_path('logo.png')
 
-    #below-header
+    #page-wrapper
       #header
         - if user_signed_in?
           = render "layouts/menu"
         #progress-bar-container
-      - if user_signed_in?
-        = render "layouts/submenu"
 
-      #main-area
-        = render "layouts/local_menu"
-        #content-area
-          .inner
-            h1#page-title
-              = content_for?(:page_title) ? yield(:page_title) : t('default_title')
+      #below-header
+        - if user_signed_in?
+          = render "layouts/submenu"
+        #main-area
+          = render "layouts/local_menu"
+          #content-area
+            .inner
+              h1#page-title
+                = content_for?(:page_title) ? yield(:page_title) : t('default_title')
 
-            #content
-              .inner.clearfix
-                = render 'layouts/flash_messages'
-                = content_for?(:content) ? yield(:content) : yield
+              #content
+                .inner.clearfix
+                  = render 'layouts/flash_messages'
+                  = content_for?(:content) ? yield(:content) : yield
 
     = render 'shared/modal'
     = render 'feedbacks/modal'
