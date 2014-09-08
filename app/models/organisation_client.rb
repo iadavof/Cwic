@@ -9,10 +9,7 @@ class OrganisationClient < ActiveRecord::Base
   has_many :contacts, class_name: 'OrganisationClientContact', dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
-  has_many :communication_records, dependent: :destroy
-
-    # Attribute modifiers
-  normalize_attributes :first_name, :infix, :last_name, :company_name, :email, :position, :route, :street_number, :postal_code, :locality, :country, :administrative_area_level_2, :administrative_area_level_1, :phone, :mobile_phone, :tax_number, :iban_att
+  has_many :communication_records, dependent: :destroy, inverse_of: :organisation_client
 
   # Validations
   validates :organisation, presence: true
@@ -130,8 +127,8 @@ class OrganisationClient < ActiveRecord::Base
         addr.country = country
       end
 
-      maker.add_tel(phone) { |e| e.location = 'work'} if phone.present?
-      maker.add_tel(mobile_phone) { |e| e.location = 'cell'} if mobile_phone.present?
+      maker.add_tel(phone) { |e| e.location = 'work' } if phone.present?
+      maker.add_tel(mobile_phone) { |e| e.location = 'cell' } if mobile_phone.present?
       maker.add_email(email) { |e| e.location = 'work' }  if email.present?
     end
   end

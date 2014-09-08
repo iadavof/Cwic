@@ -2,9 +2,6 @@ class OrganisationClientContact < ActiveRecord::Base
   # Associations
   belongs_to :organisation_client
 
-  # Attribute modifiers
-  normalize_attributes :first_name, :infix, :last_name, :email, :position, :route, :street_number, :postal_code, :locality, :country, :administrative_area_level_2, :administrative_area_level_1, :phone, :mobile_phone
-
   # Validations
   validates :organisation_client_id, presence: true
   validates :organisation_client, presence: true, if: "organisation_client_id.present?"
@@ -58,11 +55,9 @@ class OrganisationClientContact < ActiveRecord::Base
 
       maker.org = organisation_client.instance_name
       maker.title = position
-      maker.add_tel(phone) { |e| e.location = 'work'}  if phone.present?
-      maker.add_tel(mobile_phone) { |e| e.location = 'cell'}  if mobile_phone.present?
-
+      maker.add_tel(phone) { |e| e.location = 'work' }  if phone.present?
+      maker.add_tel(mobile_phone) { |e| e.location = 'cell' }  if mobile_phone.present?
       maker.add_note(note)  if note.present?
-
       maker.add_email(email) { |e| e.location = 'work' } if email.present?
     end
   end
