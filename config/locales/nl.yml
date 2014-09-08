@@ -194,6 +194,9 @@ nl:
         tax_number: 'BTW-nummer'
         iban: 'Rekeningnummer (IBAN)'
         iban_att: 'Rekening ten name van'
+      organisation_client/communication_records:
+        reservation_id: 'Reserveringsnummer'
+        contact: 'Contactpersoon'
       organisation_client_contact:
         address: 'Adres'
         phone: 'Telefoon'
@@ -656,6 +659,7 @@ nl:
         chat: 'Via chat'
         desk: 'Persoonlijk contact'
       summary_placeholder: 'Type hier een verslag van de communicatie met de klant...'
+      reservation_number: 'Reserveringsnummer...'
 
   documents:
     overview:

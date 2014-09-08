@@ -33,6 +33,17 @@
     box-sizing: border-box;
   }
 
+  .reservation-reference {
+    span {
+      width: 20%;
+      display: inline-block;
+      text-align: center;
+    }
+    input {
+      width: 80%;
+    }
+  }
+
   .summary {
     width: 100%;
     margin: 0;
