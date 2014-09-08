@@ -2,10 +2,6 @@ APP.schedule_view = {
   horizontal_day: function() {
     new CwicScheduleView({
       container: 'calendar',
-      entities_url: Routes.organisation_schedule_view_entities_path(current_organisation, { format: 'json' }),
-      reservations_url: Routes.organisation_schedule_view_reservations_path(current_organisation, { format: 'json' }),
-      patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
-      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
       zoom: 'day',
     });
@@ -14,10 +10,6 @@ APP.schedule_view = {
   horizontal_week: function() {
     new CwicScheduleView({
       container: 'calendar',
-      entities_url: Routes.organisation_schedule_view_entities_path(current_organisation, { format: 'json' }),
-      reservations_url: Routes.organisation_schedule_view_reservations_path(current_organisation, { format: 'json' }),
-      patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
-      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'horizontalCalendar',
       zoom: 'week',
     });
@@ -26,10 +18,6 @@ APP.schedule_view = {
   vertical_day: function() {
     new CwicScheduleView({
       container: 'calendar',
-      entities_url: Routes.organisation_schedule_view_entities_path(current_organisation, { format: 'json' }),
-      reservations_url: Routes.organisation_schedule_view_reservations_path(current_organisation, { format: 'json' }),
-      patch_reservation_url: Routes.organisation_reservations_path(current_organisation),
-      organisation_client_url: Routes.organisation_organisation_clients_path(current_organisation),
       view: 'verticalCalendar',
       zoom: 'day',
     });

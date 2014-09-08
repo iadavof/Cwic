@@ -1,9 +1,6 @@
 function CwicScheduleView(options) {
   this.options = $.extend({
     container: 'schedule-container',
-    entities_url: 'url for getting entities',
-    reservations_url: 'url for getting reservations data for current scope',
-    patch_reservation_url: 'url for updating a reservation',
     view: 'horizontalCalendar',
     snap_part: '0.5',
     zoom: 'day',
@@ -53,25 +50,21 @@ CwicScheduleView.prototype.initScrollContainerActions = function() {
 };
 
 CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
-  var schedule = this;
+  var schedule = this, client, edit, remove, cancel, save;
+
   var description = window.localMenu.addButton('context', 'description', APP.util.getTemplateClone('contextButtonDescription'), 1);
-  description.on('click', function() { schedule.descriptionScheduleItem.call(schedule); } );
+  client = window.localMenu.addButton('context', 'client', APP.util.getTemplateClone('contextButtonClient'), 2);
+  edit = window.localMenu.addButton('context', 'edit', APP.util.getTemplateClone('contextButtonEdit'), 3);
 
-  var client = window.localMenu.addButton('context', 'client', APP.util.getTemplateClone('contextButtonClient'), 2);
-  client.on('click', function() { schedule.gotoClientScheduleItem.call(schedule); } );
-
-  var edit = window.localMenu.addButton('context', 'edit', APP.util.getTemplateClone('contextButtonEdit'), 3);
-  edit.on('click', function() { schedule.editScheduleItem.call(schedule); } );
-
-  var remove = window.localMenu.addButton('context', 'remove', APP.util.getTemplateClone('contextButtonRemove'), 4);
+  remove = window.localMenu.addButton('context', 'remove', APP.util.getTemplateClone('contextButtonRemove'), 4);
   remove.addClass('red');
   remove.on('click', function() { schedule.removeScheduleItem.call(schedule, $(this)); } );
 
-  var cancel = window.localMenu.addButton('context', 'cancel', APP.util.getTemplateClone('contextButtonCancel'), 5);
+  cancel = window.localMenu.addButton('context', 'cancel', APP.util.getTemplateClone('contextButtonCancel'), 5);
   cancel.addClass('red');
   cancel.on('click', function() { schedule.stopEditMode.call(schedule, false); } );
 
-  var save = window.localMenu.addButton('context', 'save', APP.util.getTemplateClone('contextButtonSave'), 6);
+  save = window.localMenu.addButton('context', 'save', APP.util.getTemplateClone('contextButtonSave'), 6);
   save.addClass('green');
   save.on('click', function() { schedule.stopEditMode.call(schedule, true); } );
 
@@ -241,7 +234,7 @@ CwicScheduleView.prototype.createEntityShowCase = function() {
   }
 
   $.ajax({
-    url: this.options.entities_url
+    url: Routes.organisation_schedule_view_entities_path(current_organisation, { format: 'json' })
   }).success(function(response) {
     schedule.afterEntitiesLoad(response);
   });
@@ -362,7 +355,7 @@ CwicScheduleView.prototype.bindNavigationControls = function() {
 
 CwicScheduleView.prototype.bindStartStopEditModeOnClick = function() {
   var schedule = this;
-  $('html').on('click', function(event) {
+  $('.schedule-body').on('click', function(event) {
     var possibleScheduleItem = schedule.clickedScheduleItem(event);
     if(possibleScheduleItem) {
       // Op een schedule item geklikt, prevent the plus one button action from firing
@@ -401,6 +394,7 @@ CwicScheduleView.prototype.startEditMode = function(scheduleItemDOM, notWithTool
 
   if(!notWithToolbar) {
       this.toggleLocalMenuButtons('context', ['description', 'client', 'edit', 'remove'], true);
+      this.setLocalMenuButtonHrefs();
   }
 
   this.focusedScheduleItem.applyFocus();
@@ -414,6 +408,11 @@ CwicScheduleView.prototype.toggleLocalMenuButtons = function(division, buttonids
   localMenu.toggleButtons(division, buttonids, state);
 };
 
+CwicScheduleView.prototype.setLocalMenuButtonHrefs = function() {
+  localMenu.getButton('description').attr('href', Routes.organisation_reservation_path(current_organisation, this.focusedScheduleItem.item_id));
+  localMenu.getButton('edit').attr('href', Routes.edit_organisation_reservation_path(current_organisation, this.focusedScheduleItem.item_id));
+  localMenu.getButton('client').attr('href', Routes.organisation_organisation_client_path(current_organisation, this.focusedScheduleItem.client_id));
+};
 
 CwicScheduleView.prototype.stopEditMode = function(accept) {
   var schedule = this;
@@ -599,7 +598,7 @@ CwicScheduleView.prototype.patchScheduleItemBackend = function(scheduleItem, und
 
   $.ajax({
     type: 'PATCH',
-    url: this.options.patch_reservation_url  + '/' + scheduleItem.item_id + '.json',
+    url: Routes.organisation_reservation_path(current_organisation, scheduleItem.item_id, { format: 'json' }),
     data: scheduleItem.railsDataExport(),
     success: function(response) {
       if(undo) {
@@ -908,7 +907,7 @@ CwicScheduleView.prototype.loadscheduleEntities = function() {
     schedule = this;
 
     $.ajax({
-      url: this.options.reservations_url,
+      url: Routes.organisation_schedule_view_reservations_path(current_organisation),
       data: {
         entity_ids: this.selectedEntities,
         schedule_begin: this.beginDate.format('YYYY-MM-DD'),
@@ -1181,7 +1180,7 @@ CwicScheduleView.prototype.removeScheduleItem = function(link) {
     if($.rails.allowAction(link)) {
       this.showStatusMessage(jsLang.schedule_view.deleting, true);
       $.ajax({
-        url: schedule.options.patch_reservation_url + '/' + schedule.focusedScheduleItem.item_id + '.json',
+        url: Routes.organisation_reservation_path(current_organisation, schedule.focusedScheduleItem.item_id, { format: 'json' }),
         type: 'DELETE',
         success: function(result) {
           schedule.showStatusMessage(jsLang.schedule_view.deleted, false, 5000);
@@ -1201,7 +1200,7 @@ CwicScheduleView.prototype.removeScheduleItem = function(link) {
 CwicScheduleView.prototype.createScheduleItem = function(reservationForm, resetNewScheduleItem) {
   var jreservationForm = $(reservationForm);
   $.ajax({
-    url: schedule.options.patch_reservation_url + '.json',
+    url: Routes.organisation_reservations_path(current_organisation, { format: 'json' }),
     type: 'POST',
     data: {
       reservation: {
@@ -1251,33 +1250,6 @@ CwicScheduleView.prototype.createScheduleItem = function(reservationForm, resetN
       console.log(data);
     }
   });
-};
-
-CwicScheduleView.prototype.editScheduleItem = function() {
-  var path = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id + '/edit';
-  if (typeof(Turbolinks) != 'undefined') {
-    Turbolinks.visit(path);
-  } else {
-    window.location.href = path;
-  }
-};
-
-CwicScheduleView.prototype.descriptionScheduleItem = function() {
-  var path = this.options.patch_reservation_url + '/' + this.focusedScheduleItem.item_id;
-  if (typeof(Turbolinks) != 'undefined') {
-    Turbolinks.visit(path);
-  } else {
-    window.location.href = path;
-  }
-};
-
-CwicScheduleView.prototype.gotoClientScheduleItem = function() {
-  var path = this.options.organisation_client_url + '/' + this.focusedScheduleItem.client_id;
-  if (typeof(Turbolinks) != 'undefined') {
-    Turbolinks.visit(path);
-  } else {
-    window.location.href = path;
-  }
 };
 
 CwicScheduleView.prototype.cssLeftOrTop = function() {
