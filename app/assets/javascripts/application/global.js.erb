@@ -62,12 +62,10 @@ APP.init = function() {
 
   this.global.bindHelpModalEvents();
 
-  if (!Modernizr.flexbox) {
-    this.global.contentAreaResize();
-    $(window).on('resize', function() {
-      APP.global.contentAreaResize();
-    });
-  }
+  this.global.contentAreaResize();
+  $(window).on('resize', function() {
+    APP.global.contentAreaResize();
+  });
 };
 
 // Add progress bar for Turbolink requests
