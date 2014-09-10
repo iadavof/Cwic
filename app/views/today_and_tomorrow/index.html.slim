@@ -8,16 +8,13 @@ div#today-and-tomorrow-container.clearfix.today-and-tomorrow-container data-orga
   - if @entity_types.empty?
     p.no_entities_found = t('empty_objects_add_first_html', { models: Entity.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, Entity]) })
   - else
-    - if @entity_types.one?
-      = render partial: 'today_and_tomorrow/entity_block', collection: @entity_types.first.entities, as: :entity
-    - else
       = render partial: 'today_and_tomorrow/entity_type_block', collection: @entity_types, as: :entity_type
 
 script#reservationLineTemplate type="text/template"
   p.reservation-line
     span.time
       | 88:88 - 88:88
-    span.description
+    a.description href="#"
       | Text
 
 script#noReservationsTemplate type="text/template"

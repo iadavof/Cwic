@@ -1,9 +1,7 @@
 function CwicTodayAndTomorrow(options) {
   this.options = $.extend({
     container: 'schedule-container',
-    backend_url: 'url to backend',
     organisation_id: 0,
-    websocket_url: 'url to websocket'
   }, options || {});
 
   this.renderTodayAndTomorrow();
@@ -20,7 +18,7 @@ CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
 
 CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   var tat = this;
-  var dispatcher = new WebSocketRails(this.options.websocket_url);
+  var dispatcher = new WebSocketRails(window.location.host + Routes.websocket_path());
   // Open reservations_channel for organisation
   var channel = dispatcher.subscribe('todayandtomorrows_' + this.options.organisation_id);
 
@@ -48,7 +46,7 @@ CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
 CwicTodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
   var tat = this;
   $.ajax({
-    url: this.options.backend_url,
+    url: Routes.organisation_today_and_tomorrow_update_path(current_organisation),
     data: {
 
     }
@@ -58,85 +56,100 @@ CwicTodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
 };
 
 CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdate = function(response) {
-  if(response.length == 1) {
-    this.afterTodayTomorrowUpdateEntity(response[0].entities, this.scheduleContainer);
-  } else {
-    for(var entity_type_array_nr in response) {
-      var jentity_type = this.scheduleContainer.find('#entity_type_' + response[entity_type_array_nr].entity_type_id);
-      this.afterTodayTomorrowUpdateEntity(response[entity_type_array_nr].entities, jentity_type);
-    }
+  for(var eti in response.entity_types) {
+    var jentity_type = this.scheduleContainer.find('#entity_type_' + response.entity_types[eti].id);
+    this.afterTodayTomorrowUpdateEntity(response.entity_types[eti].entities, jentity_type);
   }
 };
 
-CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_type_info, parentdiv) {
-  for(var entity_array_nr in entity_type_info) {
-    var entity = entity_type_info[entity_array_nr];
-    var jentity = parentdiv.find('#entity_' + entity.entity_id);
+CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_type_entities, parentdiv) {
+  for(var ei in entity_type_entities) {
+    var entity = entity_type_entities[ei];
+    var jentity = parentdiv.find('#entity_' + entity.id);
     jentity = jentity.find('div.updated-info').html('');
     this.createNewUpdatedInfo(entity, jentity);
   }
 };
 
+CwicTodayAndTomorrow.prototype.getReservationProgress = function(begin_moment, end_moment) {
+  return this.momentToPercent(begin_moment, end_moment, moment());
+};
+
+CwicTodayAndTomorrow.prototype.momentToPercent = function(begin_moment, end_moment, pointer) {
+  var length = end_moment.diff(begin_moment, 'seconds');
+  return pointer.diff(begin_moment, 'seconds') / length * 100.0;
+};
+
+CwicTodayAndTomorrow.prototype.appendOneLineReservations = function(reservations, container, referenceMoment) {
+  referenceMoment = referenceMoment || moment();
+  for(up_nr in reservations) {
+    reservation = reservations[up_nr];
+    line = APP.util.getTemplateClone('reservationLineTemplate');
+    begin_moment = moment(reservation.begins_at);
+    end_moment = moment(reservation.ends_at);
+
+    // Only show the date if the moment is nog on the current day
+    var begin_format = (begin_moment.isSame(referenceMoment, 'day')) ? 'LT' : 'lll';
+    var end_format = (end_moment.isSame(referenceMoment, 'day')) ? 'LT' : 'lll';
+    line.find('span.time').text(begin_moment.format(begin_format) + ' - ' + end_moment.format(end_format));
+    descr = line.find('a.description');
+    descr.text(reservation.full_instance_name);
+    descr.attr('href', Routes.organisation_reservation_path(current_organisation, reservation.id));
+    container.append(line);
+  }
+};
+
+CwicTodayAndTomorrow.prototype.addDaySeparators = function(begin_moment, end_moment, progress_bar) {
+  var num_days = end_moment.diff(begin_moment, 'days') + 1;
+  var pointer = moment(begin_moment).startOf('day');
+  for(var i = 0; i < num_days; i++) {
+    pointer = pointer.add(1, 'day');
+    progress_bar.append($('<div>', { 'class': 'day-separator', css: { left: this.momentToPercent(begin_moment, end_moment, pointer) + '%' } }));
+  }
+};
+
 CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
-  if(entity.current_reservation == null && entity.upcoming_reservations.today.length  <= 0 && entity.upcoming_reservations.tomorrow.length <= 0) {
+  var reservation, begin_moment, end_moment, line, descr;
+
+  if(entity.current_reservation == null && entity.reservations_today.length <= 0 && entity.reservations_tomorrow.length <= 0) {
     parentdiv.append(APP.util.getTemplateClone('noReservationsTemplate'));
     return;
   }
 
-
   if(entity.current_reservation != null) {
-    var reservation = entity.current_reservation;
-    var begin_moment = moment(reservation.begin_moment);
-    var end_moment = moment(reservation.end_moment);
+    reservation = entity.current_reservation;
+    begin_moment = moment(reservation.begins_at);
+    end_moment = moment(reservation.ends_at);
 
     var currentInfo = APP.util.getTemplateClone('currentReservationTemplate');
 
-    currentInfo.find('.reservation-description').text(reservation.description);
-    currentInfo.find('.begin-time').text(begin_moment.format('HH:mm'));
-    currentInfo.find('.end-time').text(end_moment.format('HH:mm'));
+    currentInfo.find('.reservation-description').text(reservation.full_instance_name);
+    currentInfo.find('.begin-time').text(begin_moment.format('LT'));
+    currentInfo.find('.end-time').text(end_moment.format('LT'));
 
+    // Set progressbar
+    var progress_bar = currentInfo.find('.progress-bar-container');
+    progress_bar.find('span').css('width', this.getReservationProgress(begin_moment, end_moment) + '%');
     // Check if event is multiple day event
-    if(moment(begin_moment).startOf('day').unix() != moment(end_moment).startOf('day').unix()) {
+    if(!begin_moment.isSame(end_moment, 'day')) {
       currentInfo.find('.begin-date').text(begin_moment.format('l'));
       currentInfo.find('.end-date').text(end_moment.format('l'));
       currentInfo.find('.date-info').show();
-
-      // Day separators in progress bar, only if it does not fill the whole bar
-      var progressBar = currentInfo.find('.progress-bar');
-      if(reservation.day_separators != null && reservation.day_separators.length < parseInt(progressBar.width()) / 4) {
-        for(var daysep_nr in reservation.day_separators) {
-          progressBar.append($('<div>', {'class': 'day-separator', style: 'left: '+ reservation.day_separators[daysep_nr] +'%'}));
-        }
-      }
+      this.addDaySeparators(begin_moment, end_moment, progress_bar);
     }
 
-    // Set progressbar
-    currentInfo.find('.progress-bar span').css('width', reservation.progress + '%');
-
     parentdiv.append(currentInfo);
-    if(entity.upcoming_reservations.today.length  > 0 || entity.upcoming_reservations.tomorrow.length  > 0) {
+    if(entity.reservations_today.length > 0 || entity.reservations_tomorrow.length > 0) {
       parentdiv.append($('<div>', {'class': 'reservation-separator'}));
     }
   }
 
-  if(entity.upcoming_reservations.today.length  > 0 || entity.upcoming_reservations.tomorrow.length  > 0) {
+  if(entity.reservations_today.length > 0 || entity.reservations_tomorrow.length > 0) {
     var nextInfo = APP.util.getTemplateClone('nextReservationsTemplate');
-
-    for(up_nr in entity.upcoming_reservations.today) {
-      var line = APP.util.getTemplateClone('reservationLineTemplate');
-      line.find('span.time').text(moment(entity.upcoming_reservations.today[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.today[up_nr].end_moment).format('HH:mm'));
-      line.find('span.description').text(entity.upcoming_reservations.today[up_nr].description);
-      nextInfo.append(line);
-    }
-
-    if(entity.upcoming_reservations.tomorrow.length  > 0) {
+    this.appendOneLineReservations(entity.reservations_today, nextInfo);
+    if(entity.reservations_tomorrow.length > 0) {
       nextInfo.append(APP.util.getTemplateClone('tomorrowLineTemplate'));
-      for(up_nr in entity.upcoming_reservations.tomorrow) {
-        var line = APP.util.getTemplateClone('reservationLineTemplate');
-        line.find('span.time').text(moment(entity.upcoming_reservations.tomorrow[up_nr].begin_moment).format('HH:mm') + ' - ' + moment(entity.upcoming_reservations.tomorrow[up_nr].end_moment).format('HH:mm'));
-        line.find('span.description').text(entity.upcoming_reservations.tomorrow[up_nr].description);
-        nextInfo.append(line);
-      }
+      this.appendOneLineReservations(entity.reservations_tomorrow, nextInfo, moment().add(1, 'day'));
     }
     parentdiv.append(nextInfo);
   }
