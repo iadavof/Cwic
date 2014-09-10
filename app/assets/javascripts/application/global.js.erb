@@ -66,6 +66,13 @@ APP.init = function() {
   $(window).on('resize', function() {
     APP.global.contentAreaResize();
   });
+  
+  $(document).keydown(function(event) {
+    /* Close search bar when esc button is pressed */
+    if(event.keyCode == 27) {
+      APP.global.slideSearchBar('close');
+    }
+  });
 };
 
 // Add progress bar for Turbolink requests
@@ -147,71 +154,48 @@ APP.global = {
   },
   searchBarInit: function() {
     var $searchBar = $('#search-bar');
+    if (Modernizr.flexbox) {
+      $searchBar.css({height: 0});
+    }
     $('#open-search-button').on('click', function() {
       $(window).trigger('header-start-animation');
       if(!$searchBar.hasClass('open')) {
-        APP.global.slideSearchBar('open');
+        APP.global.slideSearchBar('expand');
       } else {
-        APP.global.slideSearchBar('close');
+        APP.global.slideSearchBar('collapse');
       }
       return false;
     });
   },
   slideSearchBar: function(action) {
-    var $searchBar = $('#search-bar');
-    var $pageWrapper = $('#page-wrapper');
     var $searchField = $('#global_search_query');
-    var duration = 150;
     
-    switch(action) {
-      case 'open':
-        var complete = function() {
-          $searchBar.addClass('open');
-          $(window).trigger('header-animated');
-        };
-        
-        $('#open-search-button').addClass('open');
-        
-        $(document).keydown(function(event) {
-          /* Close search bar when esc button is pressed */
-          if(event.keyCode == 27) {
-            APP.global.slideSearchBar('close');
-          }
-        });
-        
-        if (Modernizr.flexbox) {
-          $searchBar.hide().css({height: 'auto'}).data('height', $searchBar.height()).css({height: 0}).show();
-          $searchBar.velocity({height: $searchBar.data('height') + 'px'}, duration, 'swing', function() {
-            complete();
-          });
-        } else {
-          $pageWrapper.velocity({top: $('#header').outerHeight() + 'px'}, duration, 'swing', function() {
-            complete();
-          });
-        }
-        
+    var complete = function() {
+      $(window).trigger('header-animated');
+      if (action == 'expand') {
         $searchField.focus();
-        break;
-      case 'close':
-        var complete = function() {
-          $searchBar.removeClass('open');
-          $(window).trigger('header-animated');
-        };
-        
-        $searchField.blur().val('');
-        
-        $('#open-search-button').removeClass('open');
-        
-        if (Modernizr.flexbox) {
-          $searchBar.velocity({height: 0}, duration, 'swing', function() {
-            complete();
-          });
+      }
+    };
+    
+    if (action == 'close') {
+      $searchField.blur().val('');
+    }
+    
+    $('#open-search-button').toggleClass('open');
+    
+    if (Modernizr.flexbox) {
+      APP.util.expandCollapse('#search-bar', {action: action, direction: 'vertical', duration: 150}, complete);
+    } else {
+      var $pageWrapper = $('#page-wrapper');
+      var $searchBar = $('#search-bar');
+      $pageWrapper.velocity({top: (action == 'expand' ? $('#header').outerHeight() : $('#menu-bar').outerHeight()) + 'px'}, 150, 'swing', function() {
+        if (action == 'expand') {
+          $searchBar.addClass('open');
         } else {
-          $pageWrapper.velocity({top: $('#menu-bar').outerHeight() + 'px'}, duration, 'swing', function() {
-            complete();
-          });
+          $searchBar.removeClass('open');
         }
-        break;
+        complete();
+      });
     }
   },
   addProgressbarToAjax: function() {
@@ -237,7 +221,7 @@ APP.global = {
 
       if ($menuItem.hasClass('selected')) {
         /* Contract submenu if clicked menu item is the selected one */
-        APP.global.slideSubMenu($relatedSubmenu, 'close', animated, function() {
+        APP.global.slideSubMenu($relatedSubmenu, 'collapse', animated, function() {
           $menuItems.removeClass('selected');
         });
       } else {
@@ -248,7 +232,7 @@ APP.global = {
           });
         } else {
           /* Expand requested submenu */
-          APP.global.slideSubMenu($relatedSubmenu, 'open', animated, function() {
+          APP.global.slideSubMenu($relatedSubmenu, 'expand', animated, function() {
             $menuItems.removeClass('selected'); $menuItem.addClass('selected');
           });
         }
@@ -257,44 +241,47 @@ APP.global = {
     }
   },
   slideSubMenu: function(submenu, action, animated, executeBefore, executeAfter) {
-    var $submenuBox = $('#submenu-box');
-    var $mainArea = $('#main-area');
-    var $submenus = $('#submenu-box > .submenu');
     var $submenu = $(submenu);
     var executeBefore = executeBefore ? executeBefore : function() {};
     var executeAfter = executeAfter ? executeAfter : function() {};
-    var duration = 200;
+    var duration = animated ? 200 : 0;
 
     switch (action) {
-      case 'open':
+      case 'expand':
+      case 'collapse':
+        var $submenuBox = $('#submenu-box');
+        
         executeBefore();
-        $submenus.removeClass('selected').css({opacity: 0});
-        $submenu.addClass('selected').css({opacity: 1});
-        if (animated) {
-          if (Modernizr.flexbox) {
-            $submenuBox.addClass('open');
-            $submenuBox.hide().css({width: ''}).data('width', $submenuBox.width()).css({width: 0}).show().velocity({width: $submenuBox.data('width') + 'px'}, duration, 'swing', function() {
-              $submenuBox.css({width: ''});
-              executeAfter();
-            });
-          } else {
-            $submenuBox.addClass('open');
-            $mainArea.velocity({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing', function() {
-              executeAfter();
-            });
-          }
+        
+        var complete = executeAfter;
+        if (action == 'expand') {
+          APP.global.slideSubMenu($submenu, 'switch', false);
         } else {
-          if (Modernizr.flexbox) {
-            $submenuBox.css({width: ''}).addClass('open');
+          var $submenus = $submenuBox.find('> .submenu');
+          complete = function() {
+            $submenus.removeClass('selected');
+            $submenuBox.removeClass('open');
+            executeAfter();
+          };
+        }
+        
+        if (Modernizr.flexbox) {
+          APP.util.expandCollapse($submenuBox, {action: action, direction: 'horizontal', duration: duration}, complete);
+        } else {
+          var $mainArea = $('#main-area');
+          if (animated) {
+            $submenuBox.addClass('open');
+            $mainArea.velocity({left: action == 'expand' ? $submenuBox.outerWidth() + 'px' : 0}, duration, 'swing', complete);
           } else {
             $submenuBox.addClass('open');
-            $mainArea.css({left: $submenuBox.outerWidth() + 'px'});
+            $mainArea.css({left: action == 'expand' ? $submenuBox.outerWidth() + 'px' : 0});
+            executeAfter();
           }
-          executeAfter();
         }
         break;
       case 'switch':
         executeBefore();
+        var $submenus = $('#submenu-box > .submenu');
         if (animated) {
           $submenus.velocity({opacity: 0}, duration/2.5, 'swing', function() {
             $submenus.removeClass('selected');
@@ -307,32 +294,6 @@ APP.global = {
           $submenus.css({opacity: 0}).removeClass('selected');
           $submenu.css({opacity: 1}).addClass('selected');
           executeAfter();
-        }
-        break;
-      case 'close':
-        executeBefore();
-        var complete = function() {
-          $submenus.removeClass('selected');
-          $submenuBox.removeClass('open');
-          executeAfter();
-        };
-        if (animated) {
-          if (Modernizr.flexbox) {
-            $submenuBox.velocity({width: 0}, duration, 'swing', function() {
-              complete();
-            });
-          } else {
-            $mainArea.velocity({left: 0}, duration, 'swing', function() {
-              complete();
-            });
-          }
-        } else {
-          if (Modernizr.flexbox) {
-            $submenuBox.css({width: 0});
-          } else {
-            $mainArea.css({left: 0});
-          }
-          complete();
         }
         break;
     }

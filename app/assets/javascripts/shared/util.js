@@ -90,7 +90,67 @@ APP.util = {
   },
   escapeRegExp: function(str) {
     return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
-  }
+  },
+  expandCollapse: function(selector, options, complete) {
+    if (!selector) {
+      return;
+    }
+    
+    var $elem = $(selector);
+    
+    if (!$elem.length > 0) {
+      return;
+    }
+    
+    var defaults = {
+      action: 'expand',
+      direction: 'horizontal',
+      animationFunction: 'swing',
+      duration: 0,
+    };
+    
+    options = options ? options : {};
+    options = $.extend({}, defaults, options);
+    
+    if (($elem.hasClass('open') && options.action != 'collapse') || (!$elem.hasClass('open') && options.action == 'collapse')) {
+      return;
+    }
+    
+    var getTargetStyle = function() {
+      var result = {};
+      if (options.action == 'collapse') {
+        result = options.direction == 'vertical' ? {height: 0} : {width: 0};
+      } else {
+        $elem.hide().css(options.direction == 'vertical' ? {height: ''} : {width: ''})
+        result = options.direction == 'vertical' ? {height: $elem.height() + 'px'} : {width: $elem.width() + 'px'};
+        $elem.css(options.direction == 'vertical' ? {height: 0} : {width: 0}).show();
+      }
+      return result;
+    };
+    
+    var style = {
+      target: getTargetStyle(),
+      auto: options.direction == 'vertical' ? {height: ''} : {width: ''},
+    };
+    
+    var complete = complete ? complete : function() {};
+    
+    var callback = options.action == 'collapse' ? function() {
+      $elem.removeClass('open');
+      complete();
+    } : function() {
+      $elem.addClass('open');
+      $elem.css(style.auto);
+      complete();
+    };
+    
+    if (options.duration > 0) {
+      $elem.velocity(style.target, options.duration, options.animationFunction, callback);
+    } else {
+      $elem.css(style.target);
+      callback();
+    }
+  },
 };
 
 // JavaScript and jQuery extensions

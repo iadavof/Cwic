@@ -34,7 +34,6 @@ html.js.flexbox {
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-end;
-    height: 0;
     overflow: hidden;
     > .inner {
       flex: 0 0 100%;
