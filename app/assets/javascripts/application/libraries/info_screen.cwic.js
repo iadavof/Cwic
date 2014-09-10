@@ -144,9 +144,9 @@ CwicInfoScreen.prototype.createReservationItem = function(reservation) {
     from.find('td.date span.day-full').text(jsLang.info_screen.today);
   } else {
     from.find('td.date span.day').text(res_begin_moment.format('dd'));
-    from.find('td.date span.day-full').text(res_begin_moment.format('D MMM YYYY'));
+    from.find('td.date span.day-full').text(res_begin_moment.format('ll'));
   }
-  from.find('td.time span').text(res_begin_moment.format('HH:mm'));
+  from.find('td.time span').text(res_begin_moment.format('LT'));
 
   var until = item.find('div.reservation-dates-wrapper table.reservation-dates tr.datebox.until');
   if(moment().isSame(res_end_moment, 'day')) {
@@ -154,9 +154,9 @@ CwicInfoScreen.prototype.createReservationItem = function(reservation) {
     until.find('td.date span.day-full').text(jsLang.info_screen.today);
   } else {
     until.find('td.date span.day').text(res_end_moment.format('dd'));
-    until.find('td.date span.day-full').text(res_end_moment.format('D MMM YYYY'));
+    until.find('td.date span.day-full').text(res_end_moment.format('ll'));
   }
-  until.find('td.time span').text(res_end_moment.format('HH:mm'));
+  until.find('td.time span').text(res_end_moment.format('LT'));
 
   item.find('h2').text(reservation.description);
   item.find('div.object').text(reservation.entity_name);
