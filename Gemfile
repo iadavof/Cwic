@@ -62,9 +62,6 @@ end
 # Rails-i18n for standard rails locales
 gem 'rails-i18n'
 
-# Plurailize
-gem 'rich_pluralization', github: 'archan937/rich_pluralization' # This gem is broken in combination with Rails 4.1.4. Fix it or remove it entirely.
-
 # Devise for authentication. Gems are locked on minor versions, because we use custom Devise functionality and views.
 gem 'devise', '~> 3.2.4'
 gem 'devise_invitable', '~> 1.3.5'

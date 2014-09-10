@@ -1,11 +1,4 @@
 GIT
-  remote: git://github.com/archan937/rich_pluralization.git
-  revision: 7c3c32b6c1a379ad5a22aa17532a8a625556e00a
-  specs:
-    rich_pluralization (1.0.6)
-      i18n (>= 0.3.7)
-
-GIT
   remote: git://github.com/kreintjes/holidays.git
   revision: dca4cd582e5c9bc221366905919fae5c26e1fc71
   specs:
@@ -373,7 +366,6 @@ DEPENDENCIES
   rails (~> 4.1.4)
   rails-i18n
   responders
-  rich_pluralization!
   rspec-rails
   ruby-notify-my-android
   sass-rails
