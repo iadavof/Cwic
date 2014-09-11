@@ -1,6 +1,5 @@
-= paginate reservations, prefix: local_assigns[:prefix] if reservations.respond_to?(:current_page)
-
 .table-container
+  = paginate reservations, prefix: local_assigns[:prefix] if reservations.respond_to?(:current_page)
   = limiting prefix: local_assigns[:prefix]
   = form_tag multiple_organisation_reservations_path(@organisation) do
     table.multiple-edit

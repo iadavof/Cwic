@@ -5,10 +5,14 @@ div.table-container {
 }
 
 div.table-container {
+  .pagination {
+    float: left;
+  }
   form#limiting {
-    position: absolute;
-    top: 0;
-    right: 0;
+    float: right;
+  }
+  table {
+    clear: both;
   }
 }
 
@@ -57,6 +61,9 @@ table {
   td,
   th {
     padding: 6px 10px;
+    .cwic-checkbox {
+      padding: 0;
+    }
   }
 
   td {
@@ -77,6 +84,10 @@ table {
         }
       }
     }
+  }
+  th {
+    font-weight: 500;
+    font-size: 1.1em;
   }
 }
 
