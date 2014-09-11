@@ -68,13 +68,13 @@ class Reservation < ActiveRecord::Base
   scope :info_boards,  -> { joins(:reservation_status).where('reservation_statuses.info_boards = true') }
   scope :billable, -> { joins(:reservation_status).where('reservation_statuses.billable = true') }
 
-  default_order { order(id: :desc) }
+  default_order { order(:begins_at) }
 
   ##
   # Class methods
   ##
 
-  # Get all reservations within the date domain.
+  # Get all reservations that start OR end within the time domain.
   # Options:
   # - delocalize: delocalize dates with the current locale if they are strings
   # - include_edges: indicates that we also want the reservations directly outside the scope. This can be useful to check for collisions.
