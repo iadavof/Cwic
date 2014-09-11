@@ -21,10 +21,6 @@ class String
     self.to_time.to_tod
   end
 
-  def pl
-    return self # Temporary fix to disable the rich_pluralization gem since it is broken with the Rails 4.1.4 upgrade. TODO fix this!
-  end
-
   # Comparator to sort strings such that letters (alphabetic characters) come before numbers and other characters
   def alphasort(other)
     0.upto((self.length < other.length ? self.length : other.length) - 1) do |i|
