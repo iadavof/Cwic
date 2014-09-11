@@ -63,11 +63,11 @@ class Reservation < ActiveRecord::Base
   # Scopes
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
 
-  scope :past, -> (time = Time.now) { where('ends_at <= :time', time: time) }
-  scope :past_or_now, -> (time = Time.now) { where('begins_at <= :time', time: time) }
-  scope :now, -> (time = Time.now) { where('begins_at <= :time AND :time < ends_at', time: time) }
-  scope :now_or_future, -> (time = Time.now) { where('ends_at > :time', time: time) }
-  scope :future, -> (time = Time.now) { where('begins_at > :time', time: time) }
+  scope :past, -> (now = Time.now) { where('ends_at <= :now', now: now) }
+  scope :past_or_now, -> (now = Time.now) { where('begins_at <= :now', now: now) }
+  scope :now, -> (now = Time.now) { where('begins_at <= :now AND :now < ends_at', now: now) }
+  scope :now_or_future, -> (now = Time.now) { where('ends_at > :now', now: now) }
+  scope :future, -> (now = Time.now) { where('begins_at > :now', now: now) }
 
   scope :blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = true') }
   scope :non_blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = false') }
@@ -176,24 +176,24 @@ class Reservation < ActiveRecord::Base
     begins_at_was.present? && ends_at_was.present? ? period_to_days(begins_at_was, ends_at_was) : nil
   end
 
-  def past?(time = Time.now)
-    ends_at <= time
+  def past?(now = Time.now)
+    ends_at <= now
   end
 
-  def past_or_now?(time = Time.now)
-    past?(time) || now?(time)
+  def past_or_now?(now = Time.now)
+    past?(now) || now?(now)
   end
 
-  def now?(time = Time.now)
-    begins_at <= time && time < ends_at
+  def now?(now = Time.now)
+    begins_at <= now && now < ends_at
   end
 
-  def now_or_future?(time = Time.now)
-    now?(time) || future?(time)
+  def now_or_future?(now = Time.now)
+    now?(now) || future?(now)
   end
 
-  def future?(time = Time.now)
-    begins_at > time
+  def future?(now = Time.now)
+    begins_at > now
   end
 
   # Get the reservation directly before this reservation (for the same entity).
