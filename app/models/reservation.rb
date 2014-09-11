@@ -63,6 +63,11 @@ class Reservation < ActiveRecord::Base
   # Scopes
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
 
+  scope :past, -> (time = Time.now) { where('ends_at <= :time', time: time) }
+  scope :ongoing, -> (time = Time.now) { where('begins_at <= :time AND :time < ends_at', time: time) }
+  scope :upcoming, -> (time = Time.now) { where('ends_at > :time', time: time) }
+  scope :future, -> (time = Time.now) { where('begins_at > :time', time: time) }
+
   scope :blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = true') }
   scope :non_blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = false') }
   scope :info_boards,  -> { joins(:reservation_status).where('reservation_statuses.info_boards = true') }
@@ -168,6 +173,22 @@ class Reservation < ActiveRecord::Base
 
   def days_was
     begins_at_was.present? && ends_at_was.present? ? period_to_days(begins_at_was, ends_at_was) : nil
+  end
+
+  def past?(time = Time.now)
+    ends_at <= time
+  end
+
+  def ongoing?(time = Time.now)
+    begins_at <= time && time < ends_at
+  end
+
+  def upcoming?(time = Time.now)
+    ongoing?(time) || future?(time)
+  end
+
+  def future?(time = Time.now)
+    begins_at > time
   end
 
   # Get the reservation directly before this reservation (for the same entity).
