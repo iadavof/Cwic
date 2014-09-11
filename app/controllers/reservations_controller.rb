@@ -1,5 +1,6 @@
 class ReservationsController < ApplicationController
   before_action :load_organisation_client
+  before_action :set_first_page, only: :index
   before_action :load_resource
   authorize_resource
 
@@ -216,15 +217,32 @@ private
     valid
   end
 
+  def load_organisation_client
+    if params[:organisation_client_id].present?
+      @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id])
+    end
+  end
+
+  def set_first_page
+    # If we render the index view without any configuration for the results table set (except for the limit value),
+    if params.slice(:date_domain_from, :date_domain_to, :mini_search, :sort, :direction, :page).blank?
+      # Then jump to the page with the first upcoming reservation on it.
+      past = reservations.past.ssp(params)
+      # We have the amount of reservations in the past,
+      # we add one to this (because we want to be on the page with the first upcoming, i.e. non-past, reservation),
+      # we divide this by the amount of results per page and round this up to get the correct page
+      page = ((past.total_count + 1) / past.limit_value.to_f).ceil
+      params[:page] = page
+    end
+  end
+
   def load_resource
     case params[:action]
     when 'index'
-      if @organisation_client.present?
-        reservations = @organisation_client.reservations
-      else
-        reservations = @organisation.reservations
-      end
-      @reservations = reservations.by_date_domain(params[:date_domain_from], params[:date_domain_to], delocalize: true).accessible_by(current_ability, :index).includes(:reservation_status, :organisation_client, :entity).ssp(params)
+      @reservations = reservations
+        .by_date_domain(params[:date_domain_from], params[:date_domain_to], delocalize: true)
+        .includes(:reservation_status, :organisation_client, :entity)
+        .ssp(params)
     when 'multiple'
       @reservations = @organisation.reservations.where(id: params[:reservation_ids])
     when 'new', 'create'
@@ -234,10 +252,9 @@ private
     end
   end
 
-  def load_organisation_client
-    if params[:organisation_client_id].present?
-      @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id])
-    end
+  def reservations
+    (@organisation_client.present? ? @organisation_client.reservations : @organisation.reservations)
+      .accessible_by(current_ability, :index)
   end
 
   def resource_params
