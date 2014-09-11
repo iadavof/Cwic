@@ -64,8 +64,9 @@ class Reservation < ActiveRecord::Base
   pg_global_search against: { id: 'A', description: 'B' }, associated_against: { organisation_client: { first_name: 'C', last_name: 'C', locality: 'D' }, entity: { name: 'C' }, stickies: { sticky_text: 'C' } }
 
   scope :past, -> (time = Time.now) { where('ends_at <= :time', time: time) }
-  scope :ongoing, -> (time = Time.now) { where('begins_at <= :time AND :time < ends_at', time: time) }
-  scope :upcoming, -> (time = Time.now) { where('ends_at > :time', time: time) }
+  scope :past_or_now, -> (time = Time.now) { where('begins_at <= :time', time: time) }
+  scope :now, -> (time = Time.now) { where('begins_at <= :time AND :time < ends_at', time: time) }
+  scope :now_or_future, -> (time = Time.now) { where('ends_at > :time', time: time) }
   scope :future, -> (time = Time.now) { where('begins_at > :time', time: time) }
 
   scope :blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = true') }
@@ -179,12 +180,16 @@ class Reservation < ActiveRecord::Base
     ends_at <= time
   end
 
-  def ongoing?(time = Time.now)
+  def past_or_now?(time = Time.now)
+    past?(time) || now?(time)
+  end
+
+  def now?(time = Time.now)
     begins_at <= time && time < ends_at
   end
 
-  def upcoming?(time = Time.now)
-    ongoing?(time) || future?(time)
+  def now_or_future?(time = Time.now)
+    now?(time) || future?(time)
   end
 
   def future?(time = Time.now)
