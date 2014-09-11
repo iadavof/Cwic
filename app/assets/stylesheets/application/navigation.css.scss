@@ -288,6 +288,24 @@ html.js body[data-current-user-id=''] #local-menu {
   text-align: right;
 }
 
+html.logged-in.flexbox, html.logged-in.js.flexbox {
+  #local-menu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    
+    &.clearfix:after {
+      display: none;
+    }
+    
+    .navigation-actions, .context-actions, .page-actions {
+      width: auto;
+      flex: 0 0 auto;
+    }
+  }
+}
+
 /* Pagination and tabs */
 
 .pagination {
