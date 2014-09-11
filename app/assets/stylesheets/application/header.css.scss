@@ -31,6 +31,7 @@ form.mini-search {
 
 html.js.flexbox {
   #search-bar {
+    height: 0;
     display: flex;
     flex-flow: row nowrap;
     align-items: flex-end;

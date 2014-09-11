@@ -70,7 +70,7 @@ APP.init = function() {
   $(document).keydown(function(event) {
     /* Close search bar when esc button is pressed */
     if(event.keyCode == 27) {
-      APP.global.slideSearchBar('close');
+      APP.global.slideSearchBar('collapse');
     }
   });
 };
@@ -154,9 +154,6 @@ APP.global = {
   },
   searchBarInit: function() {
     var $searchBar = $('#search-bar');
-    if (Modernizr.flexbox) {
-      $searchBar.css({height: 0});
-    }
     $('#open-search-button').on('click', function() {
       $(window).trigger('header-start-animation');
       if(!$searchBar.hasClass('open')) {
@@ -177,14 +174,15 @@ APP.global = {
       }
     };
     
-    if (action == 'close') {
+    if (action == 'collapse') {
       $searchField.blur().val('');
+      $('#open-search-button').removeClass('open');
+    } else {
+      $('#open-search-button').addClass('open');
     }
     
-    $('#open-search-button').toggleClass('open');
-    
     if (Modernizr.flexbox) {
-      APP.util.expandCollapse('#search-bar', {action: action, direction: 'vertical', duration: 150}, complete);
+      APP.util.expandCollapse('#search-bar', {action: action, direction: 'vertical', duration: 150, targetDimension: 'auto'}, complete);
     } else {
       var $pageWrapper = $('#page-wrapper');
       var $searchBar = $('#search-bar');
@@ -266,7 +264,7 @@ APP.global = {
         }
         
         if (Modernizr.flexbox) {
-          APP.util.expandCollapse($submenuBox, {action: action, direction: 'horizontal', duration: duration}, complete);
+          APP.util.expandCollapse($submenuBox, {action: action, direction: 'horizontal', duration: duration, targetDimension: ''}, complete);
         } else {
           var $mainArea = $('#main-area');
           if (animated) {

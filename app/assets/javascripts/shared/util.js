@@ -103,10 +103,11 @@ APP.util = {
     }
     
     var defaults = {
-      action: 'expand',
-      direction: 'horizontal',
-      animationFunction: 'swing',
+      action: 'expand', // 'expand' or 'collapse'
+      direction: 'horizontal', // 'horizontal' or 'vertical'
+      animationFunction: 'swing', // animation function supported by Velocity.js
       duration: 0,
+      targetDimension: '', // CSS value for dimension property (height or width)
     };
     
     options = options ? options : {};
@@ -121,7 +122,7 @@ APP.util = {
       if (options.action == 'collapse') {
         result = options.direction == 'vertical' ? {height: 0} : {width: 0};
       } else {
-        $elem.hide().css(options.direction == 'vertical' ? {height: ''} : {width: ''})
+        $elem.hide().css(options.direction == 'vertical' ? {height: options.targetDimension} : {width: options.targetDimension})
         result = options.direction == 'vertical' ? {height: $elem.height() + 'px'} : {width: $elem.width() + 'px'};
         $elem.css(options.direction == 'vertical' ? {height: 0} : {width: 0}).show();
       }
@@ -130,7 +131,7 @@ APP.util = {
     
     var style = {
       target: getTargetStyle(),
-      auto: options.direction == 'vertical' ? {height: ''} : {width: ''},
+      auto: options.direction == 'vertical' ? {height: options.targetDimension} : {width: options.targetDimension},
     };
     
     var complete = complete ? complete : function() {};
