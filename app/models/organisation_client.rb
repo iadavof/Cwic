@@ -69,13 +69,13 @@ class OrganisationClient < ActiveRecord::Base
   end
 
   def upcoming_reservations(limit)
-    rel = self.reservations.where('ends_at >= :now', now: Time.now).order(:ends_at)
+    rel = self.reservations.now_or_future.reorder(:begins_at)
     rel = rel.limit(limit) if limit.present?
     rel
   end
 
   def past_reservations(limit)
-    rel = self.reservations.where('begins_at <= :now AND ends_at <= :now', now: Time.now).order(ends_at: :desc)
+    rel = self.reservations.past.reorder(ends_at: :desc)
     rel = rel.limit(limit) if limit.present?
     rel
   end
