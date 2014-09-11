@@ -21,7 +21,7 @@
 
       tbody
         - reservations.each do |reservation|
-          tr class=('highlight' if local_assigns[:highlight].try(:include?, reservation)) class=(reservation.past? ? 'past' : 'upcoming')
+          tr class=('highlight' if local_assigns[:highlight].try(:include?, reservation)) class=(['past', 'now', 'future'].detect { |m| reservation.send("#{m}?") })
             td = check_box_tag "reservation_ids[]", reservation.id, false, class: 'select-all-child', id: "reservation_ids_#{reservation.id}"
             td = (content_tag(:i, '', class: 'icon-warning-sign table-warning-icon') if reservation.warning)
             - if reservation.reservation_status.present?
