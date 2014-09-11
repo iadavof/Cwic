@@ -1,37 +1,12 @@
 html {
   background: #eeeeee;
-  height: 100%;
-  &.with-overlay {
-    height: 100%;
-    body {
-      height: 100%;
-      overflow: hidden;
-    }
-  }
 }
 
 body {
   color: #444444;
   font-size: 80%;
   font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
-  margin: 0;
-  padding: 0;
   line-height: 200%;
-  height: 100%;
-}
-
-html.js body {
-  padding-top: 0.01px;
-  margin-top: -0.01px;
-  overflow: hidden;
-  &[data-current-user-id=''] {
-    overflow: visible;
-  }
-}
-
-html.js.not-logged-in body,
-html.js.introduction-page body {
-  overflow: auto;
 }
 
 ::selection {

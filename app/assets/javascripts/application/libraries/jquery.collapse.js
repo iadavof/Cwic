@@ -91,7 +91,7 @@
       isOpen : false,
       $summary : $el
         .attr("data-collapse-summary", "")
-        .wrapInner('<a href="#"/>'),
+        .wrapInner('<a href="javascript:void(0)"/>'),
       $details : $el.next(),
       options: parent.options,
       parent: parent

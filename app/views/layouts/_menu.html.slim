@@ -4,7 +4,7 @@
   #menu-secondary-area
     a#open-feedback-button.button.blue = t('.feedback')
     #user-info
-      a#current-user href="#"
+      a#current-user href="javascript:void(0)"
         i.icon-user
         = current_user.instance_name + ' (' + current_organisation.instance_name + ')' if current_organisation.present?
       #user-menu
@@ -20,6 +20,6 @@
           - if category_content[:url].present? # No subitems
             = link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url), { data: { shortcut_for: "#{category_name}" } })
           - else # With subitems
-            = link_to(t(".categories.#{category_name}"), '#', {data: { shortcut_for: "#{category_name}" }})
+            = link_to(t(".categories.#{category_name}"), 'javascript:void(0)', {data: { shortcut_for: "#{category_name}" }})
 
-    = content_tag(:a, content_tag(:i, nil, class: 'icon-search'), id: 'open-search-button', class: (controller_name == 'search' ? 'open' : nil), href: '#')
+    = content_tag(:a, content_tag(:i, nil, class: 'icon-search'), id: 'open-search-button', class: (controller_name == 'search' ? 'open' : nil), href: 'javascript:void(0)')

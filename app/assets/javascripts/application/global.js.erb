@@ -66,6 +66,13 @@ APP.init = function() {
   $(window).on('resize', function() {
     APP.global.contentAreaResize();
   });
+  
+  $(document).keydown(function(event) {
+    /* Close search bar when esc button is pressed */
+    if(event.keyCode == 27) {
+      APP.global.slideSearchBar('collapse');
+    }
+  });
 };
 
 // Add progress bar for Turbolink requests
@@ -111,7 +118,10 @@ APP.global = {
     });
   },
   contentAreaResize: function(location) {
-    $('#below-header').css({top: $('#search-bar').is('.open') ? $('#header').outerHeight() + 'px' : $('#header').outerHeight() - $('#search-bar').outerHeight() + 'px'});
+    if(Modernizr.flexbox) {
+      return;
+    }
+    $('#page-wrapper').css({top: $('#search-bar').is('.open') ? $('#header').outerHeight() + 'px' : $('#header').outerHeight() - $('#search-bar').outerHeight() + 'px'});
     if (!Modernizr.csstransforms) {
       $('#header').css({top: -$('#header').outerHeight() + 'px'});
     }
@@ -147,47 +157,47 @@ APP.global = {
     $('#open-search-button').on('click', function() {
       $(window).trigger('header-start-animation');
       if(!$searchBar.hasClass('open')) {
-        APP.global.openSearchBar();
+        APP.global.slideSearchBar('expand');
       } else {
-        APP.global.closeSearchBar();
+        APP.global.slideSearchBar('collapse');
       }
       return false;
     });
   },
-  openSearchBar: function() {
-    var $searchBar = $('#search-bar');
-    var $belowHeader = $('#below-header');
+  slideSearchBar: function(action) {
     var $searchField = $('#global_search_query');
-
-    $('#open-search-button').addClass('open');
-
-    $(document).keydown(function(event) {
-      /* Close search bar when esc button is pressed */
-      if(event.keyCode == 27) {
-        APP.global.closeSearchBar();
+    
+    var complete = function() {
+      $(window).trigger('header-animated');
+      if (action == 'expand') {
+        $searchField.focus();
       }
-    });
-    $belowHeader.velocity({top: $('#header').outerHeight() + 'px'}, 200, 'swing', function() {
-      $searchBar.addClass('open');
-      $(window).trigger('header-animated');
-    });
-    $searchField.focus();
+    };
+    
+    if (action == 'collapse') {
+      $searchField.blur().val('');
+      $('#open-search-button').removeClass('open');
+    } else {
+      $('#open-search-button').addClass('open');
+    }
+    
+    if (Modernizr.flexbox) {
+      APP.util.expandCollapse('#search-bar', {action: action, direction: 'vertical', duration: 150, targetDimension: 'auto'}, complete);
+    } else {
+      var $pageWrapper = $('#page-wrapper');
+      var $searchBar = $('#search-bar');
+      $pageWrapper.velocity({top: (action == 'expand' ? $('#header').outerHeight() : $('#menu-bar').outerHeight()) + 'px'}, 150, 'swing', function() {
+        if (action == 'expand') {
+          $searchBar.addClass('open');
+        } else {
+          $searchBar.removeClass('open');
+        }
+        complete();
+      });
+    }
   },
-  closeSearchBar: function() {
-    var $searchBar = $('#search-bar');
-    var $belowHeader = $('#below-header');
-    var $searchField = $('#global_search_query');
-
-    $searchField.blur().val('');
-
-    $('#open-search-button').removeClass('open');
-    $belowHeader.velocity({top: $('#menu-bar').outerHeight() + 'px'}, 200, 'swing', function() {
-      $searchBar.removeClass('open');
-      $(window).trigger('header-animated');
-    });
-  },
-  addProgressbarToAjax : function() {
-    NProgress.configure({ container: $('div#progress-bar-container'), showSpinner: false });
+  addProgressbarToAjax: function() {
+    NProgress.configure({ container: $('#progress-bar-container'), showSpinner: false });
 
     $(document).ajaxStart(function() {
       NProgress.stackPush();
@@ -204,76 +214,85 @@ APP.global = {
     if (!htmlId || $relatedSubmenu.length == 0 || $menuItem.length == 0) {
       return true;
     } else {
-      var $mainArea = $('#main-area');
-      var $submenus = $('#submenu-box > .submenu');
+      var $submenuBox = $('#submenu-box');
       var $menuItems = $('#main-menu > li');
 
       if ($menuItem.hasClass('selected')) {
-        if (!$mainArea.is(':animated')) {
-          /* Contract submenu if clicked menu item is the selected one */
+        /* Contract submenu if clicked menu item is the selected one */
+        APP.global.slideSubMenu($relatedSubmenu, 'collapse', animated, function() {
           $menuItems.removeClass('selected');
-          APP.global.slideSubMenu($relatedSubmenu, 'in', animated);
-        } else {
-          return false;
-        }
+        });
       } else {
-        if (parseFloat($mainArea.css('left')) > 0) {
-          if (!$submenus.is(':animated')) {
-            $menuItems.removeClass('selected');
-            $menuItem.addClass('selected');
-            /* Contract expanded submenu first, then expand requested submenu */
-            APP.global.slideSubMenu($relatedSubmenu, 'in-out', animated);
-          } else {
-            return false;
-          }
+        if ($submenuBox.hasClass('open')) {
+          /* Contract expanded submenu first, then expand requested submenu */
+          APP.global.slideSubMenu($relatedSubmenu, 'switch', animated, function() {
+            $menuItems.removeClass('selected'); $menuItem.addClass('selected');
+          });
         } else {
-          if (!$mainArea.is(':animated')) {
-            $menuItems.removeClass('selected');
-            $menuItem.addClass('selected');
-            /* Expand requested submenu */
-            APP.global.slideSubMenu($relatedSubmenu, 'out', animated);
-          } else {
-            return false;
-          }
+          /* Expand requested submenu */
+          APP.global.slideSubMenu($relatedSubmenu, 'expand', animated, function() {
+            $menuItems.removeClass('selected'); $menuItem.addClass('selected');
+          });
         }
       }
       return false;
     }
   },
-  slideSubMenu: function(submenu, direction, animated) {
-    var $submenuBox = $('#submenu-box');
-    var $mainArea = $('#main-area');
-    var $submenus = $('#submenu-box > .submenu');
+  slideSubMenu: function(submenu, action, animated, executeBefore, executeAfter) {
     var $submenu = $(submenu);
-    var duration = 200;
+    var executeBefore = executeBefore ? executeBefore : function() {};
+    var executeAfter = executeAfter ? executeAfter : function() {};
+    var duration = animated ? 200 : 0;
 
-    switch (direction) {
-      case 'in':
-        if (animated) {
-          $mainArea.velocity({left: 0}, duration, 'swing', function() {
+    switch (action) {
+      case 'expand':
+      case 'collapse':
+        var $submenuBox = $('#submenu-box');
+        
+        executeBefore();
+        
+        var complete = executeAfter;
+        if (action == 'expand') {
+          APP.global.slideSubMenu($submenu, 'switch', false);
+        } else {
+          var $submenus = $submenuBox.find('> .submenu');
+          complete = function() {
             $submenus.removeClass('selected');
-          });
+            $submenuBox.removeClass('open');
+            executeAfter();
+          };
+        }
+        
+        if (Modernizr.flexbox) {
+          APP.util.expandCollapse($submenuBox, {action: action, direction: 'horizontal', duration: duration, targetDimension: ''}, complete);
         } else {
-          $mainArea.css({left: 0});
-          $submenus.removeClass('selected');
+          var $mainArea = $('#main-area');
+          if (animated) {
+            $submenuBox.addClass('open');
+            $mainArea.velocity({left: action == 'expand' ? $submenuBox.outerWidth() + 'px' : 0}, duration, 'swing', complete);
+          } else {
+            $submenuBox.addClass('open');
+            $mainArea.css({left: action == 'expand' ? $submenuBox.outerWidth() + 'px' : 0});
+            executeAfter();
+          }
         }
         break;
-      case 'out':
-        $submenus.removeClass('selected').css({opacity: 0});
-        $submenu.addClass('selected').css({opacity: 1});
+      case 'switch':
+        executeBefore();
+        var $submenus = $('#submenu-box > .submenu');
         if (animated) {
-          $mainArea.velocity({left: $submenuBox.outerWidth() + 'px'}, duration, 'swing');
-        } else {
-          $mainArea.css({left: $submenuBox.outerWidth() + 'px'});
-        }
-        break;
-      case 'in-out':
-        $submenus.velocity({opacity: 0}, duration/2.5, 'swing', function() {
-          $submenus.removeClass('selected');
-          $submenu.velocity({opacity: 1}, duration/2.5, 'swing', function() {
-            $submenu.addClass('selected');
+          $submenus.velocity({opacity: 0}, duration/2.5, 'swing', function() {
+            $submenus.removeClass('selected');
+            $submenu.velocity({opacity: 1}, duration/2.5, 'swing', function() {
+              $submenu.addClass('selected');
+              executeAfter();
+            });
           });
-        });
+        } else {
+          $submenus.css({opacity: 0}).removeClass('selected');
+          $submenu.css({opacity: 1}).addClass('selected');
+          executeAfter();
+        }
         break;
     }
   },

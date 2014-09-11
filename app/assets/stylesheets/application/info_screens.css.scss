@@ -17,8 +17,8 @@ body.controller-info_screens.action-show {
   margin: 0;
 }
 
-html.js body.controller-info_screens.action-show #below-header,
-html.js body.controller-info_screens.action-show #main-area {
+html.js body.controller-info_screens.action-show #page-wrapper,
+html.js body.controller-info_screens.action-show #below-header {
   position: static;
   top: auto;
   left: auto;

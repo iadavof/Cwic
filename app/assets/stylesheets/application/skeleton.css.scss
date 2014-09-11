@@ -1,0 +1,180 @@
+html, body {
+  height: 100%;
+}
+
+html {
+  &.with-overlay {
+    body {
+      overflow: hidden;
+    }
+  }
+}
+
+body {
+  margin: 0;
+  padding: 0;
+}
+
+#header {
+  position: relative;
+  z-index: 199;
+}
+
+#content-area {
+  overflow: auto !important;
+  > .inner {
+    position: relative;
+  }
+}
+
+#local-menu {
+  position: relative;
+  z-index: 198;
+}
+
+html.logged-in {
+  #logo-container {
+    display: none;
+  }
+}
+
+html.logged-in.js {
+  body {
+    padding-top: 0.01px;
+    margin-top: -0.01px;
+    overflow: hidden;
+  }
+  
+  #page-wrapper {
+    position: absolute;
+    top: 80px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+  }
+  
+  #header {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+  }
+  
+  &.csstransforms #header {
+    transform: translate(0, -100%);
+  }
+  
+  #below-header {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  #submenu-box {
+    overflow-y: auto;
+    overflow-x: hidden;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 300px;
+    bottom: 0;
+  }
+  
+  #main-area {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+  
+  #content-area {
+    position: absolute;
+    top: 50px;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
+}
+
+html.logged-in.flexbox, html.logged-in.js.flexbox {
+  body {
+    padding-top: 0.01px;
+    margin-top: -0.01px;
+  }
+  
+  #page-wrapper {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 0;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+  }
+  
+  #header, #below-header, #submenu-box, #main-area, #content-area {
+    position: relative;
+    top: auto;
+    bottom: auto;
+    left: auto;
+    right: auto;
+  }
+
+  #header {
+    width: auto;
+    flex: 0 0 auto;
+    transform: none;
+  }
+
+  #below-header {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: row nowrap;
+    align-items: stretch;
+  }
+  
+  #submenu-box {
+    flex: 0 0 auto;
+  }
+  
+  #main-area {
+    flex: 1 1 auto;
+    display: flex;
+    flex-flow: column nowrap;
+    align-items: stretch;
+  }
+  
+  #local-menu {
+    flex: 0 0 auto;
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    
+    &.clearfix:after {
+      display: none;
+    }
+    
+    .navigation-actions, .context-actions, .page-actions {
+      width: auto;
+      min-width: 0;
+      flex: 0 0 auto;
+    }
+  }
+  
+  #content-area {
+    flex: 1 1 auto;
+  }
+}
+
+html.not-logged-in {
+  body {
+    overflow: visible;
+  }
+}
