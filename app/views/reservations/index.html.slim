@@ -1,5 +1,5 @@
 - content_for :page_title do
-  == @organisation_client.present? ? index_title_of(Reservation, @organisation_client.instance_name) : index_title(Reservation)
+  == @organisation_client.present? ? index_title_of(Reservation, @organisation_client) : index_title(Reservation)
 
 - content_for :local_menu_navigation do
   = button_link_to_new([@organisation, Reservation])

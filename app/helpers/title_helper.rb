@@ -4,8 +4,8 @@ module TitleHelper
     t('.title_html', default: :index_objects_html, models: object.model_name.human(count: 2).lcfirst)
   end
 
-  def index_title_of(object, name)
-    t('.title_html_of', default: :index_objects_html_of, models: object.model_name.human(count: 2).lcfirst, name: instance_name)
+  def index_title_of(object, of)
+    t('.title_html_of', default: :index_objects_html_of, models: object.model_name.human(count: 2).lcfirst, name: of.instance_name)
   end
 
   def new_title(object)
