@@ -867,9 +867,9 @@ nl:
     organisation_client_result_reservations:
       past_reservations: 'Eerdere reserveringen'
       upcoming_reservations: 'Aankomende reserveringen'
-      ago: 'geleden'
-      now: 'Nu'
-      in_about: 'over'
+      ago: '%{time_distance} geleden'
+      now: 'Nu bezig'
+      in_about: 'Over %{time_distance}'
     reservation_result:
       options: 'Opties'
 

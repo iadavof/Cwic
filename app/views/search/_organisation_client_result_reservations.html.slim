@@ -6,14 +6,11 @@ h4 = t(".#{type}_reservations")
 - else
   dl
     - result.send("#{type}_reservations", 3).includes(:entity).each do |reservation|
-      - if type == :upcoming
-        dt title=l(reservation.begins_at, format: :long)
-          => reservation.begins_at <= Time.now ? t('now') : t('.in_about')
-          = distance_of_time_in_words_to_now(reservation.begins_at)
-      - else
-        dt title=l(reservation.ends_at, format: :long)
-          => time_ago_in_words(reservation.ends_at)
-          = t('.ago')
+      dt title=l((type == :upcoming ? reservation.begins_at : reservation.ends_at), format: :long)
+        - if type == :upcoming
+          = (reservation.now? ? t('.now') : t('.in_about', time_distance: distance_of_time_in_words_to_now(reservation.begins_at)))
+        - else
+          = t('.ago', time_distance: distance_of_time_in_words_to_now(reservation.ends_at))
       dd
         => name_link_to_show([@organisation, reservation.entity], name: reservation.entity.full_instance_name)
         ' -
