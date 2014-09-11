@@ -49,6 +49,9 @@ html.js.flexbox {
   }
 
   #search-bar {
+    &.open {
+      height: auto;
+    }
     > .inner {
       flex: 0 0 100%;
     }
