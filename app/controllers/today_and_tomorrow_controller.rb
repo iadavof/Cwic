@@ -1,8 +1,8 @@
 class TodayAndTomorrowController < ApplicationController
   before_action :load_resource
 
-  respond_to :html, only: [:index]
-  respond_to :json, only: [:update]
+  respond_to :html, only: :index
+  respond_to :json, only: :update
 
   def index
     respond_with(@entity_types)
