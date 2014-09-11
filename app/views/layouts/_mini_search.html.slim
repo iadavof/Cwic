@@ -1,5 +1,5 @@
 = form_tag(nil, method: :get, class: 'mini-search' + (local_assigns[:include_date] ? ' with-date' : '')) do
-  = params_to_hidden_fields(:date_domain_from, :date_domain_to, :mini_search)
+  = params_to_hidden_fields(:date_domain_from, :date_domain_to, :mini_search, :page)
 
   - if local_assigns[:include_date] && :include_date
     = text_field_tag(:date_domain_from, params[:date_domain_from], placeholder: t('.date_domain_from_placeholder'), id: 'date_domain_from', class: 'datepicker-field with-clear', onchange: "this.form.submit();")
