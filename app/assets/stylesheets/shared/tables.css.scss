@@ -23,7 +23,7 @@ div.table-container {
 
 table {
   background-color: #fdfdfd;
-  border: 1px solid #ccc;
+  border: 5px solid #eee;
   margin: 20px 0;
   border-collapse: collapse;
   max-width: 100%;
@@ -40,13 +40,12 @@ table {
   }
 
   thead {
-    background-color: #ddd;
-    border-bottom: 1px solid #ccc;
+    background-color: #eee;
   }
 
   tr {
     &:nth-child(even) {
-      background-color: #f3f3f3;
+      background-color: #f6f6f6;
     }
 
     &.highlight {
