@@ -2,9 +2,9 @@
   = show_title(@<%= singular_table_name %>)
 
 - content_for :local_menu_navigation do
-  = button_link_to_index(<%= class_name %>)
-  = button_link_to_edit(@<%= singular_table_name %>)
-  = button_link_to_destroy(@<%= singular_table_name %>)
+  = button_link_to_index(collection_path)
+  = button_link_to_edit(member_path)
+  = button_link_to_destroy(member_path)
 
 dl
 <% attributes.reject(&:password_digest?).each do |attribute| -%>

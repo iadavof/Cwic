@@ -2,6 +2,6 @@
   = new_title(<%= class_name %>)
 
 - content_for :local_menu_navigation do
-  = button_link_to_index(<%= class_name %>)
+  = button_link_to_index(collection_path)
 
 = render 'form'
