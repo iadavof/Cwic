@@ -37,9 +37,8 @@ class OrganisationClientContact < ActiveRecord::Base
     Vcard::Vcard::Maker.make2 do |maker|
       # Setting up name
       maker.add_name do |name|
-        name.prefix = infix  if infix.present?
         name.given = first_name
-        name.family = last_name
+        name.family = "#{infix.present? ? infix + ' ' : ''}#{last_name}"
       end
 
       # Setting up address.
