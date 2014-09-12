@@ -309,10 +309,6 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
 /* Pagination and tabs */
 
 .pagination {
-  margin: 30px 0;
-  &:first-child {
-    margin-top: 10px;
-  }
   :after {
     display: block;
     content: '.';
@@ -330,7 +326,7 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
       margin-left: 0;
     }
     &.gap, &.current, a {
-      padding: 9px 12px;
+      padding: 0.7em 0.9em;
     }
     &.gap {
       border: 0 none;

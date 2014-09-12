@@ -7,9 +7,14 @@ div.table-container {
 div.table-container {
   .pagination {
     float: left;
+    margin: 20px 0;
+    &:first-child {
+      margin-top: 10px;
+    }
   }
   form#limiting {
     float: right;
+    margin-bottom: 20px;
   }
   table {
     clear: both;
