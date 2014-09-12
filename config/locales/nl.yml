@@ -1,54 +1,11 @@
 nl:
-  submit: 'Versturen'
-  back: 'Terug'
-  show: 'Weergeven'
-  edit: 'Bewerken'
-  destroy: 'Verwijderen'
-  update: 'Updaten'
-  none: 'Geen'
-  index_objects_html: 'Lijst met <strong>%{models}</strong>'
   index_objects_html_of: 'Lijst met <strong>%{models}</strong> van <strong>%{name}</strong>'
-  empty_objects: 'Geen %{models}'
-  empty_for_search: 'Geen %{models} gevonden voor de zoekopdracht <strong>%{search}</strong>.'
-  empty_objects_add_first_html: 'Om deze optie te kunnen gebruiken moeten er eerst %{models} worden aangemaakt: %{to_new_object_link}.'
   remove_search: 'Zoekopdracht verwijderen'
-  new_object_html: '<strong>%{model}</strong> toevoegen'
-  show_object_html: '%{model}: <strong>%{name}</strong>'
-  edit_object_html: 'Bewerk %{model}: <strong>%{name}</strong>'
-  to_index_objects: 'Lijst met %{models}'
-  to_new_object: '%{model} toevoegen'
-  to_show_object: '%{name} bekijken'
-  to_edit_object: 'Bewerken'
-  to_destroy_object: 'Verwijderen'
-  to_destroy_object_confirm: 'Weet u zeker dat u %{name} wilt verwijderen?'
-  icon_to_new_object: '%{model} toevoegen'
-  icon_to_edit_object: '%{name} bewerken'
-  icon_to_destroy_object: '%{name} verwijderen'
-  add_nested_object: '%{model} toevoegen'
-  edit_nested_object: '%{model} bewerken'
-  done_nested_object: 'Klaar met bewerken'
-  remove_nested_object: '%{model} verwijderen'
-  order_nested_objects: 'Volgorde van %{models} aanpassen'
   settings: 'Instellingen'
-  include_blank_none: 'Geen'
-  prompt_choose: 'Kies...'
-  prompt_choose_model: 'Kies een %{model}...'
   all_organisations: 'Alle organisaties'
-  are_you_sure: 'Weet u het zeker?'
-  unknown_html: '<em>Onbekend</em>'
-  none_html: '<em>Geen</em>'
-  na_html: '<em>n.v.t.</em>'
-  'true': 'Ja'
-  'false': 'Nee'
-  'yes': 'Ja'
-  'no': 'Nee'
   csv: 'csv'
   xls: 'xls'
-  cancel: 'Annuleren'
-  save: 'Opslaan'
   for_example: 'Bijv.'
-  default_title: 'Titel'
-  unlimited: 'Onbeperkt'
   general: 'Algemeen'
   minutes: 'Minuten'
   minutes_abbr: 'Min.'
@@ -58,18 +15,6 @@ nl:
     with_selected: 'met geselecteerde...'
     save: 'Opslaan'
     edit_is_applied_to_the_following: 'Aanpassingen worden toegepast op de volgende reserveringen:'
-
-  date:
-    formats:
-      default: '%d-%m-%Y'
-
-  time:
-    formats:
-      default: '%d-%m-%Y %H:%M'
-
-  time_of_day:
-    formats:
-      default: '%H:%M'
 
   activerecord:
     models:
@@ -520,7 +465,6 @@ nl:
       links:
         did_not_receive_confirmation_instructions: 'Geen bevestigingsinstructies ontvangen?'
         did_not_receive_unlock_instructions: 'Geen deblokkeerinstructies ontvangen?'
-        sign_in_with: 'Inloggen met %{provider}'
     passwords:
       new:
         forgot_password: 'Wachtwoord vergeten?'
@@ -539,14 +483,6 @@ nl:
         notice: '%{resource_name} (%{resource_email}) is uitgenodigd.'
       reinvite:
         notice: '%{resource_name} (%{resource_email}) is opnieuw uitgenodigd.'
-
-  views:
-    pagination:
-      first: 'Eerste'
-      last: 'Laatste'
-      previous: 'Vorige'
-      next: 'Volgende'
-      truncate: '...'
 
   helpers:
     page_entries_info:
@@ -619,12 +555,6 @@ nl:
       date_domain_to_placeholder: 'Tot datum...'
       search_document_placeholder: 'Document zoeken...'
       search: 'Zoeken'
-
-  shared:
-    error_messages:
-      fix_the_errors:
-        one: 'Er ging iets mis. Los de fout op en probeer het opnieuw:'
-        other: 'Er ging iets mis. Los de %{count} fouten op en probeer het opnieuw:'
 
   home:
     index:
