@@ -6,7 +6,7 @@ dl
   dt = OrganisationClient.human_attribute_name(:id)
   dd = "c##{@organisation_client.id}"
   dt = OrganisationClient.human_attribute_name(:business_client)
-  dd = t(@organisation_client.business_client.to_s)
+  dd = format_bool(@organisation_client.business_client)
   - if @organisation_client.business_client
     dt = OrganisationClient.human_attribute_name(:company_name)
     dd = @organisation_client.company_name
