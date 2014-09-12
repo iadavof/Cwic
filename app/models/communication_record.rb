@@ -20,20 +20,17 @@ class CommunicationRecord < ActiveRecord::Base
   validates :method, length: { maximum: 255 }, inclusion: { in: POSSIBLE_METHODS }, allow_nil: true
 
   # Callbacks
-  before_validation :set_current_user
+  before_validation :set_user
 
   # Scopes
   default_scope { order(created_at: :desc) }
-
-  ##
-  # Instance methods
-  ##
 
   def instance_name
     self.summary
   end
 
-  def set_current_user
+private
+  def set_user
     self.user = User.current
   end
 end
