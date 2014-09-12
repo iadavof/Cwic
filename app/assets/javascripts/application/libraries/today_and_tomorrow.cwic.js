@@ -51,21 +51,14 @@ CwicTodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
 
     }
   }).success(function(response) {
-    tat.afterTodayTomorrowUpdate(response);
+    tat.afterTodayTomorrowUpdateEntity(response.entities);
   });
 };
 
-CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdate = function(response) {
-  for(var eti in response.entity_types) {
-    var jentity_type = this.scheduleContainer.find('#entity_type_' + response.entity_types[eti].id);
-    this.afterTodayTomorrowUpdateEntity(response.entity_types[eti].entities, jentity_type);
-  }
-};
-
-CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entity_type_entities, parentdiv) {
-  for(var ei in entity_type_entities) {
-    var entity = entity_type_entities[ei];
-    var jentity = parentdiv.find('#entity_' + entity.id);
+CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entities) {
+  for(var ei in entities) {
+    var entity = entities[ei];
+    var jentity = $('#entity_' + entity.id);
     jentity = jentity.find('div.updated-info').html('');
     this.createNewUpdatedInfo(entity, jentity);
   }

@@ -37,7 +37,7 @@ CwicScheduleView.prototype.renderCalendar = function() {
 
 CwicScheduleView.prototype.renderHorizontalCalendar = function () {
   this.addHorizontalViewTimeAxis();
-  this.scrollToCurrentTime();
+  this.scrollHorizontalCalendarToCurrentTime();
 };
 
 CwicScheduleView.prototype.renderVerticalCalendar = function() {
@@ -50,16 +50,12 @@ CwicScheduleView.prototype.initScrollContainerActions = function() {
   $('html').on('keydown', function(event) { schedule.bindScrollKeyboardKeyDown.call(schedule, event); });
 };
 
-CwicScheduleView.prototype.scrollToCurrentTime = function() {
+CwicScheduleView.prototype.scrollHorizontalCalendarToCurrentTime = function() {
   var scrollContainer = this.scheduleContainer.find('.schedule-scroll-container');
   var viewWidth = scrollContainer.innerWidth();
-  console.debug(viewWidth);
   var scheduleBodyWidth = this.scheduleContainer.find('.schedule-body').width();
-  console.debug(scheduleBodyWidth);
   var timePercent = this.timeToPercentage(moment());
-  console.debug(timePercent);
   var scrollPos = scheduleBodyWidth * timePercent / 100 - viewWidth / 2;
-  console.debug(scrollPos);
   scrollContainer.animate({ scrollLeft: scrollPos }, 1000);
 };
 

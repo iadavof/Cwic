@@ -9,7 +9,7 @@ class TodayAndTomorrowController < ApplicationController
   end
 
   def update
-    respond_with(@entity_types)
+    respond_with(@entities)
   end
 
   def current_menu_sub_category
@@ -22,7 +22,7 @@ private
     when 'index'
       @entity_types = @organisation.entity_types.with_entities.includes(:entities, :icon)
     when 'update'
-      @entity_types = @organisation.entity_types.with_entities.includes(:entities)
+      @entities = @organisation.entities
     end
   end
 end
