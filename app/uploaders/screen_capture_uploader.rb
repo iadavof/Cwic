@@ -1,6 +1,6 @@
 # encoding: utf-8
 
-class ScreencapUploader < CarrierWave::Uploader::Base
+class ScreenCaptureUploader < CarrierWave::Uploader::Base
 
   # Include RMagick or MiniMagick support:
   # include CarrierWave::RMagick

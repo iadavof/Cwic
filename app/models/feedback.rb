@@ -7,7 +7,7 @@ class Feedback < ActiveRecord::Base
   belongs_to :organisation
 
   # Attribute modifiers
-  mount_uploader :screen_capture, ScreencapUploader
+  mount_uploader :screen_capture, ScreenCaptureUploader
 
   # Validations
   validates :specs, presence: true
