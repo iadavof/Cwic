@@ -1,7 +1,7 @@
 function CwicTodayAndTomorrow(options) {
   this.options = $.extend({
     container: 'schedule-container',
-    organisation_id: 0,
+    organisation_id: 0
   }, options || {});
 
   this.renderTodayAndTomorrow();
@@ -19,9 +19,9 @@ CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
 CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   var tat = this;
   var dispatcher = new WebSocketRails(window.location.host + Routes.websocket_path());
+
   // Open reservations_channel for organisation
   var channel = dispatcher.subscribe('todayandtomorrows_' + this.options.organisation_id);
-
   channel.bind('update', function() { tat.updateTodayTomorrowView(); });
 };
 
@@ -46,16 +46,13 @@ CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
 CwicTodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
   var tat = this;
   $.ajax({
-    url: Routes.organisation_today_and_tomorrow_update_path(current_organisation),
-    data: {
-
-    }
+    url: Routes.organisation_today_and_tomorrow_reservations_path(current_organisation)
   }).success(function(response) {
-    tat.afterTodayTomorrowUpdateEntity(response.entities);
+    tat.updateTodayTomorrowEntities(response.entities);
   });
 };
 
-CwicTodayAndTomorrow.prototype.afterTodayTomorrowUpdateEntity = function(entities) {
+CwicTodayAndTomorrow.prototype.updateTodayTomorrowEntities = function(entities) {
   for(var ei in entities) {
     var entity = entities[ei];
     var jentity = $('#entity_' + entity.id);

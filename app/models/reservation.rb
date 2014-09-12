@@ -80,7 +80,7 @@ class Reservation < ActiveRecord::Base
   # Class methods
   ##
 
-  # Get all reservations that start OR end within the time domain.
+  # Get all reservations that start OR end within the time domain (overlap with the date domain).
   # Options:
   # - delocalize: delocalize dates with the current locale if they are strings
   # - include_edges: indicates that we also want the reservations directly outside the scope. This can be useful to check for collisions.
@@ -176,24 +176,45 @@ class Reservation < ActiveRecord::Base
     begins_at_was.present? && ends_at_was.present? ? period_to_days(begins_at_was, ends_at_was) : nil
   end
 
+  # Is the reservation in the past (has it already ended)?
   def past?(now = Time.now)
     ends_at <= now
   end
 
+  # Is the reservation in the past or currently ongoing?
   def past_or_now?(now = Time.now)
     past?(now) || now?(now)
   end
 
+  # Is the reservation currently ongoing?
   def now?(now = Time.now)
     begins_at <= now && now < ends_at
   end
 
+  # Is the reservatrion in the future or currently ongoing?
   def now_or_future?(now = Time.now)
     now?(now) || future?(now)
   end
 
+  # Is the reservation (strictly) in the future?
   def future?(now = Time.now)
     begins_at > now
+  end
+
+  # Is the reservation within the given timespan?
+  # By default this is a strict check: the reservation is NOT within its own begins_at and ends_at.
+  # When strict set to false the reservation may also have just started at the from time (the reservation is within its own begins_at and ends_at).
+  def within?(from, to, strict: true)
+    if strict
+      future?(from) && past?(to)
+    else
+      (from == begins_at || future?(from)) && past?(to)
+    end
+  end
+
+  # Does the reservation overlaps with the given timespan?
+  def overlaps?(from, to)
+    now_or_future?(from) && past_or_now?(to)
   end
 
   # Get the reservation directly before this reservation (for the same entity).
