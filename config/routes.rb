@@ -72,7 +72,7 @@ Cwic::Application.routes.draw do
 
     controller :today_and_tomorrow do
       get 'today_and_tomorrow/index'
-      get 'today_and_tomorrow/update'
+      get 'today_and_tomorrow/reservations'
     end
 
     controller :occupation_view do

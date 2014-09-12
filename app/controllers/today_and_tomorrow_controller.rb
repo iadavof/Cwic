@@ -2,14 +2,14 @@ class TodayAndTomorrowController < ApplicationController
   before_action :load_resource
 
   respond_to :html, only: :index
-  respond_to :json, only: :update
+  respond_to :json, only: :reservations
 
   def index
     respond_with(@entity_types)
   end
 
-  def update
-    respond_with(@entities)
+  def reservations
+    respond_with(@reservations)
   end
 
   def current_menu_sub_category
@@ -21,8 +21,8 @@ private
     case params[:action]
     when 'index'
       @entity_types = @organisation.entity_types.with_entities.includes(:entities, :icon)
-    when 'update'
-      @entities = @organisation.entities
+    when 'reservations'
+      @reservations = @organisation.reservations.by_date_domain(Time.now, Date.tomorrow.end_of_day).includes(:organisation_client)
     end
   end
 end
