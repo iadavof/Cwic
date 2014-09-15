@@ -29,8 +29,7 @@ nl:
   remove_nested_object: '%{model} verwijderen'
   order_nested_objects: 'Volgorde van %{models} aanpassen'
   include_blank_none: 'Geen'
-  prompt_choose: 'Kies...'
-  prompt_choose_model: 'Kies een %{model}...'
+  prompt_choose_model: 'Selecteer een %{model}...'
   are_you_sure: 'Weet u het zeker?'
   unknown_html: '<em>Onbekend</em>'
   none_html: '<em>Geen</em>'
@@ -51,6 +50,10 @@ nl:
   time_of_day:
     formats:
       default: '%H:%M'
+
+  helpers:
+    select:
+      prompt: 'Selecteer...'
 
   views:
     pagination:

@@ -11,7 +11,7 @@
   = f.fields_for :organisation_users do |ouf|
     .field
       = ouf.label :organisation_role
-      = ouf.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, { prompt: t('prompt_choose') }, { readonly: true }
+      = ouf.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, { prompt: true }, { readonly: true }
     = ouf.hidden_field :organisation_id
   .field
     = f.label :first_name

@@ -11,7 +11,7 @@
  = nested_form_for([@organisation, @entity]) do |f|
   .field.autosubmit
     = f.label :entity_type
-    = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: t('prompt_choose') }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
+    = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: true }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
 
 - else # EntityType selected: render normal form
   = render 'form'

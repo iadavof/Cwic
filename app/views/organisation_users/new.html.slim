@@ -12,7 +12,7 @@
     = f.text_field :user_email
   .field
     = f.label :organisation_role
-    = f.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, prompt: t('prompt_choose')
+    = f.collection_select :organisation_role_id, OrganisationRole.all.sort, :id, :name, prompt: true
 
   .actions
     = f.submit

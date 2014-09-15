@@ -26,7 +26,7 @@
   .field
     = check_box_tag "edit_fields[]", :entity_id, false, class: 'edit_field_checkbox', id: 'edit_fields_entity'
     = f.label :entity
-    = f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: t('prompt_choose')
+    = f.collection_select :entity_id, @organisation.entities.sort, :id, :instance_name, prompt: true
   .field
     = check_box_tag "edit_fields[]", :organisation_client_id, false, class: 'edit_field_checkbox', id: 'edit_fields_organisation_client'
     = f.label :organisation_client

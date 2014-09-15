@@ -12,7 +12,7 @@ h2
   .entity-type-filter
     .field.field-entity-type
       = f.label :entity_type
-      = select_tag :entity_type_id, options_for_select(@organisation.entity_types.sort.collect { |et| [et.name, et.id] }, @reservation.entity.try(:entity_type_id)), { prompt: t('prompt_choose') }
+      = select_tag :entity_type_id, options_for_select(@organisation.entity_types.sort.collect { |et| [et.name, et.id] }, @reservation.entity.try(:entity_type_id)), prompt: t('helpers.select.prompt')
   .no-entities-available
     = t('.no_entities_available')
   ul.entity-list
