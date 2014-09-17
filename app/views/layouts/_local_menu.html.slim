@@ -13,4 +13,6 @@
     - if content_for?(:local_menu_page)
       .inner.clearfix
         = yield(:local_menu_page)
-#sticky-header-stick-to
+- if content_for?(:under_local_menu)
+#under-local-menu
+  = yield(:under_local_menu)

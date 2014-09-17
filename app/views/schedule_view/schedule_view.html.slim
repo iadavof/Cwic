@@ -37,6 +37,10 @@
     a#scheduleDateUpdate.button<
       = t('.set')
 
+- content_for :under_local_menu do
+  #sticky-header-stick-to
+end
+
 = render 'schedule_view/template'
 
 = content_tag(:div, nil, { id: 'reservation-form-modal-blueprint', data: { blueprint: render('reservations/modal_form').to_str }})

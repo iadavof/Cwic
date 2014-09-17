@@ -14,4 +14,8 @@
   = select_month(Date.today, { field_name: 'current_month' })
   = select_year(Date.today, { field_name: 'current_year' })
 
+- content_for :under_local_menu do
+  #sticky-header-stick-to
+end
+
 = render 'template'
