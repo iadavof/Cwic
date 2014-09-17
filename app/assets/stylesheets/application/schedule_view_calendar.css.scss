@@ -50,28 +50,6 @@ div.calendar div.cwic-sticky-container {
   z-index: 20;
 }
 
-div.calendar div.top-axis {
-  position: relative;
-  width: 100%;
-  height: auto;
-  background-color: #ffffff;
-  z-index: 10;
-  border-bottom: 2px solid #ccc;
-  margin-bottom: -1px;
-}
-
-div.calendar div.top-axis .description-bubble {
-  position: absolute;
-  top: 100%;
-  margin-top: 43.6px;
-  left: 0;
-  width: 300px;
-  height: 150px;
-  background-color: #fff;
-  border: 2px solid #17889d;
-  display: none;
-}
-
 .ajax-notification {
   display: block;
   padding: 5px 8px;
@@ -93,12 +71,11 @@ div.calendar div.top-axis .description-bubble {
 }
 
 div.calendar div.left-axis {
-    position: relative;
-    float: left;
-    height: 100%;
-    overflow: hidden;
-    padding-right: 20px;
-    padding-top: 7px;
+  position: relative;
+  float: left;
+  height: 100%;
+  overflow: hidden;
+  width: 60px;
 }
 
 div.calendar div.left-axis-row {
@@ -122,91 +99,6 @@ div.calendar div.schedule-scroll-container {
   box-shadow: 0 0 30px rgba(0,0,0,0.2) inset;
 }
 
-div.calendar div.schedule-scroll-container div.top-axis div.hour-time-axis-frame,
-div.calendar div.schedule-scroll-container div.top-axis div.six-hour-time-axis-frame {
-  position: relative;
-  float: left;
-  height: 100%;
-  text-align: center;
-  font-weight: bold;
-  left: 2.083333%;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.hour-time-axis-frame {
-  width: 4.166666%;
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.six-hour-time-axis-frame {
-  width: 3.571428%;
-  font-weight: normal;
-  font-size: 0.75em;
-  padding-top: 15px;
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.day-time-axis-frame {
-  display: block;
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 14.285714%;
-  padding-bottom: 15px;
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.vertical-day-time-axis-frame {
-  display: block;
-  position: relative;
-  float: left;
-  padding-bottom: 5px;
-  box-sizing: border-box;
-  -moz-box-sizing: border-box;
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.vertical-day-time-axis-frame:nth-child(odd),
-div.calendar div.schedule-scroll-container div.top-axis div.day-time-axis-frame:nth-child(odd) {
-  background-color: rgba(0, 0, 0, 0.1);
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.vertical-day-time-axis-frame p.date {
-  margin: 0 auto;
-  font-weight: bold;
-  font-size: 1.1em;
-  text-align: center;
-  width: 100%;
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 0 2px;
-
-  color: #aaa;
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.vertical-day-time-axis-frame p.name,
-div.calendar div.schedule-scroll-container div.top-axis div.day-time-axis-frame p.name {
-  margin: 0 auto;
-  font-weight: bold;
-  font-size: 1.6em;
-  text-align: center;
-  width: 100%;
-  color: #ddd;
-
-  overflow: hidden;
-  white-space: nowrap;
-  text-overflow: ellipsis;
-  padding: 0 2px;
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.vertical-day-time-axis-frame:nth-child(odd) p.date {
-  color: #999;
-}
-
-div.calendar div.schedule-scroll-container div.top-axis div.vertical-day-time-axis-frame:nth-child(odd) p.name,
-div.calendar div.schedule-scroll-container div.top-axis div.day-time-axis-frame:nth-child(odd) p.name {
-  color: #bbb;
-}
-
 div.calendar div.schedule-scroll-container div.schedule-body div.disabled-overlay {
   background-color: transparent;
   background-image: repeating-linear-gradient(45deg, transparent, transparent 35px, rgba(66,66,66,.1) 35px, rgba(55,55,55,.1) 70px);
@@ -221,10 +113,15 @@ div.calendar div.schedule-scroll-container div.schedule-body div.disabled-overla
   z-index: 2;
 }
 
-div.calendar div.schedule-scroll-container div.top-axis,
+div.schedule-view-sticky div.top-axis,
 div.calendar div.schedule-scroll-container div.schedule-body {
   min-width: 3000px;
   position: relative;
+}
+
+div.schedule-view-sticky {
+  overflow: hidden;
+  margin-left: 60px;
 }
 
 div.calendar div.schedule-scroll-container div.schedule-body div.row {
@@ -377,11 +274,6 @@ div.calendar div.left-axis div.time-axis-row {
 
 div.calendar div.left-axis div.time-axis-row:first-child {
   margin-top: 22.5px;
-}
-
-div.calendar div.top-axis div.vertical-day-time-axis-frame.today p.name,
-div.calendar div.top-axis div.vertical-day-time-axis-frame.today p.date {
-  color: #17889d;
 }
 
 div.calendar div.left-axis div.left-axis-row.today {
@@ -1085,10 +977,131 @@ div.calendar div.entity-container div.entity-button p.entity-name {
   margin-top: 10px;
 }
 
+div.schedule-view-sticky div.top-axis {
+  position: relative;
+  width: 100%;
+  height: auto;
+  background-color: #fff;
+  z-index: 10;
+  border-bottom: 2px solid #ccc;
+  margin-bottom: -1px;
+  border-width: 0 12px 2px;
+  border-style: solid;
+  border-color: transparent;
+  border-bottom-color: #ccc;
+  box-sizing: border-box;
+}
+
+div.schedule-view-sticky div.top-axis {
+  div.hour-time-axis-frame,
+  div.six-hour-time-axis-frame {
+    position: relative;
+    float: left;
+    height: 100%;
+    text-align: center;
+    font-weight: bold;
+    left: 2.083333%;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+
+    p {
+      margin: 0;
+    }
+  }
+
+  div.hour-time-axis-frame {
+    width: 4.166666%;
+  }
+
+  div.six-hour-time-axis-frame {
+    width: 3.571428%;
+    font-weight: normal;
+    font-size: 0.75em;
+    padding-top: 15px;
+  }
+
+  div.day-time-axis-frame {
+    display: block;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 14.285714%;
+    padding-bottom: 15px;
+  }
+
+  div.vertical-day-time-axis-frame {
+    display: block;
+    position: relative;
+    float: left;
+    padding-bottom: 5px;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+  }
+
+  div.vertical-day-time-axis-frame:nth-child(odd),
+  div.day-time-axis-frame:nth-child(odd) {
+    background-color: rgba(0, 0, 0, .1);
+  }
+
+  div.vertical-day-time-axis-frame {
+    p.date {
+      margin: 0 auto;
+      font-weight: bold;
+      font-size: 1.1em;
+      text-align: center;
+      width: 100%;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 0 2px;
+
+      color: #aaa;
+    }
+
+    &:nth-child(odd) {
+      p.date {
+      color: #999;
+      }
+    }
+  }
+
+  div.vertical-day-time-axis-frame,
+  div.day-time-axis-frame {
+    p.name {
+      margin: 0 auto;
+      font-weight: bold;
+      font-size: 1.6em;
+      text-align: center;
+      width: 100%;
+      color: #ddd;
+
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+      padding: 0 2px;
+    }
+
+    &:nth-child(odd) {
+      p.name {
+        color: #bbb;
+      }
+    }
+
+    &.today {
+      p.name,
+      p.date {
+        color: #17889d;
+      }
+    }
+  }
+}
+
 @media print {
   html {
     background-color: transparent;
   }
+
   body.controller-schedule_view {
     color: #000;
 
@@ -1103,13 +1116,6 @@ div.calendar div.entity-container div.entity-button p.entity-name {
     div.calendar div.schedule-body div.column div.schedule-item div.resizer,
     div.calendar div.schedule-body div.column div.schedule-item a.open-toolbar {
       display: none !important;
-    }
-
-    div.calendar div.top-axis {
-      width: auto !important;
-      position: relative !important;
-      top: 0 !important;
-      left: 0 !important;
     }
 
     div.calendar div.schedule-body div.row div.schedule-item,

@@ -95,13 +95,13 @@ APP.util = {
     if (!selector) {
       return;
     }
-    
+
     var $elem = $(selector);
-    
+
     if (!$elem.length > 0) {
       return;
     }
-    
+
     var defaults = {
       action: 'expand', // 'expand' or 'collapse'
       direction: 'horizontal', // 'horizontal' or 'vertical'
@@ -109,14 +109,14 @@ APP.util = {
       duration: 0,
       targetDimension: '', // CSS value for dimension property (height or width)
     };
-    
+
     options = options ? options : {};
     options = $.extend({}, defaults, options);
-    
+
     if (($elem.hasClass('open') && options.action != 'collapse') || (!$elem.hasClass('open') && options.action == 'collapse')) {
       return;
     }
-    
+
     var getTargetStyle = function() {
       var result = {};
       if (options.action == 'collapse') {
@@ -128,14 +128,14 @@ APP.util = {
       }
       return result;
     };
-    
+
     var style = {
       target: getTargetStyle(),
       auto: options.direction == 'vertical' ? {height: options.targetDimension} : {width: options.targetDimension},
     };
-    
+
     var complete = complete ? complete : function() {};
-    
+
     var callback = options.action == 'collapse' ? function() {
       $elem.removeClass('open');
       complete();
@@ -144,7 +144,7 @@ APP.util = {
       $elem.css(style.auto);
       complete();
     };
-    
+
     if (options.duration > 0) {
       $elem.velocity(style.target, options.duration, options.animationFunction, callback);
     } else {
@@ -152,6 +152,24 @@ APP.util = {
       callback();
     }
   },
+  getScrollbarWidth: function() {
+    var outer = document.createElement("div");
+    outer.style.visibility = "hidden";
+    outer.style.width = "100px";
+    outer.style.msOverflowStyle = "scrollbar"; // needed for WinJS apps
+    document.body.appendChild(outer);
+    var widthNoScroll = outer.offsetWidth;
+    // force scrollbars
+    outer.style.overflow = "scroll";
+    // add innerdiv
+    var inner = document.createElement("div");
+    inner.style.width = "100%";
+    outer.appendChild(inner);
+    var widthWithScroll = inner.offsetWidth;
+    // remove divs
+    outer.parentNode.removeChild(outer);
+    return widthNoScroll - widthWithScroll;
+  }
 };
 
 // JavaScript and jQuery extensions

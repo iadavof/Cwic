@@ -141,6 +141,12 @@ dl {
   }
 }
 
+#sticky-header-stick-to {
+  flex: 0 0 auto;
+  padding: 0 40px;
+  background-color: #fff;
+}
+
 .content-columns {
   margin: 0 0 0 -20px;
   .content-column {
@@ -149,7 +155,7 @@ dl {
     float: left;
     padding: 0 0 0 20px;
     box-sizing: border-box;
-    
+
     .content-block {
       border: 1px solid #ccc;
       background-color: #fff;
@@ -169,7 +175,7 @@ html.flexbox .content-columns {
   display: flex;
   flex-flow: row wrap;
   align-items: stretch;
-  
+
   .content-column {
     width: auto;
     float: none;

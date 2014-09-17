@@ -2,24 +2,10 @@
 
 script#occupationContainerTemplate type="text/template"
   div.occupation-container
-    div.control-container.clearfix
-      div style="float: left;"
-        a#previous.button
-          i.icon-chevron-left
-        a#current.button<>
-          span.year
-            = t('.current_year')
-          span.month
-            = t('.current_month')
-        a#next.button
-          i.icon-chevron-right
-
-      div style="float: right;"
-        = select_month(Date.today, { field_name: 'current_month' })
-        = select_year(Date.today, { field_name: 'current_year' })
-
-    .top-axis.clearfix
-      p.axis-part-name.clearfix
+    #sticky-header-content data-stick-to="#sticky-header-stick-to"
+      .occupation-view-sticky
+        .top-axis.clearfix
+          p.axis-part-name.clearfix
 
     .entity-axis
     .occupation-matrix-body
@@ -36,7 +22,7 @@ script#entityRowTitleTemplate type="text/template"
     p.entity-name
 
 script#occupationMatrixBlockTemplate type="text/template"
-  div.occupation-matrix-block
+  a.occupation-matrix-block
     p.percent
 
 script#topAxisFrameTemplate type="text/template"

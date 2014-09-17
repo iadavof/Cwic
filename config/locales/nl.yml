@@ -744,11 +744,10 @@ nl:
   occupation_view:
     day:
       title: 'Dagbezetting'
+      current: 'Deze maand'
     week:
       title: 'Weekbezetting'
-    template:
-      current_month: 'Deze maand'
-      current_year: 'Dit jaar'
+      current: 'Dit jaar'
 
   feedbacks:
     modal_text:

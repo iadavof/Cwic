@@ -15,11 +15,12 @@ script#scheduleContainerTemplate type="text/template"
       p.no_entities_found
         = t('.no_entities_found', link: link_to_new([@organisation, Entity])).html_safe
 
+    #sticky-header-content data-stick-to="#sticky-header-stick-to"
+      #sticky-header-scroll-container.schedule-view-sticky
+        .top-axis.clearfix
+          .axis-parts.clearfix
     .left-axis
     .schedule-scroll-container
-      .top-axis.clearfix
-        .axis-parts.clearfix
-        .description-bubble
       .schedule-body
         .grid
 

@@ -121,7 +121,6 @@ CwicContactList.prototype.filterContacts = function(query) {
     if (  contact.instance_name.search(regEx) != -1 ||
           contact.position.search(regEx) != -1
         ) {
-        console.debug('hit');
         selectedContacts.push(contact);
     }
   });

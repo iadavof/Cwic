@@ -9,6 +9,8 @@ function CwicScheduleView(options) {
   }, options || {});
 
   this.scheduleContainer = null;
+  this.scrollContainer = null;
+  this.topAxis = null;
   this.scheduleEntities = {};
   this.selectedEntities = [];
   this.beginDate = null;
@@ -18,8 +20,6 @@ function CwicScheduleView(options) {
   this.needleTimeout = null;
   this.focusedScheduleItem = null;
   this.statusMessageTimeout = null;
-
-  this.scrollContainerInterval;
 
   this.currentMode = (this.options.view == 'horizontalCalendar') ? (this.options.zoom == 'day') ? 'week' : 'month' : 'week';
   this.renderCalendar();
@@ -51,12 +51,11 @@ CwicScheduleView.prototype.initScrollContainerActions = function() {
 };
 
 CwicScheduleView.prototype.scrollHorizontalCalendarToCurrentTime = function() {
-  var scrollContainer = this.scheduleContainer.find('.schedule-scroll-container');
-  var viewWidth = scrollContainer.innerWidth();
+  var viewWidth = this.scrollContainer.innerWidth();
   var scheduleBodyWidth = this.scheduleContainer.find('.schedule-body').width();
   var timePercent = this.timeToPercentage(moment());
   var scrollPos = scheduleBodyWidth * timePercent / 100 - viewWidth / 2;
-  scrollContainer.animate({ scrollLeft: scrollPos }, 1000);
+  this.scrollContainer.animate({ scrollLeft: scrollPos }, 1000);
 };
 
 CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
@@ -87,6 +86,9 @@ CwicScheduleView.prototype.initScheduleStub = function() {
   this.scheduleContainer.append(APP.util.getTemplateClone('scheduleContainerTemplate').contents());
   this.scheduleContainer.addClass('calendar  ' + this.options.view);
 
+  this.scrollContainer = this.scheduleContainer.find('.schedule-scroll-container');
+  this.topAxis = this.scheduleContainer.find('.top-axis');
+
   // Set schedule to the selected date or current date
   this.navigationReference = this.getFocusMoment();
   this.setBeginAndEndFromNavigationReference();
@@ -95,9 +97,8 @@ CwicScheduleView.prototype.initScheduleStub = function() {
 };
 
 CwicScheduleView.prototype.scrollContainerStep = function(step) {
-  var scrollContainer = this.scheduleContainer.find('.schedule-scroll-container');
-  var oldScrollLeft = scrollContainer.scrollLeft();
-  scrollContainer.scrollLeft(oldScrollLeft + step);
+  var oldScrollLeft = this.scrollContainer.scrollLeft();
+  this.scrollContainer.scrollLeft(oldScrollLeft + step);
 };
 
 CwicScheduleView.prototype.bindScrollKeyboardKeyDown = function(event) {
@@ -810,10 +811,7 @@ CwicScheduleView.prototype.addVerticalViewTimeAxis = function() {
 
 CwicScheduleView.prototype.addHorizontalViewTimeAxis = function() {
   // Add time in top axis
-
-  var scheduleContainer = $(this.scheduleContainer);
-  var timeAxis = $(this.scheduleContainer).find('.top-axis');
-  var timeAxisHours = $(this.scheduleContainer).find('.top-axis > .axis-parts');
+  var timeAxisHours = this.topAxis.find('.axis-parts');
 
   var parts = (this.options.zoom == 'day') ? 24 : 28;
 
@@ -842,12 +840,9 @@ CwicScheduleView.prototype.addHorizontalViewTimeAxis = function() {
 
     // Set the header day texts
     this.setTopAxisTexts();
-
-    // adjust height of hour time axis
-    this.scheduleContainer.find('div.top-axis').height(this.scheduleContainer.find('div.top-axis div.day-time-axis-frame').outerHeight());
   }
 
-  timeAxis.cwicStickyHeader();
+  this.initStickyHeader();
 };
 
 
@@ -873,8 +868,17 @@ CwicScheduleView.prototype.createVerticalSchedule = function() {
   }
 
   this.setTopAxisTexts();
+  this.initStickyHeader();
+};
 
-  this.scheduleContainer.find('div.top-axis').cwicStickyHeader();
+CwicScheduleView.prototype.initStickyHeader = function() {
+  var _this = this;
+  $('#sticky-header-content').cwicStickyHeader();
+  this.scrollContainer.on('scroll', $.throttle(100, function() { _this.stickyOnScroll.call(_this); }))
+};
+
+CwicScheduleView.prototype.stickyOnScroll = function() {
+  this.topAxis.css({ marginLeft: (-this.scrollContainer.scrollLeft()) + 'px' });
 };
 
 CwicScheduleView.prototype.createScheduleDay = function() {
@@ -945,7 +949,7 @@ CwicScheduleView.prototype.clearSchedule = function() {
   if(this.options.view == 'horizontalCalendar') {
     this.scheduleContainer.find('.left-axis').html('');
   } else if(this.options.view == 'verticalCalendar') {
-    this.scheduleContainer.find('.top-axis > .axis-parts').html('');
+    this.topAxis.find('.axis-parts').html('');
   }
 };
 
@@ -962,7 +966,7 @@ CwicScheduleView.prototype.updateSchedule = function() {
 };
 
 CwicScheduleView.prototype.disabledOverlay = function() {
-  this.scheduleContainer.find('.schedule-body').append($('<div></div>', {'class': 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
+  this.scheduleContainer.find('.schedule-body').append($('<div>', {'class': 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
 };
 
 CwicScheduleView.prototype.blurStateOnOtherScheduleItems = function(on) {
@@ -1051,10 +1055,9 @@ CwicScheduleView.prototype.appendDay = function(dayMoment) {
 };
 
 CwicScheduleView.prototype.setTopAxisTexts = function() {
-  topAxis = this.scheduleContainer.find('div.top-axis');
   var parts;
   if(this.options.view == 'verticalCalendar') {
-    parts = topAxis.find('div.axis-parts div.vertical-day-time-axis-frame');
+    parts = this.topAxis.find('div.axis-parts div.vertical-day-time-axis-frame');
 
     parts.each(function() {
       var part = $(this);
@@ -1081,7 +1084,7 @@ CwicScheduleView.prototype.setTopAxisTexts = function() {
     });
 
   } else if(this.options.view == 'horizontalCalendar' && this.options.zoom == 'week') {
-    parts = topAxis.find('div.axis-parts div.day-time-axis-frame');
+    parts = this.topAxis.find('div.axis-parts div.day-time-axis-frame');
     parts.each(function() {
       var part = $(this);
       var width = part.width();
@@ -1098,7 +1101,7 @@ CwicScheduleView.prototype.setTopAxisTexts = function() {
 };
 
 CwicScheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
-  var topAxis = this.scheduleContainer.find('.top-axis > div.axis-parts');
+  var topAxisParts = this.topAxis.find('div.axis-parts');
 
   var dayPart = APP.util.getTemplateClone('verticalDayTimeAxisFrameTemplate');
   dayPart.css('width', dayWidth + '%');
@@ -1110,7 +1113,7 @@ CwicScheduleView.prototype.appendVerticalDay = function(dayMoment, dayWidth) {
   dayPart.find('p.name').attr('title',dayMoment.format('dddd'));
   dayPart.find('p.date').attr('title',dayMoment.format('ll'));
 
-  topAxis.append(dayPart);
+  topAxisParts.append(dayPart);
 
   var column = APP.util.getTemplateClone('columnTemplate');
   column.attr('id', dayMoment.format('YYYY-MM-DD'));
@@ -1144,9 +1147,6 @@ CwicScheduleView.prototype.appendWeek = function(weekMoment) {
   $(row).attr('id', this.getContainerId(weekMoment));
 
   this.scheduleContainer.find('.schedule-body').append(row);
-
-  var timeAxis = this.scheduleContainer.find('.top-axis');
-  timeAxis.parent().css({marginLeft: this.scheduleContainer.find('.left-axis').outerWidth() + 'px'});
 };
 
 CwicScheduleView.prototype.showCurrentTimeNeedle = function() {
@@ -1171,11 +1171,11 @@ CwicScheduleView.prototype.showCurrentTimeNeedle = function() {
 CwicScheduleView.prototype.showVerticalCurrentTimeNeedle = function() {
   var currentDate = this.getContainerId(moment());
   var date_column = this.scheduleContainer.find('.column#' + currentDate);
-  this.scheduleContainer.find('.top-axis div.vertical-day-time-axis-frame.today:not(#label_' + currentDate + ')').removeClass('today');
+  this.topAxis.find('div.vertical-day-time-axis-frame.today:not(#label_' + currentDate + ')').removeClass('today');
   this.scheduleContainer.find('.column.today:not(#' + currentDate + ')').removeClass('today');
   this.scheduleContainer.find('.column:not(#' + currentDate + ') .time-needle').remove();
   if(date_column.length !== 0) {
-    this.scheduleContainer.find('.top-axis div.vertical-day-time-axis-frame#label_' + currentDate).addClass('today');
+    this.topAxis.find('div.vertical-day-time-axis-frame#label_' + currentDate).addClass('today');
     date_column.addClass('today');
     if(this.scheduleContainer.find('.time-needle').length <= 0) {
       var needle = $('<div>', {'class': 'time-needle', title: moment().toDate().toLocaleString(), style: 'top: ' + this.timeToPercentage(moment()) + '%;'});

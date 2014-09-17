@@ -1,15 +1,15 @@
-CwicOccupationView.prototype.options = null;
-CwicOccupationView.prototype.currentMonth = 0;
-CwicOccupationView.prototype.currentYear = 0;
-CwicOccupationView.prototype.occupationContainer = null;
-
 function CwicOccupationView(options) {
   this.options = $.extend({
     container: 'schedule-container',
-    entities_url: 'url for getting entities',
-    occupations_url: 'url for getting occupations data',
     view: 'dayOccupation'
   }, options || {});
+
+  this.currentMonth = 0;
+  this.currentYear = 0;
+  this.occupationContainer = null;
+  this.topAxis = null;
+  this.controls = {};
+
 
   this.initiateContainer();
   this.renderOccupation();
@@ -19,6 +19,20 @@ CwicOccupationView.prototype.initiateContainer = function() {
   this.occupationContainer = $('#' + this.options.container);
   this.occupationContainer.append(APP.util.getTemplateClone('occupationContainerTemplate').contents());
   this.occupationContainer.addClass('occupation-container');
+  this.topAxis = this.occupationContainer.find('div.top-axis');
+  this.findControls();
+  this.initStickyHeader();
+};
+
+CwicOccupationView.prototype.findControls = function() {
+  this.controls = {
+    date_current_month: localMenu.getButton('date_current_month'),
+    date_current_year: localMenu.getButton('date_current_year')
+  };
+};
+
+CwicOccupationView.prototype.initStickyHeader = function() {
+  this.occupationContainer.find('div#sticky-header-content').cwicStickyHeader();
 };
 
 CwicOccupationView.prototype.renderOccupation = function() {
@@ -36,15 +50,7 @@ CwicOccupationView.prototype.renderOccupation = function() {
 
 CwicOccupationView.prototype.bindControls = function() {
   var occ = this;
-
-  if(this.options.view == 'weekOccupation') {
-    this.occupationContainer.find('select#date_current_month').select2('destroy').hide();
-    this.occupationContainer.find('div.control-container a#current span.year').show();
-  } else {
-    this.occupationContainer.find('div.control-container a#current span.month').show();
-  }
-
-  this.occupationContainer.find('.control-container a.button').on('click', function() {
+  localMenu.getDivision('navigation').find('a.button').on('click', function() {
     if(this.id == 'previous') {
       if(occ.options.view == 'dayOccupation') {
         occ.currentMonth -= 1;
@@ -75,71 +81,67 @@ CwicOccupationView.prototype.bindControls = function() {
       }
     }
 
-    // Only trigger a cwic dropdown change event
-    occ.occupationContainer.find('select#date_current_year').val(occ.currentYear).trigger('change.cwicControl');
-    occ.occupationContainer.find('select#date_current_month').val(occ.currentMonth).trigger('change.cwicControl');
     occ.updateOccupationView();
   });
 
-  this.occupationContainer.find('div.control-container select').on('change', function() {
-    occ.currentYear = parseInt(occ.occupationContainer.find('select#date_current_year').val());
+  $.merge(this.controls.date_current_month, this.controls.date_current_year).on('change', function() {
+    occ.currentYear = parseInt(occ.controls.date_current_year.val());
     if(occ.options.view == 'dayOccupation') {
-      occ.currentMonth = parseInt(occ.occupationContainer.find('select#date_current_month').val());
+      occ.currentMonth = parseInt(occ.controls.date_current_month.val());
     }
     occ.updateOccupationView();
-  });
-
-  this.occupationContainer.on('click', 'div.occupation-matrix-block', function(){
-    var block = $(this);
-    var selEntity = block.parents('.occupation-matrix-row').data('entity-id');
-    if(occ.options.view == 'dayOccupation') {
-      window.location.href = occ.options.schedule_url + '/entity/' + selEntity + '/' + occ.currentYear + '/' + occ.currentMonth + '/' + block.data('nr');
-    } else {
-      window.location.href = occ.options.schedule_url + '/entity/' + selEntity + '/' + occ.currentYear + '/' + block.data('nr');
-    }
   });
 };
 
+CwicOccupationView.prototype.getBlockHref = function(entity, nr) {
+  if(this.options.view == 'dayOccupation') {
+    return Routes.organisation_schedule_view_horizontal_day_path(current_organisation) + '/entity/' + entity + '/' + this.currentYear + '/' + this.currentMonth + '/' + nr;
+  } else {
+    return Routes.organisation_schedule_view_horizontal_week_path(current_organisation) + '/entity/' + entity + '/' + this.currentYear + '/' + nr;
+  }
+};
+
 CwicOccupationView.prototype.updateOccupationView = function() {
-  this.occupationContainer.find('div.top-axis div.top-axis-frame').remove();
+  this.topAxis.find('div.top-axis-frame').remove();
+  var items, itemWidth;
 
   if(this.options.view == 'dayOccupation') {
-    this.occupationContainer.find('select#date_current_month').val(this.currentMonth);
-    this.occupationContainer.find('select#date_current_year').val(this.currentYear);
-    this.occupationContainer.find('div.top-axis p.axis-part-name').text($.datepicker._defaults.monthNames[this.currentMonth-1] + ' ' + this.currentYear);
-
-    var daysInMonth = this.daysInMonth();
-    var dayBlockWidth = 100.0 / daysInMonth;
-
-    this.createHeader(daysInMonth, dayBlockWidth);
-    this.generateMatrixBlocks(daysInMonth, dayBlockWidth);
+    this.controls.date_current_month.select2('val', this.currentMonth);
+    this.controls.date_current_year.select2('val', this.currentYear);
+    this.topAxis.find('p.axis-part-name').text($.datepicker._defaults.monthNames[this.currentMonth-1] + ' ' + this.currentYear);
+    items = this.daysInMonth();
   } else if(this.options.view == 'weekOccupation') {
-    this.occupationContainer.find('select#date_current_year').val(this.currentYear);
-    this.occupationContainer.find('div.top-axis p.axis-part-name').text(this.currentYear);
-
-    var weeksInYear = this.numberOfWeeksInYear(this.currentYear);
-    var weekBlockWidth = 100.0 / weeksInYear;
-
-    this.createHeader(weeksInYear, weekBlockWidth);
-    this.generateMatrixBlocks(weeksInYear, weekBlockWidth);
+    this.controls.date_current_year.select2('val', this.currentYear);
+    this.topAxis.find('p.axis-part-name').text(this.currentYear);
+    items = this.numberOfWeeksInYear(this.currentYear);
   }
 
+  this.createHeader(items, 100.0 / items);
+  this.generateMatrixBlocks(items, 100.0 / items);
   this.getOccupations();
 };
 
 CwicOccupationView.prototype.getEntities = function() {
   var occ = this;
   $.ajax({
-    url: this.options.entities_url
+    url: Routes.organisation_entities_path(current_organisation, { format: 'json' })
   }).success(function(response) {
     occ.createRows(response);
   });
 };
 
+CwicOccupationView.prototype.getBackendUrl = function() {
+  if(this.options.view == 'dayOccupation') {
+    return Routes.organisation_occupation_view_day_path(current_organisation, { format: 'json' });
+  } else {
+    return Routes.organisation_occupation_view_week_path(current_organisation, { format: 'json' });
+  }
+};
+
 CwicOccupationView.prototype.getOccupations = function() {
   var occ = this;
   $.ajax({
-    url: this.options.occupations_url,
+    url: this.getBackendUrl(),
     data: {
       year: this.currentYear,
       month: this.currentMonth,
@@ -187,47 +189,46 @@ CwicOccupationView.prototype.createRows = function(response) {
 };
 
 CwicOccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) {
+  var _this = this;
   var rows = this.occupationContainer.find('div.occupation-matrix-row');
-  rows.find('div.occupation-matrix-block').remove();
+  rows.find('a.occupation-matrix-block').remove();
 
   var zeroPercentColor = this.getColorForPercentage(0.0001, 0.1);
-
-  for(var i = 1; i <= maxNr; i += 1) {
-    var block = APP.util.getTemplateClone('occupationMatrixBlockTemplate');
-    block.addClass('nr_' + i);
-    block.data('nr', i);
-    block.attr('title', this.getBlockTitle(i, 0));
-    block.css('width', blockWidth + '%');
-    block.css('background-color', zeroPercentColor);
-    rows.append(block);
-  }
+  rows.each(function() {
+    var row = $(this), eid = row.data('entity-id');
+    for(var i = 1; i <= maxNr; i += 1) {
+      var block = APP.util.getTemplateClone('occupationMatrixBlockTemplate');
+      block.addClass('nr_' + i);
+      block.attr('href', _this.getBlockHref(eid, i));
+      block.attr('title', _this.getBlockTitle(i, 0));
+      block.css('width', blockWidth + '%');
+      block.css('background-color', zeroPercentColor);
+      row.append(block);
+    }
+  });
 };
 
 CwicOccupationView.prototype.createHeader = function(maxNr, blockWidth) {
-  var topAxis = this.occupationContainer.find('div.top-axis');
-  topAxis.find('.top-axis-frame').remove();
+  this.topAxis.find('.top-axis-frame').remove();
   for(var day = 1; day <= maxNr; day += 1) {
     var block = APP.util.getTemplateClone('topAxisFrameTemplate');
     block.find('p.nr').text(day);
     block.css('width', blockWidth + '%');
-    topAxis.append(block);
-  }
-  if(!topAxis.parent().hasClass('sticky-container')) {
-    topAxis.cwicStickyHeader();
+    this.topAxis.append(block);
   }
   this.resizeActions();
 };
 
 CwicOccupationView.prototype.resizeActions = function() {
   var newHeight = this.occupationContainer.find('.occupation-matrix-block').first().width();
-  var row = this.occupationContainer.find('.occupation-matrix-row')
+  var row = this.occupationContainer.find('.occupation-matrix-row');
   row.css('height', newHeight);
   this.occupationContainer.find('.entity-row').css('height', row.outerHeight());
 
   if(newHeight < 25) {
-    this.occupationContainer.find('div.top-axis-frame:nth-child(odd)').css('visibility', 'hidden');
+    this.topAxis.find('div.top-axis-frame:nth-child(odd)').css('visibility', 'hidden');
   } else {
-    this.occupationContainer.find('div.top-axis-frame').css('visibility', 'visible');
+    this.topAxis.find('div.top-axis-frame').css('visibility', 'visible');
   }
 
   // The percentage notation does not fit anymore, hide it
@@ -239,12 +240,14 @@ CwicOccupationView.prototype.resizeActions = function() {
     // adjust width of day axis
     dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
     dayAxisSticky.css('margin-left', '0');
+    this.topAxis.css('margin-left', '0');
   } else {
     // make room for the entity axis and show it on the left side
     this.occupationContainer.find('.occupation-matrix-block p.percent').show();
     // Adjust the width of the day axis
     dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
     dayAxisSticky.css('margin-left', '4%');
+    this.topAxis.css('margin-left', '4%');
     this.occupationContainer.find('.entity-axis').show();
   }
 };

@@ -1,4 +1,16 @@
 - content_for :page_title do
   = t('.title')
 
+- content_for :local_menu_navigation do
+  a#previous.button
+    i.icon-chevron-left
+  a#current.button<>
+    span.year
+      = t('.current')
+  a#next.button
+    i.icon-chevron-right
+
+- content_for :local_menu_page do
+  = select_year(Date.today, { field_name: 'current_year' })
+
 = render 'template'
