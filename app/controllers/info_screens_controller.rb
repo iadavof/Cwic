@@ -18,7 +18,7 @@ class InfoScreensController < ApplicationController
   # GET /info_screens/1/reservations.json
   def reservations
     @reservations = []
-    @active_ises = @info_screen.info_screen_entities.where("#{InfoScreenEntityType.table_name}.active = true").active.includes(:entity)
+    @active_ises = @info_screen.info_screen_entities.active.includes(:entity)
     @active_ises.each do |ise|
       @reservations += ise.entity.reservations.by_date_domain(Time.now, Time.now + 1.day).info_boards.includes(:entity)
     end

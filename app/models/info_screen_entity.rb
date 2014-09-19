@@ -9,7 +9,7 @@ class InfoScreenEntity < ActiveRecord::Base
   validates :entity, presence: true
 
   # Scopes
-  scope :active, -> { where("#{self.table_name}.active = true") }
+  scope :active, -> { joins(:info_screen_entity_type).where(info_screen_entity_types: { active: true }, active: true) }
 
   def instance_name
     self.entity.instance_name
