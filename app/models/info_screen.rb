@@ -21,7 +21,7 @@ class InfoScreen < ActiveRecord::Base
   accepts_nested_attributes_for :info_screen_entity_types
 
   def init
-    initialize_entity_types_and_entities if self.info_screen_entity_types.empty?
+    initialize_entity_types_and_entities if info_screen_entity_types.empty?
   end
 
   def instance_name
