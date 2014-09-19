@@ -1,5 +1,5 @@
 if @reservation.errors.empty?
-  json.partial! 'schedule_view', reservation: @reservation
+  json.partial! 'reservation', reservation: @reservation
 else
   json.errors do
     @reservation.errors.each do |attribute, errors|
