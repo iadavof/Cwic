@@ -1,10 +1,15 @@
 (function($) {
   var cwic_sticky_header = {
+    options: null,
     toStick: null,
     stickPosition: null,
     scrollViewport: null,
     nowSticky: false,
-    init: function(toStick, stickPosition) {
+    init: function(toStick, stickPosition, options) {
+      this.options = $.extend({
+        before_swap: function(){},
+        after_swap: function(){},
+      }, options || {});
       this.toStick = toStick;
       this.stickPosition = stickPosition;
       this.scrollViewport = $('#content-area');
@@ -22,13 +27,17 @@
     },
     stick: function() {
       if(!this.nowSticky) {
+        this.options.before_swap(this.toStick);
         this.toStick.contents().appendTo(this.stickPosition);
+        this.options.after_swap(this.stickPosition);
         this.nowSticky = true;
       }
     },
     unStick: function() {
       if(this.nowSticky) {
+        this.options.before_swap(this.stickPosition);
         this.stickPosition.contents().appendTo(this.toStick);
+        this.options.after_swap(this.toStick);
         this.nowSticky = false;
       }
     },
@@ -37,12 +46,12 @@
     }
   };
 
-  $.fn.cwicStickyHeader = function() {
+  $.fn.cwicStickyHeader = function(options) {
     var elems = $(this).not('.cwic-sticky');
     elems.each(function() {
       var header = $(this);
       var stickDiv = $(header.data('stick-to'));
-      cwic_sticky_header.init($(this), stickDiv);
+      cwic_sticky_header.init($(this), stickDiv, options);
     });
   };
 })(jQuery);

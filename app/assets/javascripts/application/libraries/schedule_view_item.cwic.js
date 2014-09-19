@@ -415,10 +415,10 @@ CwicScheduleViewItem.prototype.render = function(concept) {
 
     // The momentJS min and max functions work like a lowerbound and upperboud limit function and not really like min and max
     var partMomentBlock = {
-      slackBegin: momentBlock.slackBegin.min(partBegin),
-      begin: momentBlock.begin.min(partBegin),
-      end: momentBlock.end.max(partEnd),
-      slackEnd: momentBlock.slackEnd.max(partEnd)
+      slackBegin: moment.max(momentBlock.slackBegin, partBegin),
+      begin: moment.max(momentBlock.begin, partBegin),
+      end: moment.min(momentBlock.end, partEnd),
+      slackEnd: moment.min(momentBlock.slackEnd, partEnd)
     };
 
     var partBeginContainerId = this.schedule.getContainerId(partBegin);

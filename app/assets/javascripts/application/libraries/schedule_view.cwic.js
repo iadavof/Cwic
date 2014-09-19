@@ -46,6 +46,14 @@ CwicScheduleView.prototype.renderVerticalCalendar = function() {
 
 CwicScheduleView.prototype.initScrollContainerActions = function() {
   var schedule = this;
+  var stickyHeaderScrollContainer = $('#sticky-header-scroll-container');
+
+  this.scrollContainer.scroll($.throttle(100, function() {
+    stickyHeaderScrollContainer.scrollLeft(schedule.scrollContainer.scrollLeft());
+  }));
+  stickyHeaderScrollContainer.scroll($.throttle(100, function() {
+    schedule.scrollContainer.scrollLeft(stickyHeaderScrollContainer.scrollLeft());
+  }));
 
   $('html').on('keydown', function(event) { schedule.bindScrollKeyboardKeyDown.call(schedule, event); });
 };
@@ -873,12 +881,15 @@ CwicScheduleView.prototype.createVerticalSchedule = function() {
 
 CwicScheduleView.prototype.initStickyHeader = function() {
   var _this = this;
-  $('#sticky-header-content').cwicStickyHeader();
-  this.scrollContainer.on('scroll', $.throttle(100, function() { _this.stickyOnScroll.call(_this); }))
-};
-
-CwicScheduleView.prototype.stickyOnScroll = function() {
-  this.topAxis.css({ marginLeft: (-this.scrollContainer.scrollLeft()) + 'px' });
+  var cachedScrollLeft;
+  $('#sticky-header-content').cwicStickyHeader({
+    before_swap: function(thing) {
+      cachedScrollLeft = thing.find('#sticky-header-scroll-container').scrollLeft();
+    },
+    after_swap: function(thing) {
+      thing.find('#sticky-header-scroll-container').scrollLeft(cachedScrollLeft);
+    }
+  });
 };
 
 CwicScheduleView.prototype.createScheduleDay = function() {

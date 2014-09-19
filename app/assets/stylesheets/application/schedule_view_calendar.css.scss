@@ -119,11 +119,6 @@ div.calendar div.schedule-scroll-container div.schedule-body {
   position: relative;
 }
 
-div.schedule-view-sticky {
-  overflow: hidden;
-  margin-left: 60px;
-}
-
 div.calendar div.schedule-scroll-container div.schedule-body div.row {
   position: relative;
   width: 100%;
@@ -977,7 +972,15 @@ div.calendar div.entity-container div.entity-button p.entity-name {
   margin-top: 10px;
 }
 
-div.schedule-view-sticky div.top-axis {
+div.schedule-view-sticky {
+  position: relative;
+  overflow-x: auto;
+  overflow-y: hidden;
+  margin-left: 60px;
+}
+
+div.schedule-view-sticky {
+  div.top-axis {
   position: relative;
   width: 100%;
   height: auto;
@@ -985,113 +988,117 @@ div.schedule-view-sticky div.top-axis {
   z-index: 10;
   border-bottom: 2px solid #ccc;
   margin-bottom: -1px;
-  border-width: 0 12px 2px;
+  border-width: 0 0 2px;
   border-style: solid;
   border-color: transparent;
   border-bottom-color: #ccc;
-  box-sizing: border-box;
-}
+  }
 
-div.schedule-view-sticky div.top-axis {
-  div.hour-time-axis-frame,
-  div.six-hour-time-axis-frame {
-    position: relative;
-    float: left;
-    height: 100%;
-    text-align: center;
-    font-weight: bold;
-    left: 2.083333%;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-
-    p {
-      margin: 0;
+  div.top-axis {
+    div.axis-parts {
+      margin: 0 12px;
     }
-  }
 
-  div.hour-time-axis-frame {
-    width: 4.166666%;
-  }
-
-  div.six-hour-time-axis-frame {
-    width: 3.571428%;
-    font-weight: normal;
-    font-size: 0.75em;
-    padding-top: 15px;
-  }
-
-  div.day-time-axis-frame {
-    display: block;
-    position: absolute;
-    left: 0;
-    bottom: 0;
-    width: 14.285714%;
-    padding-bottom: 15px;
-  }
-
-  div.vertical-day-time-axis-frame {
-    display: block;
-    position: relative;
-    float: left;
-    padding-bottom: 5px;
-    box-sizing: border-box;
-    -moz-box-sizing: border-box;
-  }
-
-  div.vertical-day-time-axis-frame:nth-child(odd),
-  div.day-time-axis-frame:nth-child(odd) {
-    background-color: rgba(0, 0, 0, .1);
-  }
-
-  div.vertical-day-time-axis-frame {
-    p.date {
-      margin: 0 auto;
-      font-weight: bold;
-      font-size: 1.1em;
+    div.hour-time-axis-frame,
+    div.six-hour-time-axis-frame {
+      position: relative;
+      float: left;
+      height: 100%;
       text-align: center;
-      width: 100%;
+      font-weight: bold;
+      left: 2.083333%;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
 
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding: 0 2px;
-
-      color: #aaa;
-    }
-
-    &:nth-child(odd) {
-      p.date {
-      color: #999;
+      p {
+        margin: 0;
       }
     }
-  }
 
-  div.vertical-day-time-axis-frame,
-  div.day-time-axis-frame {
-    p.name {
-      margin: 0 auto;
-      font-weight: bold;
-      font-size: 1.6em;
-      text-align: center;
-      width: 100%;
-      color: #ddd;
-
-      overflow: hidden;
-      white-space: nowrap;
-      text-overflow: ellipsis;
-      padding: 0 2px;
+    div.hour-time-axis-frame {
+      width: 4.166666%;
     }
 
-    &:nth-child(odd) {
+    div.six-hour-time-axis-frame {
+      width: 3.571428%;
+      font-weight: normal;
+      font-size: 0.75em;
+      padding-top: 15px;
+    }
+
+    div.day-time-axis-frame {
+      display: block;
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      width: 14.285714%;
+      padding-bottom: 15px;
+    }
+
+    div.vertical-day-time-axis-frame {
+      display: block;
+      position: relative;
+      float: left;
+      padding-bottom: 5px;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+    }
+
+    div.vertical-day-time-axis-frame:nth-child(odd),
+    div.day-time-axis-frame:nth-child(odd) {
+      background-color: rgba(0, 0, 0, .1);
+    }
+
+    div.vertical-day-time-axis-frame {
+      p.date {
+        margin: 0 auto;
+        font-weight: bold;
+        font-size: 1.1em;
+        text-align: center;
+        width: 100%;
+
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0 2px;
+
+        color: #aaa;
+      }
+
+      &:nth-child(odd) {
+        p.date {
+        color: #999;
+        }
+      }
+    }
+
+    div.vertical-day-time-axis-frame,
+    div.day-time-axis-frame {
       p.name {
-        color: #bbb;
-      }
-    }
+        margin: 0 auto;
+        font-weight: bold;
+        font-size: 1.6em;
+        text-align: center;
+        width: 100%;
+        color: #ddd;
 
-    &.today {
-      p.name,
-      p.date {
-        color: #17889d;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        padding: 0 2px;
+      }
+
+      &:nth-child(odd) {
+        p.name {
+          color: #bbb;
+        }
+      }
+
+      &.today {
+        p.name,
+        p.date {
+          color: #17889d;
+        }
       }
     }
   }
