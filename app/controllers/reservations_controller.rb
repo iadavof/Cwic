@@ -1,4 +1,5 @@
 class ReservationsController < ApplicationController
+  # TODO: rewrite to CrudController
   before_action :load_organisation_client
   before_action :set_first_page, only: :index
   before_action :load_resource
