@@ -25,7 +25,7 @@ class OrganisationClientsController < ApplicationController
 
   # GET /organisation_clients/1/vcard
   def vcard
-    send_data @organisation_client.vcard.to_s, type: 'text/x-vcard', filename: URI::encode(@organisation_client.instance_name.gsub(/\s+/, "_").gsub(/[^0-9a-z_]/i, '')) + '.vcf'
+    send_data @organisation_client.vcard.to_s, type: 'text/x-vcard', filename: @organisation_client.vcard_filename
   end
 
   # GET /organisation_clients/new

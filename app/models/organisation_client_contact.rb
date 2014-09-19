@@ -1,4 +1,6 @@
 class OrganisationClientContact < ActiveRecord::Base
+  include Vcardable
+
   # Associations
   belongs_to :organisation_client
 

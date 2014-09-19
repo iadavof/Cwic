@@ -17,7 +17,7 @@ class OrganisationClientContactsController < ApplicationController
 
   # GET /organisation_client_contact/1/vcard
   def vcard
-    send_data @organisation_client_contact.vcard.to_s, type: 'text/x-vcard', filename: URI::encode(@organisation_client_contact.instance_name.gsub(/\s+/, "_").gsub(/[^0-9a-z_]/i, '')) + '.vcf'
+    send_data @organisation_client_contact.vcard.to_s, type: 'text/x-vcard', filename: @organisation_client_contact.vcard_filename
   end
 
 private
