@@ -24,7 +24,7 @@ class EntityType < ActiveRecord::Base
   validates :max_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
   # Callbacks
-  after_initialize :add_default_entity_type_reservation_statuses, if: :new_record?
+  after_initialize :init, if: :new_record?
   after_save :create_info_screen_entity_types
   after_save :update_reservations_slack_warnings
 
@@ -39,6 +39,10 @@ class EntityType < ActiveRecord::Base
   pg_global_search against: { name: 'A', description: 'B' }
 
   scope :with_entities, -> { where('entities_count > 0') }
+
+  def init
+    initialize_reservation_statuses if reservation_statuses.empty?
+  end
 
   def instance_name
     self.name
@@ -78,7 +82,7 @@ class EntityType < ActiveRecord::Base
   alias_method_chain :icon, :default
 
 private
-  def add_default_entity_type_reservation_statuses
+  def initialize_reservation_statuses
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0)
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
