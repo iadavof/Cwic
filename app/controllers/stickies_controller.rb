@@ -1,4 +1,5 @@
 class StickiesController < ApplicationController
+  # IMPROVEMENT: rewrite this to CrudController
   before_action :load_resource
   authorize_resource
 
