@@ -1,4 +1,14 @@
 Cwic::Application.routes.draw do
+  # Concerns
+
+  concern :stickable do
+    resources :stickies, only: [:index, :create, :update, :destroy] do
+      patch :update_weights, on: :collection
+    end
+  end
+
+  # Routes
+
   get 'introduction/index'
   get 'home/index'
   root to: 'introduction#index'
@@ -20,11 +30,13 @@ Cwic::Application.routes.draw do
 
     resources :entities do
       get :available, on: :collection
+      concerns :stickable
     end
 
     resources :reservations do
       post :multiple, on: :collection
       patch :update_status, on: :member
+      concerns :stickable
     end
 
     resources :organisation_clients do
@@ -34,6 +46,7 @@ Cwic::Application.routes.draw do
         get :vcard, on: :member
       end
       resources :reservations
+      concerns :stickable
     end
 
     resources :info_screens do
@@ -41,13 +54,6 @@ Cwic::Application.routes.draw do
     end
 
     resources :documents, except: [:new, :edit]
-
-    # TODO rewrite this so stickies are routed through their parent
-    resources :stickies, only: [:index, :update, :destroy] do
-      get ':resource/:rid/', action: :stickies_for, on: :collection
-      post ':resource/:rid/new', action: :create, on: :collection
-      patch ':resource/:rid/', action: :weight_update, on: :collection
-    end
 
     controller :schedule_view do
       # Horizontal day calendar
@@ -86,7 +92,8 @@ Cwic::Application.routes.draw do
     end
   end
 
-  # Admin pages
+  # Admin page routes
+
   resources :users, except: :new
   resources :intro_sections
   resources :entity_type_icons
