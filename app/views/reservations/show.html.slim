@@ -12,7 +12,7 @@
 
 = render 'tags/list', tags: @reservation.tags
 
-= render 'stickies/resource_stickies', resource: @reservation
+= render 'stickies/resource_stickies', backend_url: organisation_reservation_stickies_url(@organisation, @reservation)
 
 #tabs
   ul.nav

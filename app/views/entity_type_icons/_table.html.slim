@@ -5,7 +5,7 @@ table
     tr
       th
       = sortable_table_head(EntityTypeIcon, :name)
-      - if @admin
+      - unless @organisation.present?
         = sortable_table_head(EntityTypeIcon, :organisation)
       th
 
@@ -13,8 +13,8 @@ table
     - @entity_type_icons.each do |entity_type_icon|
       tr
         td = image_tag(entity_type_icon.image.icon.url)
-        td = name_link_to_show(entity_type_icon)
-        - if @admin
+        td = name_link_to_show(@organisation.present? ? [@organisation, entity_type_icon] : entity_type_icon)
+        - unless @organisation.present?
           td = entity_type_icon.organisation.present? ? entity_type_icon.organisation.name : t('all_organisations')
         td.icons
           = icon_link_to_edit(@organisation.present? ? [@organisation, entity_type_icon] : entity_type_icon)

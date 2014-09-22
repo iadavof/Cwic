@@ -2,7 +2,7 @@
   = edit_title(@<%= singular_table_name %>)
 
 - content_for :local_menu_navigation do
-  = button_link_to_show(@<%= singular_table_name %>)
-  = button_link_to_index(<%= class_name %>)
+  = button_link_to_show(member_path)
+  = button_link_to_index(collection_path)
 
 = render 'form'

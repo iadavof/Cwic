@@ -11,7 +11,7 @@
 
 = render 'tags/list', tags: @entity.tags
 
-= render 'stickies/resource_stickies', resource: @entity
+= render 'stickies/resource_stickies', backend_url: organisation_entity_stickies_url(@organisation, @entity)
 
 #tabs
   ul.nav

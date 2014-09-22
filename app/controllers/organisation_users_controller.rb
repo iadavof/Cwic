@@ -1,29 +1,11 @@
-class OrganisationUsersController < ApplicationController
-  before_action :load_resource
-  authorize_resource through: :organisation
+class OrganisationUsersController < CrudController
+  skip_before_action :load_member, only: :invite
 
-  # GET /organisation_users
-  def index
-    respond_with(@organisation_users)
-  end
-
-  # GET /organisation_users/new
-  def new
-    respond_with(@organisation_user)
-  end
-
-  # GET /organisation_users/1/edit
-  def edit
-    respond_with(@organisation_user)
-  end
-
-  # POST /organisation_users
   def create
-    # Enable user lookup by email
-    @organisation_user.by_email = true
-    @organisation_user.attributes = resource_params
+    @organisation_user.by_email = true # Enable user lookup by email
     if @organisation_user.valid? && @organisation_user.user.nil?
-      # Organisation user is valid, but user could not be found: render the invitation form for the new user. No need to save the organisation user, this will be done after the invitation is sent (and the user is created).
+      # Organisation user is valid, but user could not be found: render the invitation form for the new user.
+      # User will be created after the invitation is sent.
       @user = User.new
       @user.email = @organisation_user.user_email
       @user.organisation_users << @organisation_user
@@ -31,8 +13,7 @@ class OrganisationUsersController < ApplicationController
     else
       # User with e-mail already exists: try to save the organisation user and render the normal response.
       # The before_validation will automatically set the user based on the user_email field.
-      @organisation_user.save
-      respond_with(@organisation, @organisation_user, location: organisation_organisation_users_path(@organisation))
+      super
     end
   end
 
@@ -40,48 +21,29 @@ class OrganisationUsersController < ApplicationController
     @current_menu_link = :create # Set current_menu_link to create, since we actually are still creating a new organisation user.
     # The invite call on the user will also calls the save method on this user object and stores the organisation_users relation
     @user = User.invite!(invite_params, current_user)
-    if @user.valid?
-      respond_with(@organisation, @organisation_user, location: organisation_organisation_users_path(@organisation))
-    else
-      render :invite_form
-    end
+    respond_with(@organisation, @user, action: :invite_form, location: redirect_location)
   end
 
   def reinvite
     @organisation_user.user.invite!
-    respond_with(@organisation, @organisation_user, location: organisation_organisation_users_path(@organisation))
-  end
-
-  # PATCH/PUT /organisation_users/1
-  def update
-    @organisation_user.update_attributes(resource_params)
-    respond_with(@organisation, @organisation_user, location: organisation_organisation_users_path(@organisation))
-  end
-
-  # DELETE /organisation_users/1
-  def destroy
-    @organisation_user.destroy
-    respond_with(@organisation, @organisation_user, location: organisation_organisation_users_path(@organisation))
+    respond_with(@organisation, @organisation_user, location: redirect_location)
   end
 
 private
-  def load_resource
-    case params[:action]
-    when 'index'
-      @organisation_users = @organisation.organisation_users.accessible_by(current_ability, :index).includes(:user).ssp(params)
-    when 'new', 'create', 'invite'
-      @organisation_user = @organisation.organisation_users.build
-    else
-      @organisation_user = @organisation.organisation_users.find(params[:id])
-    end
+  def parent_model
+    Organisation
   end
 
-  def resource_params
-    params.require(:organisation_user).permit(:user_id, :user_email, :organisation_id, :organisation_role_id)
+  def permitted_params
+    [:user_id, :user_email, :organisation_id, :organisation_role_id]
   end
 
   def invite_params
     params.require(:user).permit(:first_name, :infix, :last_name, :email, :invitation_token, organisation_users_attributes: [:organisation_id, :organisation_role_id])
+  end
+
+  def redirect_location
+    collection_path
   end
 
   def interpolation_options

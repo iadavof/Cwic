@@ -9,14 +9,11 @@ function CwicStickyNotes(options) {
   this.options = $.extend({
     container: 'note-container',
     backend_url: 'url to backend',
-    resource: { class_name: '', id: 0},
     current_author: { id: 0, name: 'Name' }
   }, options || {});
 
   this.noteContainer = $('#' + this.options.container);
-
   this.bindControls();
-
   this.getNotes();
 }
 
@@ -24,16 +21,15 @@ CwicStickyNotes.prototype.getNotes = function() {
   var sn = this;
 
   $.ajax({
-      type: 'GET',
-      url: this.options.backend_url + '/' + this.options.resource.class_name + '/' + this.options.resource.id + '.json'
-    }).fail(function(){
-      window.log("Error getting notes");
-    }).success(function(response) {
-      if(response && response.length > 0) {
-        sn.renderNotes(response);
-      }
-    });
-
+    type: 'GET',
+    url: this.options.backend_url + '.json'
+  }).fail(function(){
+    window.log('Error getting notes');
+  }).success(function(response) {
+    if(response && response.length > 0) {
+      sn.renderNotes(response);
+    }
+  });
 };
 
 CwicStickyNotes.prototype.saveNote = function(note_element) {
@@ -43,15 +39,16 @@ CwicStickyNotes.prototype.saveNote = function(note_element) {
 
   var url, method;
   if(typeof(note.attr('id')) == 'undefined') {
-    //new note
+    // New note (create action)
     new_note = true;
-    url = this.options.backend_url + '/' + this.options.resource.class_name + '/' + this.options.resource.id + '/new.json';
+    url = this.options.backend_url + '.json';
     method = 'POST';
   } else {
-    //old note
-    url = this.options.backend_url + '/' + note.attr('id').split('_')[1] + '.json';
+    // Existing note (update action)
+    url = this.options.backend_url + '/' + this.noteId(note) + '.json';
     method = 'PATCH';
   }
+
   note.find('img.ajax-wait').show();
   $.ajax({
     type: method,
@@ -62,7 +59,7 @@ CwicStickyNotes.prototype.saveNote = function(note_element) {
       }
     }
   }).fail(function(){
-    window.log("Error saving");
+    window.log('Error saving');
   }).success(function(response) {
     if(new_note && response) {
       note.attr('id', 'note_' + response.id);
@@ -113,7 +110,6 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
   var note = APP.util.getTemplateClone('note-template');
   var textarea = note.find('textarea');
 
-  // add id
   if(note_obj.id != null) {
     note.attr('id', 'note_' + note_obj.id);
   } else {
@@ -126,7 +122,7 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
   var timestamp = moment(note_obj.created_at);
   note.find('p.created_at').attr('title', timestamp.format('LLLL'));
   note.find('p.created_at').text(timestamp.fromNow());
-  // Bind sticky events
+  // Bind note events
   note.find('a.delete-button').on('click', function(){ sn.deleteNote(this); });
 
   textarea.val(note_obj.sticky_text);
@@ -137,11 +133,11 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
 
   var innerNotesContainer = this.noteContainer.find('div.notes');
   innerNotesContainer.sortable({
-    handle: "div.note-head",
-    connectWith: ".notes",
+    handle: 'div.note-head',
+    connectWith: '.notes',
     start: function(e, ui) {
       if(!ui.item.attr('id')) {
-        // Sticky not saved yet. We need to save the sticky first, so it has an id.
+        // Note not saved yet. We need to save the sticky first, so it has an id.
         sn.afterNoteEdit(ui.item);
       }
       ui.placeholder.height(ui.item.outerHeight());
@@ -150,7 +146,7 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
     stop: function(e, ui) {
       sn.afterNoteMove(ui);
     },
-    placeholder: "ui-state-highlight"
+    placeholder: 'ui-state-highlight'
   });
 
   if(note_obj.id == null) {
@@ -167,20 +163,22 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
 };
 
 CwicStickyNotes.prototype.afterNoteMove = function(ui) {
+  var sn = this;
   var notes = this.noteContainer.find('div.notes div.note');
-  var noteOrder = [];
-  notes.each(function() {
-    noteOrder.push($(this).attr('id').split('_')[1]);
+
+  var weights = {};
+  notes.each(function(index, note) {
+    weights[sn.noteId($(note))] = index;
   });
 
   $.ajax({
     type: 'PATCH',
-    url: this.options.backend_url + '/' + this.options.resource.class_name + '/' + this.options.resource.id + '.json',
+    url: this.options.backend_url + '/update_weights.json',
     data: {
-      new_weight_ids: noteOrder
+      weights: weights
     }
   }).fail(function(){
-    window.log("Error updating note order");
+    window.log('Error updating note order');
   });
 };
 
@@ -188,11 +186,8 @@ CwicStickyNotes.prototype.afterNoteEdit = function(element) {
   var note = $(element).closest('div.note');
   if(note.hasClass('focus')) {
     note.find('a.save-button').hide();
-    var textarea = note.find('textarea');
-    textarea.focus();
-
+    note.find('textarea').focus();
     this.saveNote(note);
-
     note.removeClass('focus');
   }
 };
@@ -210,18 +205,20 @@ CwicStickyNotes.prototype.uponNoteEdit = function(element) {
 
 CwicStickyNotes.prototype.deleteNote = function(element) {
   var note = $(element).parents('div.note');
-
   note.hide();
 
   if(typeof(note.attr('id')) != 'undefined') {
-    var id = note.attr('id').split('_')[1];
     $.ajax({
       type: 'DELETE',
-      url: this.options.backend_url + '/' + id + '.json'
+      url: this.options.backend_url + '/' + this.noteId(note) + '.json'
     }).fail(function(){
-      window.log("Error deleting note");
+      window.log('Error deleting note');
     });
   }
 
   note.remove();
+};
+
+CwicStickyNotes.prototype.noteId = function(note) {
+  return note.attr('id').split('_')[1]; // IMPROVEMENT: save note in data attribute instead of getting it through split this way
 };

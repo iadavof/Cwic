@@ -1,71 +1,35 @@
-class FeedbacksController < ApplicationController
+class FeedbacksController < CrudController
   require 'digest/md5'
 
-  before_action :load_resource
-  authorize_resource
+  before_action :build_screen_capture, only: :create
 
   respond_to :html, only: [:index, :show, :destroy]
   respond_to :json, only: [:create]
 
-  # GET /feedbacks
-  def index
-    respond_with(@feedbacks)
-  end
-
-  # GET /feedbacks/1
-  def show
-    respond_with(@feedback)
-  end
-
-  # POST /feedbacks
-  def create
-    # Check if file is within picture_path
-    if params[:feedback][:screen_capture]
-      screen_capture_params = params[:feedback][:screen_capture]
-      # Create a new tempfile named fileupload
-      tempfile = Tempfile.new("fileupload")
-      tempfile.binmode
-      # Get the file and decode it with base64 then write it to the tempfile
-      tempfile.write(Base64.decode64(URI::unescape(screen_capture_params)[22..-1]))
-      tempfile.close
-      # Create a new uploaded file
-      filehash = Digest::MD5.hexdigest(screen_capture_params) + '.png';
-      uploaded_file = ActionDispatch::Http::UploadedFile.new(tempfile: tempfile, filename: filehash, type: 'image/png')
-      uploaded_file.inspect
-      # Replace picture_path with the new uploaded file
-      params[:feedback][:screen_capture] =  uploaded_file
-    end
-
-    @feedback.attributes = resource_params
-    @feedback.user = current_user
-    @feedback.organisation = current_organisation
-    @feedback.save
-    respond_with(@feedback)
-  end
-
-  # DELETE /feedbacks/1
-  def destroy
-    @feedback.destroy
-    respond_with(@feedback)
-  end
-
 private
-  def load_resource
-    case params[:action]
-    when 'index'
-      @feedbacks = Feedback.accessible_by(current_ability, :index).includes(:user, :organisation).ssp(params)
-    when 'create'
-      @feedback = Feedback.new
-    else
-      @feedback = Feedback.find(params[:id])
+  def permitted_params
+    [:message, :specs, :screen_capture]
+  end
+
+  def collection_includes
+    [:user, :organisation]
+  end
+
+  # Build screen capture file from raw image data
+  def build_screen_capture
+    raw_image_data = member_params[:screen_capture]
+    if raw_image_data.present?
+      # Create a new tempfile named fileupload
+      tempfile = Tempfile.new('fileupload')
+      tempfile.binmode
+
+      # Get the raw image data and decode it with base64 then write it to the tempfile
+      tempfile.write(Base64.decode64(URI::unescape(raw_image_data)[22..-1]))
+      tempfile.close
+
+      # Create a new uploaded file
+      filename = "#{Digest::MD5.hexdigest(raw_image_data)}.png"
+      @feedback.screen_capture = ActionDispatch::Http::UploadedFile.new(tempfile: tempfile, filename: filename, type: 'image/png')
     end
-  end
-
-  def resource_params
-    params.require(:feedback).permit(:message, :specs, :screen_capture)
-  end
-
-  def interpolation_options
-    { resource_name: @feedback.instance_name }
   end
 end

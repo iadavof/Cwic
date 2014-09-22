@@ -7,7 +7,7 @@ json.schedule_entities do
       json.items do
         entity.reservations.by_date_domain(@begin_date, @end_date, include_edges: true).includes(:reservation_status, :organisation_client, :entity).each do |reservation|
           json.set! reservation.id do
-            json.partial! 'reservations/schedule_view', reservation: reservation
+            json.partial! 'reservations/reservation', reservation: reservation
           end
         end
       end

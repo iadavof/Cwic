@@ -14,7 +14,7 @@ class InfoScreenEntityType < ActiveRecord::Base
   accepts_nested_attributes_for :info_screen_entities
 
   # Scopes
-  scope :active, -> { where('active = true') }
+  scope :active, -> { where(active: true) }
 
   def instance_name
     self.entity_type.instance_name

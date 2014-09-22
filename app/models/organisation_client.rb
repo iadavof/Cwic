@@ -2,6 +2,7 @@ class OrganisationClient < ActiveRecord::Base
   include PgSearch
   include Sspable
   include Taggable
+  include Vcardable
 
   # Associations
   belongs_to :organisation

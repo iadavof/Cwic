@@ -9,7 +9,7 @@
 
 = render 'tags/list', tags: @organisation_client.tags
 
-= render 'stickies/resource_stickies', resource: @organisation_client
+= render 'stickies/resource_stickies', backend_url: organisation_organisation_client_stickies_url(@organisation, @organisation_client)
 
 #tabs
   ul.nav

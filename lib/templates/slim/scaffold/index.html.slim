@@ -2,7 +2,7 @@
   = index_title(<%= class_name %>)
 
 - content_for :local_menu_navigation do
-  = button_link_to_new(<%= class_name %>)
+  = button_link_to_new(collection_path)
 
 - if @<%= plural_table_name %>.empty?
   p = t('.empty', default: :empty_objects, models: <%= class_name %>.model_name.human(count: 2).lcfirst)

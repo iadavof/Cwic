@@ -12,5 +12,6 @@
 dl
   dt = EntityTypeIcon.human_attribute_name(:name)
   dd = @entity_type_icon.name
-  dt = EntityTypeIcon.human_attribute_name(:organisation)
-  dd = @entity_type_icon.organisation ? @entity_type_icon.organisation.name : t('all_organisations')
+  - unless @organisation.present?
+    dt = EntityTypeIcon.human_attribute_name(:organisation)
+    dd = @entity_type_icon.organisation ? @entity_type_icon.organisation.name : t('all_organisations')
