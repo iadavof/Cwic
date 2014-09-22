@@ -2,6 +2,9 @@ div.table-container {
   display: inline-block;
   position: relative;
   padding-top: 30px;
+}
+
+div.table-container {
   form#limiting {
     position: absolute;
     top: 0;
@@ -15,35 +18,52 @@ table {
   margin: 20px 0;
   border-collapse: collapse;
   max-width: 100%;
+}
+
+table {
   &.multiple-edit {
     margin-bottom: 0;
   }
+
   .sortable-header-buttons {
     display: inline-block;
     white-space: nowrap;
   }
+
   thead {
     background-color: #ddd;
     border-bottom: 1px solid #ccc;
   }
+
   tr {
     &:nth-child(even) {
       background-color: #f3f3f3;
     }
+
     &.highlight {
       border: 1px solid #1c9cb2;
       background-color: rgba(109, 191, 206, .3);
     }
   }
-  td, th {
+
+  td,
+  th {
     padding: 6px 10px;
   }
+
   td {
     &.icons {
       white-space: nowrap;
-      [class^="icon-"], [class*=" icon-"] {
+    }
+    &.icons {
+      [class^="icon-"],
+      [class*=" icon-"] {
         font-size: 18px;
         margin-left: 18px;
+      }
+
+      [class^="icon-"],
+      [class*=" icon-"] {
         &:first-child {
           margin-left: 0;
         }
@@ -54,15 +74,22 @@ table {
 
 div.multiple-edit-controls {
   margin-bottom: 20px;
+}
+
+div.multiple-edit-controls {
   span.multiple-edit {
     margin: 0 20px 0 0;
   }
+
   input {
     margin: 0 10px;
     padding: 0;
     color: #ff3520;
     text-decoration: underline;
     background: transparent;
+  }
+
+  input {
     &:hover {
       color: #ff3520;
       background: transparent;
@@ -75,12 +102,17 @@ a.sortable-header-button {
   text-decoration: none;
   color: #444;
   opacity: 0.5;
+}
+
+a.sortable-header-button {
   &:hover {
     opacity: 1;
   }
+
   &.active {
     opacity: 1;
   }
+
   i {
     font-size: 0.8em;
   }

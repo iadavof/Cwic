@@ -28,9 +28,17 @@ module Sspable
     end
 
     def sort_on_class_attribute(cls, sort, direction)
-      raise "Invalid sort attribute name '#{sort}'" unless cls.attribute_names.include?(sort)
-      raise "Invalid sort direction '#{direction}'" unless %w(asc desc).include?(direction)
+      check_sort_attribute(cls, sort)
+      check_sort_direction(direction)
       reorder("#{cls.table_name}.#{sort} #{direction.upcase}").merge(@default_order)
+    end
+
+    def check_sort_attribute(cls, sort)
+      raise "Invalid sort attribute name '#{sort}'" unless cls.attribute_names.include?(sort)
+    end
+
+    def check_sort_direction(direction)
+      raise "Invalid sort direction '#{direction}'" unless %w(asc desc).include?(direction)
     end
 
     def sort_on_association(sort, direction)

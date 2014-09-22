@@ -3,15 +3,9 @@
 table
   thead
     tr
-      th
-      = sortable_table_head(OrganisationClient, :first_name)
-      = sortable_table_head(OrganisationClient, :last_name)
-      = sortable_table_head(OrganisationClient, :email)
-      = sortable_table_head(OrganisationClient, :route)
-      = sortable_table_head(OrganisationClient, :street_number)
-      = sortable_table_head(OrganisationClient, :postal_code)
+      = sortable_table_head(OrganisationClient, :name)
       = sortable_table_head(OrganisationClient, :locality)
-      = sortable_table_head(OrganisationClient, :country)
+      = sortable_table_head(OrganisationClient, :email)
       = sortable_table_head(OrganisationClient, :phone)
       = sortable_table_head(OrganisationClient, :mobile_phone)
       th
@@ -20,16 +14,10 @@ table
     - @organisation_clients.each do |organisation_client|
       tr
         td = name_link_to_show([@organisation, organisation_client])
-        td = organisation_client.first_name
-        td = organisation_client.last_name
-        td = organisation_client.email
-        td = organisation_client.route
-        td = organisation_client.street_number
-        td = organisation_client.postal_code
         td = organisation_client.locality
-        td = organisation_client.country
-        td = organisation_client.phone
-        td = organisation_client.mobile_phone
+        td = mail_to(organisation_client.email)
+        td = call_to(organisation_client.phone)
+        td = call_to(organisation_client.mobile_phone)
         td.icons
           = icon_link_to_edit([@organisation, organisation_client])
           = icon_link_to_destroy([@organisation, organisation_client])

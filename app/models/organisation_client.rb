@@ -51,6 +51,15 @@ class OrganisationClient < ActiveRecord::Base
     end.reorder(updated_at: :desc)
   end
 
+  def self.sort_on_class_attribute(cls, sort, direction)
+    if cls == self && sort == 'name'
+      check_sort_direction(direction)
+      reorder("CASE WHEN #{self.table_name}.business_client THEN #{self.table_name}.company_name ELSE #{self.table_name}.last_name END #{direction.upcase}").merge(@default_order)
+    else
+      super
+    end
+  end
+
   ##
   # Instance methods
   ##
