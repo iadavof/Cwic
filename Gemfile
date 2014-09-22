@@ -34,7 +34,7 @@ gem 'jquery-ui-rails-cdn'
 gem 'modernizr-rails'
 
 # Use the gistyle gem for the Garber Irish Javascript loading implementation
-gem 'gistyle', github: 'tonytonyjan/gistyle' # Github version to add support for alias actions. Waiting for new release.
+gem 'gistyle'
 
 # Color picker
 gem 'jquery-minicolors-rails'
