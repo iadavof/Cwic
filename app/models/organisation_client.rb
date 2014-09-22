@@ -54,6 +54,7 @@ class OrganisationClient < ActiveRecord::Base
   def self.sort_on_class_attribute(cls, sort, direction)
     if cls == self && sort == 'name'
       check_sort_direction(direction)
+      # TODO also sort on first_name and locality
       reorder("CASE WHEN #{self.table_name}.business_client THEN #{self.table_name}.company_name ELSE #{self.table_name}.last_name END #{direction.upcase}").merge(@default_order)
     else
       super
@@ -64,6 +65,7 @@ class OrganisationClient < ActiveRecord::Base
   # Instance methods
   ##
 
+  # When changing this, also change the custom sorting for name (sortable table header), see sort_on_class_attribute
   def instance_name
     name = (self.business_client ? company_name : full_name)
     (locality.present? ? "#{name}, #{locality}" : name)
