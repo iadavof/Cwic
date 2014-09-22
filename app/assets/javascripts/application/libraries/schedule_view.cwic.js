@@ -21,7 +21,7 @@ function CwicScheduleView(options) {
   this.focusedScheduleItem = null;
   this.statusMessageTimeout = null;
 
-  this.currentMode = (this.options.view == 'horizontalCalendar') ? (this.options.zoom == 'day') ? 'week' : 'month' : 'week';
+  this.currentMode = (this.options.view == 'horizontal') ? (this.options.zoom == 'day') ? 'week' : 'month' : 'week';
   this.renderCalendar();
 }
 
@@ -32,7 +32,7 @@ CwicScheduleView.prototype.renderCalendar = function() {
   this.initScrollContainerActions();
   this.addContextButtonsToLocalMenu();
 
-  (this.options.view == 'horizontalCalendar') ? this.renderHorizontalCalendar() : this.renderVerticalCalendar();
+  (this.options.view == 'horizontal') ? this.renderHorizontalCalendar() : this.renderVerticalCalendar();
 };
 
 CwicScheduleView.prototype.renderHorizontalCalendar = function () {
@@ -92,10 +92,11 @@ CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
 CwicScheduleView.prototype.initScheduleStub = function() {
   this.scheduleContainer = $('#' + this.options.container);
   this.scheduleContainer.append(APP.util.getTemplateClone('scheduleContainerTemplate').contents());
-  this.scheduleContainer.addClass('calendar  ' + this.options.view);
+  this.scheduleContainer.addClass('calendar ' + this.options.view);
 
   this.scrollContainer = this.scheduleContainer.find('.schedule-scroll-container');
   this.topAxis = this.scheduleContainer.find('.top-axis');
+  this.topAxis.addClass(this.options.view);
 
   // Set schedule to the selected date or current date
   this.navigationReference = this.getFocusMoment();
@@ -149,7 +150,7 @@ CwicScheduleView.prototype.toggleEntity = function(entity_button) {
   var entity_button = $(entity_button);
   var id = parseInt(entity_button.attr('id').split('_')[1], 10);
 
-  if (this.options.view == "verticalCalendar") {
+  if (this.options.view == "vertical") {
     // Only one item at once, first disable all
     this.toggleEntities(false);
   }
@@ -166,10 +167,10 @@ CwicScheduleView.prototype.toggleEntity = function(entity_button) {
 };
 
 CwicScheduleView.prototype.addSelectedEntity = function(id) {
-  if(this.options.view == 'horizontalCalendar') {
+  if(this.options.view == 'horizontal') {
       // Add this item to the selection
       this.selectedEntities.push(id);
-    } else if(this.options.view == 'verticalCalendar') {
+    } else {
       // Only one entity can be selected
       this.selectedEntities = [id];
     }
@@ -190,7 +191,7 @@ CwicScheduleView.prototype.removeSelectedEntity = function(id) {
 
 CwicScheduleView.prototype.getEntitiesFromLocalStorage = function() {
   if(typeof(Storage) !== 'undefined' && typeof(localStorage.previouslySelectedEntities) !== 'undefined') {
-    if(this.options.view == 'verticalCalendar' && localStorage.previouslySelectedEntities.length > 0) {
+    if(this.options.view == 'vertical' && localStorage.previouslySelectedEntities.length > 0) {
       // Only one selected entity possible, in case
       localStorage.previouslySelectedEntities = [localStorage.previouslySelectedEntities[localStorage.previouslySelectedEntities.length - 1]];
     }
@@ -244,10 +245,10 @@ CwicScheduleView.prototype.toggleEntities = function(on) {
 CwicScheduleView.prototype.createEntityShowCase = function() {
   var schedule = this;
 
-  if(this.options.view == 'horizontalCalendar') {
+  if(this.options.view == 'horizontal') {
     this.scheduleContainer.find('.fast-select a#selectAll').on('click', function(e){ e.preventDefault(); schedule.toggleEntities(true); return false; });
     this.scheduleContainer.find('.fast-select a#selectNone').on('click', function(e){ e.preventDefault(); schedule.toggleEntities(false); return false; });
-  } else if(this.options.view == 'verticalCalendar') {
+  } else if(this.options.view == 'vertical') {
     this.scheduleContainer.find('.fast-select a#selectAll').hide();
     this.scheduleContainer.find('.fast-select a#selectNone').hide();
   }
@@ -526,7 +527,7 @@ CwicScheduleView.prototype.updateDateDomainControl = function() {
 
 CwicScheduleView.prototype.nearestMomentPoint = function(rel, clickedElement) {
   var containerTP = $(clickedElement);
-  containerTPSize = this.options.view == 'horizontalCalendar' ? containerTP.width() : containerTP.height();
+  containerTPSize = this.options.view == 'horizontal' ? containerTP.width() : containerTP.height();
 
   var beginPoint;
   if(this.options.zoom == 'day') {
@@ -567,7 +568,7 @@ CwicScheduleView.prototype.getScheduleItemForDOMObject = function(ScheDOM) {
 
 CwicScheduleView.prototype.getPointerRel = function(event, container) {
   var offset = $(container).offset();
-  return (this.options.view == 'horizontalCalendar') ? event.originalEvent.pageX - offset.left : event.originalEvent.pageY - offset.top;
+  return (this.options.view == 'horizontal') ? event.originalEvent.pageX - offset.left : event.originalEvent.pageY - offset.top;
 };
 
 CwicScheduleView.prototype.getContainerForPoint = function(event) {
@@ -855,9 +856,9 @@ CwicScheduleView.prototype.addHorizontalViewTimeAxis = function() {
 
 
 CwicScheduleView.prototype.createSchedule = function() {
-  if(this.options.view == 'horizontalCalendar') {
+  if(this.options.view == 'horizontal') {
     (this.options.zoom == 'day') ? this.createScheduleDay() : this.createScheduleWeek();
-  } else if(this.options.view == 'verticalCalendar') {
+  } else {
     this.createVerticalSchedule();
   }
 };
@@ -957,9 +958,9 @@ CwicScheduleView.prototype.clearSchedule = function() {
   var scheduleBody = this.scheduleContainer.find('.schedule-body');
   scheduleBody.css('height', scheduleBody.height());
   scheduleBody.children(':not("div.grid")').remove();
-  if(this.options.view == 'horizontalCalendar') {
+  if(this.options.view == 'horizontal') {
     this.scheduleContainer.find('.left-axis').html('');
-  } else if(this.options.view == 'verticalCalendar') {
+  } else {
     this.topAxis.find('.axis-parts').html('');
   }
 };
@@ -1009,7 +1010,7 @@ CwicScheduleView.prototype.initscheduleEntityContainers = function(scheJSON) {
     scheduleEntity.renderScheduleItems();
   });
 
-  if(this.options.view == 'horizontalCalendar') {
+  if(this.options.view == 'horizontal') {
     scheduleEntity.setEntityContainerHeight($.size(scheJSON));
   }
 };
@@ -1067,7 +1068,7 @@ CwicScheduleView.prototype.appendDay = function(dayMoment) {
 
 CwicScheduleView.prototype.setTopAxisTexts = function() {
   var parts;
-  if(this.options.view == 'verticalCalendar') {
+  if(this.options.view == 'vertical') {
     parts = this.topAxis.find('div.axis-parts div.vertical-day-time-axis-frame');
 
     parts.each(function() {
@@ -1094,7 +1095,7 @@ CwicScheduleView.prototype.setTopAxisTexts = function() {
 
     });
 
-  } else if(this.options.view == 'horizontalCalendar' && this.options.zoom == 'week') {
+  } else if(this.options.view == 'horizontal' && this.options.zoom == 'week') {
     parts = this.topAxis.find('div.axis-parts div.day-time-axis-frame');
     parts.each(function() {
       var part = $(this);
@@ -1139,7 +1140,7 @@ CwicScheduleView.prototype.renderScheduleBodyGrid = function() {
   var nritems = this.options.zoom == 'day' ? 23 : 27;
   for(var i = 0; i < nritems; i += 1) {
     var gridItem = APP.util.getTemplateClone('gridItemTemplate');
-    gridItem.addClass(this.options.view == 'horizontalCalendar' ? 'horizontal' : 'vertical');
+    gridItem.addClass(this.options.view);
     gridItem.addClass(this.options.zoom);
     grid.append(gridItem);
   }
@@ -1279,13 +1280,13 @@ CwicScheduleView.prototype.createScheduleItem = function(reservationForm, resetN
 };
 
 CwicScheduleView.prototype.cssLeftOrTop = function() {
-  return (this.options.view == 'horizontalCalendar') ? 'left' : 'top';
+  return (this.options.view == 'horizontal') ? 'left' : 'top';
 };
 
 CwicScheduleView.prototype.cssRightOrBottom = function() {
-  return (this.options.view == 'horizontalCalendar') ? 'right' : 'bottom';
+  return (this.options.view == 'horizontal') ? 'right' : 'bottom';
 };
 
 CwicScheduleView.prototype.cssWidthOrHeight = function() {
-  return (this.options.view == 'horizontalCalendar') ? 'width' : 'height';
+  return (this.options.view == 'horizontal') ? 'width' : 'height';
 };

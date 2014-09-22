@@ -2,7 +2,7 @@ APP.schedule_view = {
   horizontal_day: function() {
     new CwicScheduleView({
       container: 'calendar',
-      view: 'horizontalCalendar',
+      view: 'horizontal',
       zoom: 'day',
     });
     this.bind_new_reservation_modal_button();
@@ -10,7 +10,7 @@ APP.schedule_view = {
   horizontal_week: function() {
     new CwicScheduleView({
       container: 'calendar',
-      view: 'horizontalCalendar',
+      view: 'horizontal',
       zoom: 'week',
     });
     this.bind_new_reservation_modal_button();
@@ -18,7 +18,7 @@ APP.schedule_view = {
   vertical_day: function() {
     new CwicScheduleView({
       container: 'calendar',
-      view: 'verticalCalendar',
+      view: 'vertical',
       zoom: 'day',
     });
     this.bind_new_reservation_modal_button();
