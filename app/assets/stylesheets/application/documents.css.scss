@@ -42,10 +42,14 @@ div#documents-container {
       text-decoration: none;
       background-color: #fff;
       background-position: center center;
+    }
+
+    > a.document-link {
       &:hover + a.document-info {
         background-color: #1c9cb2;
         height: 50%;
       }
+
       .document-extension {
         background-color: #eee;
         display: block;
@@ -58,7 +62,7 @@ div#documents-container {
         font-weight: bold;
         text-transform: uppercase;
         transition: 0.2s;
-        border-radius: 0 0 0.5em 0;
+        border-radius: 0 0 .5em;
       }
     }
 
@@ -75,13 +79,14 @@ div#documents-container {
       padding: 0.4em;
       box-sizing: border-box;
       transition: 0.3s;
+    }
+
+    .document-info {
       &:hover {
         background-color: #1c9cb2;
         height: 50%;
       }
-    }
 
-    .document-info {
       .filename, .created_at, .created_by {
         display: block;
         margin: 0;

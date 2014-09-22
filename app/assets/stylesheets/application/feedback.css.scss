@@ -1,29 +1,41 @@
 #new_feedback_popup {
   h2 {
     margin: 0;
-    [class^="icon-"], [class*=" icon-"] {
+    [class^="icon-"],
+    [class*=" icon-"] {
       margin-right: 0.5em;
       font-size: 1.2em;
     }
   }
-  div.feedback-status, div.feedback-review {
+
+  div.feedback-status,
+  div.feedback-review {
     position: relative;
   }
+
   div.feedback-status {
     background-image: image-url('ajax_wait.gif');
     background-position: center center;
     background-repeat: no-repeat;
   }
-  #creating_screenshot, #feedback-error, #feedback-success, #feedback-error-explain, #feedback-success-explain {
+
+  #creating_screenshot,
+  #feedback-error,
+  #feedback-success,
+  #feedback-error-explain,
+  #feedback-success-explain {
     visibility: hidden;
   }
+
   #creating_screenshot {
     text-align: center;
   }
+
   #feedback-intro {
     width: 400px;
   }
-  textarea#feedback-message {
+
+  #feedback-message {
     margin-bottom: 10px;
     width: 100%;
     max-width: 500px;
@@ -31,6 +43,7 @@
     -moz-box-sizing: border-box;
     box-sizing: border-box;
   }
+
   #feedback-message-summary {
     clear: both;
     font-style: italic;
@@ -39,31 +52,42 @@
     position: relative;
     min-height: 20px;
     max-width: 480px;
+  }
+
+  #feedback-message-summary {
     #edit-feedback-button {
       position: absolute;
       right: 5px;
       top: 5px;
     }
   }
+
   .feedback-tech-info {
     max-width: 500px;
     line-height: 110%;
+  }
+
+  .feedback-tech-info {
     h4 {
       margin: 0;
     }
+
     #tech-info-summary {
       font-size: 0.8em;
     }
   }
-  img#screenshot_preview {
+
+  #screenshot_preview {
     width: 100%;
   }
+
   .feedback-screenshot-wrapper {
     max-height: 300px;
     overflow: auto;
     max-width: 500px;
     margin: 20px 0;
   }
+
   button.feedback-button {
     clear: both;
     float: right;
@@ -71,12 +95,17 @@
   }
 }
 
-html.backgroundsize.smil #new_feedback_popup div.feedback-status {
-  background-image: image-url('ajax_wait.svg');
-  background-size: 100px 100px;
+html.backgroundsize.smil {
+  #new_feedback_popup {
+    div.feedback-status {
+      background-image: image-url('ajax_wait.svg');
+      background-size: 100px 100px;
+    }
+  }
 }
 
-td.feedback_message, td.feedback_specs {
+td.feedback_message,
+td.feedback_specs {
   p {
     height: 50px;
     width: 300px;

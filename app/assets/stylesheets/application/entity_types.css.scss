@@ -4,7 +4,7 @@ div#entity-type-form {
     border: 2px solid #ccc;
     display: block;
     margin: 5px;
-    padding: 70px 10px 10px 10px;
+    padding: 70px 10px 10px;
     background-position: center 10px;
     background-repeat: no-repeat;
     text-align: center;
@@ -41,10 +41,14 @@ div#entity-type-form {
       padding: 0;
       margin: 0;
     }
+
     div.reservation-status-header {
       background-color: #ddd;
       overflow: hidden;
       padding: 0.5em 0;
+    }
+
+    div.reservation-status-header {
       .sort-handle {
         font-size: 1.8em;
         padding: 0 10px 0 12px;
@@ -52,11 +56,15 @@ div#entity-type-form {
         min-width: 0;
         width: auto;
       }
+
       > div {
         display: table-row;
         width: 100%;
         border: 0 none;
         font-size: 0.9em;
+      }
+
+      > div {
         div {
           display: table-cell;
           font-weight: bold;
@@ -67,6 +75,7 @@ div#entity-type-form {
           text-align: center;
           vertical-align: middle;
         }
+
         div.name {
           min-width: 15em;
           width: 15em;
@@ -76,12 +85,18 @@ div#entity-type-form {
     .reservation-status-wrapper {
       > .inner {
         position: relative;
+      }
+
+      > .inner {
         .bool {
           width: 10em;
           text-align: center;
         }
-        .minicolors-theme-default .minicolors-input {
-          width: 10em;
+
+        .minicolors-theme-default {
+          .minicolors-input {
+            width: 10em;
+          }
         }
       }
     }
@@ -108,23 +123,11 @@ div#entity-type-form {
     }
 
     div.view {
-      div.name {
-
-      }
-
-      div.description {
-
-      }
-
       div.description div.value {
         line-height: 1.2em;
         max-height: 3.6em;
         overflow: hidden;
         text-overflow: ellipsis; /* XXX TODO does not work */
-      }
-
-      div.extra {
-
       }
 
       div.extra dl {
@@ -194,7 +197,7 @@ div#entity-type-form {
 
         h4,
         table {
-          margin: 0 0 10px 0;
+          margin: 0 0 10px;
         }
 
         th {

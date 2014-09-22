@@ -2,17 +2,19 @@
   background-color: #eee;
 }
 
-html.js.logged-in #main-area {
-  box-shadow: 0 0 60px rgba(0, 0, 0, 0.1);
-  border-left: 1px solid #ccc;
-  border-top: 1px solid #f9f9f9;
-}
-
-html.js.not-logged-in #below-header {
-  box-shadow: none;
+html.js.logged-in {
+  #main-area {
+    box-shadow: 0 0 60px rgba(0, 0, 0, .1);
+    border-left: 1px solid #ccc;
+    border-top: 1px solid #f9f9f9;
+  }
 }
 
 html.js.not-logged-in {
+  #below-header {
+    box-shadow: none;
+  }
+
   #content,
   #page-title {
     text-align: center;
@@ -22,7 +24,7 @@ html.js.not-logged-in {
     display: inline-block;
     text-align: left;
   }
-  
+
   #local-menu, &.flexbox #local-menu {
     display: none;
   }
@@ -31,6 +33,9 @@ html.js.not-logged-in {
 #content {
   margin: 0 0 20px;
   background: #fff;
+}
+
+#content {
   > .inner {
     padding: 40px;
     position: relative;
@@ -49,7 +54,9 @@ html.js.not-logged-in {
   margin-right: -5px;
   background-color: #ff3520;
   color: #fff;
+}
 
+#error-explanation {
   .error-head {
     font-weight: bold;
     font-size: 1.1em;
@@ -71,7 +78,9 @@ html.js.not-logged-in {
     margin: 0;
     padding: 0;
     font-size: 0.9em;
+  }
 
+  ul {
     > li {
       list-style: square inside;
     }
@@ -101,7 +110,9 @@ html.js.not-logged-in {
   color: #ff3520;
   font-weight: bold;
   margin-left: 1em;
+}
 
+#search-shortcut {
   span {
     color: #444;
     font-weight: normal;
