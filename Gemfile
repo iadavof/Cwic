@@ -124,7 +124,7 @@ gem 'holidays', github: 'kreintjes/holidays' # Custom gem to add support for ide
 gem 'numbers_and_words', github: 'kreintjes/numbers_and_words' # Custom gem to add ordinal support for dutch locale.
 
 # Attribute normalizer to normalize/cleanup attribute values (for instance change blanks to nils)
-gem 'attribute_normalizer', '~> 1.2.0.b' # Locked on new release candidate. Waiting for official release.
+gem 'attribute_normalizer'
 
 # Ice cube gem for easy recurrence rules
 gem 'ice_cube'
