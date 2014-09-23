@@ -202,6 +202,7 @@ CwicOccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
       block.attr('href', _this.getBlockHref(eid, i));
       block.attr('title', _this.getBlockTitle(i, 0));
       block.css('width', blockWidth + '%');
+      block.css('padding-top', blockWidth + '%');
       block.css('background-color', zeroPercentColor);
       row.append(block);
     }
@@ -220,10 +221,8 @@ CwicOccupationView.prototype.createHeader = function(maxNr, blockWidth) {
 };
 
 CwicOccupationView.prototype.resizeActions = function() {
-  var newHeight = this.occupationContainer.find('.occupation-matrix-block').first().width();
-  var row = this.occupationContainer.find('.occupation-matrix-row');
-  row.css('height', newHeight);
-  this.occupationContainer.find('.entity-row').css('height', row.outerHeight());
+  var newHeight = this.occupationContainer.find('.occupation-matrix-row').height();
+  this.occupationContainer.find('.entity-axis .entity-row').height(newHeight);
 
   if(newHeight < 25) {
     this.topAxis.find('div.top-axis-frame:nth-child(odd)').css('visibility', 'hidden');
@@ -239,15 +238,13 @@ CwicOccupationView.prototype.resizeActions = function() {
     this.occupationContainer.find('.entity-axis').hide();
     // adjust width of day axis
     dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
-    dayAxisSticky.css('margin-left', '0');
-    this.topAxis.css('margin-left', '0');
+    $.merge(dayAxisSticky, this.topAxis).css('margin-left', '0');
   } else {
     // make room for the entity axis and show it on the left side
     this.occupationContainer.find('.occupation-matrix-block p.percent').show();
     // Adjust the width of the day axis
     dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
-    dayAxisSticky.css('margin-left', '4%');
-    this.topAxis.css('margin-left', '4%');
+    $.merge(dayAxisSticky, this.topAxis).css('margin-left', '4%');
     this.occupationContainer.find('.entity-axis').show();
   }
 };
