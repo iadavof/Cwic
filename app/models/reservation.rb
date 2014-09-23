@@ -22,6 +22,7 @@ class Reservation < ActiveRecord::Base
 
   # Model extensions
   attr_accessor :validate_overlapping # Should we validate not overlapping (default true)? Disabled for multiple edit actions.
+  audited only: [:description, :entity, :organisation_client, :reservation_status, :begins_at, :ends_at, :slack_before, :slack_after], allow_mass_assignment: true
 
   # Attribute modifiers
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
