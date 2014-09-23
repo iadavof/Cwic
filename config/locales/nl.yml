@@ -85,9 +85,6 @@ nl:
       reservation_status:
         one: 'Reserveringsstatus'
         other: 'Reserveringsstatussen'
-      reservation_log:
-        one: 'Aanpassing'
-        other: 'Aanpassingen'
       reserve_period:
         one: 'Reserveerperiode'
         other: 'Reserveerperioden'
@@ -242,7 +239,6 @@ nl:
         reservation_status: 'Status'
         created_at: 'Aangemaakt op'
         documents: 'Documenten'
-        reservation_logs: 'Aanpassingen'
       reservation_recurrence_definition:
         repeating: 'Herhalen...'
         repeating_unit: 'Herhaling'
@@ -252,9 +248,6 @@ nl:
         repeating_instances: 'aantal herhalingen'
         repeating_weekdays: 'Op weekdagen'
         repeating_monthdays: 'Dagen van maand'
-      reservation_log:
-        user: 'Gebruiker'
-        created_at: 'Tijdstip'
       feedback:
         screen_capture: 'Screenshot'
         user: 'Gebruiker'
