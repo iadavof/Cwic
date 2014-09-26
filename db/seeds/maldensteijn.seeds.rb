@@ -1,17 +1,12 @@
 after 'iada' do
   iada_user = User.find_by!(email: 'admin@iada.nl')
   christiaan_user = User.find_by!(email: 'christiaan@iada.nl')
-
-  User.current = iada_user
-
   # Create Maldensteijn admin user
   ard_user = User.create!(first_name: 'Ard', infix: 'van', last_name: 'Hulst', email: 'ard@maldensteijn.nl', password: 'cwictest', confirmed_at: DateTime.now)
   david_user = User.create!(first_name: 'David', last_name: 'Westen', email: 'david@maldensteijn.nl', password: 'cwictest', confirmed_at: DateTime.now)
 
   # Create Maldensteijn organisation
   maldensteijn = Organisation.create!(name: 'Maldensteijn', route: 'Kerkplein', street_number: '8a', administrative_area_level_1: 'Gelderland', administrative_area_level_2: 'Heumen', postal_code: '6581 AC', locality: 'Malden', country: 'Netherlands', lat: 51.7808067, lng: 5.850443799999994)
-
-  Organisation.current = maldensteijn
 
   # Add users to Maldensteijn organisation
   OrganisationUser.create!(organisation: maldensteijn, user: ard_user, organisation_role: SeedHelper.admin_role)
