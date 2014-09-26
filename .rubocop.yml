@@ -1,0 +1,65 @@
+AllCops:
+  Include:
+    - '**/Rakefile'
+    - '**/config.ru'
+  Exclude:
+    - 'bin/**/*'
+    - 'config/**/*'
+    - 'db/**/*'
+    - 'lib/**/*'
+    - 'log/**/*'
+    - 'public/**/*'
+    - 'tmp/**/*'
+    - 'vendor/**/*'
+  RunRailsCops: true
+
+Style/Documentation:
+  Enabled: false
+
+Style/TrailingComma:
+  EnforcedStyleForMultiline: comma
+
+Style/Semicolon:
+  AllowAsExpressionSeparator: true
+
+Style/AlignParameters:
+  EnforcedStyle: with_fixed_indentation
+
+Style/TrivialAccessors:
+  ExactNameMatch: true
+
+Lint/UnusedBlockArgument:
+  Enabled: false
+
+# Cop supports --auto-correct.
+Lint/UnusedMethodArgument:
+  Enabled: false
+
+Metrics/ParameterLists:
+  CountKeywordArgs: false
+
+# Configuration parameters: CountComments.
+Metrics/ClassLength:
+  Max: 500
+  Enabled: false
+
+Metrics/CyclomaticComplexity:
+  Max: 25
+
+# Configuration parameters: AllowURI.
+Metrics/LineLength:
+  Max: 160
+  Exclude:
+    - 'spec/**/*'
+
+# Configuration parameters: CountComments.
+Metrics/MethodLength:
+  Max: 300
+  Enabled: false
+
+Metrics/PerceivedComplexity:
+  Max: 25
+
+# Configuration parameters: Include.
+Rails/HasAndBelongsToMany:
+  Enabled: false
