@@ -24,7 +24,7 @@ TimeUnit.create!([
   { key: 'week', repetition_key: 'weekly', seconds: 1.week },
   { key: 'month', repetition_key: 'monthly', seconds: 1.month },
   { key: 'year', repetition_key: 'yearly', seconds: 1.year.to_i },
-  { key: 'infinite', repetition_key: nil, seconds: 1.year.to_i + 1 }
+  { key: 'infinite', repetition_key: nil, seconds: nil }
 ])
 
 # Create default roles

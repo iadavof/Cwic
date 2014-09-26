@@ -1,3 +1,4 @@
+# TODO: does it really make sense to store time units in the database instead of just defining them in code?
 class TimeUnit < ActiveRecord::Base
   # Attribute modifiers
   symbolize :key
