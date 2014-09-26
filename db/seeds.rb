@@ -14,18 +14,17 @@ DataType.create!([
 ])
 
 # Create default time periods
-# TODO? Remove common since it is not used anymore.
 TimeUnit.create!([
-  { key: 'second', repetition_key: 'secondly', common: false, seconds: 1.second },
-  { key: 'minute', repetition_key: 'minutely', common: false, seconds: 1.minute },
-  { key: 'quarter', repetition_key: 'quarterly', common: true, seconds: 15.minutes },
-  { key: 'half_hour', repetition_key: 'half_hourly', common: true, seconds: 30.minutes },
-  { key: 'hour', repetition_key: 'hourly', common: true, seconds: 1.hour },
-  { key: 'day', repetition_key: 'daily', common: true, seconds: 1.day },
-  { key: 'week', repetition_key: 'weekly', common: true, seconds: 1.week },
-  { key: 'month', repetition_key: 'monthly', common: false, seconds: 1.month },
-  { key: 'year', repetition_key: 'yearly', common: false, seconds: 1.year.to_i },
-  { key: 'infinite', repetition_key: nil, common: false, seconds: 1.year.to_i + 1}
+  { key: 'second', repetition_key: 'secondly', seconds: 1.second },
+  { key: 'minute', repetition_key: 'minutely', seconds: 1.minute },
+  { key: 'quarter', repetition_key: 'quarterly', seconds: 15.minutes },
+  { key: 'half_hour', repetition_key: 'half_hourly', seconds: 30.minutes },
+  { key: 'hour', repetition_key: 'hourly', seconds: 1.hour },
+  { key: 'day', repetition_key: 'daily', seconds: 1.day },
+  { key: 'week', repetition_key: 'weekly', seconds: 1.week },
+  { key: 'month', repetition_key: 'monthly', seconds: 1.month },
+  { key: 'year', repetition_key: 'yearly', seconds: 1.year.to_i },
+  { key: 'infinite', repetition_key: nil, seconds: 1.year.to_i + 1 }
 ])
 
 # Create default roles

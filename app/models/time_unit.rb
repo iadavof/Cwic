@@ -6,9 +6,6 @@ class TimeUnit < ActiveRecord::Base
   validates :key, presence: true, uniqueness: true, length: { maximum: 255 }
   validates :seconds, numericality: { only_integer: true }, allow_nil: true
 
-  # Scopes
-  scope :common, -> { where(common: true) } # TODO remove this (instead just select the units you want yourself). This was going to be used in Reservation Rules, but is at the moment not used anymore.
-
   default_scope { order('seconds ASC') }
 
   def instance_name
