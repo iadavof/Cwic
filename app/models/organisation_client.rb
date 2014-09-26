@@ -13,6 +13,9 @@ class OrganisationClient < ActiveRecord::Base
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
   has_many :communication_records, dependent: :destroy, inverse_of: :organisation_client
 
+  # Model extensions
+  audited only: [:first_name, :last_name, :infix, :email, :route, :street_number, :postal_code, :locality, :country, :administrative_area_level_2, :administrative_area_level_1, :phone, :mobile_phone, :business_client, :company_name, :tax_number, :iban, :iban_att], allow_mass_assignment: true
+
   # Validations
   validates :organisation, presence: true
   validates :first_name, presence: true, unless: -> { business_client }

@@ -23,13 +23,13 @@
       a href="#documents"
         = Document.model_name.human(count: 2)
     li
-      a href="#logs"
-        = t('.logs')
+      a href="#audits"
+        = t('audits.logs')
 
   .tab-wrap
     #general
       = render 'show_general'
     #documents
       = render 'show_documents'
-    #logs
-      = render 'show_logs'
+    #audits
+      = render 'audits/logs', item: @reservation

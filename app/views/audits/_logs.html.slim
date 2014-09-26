@@ -8,7 +8,7 @@ table
       th = t('audits.before')
       th = t('audits.after')
   tbody
-    - item.audits.reorder(version: :desc).includes(:user).first(10).each do |audit|
+    - item.audits.reorder(version: :desc).includes(:user).first(20).each do |audit|
         - if audit.action == 'create'
           tr class="separate"
             td = l(audit.created_at, format: :long)
@@ -23,5 +23,5 @@ table
                 td rowspan=audit.audited_changes.count
                   = name_link_to_show(audit.user)
               td = item.class.human_attribute_name(attr_name.chomp('_id'))
-              td = send("{item.class.underscore}_audit_format", attr_name, change[0])
-              td = send("{item.class.underscore}_audit_format", attr_name, change[1])
+              td = send("#{item.class.model_name.to_s.underscore}_audit_format", attr_name, change[0])
+              td = send("#{item.class.model_name.to_s.underscore}_audit_format", attr_name, change[1])

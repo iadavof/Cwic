@@ -805,6 +805,15 @@ nl:
       canceled: 'Geannuleerd'
       not_used: 'Niet gebruikt'
 
+  audits:
+    logs: 'Geschiedenis'
+    created_at: 'Datum'
+    by: 'Door'
+    item: 'Eigenschap'
+    before: 'Oude waarde'
+    after: 'Nieuwe waarde'
+    created: 'Aangemaakt'
+
   tags:
     show:
       tags: 'Tags'

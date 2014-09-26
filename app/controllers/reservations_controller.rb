@@ -63,6 +63,7 @@ class ReservationsController < ApplicationController
       return render action: :new
     end
 
+    @reservation.save
     @reservation.build_organisation_client if @reservation.organisation_client.blank? # Rebuild the blank organisation client if needed
     respond_with(@organisation, @reservation)
   end
