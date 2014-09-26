@@ -78,7 +78,11 @@ Cwic::Application.configure do
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = ::Logger::Formatter.new
 
+  # Action mailer default sender domain
   config.action_mailer.default_url_options = { host: 'cwic.nl' }
+
+  # Disable registrations (for now)
+  config.disable_registrations = true
 end
 
 Cwic::Application.config.middleware.use ExceptionNotification::Rack,
