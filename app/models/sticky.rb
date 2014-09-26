@@ -23,7 +23,7 @@ class Sticky < ActiveRecord::Base
 
 private
   def set_organisation
-    self.organisation ||= Organisation.current
+    self.organisation = stickable.organisation
   end
 
   def set_user

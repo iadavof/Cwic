@@ -34,7 +34,7 @@ class Document < ActiveRecord::Base
 
 private
   def set_organisation
-    self.organisation ||= Organisation.current
+    self.organisation = documentable.organisation
   end
 
   def set_user
