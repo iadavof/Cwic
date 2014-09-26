@@ -31,6 +31,6 @@ class CommunicationRecord < ActiveRecord::Base
 
 private
   def set_user
-    self.user = User.current
+    self.user ||= User.current
   end
 end

@@ -1,10 +1,10 @@
 class Feedback < ActiveRecord::Base
-	include PgSearch
-	include Sspable
+  include PgSearch
+  include Sspable
 
   # Associations
-  belongs_to :user
   belongs_to :organisation
+  belongs_to :user
 
   # Attribute modifiers
   mount_uploader :screen_capture, ScreenCaptureUploader
@@ -16,8 +16,8 @@ class Feedback < ActiveRecord::Base
   validates :screen_capture, presence: true
 
   # Callbacks
-  before_validation :set_user
   before_validation :set_organisation
+  before_validation :set_user
 
   # Scopes
   pg_global_search against: { user: 'A', organisation: 'A', message: 'B' }
@@ -27,11 +27,11 @@ class Feedback < ActiveRecord::Base
   end
 
 private
-  def set_user
-    self.user = User.current
+  def set_organisation
+    self.organisation ||= Organisation.current
   end
 
-  def set_organisation
-    self.organisation = Organisation.current
+  def set_user
+    self.user ||= User.current
   end
 end

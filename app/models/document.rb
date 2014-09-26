@@ -19,7 +19,8 @@ class Document < ActiveRecord::Base
   validates :document, presence: true
 
   # Callbacks
-  before_validation :set_organisation, :set_user
+  before_validation :set_organisation
+  before_validation :set_user
   before_save :store_file_properties
 
   # Scopes
@@ -33,11 +34,11 @@ class Document < ActiveRecord::Base
 
 private
   def set_organisation
-    self.organisation = Organisation.current
+    self.organisation ||= Organisation.current
   end
 
   def set_user
-    self.user = User.current
+    self.user ||= User.current
   end
 
   def store_file_properties

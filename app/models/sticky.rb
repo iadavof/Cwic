@@ -1,8 +1,8 @@
 class Sticky < ActiveRecord::Base
   # Associations
   belongs_to :stickable, polymorphic: true
-  belongs_to :user
   belongs_to :organisation
+  belongs_to :user
 
   # Validations
   validates :organisation, presence: true
@@ -11,7 +11,8 @@ class Sticky < ActiveRecord::Base
   validates :weight, numericality: true, allow_nil: true
 
   # Callbacks
-  before_validation :set_organisation, :set_user
+  before_validation :set_organisation
+  before_validation :set_user
 
   # Scopes
   default_scope { order('weight ASC, created_at DESC'); }
@@ -22,10 +23,10 @@ class Sticky < ActiveRecord::Base
 
 private
   def set_organisation
-    self.organisation = Organisation.current
+    self.organisation ||= Organisation.current
   end
 
   def set_user
-    self.user = User.current
+    self.user ||= User.current
   end
 end
