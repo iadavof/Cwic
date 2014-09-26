@@ -472,6 +472,7 @@ nl:
     registrations:
       new:
         your_info: 'Uw gegevens'
+      disabled: 'Registreren is momenteel uitgeschakeld'
     sessions:
       destroy:
         logout: 'Uitloggen'
