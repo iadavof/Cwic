@@ -88,8 +88,8 @@ end
 Cwic::Application.config.middleware.use ExceptionNotification::Rack,
  email: {
   email_prefix: '[Exception] ',
-  sender_addres: %{"Flyblown" <flyblown@cwic.nl>},
-  exception_receipients: %w{info@iada.nl}
+  sender_address: %{"Flyblown" <flyblown@cwic.nl>},
+  exception_recipients: %w{info@iada.nl}
  },
  notify_my_android: {
   api_keys: [
