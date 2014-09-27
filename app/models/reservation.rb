@@ -17,7 +17,6 @@ class Reservation < ActiveRecord::Base
   has_one :reservation_recurrence_definition
   has_one :entity_type, through: :entity
   has_many :stickies, as: :stickable, dependent: :destroy
-  has_many :reservation_logs, dependent: :destroy
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Model extensions
