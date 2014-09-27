@@ -34,6 +34,7 @@ Cwic::Application.configure do
   # Precompile assets (needed for js-routes)
   config.assets.initialize_on_precompile = true
 
+  # ActionMailer default sender host
   config.action_mailer.default_url_options = { host: 'localhost:3000' }
 
   # Bullet config

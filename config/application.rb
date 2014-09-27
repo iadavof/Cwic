@@ -38,5 +38,8 @@ module Cwic
     config.generators.stylesheets = false
     config.generators.javascripts = false
     config.generators.test_framework = false
+
+    # Default values for custom configuration settings
+    config.disable_registrations = false
   end
 end
