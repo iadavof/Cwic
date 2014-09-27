@@ -4,5 +4,5 @@ Dir.glob("#{Rails.root}/app/models/*.rb").each do |file|
   model_name = File.basename(file, '.rb').classify
   next if ['User'].include?(model_name) # Skip the User model. It does not work for some strange reason (related to Devise).
   model = model_name.constantize
-  model.send(:include, AutoNormalizable) if model < ActiveRecord::Base
+  model.send(:include, AutoNormalizable) if model < ActiveRecord::Base && model.table_exists?
 end
