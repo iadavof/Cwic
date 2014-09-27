@@ -472,7 +472,7 @@ nl:
     registrations:
       new:
         your_info: 'Uw gegevens'
-      disabled: 'Registreren is momenteel uitgeschakeld'
+      disabled: 'Registreren is op dit moment (nog) niet mogelijk'
     sessions:
       destroy:
         logout: 'Uitloggen'
