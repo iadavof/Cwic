@@ -20,7 +20,8 @@ class EntityImage < ActiveRecord::Base
     self.title
   end
 
-private
+  private
+
   def set_organisation
     self.organisation = self.imageable.organisation
   end

@@ -1,6 +1,7 @@
 class UsersController < CrudController
 
-private
+  private
+
   def permitted_params
     [:first_name, :last_name, :infix, :email]
   end

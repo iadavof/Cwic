@@ -51,7 +51,8 @@ module Sspable
       joins(association.name).sort_on_class_attribute(cls, sort, direction) # Join on the association (so we can sort on it) and perform the sorting!
     end
 
-  private
+    private
+
     def ssp_value(key, params, options)
       prefix = options[:prefix]
       params["#{prefix + '_' if prefix}#{key}"]

@@ -32,7 +32,8 @@ class Document < ActiveRecord::Base
     self.document_filename
   end
 
-private
+  private
+
   def set_organisation
     self.organisation = documentable.organisation
   end

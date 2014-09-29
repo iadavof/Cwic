@@ -10,7 +10,8 @@ class StickiesController < CrudController
     respond_with(@stickies)
   end
 
-private
+  private
+
   def parent_models
     [Entity, OrganisationClient, Reservation]
   end

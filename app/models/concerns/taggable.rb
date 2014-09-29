@@ -14,7 +14,8 @@ module Taggable
     end
   end
 
-private
+  private
+
   def set_tag_owner
     # Set the owner of some tags based on the current tag_list
     set_owner_tag_list_on(self.organisation, :tags, self.tag_list)

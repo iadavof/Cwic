@@ -57,7 +57,8 @@ class SearchController < ApplicationController
     respond_with(@results)
   end
 
-private
+  private
+
   def generate_search_key
     # Generate new unique search key
     begin

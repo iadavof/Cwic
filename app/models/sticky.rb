@@ -21,7 +21,8 @@ class Sticky < ActiveRecord::Base
     "#{self.class.model_name.human} ##{self.id.to_s}"
   end
 
-private
+  private
+
   def set_organisation
     self.organisation = stickable.organisation
   end

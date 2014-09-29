@@ -23,7 +23,8 @@ class EntityTypePropertyOption < ActiveRecord::Base
     @errors ||= EntityTypePropertyOptionErrors.new(self)
   end
 
-private
+  private
+
   def clear_depending_entity_properties
     # Because of a bug in Rails with regard to default_scopes, associations and update_all, we need to perform this action in an unscoped block.
     EntityProperty.unscoped { self.entity_type_property.entity_properties.where(value: self.id.to_s).update_all(value: nil) }

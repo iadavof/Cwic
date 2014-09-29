@@ -38,7 +38,8 @@ class ScheduleViewController < ApplicationController
     respond_with(@entities)
   end
 
-private
+  private
+
   def set_data
     @sel_entity = params[:entity].to_i if params[:entity].present?
 

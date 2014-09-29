@@ -97,7 +97,8 @@ module LinkHelper
     link_to_destroy(object, options)
   end
 
-private
+  private
+
   # Helpers for the link helpers
   def relevant_object(object)
     case object

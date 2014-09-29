@@ -158,7 +158,8 @@ class Entity < ActiveRecord::Base
     self.reservations.by_date_domain(begins_at, ends_at, options).empty?
   end
 
-private
+  private
+
   def create_info_screen_entities
     self.organisation.info_screens.each do |is|
       iset = InfoScreenEntityType.where('entity_type_id = ? AND info_screen_id = ?', self.entity_type.id, is.id).first;

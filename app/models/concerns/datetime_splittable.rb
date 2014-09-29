@@ -42,7 +42,8 @@ module DatetimeSplittable
     end
   end
 
-protected
+  protected
+
   def get_date(attribute)
     date = instance_variable_get("@#{attribute}_date")
     time = self.send(attribute)

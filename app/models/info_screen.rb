@@ -28,7 +28,8 @@ class InfoScreen < ActiveRecord::Base
     self.name
   end
 
-private
+  private
+
   # Initialize info screen with all the Entity Types and Entities for the organisation.
   def initialize_entity_types_and_entities
     self.info_screen_entity_types << self.organisation.entity_types.includes(:entities).map do |et|

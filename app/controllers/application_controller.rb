@@ -75,7 +75,8 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_menu_link
 
-private
+  private
+
   def load_organisation
     @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
   end

@@ -6,7 +6,8 @@ class FeedbacksController < CrudController
   respond_to :html, only: [:index, :show, :destroy]
   respond_to :json, only: [:create]
 
-private
+  private
+
   def permitted_params
     [:message, :specs, :screen_capture]
   end

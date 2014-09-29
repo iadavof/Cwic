@@ -26,7 +26,8 @@ class Feedback < ActiveRecord::Base
     "Feedback #{self.id}"
   end
 
-private
+  private
+
   def set_organisation
     self.organisation ||= Organisation.current
   end

@@ -18,7 +18,8 @@ class OrganisationClientsController < CrudController
     send_data(@organisation_client.vcard.to_s, type: 'text/x-vcard', filename: @organisation_client.vcard_filename)
   end
 
-private
+  private
+
   def parent_model
     Organisation
   end

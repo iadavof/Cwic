@@ -62,7 +62,8 @@ class User < ActiveRecord::Base
     end
   end
 
-private
+  private
+
   def save_current_name_in_reservation_log # Save the current username in the logs and nullify the reference to this user
     self.reservation_logs.update_all(old_user_name: instance_name, user_id: nil)
   end

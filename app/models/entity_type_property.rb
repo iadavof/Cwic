@@ -95,7 +95,8 @@ class EntityTypeProperty < ActiveRecord::Base
     @errors ||= EntityTypePropertyErrors.new(self)
   end
 
-private
+  private
+
   def cast_default_value
     self.default_value = self.cast_value(self.default_value)
   end

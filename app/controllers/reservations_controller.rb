@@ -106,7 +106,8 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, Reservation)
   end
 
-private
+  private
+
   def multiple_action
     # Check if a parameter key edit or delete is defined, this is the name of the submit button that is clicked
     action = %w(edit delete).detect { |a| params[a] }

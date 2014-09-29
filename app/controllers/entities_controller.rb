@@ -35,7 +35,8 @@ class EntitiesController < CrudController
     respond_with(@organisation, @entities, @selected_entity)
   end
 
-private
+  private
+
   def parent_model
     Organisation
   end

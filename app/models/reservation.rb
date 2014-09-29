@@ -322,7 +322,8 @@ class Reservation < ActiveRecord::Base
     (seconds_past.to_f / seconds.to_f * 100.00).round(2)
   end
 
-private
+  private
+
   def fix_base_reservation_reference
     # The first reservation of a repeating set is removed!
     repeating_set = self.class.where(base_reservation_id: self.id).where.not(id: self.id).reorder(begins_at: :asc)

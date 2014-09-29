@@ -29,7 +29,8 @@ class OrganisationUsersController < CrudController
     respond_with(@organisation, @organisation_user, location: redirect_location)
   end
 
-private
+  private
+
   def parent_model
     Organisation
   end

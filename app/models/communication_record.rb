@@ -29,7 +29,8 @@ class CommunicationRecord < ActiveRecord::Base
     self.summary
   end
 
-private
+  private
+
   def set_user
     self.user ||= User.current
   end

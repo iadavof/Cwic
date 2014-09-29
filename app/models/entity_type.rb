@@ -81,7 +81,8 @@ class EntityType < ActiveRecord::Base
   end
   alias_method_chain :icon, :default
 
-private
+  private
+
   def initialize_reservation_statuses
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0)
     self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)

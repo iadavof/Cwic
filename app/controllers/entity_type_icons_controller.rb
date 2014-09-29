@@ -1,7 +1,8 @@
 class EntityTypeIconsController < CrudController
   before_action :update_menu
 
-private
+  private
+
   def parent_models
     # Parent is organisation or nil (no parent, used in admin interface)
     [Organisation, nil]

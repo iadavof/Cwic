@@ -12,7 +12,8 @@ class InfoScreensController < CrudController
     respond_with(@organisation, @info_screen, @active_ises, @reservations)
   end
 
-private
+  private
+
   def parent_model
     Organisation
   end

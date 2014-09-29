@@ -30,7 +30,8 @@ class OrganisationUser < ActiveRecord::Base
     (self.user.present? ? self.user.instance_name : nil) # We need this fallback for the interpoliation_options when creating a new organisation user (user could then be nil).
   end
 
-private
+  private
+
   def set_user_by_email
     # Find and set the user based on their e-mail (if the e-mail is present). This is useful when adding a new user to the organisation.
     self.user = User.find_by(email: self.user_email)

@@ -15,7 +15,8 @@ class OccupationViewController < ApplicationController
     end
   end
 
-private
+  private
+
   def render_day_json
     date = Date.new(params[:year].to_i, params[:month].to_i)
     day_range = (date.beginning_of_month..date.end_of_month)

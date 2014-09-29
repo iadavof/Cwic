@@ -67,7 +67,8 @@ class EntityProperty < ActiveRecord::Base
     @errors ||= EntityPropertyErrors.new(self)
   end
 
-private
+  private
+
   def cast_value
     if self.multiple_options?
       self.value = self.values.present? # Needed to let the required validation for multiple option properties work.

@@ -1,6 +1,6 @@
 class EntityTypesController < CrudController
+  private
 
-private
   def parent_model
     Organisation
   end
