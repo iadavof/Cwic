@@ -208,9 +208,9 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  # Does the reservation overlaps with the given timespan?
+  # Does the reservation overlap with the given timespan?
   def overlaps?(from, to)
-    now_or_future?(from) && past_or_now?(to)
+    now_or_future?(from) && past_or_now?(to - 1) # End times are considered to be exclusive so we extract one second
   end
 
   # Get the reservation directly before this reservation (for the same entity).
