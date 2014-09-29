@@ -6,9 +6,9 @@ module EntityTypesHelper
   def entity_type_audit_format(attr_name, value)
     case attr_name
     when 'min_reservation_length', 'max_reservation_length'
-      (value.nil? ?  I18n.t('none') : "#{value} #{I18n.t('minutes_abbr')}")
+      (value.nil? ?  I18n.t('none') : "#{value} #{I18n.t('minutes_abbr').lcfirst}")
     when 'slack_before', 'slack_after'
-      (value.nil? ?  I18n.t('default') : "#{value} #{I18n.t('minutes_abbr')}")
+      (value.nil? ?  I18n.t('default') : "#{value} #{I18n.t('minutes_abbr').lcfirst}")
     else
       generic_format(value)
     end
