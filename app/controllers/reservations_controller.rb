@@ -121,6 +121,7 @@ class ReservationsController < ApplicationController
       @reservation.errors.clear
       valid = params[:edit_fields].present? && alter_multiple_edit_reservations(@reservations, @reservation, attributes)
       if valid
+        @reservations.map(&:save)
         redirect_to session.delete(:return_to)
       else
         load_resource
