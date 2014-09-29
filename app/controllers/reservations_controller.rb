@@ -1,5 +1,7 @@
 class ReservationsController < ApplicationController
   # TODO: rewrite to CrudController
+  MULTIPLE_EDIT_ATTRIBUTES = [:description, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id]
+
   before_action :load_organisation_client
   before_action :set_first_page, only: :index
   before_action :load_resource
@@ -112,14 +114,12 @@ class ReservationsController < ApplicationController
 
   def multiple_edit
     # Handle edit
-    attributes = [:description, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id]
     if params[:process] == 'process'
       @reservation = Reservation.new
-      @reservation.localized.update_attributes(resource_params)
+      @reservation.localized.attributes = resource_params
+      @reservation.errors.clear # Remove the validation errors from form reservation because we dont need this
 
-      # Remove the validation errors from form_reservation because we dont need this
-      @reservation.errors.clear
-      valid = params[:edit_fields].present? && alter_multiple_edit_reservations(@reservations, @reservation, attributes)
+      valid = params[:edit_fields].present? && update_multiple_edit_reservations(@reservations, @reservation)
       if valid
         @reservations.map(&:save)
         redirect_to session.delete(:return_to)
@@ -128,7 +128,7 @@ class ReservationsController < ApplicationController
         render 'reservations/multiple/edit'
       end
     else
-      @reservation = generate_multiple_edit_set_reservation(@reservations, attributes)
+      @reservation = generate_multiple_edit_reservation(@reservations)
       render 'reservations/multiple/edit'
     end
   end
@@ -146,42 +146,37 @@ class ReservationsController < ApplicationController
     end
   end
 
-  def generate_multiple_edit_set_reservation(reservations, attributes)
-    set_reservation = Reservation.new
+  def generate_multiple_edit_reservation(reservations)
+    reservation = Reservation.new
     # Copy values from first reservation
-    attributes.each do |a|
-      set_reservation.send(a.to_s + '=', reservations.first.send(a))
+    MULTIPLE_EDIT_ATTRIBUTES.each do |a|
+      reservation.send("#{a}=", reservations.first.send(a))
     end
 
     reservations.each do |r|
-      attributes.each do |a|
-        if r.send(a) != set_reservation.send(a)
-          # Not the same, so nillify
-          set_reservation.send(a.to_s + '=', nil)
-          attributes.delete_if {|key, value| value == a }
-        end
+      MULTIPLE_EDIT_ATTRIBUTES.each do |a|
+        # Nillify fields if not equal
+        reservation.send("#{a}=", nil) unless r.send(a) == reservation.send(a)
       end
-      # Do not continue,because everything is different already
-      return false if attributes.count <= 0
     end
-    set_reservation
+    reservation
   end
 
-  def alter_multiple_edit_reservations(reservations, form_reservation, attributes)
+  def update_multiple_edit_reservations(reservations, reservation)
     # Setting the new attribute values
-    attributes.each do |a|
-      new_value = resource_params[a.to_s]
+    MULTIPLE_EDIT_ATTRIBUTES.each do |a|
+      new_value = resource_params[a]
       if params[:edit_fields].include?(a.to_s)
-        reservations.map { |r| r.send(a.to_s + '=', new_value) }
+        reservations.map { |r| r.send("#{a}=", new_value) }
       end
     end
 
     # Checking if the new attribute values are possible
-    # Adding errors to the form_reservation
+    # Adding errors to the form reservation
     valid = true
     unless reservations_not_overlapping_each_other(reservations)
       valid = false
-      form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
+      reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
     else
       reservations.each do |res|
         # Disable standard overlapping validation (which possibly includes reservation which are also being edited with this multiple edit action)
@@ -190,7 +185,7 @@ class ReservationsController < ApplicationController
           res.errors.full_messages.each do |ir_message|
             if ir_message
               valid = false
-              form_reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_error_html', reservation_id: res.id, ir_message: ir_message).html_safe)
+              reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_error_html', reservation_id: res.id, ir_message: ir_message).html_safe)
             end
           end
         end
