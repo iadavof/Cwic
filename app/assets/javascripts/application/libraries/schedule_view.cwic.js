@@ -969,7 +969,7 @@ CwicScheduleView.prototype.updateSchedule = function() {
   this.clearSchedule();
   if(this.selectedEntities.length > 0) {
     this.loadscheduleEntities();
-    this.scheduleContainer.find('.schedule-body .disabled-overlay').remove();
+    this.scheduleContainer.find('.schedule-container .disabled-overlay').remove();
   } else {
     this.createSchedule();
     this.disabledOverlay();
@@ -978,7 +978,7 @@ CwicScheduleView.prototype.updateSchedule = function() {
 };
 
 CwicScheduleView.prototype.disabledOverlay = function() {
-  this.scheduleContainer.find('.schedule-body').append($('<div>', {'class': 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
+  this.scheduleContainer.find('.schedule-container').append($('<div>', {'class': 'disabled-overlay', text: jsLang.schedule_view.no_objects}));
 };
 
 CwicScheduleView.prototype.blurStateOnOtherScheduleItems = function(on) {
