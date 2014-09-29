@@ -15,37 +15,6 @@ div.occupation-container {
     padding: 0;
   }
 
-  div.entity-axis {
-    position: relative;
-    float: left;
-    width: 4%;
-    height: 100%;
-    overflow: hidden;
-  }
-
-  div.entity-axis {
-    div.entity-row {
-      position: relative;
-      overflow: hidden;
-      width: 100%;
-      text-align: center;
-      margin: 30px 0;
-      box-sizing: border-box;
-    }
-
-    div.entity-row {
-      img.entity-icon {
-        max-height: 80%;
-        margin: 10%;
-        max-width: 80%;
-        border: 2px solid #fff;
-
-        -moz-box-sizing: border-box;
-        box-sizing: border-box;
-      }
-    }
-  }
-
   div.occupation-matrix-body {
     position: relative;
     overflow: hidden;
@@ -73,38 +42,75 @@ div.occupation-container {
     }
 
     div.occupation-matrix-row {
+      position: relative;
       border: 1px solid #ccc;
       margin: 0;
     }
 
     div.occupation-matrix-row {
-      a.occupation-matrix-block {
-        position: relative;
-        float: left;
-        width: 50px;
+      div.entity-block {
+        position: absolute;
+        top: 0;
+        left: 0;
         overflow: hidden;
-        border-left: 1px solid #e5ffe5;
+        width: 4%;
+        height: 100%;
+        text-align: center;
+        margin: 0;
         box-sizing: border-box;
-        cursor: pointer;
       }
 
-      a.occupation-matrix-block {
-        p.percent {
+      div.entity-block {
+        img.entity-icon {
           position: absolute;
-          top: 50%;
-          left: 50%;
-          margin-top: -15px;
-          margin-left: -15px;
-          width: 30px;
-          height: 30px;
-          line-height: 30px;
-          text-align: center;
-          font-size: 75%;
-          color: #333;
+          top: 7%;
+          left: 7%;
+          max-width: 86%;
+          max-height: 86%;
+          border: 2px solid #fff;
+          box-sizing: border-box;
+          display: block;
+        }
+      }
+      .occupation-matrix-blocks {
+        a.occupation-matrix-block {
+          position: relative;
+          float: left;
+          width: 50px;
+          overflow: hidden;
+          border-left: 1px solid #e5ffe5;
+          margin-left: -1px;
+          cursor: pointer;
         }
 
-        &:first-child {
-          border: none;
+        a.occupation-matrix-block {
+          &:before {
+            display: block;
+            content: '.';
+            height: 0;
+            width: 100%;
+            padding-top: 100%;
+            visibility: hidden;
+          }
+        
+          p.percent {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            margin-top: -15px;
+            margin-left: -15px;
+            width: 30px;
+            height: 30px;
+            line-height: 30px;
+            text-align: center;
+            font-size: 75%;
+            color: #333;
+          }
+
+          &:first-child {
+            border: none;
+            margin-left: 0;
+          }
         }
       }
     }

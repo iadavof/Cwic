@@ -169,14 +169,10 @@ CwicOccupationView.prototype.getBlockTitle = function(nr, percent) {
 CwicOccupationView.prototype.createRows = function(response) {
   for(ent_nr in response.entities) {
     var entity = response.entities[ent_nr];
-    var entityRow = APP.util.getTemplateClone('entityRowTemplate');
-    entityRow.attr('id', 'entity_' + entity.id);
-    entityRow.find('img.entity-icon').attr('src', entity.icon).css('border-color', entity.color);
-    this.occupationContainer.find('.entity-axis').append(entityRow);
 
     var occupationRow = APP.util.getTemplateClone('occupationMatrixRowTemplate');
     occupationRow.attr('id', 'or_' + entity.id);
-    occupationRow.data('entity-id', entity.id);
+    occupationRow.data({entityId: entity.id, entityColor: entity.color, entityIcon: entity.icon});
 
     var titleDiv = APP.util.getTemplateClone('entityRowTitleTemplate');
     titleDiv.find('p.entity-name').text(entity.name);
@@ -195,16 +191,23 @@ CwicOccupationView.prototype.generateMatrixBlocks = function(maxNr, blockWidth) 
 
   var zeroPercentColor = this.getColorForPercentage(0.0001, 0.1);
   rows.each(function() {
-    var row = $(this), eid = row.data('entity-id');
+    var row = $(this);
+    var rowData = row.data();
+    var blocksContainer = row.find('.occupation-matrix-blocks');
+    var entityBlock = APP.util.getTemplateClone('entityBlockTemplate');
+    entityBlock.attr('id', 'entity_' + rowData.entityId).css({width: blockWidth + '%'});
+    entityBlock.find('img.entity-icon').attr('src', rowData.entityIcon).css('border-color', rowData.entityColor);
+    blocksContainer.css({marginLeft: blockWidth + '%'}).data({marginLeft: blockWidth + '%'});
+    row.prepend(entityBlock);
+    
     for(var i = 1; i <= maxNr; i += 1) {
       var block = APP.util.getTemplateClone('occupationMatrixBlockTemplate');
       block.addClass('nr_' + i);
-      block.attr('href', _this.getBlockHref(eid, i));
+      block.attr('href', _this.getBlockHref(rowData.entityId, i));
       block.attr('title', _this.getBlockTitle(i, 0));
       block.css('width', blockWidth + '%');
-      block.css('padding-top', blockWidth + '%');
       block.css('background-color', zeroPercentColor);
-      row.append(block);
+      blocksContainer.append(block);
     }
   });
 };
@@ -222,7 +225,6 @@ CwicOccupationView.prototype.createHeader = function(maxNr, blockWidth) {
 
 CwicOccupationView.prototype.resizeActions = function() {
   var newHeight = this.occupationContainer.find('.occupation-matrix-row').height();
-  this.occupationContainer.find('.entity-axis .entity-row').height(newHeight);
 
   if(newHeight < 25) {
     this.topAxis.find('div.top-axis-frame:nth-child(odd)').css('visibility', 'hidden');
@@ -231,21 +233,24 @@ CwicOccupationView.prototype.resizeActions = function() {
   }
 
   // The percentage notation does not fit anymore, hide it
-  var dayAxisSticky;
   if(newHeight < 30) {
+    var dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
+    var blocksContainer = this.occupationContainer.find('.occupation-matrix-blocks');
     // hide the entity axis and reuse the freed space
     this.occupationContainer.find('.occupation-matrix-block p.percent').hide();
-    this.occupationContainer.find('.entity-axis').hide();
+    this.occupationContainer.find('.entity-block').hide();
     // adjust width of day axis
-    dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
-    $.merge(dayAxisSticky, this.topAxis).css('margin-left', '0');
+    $.merge(dayAxisSticky, this.topAxis).css('padding-left', '0');
+    blocksContainer.css('margin-left', '0');
   } else {
+    var dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
+    var blocksContainer = this.occupationContainer.find('.occupation-matrix-blocks');
     // make room for the entity axis and show it on the left side
     this.occupationContainer.find('.occupation-matrix-block p.percent').show();
+    this.occupationContainer.find('.entity-block').show()
     // Adjust the width of the day axis
-    dayAxisSticky = this.occupationContainer.find('.cwic-sticky-container');
-    $.merge(dayAxisSticky, this.topAxis).css('margin-left', '4%');
-    this.occupationContainer.find('.entity-axis').show();
+    $.merge(dayAxisSticky, this.topAxis).css('padding-left', blocksContainer.data('marginLeft'));
+    blocksContainer.css('margin-left', blocksContainer.data('marginLeft'));
   }
 };
 
