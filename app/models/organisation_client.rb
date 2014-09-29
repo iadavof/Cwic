@@ -3,6 +3,7 @@ class OrganisationClient < ActiveRecord::Base
   include Sspable
   include Taggable
   include Vcardable
+  include I18n::Alchemy
 
   # Associations
   belongs_to :organisation
