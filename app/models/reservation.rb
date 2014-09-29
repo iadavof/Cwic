@@ -36,7 +36,7 @@ class Reservation < ActiveRecord::Base
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validate :not_overlapping, if: -> { entity.present? && validate_overlapping }
-  validate :check_invalid_recurrences, if: :new_record?
+  validate :ensure_recurrences_valid, on: :create, if: -> { recurrence_definition_recurring? && errors.empty? }
   validate :ensure_period_valid, if: -> { entity.present? && begins_at.present? && ends_at.present? }
 
   # Callbacks
@@ -44,9 +44,9 @@ class Reservation < ActiveRecord::Base
 
   before_validation :check_reservation_organisation
   before_validation :check_if_should_update_reservation_status
-  before_validation :generate_recurrences, if: :new_record?
+  before_validation :generate_recurrences, on: :create, if: :recurrence_definition_recurring?
   before_save :update_warning_state
-  after_create :save_recurrences
+  after_create :save_recurrences, on: :create, if: :recurrence_definition_recurring?
   after_save :update_warning_state_neighbours
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
   after_save :trigger_update_websockets
@@ -266,12 +266,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def recurrences
-    @recurrences ||=
-      if self.base_reservation.present?
-        self.organisation.reservations.where(base_reservation: self.base_reservation).order(:begins_at)
-      else
-        []
-      end
+    @recurrences ||= (base_reservation.present? ? organisation.reservations.where(base_reservation: base_reservation).order(:begins_at) : [])
   end
 
   # Check if the reservation is not overlapping with other reservations for the same entity.
@@ -325,9 +320,9 @@ class Reservation < ActiveRecord::Base
   private
 
   def fix_base_reservation_reference
-    # The first reservation of a repeating set is removed!
-    repeating_set = self.class.where(base_reservation_id: self.id).where.not(id: self.id).reorder(begins_at: :asc)
-    repeating_set.update_all(base_reservation_id: repeating_set.first.id) if repeating_set.present?
+    # The first reservation of a recurring set is removed: update the base reservation of all others
+    recurrences = self.class.where(base_reservation_id: self.id).where.not(id: self.id).reorder(begins_at: :asc)
+    recurrences.update_all(base_reservation_id: recurrences.first.id) if recurrences.present?
   end
 
   def check_if_should_update_reservation_status
@@ -362,19 +357,19 @@ class Reservation < ActiveRecord::Base
     end
   end
 
-  def generate_recurrences
-    self.reservation_recurrence_definition.generate_recurrences if self.reservation_recurrence_definition.present? && self.reservation_recurrence_definition.valid?
+  # Should we perform recurrence definition related callbacks
+  def recurrence_definition_recurring?
+    reservation_recurrence_definition.present? && reservation_recurrence_definition.valid? && reservation_recurrence_definition.repeating?
   end
 
-  def check_invalid_recurrences
-    if self.errors.empty? && self.reservation_recurrence_definition.present? && self.reservation_recurrence_definition.repeating
-      invalid_reservations = self.reservation_recurrence_definition.check_invalid_recurrences
-      invalid_reservations.each do |invalid_reservation|
-        invalid_reservation.errors.full_messages.each do |ir_message|
-          if ir_message
-            errors.add(:base, I18n.t('activerecord.errors.models.reservation.repetition_error_html', begins_at: I18n.l(invalid_reservation.begins_at, format: :long), ir_message: ir_message).html_safe)
-          end
-        end
+  def generate_recurrences
+    reservation_recurrence_definition.generate_recurrences
+  end
+
+  def ensure_recurrences_valid
+    self.reservation_recurrence_definition.invalid_recurrences.each do |invalid_reservation|
+      invalid_reservation.errors.full_messages.select(&:present?).each do |ir_message|
+        errors.add(:base, I18n.t('activerecord.errors.models.reservation.repetition_error_html', begins_at: I18n.l(invalid_reservation.begins_at, format: :long), ir_message: ir_message).html_safe)
       end
     end
   end
@@ -389,9 +384,11 @@ class Reservation < ActiveRecord::Base
   end
 
   def save_recurrences
-    self.reservation_recurrence_definition.save_recurrences if self.reservation_recurrence_definition.present?
+    self.reservation_recurrence_definition.save_recurrences
     # Remove recurrence model such that it will not be saved in the next step
     self.reservation_recurrence_definition = nil
+    # Set the base reservation of the main recurrence to self
+    self.update_column(:base_reservation_id, self.id) # Use update_column to avoid triggering callbacks and adding a double audit log
   end
 
   def occupation_recalculation_needed?
