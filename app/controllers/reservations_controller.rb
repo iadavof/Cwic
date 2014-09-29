@@ -201,7 +201,7 @@ class ReservationsController < ApplicationController
     valid = true
     while refres = dupreservations.to_a.shift
       dupreservations.each do |res|
-        if res.begins_at <= refres.ends_at && res.ends_at >= refres.begins_at
+        if res.overlaps?(refres.begins_at, refres.ends_at)
           valid = false
           break
         end
