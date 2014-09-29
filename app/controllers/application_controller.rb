@@ -25,12 +25,12 @@ class ApplicationController < ActionController::Base
   end
 
   def after_sign_in_path_for(resource_or_scope)
-    home_index_path
+    organisation_home_index_path(current_organisation)
   end
 
   def switch_organisation
     session[:current_organisation_id] = params[:id].to_i
-    redirect_to home_index_path
+    redirect_to organisation_home_index_path(current_organisation)
   end
 
   def current_organisation

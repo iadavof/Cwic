@@ -1,4 +1,21 @@
 - content_for :page_title do
   = t('.welcome_html')
 
-= t('.todo_dashboard')
+.gridster
+  .widget data-row=1 data-col=2 data-sizex=2 data-sizey=1
+    = render_widget :new_reservations, :display, organisation: current_organisation
+
+  .widget data-row=1 data-col=2 data-sizex=2 data-sizey=1
+    = render_widget :new_reservations, :display, organisation: current_organisation
+
+  .widget data-row=1 data-col=1 data-sizex=1 data-sizey=1
+  .widget data-row=2 data-col=1 data-sizex=1 data-sizey=1
+  .widget data-row=3 data-col=1 data-sizex=1 data-sizey=1
+
+  .widget data-row=2 data-col=2 data-sizex=2 data-sizey=2
+
+  .widget data-row=3 data-col=3 data-sizex=1 data-sizey=1
+
+  .widget data-row=1 data-col=3 data-sizex=1 data-sizey=1
+  .widget data-row=2 data-col=3 data-sizex=1 data-sizey=2
+

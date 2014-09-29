@@ -1,0 +1,13 @@
+= widget_div do
+  .inner
+    h1 Nieuwe reserveringen
+    table
+      thead
+        th Reservering
+        th Begint op
+        th Eindigd op
+      - @reservations.each do |res|
+       tr
+          td = res.full_instance_name
+          td = I18n.l(res.begins_at, format: :long)
+          td = I18n.l(res.ends_at, format: :long)

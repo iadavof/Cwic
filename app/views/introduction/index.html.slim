@@ -19,7 +19,7 @@ section.intro-section-home.full-height
     .intro-actions
       - if user_signed_in?
         .intro-go-to-app
-          = link_to(t('.go_to_app'), home_index_path, class: 'button')
+          = link_to(t('.go_to_app'), organisation_home_index_path(current_organisation), class: 'button')
         .intro-sign-out
           = link_to(t('.sign_out'), destroy_user_session_path, class: 'button', method: :delete)
       - else

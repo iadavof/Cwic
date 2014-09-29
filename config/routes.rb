@@ -4,7 +4,6 @@ Cwic::Application.routes.draw do
   instance_eval(File.read(Rails.root.join('config/routing_concerns.rb')))
 
   get 'introduction/index'
-  get 'home/index'
   root to: 'introduction#index'
 
   devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', invitations: 'users/invitations' }
@@ -20,6 +19,7 @@ Cwic::Application.routes.draw do
   resources :my_organisations, except: [:new, :create]
 
   resources :organisations do
+    get 'home/index'
     post :tag_search, on: :member
 
     resources :organisation_users, except: :show do

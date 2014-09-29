@@ -5,7 +5,7 @@ module MenuHelper
       overview: {
         home: {
           links: {
-            index: { name: t('.dashboard'), url: home_index_path, icon: 'icon-home' },
+            index: { name: t('.dashboard'), url: organisation_home_index_path(current_organisation), icon: 'icon-home' },
           },
         },
       },

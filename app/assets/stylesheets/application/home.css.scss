@@ -1,0 +1,16 @@
+.gridster {
+  .widget {
+    background-color: #F9EAEA;
+    overflow: hidden;
+  }
+
+  .widget {
+    .inner {
+      margin: 1em;
+    }
+
+    h1 {
+      padding: .2em .5em;
+    }
+  }
+}
