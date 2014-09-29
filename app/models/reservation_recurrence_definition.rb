@@ -17,6 +17,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
   column :repeating_end, :string
   column :repeating_until, :datetime
   column :repeating_instances, :integer
+  attr_accessor :recurrences
 
   # Validations
   validates :reservation, presence: true
@@ -44,6 +45,14 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 
   # Instance methods
 
+  def recurrences
+    @recurrences ||= []
+  end
+
+  def recurrences?
+    recurrences.any?
+  end
+
   def generate_recurrences
     if self.repeating
       schedule = IceCube::Schedule.new(self.reservation.begins_at)
@@ -65,7 +74,6 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
       # Apply constructed schedule rule
       schedule.add_recurrence_rule schedule_rule
 
-
       # Get the requested occurences
       if self.repeating_end == 'until'
         recurrence_dates = schedule.occurrences(self.repeating_until)
@@ -74,29 +82,18 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
       end
 
       @recurrences = clone_reservation(recurrence_dates) if recurrence_dates.present?
-      @recurrences
     end
   end
 
   def save_recurrences
-    unless @recurrences.blank?
-      # There are recurernces, set base_reservation for original reservation
-      self.reservation.base_reservation = self.reservation
-      self.reservation.save
-      @recurrences.map { |r| r.save }
+    recurrences.each do |r|
+      r.base_reservation = reservation
+      r.save!
     end
   end
 
-  def check_invalid_recurrences
-    invalid_recurrences = []
-    if @recurrences
-      @recurrences.each do |r|
-        unless r.valid?
-          invalid_recurrences << r
-        end
-      end
-    end
-    invalid_recurrences
+  def invalid_recurrences
+    recurrences.select { |r| r.invalid? }
   end
 
   private
@@ -114,7 +111,6 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
       new_reservation = self.reservation.dup
       new_reservation.begins_at = starts_at
       new_reservation.ends_at = starts_at + reservation_length.seconds
-      new_reservation.base_reservation = self.reservation
       new_reservation.reservation_recurrence_definition = nil
       new_reservations << new_reservation
     end

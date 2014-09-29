@@ -7,6 +7,21 @@ module ApplicationHelper
     text.present? ? text : I18n.t('none_html').html_safe
   end
 
+  def generic_format(value)
+    case value
+    when TrueClass, FalseClass
+      format_bool(value)
+    when Integer
+      number_with_delimiter(value)
+    when Float, BigDecimal
+      number_with_precision(value)
+    when Date, Time, DateTime
+      I18n.l(value, format: :long)
+    else
+      value
+    end
+  end
+
   # Format description (title) helpers. Useful for (a.o.) entities and entity types.
   def format_description_title(obj)
     obj = obj.description if obj.respond_to?(:description)
@@ -15,7 +30,7 @@ module ApplicationHelper
   end
 
   def format_description_with_name_title(obj)
-     if obj.description.present?
+    if obj.description.present?
       "#{obj.name} (#{format_description_title(obj)})"
     else
       "#{obj.name}"

@@ -76,6 +76,9 @@ gem 'activerecord-import'
 # Active model tableless for using tableless models in a nested form
 gem 'activerecord-tableless'
 
+# Logging of changes
+gem 'audited-activerecord'
+
 # Ancestry gem for ActiveRecord tree helpers
 gem 'ancestry'
 

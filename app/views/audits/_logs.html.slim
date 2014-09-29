@@ -1,0 +1,27 @@
+h2 = t('audits.logs')
+table
+  thead
+    tr
+      th = t('audits.created_at')
+      th = t('audits.by')
+      th = t('audits.item')
+      th = t('audits.before')
+      th = t('audits.after')
+  tbody
+    - item.audits.reorder(version: :desc).includes(:user).first(20).each do |audit|
+        - if audit.action == 'create'
+          tr class="separate"
+            td = l(audit.created_at, format: :long)
+            td = name_link_to_show(audit.user)
+            td colspan="3" = t('audits.created')
+        - else
+          - audit.audited_changes.each_with_index do |(attr_name, change), i|
+            tr class=("separate" if i == 0)
+              - if i == 0
+                td rowspan=audit.audited_changes.count
+                  = l(audit.created_at, format: :long)
+                td rowspan=audit.audited_changes.count
+                  = name_link_to_show(audit.user)
+              td = item.class.human_attribute_name(attr_name.chomp('_id'))
+              td = send("#{item.class.model_name.to_s.underscore}_audit_format", attr_name, change[0])
+              td = send("#{item.class.model_name.to_s.underscore}_audit_format", attr_name, change[1])

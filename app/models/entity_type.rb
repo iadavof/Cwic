@@ -23,6 +23,9 @@ class EntityType < ActiveRecord::Base
   validates :min_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :max_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
 
+  # Model extensions
+  audited only: [:name, :description, :slack_before, :slack_after, :min_reservation_length, :max_reservation_length], allow_mass_assignment: true
+
   # Callbacks
   after_initialize :init, if: :new_record?
   after_save :create_info_screen_entity_types

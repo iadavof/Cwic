@@ -34,4 +34,19 @@ module ReservationsHelper
       end
     end
   end
+
+  def reservation_audit_format(attr_name, value)
+    case attr_name
+    when 'entity_id'
+      name_link_to_show([@organisation, Entity.find(value)])
+    when 'organisation_client_id'
+      name_link_to_show([@organisation, OrganisationClient.find(value)])
+    when 'reservation_status_id'
+      ReservationStatus.find(value).instance_name
+    when 'slack_before', 'slack_after'
+      (value.nil? ?  I18n.t('default') : "#{value} #{I18n.t('minutes_abbr').lcfirst}")
+    else
+      generic_format(value)
+    end
+  end
 end

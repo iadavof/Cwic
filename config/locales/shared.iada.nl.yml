@@ -1,5 +1,6 @@
 nl:
   default_title: 'Titel'
+  default: 'Standaard'
   submit: 'Versturen'
   save: 'Opslaan'
   cancel: 'Annuleren'

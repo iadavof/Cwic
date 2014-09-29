@@ -44,6 +44,14 @@ table {
       border: 1px solid #1c9cb2;
       background-color: rgba(109, 191, 206, .3);
     }
+
+    &.separate {
+      border-top: 1px solid #888;
+    }
+
+    &.separate:first-child {
+      border-top: none;
+    }
   }
 
   td,

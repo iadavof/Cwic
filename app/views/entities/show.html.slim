@@ -28,6 +28,9 @@
     li
       a href="#images"
         = EntityImage.model_name.human(count: 2)
+    li
+      a href="#audits"
+        = t('audits.logs')
 
   .tab-wrap
     #general
@@ -39,3 +42,5 @@
       = render 'show_documents'
     #images
       = render 'show_images'
+    #audits
+      = render 'audits/logs', item: @entity

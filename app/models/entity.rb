@@ -18,6 +18,7 @@ class Entity < ActiveRecord::Base
 
   # Model extensions
   delegate :reserve_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
+  audited only: [:name, :entity_type_id, :description, :color, :include_entity_type_images, :frontend_name, :slack_before, :slack_after], allow_mass_assignment: true
 
   # Validations
   validates :entity_type, presence: true
