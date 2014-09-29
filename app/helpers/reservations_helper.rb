@@ -44,7 +44,7 @@ module ReservationsHelper
     when 'reservation_status_id'
       ReservationStatus.find(value).instance_name
     when 'slack_before', 'slack_after'
-      (value.nil? ?  I18n.t('default') : value.to_s +  ' ' + I18n.t('minutes_abbr'))
+      (value.nil? ?  I18n.t('default') : "#{value} #{I18n.t('minutes_abbr')}")
     else
       generic_format(value)
     end
