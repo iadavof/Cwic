@@ -1,3 +1,5 @@
+require 'csv'
+
 # Adds export functionalities to a model (export to CSV or Excel)
 module Exportable
   extend ActiveSupport::Concern

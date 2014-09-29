@@ -1,5 +1,4 @@
 require File.expand_path('../boot', __FILE__)
-require 'csv'
 require 'rails/all'
 
 I18n.config.enforce_available_locales = true # Set enforce_available_locales to prevent deprecation warning. Do this here to prevent gems from beating us to it.
