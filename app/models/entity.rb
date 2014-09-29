@@ -41,18 +41,14 @@ class Entity < ActiveRecord::Base
 
   default_scope { order('id ASC') }
 
-  ##
   # Class methods
-  ##
 
   def self.available_between(begins_at, ends_at, options = {})
     # Note: there might be a more efficient way. Especially in combination with the max slack before and after retrieval used in EntitiesController#availability.
     self.all.find_all { |e| e.is_available_between?(begins_at, ends_at, options) }
   end
 
-  ##
   # Instance methods
-  ##
 
   def init
     self.color ||= Cwic::Color.random_hex_color

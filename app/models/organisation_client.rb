@@ -38,9 +38,7 @@ class OrganisationClient < ActiveRecord::Base
 
   default_scope { order(:last_name, :first_name, :locality) }
 
-  ##
   # Class methods
-  ##
 
   # Search OrganisationClients for autocomplete. Finds all clients for which one of the columns matches the query. Multiple query words limit the results.
   def self.autocomplete_search(query)
@@ -61,9 +59,7 @@ class OrganisationClient < ActiveRecord::Base
     end
   end
 
-  ##
   # Instance methods
-  ##
 
   # When changing this, also change the custom sorting for name (sortable table header), see sort_on_class_attribute
   def instance_name

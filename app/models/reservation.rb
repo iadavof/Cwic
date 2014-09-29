@@ -76,9 +76,7 @@ class Reservation < ActiveRecord::Base
 
   default_order { order(:begins_at) }
 
-  ##
   # Class methods
-  ##
 
   # Get all reservations that start OR end within the time domain (overlap with the date domain).
   # Options:
@@ -121,9 +119,7 @@ class Reservation < ActiveRecord::Base
     }
   end
 
-  ##
   # Instance methods
-  ##
 
   def init # Note: in this case init is also executed for already existing records
     @validate_overlapping ||= true

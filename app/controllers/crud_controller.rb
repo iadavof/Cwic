@@ -9,9 +9,7 @@ class CrudController < ApplicationController
 
   helper_method :member, :member_path, :parent_models, :parent, :parent_path, :collection, :collection_path, :listed_collection
 
-  ##
   # Actions
-  ##
 
   def index
     respond_with(collection)
@@ -46,17 +44,13 @@ class CrudController < ApplicationController
 
   protected
 
-  ##
   # Name and model
-  ##
 
   def model
     self.class.const_get self.class.name.match(/(?<collection>.*)Controller/)[:collection].singularize
   end
 
-  ##
   # Member
-  ##
 
   def member_name
     model.model_name.singular
@@ -110,9 +104,7 @@ class CrudController < ApplicationController
     { resource_name: member.instance_name }
   end
 
-  ##
   # Parent
-  ##
 
   def parent?
     parent_model.present?
@@ -177,9 +169,7 @@ class CrudController < ApplicationController
     (parent? ? [parent] : [])
   end
 
-  ##
   # Collection
-  ##
 
   def collection_name
     model.model_name.plural

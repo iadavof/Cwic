@@ -6,9 +6,7 @@ end
 
 class SeedHelper
   class << self
-    ##
     # Getters
-    ##
 
     def admin_role
       role('Administrator')
@@ -44,9 +42,8 @@ class SeedHelper
       @cache[type][key] = yield
     end
 
-    ##
     # Builders
-    ##
+
     def create_organisation_clients(organisation, amount)
       amount.times do
         FactoryGirl.create(:organisation_client, organisation: organisation)

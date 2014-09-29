@@ -27,9 +27,7 @@ class User < ActiveRecord::Base
   # Scopes
   pg_global_search against: { last_name: 'A', email: 'A', first_name: 'B' }
 
-  ##
   # Class methods
-  ##
 
   def self.current
     Thread.current[:user]
@@ -39,9 +37,7 @@ class User < ActiveRecord::Base
     Thread.current[:user] = user
   end
 
-  ##
   # Instance methods
-  ##
 
   def instance_name
     self.first_name + ' ' + (self.infix.present? ? self.infix + ' ' : '') + self.last_name

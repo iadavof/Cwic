@@ -9,9 +9,7 @@ class DayOccupation < ActiveRecord::Base
 
   # Note: delete_all is used in recalculate, so destroy callbacks will not be called.
 
-  ##
   # Class methods
-  ##
 
   # Recalculates all occupations in days range for the given entity
   def self.recalculate(entity, days)
@@ -34,9 +32,7 @@ class DayOccupation < ActiveRecord::Base
     DayOccupation.import(occupations)
   end
 
-  ##
   # Instance methods
-  ##
 
   def instance_name
     day

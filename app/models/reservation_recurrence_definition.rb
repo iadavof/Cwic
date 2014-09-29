@@ -28,9 +28,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 	validate :length_not_greater_than_repetition_unit, if: :repeating?
 	validate :repeating_end_after_reservation_end, if: -> { self.repeating? && self.repeating_until.present? }
 
-	##
 	# Class methods
-	##
 
 	def self.repeating_units
 		TimeUnit.where(key: [:day, :week, :month, :year])
@@ -44,9 +42,7 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 		(1..7).map { |i| OpenStruct.new(key: i, human_name: I18n.t(:"date.day_names")[i == 7 ? 0 : i]) }
 	end
 
-	##
 	# Instance methods
-	##
 
 	def generate_recurrences
 		# If we are not repeating, there is nothing to do
