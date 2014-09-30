@@ -1,13 +1,6 @@
 Cwic::Application.routes.draw do
-  # Concerns
-
-  concern :stickable do
-    resources :stickies, only: [:index, :create, :update, :destroy] do
-      patch :update_weights, on: :collection
-    end
-  end
-
-  # Routes
+  # Load routing concerns. This needs to happen before any concern is used.
+  instance_eval(File.read(Rails.root.join('config/routing_concerns.rb')))
 
   get 'introduction/index'
   get 'home/index'
