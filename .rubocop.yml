@@ -28,6 +28,10 @@ Style/AlignParameters:
 Style/TrivialAccessors:
   ExactNameMatch: true
 
+Style/ClassAndModuleChildren:
+  Enabled: false
+  EnforcedStyle: 'nested' # nested or compact
+
 Lint/UnusedBlockArgument:
   Enabled: false
 
