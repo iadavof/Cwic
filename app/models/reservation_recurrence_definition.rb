@@ -3,10 +3,6 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
 
   has_no_table database: :pretend_success
 
-  # Associations
-  belongs_to :reservation
-  belongs_to :repeating_unit, class_name: 'TimeUnit'
-
   # Model definition
   column :reservation_id, :references
   column :repeating_unit_id, :references
@@ -18,6 +14,10 @@ class ReservationRecurrenceDefinition < ActiveRecord::Base
   column :repeating_until, :datetime
   column :repeating_instances, :integer
   attr_accessor :recurrences
+
+  # Associations
+  belongs_to :reservation
+  belongs_to :repeating_unit, class_name: 'TimeUnit'
 
   # Validations
   validates :reservation, presence: true
