@@ -4,11 +4,16 @@ function CwicTodayAndTomorrow(options) {
     organisation_id: 0
   }, options || {});
 
+  this.todContainer = $('#' + this.options.container);
+  if(this.todContainer.data('today-and-tomorrow-view-initialized')) {
+    return;
+  }
+  this.todContainer.data('today-and-tomorrow-view-initialized', true);
+
   this.renderTodayAndTomorrow();
 }
 
 CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
-  this.scheduleContainer = $('#' + this.options.container);
   this.bindEntityInfoControls();
   this.initWebSocket();
   this.updateTodayTomorrowView();
@@ -21,12 +26,14 @@ CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   var dispatcher = new WebSocketRails(window.location.host + Routes.websocket_path());
 
   // Open reservations_channel for organisation
-  var channel = dispatcher.subscribe('todayandtomorrows_' + this.options.organisation_id);
-  channel.bind('update', function() { tat.updateTodayTomorrowView(); });
+  if(typeof window.cwic_today_and_tomorrow_channel === 'undefined') {
+    window.cwic_today_and_tomorrow_channel = dispatcher.subscribe('todayandtomorrows_' + this.options.organisation_id);
+    window.cwic_today_and_tomorrow_channel.bind('update', function() { tat.updateTodayTomorrowView(); });
+  }
 };
 
 CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
-  this.scheduleContainer.find('p.entity-name').on('click', function() {
+  this.todContainer.find('p.entity-name').on('click', function() {
     var $description = $(this).siblings('.entity-description');
     var descriptionHeight = $description.height();
 
@@ -53,10 +60,10 @@ CwicTodayAndTomorrow.prototype.updateTodayTomorrowView = function() {
 };
 
 CwicTodayAndTomorrow.prototype.updateTodayTomorrowEntities = function(entities) {
+  $('div.entity div.updated-info').html('').append(APP.util.getTemplateClone('noReservationsTemplate'));
   for(var ei in entities) {
     var entity = entities[ei];
-    var jentity = $('#entity_' + entity.id);
-    jentity = jentity.find('div.updated-info').html('');
+    var jentity = $('#entity_' + entity.id + ' div.updated-info');
     this.createNewUpdatedInfo(entity, jentity);
   }
 };
@@ -90,20 +97,21 @@ CwicTodayAndTomorrow.prototype.appendOneLineReservations = function(reservations
 };
 
 CwicTodayAndTomorrow.prototype.addDaySeparators = function(begin_moment, end_moment, progress_bar) {
-  var num_days = end_moment.diff(begin_moment, 'days') + 1;
+  var num_days = end_moment.diff(begin_moment, 'days');
   var pointer = moment(begin_moment).startOf('day');
-  for(var i = 0; i < num_days; i++) {
+  for(var i = 0; i <= num_days; i++) {
     pointer = pointer.add(1, 'day');
-    progress_bar.append($('<div>', { 'class': 'day-separator', css: { left: this.momentToPercent(begin_moment, end_moment, pointer) + '%' } }));
+    if(pointer.isBefore(end_moment)) {
+      progress_bar.append($('<div>', { 'class': 'day-separator', css: { left: this.momentToPercent(begin_moment, end_moment, pointer) + '%' } }));
+    }
   }
 };
 
 CwicTodayAndTomorrow.prototype.createNewUpdatedInfo = function(entity, parentdiv) {
   var reservation, begin_moment, end_moment, line, descr;
 
-  if(entity.current_reservation == null && entity.reservations_today.length <= 0 && entity.reservations_tomorrow.length <= 0) {
-    parentdiv.append(APP.util.getTemplateClone('noReservationsTemplate'));
-    return;
+  if(entity.current_reservation != null || entity.reservations_today.length > 0 || entity.reservations_tomorrow.length > 0) {
+    parentdiv.find('p.no-reservations').remove();
   }
 
   if(entity.current_reservation != null) {

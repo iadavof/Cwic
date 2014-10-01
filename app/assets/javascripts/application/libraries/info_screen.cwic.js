@@ -4,7 +4,7 @@ function CwicInfoScreen(options) {
     backend_url: 'url to info screen backend',
     websocket_url: 'url to websocket',
     organisation_id: 0,
-    updateTimeout: 3600000,
+    updateTimeout: 3600000
   }, options || {});
 
   this.infoScreenContainer = $('#' + this.options.container);
@@ -21,10 +21,11 @@ CwicInfoScreen.prototype.initWebSocket = function() {
   var is = this;
   var dispatcher = new WebSocketRails(this.options.websocket_url);
   // open reservations_channel for organisation
-  var channel = dispatcher.subscribe('infoscreens_' + this.options.organisation_id);
-
-  channel.bind('update', function() { is.getInfoScreenItems(); });
-}
+  if(typeof window.cwic_info_screen_channel === 'undefined') {
+    window.cwic_info_screen_channel = dispatcher.subscribe('infoscreens_' + this.options.organisation_id);
+    window.cwic_info_screen_channel.bind('update', function() { is.getInfoScreenItems(); });
+  }
+};
 
 CwicInfoScreen.prototype.init = function() {
   var is = this;
@@ -40,7 +41,7 @@ CwicInfoScreen.prototype.init = function() {
 
   this.overdueRemoveInterval = setInterval(function() { is.eatOverdueItems(); }, 20000);
   this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);
-}
+};
 
 CwicInfoScreen.prototype.removeDeletedItems = function(reservations) {
   var reservationIds = [];
@@ -50,12 +51,12 @@ CwicInfoScreen.prototype.removeDeletedItems = function(reservations) {
 
   var view_reservations = this.infoScreenContainer.find('ul#realtime-list').children('li.infoScreenListItem');
   view_reservations.each(function(index, item) {
-    var item = $(item);
-    if($.inArray(parseInt(item.attr('id').split('_')[1]), reservationIds) < 0) {
+    item = $(item);
+    if($.inArray(parseInt(item.attr('id').split('_')[1], 10), reservationIds) < 0) {
       item.slideUp(300, function(){ $(this).remove(); });
     }
   });
-}
+};
 
 CwicInfoScreen.prototype.reservationAnimation = function(on) {
   var tables = this.infoScreenContainer.find('table.reservation-dates');
@@ -70,7 +71,7 @@ CwicInfoScreen.prototype.reservationAnimation = function(on) {
       table.offsetWidth = tables.offsetWidth;
     }
   });
-}
+};
 
 CwicInfoScreen.prototype.itemUpdate = function(reservations) {
 
@@ -98,7 +99,7 @@ CwicInfoScreen.prototype.itemUpdate = function(reservations) {
     }
     var view_reservations = list.children('li.infoScreenListItem');
     view_reservations.each(function(index, item) {
-      var item = $(item);
+      item = $(item);
       if(reservation.begin_unix < item.data('begin_unix')) {
         item.before(newItem);
         item.slideDown(300);
@@ -114,21 +115,21 @@ CwicInfoScreen.prototype.itemUpdate = function(reservations) {
   });
 
   this.reservationAnimation(true);
-}
+};
 
 CwicInfoScreen.prototype.eatOverdueItems = function() {
   var view_reservations = this.infoScreenContainer.find('ul#realtime-list').children('li.infoScreenListItem');
   var currentTime = moment().unix();
 
   view_reservations.each(function(index, item) {
-    var item = $(item);
+    item = $(item);
     if(item.data('end_unix') > currentTime) {
       return false;
     } else {
       item.slideUp(300, function() { $(this).remove(); });
     }
   });
-}
+};
 
 CwicInfoScreen.prototype.createReservationItem = function(reservation) {
   var item = this.getTemplateClone('listItemTemplate');
@@ -180,7 +181,7 @@ CwicInfoScreen.prototype.createReservationItem = function(reservation) {
   if(this.previousSettings.direction_char_visible) {
     wayfinding.show();
     if(reservation.direction_char != null) {
-      wayfinding.find('i').attr('class', reservation.direction_char)
+      wayfinding.find('i').attr('class', reservation.direction_char);
     }
   } else {
     wayfinding.hide();
@@ -188,14 +189,14 @@ CwicInfoScreen.prototype.createReservationItem = function(reservation) {
 
   return item;
 
-}
+};
 
 CwicInfoScreen.prototype.settingsUpdate = function(settings) {
   var is = this;
 
   if(this.previousSettings == null || settings.clock_header != this.previousSettings.clock_header) {
     if(settings.clock_header) {
-      this.clockInterval = setInterval(function() { is.updateClock() }, 100);
+      this.clockInterval = setInterval(function() { is.updateClock(); }, 100);
       this.infoScreenContainer.find('div.info-screen-header').slideDown(500);
     } else {
       this.infoScreenContainer.find('div.info-screen-header').slideUp(500, function() { clearInterval(is.clockInterval); });
@@ -203,7 +204,7 @@ CwicInfoScreen.prototype.settingsUpdate = function(settings) {
   }
 
   this.previousSettings = settings;
-}
+};
 
 CwicInfoScreen.prototype.getInfoScreenItems = function() {
   var is = this;
@@ -218,20 +219,16 @@ CwicInfoScreen.prototype.getInfoScreenItems = function() {
     is.settingsUpdate(response.settings);
     is.itemUpdate(response.reservations);
   });
-}
+};
 
 CwicInfoScreen.prototype.setOnResize = function() {
   var is = this;
   $(window).on('resize', function() {
     is.realtimeFullscreensElemPlacement();
     is.realtimeFullscreensReservationDatesWidth();
-    if ((screen.height - $(window).height()) < 5) {
-      $('#fullscreen-link').hide();
-    } else {
-      $('#fullscreen-link').show();
-    }
+    $('#fullscreen-link').toggle(screen.height - $(window).height() < 5);
   });
-}
+};
 
 CwicInfoScreen.prototype.initFullScreenControls = function() {
   var is = this;
@@ -239,13 +236,13 @@ CwicInfoScreen.prototype.initFullScreenControls = function() {
   $('#fullscreen-link').on('click', function() {
     is.requestFullScreen(document.getElementById('content'));
   });
-}
+};
 
 CwicInfoScreen.prototype.realtimeFullscreensElemPlacement = function() {
   $('#realtime-list > li > .inner .info-container').each(function(){
     $(this).css('margin-top', ($(this).parent().height() / 2) - ($(this).height() / 2) + 'px');
   });
-}
+};
 
 CwicInfoScreen.prototype.requestFullScreen = function(el) {
   // Supports most browsers and their versions.
@@ -265,16 +262,16 @@ CwicInfoScreen.prototype.requestFullScreen = function(el) {
       }
   }
   return false;
-}
+};
 
 CwicInfoScreen.prototype.updateClock = function() {
   var now = moment();
   $('.current-time').html(now.format('[<span class="current-day">]dd[</span> <span class="current-date">]D MMM YYYY[</span><span class="current-hour">]HH[</span>:<span class="current-minute">]mm[</span><span class="current-second"> ]ss[</span>]'));
-}
+};
 
 CwicInfoScreen.prototype.getTemplateClone = function(id) {
   var item = $('#info-screen-templates').find('#' + id).clone();
   item.removeAttr('id');
   item.show();
   return item;
-}
+};

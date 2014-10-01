@@ -18,7 +18,7 @@ class Sticky < ActiveRecord::Base
   default_scope { order('weight ASC, created_at DESC'); }
 
   def instance_name
-    "#{self.class.model_name.human} ##{self.id.to_s}"
+    "#{self.class.model_name.human} ##{self.id}"
   end
 
   private

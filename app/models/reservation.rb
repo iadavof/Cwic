@@ -42,7 +42,7 @@ class Reservation < ActiveRecord::Base
   # Callbacks
   after_initialize :init # new_record check is intentionally omitted since @validate_overlapping should also be initialized for already existing records
 
-  before_validation :check_reservation_organisation
+  before_validation :set_organisation_client_organisation
   before_validation :check_if_should_update_reservation_status
   before_validation :generate_recurrences, on: :create, if: :recurrence_definition_recurring?
   before_save :update_warning_state
@@ -338,6 +338,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def update_warning_state_neighbours
+    binding.pry
     if self.begins_at_changed?
       # If begin times for this reservation changed, then update warnings for old and new first neighbour as well.
       previous_reservation = self.previous(true)
@@ -412,6 +413,7 @@ class Reservation < ActiveRecord::Base
   end
 
   def trigger_update_websockets
+    binding.pry
     WebsocketRails[('infoscreens_' + self.organisation.id.to_s).to_sym].trigger 'update'
     WebsocketRails[('todayandtomorrows_' + self.organisation.id.to_s).to_sym].trigger 'update'
   end
@@ -427,10 +429,7 @@ class Reservation < ActiveRecord::Base
     from..to
   end
 
-  def check_reservation_organisation
-    # TODO this looks rather scarry. Are we sure this should be done this way?
-    if self.organisation_client.present? && self.organisation_client.organisation.nil?
-      self.organisation_client.organisation = self.organisation
-    end
+  def set_organisation_client_organisation
+    organisation_client.organisation ||= organisation if organisation_client.present?
   end
 end

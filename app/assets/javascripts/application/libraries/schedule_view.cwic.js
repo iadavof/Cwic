@@ -5,10 +5,15 @@ function CwicScheduleView(options) {
     snap_part: '0.5',
     zoom: 'day',
     scroll_step: 20,
-    scroll_hover_margin: 100,
+    scroll_hover_margin: 100
   }, options || {});
 
-  this.scheduleContainer = null;
+  this.scheduleContainer = $('#' + this.options.container);
+  if(this.scheduleContainer.data('cwic-schedule-view-initialized')) {
+    return;
+  }
+  this.scheduleContainer.data('cwic-schedule-view-initialized', true);
+
   this.scrollContainer = null;
   this.topAxis = null;
   this.scheduleEntities = {};
@@ -90,7 +95,6 @@ CwicScheduleView.prototype.addContextButtonsToLocalMenu = function() {
 };
 
 CwicScheduleView.prototype.initScheduleStub = function() {
-  this.scheduleContainer = $('#' + this.options.container);
   this.scheduleContainer.append(APP.util.getTemplateClone('scheduleContainerTemplate').contents());
   this.scheduleContainer.addClass('calendar ' + this.options.view);
 
@@ -637,6 +641,7 @@ CwicScheduleView.prototype.patchScheduleItemBackend = function(scheduleItem, und
     error: function(response) {
       schedule.hideStatusMessage();
       schedule.showStatusMessage(jsLang.schedule_view.saving_error, false, 10000);
+      scheduleItem.undoAcceptConcept();
     }
   });
 };
