@@ -11,7 +11,7 @@ class ColorValidator < ActiveModel::EachValidator
 
   def valid_color?(value)
     if value.nil? || value.empty?
-      true # not really a color, but it is not our task to validate presence.
+      false
     elsif value =~ /\A#(?=[A-Fa-f0-9])(?:.{3}|.{6})\z/i
       # Value is a color code
       true
