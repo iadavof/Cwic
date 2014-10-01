@@ -453,6 +453,7 @@ nl:
       date_must_be_after_attribute: 'moet na %{attribute_name} (%{formatted_date}) zijn'
       date_must_be_after_date: 'moet na %{formatted_date} zijn'
       extension_white_list_error: 'Dit type bestand is niet toegestaan'
+      invalid_color: 'kleurcode is ongeldig'
 
   devise:
     shared:

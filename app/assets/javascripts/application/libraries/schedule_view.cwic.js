@@ -151,7 +151,7 @@ CwicScheduleView.prototype.setBeginAndEndFromNavigationReference = function() {
 };
 
 CwicScheduleView.prototype.toggleEntity = function(entity_button) {
-  var entity_button = $(entity_button);
+  entity_button = $(entity_button);
   var id = parseInt(entity_button.attr('id').split('_')[1], 10);
 
   if (this.options.view == "vertical") {
@@ -887,6 +887,7 @@ CwicScheduleView.prototype.createVerticalSchedule = function() {
 
 CwicScheduleView.prototype.initStickyHeader = function() {
   var _this = this;
+  // The scroll position is not maintained when we move the sticky header content from page content to the top menu, we have to cache this value.
   var cachedScrollLeft;
   $('#sticky-header-content').cwicStickyHeader({
     before_swap: function(thing) {

@@ -2,7 +2,7 @@ class ColorValidator < ActiveModel::EachValidator
   COLORS = ['aqua', 'black', 'blue', 'fuchsia', 'gray', 'green', 'lime', 'maroon', 'navy', 'olive', 'orange', 'purple', 'red', 'silver', 'teal', 'white', 'yellow']
 
   def validate_each(record, attribute, value)
-    record.errors.add(attributes, (options[:message] || default_error_message(value))) unless valid_color?(value)
+    record.errors.add(attribute, (options[:message] || default_error_message(value))) unless valid_color?(value)
   end
 
   def default_error_message(value)
@@ -10,7 +10,9 @@ class ColorValidator < ActiveModel::EachValidator
   end
 
   def valid_color?(value)
-    if value =~ /\A#(?=[A-F0-9])(?:.{3}|.{6})\z/i
+    if value.nil? || value.empty?
+      true # not really a color, but it is not our task to validate presence.
+    elsif value =~ /\A#(?=[A-Fa-f0-9])(?:.{3}|.{6})\z/i
       # Value is a color code
       true
     elsif COLORS.include?(value.downcase)
