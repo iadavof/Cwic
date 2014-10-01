@@ -213,7 +213,7 @@ html.js {
       .wayfinding {
         [class^="symbol-"],
         [class*=" symbol-"] {
-          :before {
+          &:before {
             display: block;
             position: absolute;
             top: 50%;
@@ -314,7 +314,8 @@ html.js {
             text-align: center;
             color: #fff;
             background-color: #1c9cb2;
-            width: 215px;
+            width: 230px;
+            display: block;
           }
 
           .date {
@@ -374,13 +375,13 @@ div.info-screen-entity-type {
       width: 30px;
       padding: 5px;
       height: 100%;
-      background-color: #FF3520;
+      background-color: #ff3520;
       margin-right: 10px;
     }
 
     span.active-sign {
       &.active {
-        background-color: #18C13D;
+        background-color: #18c13d;
       }
     }
   }
