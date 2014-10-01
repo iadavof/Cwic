@@ -1,0 +1,18 @@
+doctype html
+html.no-js.info-screen
+  head
+    title
+      | Cwic
+    = stylesheet_link_tag "info_screen", media: "all", "data-turbolinks-track" => true
+    = jquery_include_tag :google
+    = javascript_include_tag "info_screen", "data-turbolinks-track" => true
+    = csrf_meta_tags
+
+  body[
+    class="controller-#{controller_name} action-#{action_name}"
+    data-controller=controller_name
+    data-action=action_name
+    data-current-organisation-id=current_organisation.try(:id)
+    data-current-locale=I18n.locale
+  ]
+    = content_for?(:content) ? yield(:content) : yield

@@ -338,7 +338,6 @@ class Reservation < ActiveRecord::Base
   end
 
   def update_warning_state_neighbours
-    binding.pry
     if self.begins_at_changed?
       # If begin times for this reservation changed, then update warnings for old and new first neighbour as well.
       previous_reservation = self.previous(true)
@@ -413,7 +412,6 @@ class Reservation < ActiveRecord::Base
   end
 
   def trigger_update_websockets
-    binding.pry
     WebsocketRails[('infoscreens_' + self.organisation.id.to_s).to_sym].trigger 'update'
     WebsocketRails[('todayandtomorrows_' + self.organisation.id.to_s).to_sym].trigger 'update'
   end

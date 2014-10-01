@@ -2,6 +2,8 @@ class InfoScreensController < CrudController
   respond_to :html, except: :reservations
   respond_to :json, only: :reservations
 
+  layout 'info_screen', only: [:show]
+
   def reservations
     @reservations = []
     @active_ises = @info_screen.info_screen_entities.active.includes(:entity)

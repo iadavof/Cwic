@@ -4,7 +4,7 @@ function CwicInfoScreen(options) {
     backend_url: 'url to info screen backend',
     websocket_url: 'url to websocket',
     organisation_id: 0,
-    updateTimeout: 3600000
+    updateTimeout: 1800000
   }, options || {});
 
   this.infoScreenContainer = $('#' + this.options.container);
@@ -23,7 +23,7 @@ CwicInfoScreen.prototype.initWebSocket = function() {
   // open reservations_channel for organisation
   if(typeof window.cwic_info_screen_channel === 'undefined') {
     window.cwic_info_screen_channel = dispatcher.subscribe('infoscreens_' + this.options.organisation_id);
-    window.cwic_info_screen_channel.bind('update', function() { is.getInfoScreenItems(); });
+    window.cwic_info_screen_channel.bind('update', function() { is.scheduleFastUpdate(); });
   }
 };
 
@@ -41,6 +41,21 @@ CwicInfoScreen.prototype.init = function() {
 
   this.overdueRemoveInterval = setInterval(function() { is.eatOverdueItems(); }, 20000);
   this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);
+};
+
+CwicInfoScreen.prototype.scheduleFastUpdate = function() {
+  var is = this;
+  if(this.infoScreenUpdateInterval) {
+    console.log('interupting normal update interval.');
+    clearInterval(this.infoScreenUpdateInterval);
+    this.infoScreenUpdateInterval = null;
+    setTimeout(function(){
+      is.getInfoScreenItems();
+      is.infoScreenUpdateInterval = setInterval(function(){ is.getInfoScreenItems(); }, is.options.updateTimeout);
+      console.log('continuing with normal update interval.');
+    }, 3000);
+    console.log('fast update scheduled for 3 sec...');
+  } // else: There is already a fast update scheduled, do nothing
 };
 
 CwicInfoScreen.prototype.removeDeletedItems = function(reservations) {
@@ -74,7 +89,6 @@ CwicInfoScreen.prototype.reservationAnimation = function(on) {
 };
 
 CwicInfoScreen.prototype.itemUpdate = function(reservations) {
-
   // Stop the reservation table animations
   this.reservationAnimation(false);
 
@@ -85,7 +99,6 @@ CwicInfoScreen.prototype.itemUpdate = function(reservations) {
   var list = this.infoScreenContainer.find('ul#realtime-list');
   $.each(reservations, function(index, reservation) {
     var newItem = is.createReservationItem(reservation);
-
     // Remove old item if already showed and begin date is not the same
     var oldItem = is.infoScreenContainer.find('#reservation_' + reservation.id);
     var placed = false;

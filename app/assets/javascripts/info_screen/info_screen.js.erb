@@ -1,0 +1,17 @@
+APP.info_screens = {
+  init: function() {
+    window.jsLang = jsLangs[$('body').data('current-locale')];
+  },
+  show: function() {
+    var isContainer = $('#info-screen-container');
+    var organisation_id = isContainer.data('organisation-id');
+    var isId = isContainer.data('info-screen-id');
+    var fullScreen = new CwicInfoScreen({
+      container: 'info-screen-container',
+      info_screen_id: isId,
+      backend_url: Routes.reservations_organisation_info_screen_path(organisation_id, isId),
+      websocket_url: window.location.host + Routes.websocket_path(),
+      organisation_id: organisation_id
+    });
+  },
+}
