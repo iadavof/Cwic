@@ -20,7 +20,7 @@ class Reservation < ActiveRecord::Base
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Model extensions
-  attr_accessor :validate_overlapping # Should we validate not overlapping (default true)? Disabled for multiple edit actions.
+  attr_accessor :validate_not_conflicting # Should we validate not conflicting with other reservations (default true)? Disabled for multiple edit actions.
   audited only: [:description, :entity_id, :organisation_client_id, :reservation_status_id, :begins_at, :ends_at, :slack_before, :slack_after], allow_mass_assignment: true
 
   # Attribute modifiers
@@ -35,12 +35,12 @@ class Reservation < ActiveRecord::Base
   validates :begins_at, presence: true
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
-  validate :not_overlapping, if: -> { entity.present? && validate_overlapping }
+  validate :not_conflicting_with_reservations, if: -> { entity.present? && validate_not_conflicting }
   validate :ensure_recurrences_valid, on: :create, if: -> { recurrence_definition_recurring? && errors.empty? }
   validate :ensure_period_valid, if: -> { entity.present? && begins_at.present? && ends_at.present? }
 
   # Callbacks
-  after_initialize :init # new_record check is intentionally omitted since @validate_overlapping should also be initialized for already existing records
+  after_initialize :init # new_record check is intentionally omitted since @validate_not_conflicting should also be initialized for already existing records
 
   before_validation :set_organisation_client_organisation
   before_validation :check_if_should_update_reservation_status
@@ -122,7 +122,7 @@ class Reservation < ActiveRecord::Base
   # Instance methods
 
   def init # Note: in this case init is also executed for already existing records
-    @validate_overlapping ||= true
+    @validate_not_conflicting ||= true
   end
 
   def instance_name
@@ -282,31 +282,31 @@ class Reservation < ActiveRecord::Base
 
   # Check if the reservation is not overlapping with other reservations for the same entity.
   # It is possible to overwrite the set of reservations to check in. This is useful for multiple edit actions.
-  def not_overlapping(set = nil)
-    not_overlapping = true
-    set = self.entity.reservations.blocking.where('reservations.id <> ?', self.id.to_i) if set.nil?
-    total_overlap = set.where('(:begins_at <= begins_at AND :ends_at >= ends_at) OR (:begins_at >= begins_at AND :ends_at <= ends_at)', begins_at: begins_at, ends_at: ends_at).first
+  def not_conflicting_with_reservations(reservations = nil)
+    valid = true
+    reservations ||= self.entity.reservations.blocking.where('reservations.id <> ?', self.id.to_i)
+    total_overlap = reservations.where('(:begins_at <= begins_at AND :ends_at >= ends_at) OR (:begins_at >= begins_at AND :ends_at <= ends_at)', begins_at: begins_at, ends_at: ends_at).first
     if total_overlap.present?
       # Total overlap means this reservation is completely within another reservation or completely over another reserveration, so we do not know whether it is best to change the begins_at or the ends_at to fix this problem.
       errors.add(:base, I18n.t('activerecord.errors.models.reservation.total_overlap_html', reservation_url: organisation_reservation_path(total_overlap.organisation, total_overlap), other_begins_at: I18n.l(total_overlap.begins_at, format: :long), other_ends_at: I18n.l(total_overlap.ends_at, format: :long)).html_safe)
       errors.add(:begins_at, false)
       errors.add(:ends_at, false)
-      not_overlapping = false
+      valid = false
     else
       # No complete overlap, but maybe just the ends_at overlaps
-      ends_at_overlap = set.where('begins_at < :ends_at AND :ends_at <= ends_at', ends_at: ends_at).first
+      ends_at_overlap = reservations.where('begins_at < :ends_at AND :ends_at <= ends_at', ends_at: ends_at).first
       if ends_at_overlap.present?
         errors.add(:ends_at, I18n.t('activerecord.errors.models.reservation.attributes.ends_at.ends_at_html', reservation_url: organisation_reservation_path(ends_at_overlap.organisation, ends_at_overlap), other_begins_at: I18n.l(ends_at_overlap.begins_at, format: :long)).html_safe)
-        not_overlapping = false
+        valid = false
       end
       # Or just the begins_at overlaps
-      begins_at_overlap = set.where('begins_at <= :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
+      begins_at_overlap = reservations.where('begins_at <= :begins_at AND :begins_at < ends_at', begins_at: begins_at).first
       if begins_at_overlap.present?
         errors.add(:begins_at, I18n.t('activerecord.errors.models.reservation.attributes.begins_at.begins_at_html', reservation_url: organisation_reservation_path(begins_at_overlap.organisation, begins_at_overlap), other_ends_at: I18n.l(begins_at_overlap.ends_at, format: :long)).html_safe)
-        not_overlapping = false
+        valid = false
       end
     end
-    not_overlapping
+    valid
   end
 
   def update_warning_state

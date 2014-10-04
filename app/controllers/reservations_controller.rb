@@ -174,14 +174,14 @@ class ReservationsController < ApplicationController
     # Checking if the new attribute values are possible
     # Adding errors to the form reservation
     valid = true
-    unless reservations_not_overlapping_each_other(reservations)
+    unless reservations_not_conflicting_each_other(reservations)
       valid = false
       reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
     else
       reservations.each do |res|
-        # Disable standard overlapping validation (which possibly includes reservation which are also being edited with this multiple edit action)
-        res.validate_overlapping = false
-        unless res.valid? && res.not_overlapping(res.entity.reservations.blocking.where.not(id: reservations.ids))
+        # Disable standard conflict validation (which possibly includes reservation which are also being edited with this multiple edit action)
+        res.validate_not_conflicting = false
+        unless res.valid? && res.not_conflicting_with_reservations(res.entity.reservations.blocking.where.not(id: reservations.ids))
           res.errors.full_messages.each do |ir_message|
             if ir_message
               valid = false
@@ -194,7 +194,7 @@ class ReservationsController < ApplicationController
     valid
   end
 
-  def reservations_not_overlapping_each_other(reservations)
+  def reservations_not_conflicting_each_other(reservations)
     # We are going to alter this set, so dup to make the altering non-permanent
     dupreservations = reservations.dup
 
