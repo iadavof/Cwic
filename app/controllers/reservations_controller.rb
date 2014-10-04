@@ -163,7 +163,7 @@ class ReservationsController < ApplicationController
   end
 
   def update_multiple_edit_reservations(reservations, reservation)
-    # Setting the new attribute values
+    # Setting the new values
     MULTIPLE_EDIT_ATTRIBUTES.each do |a|
       new_value = resource_params[a]
       if params[:edit_fields].include?(a.to_s)
@@ -171,43 +171,40 @@ class ReservationsController < ApplicationController
       end
     end
 
-    # Checking if the new attribute values are possible
-    # Adding errors to the form reservation
-    valid = true
-    unless reservations_not_conflicting_each_other(reservations)
-      valid = false
-      reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
-    else
-      reservations.each do |res|
-        # Disable standard conflict validation (which possibly includes reservation which are also being edited with this multiple edit action)
-        res.validate_not_conflicting = false
-        unless res.valid? && res.not_conflicting_with_reservations(res.entity.reservations.blocking.where.not(id: reservations.ids))
-          res.errors.full_messages.each do |ir_message|
-            if ir_message
-              valid = false
-              reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_error_html', reservation_id: res.id, ir_message: ir_message).html_safe)
-            end
+    # Validate all reservations and copy potential errors to the form reservation
+    reservations.each do |res|
+      # Disable standard conflicting validation (which possibly includes reservation which are also being edited with this multiple edit action)
+      res.validate_not_conflicting = false
+      # Check if the reservation is valid and not conflicting with other reservations (that are not included in the current multiple edit set)
+      unless res.valid? && res.not_conflicting_with_reservations(res.entity.reservations.blocking.where.not(id: reservations.ids))
+        res.errors.full_messages.each do |ir_message|
+          if ir_message
+            reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_error_html', reservation_id: res.id, ir_message: ir_message).html_safe)
           end
         end
       end
     end
-    valid
+
+    # Check if the reservations are not conflicting with each other.
+    # This should be done after individually validating the reservations, because the before_validation callbacks need to be called first (due to DatetimeSplittable).
+    if reservations_conflict_with_each_other?(reservations)
+      reservation.errors.add(:base, I18n.t('activerecord.errors.models.reservation.multiple_edit_overlaps'))
+    end
+
+    reservation.errors.empty? # Return true if valid
   end
 
-  def reservations_not_conflicting_each_other(reservations)
-    # We are going to alter this set, so dup to make the altering non-permanent
-    dupreservations = reservations.dup
+  def reservations_conflict_with_each_other?(reservations)
+    # We are going to alter this set, so dup the array to make the altering non-permanent.
+    # We dup the array instead of the collection to keep the current attribute values (instead of reloading them).
+    dupreservations = reservations.to_a.dup
 
-    valid = true
-    while refres = dupreservations.to_a.shift
+    while refres = dupreservations.shift
       dupreservations.each do |res|
-        if res.overlaps?(refres.begins_at, refres.ends_at)
-          valid = false
-          break
-        end
+        return true if refres.conflicts_with_reservation?(res)
       end
     end
-    valid
+    false
   end
 
   def load_organisation_client
