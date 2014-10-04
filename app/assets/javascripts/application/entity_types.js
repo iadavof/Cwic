@@ -15,6 +15,15 @@ APP.entity_types = {
     APP.entity_types.initReservationStatusSort();
     form.find('.reservation-status-wrapper').each(function () { APP.entity_types.initReservationStatusWrapper($(this)); });
     $(document).on('nested:fieldAdded:reservation_statuses', function(event) { APP.entity_types.initReservationStatusWrapper(event.field); });
+
+    this.bindDefaultSelector();
+  },
+  bindDefaultSelector: function() {
+    $('input.default-status').on('change', function() {
+      if($(this).is(':checked')) {
+        $('input.default-status').not(this).prop('checked', false).trigger('change');
+      }
+    });
   },
   initReservationStatusSort: function() {
     $('ul#entity-type-reservation-statuses').sortable({

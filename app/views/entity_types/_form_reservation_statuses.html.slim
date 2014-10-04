@@ -6,6 +6,7 @@ h2 = ReservationStatus.model_name.human(count: 2)
     .icon.icon-resize-vertical.sort-handle.hidden
     .name = ReservationStatus.human_attribute_name(:name)
     .color = ReservationStatus.human_attribute_name(:color)
+    div = ReservationStatus.human_attribute_name(:default_status)
     div = ReservationStatus.human_attribute_name(:blocking).html_safe
     div = ReservationStatus.human_attribute_name(:info_boards).html_safe
     div = ReservationStatus.human_attribute_name(:billable).html_safe

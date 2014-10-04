@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140926075218) do
+ActiveRecord::Schema.define(version: 20141001144436) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -369,6 +369,7 @@ ActiveRecord::Schema.define(version: 20140926075218) do
     t.boolean  "blocking",                 default: true
     t.boolean  "info_boards",              default: true
     t.boolean  "billable",                 default: true
+    t.boolean  "default_status",           default: false
   end
 
   add_index "reservation_statuses", ["entity_type_id"], name: "index_reservation_statuses_on_entity_type_id", using: :btree

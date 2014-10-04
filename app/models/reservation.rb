@@ -339,11 +339,11 @@ class Reservation < ActiveRecord::Base
   def check_if_should_update_reservation_status
     return if self.entity.nil?
     if self.reservation_status.nil?
-      self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
+      self.reservation_status = self.entity.entity_type.reservation_statuses.where(default_status: true).first
     elsif self.entity_id_was.present? && self.entity_id_changed?
       # entity is changed, check if the same reservation status set is applicable
       if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type
-        self.reservation_status = self.entity.entity_type.reservation_statuses.order(:index).first
+        self.reservation_status = self.entity.entity_type.reservation_statuses.where(default_status: true).first
       end
     end
   end

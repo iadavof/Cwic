@@ -22,6 +22,7 @@ class EntityType < ActiveRecord::Base
   validates :slack_after, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :min_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :max_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validate :default_reservation_status
 
   # Model extensions
   audited only: [:name, :description, :slack_before, :slack_after, :min_reservation_length, :max_reservation_length], allow_mass_assignment: true
@@ -86,12 +87,21 @@ class EntityType < ActiveRecord::Base
 
   private
 
+  def default_reservation_status
+    count = reservation_statuses.reject(&:marked_for_destruction?).count(&:default_status)
+    if count > 1
+      errors.add(:base, I18n.t('activerecord.errors.models.entity_type.multiple_default_reservation_statuses'))
+    elsif count < 1
+      errors.add(:base, I18n.t('activerecord.errors.models.entity_type.no_default_reservation_status'))
+    end
+  end
+
   def initialize_reservation_statuses
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0, default_status: true)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
   end
 
   def create_info_screen_entity_types
