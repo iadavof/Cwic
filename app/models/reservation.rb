@@ -213,6 +213,17 @@ class Reservation < ActiveRecord::Base
     now_or_future?(from) && past_or_now?(to - 1) # End times are considered to be exclusive so we extract one second
   end
 
+  # Does the reservation overlap with another reservation?
+  def overlaps_with_reservation?(other)
+    other.overlaps?(begins_at, ends_at)
+  end
+
+  # Does the reservation conflict with another reservation?
+  # Conflicting reservations are overlapping reservations for the same entity that are both blocking.
+  def conflicts_with_reservation?(other)
+    other.entity == entity && other.reservation_status.blocking? && reservation_status.blocking? && other.overlaps_with_reservation?(self)
+  end
+
   # Get the reservation directly before this reservation (for the same entity).
   # If was = true, then the old times for this reservation will be used.
   def previous(was = false)
