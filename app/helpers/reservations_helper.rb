@@ -40,9 +40,9 @@ module ReservationsHelper
     when 'entity_id'
       name_link_to_show([@organisation, Entity.find(value)])
     when 'organisation_client_id'
-      name_link_to_show([@organisation, OrganisationClient.find(value)])
+      name_link_to_show([@organisation, OrganisationClient.find(value)]) rescue I18n.t('deleted')
     when 'reservation_status_id'
-      ReservationStatus.find(value).instance_name
+      ReservationStatus.find(value).instance_name rescue I18n.t('deleted')
     when 'slack_before', 'slack_after'
       (value.nil? ?  I18n.t('default') : "#{value} #{I18n.t('minutes_abbr').lcfirst}")
     else
