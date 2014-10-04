@@ -1,7 +1,8 @@
 function CwicTodayAndTomorrow(options) {
   this.options = $.extend({
     container: 'schedule-container',
-    organisation_id: 0
+    organisation_id: 0,
+    updateTimeout: 300000
   }, options || {});
 
   this.todContainer = $('#' + this.options.container);
@@ -9,7 +10,7 @@ function CwicTodayAndTomorrow(options) {
     return;
   }
   this.todContainer.data('today-and-tomorrow-view-initialized', true);
-
+  this.todUpdateInterval = null;
   this.renderTodayAndTomorrow();
 }
 
@@ -18,7 +19,7 @@ CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   this.initWebSocket();
   this.updateTodayTomorrowView();
   var schedule = this;
-  setInterval(function() {schedule.updateTodayTomorrowView();}, 300000);
+  this.todUpdateInterval = setInterval(function() {schedule.updateTodayTomorrowView();}, schedule.options.updateTimeout);
 };
 
 CwicTodayAndTomorrow.prototype.initWebSocket = function() {
@@ -28,8 +29,23 @@ CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   // Open reservations_channel for organisation
   if(typeof window.cwic_today_and_tomorrow_channel === 'undefined') {
     window.cwic_today_and_tomorrow_channel = dispatcher.subscribe('todayandtomorrows_' + this.options.organisation_id);
-    window.cwic_today_and_tomorrow_channel.bind('update', function() { tat.updateTodayTomorrowView(); });
+    window.cwic_today_and_tomorrow_channel.bind('update', function() { tat.scheduleFastUpdate(); });
   }
+};
+
+CwicTodayAndTomorrow.prototype.scheduleFastUpdate = function() {
+  var tat = this;
+  if(this.infoScreenUpdateInterval) {
+    console.log('interupting normal update interval.');
+    clearInterval(this.todUpdateInterval);
+    this.todUpdateInterval = null;
+    setTimeout(function(){
+      tat.updateTodayTomorrowView();
+      tat.todUpdateInterval = setInterval(function(){ tat.updateTodayTomorrowView(); }, schedule.options.updateTimeout);
+      console.log('continuing with normal update interval.');
+    }, 3000);
+    console.log('fast update scheduled for 3 sec...');
+  } // else: There is already a fast update scheduled, do nothing
 };
 
 CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
