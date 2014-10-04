@@ -38,7 +38,7 @@ module ReservationsHelper
   def reservation_audit_format(attr_name, value)
     case attr_name
     when 'entity_id'
-      name_link_to_show([@organisation, Entity.find(value)])
+      name_link_to_show([@organisation, Entity.find(value)]) rescue I18n.t('deleted')
     when 'organisation_client_id'
       name_link_to_show([@organisation, OrganisationClient.find(value)]) rescue I18n.t('deleted')
     when 'reservation_status_id'
