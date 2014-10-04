@@ -199,7 +199,7 @@ CwicReservationFormController.prototype.renderAvailableEntitiesList = function()
   this.clearAvailableEntitiesList();
 
   var entityList = this.getAvailableEntitiesList();
-  this.showNoAvailableEntitiesListMessage(this.availableEntities.length <= 0);
+  this.showNoAvailableEntitiesListMessage($.size(this.availableEntities) == 0);
 
   $.each(this.availableEntities, function(index, entity) {
     var newLi = $('<li>', {
