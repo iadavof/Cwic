@@ -11,7 +11,7 @@ class Reservation < ActiveRecord::Base
   belongs_to :organisation
   belongs_to :entity
   belongs_to :organisation_client
-  belongs_to :reservation_status
+  belongs_to :status, class_name: 'ReservationStatus'
   belongs_to :base_reservation, class_name: 'Reservation'
 
   has_one :reservation_recurrence_definition
@@ -21,7 +21,7 @@ class Reservation < ActiveRecord::Base
 
   # Model extensions
   attr_accessor :validate_not_conflicting # Should we validate not conflicting with other reservations (default true)? Disabled for multiple edit actions.
-  audited only: [:description, :entity_id, :organisation_client_id, :reservation_status_id, :begins_at, :ends_at, :slack_before, :slack_after], allow_mass_assignment: true
+  audited only: [:description, :entity_id, :organisation_client_id, :status_id, :begins_at, :ends_at, :slack_before, :slack_after], allow_mass_assignment: true
 
   # Attribute modifiers
   split_datetime :begins_at, default: Time.now.ceil_to(1.hour)
@@ -31,7 +31,7 @@ class Reservation < ActiveRecord::Base
   validates :organisation, presence: true
   validates :entity, presence: true
   validates :organisation_client, presence: true
-  validates :reservation_status, presence: true
+  validates :status, presence: true
   validates :begins_at, presence: true
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
@@ -43,7 +43,7 @@ class Reservation < ActiveRecord::Base
   after_initialize :init # new_record check is intentionally omitted since @validate_not_conflicting should also be initialized for already existing records
 
   before_validation :set_organisation_client_organisation
-  before_validation :check_if_should_update_reservation_status
+  before_validation :check_if_should_update_status
   before_validation :generate_recurrences, on: :create, if: :recurrence_definition_recurring?
   before_save :update_warning_state
   after_create :save_recurrences, on: :create, if: :recurrence_definition_recurring?
@@ -69,10 +69,10 @@ class Reservation < ActiveRecord::Base
   scope :now_or_future, -> (now = Time.now) { where('ends_at > :now', now: now) }
   scope :future, -> (now = Time.now) { where('begins_at > :now', now: now) }
 
-  scope :blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = true') }
-  scope :non_blocking, -> { joins(:reservation_status).where('reservation_statuses.blocking = false') }
-  scope :info_boards,  -> { joins(:reservation_status).where('reservation_statuses.info_boards = true') }
-  scope :billable, -> { joins(:reservation_status).where('reservation_statuses.billable = true') }
+  scope :blocking, -> { joins(:status).where(reservation_statuses: { blocking: true }) }
+  scope :non_blocking, -> { joins(:status).where(reservation_statuses: { blocking: false }) }
+  scope :info_boards,  -> { joins(:status).where(reservation_statuses: { info_boards: true }) }
+  scope :billable, -> { joins(:status).where(reservation_statuses: { billable: true }) }
 
   default_order { order(:begins_at) }
 
@@ -109,7 +109,7 @@ class Reservation < ActiveRecord::Base
   def self.export_data
     {
       id: true,
-      reservation_status: true,
+      status: true,
       description: true,
       organisation_client: true,
       entity: true,
@@ -336,14 +336,14 @@ class Reservation < ActiveRecord::Base
     recurrences.update_all(base_reservation_id: recurrences.first.id) if recurrences.present?
   end
 
-  def check_if_should_update_reservation_status
+  def check_if_should_update_status
     return if self.entity.nil?
-    if self.reservation_status.nil?
-      self.reservation_status = self.entity.entity_type.reservation_statuses.where(default_status: true).first
+    if self.status.nil?
+      self.status = self.entity.entity_type.reservation_statuses.where(default_status: true).first
     elsif self.entity_id_was.present? && self.entity_id_changed?
       # entity is changed, check if the same reservation status set is applicable
       if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type
-        self.reservation_status = self.entity.entity_type.reservation_statuses.where(default_status: true).first
+        self.status = self.entity.entity_type.reservation_statuses.where(default_status: true).first
       end
     end
   end

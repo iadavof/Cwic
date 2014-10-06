@@ -25,4 +25,4 @@ dl
 - unless @reservation.recurrences.empty?
   h2 = t('.repetitions')
 
-  = render 'table', reservations: @reservation.recurrences.includes(:reservation_status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences'
+  = render 'table', reservations: @reservation.recurrences.includes(:status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences'

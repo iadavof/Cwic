@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001144436) do
+ActiveRecord::Schema.define(version: 20141006084637) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -383,7 +383,7 @@ ActiveRecord::Schema.define(version: 20141001144436) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "description"
-    t.integer  "reservation_status_id",  limit: 8
+    t.integer  "status_id",              limit: 8
     t.integer  "base_reservation_id",    limit: 8
     t.integer  "slack_before"
     t.integer  "slack_after"
@@ -394,7 +394,7 @@ ActiveRecord::Schema.define(version: 20141001144436) do
   add_index "reservations", ["entity_id"], name: "index_reservations_on_entity_id", using: :btree
   add_index "reservations", ["organisation_client_id"], name: "index_reservations_on_organisation_client_id", using: :btree
   add_index "reservations", ["organisation_id"], name: "index_reservations_on_organisation_id", using: :btree
-  add_index "reservations", ["reservation_status_id"], name: "index_reservations_on_reservation_status_id", using: :btree
+  add_index "reservations", ["status_id"], name: "index_reservations_on_status_id", using: :btree
 
   create_table "reserve_periods", force: true do |t|
     t.integer  "entity_type_id", limit: 8
