@@ -1,0 +1,9 @@
+= form_for(member_path) do |f|
+  = render 'shared/error_messages', target: @newsletter_signup
+
+  .field
+    = f.label :email
+    = f.text_field :email
+
+  .actions
+    = f.submit

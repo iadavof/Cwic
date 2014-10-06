@@ -17,6 +17,11 @@ nl:
     save: 'Opslaan'
     edit_is_applied_to_the_following: 'Aanpassingen worden toegepast op de volgende reserveringen:'
 
+  valid_email:
+    validations:
+      email:
+        invalid: 'is ongeldig'
+
   activerecord:
     models:
       user:
@@ -88,6 +93,9 @@ nl:
       reserve_period:
         one: 'Reserveerperiode'
         other: 'Reserveerperioden'
+      newsletter_signup:
+        one: 'Nieuwsbriefaanmelding'
+        other: 'Nieuwsbriefaanmeldingen'
     attributes:
       user:
         name: 'Naam'
@@ -820,3 +828,8 @@ nl:
       tags: 'Tags'
     tag:
       search_for_tag: 'Zoeken naar alle items met de tag "%{tag}"'
+
+  newsletter_signups:
+    thanks: 'Bedankt voor het aanmelden voor de Cwic nieuwsbrief! Je hoort van ons!'
+    invalid_email: 'Het ingevoerde e-mailadres voor de nieuwsbriefaanmelding lijkt niet te kloppen'
+    enter_your_email: 'Vul hier je e-mailadres in...'

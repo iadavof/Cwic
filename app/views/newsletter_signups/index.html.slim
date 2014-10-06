@@ -1,0 +1,23 @@
+- content_for :page_title do
+  = index_title(NewsletterSignup)
+
+- content_for :local_menu_navigation do
+  = button_link_to_new(collection_path)
+
+- if @newsletter_signups.empty?
+  p = t('.empty', default: :empty_objects, models: NewsletterSignup.model_name.human(count: 2).lcfirst)
+
+- else
+  table
+    thead
+      tr
+        th = NewsletterSignup.human_attribute_name(:email)
+        th
+
+    tbody
+      - @newsletter_signups.each do |newsletter_signup|
+        tr
+          td = newsletter_signup.instance_name
+          td.icons
+            = icon_link_to_edit(newsletter_signup)
+            = icon_link_to_destroy(newsletter_signup)

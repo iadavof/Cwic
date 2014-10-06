@@ -15,6 +15,7 @@ class User < ActiveRecord::Base
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
   validates :infix, length: { maximum: 255 }
+  validates :email, email: true
 
   # Nested attributes
   accepts_nested_attributes_for :organisations

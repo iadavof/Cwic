@@ -1,0 +1,7 @@
+- content_for :page_title do
+  = edit_title(@newsletter_signup)
+
+- content_for :local_menu_navigation do
+  = button_link_to_index(collection_path)
+
+= render 'form'

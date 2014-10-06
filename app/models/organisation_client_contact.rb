@@ -9,7 +9,7 @@ class OrganisationClientContact < ActiveRecord::Base
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :infix, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
-  validates :email, length: { maximum: 255 }
+  validates :email, length: { maximum: 255 }, email: { mx: true, ban_disposable_email: true }, allow_blank: true
   validates :position, length: { maximum: 255 }
   validates :route, length: { maximum: 255 }
   validates :street_number, length: { maximum: 255 }

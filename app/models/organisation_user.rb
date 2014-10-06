@@ -15,7 +15,7 @@ class OrganisationUser < ActiveRecord::Base
 
   # Validations
   validates :organisation, presence: true
-  validates :user_email, presence: true, format: { with: Devise::email_regexp, allow_blank: true }, if: :by_email
+  validates :user_email, presence: true, email: { mx: true, ban_disposable_email: true }, if: :by_email
   validates :user, presence: { unless: -> { by_email } }, uniqueness: { scope: :organisation_id, allow_nil: true }
   validates :organisation_role, presence: true
 

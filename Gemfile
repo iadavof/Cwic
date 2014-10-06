@@ -124,6 +124,9 @@ gem 'hash_to_hidden_fields'
 # Validator for timeliness of dates
 gem 'validates_timeliness'
 
+# Validator for valid email address
+gem 'valid_email'
+
 # Make ActiveRecord objects deep clonable (dup) including associations
 gem 'deep_cloneable'
 
