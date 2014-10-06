@@ -5,21 +5,21 @@ function CwicTodayAndTomorrow(options) {
     updateTimeout: 300000
   }, options || {});
 
-  this.todContainer = $('#' + this.options.container);
-  if(this.todContainer.data('today-and-tomorrow-view-initialized')) {
+  this.container = $('#' + this.options.container);
+  if(this.container.data('today-and-tomorrow-view-initialized')) {
     return;
   }
-  this.todContainer.data('today-and-tomorrow-view-initialized', true);
-  this.todUpdateInterval = null;
+  this.container.data('today-and-tomorrow-view-initialized', true);
+  this.updateInterval = null;
   this.renderTodayAndTomorrow();
 }
 
 CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
+  var tat = this;
   this.bindEntityInfoControls();
   this.initWebSocket();
   this.updateTodayTomorrowView();
-  var schedule = this;
-  this.todUpdateInterval = setInterval(function() {schedule.updateTodayTomorrowView();}, schedule.options.updateTimeout);
+  this.updateInterval = setInterval(function() { tat.updateTodayTomorrowView(); }, tat.options.updateTimeout);
 };
 
 CwicTodayAndTomorrow.prototype.initWebSocket = function() {
@@ -35,13 +35,13 @@ CwicTodayAndTomorrow.prototype.initWebSocket = function() {
 
 CwicTodayAndTomorrow.prototype.scheduleFastUpdate = function() {
   var tat = this;
-  if(this.infoScreenUpdateInterval) {
+  if(this.updateInterval) {
     console.log('interupting normal update interval.');
-    clearInterval(this.todUpdateInterval);
-    this.todUpdateInterval = null;
-    setTimeout(function(){
+    clearInterval(this.updateInterval);
+    this.updateInterval = null;
+    setTimeout(function() {
       tat.updateTodayTomorrowView();
-      tat.todUpdateInterval = setInterval(function(){ tat.updateTodayTomorrowView(); }, schedule.options.updateTimeout);
+      tat.updateInterval = setInterval(function() { tat.updateTodayTomorrowView(); }, tat.options.updateTimeout);
       console.log('continuing with normal update interval.');
     }, 3000);
     console.log('fast update scheduled for 3 sec...');
@@ -49,7 +49,7 @@ CwicTodayAndTomorrow.prototype.scheduleFastUpdate = function() {
 };
 
 CwicTodayAndTomorrow.prototype.bindEntityInfoControls = function() {
-  this.todContainer.find('p.entity-name').on('click', function() {
+  this.container.find('p.entity-name').on('click', function() {
     var $description = $(this).siblings('.entity-description');
     var descriptionHeight = $description.height();
 
