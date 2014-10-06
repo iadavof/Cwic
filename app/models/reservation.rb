@@ -338,7 +338,7 @@ class Reservation < ActiveRecord::Base
 
   def set_default_status
     # Called on entity_type_changed, thus also for new reservations.
-    self.status = entity_type.reservation_statuses.where(default_status: true).first!
+    self.status = entity_type.default_reservation_status
   end
 
   def entity_type_changed?
