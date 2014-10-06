@@ -98,8 +98,7 @@ gem 'pg_search', '~> 0.7.3' # Locked on minor version, because we use custom sea
 gem 'kaminari'
 
 # Websockets so we could create push notifications
-# gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom gem to add Windows compatibility. Waiting for issue #186 to be fixed.
-gem 'websocket-rails'
+gem 'websocket-rails', github: 'kreintjes/websocket-rails' # Custom gem to add Windows compatibility. Waiting for issue #186 to be fixed.
 
 # Organisation of the seeds
 gem 'seedbank'
