@@ -421,8 +421,8 @@ class Reservation < ActiveRecord::Base
   end
 
   def trigger_update_websockets
-    WebsocketRails[('infoscreens_' + self.organisation.id.to_s).to_sym].trigger 'update'
-    WebsocketRails[('todayandtomorrows_' + self.organisation.id.to_s).to_sym].trigger 'update'
+    WebsocketRails["infoscreens_#{organisation.id}"].trigger('update')
+    WebsocketRails["todayandtomorrows_#{organisation.id}"].trigger('update')
   end
 
   # Converts a period (begins datetime to ends datetime range) to a days (dates) range
