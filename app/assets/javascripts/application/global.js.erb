@@ -1,5 +1,9 @@
 var current_user, current_organisation, current_locale;
 
+// Temporary disable Turbolinks page cache functionality to solve back-button related problems.
+// TODO: implement real solution for this and other Turbolinks problems and re-enable page cache.
+Turbolinks.pagesCached(0);
+
 APP.init = function() {
   // Load current_user and current_organisation data
   var body = $('body');
@@ -66,7 +70,7 @@ APP.init = function() {
   $(window).on('resize', function() {
     APP.global.contentAreaResize();
   });
-  
+
   $(document).keydown(function(event) {
     /* Close search bar when esc button is pressed */
     if(event.keyCode == 27) {
@@ -166,21 +170,21 @@ APP.global = {
   },
   slideSearchBar: function(action) {
     var $searchField = $('#global_search_query');
-    
+
     var complete = function() {
       $(window).trigger('header-animated');
       if (action == 'expand') {
         $searchField.focus();
       }
     };
-    
+
     if (action == 'collapse') {
       $searchField.blur().val('');
       $('#open-search-button').removeClass('open');
     } else {
       $('#open-search-button').addClass('open');
     }
-    
+
     if (Modernizr.flexbox) {
       APP.util.expandCollapse('#search-bar', {action: action, direction: 'vertical', duration: 150, targetDimension: 'auto'}, complete);
     } else {
@@ -248,9 +252,9 @@ APP.global = {
       case 'expand':
       case 'collapse':
         var $submenuBox = $('#submenu-box');
-        
+
         executeBefore();
-        
+
         var complete = executeAfter;
         if (action == 'expand') {
           APP.global.slideSubMenu($submenu, 'switch', false);
@@ -262,7 +266,7 @@ APP.global = {
             executeAfter();
           };
         }
-        
+
         if (Modernizr.flexbox) {
           APP.util.expandCollapse($submenuBox, {action: action, direction: 'horizontal', duration: duration, targetDimension: ''}, complete);
         } else {
