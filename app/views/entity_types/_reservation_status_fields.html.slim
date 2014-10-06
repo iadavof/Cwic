@@ -6,6 +6,8 @@ li.fields.nested-object-wrapper.reservation-status-wrapper.clearfix
     .field.horizontal-block
       = f.text_field :color, class: 'reservation_status_color', autocomplete: :off
     .field.horizontal-block.bool
+      = f.check_box :default_status, class: 'default-status'
+    .field.horizontal-block.bool
       = f.check_box :blocking
     .field.horizontal-block.bool
       = f.check_box :info_boards

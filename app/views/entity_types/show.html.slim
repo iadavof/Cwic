@@ -29,8 +29,8 @@
       a href="#images"
         = EntityImage.model_name.human(count: 2)
     li
-      a href="#reserve-periods"
-        = ReservePeriod.model_name.human(count: 2)
+      a href="#reservation-periods"
+        = ReservationPeriod.model_name.human(count: 2)
     li
       a href="#audits"
         = t('audits.logs')
@@ -46,7 +46,7 @@
       = render 'show_reservation_statuses'
     #images
       = render 'show_images'
-    #reserve-periods
-      = render 'show_reserve_periods'
+    #reservation-periods
+      = render 'show_reservation_periods'
     #audits
       = render 'audits/logs', item: @entity_type

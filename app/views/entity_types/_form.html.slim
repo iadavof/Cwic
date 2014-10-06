@@ -21,8 +21,8 @@
           a href="#images"
             = EntityImage.model_name.human(count: 2)
         li
-          a href="#reserve-periods"
-            = ReservePeriod.model_name.human(count: 2)
+          a href="#reservation-periods"
+            = ReservationPeriod.model_name.human(count: 2)
 
       .tab-wrap
         #general
@@ -35,8 +35,8 @@
           = render 'form_reservation_statuses', f: f
         #images.hide
           = render 'form_images', f: f
-        #reserve-periods.hide
-          = render 'form_reserve_periods', f: f
+        #reservation-periods.hide
+          = render 'form_reservation_periods', f: f
 
     .actions
       = f.submit

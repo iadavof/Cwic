@@ -22,10 +22,10 @@ end
 
 # Gets a random ends_at (after the begins_at) such that the reservation's length matches the entity's reserve periods
 def build_ends_at(entity, begins_at)
-  reserve_periods = entity.reserve_periods.includes(:period_unit)
-  if reserve_periods.empty?
+  reservation_periods = entity.reservation_periods.includes(:period_unit)
+  if reservation_periods.empty?
     # The entity does not have any reserve periods: insert a temporary fake reserve period of a half hour to use for building the length
-    reserve_periods = [build(:reserve_period, period_unit: TimeUnit.find_by!(key: 'half_hour'))]
+    reservation_periods = [build(:reservation_period, period_unit: TimeUnit.find_by!(key: 'half_hour'))]
   end
 
   # Determine minimum and maximum length we want to allow
@@ -34,7 +34,7 @@ def build_ends_at(entity, begins_at)
     max_length = entity.max_reservation_length_seconds # Use the defined maximum length
   else
     # The max length is 50 times the largest reserve period with a maximum of one year (for performance reasons)
-    max_length = [reserve_periods.sort_by(&:length).last.length * 50, 1.year].min
+    max_length = [reservation_periods.sort_by(&:length).last.length * 50, 1.year].min
   end
 
   desired_length = min_length + rand(max_length - min_length) # The desired length of the reservation we want to at least achieve. This is a random function that centers between the min and max length.
@@ -43,11 +43,11 @@ def build_ends_at(entity, begins_at)
   length = 0
   while length < desired_length do
     max_remaining_length = max_length - length # Determine the remaining length we can use
-    reserve_period = reserve_periods.select { |rp| rp.length < max_remaining_length }.sample # Pick a random reserve period that does not exceed this length
-    if reserve_period.present?
-      length += reserve_period.length # Apply the reserve period
+    reservation_period = reservation_periods.select { |rp| rp.length < max_remaining_length }.sample # Pick a random reserve period that does not exceed this length
+    if reservation_period.present?
+      length += reservation_period.length # Apply the reserve period
     else
-      break # Stop building length if we cannot find a suitable reserve_period anymore
+      break # Stop building length if we cannot find a suitable reservation_period anymore
     end
   end
 

@@ -1,4 +1,4 @@
-class ReservePeriod < ActiveRecord::Base
+class ReservationPeriod < ActiveRecord::Base
   include I18n::Alchemy
 
   # Associations
@@ -31,6 +31,6 @@ class ReservePeriod < ActiveRecord::Base
   private
 
   def default_name
-    I18n.t('reserve_period.default_name', unit: period_unit.human_numeral_name.lcfirst, unit_plural: period_unit.human_numeral_name(count: 2).lcfirst, count: period_amount) if period_unit.present?
+    I18n.t('reservation_period.default_name', unit: period_unit.human_numeral_name.lcfirst, unit_plural: period_unit.human_numeral_name(count: 2).lcfirst, count: period_amount) if period_unit.present?
   end
 end
