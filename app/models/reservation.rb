@@ -31,7 +31,7 @@ class Reservation < ActiveRecord::Base
   validates :organisation, presence: true
   validates :entity, presence: true
   validates :organisation_client, presence: true
-  validates :status, presence: true
+  validates :status, presence: true, if: -> { entity.present? }
   validates :begins_at, presence: true
   validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
