@@ -43,7 +43,7 @@ class Reservation < ActiveRecord::Base
   after_initialize :init # new_record check is intentionally omitted since @validate_not_conflicting should also be initialized for already existing records
 
   before_validation :set_organisation_client_organisation
-  before_validation :check_if_should_update_status
+  before_validation :set_default_status, if: -> { entity_type_changed? && entity_type.present? }
   before_validation :generate_recurrences, on: :create, if: :recurrence_definition_recurring?
   before_save :update_warning_state
   after_create :save_recurrences, on: :create, if: :recurrence_definition_recurring?
@@ -336,16 +336,14 @@ class Reservation < ActiveRecord::Base
     recurrences.update_all(base_reservation_id: recurrences.first.id) if recurrences.present?
   end
 
-  def check_if_should_update_status
-    return if self.entity.nil?
-    if self.status.nil?
-      self.status = self.entity.entity_type.reservation_statuses.where(default_status: true).first
-    elsif self.entity_id_was.present? && self.entity_id_changed?
-      # entity is changed, check if the same reservation status set is applicable
-      if self.entity.entity_type != self.organisation.entities.find(self.entity_id_was).entity_type
-        self.status = self.entity.entity_type.reservation_statuses.where(default_status: true).first
-      end
-    end
+  def set_default_status
+    # Called on entity_type_changed, thus also for new reservations.
+    self.status = entity_type.reservation_statuses.where(default_status: true).first!
+  end
+
+  def entity_type_changed?
+    # Also returns true when entity (and thus entity type) was not set, but is now.
+    entity_id_changed? && (entity_id_was.nil? || entity_type != Entity.find(entity_id_was).entity_type)
   end
 
   def update_warning_state_neighbours
