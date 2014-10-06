@@ -103,11 +103,11 @@ class EntityType < ActiveRecord::Base
   end
 
   def initialize_reservation_statuses
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0, default_status: true)
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3)
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0, default_status: true, blocking: true, info_boards: false, billable: false)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1, blocking: true, info_boards: true, billable: true)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2, blocking: true, info_boards: true, billable: true)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3, blocking: false, info_boards: false, billable: false)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4, blocking: true, info_boards: true, billable: true)
   end
 
   def create_info_screen_entity_types
