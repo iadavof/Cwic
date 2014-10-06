@@ -1,4 +1,4 @@
-class RenameReservatioonStatusColumn < ActiveRecord::Migration
+class RenameReservationStatusColumn < ActiveRecord::Migration
   def change
     rename_column :reservations, :reservation_status_id, :status_id
   end
