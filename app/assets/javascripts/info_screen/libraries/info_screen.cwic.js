@@ -37,7 +37,9 @@ CwicInfoScreen.prototype.init = function() {
 
   this.getInfoScreenItems();
 
-  this.initWebSocket();
+  if(typeof WebSocketRails !== 'undefined') {
+    this.initWebSocket();
+  }
 
   this.overdueRemoveInterval = setInterval(function() { is.eatOverdueItems(); }, 20000);
   this.infoScreenUpdateInterval = setInterval(function() { is.getInfoScreenItems(); }, this.options.updateTimeout);

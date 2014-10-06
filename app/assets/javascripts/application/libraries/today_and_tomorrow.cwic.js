@@ -17,7 +17,9 @@ function CwicTodayAndTomorrow(options) {
 CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   var tat = this;
   this.bindEntityInfoControls();
-  this.initWebSocket();
+  if(typeof WebSocketRails !== 'undefined') {
+    this.initWebSocket();
+  }
   this.updateTodayTomorrowView();
   this.updateInterval = setInterval(function() { tat.updateTodayTomorrowView(); }, tat.options.updateTimeout);
 };

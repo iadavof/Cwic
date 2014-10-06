@@ -52,7 +52,7 @@ class Reservation < ActiveRecord::Base
   after_save :trigger_update_websockets
 
   before_destroy :fix_base_reservation_reference, if: -> { base_reservation_id == id }
-  after_destroy :trigger_update_websockets
+  after_destroy :trigger_update_websockets, if: -> { Object.const_defined?('WebsocketRails') }
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
   # Nested attributes

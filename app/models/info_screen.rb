@@ -15,7 +15,7 @@ class InfoScreen < ActiveRecord::Base
 
   # Callbacks
   after_initialize :init, if: :new_record?
-  after_save :trigger_update_infoscreens
+  after_save :trigger_update_infoscreens, if: -> { Object.const_defined?('WebsocketRails') }
 
   # Nested attributes
   accepts_nested_attributes_for :info_screen_entity_types

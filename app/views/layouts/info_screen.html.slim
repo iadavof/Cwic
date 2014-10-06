@@ -5,6 +5,7 @@ html.no-js.info-screen
       | Cwic
     = stylesheet_link_tag "info_screen", media: "all", "data-turbolinks-track" => true
     = jquery_include_tag :google
+    = javascript_include_tag "websocket_rails/main" if Object.const_defined?('WebsocketRails')
     = javascript_include_tag "info_screen", "data-turbolinks-track" => true
     = csrf_meta_tags
 
