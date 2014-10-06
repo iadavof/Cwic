@@ -16,6 +16,6 @@ class ReservationStatus < ActiveRecord::Base
   end
 
   def reset_reservation_statuses_to_default
-    entity_type.reservations.where(status: self).update_all(status_id: entity_type.default_reservation_status.id)
+    entity_type.reservations.where(status: self).update_all(status_id: entity_type.default_reservation_status(memory: true).id)
   end
 end

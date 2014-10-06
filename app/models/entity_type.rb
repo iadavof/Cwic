@@ -86,9 +86,15 @@ class EntityType < ActiveRecord::Base
   end
   alias_method_chain :icon, :default
 
-  def default_reservation_status
-    # We have to look at the statuses in memory in order to use the default_reservation_status in destroy actions which originate from nested forms.
-    reservation_statuses.reject(&:marked_for_destruction?).select(&:default_status).first
+  def default_reservation_status(memory: false)
+    if memory
+      # Lookup default status in cached statuses ignoring the just destroyed (marked_for_destruction) statuses
+      # This is useful for getting the right default status in the middle of create or update actions.
+      reservation_statuses.reject(&:marked_for_destruction?).select(&:default_status).first
+    else
+      # Lookup default status in database
+      reservation_statuses.where(default_status: true).first!
+    end
   end
 
   private
