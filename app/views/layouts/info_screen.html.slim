@@ -15,5 +15,6 @@ html.no-js.info-screen
     data-action=action_name
     data-current-organisation-id=current_organisation.try(:id)
     data-current-locale=I18n.locale
+    data-websocket-url=websocket_url
   ]
     = content_for?(:content) ? yield(:content) : yield

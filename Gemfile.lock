@@ -215,8 +215,6 @@ GEM
     rainbow (2.0.0)
     rake (10.3.2)
     redis (3.1.0)
-    redis-objects (1.0.0)
-      redis (>= 3.0.2)
     ref (1.0.5)
     responders (1.1.0)
       railties (>= 3.2, < 5)
@@ -292,14 +290,13 @@ GEM
     warden (1.2.3)
       rack (>= 1.0)
     websocket-driver (0.3.5)
-    websocket-rails (0.7.0)
+    websocket-rails (0.6.2)
       em-synchrony
       faye-websocket
       hiredis
       rack
       rails
       redis
-      redis-objects
       thin
     win32console (1.3.2-x86-mingw32)
     xml-simple (1.1.4)
@@ -369,4 +366,4 @@ DEPENDENCIES
   valid_email
   validates_timeliness
   vcard
-  websocket-rails
+  websocket-rails (= 0.6.2)

@@ -15,7 +15,8 @@ if Object.const_defined?('WebsocketRails')
     # Change to true to enable standalone server mode
     # Start the standalone server with rake websocket_rails:start_server
     # * Requires Redis
-    config.standalone = false
+    config.standalone = true
+    config.standalone_port = 1337
 
     # Change to true to enable channel synchronization between
     # multiple server instances.

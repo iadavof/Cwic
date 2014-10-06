@@ -65,4 +65,8 @@ module ApplicationHelper
 
     content_tag(:a, name || telephone_number.html_safe, html_options, &block)
   end
+
+  def websocket_url
+    "#{request.host}:#{WebsocketRails.config.standalone_port}#{websocket_path}"
+  end
 end

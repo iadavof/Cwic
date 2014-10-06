@@ -21,6 +21,7 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
     data-current-user-name=current_user.try(:instance_name)
     data-current-organisation-id=current_organisation.try(:id)
     data-current-locale=I18n.locale
+    data-websocket-url=websocket_url
   ]
     #page-wrapper
       - unless user_signed_in?

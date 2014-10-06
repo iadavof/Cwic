@@ -98,7 +98,9 @@ gem 'pg_search', '~> 0.7.3' # Locked on minor version, because we use custom sea
 gem 'kaminari'
 
 # Websockets so we could create push notifications
-gem 'websocket-rails', platform: :ruby # Include websocket only on Linux, since it does not work on Windows. Waiting for fix of issue #186.
+# Include websocket only on Linux, since it does not work on Windows. Waiting for fix of issue #186.
+# Lock on 0.6.2 version of gem. We cannot upgrade to 0.7.0 due to bug with standalone mode. Waiting for fix of issue #231.
+gem 'websocket-rails', '0.6.2', platform: :ruby
 
 # Organisation of the seeds
 gem 'seedbank'

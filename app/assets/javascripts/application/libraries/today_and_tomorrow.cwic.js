@@ -26,7 +26,7 @@ CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
 
 CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   var tat = this;
-  var dispatcher = new WebSocketRails(window.location.host + Routes.websocket_path());
+  var dispatcher = new WebSocketRails(websocket_url);
 
   // Open reservations_channel for organisation
   if(typeof window.cwic_today_and_tomorrow_channel === 'undefined') {
