@@ -8,6 +8,7 @@ class EntityType < ActiveRecord::Base
   belongs_to :icon, class_name: 'EntityTypeIcon'
 
   has_many :entities, dependent: :destroy
+  has_many :reservations, through: :entities
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type
   has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
   has_many :images, class_name: 'EntityImage', as: :imageable, dependent: :destroy, inverse_of: :imageable
@@ -22,6 +23,7 @@ class EntityType < ActiveRecord::Base
   validates :slack_after, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :min_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :max_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
+  validate :one_default_reservation_status
 
   # Model extensions
   audited only: [:name, :description, :slack_before, :slack_after, :min_reservation_length, :max_reservation_length], allow_mass_assignment: true
@@ -84,14 +86,34 @@ class EntityType < ActiveRecord::Base
   end
   alias_method_chain :icon, :default
 
+  def default_reservation_status(memory: false)
+    if memory
+      # Lookup default status in cached statuses ignoring the just destroyed (marked_for_destruction) statuses
+      # This is useful for getting the right default status in the middle of create or update actions.
+      reservation_statuses.reject(&:marked_for_destruction?).select(&:default_status).first
+    else
+      # Lookup default status in database
+      reservation_statuses.where(default_status: true).first!
+    end
+  end
+
   private
 
+  def one_default_reservation_status
+    count = reservation_statuses.reject(&:marked_for_destruction?).count(&:default_status)
+    if count > 1
+      errors.add(:base, I18n.t('activerecord.errors.models.entity_type.multiple_default_reservation_statuses'))
+    elsif count < 1
+      errors.add(:base, I18n.t('activerecord.errors.models.entity_type.no_default_reservation_status'))
+    end
+  end
+
   def initialize_reservation_statuses
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3)
-    self.reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#FFF849', index: 0, default_status: true, blocking: true, info_boards: false, billable: false)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#FFBC49', index: 1, blocking: true, info_boards: true, billable: true)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18C13D', index: 2, blocking: true, info_boards: true, billable: true)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3, blocking: false, info_boards: false, billable: false)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4, blocking: true, info_boards: true, billable: true)
   end
 
   def create_info_screen_entity_types

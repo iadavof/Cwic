@@ -74,7 +74,7 @@ class SearchController < ApplicationController
   def includes_for_type(type)
     case type
     when 'Reservation'
-      [:reservation_status, :entity, :organisation_client]
+      [:status, :entity, :organisation_client]
     when 'Entity'
       [:entity_type, :images]
     when 'EntityType'

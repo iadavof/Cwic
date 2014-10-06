@@ -10,6 +10,7 @@ nl:
   general: 'Algemeen'
   minutes: 'Minuten'
   minutes_abbr: 'Min.'
+  deleted: '<Verwijderd>'
   multiple:
     delete: 'Verwijderen'
     edit: 'Bewerken'
@@ -272,6 +273,7 @@ nl:
       reservation_status:
         name: 'Naam'
         color: 'Kleur'
+        default_status: 'Standaard'
         blocking: 'Blok&shy;ka&shy;de'
         info_boards: 'In&shy;for&shy;ma&shy;tie&shy;scher&shy;men'
         billable: 'De&shy;cla&shy;reer&shy;baar'
@@ -307,6 +309,9 @@ nl:
           attributes:
             user:
               taken: 'bestaat al binnen de organisatie'
+        entity_type:
+          no_default_reservation_status: 'Er is geen standaard reserveringsstatus geselecteerd'
+          multiple_default_reservation_statuses: 'Er zijn meerdere standaard reserveringsstatussen geselecteerd'
         reservation:
           period_not_allowed: 'De periode van de reservering is niet toegestaan volgens de gedefinieerde reserveerperioden voor dit object'
           period_too_small: 'Een reservering voor dit object moet minimaal %{count} minuten duren'
