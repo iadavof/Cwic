@@ -533,6 +533,8 @@ nl:
         users: 'Alle gebruikers'
         feedbacks: 'Feedback'
         entity_type_icons: 'Objecticonen'
+        intro_sections: "Intropagina\'s"
+        newsletter_signups: 'Nieuwsbriefaanmeldingen'
       links:
         index: 'Lijst'
         new: 'Nieuw'
