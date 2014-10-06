@@ -86,7 +86,7 @@ nl:
       reservation_status:
         one: 'Reserveringsstatus'
         other: 'Reserveringsstatussen'
-      reserve_period:
+      reservation_period:
         one: 'Reserveerperiode'
         other: 'Reserveerperioden'
     attributes:
@@ -277,12 +277,12 @@ nl:
         blocking: 'Blok&shy;ka&shy;de'
         info_boards: 'In&shy;for&shy;ma&shy;tie&shy;scher&shy;men'
         billable: 'De&shy;cla&shy;reer&shy;baar'
-      reserve_period:
+      reservation_period:
         name: 'Naam'
         period_amount: 'Periode aantal'
         period_unit: 'Periode eenheid'
         price: 'Prijs'
-      entity_type/reserve_periods:
+      entity_type/reservation_periods:
         period_amount: 'Periode bij reserveerperiode'
         period_unit: 'Periode bij reserveerperiode'
         price: 'Prijs bij reserveerperiode'
@@ -447,7 +447,7 @@ nl:
       numeral_name: 'Oneindig'
       repetition_name: 'Geen herhaling'
 
-  reserve_period:
+  reservation_period:
     default_name:
       one: 'Per %{unit}'
       other: 'Per %{count} %{unit_plural}'
@@ -631,10 +631,10 @@ nl:
       options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
     form_reservation_statuses:
       reservation_status_help: 'Met reserveringsstatussen kunt u aangeven waar een reservering zich bevindt in het verwerkingsproces. U kunt hier zelf statussen aanmaken die aansluiten bij uw werkwijze en instellen welke consequenties aan individuele statussen moeten worden verbonden (bijvoorbeeld of er nieuwe reserveringen kunnen worden aangemaakt die overlappen met een andere reservering met de status ''geannuleerd'').'
-    form_reserve_periods:
-      reserve_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
+    form_reservation_periods:
+      reservation_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
       reservation_length_limitations: 'Duurbeperkingen'
-    reserve_period_fields:
+    reservation_period_fields:
       period: 'Periode'
       per_period: 'per periode'
 

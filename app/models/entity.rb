@@ -17,7 +17,7 @@ class Entity < ActiveRecord::Base
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Model extensions
-  delegate :reserve_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
+  delegate :reservation_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
   audited only: [:name, :entity_type_id, :description, :color, :include_entity_type_images, :frontend_name, :slack_before, :slack_after], allow_mass_assignment: true
 
   # Validations
@@ -107,12 +107,12 @@ class Entity < ActiveRecord::Base
   end
 
   def reservation_matches_periods?(begins_at, ends_at)
-    reserve_periods.empty? || reservation_cost(begins_at, ends_at).present? # TODO for now we consider every reservation valid if there are no reserve periods defined. Is this really the desired behaviour?
+    reservation_periods.empty? || reservation_cost(begins_at, ends_at).present? # TODO for now we consider every reservation valid if there are no reserve periods defined. Is this really the desired behaviour?
   end
 
   def reservation_cost(begins_at, ends_at)
     length = (ends_at - begins_at).round
-    Cwic::Knapsack.new(reserve_periods.map { |rp| { c: rp.price, w: rp.length } }).solve_minimum(length)
+    Cwic::Knapsack.new(reservation_periods.map { |rp| { c: rp.price, w: rp.length } }).solve_minimum(length)
   end
 
   def update_reservations_slack_warnings(force = false) # Also used in EntityType model so this method should be public

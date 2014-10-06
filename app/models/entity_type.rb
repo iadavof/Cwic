@@ -14,7 +14,7 @@ class EntityType < ActiveRecord::Base
   has_many :images, class_name: 'EntityImage', as: :imageable, dependent: :destroy, inverse_of: :imageable
   has_many :reservation_statuses, dependent: :destroy, inverse_of: :entity_type
   has_many :info_screen_entity_types, dependent: :destroy
-  has_many :reserve_periods, dependent: :destroy, inverse_of: :entity_type
+  has_many :reservation_periods, dependent: :destroy, inverse_of: :entity_type
 
   # Validations
   validates :name, presence: true, length: { maximum: 255 }, uniqueness: { scope: :organisation }
@@ -38,7 +38,7 @@ class EntityType < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
   accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :reservation_statuses, allow_destroy: true
-  accepts_nested_attributes_for :reserve_periods, allow_destroy: true
+  accepts_nested_attributes_for :reservation_periods, allow_destroy: true
 
   # Scopes
   pg_global_search against: { name: 'A', description: 'B' }

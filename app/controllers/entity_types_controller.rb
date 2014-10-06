@@ -15,7 +15,7 @@ class EntityTypesController < CrudController
       options_attributes: [:id, :name, :description, :amount_relevant, :default_price, :index, :_destroy],
       images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
       reservation_statuses_attributes: [:id, :name, :color, :index, :default_status, :blocking, :info_boards, :billable, :_destroy],
-      reserve_periods_attributes: [:id, :name, :period_amount, :period_unit_id, :min_periods, :max_periods, :price, :_destroy],
+      reservation_periods_attributes: [:id, :name, :period_amount, :period_unit_id, :min_periods, :max_periods, :price, :_destroy],
     ]
   end
 end

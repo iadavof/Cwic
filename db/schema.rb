@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006084637) do
+ActiveRecord::Schema.define(version: 20141006133906) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -359,6 +359,19 @@ ActiveRecord::Schema.define(version: 20141006084637) do
     t.datetime "updated_at"
   end
 
+  create_table "reservation_periods", force: true do |t|
+    t.integer  "entity_type_id", limit: 8
+    t.string   "name"
+    t.integer  "period_amount"
+    t.integer  "period_unit_id", limit: 8
+    t.decimal  "price"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  add_index "reservation_periods", ["entity_type_id"], name: "index_reservation_periods_on_entity_type_id", using: :btree
+  add_index "reservation_periods", ["period_unit_id"], name: "index_reservation_periods_on_period_unit_id", using: :btree
+
   create_table "reservation_statuses", force: true do |t|
     t.string   "name"
     t.integer  "index"
@@ -395,19 +408,6 @@ ActiveRecord::Schema.define(version: 20141006084637) do
   add_index "reservations", ["organisation_client_id"], name: "index_reservations_on_organisation_client_id", using: :btree
   add_index "reservations", ["organisation_id"], name: "index_reservations_on_organisation_id", using: :btree
   add_index "reservations", ["status_id"], name: "index_reservations_on_status_id", using: :btree
-
-  create_table "reserve_periods", force: true do |t|
-    t.integer  "entity_type_id", limit: 8
-    t.string   "name"
-    t.integer  "period_amount"
-    t.integer  "period_unit_id", limit: 8
-    t.decimal  "price"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
-
-  add_index "reserve_periods", ["entity_type_id"], name: "index_reserve_periods_on_entity_type_id", using: :btree
-  add_index "reserve_periods", ["period_unit_id"], name: "index_reserve_periods_on_period_unit_id", using: :btree
 
   create_table "stickies", force: true do |t|
     t.integer  "stickable_id",    limit: 8

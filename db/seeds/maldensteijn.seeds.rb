@@ -24,20 +24,20 @@ after 'iada' do
   # Create entity types of Maldensteijn
   properties = [people_property.dup, seats_property.dup, area_property.dup]
   foyer = EntityType.create!(organisation: maldensteijn, name: 'Foyer', description: 'Open ruimte met een bar en luxe zitplaatsen.', properties: properties)
-  foyer.reserve_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 100)
+  foyer.reservation_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 100)
 
   properties = [people_property.dup, area_property.dup.set(index: 1), drinks_property.dup.set(index: 2), shape_property.deep_clone(include: :options).set(index: 3)]
   zaal = EntityType.create!(organisation: maldensteijn, name: 'Zaal', description: 'Grote ruimte voor diverse doeleinden.', properties: properties)
-  zaal.reserve_periods.create(period_unit: TimeUnit.find_by(key: :half_hour), price: 30)
-  zaal.reserve_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 50)
+  zaal.reservation_periods.create(period_unit: TimeUnit.find_by(key: :half_hour), price: 30)
+  zaal.reservation_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 50)
 
   properties = [people_property.dup, seats_property.dup, area_property.dup.set(default_value: 20), drinks_property.dup.set(default_value: true), shape_property.deep_clone(include: :options).tap { |p| p.options.detect { |o| o.name == 'Rechthoekig' }.default = true }]
   kantoorruimte = EntityType.create!(organisation: maldensteijn, name: 'Kantoorruimte', description: 'Grote ruimte voor vergaderingen en bijeenkomsten met koffie.', properties: properties)
-  kantoorruimte.reserve_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 50)
+  kantoorruimte.reservation_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 50)
 
   properties = [seats_property.dup.set(index: 0)]
   theaterzaal = EntityType.create!(organisation: maldensteijn, name: 'Theaterzaal', description: 'Grote theaterzaal met tribune.', properties: properties)
-  theaterzaal.reserve_periods.create(period_amount: 6, period_unit: TimeUnit.find_by(key: :hour), price: 5000)
+  theaterzaal.reservation_periods.create(period_amount: 6, period_unit: TimeUnit.find_by(key: :hour), price: 5000)
 
   # Create entities of Maldensteijn
   entity = Entity.new(organisation: maldensteijn, entity_type: foyer, name: 'Bovenfoyer', description: 'Foyer op de eerste verdieping.')
