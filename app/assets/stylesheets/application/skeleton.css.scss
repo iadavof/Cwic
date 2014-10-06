@@ -20,6 +20,11 @@ body {
   z-index: 199;
 }
 
+#local-menu {
+  position: relative;
+  z-index: 198;
+}
+
 #content-area {
   overflow: auto !important;
   -webkit-overflow-scrolling: touch; /* Fix momentum scrolling on IOS */
@@ -27,11 +32,6 @@ body {
   > .inner {
     position: relative;
   }
-}
-
-#local-menu {
-  position: relative;
-  z-index: 198;
 }
 
 html.logged-in {

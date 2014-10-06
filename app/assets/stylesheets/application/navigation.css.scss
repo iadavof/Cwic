@@ -288,13 +288,27 @@ html.js body[data-current-user-id=''] #local-menu {
   text-align: right;
 }
 
+html.logged-in.flexbox, html.logged-in.js.flexbox {
+  #local-menu {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-between;
+    align-items: stretch;
+    
+    &.clearfix:after {
+      display: none;
+    }
+    
+    .navigation-actions, .context-actions, .page-actions {
+      width: auto;
+      flex: 0 0 auto;
+    }
+  }
+}
+
 /* Pagination and tabs */
 
 .pagination {
-  margin: 30px 0;
-  &:first-child {
-    margin-top: 10px;
-  }
   :after {
     display: block;
     content: '.';
@@ -312,7 +326,7 @@ html.js body[data-current-user-id=''] #local-menu {
       margin-left: 0;
     }
     &.gap, &.current, a {
-      padding: 9px 12px;
+      padding: 0.7em 0.9em;
     }
     &.gap {
       border: 0 none;
