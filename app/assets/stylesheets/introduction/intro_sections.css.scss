@@ -39,6 +39,53 @@ h1 strong {
   width: 100%;
 }
 
+.newsletter-signup {
+  text-align: center;
+}
+
+.newsletter-signup {
+  > .inner {
+    display: inline-block;
+    background-color: #fff;
+    padding: 1.5em;
+    margin: 0 1.5em;
+    box-shadow: 0 0 0.8em rgba(0, 0, 0, 0.5);
+    max-width: 33em;
+  }
+  
+  > .inner {
+    h2 {
+      margin: 0;
+      padding: 0;
+    }
+
+    p {
+      padding: 0;
+      margin: 1.5em 0;
+    }
+
+    form {
+      .field {
+        margin: 0 -1.5em -1em 0;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: center;
+      }
+
+      .field {
+        input {
+          margin: 0 1.5em 1em 0;
+          flex: 1 1 auto;
+        }
+        input:last-child {
+          flex: 0 0 auto;
+        }
+      }
+    }
+  }
+}
+
 .onepage-scroll {
   height: 100%;
   margin: 0 auto;
@@ -71,21 +118,46 @@ h1 strong {
   z-index: 0;
 }
 
-.onepage-scroll > section.intro-section-home .background-slider {
-  position: absolute;
-  height: 100%;
-  width: 100%;
-  top: 0;
-  left: 0;
-  z-index: 0;
-}
+.onepage-scroll > section.intro-section-home {
+  .background-slider {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    z-index: 0;
+  }
 
-.onepage-scroll > section.intro-section-home .background-slider > div {
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
+  .background-slider {
+    > div {
+      position: absolute;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+    }
+
+    > div {
+      &:before {
+        z-index: 1;
+      }
+
+      &:after {
+        display: block;
+        content: ' ';
+        background-color: rgba(#1c9cb2,0.75);
+        position: absolute;
+        left: 0;
+        bottom: 0;
+        width: 50%;
+        height: 150%;
+        margin-bottom: 3%;
+        transform: rotate(-15deg);
+        transform-origin: 100% 100%;
+        z-index: 1;
+      }
+    }
+  }
 }
 
 .onepage-scroll > section.intro-section-home .background-slider > div:before,
@@ -98,25 +170,6 @@ h1 strong {
   bottom: 0;
   left: 0;
   right: 0;
-}
-
-.onepage-scroll > section.intro-section-home .background-slider > div:before {
-  z-index: 1;
-}
-
-.onepage-scroll > section.intro-section-home .background-slider > div:after {
-  display: block;
-  content: ' ';
-  background-color: rgba(#1c9cb2,0.75);
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  width: 50%;
-  height: 150%;
-  margin-bottom: 3%;
-  transform: rotate(-15deg);
-  transform-origin: 100% 100%;
-  z-index: 1;
 }
 
 .onepage-scroll > section div.home-text-section {
