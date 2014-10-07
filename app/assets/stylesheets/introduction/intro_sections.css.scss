@@ -50,7 +50,7 @@ h1 strong {
     padding: 1.5em;
     margin: 0 1.5em;
     box-shadow: 0 0 0.8em rgba(0, 0, 0, 0.5);
-    max-width: 32em;
+    max-width: 33em;
   }
   
   > .inner {
@@ -67,11 +67,19 @@ h1 strong {
     form {
       .field {
         margin: 0 -1.5em -1em 0;
+        display: flex;
+        flex-flow: row wrap;
+        align-items: stretch;
+        justify-content: center;
       }
 
       .field {
         input {
           margin: 0 1.5em 1em 0;
+          flex: 1 1 auto;
+        }
+        input:last-child {
+          flex: 0 0 auto;
         }
       }
     }
