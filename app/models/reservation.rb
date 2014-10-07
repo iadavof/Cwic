@@ -49,7 +49,7 @@ class Reservation < ActiveRecord::Base
   after_create :save_recurrences, on: :create, if: :recurrence_definition_recurring?
   after_save :update_warning_state_neighbours
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
-  after_save :trigger_update_websockets
+  after_save :trigger_update_websockets, if: -> { Object.const_defined?('WebsocketRails') }
 
   before_destroy :fix_base_reservation_reference, if: -> { base_reservation_id == id }
   after_destroy :trigger_update_websockets, if: -> { Object.const_defined?('WebsocketRails') }
