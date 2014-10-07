@@ -704,7 +704,7 @@ nl:
       full_form: 'Meer opties'
     multiple:
       delete:
-        are_you_sure_you_want_delete: 'Weet je het zeker dat je onderstaande reserveringen wilt verwijderen?'
+        are_you_sure_you_want_delete: 'Weet u zeker dat u onderstaande reserveringen wilt verwijderen?'
 
   reservation_recurrence_definitions:
     form_fields:
@@ -780,6 +780,9 @@ nl:
 
   introduction:
     index:
+      newsletter: 'Nieuwsbrief'
+      sign_up_for_newsletter: 'Cwic is nog volop in ontwikkeling, dus er kunnen op dit moment nog geen accounts worden aangemaakt. Wilt u als eerste weten wanneer dit wel mogelijk is? Schrijf u dan in voor de nieuwsbrief.'
+      submit_newsletter_subscription: 'Inschrijven'
       start_using_cwic: 'Ga nu Cwic gebruiken'
       go_to_app: 'Ga naar de applicatie'
       sign_in: 'Inloggen'
@@ -837,6 +840,6 @@ nl:
       search_for_tag: 'Zoeken naar alle items met de tag "%{tag}"'
 
   newsletter_signups:
-    thanks: 'Bedankt voor het aanmelden voor de Cwic nieuwsbrief! Je hoort van ons!'
-    invalid_email: 'Het ingevoerde e-mailadres voor de nieuwsbriefaanmelding lijkt niet te kloppen'
-    enter_your_email: 'Vul hier je e-mailadres in...'
+    thanks: 'Bedankt voor het aanmelden voor de Cwic nieuwsbrief! U hoort van ons!'
+    invalid_email: 'Het ingevoerde e-mailadres voor de nieuwsbriefaanmelding lijkt niet te kloppen.'
+    enter_your_email: 'Vul hier uw e-mailadres in...'

@@ -11,12 +11,6 @@ section.intro-section-home
   = render 'layouts/flash_messages'
 
   .home-text-section
-    .newsletter-signup
-      = form_for @newsletter_signup, url: { controller: :newsletter_signups, action: :public_signup } do |f|
-        .field
-          = f.email_field :email, placeholder: t('newsletter_signups.enter_your_email')
-          = f.submit
-
     .intro-actions
       - if user_signed_in?
         .intro-go-to-app
@@ -24,8 +18,20 @@ section.intro-section-home
         .intro-sign-out
           = link_to(t('.sign_out'), destroy_user_session_path, class: 'button', method: :delete)
       - else
-        .intro-sign-up
-          = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
+        - if Rails.application.config.disable_registrations
+          .newsletter-signup
+            .inner
+              h2
+                = t('.newsletter')
+              p
+                = t('.sign_up_for_newsletter')
+              = form_for @newsletter_signup, url: { controller: :newsletter_signups, action: :public_signup } do |f|
+                .field
+                  = f.email_field :email, placeholder: t('newsletter_signups.enter_your_email')
+                  = f.submit t('.submit_newsletter_subscription')
+        - else
+          .intro-sign-up
+            = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
         .intro-sign-in
           = link_to(t('.sign_in'), new_user_session_path, class: 'button')
 
