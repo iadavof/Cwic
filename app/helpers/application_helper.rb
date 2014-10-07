@@ -67,6 +67,6 @@ module ApplicationHelper
   end
 
   def websocket_url
-    "#{request.host}:#{WebsocketRails.config.standalone_port}#{websocket_path}"
+    "#{request.host}:#{WebsocketRails.config.standalone_port}#{websocket_path}" if Object.const_defined?('WebsocketRails')
   end
 end
