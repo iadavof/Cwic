@@ -56,7 +56,8 @@ section.intro-section-last
         td = t('yes')
 
   .intro-sign-up
-    = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
+    - unless Rails.application.config.disable_registrations
+      = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
 
   .intellectual-property
     = t('.intellectual_property_html')
