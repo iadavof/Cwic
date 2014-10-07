@@ -10,7 +10,7 @@
 == filter_summary(@organisation_client, params[:date_domain_from], params[:date_domain_to])
 - if @reservations.empty? && params[:mini_search].present?
   p
-    = t('empty_for_search', models: Reservation.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe
+    => t('empty_for_search', models: Reservation.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe
     = link_to(t('remove_search'), @organisation_client.present? ? organisation_organisation_client_reservations_path(current_organisation, @organisation_client) : organisation_reservations_path(current_organisation))
 
 - elsif @reservations.empty?

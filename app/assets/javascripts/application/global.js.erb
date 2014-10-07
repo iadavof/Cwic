@@ -416,8 +416,10 @@ APP.global = {
       input.wrap('<div class="field-with-clear"></div>');
       var span = $('<span>', { text: 'X' });
       input.after(span);
-      span.on('click', function(){
+      span.on('click', function() {
         input.val(null);
+        $(this).remove();
+        input.unwrap();
         input.trigger('change');
       });
     }

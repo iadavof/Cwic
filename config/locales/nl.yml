@@ -2,6 +2,7 @@ nl:
   index_objects_html_of: 'Lijst met <strong>%{models}</strong> van <strong>%{name}</strong>'
   empty_objects_add_first_html: 'Om deze optie te kunnen gebruiken moeten er eerst %{models} worden aangemaakt: %{to_new_object_link}.'
   remove_search: 'Zoekopdracht verwijderen'
+  empty_for_search: 'Er zijn helaas geen resultaten die voldoen aan je criteria.'
   settings: 'Instellingen'
   all_organisations: 'Alle organisaties'
   csv: 'csv'

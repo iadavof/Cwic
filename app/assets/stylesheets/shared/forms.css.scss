@@ -224,27 +224,32 @@ fieldset.inline-fieldset {
 
 div.field-with-clear {
   display: inline-block;
+}
+
+div.field-with-clear {
   input {
     border-right: 0 none;
     margin-right: 0;
   }
+
   span {
-    font-family: 'Clear Sans', 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;
+    font-family: "Clear Sans","Lucida Sans Unicode","Lucida Grande",sans-serif;
     font-size: 1em;
     display: inline-block;
-    width: 1em;
-    height: 100%;
     color: #fff;
     background-color: #FF3520;
-    vertical-align: middle;
-    margin: -1px 5px 0 -2px;
-    text-align: center;
-    padding: 4px;
+    padding: .8em .6em;
     border: 1px solid #ccc;
+    margin: 0 5px 0 -1px;
+    line-height: normal;
     border-left: 0 none;
     cursor: pointer;
     transition: background-color 0.2s ease-in-out;
     background-image: linear-gradient(to bottom, rgba(255,255,255,0.2) 0%, transparent 60%);
+    box-sizing: border-box;
+  }
+
+  span {
     &:hover {
       background-color: #ff4a37;
     }
