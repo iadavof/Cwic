@@ -27,7 +27,7 @@ module Cwic
     config.autoload_paths += %W(#{config.root}/lib/i18n_alchemy)
 
     # Precompile jquery libraries for the case that CDN is not available
-    config.assets.precompile += %w(jquery.js jquery-ui.js introduction.js introduction.css info_screen.js info_screen.css)
+    config.assets.precompile += %w(jquery.js jquery-ui.js introduction.js introduction.css info_screen.js info_screen.css websocket_rails/main.js)
 
     # Load core extensions (only autoloading is not enough, since the String class is already loaded and therefore the core_ext will not be loaded anymore)
     Dir[File.join(Rails.root, 'lib', 'core_ext', '*.rb')].each { |l| require l }

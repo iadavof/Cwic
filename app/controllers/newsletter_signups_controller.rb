@@ -1,8 +1,9 @@
 class NewsletterSignupsController < CrudController
-  skip_before_action :load_member, only: [:public_signup]
+  skip_before_action :authenticate_user!, only: :public_signup
+  skip_before_action :load_member, only: :public_signup
 
   def public_signup
-    # TODO fix this when crud controller is improved with split of build_member and load member callbacks
+    # TODO improve this when crud controller is improved with split of build_member and load member callbacks
     @newsletter_signup = build_member
     if @newsletter_signup.save
       redirect_to root_path, notice: I18n.t('newsletter_signups.thanks')
