@@ -514,8 +514,8 @@ nl:
         settings: 'Instellingen'
         admin: 'Admin'
       feedback: 'Feedback'
-      organisation: 'Organisatie'
     user_menu:
+      organisation: 'Organisatie'
       actions: 'Acties'
       logout: 'Uitloggen'
     submenu:
