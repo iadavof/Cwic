@@ -14,8 +14,6 @@
           = sortable_table_head(Reservation, [:entity, :name], prefix: local_assigns[:prefix])
           = sortable_table_head(Reservation, :begins_at, prefix: local_assigns[:prefix])
           = sortable_table_head(Reservation, :ends_at, prefix: local_assigns[:prefix])
-          = table_head(Reservation, :slack_before)
-          = table_head(Reservation, :slack_after)
           th
 
       tbody
@@ -34,8 +32,6 @@
             td = name_link_to_show([@organisation, reservation.entity])
             td = l(reservation.begins_at, format: :long)
             td = l(reservation.ends_at, format: :long)
-            td = "#{reservation.slack_before} #{t('minutes_abbr').lcfirst}"
-            td = "#{reservation.slack_after} #{t('minutes_abbr').lcfirst}"
             td.icons
               = icon_link_to_edit([@organisation, reservation])
               = icon_link_to_destroy([@organisation, reservation])
