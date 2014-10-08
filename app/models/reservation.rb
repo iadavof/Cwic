@@ -81,14 +81,9 @@ class Reservation < ActiveRecord::Base
 
   # Get all reservations that start OR end within the time domain (overlap with the date domain).
   # Options:
-  # - delocalize: delocalize dates with the current locale if they are strings
   # - include_edges: indicates that we also want the reservations directly outside the scope. This can be useful to check for collisions.
   # - ignore_reservations: exclude the listed reservations or reservation ids. This can be useful to check if an entity is available when editting a reservation.
   def self.by_date_domain(from, to, options = {})
-    # Delocalize or parse from and to as date (if strings)
-    from = (options[:delocalize] ? Date.strptime(from, I18n.t('date.formats.default')) : from.to_date) if from.present? && from.is_a?(String)
-    to = (options[:delocalize] ? Date.strptime(to, I18n.t('date.formats.default')) : to.to_date) if to.present? && to.is_a?(String)
-
     # Translate dates to beginning and end of day
     from = from.beginning_of_day if from.is_a?(Date)
     to = to.end_of_day if to.is_a?(Date)

@@ -7,7 +7,7 @@
 - content_for :local_menu_page do
   = render 'layouts/mini_search', current_search_type: Reservation.model_name, include_date: true
 
-== filter_summary(@organisation_client, params[:date_domain_from], params[:date_domain_to])
+== filter_summary(@organisation_client, @date_domain_from, @date_domain_to)
 - if @reservations.empty? && params[:mini_search].present?
   p
     => t('empty_for_search', models: Reservation.model_name.human(count: 2).lcfirst, search: params[:mini_search]).html_safe
