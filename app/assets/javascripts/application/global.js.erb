@@ -93,7 +93,7 @@ APP.global = {
   },
   bindHelpModalEvents: function() {
     $('.help i').on('click', function() {
-      var content = $('<p/>');
+      var content = $('<p>');
       content.text($(this).attr('title'));
       APP.modal.openModal('help-modal', content);
     });
@@ -136,14 +136,20 @@ APP.global = {
     var $submenuBox = $('#submenu-box');
     var $menuItems = $('#main-menu > li');
 
-    this.slideSubMenuByMenuItem($('#main-menu > li.active').first().attr('id'), false);
-
+    var activeMenuItem = $('#main-menu > li.active').first();
+    if(activeMenuItem.length > 0) {
+      // Open the active menu without animation
+      this.slideSubMenuByMenuItem(activeMenuItem.attr('id'), false);
+    }
     $('#main-menu > li > a').on('click', function() {
       return APP.global.slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
     });
 
     $submenuBox.find('a#collapse-menu').on('click', function() {
-        APP.global.slideSubMenu($(this).closest('#submenu-box').find('submenu.selected'), 'collapse', true);
+      var submenuBox = $(this).closest('#submenu-box').find('.submenu.selected');
+      APP.global.slideSubMenu(submenuBox, 'collapse', true, function(){
+        $('li#' + submenuBox.data('main-menu-relation')).removeClass('selected');
+      });
     });
 
     /* Highlight shortcut letters */
@@ -165,11 +171,7 @@ APP.global = {
     var $searchBar = $('#search-bar');
     $('#open-search-button').on('click', function() {
       $(window).trigger('header-start-animation');
-      if(!$searchBar.hasClass('open')) {
-        APP.global.slideSearchBar('expand');
-      } else {
-        APP.global.slideSearchBar('collapse');
-      }
+      APP.global.slideSearchBar($searchBar.hasClass('open') ? 'collapse' : 'expand');
       return false;
     });
   },
@@ -179,16 +181,11 @@ APP.global = {
     var complete = function() {
       $(window).trigger('header-animated');
       if (action == 'expand') {
-        $searchField.focus();
+        $searchField.select();
       }
     };
 
-    if (action == 'collapse') {
-      $searchField.blur().val('');
-      $('#open-search-button').removeClass('open');
-    } else {
-      $('#open-search-button').addClass('open');
-    }
+    $('#open-search-button').toggleClass('open', action == 'expand');
 
     if (Modernizr.flexbox) {
       APP.util.expandCollapse('#search-bar', {action: action, direction: 'vertical', duration: 150, targetDimension: 'auto'}, complete);
@@ -196,11 +193,7 @@ APP.global = {
       var $pageWrapper = $('#page-wrapper');
       var $searchBar = $('#search-bar');
       $pageWrapper.velocity({top: (action == 'expand' ? $('#header').outerHeight() : $('#menu-bar').outerHeight()) + 'px'}, 150, 'swing', function() {
-        if (action == 'expand') {
-          $searchBar.addClass('open');
-        } else {
-          $searchBar.removeClass('open');
-        }
+        $searchBar.toggleClass('open', action == 'expand');
         complete();
       });
     }
@@ -226,17 +219,10 @@ APP.global = {
       var $submenuBox = $('#submenu-box');
       var $menuItems = $('#main-menu > li');
 
-      if ($submenuBox.hasClass('open')) {
-        /* Contract expanded submenu first, then expand requested submenu */
-        APP.global.slideSubMenu($relatedSubmenu, 'switch', animated, function() {
-          $menuItems.removeClass('selected'); $menuItem.addClass('selected');
-        });
-      } else {
-        /* Expand requested submenu */
-        APP.global.slideSubMenu($relatedSubmenu, 'expand', animated, function() {
-          $menuItems.removeClass('selected'); $menuItem.addClass('selected');
-        });
-      }
+      APP.global.slideSubMenu($relatedSubmenu, $submenuBox.hasClass('open') ? 'switch' : 'expand', animated, function() {
+        $menuItems.removeClass('selected');
+        $menuItem.addClass('selected');
+      });
       return false;
     }
   },
