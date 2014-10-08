@@ -156,7 +156,7 @@ class Entity < ActiveRecord::Base
   end
 
   def is_available_between?(begins_at, ends_at, options = {})
-    self.reservations.by_date_domain(begins_at, ends_at, options).empty?
+    self.reservations.blocking.by_date_domain(begins_at, ends_at, options).empty?
   end
 
   private
