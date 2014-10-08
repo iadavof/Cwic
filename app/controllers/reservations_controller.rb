@@ -252,7 +252,7 @@ class ReservationsController < ApplicationController
   def parse_date(string)
     # IMPROVEMENT: this is used the date domain filter. It might be better to rewrite these filters to an active model object and use default Rails validations and I18n::Alchemy for parsing.
     begin
-      I18n::Alchemy::DateParser.parse(string).to_date
+      I18n::Alchemy::DateParser.parse(string).to_date if string.present?
     rescue ArgumentError
       nil
     end
