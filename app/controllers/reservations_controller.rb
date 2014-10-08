@@ -90,7 +90,7 @@ class ReservationsController < ApplicationController
 
   # PATCH/PUT /reservations/1/update_status
   def update_status
-    @reservation.status = @reservation.entity.entity_type.reservation_statuses.find(params[:status_id].to_i)
+    @reservation.status = @reservation.entity.reservation_statuses.find(params[:status_id].to_i)
     if @reservation.status.present? && @reservation.save
       render json: { }, status: :ok
     else

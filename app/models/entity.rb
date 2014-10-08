@@ -17,7 +17,7 @@ class Entity < ActiveRecord::Base
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
 
   # Model extensions
-  delegate :reservation_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
+  delegate :reservation_statuses, :default_reservation_status, :reservation_periods, :min_reservation_length, :min_reservation_length_seconds, :max_reservation_length, :max_reservation_length_seconds, to: :entity_type
   audited only: [:name, :entity_type_id, :description, :color, :include_entity_type_images, :frontend_name, :slack_before, :slack_after], allow_mass_assignment: true
 
   # Validations
