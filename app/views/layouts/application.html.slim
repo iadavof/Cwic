@@ -4,6 +4,7 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
   head
     title
       = (content_for?(:page_title) ? sanitize(yield(:page_title), tags: []) : t('default_title')) + " | Cwic"
+    = favicon_link_tag "favicon.ico"
     = stylesheet_link_tag "application", media: "all", "data-turbolinks-track" => true
     = jquery_include_tag :google
     = jquery_ui_include_tag :google
