@@ -249,7 +249,7 @@ CwicInfoScreen.prototype.initFullScreenControls = function() {
   var is = this;
   $('body').append($('<a>', {id: 'fullscreen-link'}).html($('<i>', {'class':'icon-resize-full'})));
   $('#fullscreen-link').on('click', function() {
-    is.requestFullScreen(document.getElementById('content'));
+    is.requestFullScreen(document.getElementById('info-screen-container'));
   });
 };
 

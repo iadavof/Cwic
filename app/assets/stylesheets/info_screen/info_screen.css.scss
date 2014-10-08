@@ -4,13 +4,6 @@ body {
 }
 
 body {
-  #header,
-  #submenu-box,
-  #local-menu,
-  h1 {
-    display: none;
-  }
-
   #fullscreen-link {
     position: fixed;
     bottom: 0;
@@ -33,285 +26,283 @@ body {
       font-size: 3em;
     }
   }
+
 }
 
-html.js {
-  body.controller-info_screens {
-    &.action-show {
-      #page-wrapper,
-      #below-header {
-        position: static;
-        top: auto;
-        left: auto;
-        right: auto;
-        bottom: auto;
-      }
-    }
-  }
+html,
+body,
+#info-screen-container {
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  background-color: #eee;
 }
 
-:full-screen > .inner {
+#info-screen-container:fullscreen {
   cursor: image-url("blank_cursor.png"), auto;
 }
 
-.info-screen-header {
-  padding: 10px 15px;
-  position: relative;
-  z-index: 99;
-  line-height: normal;
-  text-align: center;
-  background-color: #1c9cb2;
-}
-
-.info-screen-header {
-  .current-time {
-    display: inline-block;
-    font-size: 4em;
-    color: #fff;
-    font-family: 'Signika', sans-serif;
+#info-screen-container {
+  .info-screen-header {
+    padding: 10px 15px;
+    position: relative;
+    z-index: 99;
+    line-height: normal;
+    text-align: center;
+    background-color: #1c9cb2;
   }
 
-  .current-time {
-    .current-day {
-      font-weight: bold;
-      text-transform: lowercase;
+  .info-screen-header {
+    .current-time {
+      display: inline-block;
+      font-size: 4em;
+      color: #fff;
+      font-family: 'Signika', sans-serif;
     }
 
-    .current-date {
-      font-family: 'SignikaLight', sans-serif;
-      margin-right: 1em;
-    }
+    .current-time {
+      .current-day {
+        font-weight: bold;
+        text-transform: lowercase;
+      }
 
-    .current-hour,
-    .current-minute {
-      font-size: 1.1em;
-      font-weight: bold;
-    }
+      .current-date {
+        font-family: 'SignikaLight', sans-serif;
+        margin-right: 1em;
+      }
 
-    .current-second {
-      font-size: 0.6em;
-      vertical-align: super;
-      line-height: 0;
-      position: relative;
-      top: 0.3em;
+      .current-hour,
+      .current-minute {
+        font-size: 1.1em;
+        font-weight: bold;
+      }
+
+      .current-second {
+        font-size: 0.6em;
+        vertical-align: super;
+        line-height: 0;
+        position: relative;
+        top: 0.3em;
+      }
     }
   }
-}
 
-#realtime-list {
-  list-style-type: none;
-  display: block;
-  padding: 0;
-  margin: 0;
-  font-family: 'Signika', sans-serif;
-}
-
-#realtime-list {
-  li {
+  #realtime-list {
+    list-style-type: none;
     display: block;
     padding: 0;
     margin: 0;
-    border-bottom: 2px solid #aaa;
-    border-left: 15px solid #18c13d;
+    font-family: 'Signika', sans-serif;
   }
 
-  li {
-    > .inner {
-      padding: 2em 13em 2em 3em;
-      color: #666;
-      background-color: #fff;
-      position: relative;
+  #realtime-list {
+    li {
+      display: block;
+      padding: 0;
+      margin: 0;
+      border-bottom: 2px solid #aaa;
+      border-left: 15px solid #18c13d;
     }
 
-    > .inner {
-      h2 {
-        margin: 0;
-        padding: 0;
-        font-size: 3.2em;
-        line-height: 100%;
-        font-family: 'SignikaSemibold', sans-serif;
-        font-weight: normal;
-      }
-
-      .object {
-        font-size: 2.4em;
-        margin-top: 0.7em;
-      }
-
-      .availability {
-        font-size: 1.9em;
-        margin-top: 0.6em;
-        display: inline-block;
-        padding: 0.3em 0.5em;
-        border: 3px solid #fff;
-        margin-left: -3px;
-      }
-
-      .availability {
-        &.available {
-          color: #fff;
-          background-color: #16ad37;
-        }
-
-        &.not-available {
-          color: #fff;
-          background-color: #ff3520;
-        }
-
-        strong {
-          font-size: 1.3em;
-          vertical-align: middle;
-          font-family: SignikaSemibold, sans-serif;
-          font-weight: normal;
-        }
-      }
-
-      .info-container {
-        float: right;
-        margin: 0;
-        font-size: 1.4em;
-      }
-
-      .wayfinding {
-        font-size: 5em;
-        width: 1em;
-        height: 100%;
-        text-align: center;
-        background-color: #e3e3e3;
-        color: #17889d;
-        padding: 0 0.25em;
-        position: absolute;
-        top: 0;
-        right: 0;
-      }
-
-      .wayfinding {
-        [class^="symbol-"],
-        [class*=" symbol-"] {
-          &:before {
-            display: block;
-            position: absolute;
-            top: 50%;
-            left: 0;
-            text-align: center;
-            height: 0;
-            line-height: 0;
-            width: 100%;
-          }
-        }
-      }
-
-      .reservation-dates-wrapper {
-        overflow: hidden;
-        font-size: 1.9em;
-        border: 3px solid #fff;
-        height: 1.8em;
-      }
-
-      .reservation-dates-wrapper {
-        &:before {
-          content: ' ';
-        }
-      }
-
-      .reservation-dates {
-        border: 0 none;
-        border-spacing: 0;
-        margin: 0;
-        padding: 0;
-        border-collapse: separate;
+    li {
+      > .inner {
+        padding: 2em 13em 2em 3em;
+        color: #666;
+        background-color: #fff;
         position: relative;
       }
 
-      .reservation-dates {
-        &.animating {
-          -webkit-animation: reservation-dates 4s ease-in-out 0s infinite alternate;
-          animation: reservation-dates 4s ease-in-out 0s infinite alternate;
+      > .inner {
+        h2 {
+          margin: 0;
+          padding: 0;
+          font-size: 3.2em;
+          line-height: 100%;
+          font-family: 'SignikaSemibold', sans-serif;
+          font-weight: normal;
         }
 
-        .datebox {
-          background-color: #e3e3e3;
+        .object {
+          font-size: 2.4em;
+          margin-top: 0.7em;
         }
 
-        .datebox {
+        .availability {
+          font-size: 1.9em;
+          margin-top: 0.6em;
+          display: inline-block;
+          padding: 0.3em 0.5em;
+          border: 3px solid #fff;
+          margin-left: -3px;
+        }
 
-          &.until {
-            .date {
-              background-color: #1c9cb2;
-            }
-
-            .time {
-              background-color: #1c9cb2;
-            }
-
-            td {
-            border-bottom: 0 none;
-            }
-          }
-
-          td {
-            padding: 0 0.5em;
-            line-height: 1.8em;
-            text-align: center;
-            color: #5f5f5f;
-            white-space: nowrap;
-          }
-
-          .until,
-          .from {
-            background-color: #16ad37;
-            border-right: 3px solid #fff;
+        .availability {
+          &.available {
             color: #fff;
+            background-color: #16ad37;
           }
 
-          .until {
+          &.not-available {
+            color: #fff;
             background-color: #ff3520;
           }
 
-          .until,
-          .from {
-            [class^="icon-"],
-            [class*=" icon-"] {
-              font-size: 0.9em;
-              position: relative;
-              bottom: 0.1em;
+          strong {
+            font-size: 1.3em;
+            vertical-align: middle;
+            font-family: SignikaSemibold, sans-serif;
+            font-weight: normal;
+          }
+        }
+
+        .info-container {
+          float: right;
+          margin: 0;
+          font-size: 1.4em;
+        }
+
+        .wayfinding {
+          font-size: 5em;
+          width: 1em;
+          height: 100%;
+          text-align: center;
+          background-color: #e3e3e3;
+          color: #17889d;
+          padding: 0 0.25em;
+          position: absolute;
+          top: 0;
+          right: 0;
+        }
+
+        .wayfinding {
+          [class^="symbol-"],
+          [class*=" symbol-"] {
+            &:before {
+              display: block;
+              position: absolute;
+              top: 50%;
+              left: 0;
+              text-align: center;
+              height: 0;
+              line-height: 0;
+              width: 100%;
+            }
+          }
+        }
+
+        .reservation-dates-wrapper {
+          overflow: hidden;
+          font-size: 1.9em;
+          border: 3px solid #fff;
+          height: 1.8em;
+        }
+
+        .reservation-dates-wrapper {
+          &:before {
+            content: ' ';
+          }
+        }
+
+        .reservation-dates {
+          border: 0 none;
+          border-spacing: 0;
+          margin: 0;
+          padding: 0;
+          border-collapse: separate;
+          position: relative;
+        }
+
+        .reservation-dates {
+          &.animating {
+            -webkit-animation: reservation-dates 4s ease-in-out 0s infinite alternate;
+            animation: reservation-dates 4s ease-in-out 0s infinite alternate;
+          }
+
+          .datebox {
+            background-color: #e3e3e3;
+          }
+
+          .datebox {
+
+            &.until {
+              .date {
+                background-color: #1c9cb2;
+              }
+
+              .time {
+                background-color: #1c9cb2;
+              }
+
+              td {
+              border-bottom: 0 none;
+              }
+            }
+
+            td {
+              padding: 0 0.5em;
+              line-height: 1.8em;
+              text-align: center;
+              color: #5f5f5f;
+              white-space: nowrap;
+            }
+
+            .until,
+            .from {
+              background-color: #16ad37;
+              border-right: 3px solid #fff;
+              color: #fff;
+            }
+
+            .until {
+              background-color: #ff3520;
+            }
+
+            .until,
+            .from {
+              [class^="icon-"],
+              [class*=" icon-"] {
+                font-size: 0.9em;
+                position: relative;
+                bottom: 0.1em;
+              }
+
+              .date {
+                &.today {
+                  background-color: #16ad37;
+                }
+              }
             }
 
             .date {
-              &.today {
-                background-color: #16ad37;
+              vertical-align: middle;
+              text-align: center;
+              color: #fff;
+              background-color: #1c9cb2;
+              width: 230px;
+              display: block;
+            }
+
+            .date {
+              .day {
+                font-weight: bold;
+              }
+
+              .day {
+                &:after {
+                  content: ' ';
+                }
               }
             }
-          }
 
-          .date {
-            vertical-align: middle;
-            text-align: center;
-            color: #fff;
-            background-color: #1c9cb2;
-            width: 230px;
-            display: block;
-          }
-
-          .date {
-            .day {
-              font-weight: bold;
+            .time {
+              vertical-align: middle;
+              text-align: center;
+              color: #fff;
+              background-color: #1c9cb2;
+              font-family: 'SignikaSemibold', sans-serif;
+              border-left: 3px solid #fff;
             }
-
-            .day {
-              &:after {
-                content: ' ';
-              }
-            }
-          }
-
-          .time {
-            vertical-align: middle;
-            text-align: center;
-            color: #fff;
-            background-color: #1c9cb2;
-            font-family: 'SignikaSemibold', sans-serif;
-            border-left: 3px solid #fff;
           }
         }
       }
