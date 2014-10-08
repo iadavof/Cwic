@@ -53,7 +53,7 @@ class SearchController < ApplicationController
 
   def tag
     @tag = ActsAsTaggableOn::Tag.find(params[:id])
-    @results = @tag.taggings.where(tagger_type: 'Organisation', tagger_id: 1, taggable_type: SEARCHABLE).page(params[:page])
+    @results = @tag.taggings.where(tagger_type: 'Organisation', tagger_id: @organisation.id, taggable_type: SEARCHABLE).page(params[:page])
     respond_with(@results)
   end
 

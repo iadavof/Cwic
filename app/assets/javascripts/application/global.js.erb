@@ -392,19 +392,20 @@ APP.global = {
     if(!parent) {
       parent = document.body;
     }
-    $(parent).find(':radio, :checkbox, input[type=file]').cwicControl();
-    $(parent).find('select').select2({
+    $parent = $(parent);
+    $parent.find(':radio, :checkbox, input[type=file]').cwicControl();
+    $parent.find('select').select2({
       width: 'resolve',
       minimumResultsForSearch: -1,
     });
-    $(parent).find('.datepicker-field').datepicker();
-    $(parent).find('.timepicker-field').timepicker({ showPeriodLabels: false });
-    $(parent).find('input.organisation_client_select').each(this.initializeOrganisationClientSelect);
-    $(parent).find('input.with-clear').each(this.initializeInputWithClear);
+    $parent.find('.datepicker-field').datepicker();
+    $parent.find('.timepicker-field').timepicker({ showPeriodLabels: false });
+    $parent.find('input.organisation_client_select').each(this.initializeOrganisationClientSelect);
+    $parent.find('input.with-clear').each(this.initializeInputWithClear);
 
     $(document).on('nested:fieldAdded', function(e) { APP.global.initializeSpecialFormFields(e.field); });
 
-    $(parent).find('.select2-offscreen.autosubmit').on('change', function() {
+    $parent.find('.select2-offscreen.autosubmit').on('change', function() {
       $(this).prev('.select2-container').addClass('autosubmit-busy');
     });
   },

@@ -7,6 +7,7 @@ FactoryGirl.define do
     begins_at           { build_begins_at(entity) }
     ends_at             { build_ends_at(entity, begins_at) }
     description         { (amount = rand(5)) > 0 ? Forgery(:lorem_ipsum).words(amount) : nil }
+    status              { entity.reservation_statuses.sample }
   end
 end
 

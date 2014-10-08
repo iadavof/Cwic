@@ -90,7 +90,7 @@ class ReservationsController < ApplicationController
 
   # PATCH/PUT /reservations/1/update_status
   def update_status
-    @reservation.status = @reservation.entity.entity_type.reservation_statuses.find(params[:status_id].to_i)
+    @reservation.status = @reservation.entity.reservation_statuses.find(params[:status_id].to_i)
     if @reservation.status.present? && @reservation.save
       render json: { }, status: :ok
     else
@@ -229,8 +229,10 @@ class ReservationsController < ApplicationController
   def load_resource
     case params[:action]
     when 'index'
+      @date_domain_from = parse_date(params[:date_domain_from])
+      @date_domain_to = parse_date(params[:date_domain_to])
       @reservations = reservations
-        .by_date_domain(params[:date_domain_from], params[:date_domain_to], delocalize: true)
+        .by_date_domain(@date_domain_from, @date_domain_to)
         .includes(:status, :organisation_client, :entity)
         .ssp(params)
     when 'multiple'
@@ -245,6 +247,15 @@ class ReservationsController < ApplicationController
   def reservations
     (@organisation_client.present? ? @organisation_client.reservations : @organisation.reservations)
       .accessible_by(current_ability, :index)
+  end
+
+  def parse_date(string)
+    # IMPROVEMENT: this is used the date domain filter. It might be better to rewrite these filters to an active model object and use default Rails validations and I18n::Alchemy for parsing.
+    begin
+      I18n::Alchemy::DateParser.parse(string).to_date
+    rescue ArgumentError
+      nil
+    end
   end
 
   def resource_params

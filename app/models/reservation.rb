@@ -43,7 +43,8 @@ class Reservation < ActiveRecord::Base
   after_initialize :init # new_record check is intentionally omitted since @validate_not_conflicting should also be initialized for already existing records
 
   before_validation :set_organisation_client_organisation
-  before_validation :set_default_status, if: -> { entity_type_changed? && entity_type.present? }
+  before_validation :set_default_status, on: :create, if: -> { entity.present? }
+  before_validation :set_default_status!, on: :update, if: -> { entity_type_changed? && entity.present? }
   before_validation :generate_recurrences, on: :create, if: :recurrence_definition_recurring?
   before_save :update_warning_state
   after_create :save_recurrences, on: :create, if: :recurrence_definition_recurring?
@@ -80,14 +81,9 @@ class Reservation < ActiveRecord::Base
 
   # Get all reservations that start OR end within the time domain (overlap with the date domain).
   # Options:
-  # - delocalize: delocalize dates with the current locale if they are strings
   # - include_edges: indicates that we also want the reservations directly outside the scope. This can be useful to check for collisions.
   # - ignore_reservations: exclude the listed reservations or reservation ids. This can be useful to check if an entity is available when editting a reservation.
   def self.by_date_domain(from, to, options = {})
-    # Delocalize or parse from and to as date (if strings)
-    from = (options[:delocalize] ? Date.strptime(from, I18n.t('date.formats.default')) : from.to_date) if from.present? && from.is_a?(String)
-    to = (options[:delocalize] ? Date.strptime(to, I18n.t('date.formats.default')) : to.to_date) if to.present? && to.is_a?(String)
-
     # Translate dates to beginning and end of day
     from = from.beginning_of_day if from.is_a?(Date)
     to = to.end_of_day if to.is_a?(Date)
@@ -336,14 +332,19 @@ class Reservation < ActiveRecord::Base
     recurrences.update_all(base_reservation_id: recurrences.first.id) if recurrences.present?
   end
 
+  # Set status to the entity's default status. Called before_validation on create.
   def set_default_status
-    # Called on entity_type_changed, thus also for new reservations.
-    self.status = entity_type.default_reservation_status
+    self.status ||= entity.default_reservation_status
+  end
+
+  # Reset status to the entity's default status again. Called before_validation on update when entity type is changed.
+  def set_default_status!
+    self.status = nil
+    set_default_status
   end
 
   def entity_type_changed?
-    # Also returns true when entity (and thus entity type) was not set, but is now.
-    entity_id_changed? && (entity_id_was.nil? || entity_type != Entity.find(entity_id_was).entity_type)
+    entity_id_changed? && (entity_type != Entity.find(entity_id_was).entity_type)
   end
 
   def update_warning_state_neighbours
