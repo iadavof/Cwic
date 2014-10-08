@@ -142,6 +142,10 @@ APP.global = {
       return APP.global.slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
     });
 
+    $submenuBox.find('a#collapse-menu').on('click', function() {
+        APP.global.slideSubMenu($(this).closest('#submenu-box').find('submenu.selected'), 'collapse', true);
+    });
+
     /* Highlight shortcut letters */
     $menuItems.children('a').each(function(){
       var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
@@ -222,23 +226,16 @@ APP.global = {
       var $submenuBox = $('#submenu-box');
       var $menuItems = $('#main-menu > li');
 
-      if ($menuItem.hasClass('selected')) {
-        /* Contract submenu if clicked menu item is the selected one */
-        APP.global.slideSubMenu($relatedSubmenu, 'collapse', animated, function() {
-          $menuItems.removeClass('selected');
+      if ($submenuBox.hasClass('open')) {
+        /* Contract expanded submenu first, then expand requested submenu */
+        APP.global.slideSubMenu($relatedSubmenu, 'switch', animated, function() {
+          $menuItems.removeClass('selected'); $menuItem.addClass('selected');
         });
       } else {
-        if ($submenuBox.hasClass('open')) {
-          /* Contract expanded submenu first, then expand requested submenu */
-          APP.global.slideSubMenu($relatedSubmenu, 'switch', animated, function() {
-            $menuItems.removeClass('selected'); $menuItem.addClass('selected');
-          });
-        } else {
-          /* Expand requested submenu */
-          APP.global.slideSubMenu($relatedSubmenu, 'expand', animated, function() {
-            $menuItems.removeClass('selected'); $menuItem.addClass('selected');
-          });
-        }
+        /* Expand requested submenu */
+        APP.global.slideSubMenu($relatedSubmenu, 'expand', animated, function() {
+          $menuItems.removeClass('selected'); $menuItem.addClass('selected');
+        });
       }
       return false;
     }
@@ -249,7 +246,7 @@ APP.global = {
     var executeAfter = executeAfter ? executeAfter : function() {};
     var duration = animated ? 200 : 0;
 
-    switch (action) {
+    switch(action) {
       case 'expand':
       case 'collapse':
         var $submenuBox = $('#submenu-box');
