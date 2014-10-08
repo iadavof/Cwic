@@ -14,6 +14,10 @@ after 'iada' do
   OrganisationUser.create!(organisation: maldensteijn, user: christiaan_user, organisation_role: SeedHelper.planner_role)
   OrganisationUser.create!(organisation: maldensteijn, user: david_user, organisation_role: SeedHelper.viewer_role)
 
+  # Create an info screen.
+  # This should happen before adding entity types/entities, so they are automatically added to the info screen.
+  info_screen = InfoScreen.create!(organisation: maldensteijn, name: 'Entree', public: true, add_new_entity_types: true)
+
   # Create entity type property templates
   people_property = EntityTypeProperty.new(name: 'Max. personen', description: 'Het maximale aantal personen', data_type: SeedHelper.data_type(:integer), required: true, index: 0)
   seats_property = EntityTypeProperty.new(name: 'Zitplaatsen', description: 'Het aantal beschikbare zitplaatsen', data_type: SeedHelper.data_type(:integer), required: true, index: 1)
@@ -80,10 +84,6 @@ after 'iada' do
   entity.set_properties(150)
   entity.stickies.build(organisation: maldensteijn, user: christiaan_user, sticky_text: 'Er zit een scheur in het gordijn die zo snel mogelijk hersteld moet worden')
   entity.save!
-
-  # Create an info screen
-  info_screen = InfoScreen.create!(organisation: maldensteijn, name: 'Entree', public: true)
-  # TODO add active entities and entity types to this info screen.
 
   # Create organisation clients
   OrganisationClient.find_by!(organisation: SeedHelper.organisation('IADA'), email: 'christiaanthijssen@iada.nl').dup.set(organisation: maldensteijn).save!
