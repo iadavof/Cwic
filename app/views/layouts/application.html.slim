@@ -8,6 +8,7 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
     = jquery_include_tag :google
     = jquery_ui_include_tag :google
     = javascript_include_tag "https://maps.googleapis.com/maps/api/js?sensor=false&callback=APP.global.initializeGoogleMapsFunctions", async: true
+    = javascript_include_tag "websocket_rails/main" if Object.const_defined?('WebsocketRails')
     = javascript_include_tag "application", "data-turbolinks-track" => true
     meta name="viewport" content="width=device-width, user-scalable=no"
     = csrf_meta_tags
@@ -20,6 +21,7 @@ html class=("no-js " + (user_signed_in? ? 'logged-in' : 'not-logged-in')) lang=I
     data-current-user-name=current_user.try(:instance_name)
     data-current-organisation-id=current_organisation.try(:id)
     data-current-locale=I18n.locale
+    data-websocket-url=websocket_url
   ]
     #page-wrapper
       - unless user_signed_in?

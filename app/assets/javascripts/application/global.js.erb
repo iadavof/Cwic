@@ -1,4 +1,4 @@
-var current_user, current_organisation, current_locale;
+var current_user, current_organisation, current_locale, websocket_url;
 
 // Temporary disable Turbolinks page cache functionality to solve back-button related problems.
 // TODO: implement real solution for this and other Turbolinks problems and re-enable page cache.
@@ -10,6 +10,7 @@ APP.init = function() {
   current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
   current_organisation = { id: parseInt(body.data('current-organisation-id')) };
   current_locale = body.data('current-locale');
+  websocket_url = body.data('websocket-url');
   this.global.initLocale(current_locale);
 
   if ($('#header:visible').length > 0) {

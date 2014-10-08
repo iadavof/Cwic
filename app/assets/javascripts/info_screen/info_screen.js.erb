@@ -10,7 +10,7 @@ APP.info_screens = {
       container: 'info-screen-container',
       info_screen_id: isId,
       backend_url: Routes.reservations_organisation_info_screen_path(organisation_id, isId),
-      websocket_url: window.location.host + Routes.websocket_path(),
+      websocket_url: $('body').data('websocket-url'),
       organisation_id: organisation_id
     });
   },

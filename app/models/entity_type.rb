@@ -30,7 +30,7 @@ class EntityType < ActiveRecord::Base
 
   # Callbacks
   after_initialize :init, if: :new_record?
-  after_save :create_info_screen_entity_types
+  after_create :create_info_screen_entity_types
   after_save :update_reservations_slack_warnings
 
   # Nested attributes

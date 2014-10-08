@@ -17,14 +17,16 @@ function CwicTodayAndTomorrow(options) {
 CwicTodayAndTomorrow.prototype.renderTodayAndTomorrow = function() {
   var tat = this;
   this.bindEntityInfoControls();
-  this.initWebSocket();
+  if(typeof WebSocketRails !== 'undefined') {
+    this.initWebSocket();
+  }
   this.updateTodayTomorrowView();
   this.updateInterval = setInterval(function() { tat.updateTodayTomorrowView(); }, tat.options.updateTimeout);
 };
 
 CwicTodayAndTomorrow.prototype.initWebSocket = function() {
   var tat = this;
-  var dispatcher = new WebSocketRails(window.location.host + Routes.websocket_path());
+  var dispatcher = new WebSocketRails(websocket_url);
 
   // Open reservations_channel for organisation
   if(typeof window.cwic_today_and_tomorrow_channel === 'undefined') {

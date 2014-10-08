@@ -9,7 +9,6 @@
 //= require moment
 //= require moment/nl.js
 //= require magnific-popup
-//= require websocket_rails/main
 //= require gistyle
 //= require ./shared/i18n/cwic/base
 //= require_tree ./shared/libraries

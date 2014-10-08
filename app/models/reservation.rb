@@ -49,10 +49,10 @@ class Reservation < ActiveRecord::Base
   after_create :save_recurrences, on: :create, if: :recurrence_definition_recurring?
   after_save :update_warning_state_neighbours
   after_save :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
-  after_save :trigger_update_websockets
+  after_save :trigger_update_websockets, if: -> { Object.const_defined?('WebsocketRails') }
 
   before_destroy :fix_base_reservation_reference, if: -> { base_reservation_id == id }
-  after_destroy :trigger_update_websockets
+  after_destroy :trigger_update_websockets, if: -> { Object.const_defined?('WebsocketRails') }
   after_destroy :trigger_occupation_recalculation, if: :occupation_recalculation_needed?
 
   # Nested attributes
@@ -421,8 +421,8 @@ class Reservation < ActiveRecord::Base
   end
 
   def trigger_update_websockets
-    WebsocketRails[('infoscreens_' + self.organisation.id.to_s).to_sym].trigger 'update'
-    WebsocketRails[('todayandtomorrows_' + self.organisation.id.to_s).to_sym].trigger 'update'
+    WebsocketRails["infoscreens_#{organisation.id}"].trigger('update')
+    WebsocketRails["todayandtomorrows_#{organisation.id}"].trigger('update')
   end
 
   # Converts a period (begins datetime to ends datetime range) to a days (dates) range

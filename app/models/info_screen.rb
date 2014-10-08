@@ -15,7 +15,7 @@ class InfoScreen < ActiveRecord::Base
 
   # Callbacks
   after_initialize :init, if: :new_record?
-  after_save :trigger_update_infoscreens
+  after_save :trigger_update_infoscreens, if: -> { Object.const_defined?('WebsocketRails') }
 
   # Nested attributes
   accepts_nested_attributes_for :info_screen_entity_types
@@ -40,6 +40,6 @@ class InfoScreen < ActiveRecord::Base
   end
 
   def trigger_update_infoscreens
-    WebsocketRails[('infoscreens_' + self.organisation.id.to_s).to_sym].trigger 'update'
+    WebsocketRails["infoscreens_#{organisation.id}"].trigger('update')
   end
 end

@@ -4,7 +4,6 @@
 //= require modernizr
 //= require moment
 //= require moment/nl.js
-//= require websocket_rails/main
 //= require gistyle
 //= require_tree ./shared/i18n
 //= require_tree ./shared/libraries
