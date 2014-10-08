@@ -3,6 +3,7 @@ html.no-js.info-screen
   head
     title
       | Cwic
+    = favicon_link_tag "favicon.ico"
     = stylesheet_link_tag "info_screen", media: "all", "data-turbolinks-track" => true
     = jquery_include_tag :google
     = javascript_include_tag "websocket_rails/main" if Object.const_defined?('WebsocketRails')
