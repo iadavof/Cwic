@@ -16,7 +16,6 @@ APP.init = function() {
   if ($('#header:visible').length > 0) {
     // Load the menu
     this.global.menuInit();
-    this.global.keyboardShortcutsInit();
     this.global.searchBarInit();
 
     // Load the feedback module
@@ -150,18 +149,6 @@ APP.global = {
       APP.global.slideSubMenu(submenuBox, 'collapse', true, function(){
         $('li#' + submenuBox.data('main-menu-relation')).removeClass('selected');
       });
-    });
-
-    /* Highlight shortcut letters */
-    $menuItems.children('a').each(function(){
-      var shortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
-      if (shortcutKey) {
-        var txt = $(this).text();
-        var index = txt.toUpperCase().indexOf(shortcutKey);
-        if (index >= 0) {
-          $(this).html(txt.substring(0, index) + '<span class="shortcut-highlight">' + txt.substring(index, index + 1) + '</span>' + txt.substring(index + 1)).attr('title', jsLang.global.expand_menu + ' [Alt+' + shortcutKey + ']');
-        }
-      }
     });
   },
   loadLocalMenu: function(){
@@ -326,32 +313,6 @@ APP.global = {
     content.append(okButton);
 
     APP.modal.openModal('confirm', content);
-  },
-  keyboardShortcutsInit: function() {
-    $(document).keydown(function(event) {
-      if(event.altKey) {
-        var keyString = String.fromCharCode(event.which);
-        $('#main-menu > li > a').each(function(){
-          var menuItemId = $(this).parent().attr('id');
-          var menuItemShortcutKey = APP.global.getShortcutKeyById($(this).data('shortcutFor'));
-          if(keyString == menuItemShortcutKey) {
-            return APP.global.executeShortcut(menuItemId);
-          }
-        });
-      }
-    });
-  },
-  executeShortcut: function(htmlId) {
-    this.slideSubMenuByMenuItem(htmlId, true);
-    return false;
-  },
-  getShortcutKeyById: function(id) {
-    var key = jsLang.shortcutKeys[id.replace(/[^a-zA-Z0-9]/g, '_')];
-    if (typeof(key) != 'undefined' && key.length == 1) {
-      return key.toUpperCase();
-    } else {
-      return false;
-    }
   },
   initializeTabs: function() {
     var container = $('#tabs');

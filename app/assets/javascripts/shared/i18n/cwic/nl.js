@@ -1,10 +1,4 @@
 jsLangs['nl'] = {
-  shortcutKeys: {
-    overview: 'v', // o gives focus errors in firefox
-    reservations: 'r',
-    settings: 's',
-    admin: 'a',
-  },
   global: {
     none: 'Geen',
     prompt: 'Selecteer',
