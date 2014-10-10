@@ -9,11 +9,13 @@ div.today-and-tomorrow-container {
     h2 {
       margin: 0 20px 0 10px;
       display: inline-block;
+      vertical-align: middle;
     }
 
     img.entity_type_icon {
       margin: 10px 10px 10px 0;
       vertical-align: middle;
+      height: 30px;
     }
 
     div.entities-container {

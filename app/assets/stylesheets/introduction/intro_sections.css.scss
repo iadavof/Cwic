@@ -104,24 +104,12 @@ h1 strong {
     padding-bottom: 3%;
     margin-top: -3%;
     box-shadow: 0 0 80px rgba(0,0,0,.2);
-    background-color: #dafff2;
+    background-color: #fff;
   }
 
   > section {
     &:first-child {
       margin-top: 0;
-    }
-
-    &:nth-child(4n+1) {
-      background-color: #fff6ea;
-    }
-
-    &:nth-child(4n+2) {
-      background-color: #e6ffff;
-    }
-
-    &:nth-child(4n+3) {
-      background-color: #ffffea;
     }
 
     &.intro-section-home,
@@ -156,6 +144,8 @@ h1 strong {
         > div {
           &:before {
             z-index: 1;
+            background-color: rgba(250,236,242,.25);
+            background-position: center center;
           }
 
           &:after {
@@ -180,7 +170,6 @@ h1 strong {
     div.image-section:after {
       display: block;
       content: ' ';
-      background-color: rgba(250,236,242,.25);
       position: absolute;
       top: 0;
       bottom: 0;
@@ -245,11 +234,24 @@ h1 strong {
       position: absolute;
       right: 0;
       top: -3%;
+      background-position: 0 0;
+    }
+    
+    div.image-section {
+      &:after {
+        background-image: linear-gradient(to left, rgba(0,0,0,0) 50%, rgba(0,0,0,0.025) 100%);
+      }
     }
 
     &:nth-child(even) div.image-section {
       right: auto;
       left: 0;
+    }
+
+    &:nth-child(even) div.image-section {
+      &:after {
+        background-image: linear-gradient(to right, rgba(0,0,0,0) 50%, rgba(0,0,0,0.025) 100%);
+      }
     }
 
     &:nth-child(even) div.text-section {
@@ -260,7 +262,6 @@ h1 strong {
     &.intro-section-home .background-slider > div,
     div.image-section {
       background-size: cover;
-      background-position: center center;
       background-repeat: no-repeat;
     }
 
