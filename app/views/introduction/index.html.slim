@@ -47,7 +47,12 @@ section
     .intro-section-body
       p = t('intro_section.schedule_view.intro')
 
-  .image-section.lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
+  .image-section
+    span.cycle-prev.icon-chevron-left
+    span.cycle-next.icon-chevron-right
+    .lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
+    .lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
+    .lazy data-original="#{asset_path('intro_screenshots/section-3.jpg')}"
 
 section
   .text-section
@@ -56,7 +61,12 @@ section
     .intro-section-body
       p = t('intro_section.organisation_client.intro')
 
-  .image-section.lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
+  .image-section
+    span.cycle-prev.icon-chevron-left
+    span.cycle-next.icon-chevron-right
+    .lazy data-original="#{asset_path('intro_screenshots/section-3.jpg')}"
+    .lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
+    .lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
 
 section
   .text-section
@@ -65,16 +75,13 @@ section
     .intro-section-body
       p = t('intro_section.organisation_client.intro')
 
-  .image-section.lazy data-original="#{asset_path('intro_screenshots/section-3.jpg')}"
+  .image-section
+    span.cycle-prev.icon-chevron-left
+    span.cycle-next.icon-chevron-right
+    .lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
+    .lazy data-original="#{asset_path('intro_screenshots/section-3.jpg')}"
+    .lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
 
-section
-  .text-section
-    h2 = t('intro_section.organisation_client.title')
-
-    .intro-section-body
-      p = t('intro_section.organisation_client.intro')
-
-  .image-section.lazy data-original="#{asset_path('intro_screenshots/section-4.jpg')}"
 
 section.intro-section-last
   .intro-sign-up

@@ -167,7 +167,7 @@ h1 strong {
     }
 
     &.intro-section-home .background-slider > div:before,
-    div.image-section:after {
+    div.image-section > div:after {
       display: block;
       content: ' ';
       position: absolute;
@@ -230,16 +230,79 @@ h1 strong {
     div.image-section {
       width: 50%;
       background-color: #fff;
-      height: 100%;
       position: absolute;
       right: 0;
-      top: -3%;
-      background-position: 0 0;
+      top: 0;
+      height: 94.25%;
+      z-index: 0;
     }
-    
+
     div.image-section {
-      &:after {
-        background-image: linear-gradient(to left, rgba(0,0,0,0) 50%, rgba(0,0,0,0.025) 100%);
+      .cycle-prev,
+      .cycle-next {
+        display: block;
+        position: absolute;
+        top: 25%;
+        bottom: 25%;
+        z-index: 999;
+        width: 5%;
+        min-width: 2em;
+        cursor: pointer;
+        background-color: #1c9cb2;
+        color: #fff;
+        opacity: 0;
+        transition: 0.2s;
+        box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.3)
+      }
+
+      .cycle-prev,
+      .cycle-next {
+        &:before {
+          display: block;
+          position: absolute;
+          top: 50%;
+          left: 50%;
+          transform: translate(-50%, -50%);
+          font-size: 1.1em;
+        }
+
+        &:hover {
+          background-color: #fff;
+          color: #1c9cb2;
+        }
+      }
+
+      .cycle-prev {
+        left: 0;
+        border-radius: 0 9999px 9999px 0;
+      }
+
+      .cycle-next {
+        right: 0;
+        border-radius: 9999px 0 0 9999px;
+      }
+
+      &:hover {
+        .cycle-prev,
+        .cycle-next {
+          opacity: 1;
+        }
+      }
+
+      > div {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-position: 0 0;
+        background-color: #fff;
+      }
+
+      > div {
+        &:after {
+          background-image: linear-gradient(to left, rgba(0,0,0,0) 50%, rgba(0,0,0,0.025) 100%);
+        }
       }
     }
 
@@ -249,8 +312,10 @@ h1 strong {
     }
 
     &:nth-child(even) div.image-section {
-      &:after {
-        background-image: linear-gradient(to right, rgba(0,0,0,0) 50%, rgba(0,0,0,0.025) 100%);
+      > div {
+        &:after {
+          background-image: linear-gradient(to right, rgba(0,0,0,0) 50%, rgba(0,0,0,0.025) 100%);
+        }
       }
     }
 
@@ -260,7 +325,7 @@ h1 strong {
     }
 
     &.intro-section-home .background-slider > div,
-    div.image-section {
+    div.image-section > div {
       background-size: cover;
       background-repeat: no-repeat;
     }
