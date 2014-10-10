@@ -5,6 +5,15 @@ APP.introduction = {
       slides: '> div',
       speed: 800,
     });
+    $('section .image-section').cycle({
+      autoHeight: false,
+      slides: '> div',
+      speed: 800,
+      fx: 'scrollHorz',
+      pauseOnHover: true,
+      swipe: true,
+      swipeFx: 'scrollHorz',
+    });
     $('.lazy').lazyload({
       effect: "fadeIn"
     });
