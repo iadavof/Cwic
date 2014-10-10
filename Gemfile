@@ -167,6 +167,9 @@ group :development do
   # Spring gem for application pre-loading leading to faster Rails commands
   gem 'spring'
 
-  # Rubocop for code style checking (possibly in combination with SublimeLinter)
+  # Rubocop for code style checking of Ruby files (possibly in combination with SublimeLinter)
   gem 'rubocop', require: false
+
+  # SCSS-Lint for code syntax and style checking of SCSS files (possibly in combination with SublimeLinter)
+  gem 'scss-lint', require: false
 end
