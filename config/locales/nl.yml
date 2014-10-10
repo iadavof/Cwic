@@ -3,6 +3,7 @@ nl:
   empty_objects_add_first_html: 'Om deze optie te kunnen gebruiken moeten er eerst %{models} worden aangemaakt: %{to_new_object_link}.'
   remove_search: 'Zoekopdracht verwijderen'
   empty_for_search: 'Er zijn helaas geen resultaten die voldoen aan je criteria.'
+  no_organisations_for_current_user: 'U heeft geen toegang (meer) tot een organisatie. U kunt het systeem nu niet gebruiken.'
   settings: 'Instellingen'
   all_organisations: 'Alle organisaties'
   csv: 'csv'

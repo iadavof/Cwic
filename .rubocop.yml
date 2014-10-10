@@ -52,7 +52,7 @@ Metrics/CyclomaticComplexity:
 
 # Configuration parameters: AllowURI.
 Metrics/LineLength:
-  Max: 160
+  Max: 320
   Exclude:
     - 'spec/**/*'
 
