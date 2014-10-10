@@ -1,0 +1,7 @@
+= form_for(@organisation, url: { controller: 'my_organisations', action: 'update', id: @organisation } ) do |f|
+  = render 'shared/error_messages', target: @organisation
+
+  = render 'organisations/form_fields', f: f
+
+  .actions
+    = f.submit

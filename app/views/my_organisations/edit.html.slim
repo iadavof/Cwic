@@ -1,0 +1,7 @@
+- content_for :page_title do
+  = edit_title(@organisation)
+
+- content_for :local_menu_navigation do
+  = button_link_to_show(@organisation, location: my_organisation_path(@organisation))
+
+= render 'form'

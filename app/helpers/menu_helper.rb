@@ -41,10 +41,10 @@ module MenuHelper
       },
       entities: construct_entities_menu,
       settings: {
-        my_organisation: {
+        my_organisations: {
           links: {
-            details: { url: organisation_path(current_organisation), icon: 'icon-eye-view' },
-          }
+            show: { url: my_organisation_path(current_organisation), icon: 'icon-eye-view' },
+          },
         },
         organisation_users: {
           links: {

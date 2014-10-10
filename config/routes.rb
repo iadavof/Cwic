@@ -12,6 +12,7 @@ Cwic::Application.routes.draw do
   get 'switch_organisation/:id/', controller: :application, action: :switch_organisation, as: :switch_organisation
 
   resources :my_users, except: [:new, :create]
+  resources :my_organisations, except: [:new, :create]
 
   resources :organisations do
     post :tag_search, on: :member
