@@ -58,6 +58,24 @@ section
 
   .image-section.lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
 
+section
+  .text-section
+    h2 = t('intro_section.organisation_client.title')
+
+    .intro-section-body
+      p = t('intro_section.organisation_client.intro')
+
+  .image-section.lazy data-original="#{asset_path('intro_screenshots/section-3.jpg')}"
+
+section
+  .text-section
+    h2 = t('intro_section.organisation_client.title')
+
+    .intro-section-body
+      p = t('intro_section.organisation_client.intro')
+
+  .image-section.lazy data-original="#{asset_path('intro_screenshots/section-4.jpg')}"
+
 section.intro-section-last
   .intro-sign-up
     - unless Rails.application.config.disable_registrations
