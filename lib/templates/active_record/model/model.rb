@@ -32,9 +32,9 @@ class <%= class_name %> < <%= parent_class_name.classify %>
 <% end -%>
   def instance_name
 <% if accessible_attributes.empty? -%>
-    "#{self.class.model_name.human} #{self.id}"
+    "#{self.class.model_name.human} #{id}"
 <% else -%>
-    self.<%= accessible_attributes.first.name %>
+    <%= accessible_attributes.first.name %>
 <% end -%>
   end
 end
