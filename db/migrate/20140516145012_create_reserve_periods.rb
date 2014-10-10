@@ -1,6 +1,6 @@
 class CreateReservePeriods < ActiveRecord::Migration
   def change
-    create_table :reservation_periods do |t|
+    create_table :reserve_periods do |t|
       t.references :entity_type, index: true
       t.string :name
       t.integer :period_amount
