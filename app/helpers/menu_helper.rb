@@ -1,80 +1,121 @@
 module MenuHelper
   def menu
-    menu = {
+    return @menu if @menu.present?
+    @menu = {
       overview: {
         home: {
-          index: { name: t('.dashboard'), url: home_index_path, icon: 'icon-home' }
+          links: {
+            index: { name: t('.dashboard'), url: home_index_path, icon: 'icon-home' },
+          },
         },
       },
       reservations: {
         reservations: {
-          index: { url: organisation_reservations_path(current_organisation), icon: 'icon-list' },
-          new: { url: new_organisation_reservation_path(current_organisation), icon: 'icon-plus-sign' }
+          links: {
+            index: { url: organisation_reservations_path(current_organisation), icon: 'icon-list' },
+            new: { url: new_organisation_reservation_path(current_organisation), icon: 'icon-plus-sign' },
+          },
         },
         schedule_view: {
-          horizontal_day: { url: organisation_schedule_view_horizontal_day_path(current_organisation), icon: 'icon-alignleftedge' },
-          horizontal_week: { url: organisation_schedule_view_horizontal_week_path(current_organisation), icon: 'icon-alignleftedge' },
-          vertical_day: { url: organisation_schedule_view_vertical_day_path(current_organisation), icon: 'icon-aligntopedge' },
-          today_and_tomorrow: { url: organisation_today_and_tomorrow_index_path(current_organisation), icon: 'icon-time' }
+          links: {
+            horizontal_day: { url: organisation_schedule_view_horizontal_day_path(current_organisation), icon: 'icon-alignleftedge' },
+            horizontal_week: { url: organisation_schedule_view_horizontal_week_path(current_organisation), icon: 'icon-alignleftedge' },
+            vertical_day: { url: organisation_schedule_view_vertical_day_path(current_organisation), icon: 'icon-aligntopedge' },
+            today_and_tomorrow: { url: organisation_today_and_tomorrow_index_path(current_organisation), icon: 'icon-time' },
+          },
         },
         occupation_view: {
-          day: { url: organisation_occupation_view_day_path(current_organisation), icon: 'icon-stocks' },
-          week: { url: organisation_occupation_view_week_path(current_organisation), icon: 'icon-stocks' }
+          links: {
+            day: { url: organisation_occupation_view_day_path(current_organisation), icon: 'icon-stocks' },
+            week: { url: organisation_occupation_view_week_path(current_organisation), icon: 'icon-stocks' },
+          },
         },
       },
       organisation_clients: {
         organisation_clients: {
-          index: { url: organisation_organisation_clients_path(current_organisation), icon: 'icon-list' },
-          new: { url: new_organisation_organisation_client_path(current_organisation), icon: 'icon-plus-sign' }
+          links: {
+            index: { url: organisation_organisation_clients_path(current_organisation), icon: 'icon-list' },
+            new: { url: new_organisation_organisation_client_path(current_organisation), icon: 'icon-plus-sign' },
+          },
         },
       },
-      entities: {
-        entities: {
-          index: { url: organisation_entities_path(current_organisation), icon: 'icon-list' },
-          new: { url: new_organisation_entity_path(current_organisation), icon: 'icon-plus-sign' }
-        },
-      },
+      entities: construct_entities_menu,
       settings: {
         organisation_users: {
-          index: { url: organisation_organisation_users_path(current_organisation), icon: 'icon-list' },
-          new: { url: new_organisation_organisation_user_path(current_organisation), icon: 'icon-plus-sign' }
+          links: {
+            index: { url: organisation_organisation_users_path(current_organisation), icon: 'icon-list' },
+            new: { url: new_organisation_organisation_user_path(current_organisation), icon: 'icon-plus-sign' },
+          },
         },
         entity_types: {
-          index: { url: organisation_entity_types_path(current_organisation), icon: 'icon-list' },
-          new: { url: new_organisation_entity_type_path(current_organisation), icon: 'icon-plus-sign' },
-          custom_icons: { url: organisation_entity_type_icons_path(current_organisation), icon: 'icon-picture' }
+          links: {
+            index: { url: organisation_entity_types_path(current_organisation), icon: 'icon-list' },
+            new: { url: new_organisation_entity_type_path(current_organisation), icon: 'icon-plus-sign' },
+            custom_icons: { url: organisation_entity_type_icons_path(current_organisation), icon: 'icon-picture' },
+          },
+        },
+        entities: {
+          links: {
+            index: { url: organisation_entities_path(current_organisation), icon: 'icon-list' },
+            new: { url: new_organisation_entity_path(current_organisation), icon: 'icon-plus-sign' },
+          },
         },
         documents: {
-          index: { url: organisation_documents_path(current_organisation), icon: 'icon-list' }
+          links: {
+            index: { url: organisation_documents_path(current_organisation), icon: 'icon-list' },
+          },
         },
         info_screens: {
-          index: { url: organisation_info_screens_path(current_organisation), icon: 'icon-list' },
-          new: { url: new_organisation_info_screen_path(current_organisation), icon: 'icon-plus-sign' }
+          links: {
+            index: { url: organisation_info_screens_path(current_organisation), icon: 'icon-list' },
+            new: { url: new_organisation_info_screen_path(current_organisation), icon: 'icon-plus-sign' },
+          },
         },
       },
     }
     if @admin
-      menu[:admin] = {
+      @menu[:admin] = {
         organisations: {
-          index: { url: organisations_path, icon: 'icon-list' },
+          links: {
+            index: { url: organisations_path, icon: 'icon-list' },
+          },
         },
         users: {
-          index: { url: users_path, icon: 'icon-list' },
+          links: {
+            index: { url: users_path, icon: 'icon-list' },
+          },
         },
         feedbacks: {
-          index: { url: feedbacks_path, icon: 'icon-list' },
+          links: {
+            index: { url: feedbacks_path, icon: 'icon-list' },
+          },
         },
         entity_type_icons: {
-          index: { url: entity_type_icons_path, icon: 'icon-list' },
-          new: { url: new_entity_type_icon_path, icon: 'icon-plus-sign' }
+          links: {
+            index: { url: entity_type_icons_path, icon: 'icon-list' },
+            new: { url: new_entity_type_icon_path, icon: 'icon-plus-sign' },
+          },
         },
         newsletter_signups: {
-          index: { url: newsletter_signups_path, icon: 'icon-list' },
-          new: { url: new_newsletter_signup_path, icon: 'icon-plus-sign' }
-        }
+          links: {
+            index: { url: newsletter_signups_path, icon: 'icon-list' },
+            new: { url: new_newsletter_signup_path, icon: 'icon-plus-sign' },
+          },
+        },
       }
     end
-    menu
+    @menu
+  end
+
+  def construct_entities_menu
+    submenu = {}
+    current_organisation.entity_types.includes(:entities).each do |et|
+      submenu[et.id] = { name: et.instance_name, links: {} }
+      et.entities.each do |e|
+        submenu[et.id][:links][e.id] = { name: e.instance_name, color: e.color, url: organisation_entity_path(current_organisation, e) }
+      end
+    end
+    submenu
   end
 
   def category_name_matches?(category_name)
@@ -93,7 +134,7 @@ module MenuHelper
   def link_name_matches?(link_name)
     aliases = {
       create: :new,
-      update: :edit
+      update: :edit,
     }
     current_menu_link == link_name || aliases[current_menu_link] == link_name
   end
