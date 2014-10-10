@@ -1,5 +1,4 @@
 #submenu-box.clearfix
-  a.icon-chevron-left#collapse-menu href="javascript:void(0);"
   - menu.each_with_index do |(category_name, category_content), index|
     - unless category_content[:url].present? # With subitems
       .submenu.clearfix data-main-menu-relation="main-menu-item-#{index + 1}"

@@ -20,7 +20,8 @@ body {
   z-index: 199;
 }
 
-#local-menu {
+#local-menu,
+#under-local-menu {
   position: relative;
   z-index: 198;
 }
@@ -171,6 +172,10 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
       min-width: 0;
       flex: 0 0 auto;
     }
+  }
+
+  #under-local-menu {
+    flex: 0 0 auto;
   }
 
   #content-area {
