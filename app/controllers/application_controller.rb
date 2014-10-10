@@ -4,9 +4,10 @@ class ApplicationController < ActionController::Base
   before_action { @admin = true }
   before_action :authenticate_user!
   before_action :set_locale
-  before_action :load_organisation
-  around_action :set_current_user
-  around_action :set_current_organisation
+  before_action :ensure_user_has_organisations, if: :user_signed_in?
+  before_action :load_organisation, if: :user_signed_in?
+  around_action :set_current_user, if: :user_signed_in?
+  around_action :set_current_organisation, if: :user_signed_in?
 
   # check_authorization unless: :devise_controller? TODO enable this line when authorization is implemented
 
@@ -77,12 +78,18 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def load_organisation
-    @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
-  end
-
   def set_locale
     I18n.locale = params[:locale] || I18n.default_locale
+  end
+
+  def ensure_user_has_organisations
+    return if current_user.organisations.any?
+    sign_out
+    redirect_to new_user_session_path, alert: t('no_organisations_for_current_user')
+  end
+
+  def load_organisation
+    @organisation = Organisation.find(params[:organisation_id]) if params[:organisation_id].present?
   end
 
   def set_current_user
