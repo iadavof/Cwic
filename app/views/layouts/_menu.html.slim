@@ -11,15 +11,17 @@
         = render 'layouts/user_menu'
 
   #menu-main-area
-    = link_to(home_index_path, class: 'logo-in-app') do
-      img src=asset_path('logo_in_app.png')
 
     ul#main-menu
       - menu.each_with_index do |(category_name, category_content), index|
-        = content_tag(:li, id: "main-menu-item-#{index + 1}", class: (category_matches?(category_name) ? "active" : nil)) do
-          - if category_content[:url].present? # No subitems
-            = link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url), { data: { shortcut_for: "#{category_name}" } })
-          - else # With subitems
-            = link_to(t(".categories.#{category_name}"), 'javascript:void(0)', {data: { shortcut_for: "#{category_name}" }})
+        - if index == 0
+          = content_tag(:li, id: "main-menu-item-#{index + 1}", class: (category_matches?(category_name) ? "cwic-logo active" : 'cwic-logo')) do
+            = link_to('', category_content[:url], category_content.except(:name, :url))
+        - else
+          = content_tag(:li, id: "main-menu-item-#{index + 1}", class: (category_matches?(category_name) ? "active" : nil)) do
+            - if category_content[:url].present? # No subitems
+              = link_to((category_content[:name].present? ? category_content[:name] : t(".#{category_name}")), category_content[:url], category_content.except(:name, :url))
+            - else # With subitems
+              = link_to(t(".categories.#{category_name}"), 'javascript:void(0)')
 
     = content_tag(:a, content_tag(:i, nil, class: 'icon-search'), id: 'open-search-button', class: (controller_name == 'search' ? 'open' : nil), href: 'javascript:void(0)')

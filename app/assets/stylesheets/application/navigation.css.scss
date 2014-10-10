@@ -1,16 +1,5 @@
 /* Main menu */
 
-.logo-in-app {
-  margin: 0.45em 1.45em 0.45em 20px;
-  display: inline-block;
-  vertical-align: top;
-  > img {
-    height: 2.2em;
-    width: auto;
-    display: block;
-  }
-}
-
 #menu-bar {
   position: relative;
   background: #ff3520;
@@ -77,16 +66,47 @@
     z-index: 2;
     transition: 0.2s ease-in-out;
   }
+
+  &.cwic-logo {
+    width: 120px;
+  }
+
+  &.cwic-logo {
+    > a {
+      display: block;
+      background-position: center center;
+      background-size: 75px auto;
+      background-repeat: no-repeat;
+      background-image: image-url('logo_in_app.png');
+    }
+
+    > a:before {
+      content: '\a0';
+      display: inline;
+    }
+
+    &.active {
+      > a {
+        background-image: image-url('logo_in_app_active.png');
+      }
+    }
+  }
+
   &.selected {
     > a {
       border-color: #1c9cb2;
     }
   }
+
   &.active {
     background-color: #fff;
+  }
+
+  &.active {
     > a {
       color: #ff3520;
     }
+
     &.selected {
       &:after {
         border-top-color: #ff3520;
@@ -97,7 +117,7 @@
 
 #main-menu > li > a:hover,
 #user-menu .section ul > li > a:hover {
-  background: rgba(255,255,255,0.1);
+  background-color: rgba(255,255,255,0.1);
 }
 
 #user-menu {
