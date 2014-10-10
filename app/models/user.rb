@@ -37,7 +37,7 @@ class User < ActiveRecord::Base
   # Instance methods
 
   def instance_name
-    "#{first_name} #{infix} #{self.last_name}"
+    "#{first_name}#{infix.present? ? (' ' + infix) : ''} #{last_name}"
   end
 
   def status
