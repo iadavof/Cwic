@@ -68,10 +68,6 @@ module MenuHelper
           index: { url: entity_type_icons_path, icon: 'icon-list' },
           new: { url: new_entity_type_icon_path, icon: 'icon-plus-sign' }
         },
-        intro_sections: {
-          index: { url: intro_sections_path, icon: 'icon-squaresettings' },
-          new: { url: new_intro_section_path, icon: 'icon-plus-sign' }
-        },
         newsletter_signups: {
           index: { url: newsletter_signups_path, icon: 'icon-list' },
           new: { url: new_newsletter_signup_path, icon: 'icon-plus-sign' }

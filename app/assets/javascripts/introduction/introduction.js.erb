@@ -5,6 +5,9 @@ APP.introduction = {
       slides: '> div',
       speed: 800,
     });
+    $('.lazy').lazyload({
+      effect: "fadeIn"
+    });
     $('body').find('select, :radio, :checkbox, input[type=file]').cwicControl();
     if (Modernizr.svg) {
       $('#logo-container .logo').attr('src', '<%= asset_path('logo.svg') %>');

@@ -89,7 +89,6 @@ Cwic::Application.routes.draw do
   # Admin page routes
 
   resources :users, except: :new
-  resources :intro_sections
   resources :entity_type_icons
   resources :feedbacks, except: [:new, :edit]
   resources :newsletter_signups, except: [:show] do

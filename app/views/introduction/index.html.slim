@@ -40,21 +40,25 @@ section.intro-section-home
         = t('.intro_title_html')
       = t('.intro_text_html')
 
-= render @intro_sections
+section
+  .text-section
+    h2 = t('intro_section.schedule_view.title')
+
+    .intro-section-body
+      p = t('intro_section.schedule_view.intro')
+
+  .image-section.lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
+
+section
+  .text-section
+    h2 = t('intro_section.organisation_client.title')
+
+    .intro-section-body
+      p = t('intro_section.organisation_client.intro')
+
+  .image-section.lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
 
 section.intro-section-last
-  table.features-comparison
-    thead
-      tr
-        th = t('.light')
-        th = t('.regular')
-        th = t('.enterprise')
-    tbody
-      tr
-        td = t('no')
-        td = t('yes')
-        td = t('yes')
-
   .intro-sign-up
     - unless Rails.application.config.disable_registrations
       = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')

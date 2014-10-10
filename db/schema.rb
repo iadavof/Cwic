@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141006133906) do
+ActiveRecord::Schema.define(version: 20141010103329) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -255,16 +255,6 @@ ActiveRecord::Schema.define(version: 20141006133906) do
   end
 
   add_index "info_screens", ["organisation_id"], name: "index_info_screens_on_organisation_id", using: :btree
-
-  create_table "intro_sections", force: true do |t|
-    t.string   "title"
-    t.text     "body"
-    t.string   "image"
-    t.integer  "weight",           default: 0
-    t.string   "background_color", default: "#fff"
-    t.datetime "created_at"
-    t.datetime "updated_at"
-  end
 
   create_table "newsletter_signups", force: true do |t|
     t.string   "email"
