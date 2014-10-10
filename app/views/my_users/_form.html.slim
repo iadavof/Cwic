@@ -1,4 +1,4 @@
-= form_for(@user) do |f|
+= form_for(@user, url: { controller: 'my_users', action: 'update', id: @user} ) do |f|
   = render 'shared/error_messages', target: @user
 
   = render 'users/form_fields', f: f

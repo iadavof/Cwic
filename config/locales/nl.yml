@@ -518,6 +518,7 @@ nl:
     user_menu:
       organisation: 'Organisatie'
       actions: 'Acties'
+      account_settings: 'Accountinstellingen'
       logout: 'Uitloggen'
     submenu:
       categories:
@@ -532,13 +533,15 @@ nl:
         documents: 'Documenten'
         info_screens: 'Informatieschermen'
         organisations: 'Organisaties'
-        users: 'Alle gebruikers'
+        my_organisation: 'Mijn organisatie'
+        users: 'Gebruikers'
         feedbacks: 'Feedback'
         entity_type_icons: 'Objecticonen'
         newsletter_signups: 'Nieuwsbriefaanmeldingen'
       links:
         index: 'Lijst'
         new: 'Nieuw'
+        details: 'Details'
         schedule_view:
           horizontal_day: 'Horizontale dagkalender'
           horizontal_week: 'Horizontale weekkalender'
