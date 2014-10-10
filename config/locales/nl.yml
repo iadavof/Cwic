@@ -532,6 +532,7 @@ nl:
         documents: 'Documenten'
         info_screens: 'Informatieschermen'
         organisations: 'Organisaties'
+        my_organisation: 'Mijn organisatie'
         users: 'Alle gebruikers'
         feedbacks: 'Feedback'
         entity_type_icons: 'Objecticonen'
@@ -539,6 +540,7 @@ nl:
       links:
         index: 'Lijst'
         new: 'Nieuw'
+        details: 'Details'
         schedule_view:
           horizontal_day: 'Horizontale dagkalender'
           horizontal_week: 'Horizontale weekkalender'
