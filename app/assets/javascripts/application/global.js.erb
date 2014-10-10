@@ -135,20 +135,30 @@ APP.global = {
     var $submenuBox = $('#submenu-box');
     var $menuItems = $('#main-menu > li');
 
-    var activeMenuItem = $('#main-menu > li.active').first();
-    if(activeMenuItem.length > 0) {
+    var $activeMenuItem = $('#main-menu > li.active').first();
+    if($activeMenuItem.length > 0) {
       // Open the active menu without animation
-      this.slideSubMenuByMenuItem(activeMenuItem.attr('id'), false);
+      this.slideSubMenuByMenuItem($activeMenuItem.attr('id'), false);
     }
     $('#main-menu > li > a').on('click', function() {
       return APP.global.slideSubMenuByMenuItem($(this).parent('li').attr('id'), true);
     });
 
-    $submenuBox.find('a#collapse-menu').on('click', function() {
-      var submenuBox = $(this).closest('#submenu-box').find('.submenu.selected');
-      APP.global.slideSubMenu(submenuBox, 'collapse', true, function(){
-        $('li#' + submenuBox.data('main-menu-relation')).removeClass('selected');
-      });
+    $('a#collapse-menu').on('click', function() {
+      var $link = $(this);
+      var $submenuBox = $('#submenu-box');
+      var $submenu = $submenuBox.find('> .submenu.selected').first();
+      if ($submenuBox.hasClass('open')) {
+        APP.global.slideSubMenu($submenu, 'collapse', true, function() {
+          $('li#' + $submenu.data('main-menu-relation')).removeClass('selected');
+        });
+      } else {
+        var $lastSubmenu = $submenuBox.find('> .submenu[data-main-menu-relation="' + $submenuBox.data('last-opened-menu-item') + '"]').first();
+        APP.global.slideSubMenu($lastSubmenu, 'expand', true, function() {
+          $link.removeClass('icon-chevron-right').addClass('icon-chevron-left');
+          $('li#' + $lastSubmenu.data('main-menu-relation')).addClass('selected');
+        });
+      }
     });
   },
   loadLocalMenu: function(){
@@ -215,6 +225,7 @@ APP.global = {
   },
   slideSubMenu: function(submenu, action, animated, executeBefore, executeAfter) {
     var $submenu = $(submenu);
+    var $collapseLink = $('a#collapse-menu');
     var executeBefore = executeBefore ? executeBefore : function() {};
     var executeAfter = executeAfter ? executeAfter : function() {};
     var duration = animated ? 200 : 0;
@@ -229,8 +240,11 @@ APP.global = {
         var complete = executeAfter;
         if (action == 'expand') {
           APP.global.slideSubMenu($submenu, 'switch', false);
+          $collapseLink.removeClass('icon-chevron-right').addClass('icon-chevron-left');
         } else {
           var $submenus = $submenuBox.find('> .submenu');
+          $submenuBox.data('last-opened-menu-item', $submenu.data('main-menu-relation'));
+          $collapseLink.removeClass('icon-chevron-left').addClass('icon-chevron-right');
           complete = function() {
             $submenus.removeClass('selected');
             $submenuBox.removeClass('open');
@@ -253,20 +267,22 @@ APP.global = {
         }
         break;
       case 'switch':
-        executeBefore();
-        var $submenus = $('#submenu-box > .submenu');
-        if (animated) {
-          $submenus.velocity({opacity: 0}, duration/2.5, 'swing', function() {
-            $submenus.removeClass('selected');
-            $submenu.velocity({opacity: 1}, duration/2.5, 'swing', function() {
-              $submenu.addClass('selected');
-              executeAfter();
+        if (!$submenu.hasClass('selected')) {
+          executeBefore();
+          var $submenus = $('#submenu-box > .submenu');
+          if (animated) {
+            $submenus.velocity({opacity: 0}, duration/2.5, 'swing', function() {
+              $submenus.removeClass('selected');
+              $submenu.velocity({opacity: 1}, duration/2.5, 'swing', function() {
+                $submenu.addClass('selected');
+                executeAfter();
+              });
             });
-          });
-        } else {
-          $submenus.css({opacity: 0}).removeClass('selected');
-          $submenu.css({opacity: 1}).addClass('selected');
-          executeAfter();
+          } else {
+            $submenus.css({opacity: 0}).removeClass('selected');
+            $submenu.css({opacity: 1}).addClass('selected');
+            executeAfter();
+          }
         }
         break;
     }
