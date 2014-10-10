@@ -518,6 +518,7 @@ nl:
     user_menu:
       organisation: 'Organisatie'
       actions: 'Acties'
+      account_settings: 'Accountinstellingen'
       logout: 'Uitloggen'
     submenu:
       categories:
@@ -533,7 +534,7 @@ nl:
         info_screens: 'Informatieschermen'
         organisations: 'Organisaties'
         my_organisation: 'Mijn organisatie'
-        users: 'Alle gebruikers'
+        users: 'Gebruikers'
         feedbacks: 'Feedback'
         entity_type_icons: 'Objecticonen'
         newsletter_signups: 'Nieuwsbriefaanmeldingen'

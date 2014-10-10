@@ -11,4 +11,5 @@
     = t('.actions')
   ul
     li
+      = link_to(content_tag(:i, '', class: 'icon icon-settingsthree-gears') + ' ' + t('.account_settings'), my_user_path(current_user))
       = link_to(content_tag(:i, '', class: 'icon icon-off') + ' ' + t('.logout'), destroy_user_session_path, method: :delete)
