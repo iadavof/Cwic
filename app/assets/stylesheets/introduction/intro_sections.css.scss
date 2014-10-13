@@ -8,6 +8,10 @@ body {
   padding: 0;
 }
 
+h1, h2, h3, h4, h5, h6 {
+  line-height: normal;
+}
+
 h1 {
   padding: 0;
   margin-top: 0;
@@ -103,7 +107,7 @@ h1 strong {
     box-sizing: border-box;
     padding-bottom: 3%;
     margin-top: -3%;
-    box-shadow: 0 0 80px rgba(0,0,0,.2);
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     background-color: #fff;
   }
 
@@ -228,13 +232,15 @@ h1 strong {
     }
 
     div.image-section {
-      width: 50%;
+      width: 48%;
       background-color: #fff;
       position: absolute;
-      right: 0;
-      top: 0;
-      height: 94.25%;
+      right: 2%;
+      top: 3%;
+      height: 88.25%;
       z-index: 0;
+      border-radius: 20px;
+      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
     }
 
     div.image-section {
@@ -252,7 +258,7 @@ h1 strong {
         color: #fff;
         opacity: 0;
         transition: 0.2s;
-        box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.3)
+        box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.3);
       }
 
       .cycle-prev,
@@ -299,24 +305,22 @@ h1 strong {
         background-color: #fff;
       }
 
-      > div {
-        &:after {
-          background-image: linear-gradient(to left, rgba(0,0,0,0) 50%, rgba(0,0,0,0.025) 100%);
-        }
+      &:after {
+        display: block;
+        content: '\a0';
+        height: 100%;
+        width: 100%;
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        background-color: rgba(250, 236, 242, 0.15);
+        z-index: 998;
       }
     }
 
     &:nth-child(even) div.image-section {
       right: auto;
-      left: 0;
-    }
-
-    &:nth-child(even) div.image-section {
-      > div {
-        &:after {
-          background-image: linear-gradient(to right, rgba(0,0,0,0) 50%, rgba(0,0,0,0.025) 100%);
-        }
-      }
+      left: 2%;
     }
 
     &:nth-child(even) div.text-section {

@@ -37,15 +37,15 @@ section.intro-section-home
 
     .home-intro-text
       h1
-        = t('.intro_title_html')
-      = t('.intro_text_html')
+        = t('intro_section.home.title_html')
+      = t('intro_section.home.intro_html')
 
 section
   .text-section
-    h2 = t('intro_section.schedule_view.title')
+    h2 = t('intro_section.views.title')
 
     .intro-section-body
-      p = t('intro_section.schedule_view.intro')
+      p = t('intro_section.views.intro')
 
   .image-section
     span.cycle-prev.icon-chevron-left
@@ -56,10 +56,10 @@ section
 
 section
   .text-section
-    h2 = t('intro_section.organisation_client.title')
+    h2 = t('intro_section.client_management.title')
 
     .intro-section-body
-      p = t('intro_section.organisation_client.intro')
+      p = t('intro_section.client_management.intro')
 
   .image-section
     span.cycle-prev.icon-chevron-left
@@ -70,10 +70,24 @@ section
 
 section
   .text-section
-    h2 = t('intro_section.organisation_client.title')
+    h2 = t('intro_section.flexibility.title')
 
     .intro-section-body
-      p = t('intro_section.organisation_client.intro')
+      p = t('intro_section.flexibility.intro')
+
+  .image-section
+    span.cycle-prev.icon-chevron-left
+    span.cycle-next.icon-chevron-right
+    .lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
+    .lazy data-original="#{asset_path('intro_screenshots/section-3.jpg')}"
+    .lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
+
+section
+  .text-section
+    h2 = t('intro_section.online.title')
+
+    .intro-section-body
+      p = t('intro_section.online.intro')
 
   .image-section
     span.cycle-prev.icon-chevron-left

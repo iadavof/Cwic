@@ -94,9 +94,14 @@ a#collapse-menu {
     > a {
       display: block;
       background-position: center center;
-      background-size: 75px auto;
+      background-size: 74px auto;
       background-repeat: no-repeat;
       background-image: image-url('logo_in_app.png');
+      image-rendering: -moz-crisp-edges;
+    }
+    
+    html.svg & > a {
+      background-image: image-url('logo_in_app.svg');
     }
 
     > a:before {
@@ -107,6 +112,10 @@ a#collapse-menu {
     &.active {
       > a {
         background-image: image-url('logo_in_app_active.png');
+      }
+      
+      html.svg & > a {
+        background-image: image-url('logo.svg');
       }
     }
   }
