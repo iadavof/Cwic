@@ -28,13 +28,12 @@ h1 strong {
   z-index: 1;
   background-color: #fff;
   padding: 40px;
-  text-align: center;
 }
 
 #logo-container-inner {
   position: relative;
-  display: inline-block;
-  width: 420px;
+  display: block;
+  width: 416px;
   margin: 0 auto;
   max-width: 100%;
 }

@@ -1,5 +1,9 @@
 APP.introduction = {
   index: function() {
+    // Replace logo with svg version if svg is available
+    if (Modernizr.svg) {
+      $('#logo-container .logo').attr('src', '<%= asset_path('logo.svg') %>');
+    }
     $('.background-slider').cycle({
       autoHeight: false,
       slides: '> div',
@@ -18,8 +22,5 @@ APP.introduction = {
       effect: "fadeIn"
     });
     $('body').find('select, :radio, :checkbox, input[type=file]').cwicControl();
-    if (Modernizr.svg) {
-      $('#logo-container .logo').attr('src', '<%= asset_path('logo.svg') %>');
-    }
   },
 }

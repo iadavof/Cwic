@@ -90,13 +90,12 @@ html.js.not-logged-in {
 #logo-container {
   background-color: #fff;
   padding: 40px;
-  text-align: center;
 }
 
 #logo-container-inner {
   position: relative;
-  display: inline-block;
-  width: 420px;
+  display: block;
+  width: 416px;
   margin: 0 auto;
   max-width: 100%;
 }
