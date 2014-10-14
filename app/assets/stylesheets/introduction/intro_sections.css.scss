@@ -36,9 +36,8 @@ ul.feature-list {
     position: relative;
     margin: 0 0 0.8em 0;
     padding: 0 0 0 2.34em;
-    padding-left: calc(2.34em + 4px);
+    border-left: 4px solid transparent;
     text-indent: -2.34em;
-    text-indent: calc(-2.34em - 4px);
   }
   li {
     i.list-icon {
@@ -50,7 +49,7 @@ ul.feature-list {
       color: #18c13d;
       width: 2em;
       height: 2em;
-      margin-right: 1em;
+      margin: 0 1em 0 -4px;
       line-height: 2em;
       text-align: center;
       font-size: 0.78em;

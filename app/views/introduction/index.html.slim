@@ -46,23 +46,9 @@ section
 
     .intro-section-body
       p = t('intro_section.flexibility.intro')
-      ul.feature-list
-        li 
-          i.icon-ok.list-icon
-          | Flexibel in te delen door middel van zelf te configureren objectsoorten en objecten
-        li 
-          i.icon-ok.list-icon
-          | Uitgebreide instellingen voor prijzen en beschikbaarheid
-        li 
-          i.icon-ok.list-icon
-          | Koppel documenten aan objecten, reserveringen en klanten
+      = render 'section_feature_list', section: :flexibility
 
-  .image-section
-    span.cycle-prev.icon-chevron-left
-    span.cycle-next.icon-chevron-right
-    .lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
-    .lazy data-original="#{asset_path('intro_screenshots/section-3.jpg')}"
-    .lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
+  = render 'section_images', images: [2, 3, 1]
 
 section
   .text-section
@@ -70,29 +56,9 @@ section
 
     .intro-section-body
       p = t('intro_section.views.intro')
-      ul.feature-list
-        li 
-          i.icon-ok.list-icon
-          | Consistente en gebruiksvriendelijke gebruikersinterface
-        li 
-          i.icon-ok.list-icon
-          | Intuïtieve helpfunctie bij complexere instellingen
-        li 
-          i.icon-ok.list-icon
-          | Interactieve kalenders voor het snel bekijken en inboeken van reserveringen
-        li 
-          i.icon-ok.list-icon
-          | Gedetailleerd overzicht van reserveringen voor de huidige en eerstvolgende dag
-        li 
-          i.icon-ok.list-icon
-          | Overzicht van de bezettingsgraad
+      = render 'section_feature_list', section: :views
 
-  .image-section
-    span.cycle-prev.icon-chevron-left
-    span.cycle-next.icon-chevron-right
-    .lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
-    .lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
-    .lazy data-original="#{asset_path('intro_screenshots/section-4.jpg')}"
+  = render 'section_images', images: [1, 2, 4]
 
 section
   .text-section
@@ -100,17 +66,9 @@ section
 
     .intro-section-body
       p = t('intro_section.client_management.intro')
-      ul.feature-list
-        li 
-          i.icon-ok.list-icon
-          | Uitgebreid klantenbeheer
-        li
-          i.icon-ok.list-icon
-          | Houd alle communicatie met uw klanten bij, met ondersteuning voor het bijhouden van klanttevredenheid
+      = render 'section_feature_list', section: :client_management
 
-  .image-section
-    .lazy data-original="#{asset_path('intro_screenshots/section-5.jpg')}" style="background-position: right 0"
-    .lazy data-original="#{asset_path('intro_screenshots/section-6.jpg')}"
+  = render 'section_images', images: [5, 6]
 
 section
   .text-section
@@ -118,14 +76,9 @@ section
 
     .intro-section-body
       p = t('intro_section.online.intro')
+      = render 'section_feature_list', section: :online
 
-  .image-section
-    span.cycle-prev.icon-chevron-left
-    span.cycle-next.icon-chevron-right
-    .lazy data-original="#{asset_path('intro_screenshots/section-2.jpg')}"
-    .lazy data-original="#{asset_path('intro_screenshots/section-3.jpg')}"
-    .lazy data-original="#{asset_path('intro_screenshots/section-1.jpg')}"
-
+  = render 'section_images', images: [2, 3, 1]
 
 section.intro-section-last
   .intro-sign-up

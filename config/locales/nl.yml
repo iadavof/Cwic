@@ -782,17 +782,6 @@ nl:
       feedback_error_explain: 'Er is helaas iet misgegaan tijdens het verzenden van de feedback. Probeert u het later nog eens.'
       close: 'Sluiten'
 
-  introduction:
-    index:
-      newsletter: 'Nieuwsbrief'
-      sign_up_for_newsletter: 'Cwic is nog volop in ontwikkeling, dus er kunnen op dit moment nog geen accounts worden aangemaakt. Wilt u als eerste weten wanneer dit wel mogelijk is? Schrijf u dan in voor de nieuwsbrief.'
-      submit_newsletter_subscription: 'Inschrijven'
-      start_using_cwic: 'Ga nu Cwic gebruiken'
-      go_to_app: 'Ga naar de applicatie'
-      sign_in: 'Inloggen'
-      sign_out: 'Uitloggen'
-      intellectual_property_html: 'Cwic&reg; is een geregistreerd handelsmerk van <a href="http://iada.nl/">IADA v.o.f.</a>'
-
   stickies:
     resource_stickies:
       saved: 'Opgeslagen'

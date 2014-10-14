@@ -1,0 +1,7 @@
+- features = t("intro_section.#{section}.features")
+- if features.respond_to?(:each)
+  ul.feature-list
+    - features.each do |feature|
+      li
+        i.icon-ok.list-icon
+        = feature

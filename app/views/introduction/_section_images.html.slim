@@ -1,0 +1,6 @@
+.image-section
+  span.cycle-prev.icon-chevron-left
+  span.cycle-next.icon-chevron-right
+  - images.each do |image|
+    .lazy data-original="#{asset_path("intro_screenshots/section-#{image}.jpg")}"
+
