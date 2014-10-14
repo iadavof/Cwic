@@ -1,6 +1,6 @@
 class CommunicationRecord < ActiveRecord::Base
-  POSSIBLE_EMOTIONS = [:angry, :sad, :blank, :happy, :superhappy]
-  POSSIBLE_METHODS = [:phone, :email, :mail, :chat, :desk]
+  EMOTIONS = [:angry, :sad, :blank, :happy, :superhappy]
+  METHODS = [:phone, :email, :mail, :chat, :desk]
 
   # Associations
   belongs_to :organisation_client
@@ -16,8 +16,8 @@ class CommunicationRecord < ActiveRecord::Base
   validates :user, presence: true
   validates :reservation_id, inclusion: { in: -> cr { cr.organisation_client.reservation_ids } }, if: -> { organisation_client.present? }, allow_nil: true
   validates :summary, presence: true
-  validates :emotion, length: { maximum: 255 }, inclusion: { in: POSSIBLE_EMOTIONS }, allow_nil: true
-  validates :method, length: { maximum: 255 }, inclusion: { in: POSSIBLE_METHODS }, allow_nil: true
+  validates :emotion, length: { maximum: 255 }, inclusion: { in: EMOTIONS }, allow_nil: true
+  validates :method, length: { maximum: 255 }, inclusion: { in: METHODS }, allow_nil: true
 
   # Callbacks
   before_validation :set_user
@@ -26,7 +26,7 @@ class CommunicationRecord < ActiveRecord::Base
   default_scope { order(created_at: :desc) }
 
   def instance_name
-    self.summary
+    summary
   end
 
   private

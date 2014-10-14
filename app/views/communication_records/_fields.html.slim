@@ -3,11 +3,11 @@
 
   .head.clearfix
     .methods
-      - CommunicationRecord::POSSIBLE_METHODS.each do |method|
+      - CommunicationRecord::METHODS.each do |method|
         div class="#{method}#{(f.object.method == method.to_s) ? ' active' : ''}" data-value=method title=t(".method.#{method}")
       = f.hidden_field :method
     .emotions
-      - CommunicationRecord::POSSIBLE_EMOTIONS.each do |emo|
+      - CommunicationRecord::EMOTIONS.each do |emo|
         div class="#{emo}#{(f.object.emotion == emo.to_s) ? ' active' : ''}" data-value=emo
       = f.hidden_field :emotion
     .contact-reference
