@@ -13,21 +13,19 @@
   .field
     = f.label :password_confirmation
     = f.password_field :password_confirmation
-<% elsif [:float, :decimal].include?(attribute.type) -%>
-    = f.label :<%= attribute.name %>
-    = f.number_field :<%= attribute.name %>, step: :any
-<% elsif [:date].include?(attribute.type) -%>
-    = f.label :<%= attribute.name %>
-    = f.text_field :<%= attribute.name %>, class: 'datepicker-field'
-<% elsif [:time].include?(attribute.type) -%>
-    = f.label :<%= attribute.name %>
-    = f.text_field:<%= attribute.name %>, class: 'timepicker-field'
-<% elsif [:datetime, :timestamp].include?(attribute.type) -%>
-    = f.label :<%= attribute.name %>
-    = f.text_field :<%= attribute.name %>
 <% else -%>
     = f.label :<%= attribute.name %>
+<% if [:float, :decimal].include?(attribute.type) -%>
+    = f.number_field :<%= attribute.name %>, step: :any
+<% elsif [:date].include?(attribute.type) -%>
+    = f.text_field :<%= attribute.name %>, class: 'datepicker-field'
+<% elsif [:time].include?(attribute.type) -%>
+    = f.text_field:<%= attribute.name %>, class: 'timepicker-field'
+<% elsif [:datetime, :timestamp].include?(attribute.type) -%>
+    = f.text_field :<%= attribute.name %>
+<% else -%>
     = f.<%= attribute.field_type %> :<%= attribute.name %>
+<% end -%>
 <% end -%>
 <% end -%>
 
