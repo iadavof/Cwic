@@ -23,6 +23,36 @@ h1 strong {
   color: #fff;
 }
 
+ul.feature-list {
+  display: block;
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+}
+
+ul.feature-list {
+  li {
+    display: block;
+    margin: 0;
+    padding: 0;
+  }
+  li {
+    &:before {
+      display: inline-block;
+      vertical-align: middle;
+      border: 2px solid #18c13d;
+      color: #18c13d;
+      width: 2em;
+      height: 2em;
+      line-height: 2em;
+      text-align: center;
+      font-size: 0.76em;
+      border-radius: 9999px;
+      margin: 0.5em 0.8em 0.5em 0;
+    }
+  }
+}
+
 #logo-container {
   position: relative;
   z-index: 1;
@@ -94,6 +124,8 @@ h1 strong {
 .onepage-scroll {
   height: 100%;
   margin: 0 auto;
+  font-size: 1.2em;
+  line-height: 200%;
 }
 
 .onepage-scroll {
@@ -202,7 +234,7 @@ h1 strong {
         box-sizing: border-box;
         color: #fff;
         text-shadow: 0 0 0.5em rgba(0,0,0,.3);
-        font-size: 1.3em;
+        font-size: 1.1em;
 
         a {
           color: #fff;
@@ -217,7 +249,6 @@ h1 strong {
     }
 
     div.text-section {
-      font-size: 1.3em;
       padding: 5%;
       box-sizing: border-box;
       padding-right: 55%;
@@ -385,7 +416,7 @@ table.features-comparison {
 .intro-sign-up,
 .intro-go-to-app {
   .button {
-    font-size: 1.7em;
+    font-size: 1.5em;
     font-weight: bold;
   }
 }

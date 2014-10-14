@@ -9,7 +9,9 @@ APP.introduction = {
       slides: '> div',
       speed: 800,
     });
-    $('section .image-section').cycle({
+    var $cyclePrevLink = $('<span class="cycle-prev icon-chevron-left">');
+    var $cycleNextLink = $('<span class="cycle-next icon-chevron-right">');
+    $('section .image-section').append($cyclePrevLink, $cycleNextLink).cycle({
       autoHeight: false,
       slides: '> div',
       speed: 800,
