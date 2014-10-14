@@ -4,11 +4,11 @@
   .head.clearfix
     .methods
       - CommunicationRecord::METHODS.each do |method|
-        div class="#{method}#{(f.object.method == method.to_s) ? ' active' : ''}" data-value=method title=t(".method.#{method}")
+        div class=[method, ('active' if f.object.method == method)] data-value=method title=t(".method.#{method}")
       = f.hidden_field :method
     .emotions
-      - CommunicationRecord::EMOTIONS.each do |emo|
-        div class="#{emo}#{(f.object.emotion == emo.to_s) ? ' active' : ''}" data-value=emo
+      - CommunicationRecord::EMOTIONS.each do |emotion|
+        div class=[emotion, ('active' if f.object.emotion == emotion)] data-value=emotion
       = f.hidden_field :emotion
     .contact-reference
       = f.collection_select :contact_id, @organisation_client.contacts, :id, :instance_name, prompt: t('prompt_choose_model', model: OrganisationClientContact.model_name.human.lcfirst)
