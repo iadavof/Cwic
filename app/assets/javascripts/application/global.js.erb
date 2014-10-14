@@ -12,13 +12,13 @@ APP.init = function() {
   current_locale = body.data('current-locale');
   websocket_url = body.data('websocket-url');
   this.global.initLocale(current_locale);
-  
+
   // Replace AJAX spinner with svg version if SMIL animations are available
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax-wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('.ajax-wait:not(img)').css('background-image', 'url("<%= asset_path('ajax_wait.svg') %>") !important');
   }
-  
+
   // Replace logo with svg version if svg is available
   if (Modernizr.svg) {
     $('#logo-container .logo').attr('src', '<%= asset_path('logo.svg') %>');
@@ -50,9 +50,6 @@ APP.init = function() {
 
   // Set the upper nprogress bar as the default ajax complete and start handlers
   this.global.addProgressbarToAjax();
-
-  // Initialize tabs
-  this.global.initializeTabs();
 
   // Initialize special form fields, such as date- and timepickers, special Cwic Controls (select, checkbox, ...)
   this.global.initializeSpecialFormFields();
@@ -337,27 +334,6 @@ APP.global = {
     content.append(okButton);
 
     APP.modal.openModal('confirm', content);
-  },
-  initializeTabs: function() {
-    var container = $('#tabs');
-    container.tabs({ active: this.determineFirstTabWithErrors(container) });
-  },
-  determineFirstTabWithErrors: function(container) {
-    // Determines the first tab to open. This is the first tab with errors (if any, else simply open the first tab). Also adds the 'with-errors' class to any tabs with errors.
-    var first = 0;
-    var determined = false;
-    container.find('.nav a').each(function(index) {
-      var id = $(this).attr('href'); // Starts with #
-      var tab = container.find(id);
-      if(tab.find('.validation-error').length) {
-        if(first == 0 && !determined) {
-          first = index;
-          determined = true;
-        }
-        $(this).addClass('with-errors');
-      }
-    });
-    return first;
   },
   initializeSpecialFormFields: function(parent) {
     if(!parent) {
