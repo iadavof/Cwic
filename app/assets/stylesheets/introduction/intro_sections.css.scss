@@ -282,7 +282,6 @@ ul.feature-list {
       height: 88.25%;
       z-index: 0;
       border-radius: 20px;
-      box-shadow: 0 0 4px rgba(0, 0, 0, 0.3);
     }
 
     div.image-section {
@@ -357,6 +356,8 @@ ul.feature-list {
         bottom: 0;
         background-color: rgba(250, 236, 242, 0.15);
         z-index: 998;
+        box-shadow: 0 0 4px rgba(0, 0, 0, 0.3) inset;
+        border-radius: 20px;
       }
     }
 
