@@ -282,6 +282,7 @@ ul.feature-list {
       height: 88.25%;
       z-index: 0;
       border-radius: 20px;
+      overflow: hidden;
     }
 
     div.image-section {
@@ -297,7 +298,6 @@ ul.feature-list {
         cursor: pointer;
         background-color: #1c9cb2;
         color: #fff;
-        opacity: 0;
         transition: 0.2s;
         box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.3);
       }
@@ -320,19 +320,27 @@ ul.feature-list {
       }
 
       .cycle-prev {
-        left: 0;
+        left: -6%;
         border-radius: 0 9999px 9999px 0;
       }
 
       .cycle-next {
-        right: 0;
+        right: -6%;
         border-radius: 9999px 0 0 9999px;
       }
 
       &:hover {
         .cycle-prev,
         .cycle-next {
-          opacity: 1;
+          display: block;
+        }
+        
+        .cycle-prev {
+          left: 0;
+        }
+        
+        .cycle-next {
+          right: 0;
         }
       }
 
