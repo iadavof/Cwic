@@ -26,29 +26,35 @@ h1 strong {
 ul.feature-list {
   display: block;
   list-style-type: none;
-  margin: 0;
+  margin: 0 0 -0.8em 0;
   padding: 0;
 }
 
 ul.feature-list {
   li {
     display: block;
-    margin: 0;
-    padding: 0;
+    position: relative;
+    margin: 0 0 0.8em 0;
+    padding: 0 0 0 2.34em;
+    padding-left: calc(2.34em + 4px);
+    text-indent: -2.34em;
+    text-indent: calc(-2.34em - 4px);
   }
   li {
-    &:before {
+    i.list-icon {
+      text-indent: 0;
       display: inline-block;
       vertical-align: middle;
+      position: relative;
       border: 2px solid #18c13d;
       color: #18c13d;
       width: 2em;
       height: 2em;
+      margin-right: 1em;
       line-height: 2em;
       text-align: center;
-      font-size: 0.76em;
+      font-size: 0.78em;
       border-radius: 9999px;
-      margin: 0.5em 0.8em 0.5em 0;
     }
   }
 }

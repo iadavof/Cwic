@@ -56,8 +56,7 @@ div#reservation-form {
   }
 }
 
-.cwic-checkbox.checked > .inner,
-.feature-list li {
+.cwic-checkbox.checked > .inner {
   @extend .icon-ok;
   &:before {
     @extend [class^="icon-"];
