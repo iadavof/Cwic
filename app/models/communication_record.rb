@@ -9,15 +9,14 @@ class CommunicationRecord < ActiveRecord::Base
   belongs_to :contact, class_name: 'OrganisationClientContact'
 
   # Attribute modifiers
-  symbolize :emotion, :method
+  symbolize :emotion, in: EMOTIONS, allow_nil: true
+  symbolize :method, in: METHODS, allow_nil: true
 
   # Validations
   validates :organisation_client, presence: true
   validates :user, presence: true
   validates :reservation_id, inclusion: { in: -> cr { cr.organisation_client.reservation_ids } }, if: -> { organisation_client.present? }, allow_nil: true
   validates :summary, presence: true
-  validates :emotion, length: { maximum: 255 }, inclusion: { in: EMOTIONS }, allow_nil: true
-  validates :method, length: { maximum: 255 }, inclusion: { in: METHODS }, allow_nil: true
 
   # Callbacks
   before_validation :set_user
