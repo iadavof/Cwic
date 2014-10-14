@@ -4,4 +4,4 @@ json.author do
   json.name sticky.user.instance_name
 end
 json.sticky_text sticky.sticky_text
-json.created_at sticky.created_at.strftime('%Y-%m-%d %H:%M')
+json.created_at sticky.created_at

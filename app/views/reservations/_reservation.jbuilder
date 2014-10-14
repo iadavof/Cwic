@@ -1,6 +1,6 @@
 json.id reservation.id
-json.begin_moment reservation.begins_at.strftime('%Y-%m-%d %H:%M')
-json.end_moment reservation.ends_at.strftime('%Y-%m-%d %H:%M')
+json.begin_moment reservation.begins_at
+json.end_moment reservation.ends_at
 json.bg_color reservation.entity.color
 json.text_color reservation.entity.text_color
 json.blocking reservation.status.blocking if reservation.status.present?
