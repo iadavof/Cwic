@@ -263,6 +263,13 @@ ul.feature-list {
       > h2 {
         margin-top: 0;
         font-size: 2.2em;
+        font-weight: 300;
+      }
+      > h2 {
+        strong {
+          font-weight: bold;
+          color: #ff3520;
+        }
       }
     }
 
