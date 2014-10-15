@@ -7,7 +7,7 @@ class CrudController < ApplicationController
 
   # authorize_resource TODO enable this line when authorization is implemented
 
-  helper_method :member, :member_path, :parent_models, :parent, :parent_path, :collection, :collection_path, :listed_collection
+  helper_method :member, :member_path, :parent_models, :parent, :parent_path, :collection, :collection_path
 
   # Actions
 
@@ -201,10 +201,6 @@ class CrudController < ApplicationController
     rel = rel.ssp(params) if rel.respond_to?(:ssp)
     rel = rel.includes(collection_includes) if collection_includes.present?
     rel
-  end
-
-  def listed_collection
-    collection
   end
 
   def collection_path
