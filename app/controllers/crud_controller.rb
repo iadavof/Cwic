@@ -7,7 +7,7 @@ class CrudController < ApplicationController
 
   # authorize_resource TODO enable this line when authorization is implemented
 
-  helper_method :member, :member_path, :parent_models, :parent, :parent_path, :collection, :collection_path
+  helper_method :member, :member_path, :parent, :parent_path, :collection, :collection_path
 
   # Actions
 
