@@ -9,7 +9,7 @@ class MyUsersController < CrudController
     [:first_name, :last_name, :infix, :email]
   end
 
-  def redirect_location
+  def respond_location
     my_user_path(member)
   end
 end

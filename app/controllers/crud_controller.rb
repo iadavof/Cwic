@@ -29,17 +29,17 @@ class CrudController < ApplicationController
 
   def create
     member.save
-    respond_with(*member_path, location: redirect_location)
+    respond_with(*member_path, location: respond_location)
   end
 
   def update
     member.save
-    respond_with(*member_path, location: redirect_location)
+    respond_with(*member_path, location: respond_location)
   end
 
   def destroy
     member.destroy
-    respond_with(*member_path, alert: member.errors[:base], location: redirect_location)
+    respond_with(*member_path, location: respond_location, alert: member.errors[:base])
   end
 
   protected
@@ -96,7 +96,7 @@ class CrudController < ApplicationController
     parent_path + [member]
   end
 
-  def redirect_location
+  def respond_location
     nil # Use default respond_with behaviour
   end
 
