@@ -115,13 +115,12 @@ class CrudController < ApplicationController
   end
 
   def parent_model
-    if parent_models.present?
-      parent_model = parent_models.reject(&:nil?).find { |pm| parent_id(pm) }
-      if parent_models.include?(parent_model)
-        parent_model # Found parent model allowed: return it (could be nil if having no parent is allowed)
-      else
-        parent_models.first # No allowed parent found: force first allowed parent
-      end
+    return unless parent_models.present?
+    parent_model = parent_models.reject(&:nil?).find { |pm| parent_id(pm) }
+    if parent_models.include?(parent_model)
+      parent_model # Found parent model allowed: return it (could be nil if having no parent is allowed)
+    else
+      parent_models.first # No allowed parent found: force first allowed parent
     end
   end
 
