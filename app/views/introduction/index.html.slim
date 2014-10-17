@@ -32,8 +32,9 @@ section.intro-section-home.full-height
         - else
           .intro-sign-up
             = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
-        .intro-sign-in
-          = link_to(t('.sign_in'), new_user_session_path, class: 'button')
+        - unless Rails.application.config.disable_sessions
+          .intro-sign-in
+            = link_to(t('.sign_in'), new_user_session_path, class: 'button')
 
     .home-intro-text
       h1

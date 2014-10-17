@@ -12,4 +12,7 @@ Cwic::Application.configure do
 
   # Send mails from staging.cwic.nl
   config.action_mailer.default_url_options = { host: 'staging.cwic.nl' }
+
+  # Enable sessions on staging (only user's with an account can login any way)
+  config.disable_sessions = false
 end

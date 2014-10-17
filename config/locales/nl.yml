@@ -485,6 +485,7 @@ nl:
     sessions:
       destroy:
         logout: 'Uitloggen'
+      disabled: 'Inloggen is op dit moment (nog) niet mogelijk'
 
   flash:
     organisation_users:
