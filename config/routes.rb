@@ -7,7 +7,7 @@ Cwic::Application.routes.draw do
   get 'home/index'
   root to: 'introduction#index'
 
-  devise_for :users, controllers: { registrations: 'users/registrations', invitations: 'users/invitations' }
+  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', invitations: 'users/invitations' }
 
   get 'switch_organisation/:id/', controller: :application, action: :switch_organisation, as: :switch_organisation
 

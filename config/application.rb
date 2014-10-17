@@ -40,6 +40,7 @@ module Cwic
 
     # Default values for custom configuration settings
     config.disable_registrations = false
+    config.disable_sessions = false
     config.flyblown = false
   end
 end

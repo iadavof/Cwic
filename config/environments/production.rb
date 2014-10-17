@@ -84,6 +84,7 @@ Cwic::Application.configure do
   # Enable FlyBlown exception handler
   config.flyblown = true
 
-  # Disable registrations (for now)
+  # Disable registrations and sessions (for now)
   config.disable_registrations = true
+  config.disable_sessions = true
 end
