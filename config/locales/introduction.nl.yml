@@ -39,3 +39,6 @@ nl:
     online:
       title_html: 'Direct <strong>online</strong> en altijd <strong>up-to-date</strong>'
       intro: 'Als u betaalt voor een reserveringssysteem is het jammer als u tijd en geld moet verspillen aan het installeren en up-to-date houden van software op verschillende computers. Cwic is een online systeem en is dus direct te gebruiken en altijd up-to-date. Daarnaast is uw reserveringssysteem overal via internet te bereiken, dus ook thuis, op een terras of in de trein.'
+    dutch:
+      title_html: 'Made in <strong>Holland</strong>'
+      intro: 'Cwic wordt in Nederland ontwikkeld en gehost. Dat betekent dat gegevens van u en uw klanten binnen Nederland blijven en dat u zaken doet met een bedrijf dat gebonden is aan de Nederlandse wetgeving. En dat is wel zo prettig.'

@@ -1,4 +1,4 @@
-section.intro-section-home
+section.intro-section-home.full-height
   .background-slider
     - intro_background_images(3).each do |image|
       div style="background-image: url('#{asset_path(image)}')"
@@ -40,7 +40,7 @@ section.intro-section-home
         = t('intro_section.home.title_html')
       = t('intro_section.home.intro_html')
 
-section
+section.screenshots.full-height
   .text-section
     h2 = t('intro_section.flexibility.title_html')
 
@@ -48,9 +48,9 @@ section
       p = t('intro_section.flexibility.intro')
       = render 'section_feature_list', section: :flexibility
 
-  = render 'section_images', images: [2, 3, 1]
+  = render 'section_images', images: [3,7]
 
-section
+section.screenshots.full-height
   .text-section
     h2 = t('intro_section.views.title_html')
 
@@ -60,7 +60,7 @@ section
 
   = render 'section_images', images: [1, 2, 4]
 
-section
+section.screenshots.full-height
   .text-section
     h2 = t('intro_section.client_management.title_html')
 
@@ -78,7 +78,12 @@ section
       p = t('intro_section.online.intro')
       = render 'section_feature_list', section: :online
 
-  = render 'section_images', images: [2, 3, 1]
+  .text-section
+    h2 = t('intro_section.dutch.title_html')
+
+    .intro-section-body
+      p = t('intro_section.dutch.intro')
+      = render 'section_feature_list', section: :dutch
 
 section.intro-section-last
   .intro-sign-up
