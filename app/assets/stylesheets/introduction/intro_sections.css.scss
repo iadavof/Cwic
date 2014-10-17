@@ -87,8 +87,8 @@ ul.feature-list {
     background-color: #fff;
     padding: 1.5em;
     margin: 0 1.5em;
-    box-shadow: 0 0 0.8em rgba(0, 0, 0, .5);
     max-width: 33em;
+    border: 5px solid #eee;
   }
 
   > .inner {
@@ -144,13 +144,14 @@ ul.feature-list {
     margin-top: -3%;
     box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
     background-color: #fff;
+    text-align: center;
   }
 
   > section {
     &:first-child {
       margin-top: 0;
     }
-    
+
     &.full-height {
       min-height: 100%;
     }
@@ -166,6 +167,12 @@ ul.feature-list {
     }
 
     &.intro-section-home {
+      .newsletter-signup {
+        > .inner {
+          box-shadow: 0 0 0.8em rgba(0, 0, 0, .5);
+          border: 0 none;
+        }
+      }
       .background-slider {
         position: absolute;
         height: 100%;
@@ -248,11 +255,13 @@ ul.feature-list {
     }
 
     div.text-section {
+      display: inline-block;
+      vertical-align: top;
       width: 50%;
       padding: 5%;
       box-sizing: border-box;
       overflow: hidden;
-      float: left;
+      text-align: left;
     }
 
     div.text-section {
@@ -294,11 +303,18 @@ ul.feature-list {
       }
     }
   }
+
+  > section.screenshots {
+    text-align: inherit;
+  }
+
   > section.screenshots {
     div.text-section {
+      display: block;
       width: auto;
       padding-right: 55%;
       float: none;
+      text-align: inherit;
     }
 
     div.image-section {
@@ -312,7 +328,7 @@ ul.feature-list {
       border-radius: 20px;
       overflow: hidden;
     }
-    
+
     div.image-section {
       > div:after {
         display: block;
@@ -374,11 +390,11 @@ ul.feature-list {
           display: block;
           box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.3);
         }
-        
+
         .cycle-prev {
           transform: none;
         }
-        
+
         .cycle-next {
           transform: none;
         }
@@ -408,7 +424,7 @@ ul.feature-list {
         border-radius: 20px;
       }
     }
-    
+
     &:nth-child(even) div.text-section {
       padding-right: 5%;
       padding-left: 55%;
@@ -475,7 +491,8 @@ table.features-comparison {
     }
 
     .background-slider > div:after {
-      transform: none;
+        width: 53%;
+        transform: rotate(-7.5deg);
     }
   }
 }
