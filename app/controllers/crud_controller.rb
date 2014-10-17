@@ -3,8 +3,6 @@ class CrudController < ApplicationController
   before_action :load_collection
   before_action :load_member, except: :index
 
-  before_action :assign_attributes, only: :update
-
   # authorize_resource TODO enable this line when authorization is implemented
 
   helper_method :member, :member_path, :parent, :parent_path, :collection, :collection_path
@@ -33,7 +31,7 @@ class CrudController < ApplicationController
   end
 
   def update
-    member.save
+    member.update(member_params)
     respond_with(*member_path, location: respond_location)
   end
 
@@ -74,10 +72,6 @@ class CrudController < ApplicationController
 
   def build_member
     collection.build(member_params)
-  end
-
-  def assign_attributes
-    member.assign_attributes(member_params)
   end
 
   def member_params_key
