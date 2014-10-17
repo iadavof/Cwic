@@ -1,8 +1,8 @@
 if Rails.application.config.flyblown
   Cwic::Application.config.middleware.use(ExceptionNotification::Rack,
     email: {
-      email_prefix: '[Exception] ',
-      sender_address: %("Flyblown" <flyblown@cwic.nl>),
+      email_prefix: "[Cwic #{Rails.env} Exception] ",
+      sender_address: %("Flyblown Cwic" <flyblown@cwic.nl>),
       exception_recipients: %w(info@iada.nl),
     },
     notify_my_android: {
