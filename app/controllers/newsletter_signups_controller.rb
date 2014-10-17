@@ -6,9 +6,10 @@ class NewsletterSignupsController < CrudController
     # TODO improve this when crud controller is improved with split of build_member and load member callbacks
     @newsletter_signup = build_member
     if @newsletter_signup.save
+      NotificationMailer.newsletter_signup_notification(@newsletter_signup).deliver
       redirect_to root_path, notice: I18n.t('newsletter_signups.thanks')
     else
-      redirect_to root_path, alert: @newsletter_signup.errors.full_messages.first #I18n.t('newsletter_signups.invalid_email')
+      redirect_to root_path, alert: @newsletter_signup.errors.full_messages.first
     end
   end
 
