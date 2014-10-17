@@ -12,19 +12,19 @@ class CrudController < ApplicationController
   # Actions
 
   def index
-    respond_with(collection)
+    respond_with(*collection_path)
   end
 
   def show
-    respond_with(member)
+    respond_with(*member_path)
   end
 
   def new
-    respond_with(member)
+    respond_with(*member_path)
   end
 
   def edit
-    respond_with(member)
+    respond_with(*member_path)
   end
 
   def create
@@ -100,6 +100,7 @@ class CrudController < ApplicationController
     nil # Use default respond_with behaviour
   end
 
+  # Interpolation options for respond messages (using the Responders gem)
   def interpolation_options
     { resource_name: member.instance_name }
   end
