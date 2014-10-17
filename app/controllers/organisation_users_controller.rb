@@ -21,12 +21,12 @@ class OrganisationUsersController < CrudController
     @current_menu_link = :create # Set current_menu_link to create, since we actually are still creating a new organisation user.
     # The invite call on the user will also calls the save method on this user object and stores the organisation_users relation
     @user = User.invite!(invite_params, current_user)
-    respond_with(@organisation, @user, action: :invite_form, location: redirect_location)
+    respond_with(@organisation, @user, action: :invite_form, location: respond_location)
   end
 
   def reinvite
     @organisation_user.user.invite!
-    respond_with(@organisation, @organisation_user, location: redirect_location)
+    respond_with(@organisation, @organisation_user, location: respond_location)
   end
 
   private
@@ -43,7 +43,7 @@ class OrganisationUsersController < CrudController
     params.require(:user).permit(:first_name, :infix, :last_name, :email, :invitation_token, organisation_users_attributes: [:organisation_id, :organisation_role_id])
   end
 
-  def redirect_location
+  def respond_location
     collection_path
   end
 

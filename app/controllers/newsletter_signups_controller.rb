@@ -18,7 +18,7 @@ class NewsletterSignupsController < CrudController
     [:email]
   end
 
-  def redirect_location
+  def respond_location
     collection_path
   end
 end

@@ -33,7 +33,7 @@ class InfoScreensController < CrudController
     ]
   end
 
-  def redirect_location
+  def respond_location
     collection_path
   end
 end

@@ -3,43 +3,41 @@ class CrudController < ApplicationController
   before_action :load_collection
   before_action :load_member, except: :index
 
-  before_action :assign_attributes, only: :update
-
   # authorize_resource TODO enable this line when authorization is implemented
 
-  helper_method :member, :member_path, :parent_models, :parent, :parent_path, :collection, :collection_path, :listed_collection
+  helper_method :member, :member_path, :parent, :parent_path, :collection, :collection_path
 
   # Actions
 
   def index
-    respond_with(collection)
+    respond_with(*collection_path)
   end
 
   def show
-    respond_with(member)
+    respond_with(*member_path)
   end
 
   def new
-    respond_with(member)
+    respond_with(*member_path)
   end
 
   def edit
-    respond_with(member)
+    respond_with(*member_path)
   end
 
   def create
     member.save
-    respond_with(*member_path, location: redirect_location)
+    respond_with(*member_path, location: respond_location)
   end
 
   def update
-    member.save
-    respond_with(*member_path, location: redirect_location)
+    member.update(member_params)
+    respond_with(*member_path, location: respond_location)
   end
 
   def destroy
     member.destroy
-    respond_with(*member_path, alert: member.errors[:base], location: redirect_location)
+    respond_with(*member_path, location: respond_location, alert: member.errors[:base])
   end
 
   protected
@@ -76,10 +74,6 @@ class CrudController < ApplicationController
     collection.build(member_params)
   end
 
-  def assign_attributes
-    member.assign_attributes(member_params)
-  end
-
   def member_params_key
     member_name.to_sym
   end
@@ -96,10 +90,11 @@ class CrudController < ApplicationController
     parent_path + [member]
   end
 
-  def redirect_location
+  def respond_location
     nil # Use default respond_with behaviour
   end
 
+  # Interpolation options for respond messages (using the Responders gem)
   def interpolation_options
     { resource_name: member.instance_name }
   end
@@ -115,13 +110,12 @@ class CrudController < ApplicationController
   end
 
   def parent_model
-    if parent_models.present?
-      parent_model = parent_models.reject(&:nil?).find { |pm| parent_id(pm) }
-      if parent_models.include?(parent_model)
-        parent_model # Found parent model allowed: return it (could be nil if having no parent is allowed)
-      else
-        parent_models.first # No allowed parent found: force first allowed parent
-      end
+    return unless parent_models.present?
+    parent_model = parent_models.reject(&:nil?).find { |pm| parent_id(pm) }
+    if parent_models.include?(parent_model)
+      parent_model # Found parent model allowed: return it (could be nil if having no parent is allowed)
+    else
+      parent_models.first # No allowed parent found: force first allowed parent
     end
   end
 
@@ -201,10 +195,6 @@ class CrudController < ApplicationController
     rel = rel.ssp(params) if rel.respond_to?(:ssp)
     rel = rel.includes(collection_includes) if collection_includes.present?
     rel
-  end
-
-  def listed_collection
-    collection
   end
 
   def collection_path
