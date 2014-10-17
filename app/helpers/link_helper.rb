@@ -42,6 +42,14 @@ module LinkHelper
     link_to_if(can?(:destroy, relevant_object(object)), name, location, options) {}
   end
 
+  def link_to_action(object, action, options = {})
+    name = options.delete(:name) || t(".to_#{action}", default: :to_action_object, action: action, class: object_class_name(object).lcfirst, name: object_name(object))
+    location_query = options.delete(:location_query) || {}
+    location = options.delete(:location) || polymorphic_path(object, location_query.merge!(action: action))
+    options = options.merge(data: { action: action })
+    link_to_if(can?(action, relevant_object(object)), name, location, options) {}
+  end
+
   # Name link to object helpers
   def name_link_to_show(object, options = {})
     options[:name] ||= object_name(object)
@@ -71,6 +79,14 @@ module LinkHelper
     link_to_destroy(object, options)
   end
 
+  def icon_link_to_action(object, action, options = {})
+    options[:name] = ''
+    options[:class] ||= 'icon'
+    options[:class] += " #{options[:icon]}" if options[:icon].present?
+    options[:title] ||= t(".to_#{action}", default: :to_action_object, action: action, class: object_class_name(object).lcfirst, name: object_name(object))
+    link_to_action(object, action, options)
+  end
+
   # Button link to object helpers
   def button_link_to_index(object, options = {})
     options[:class] ||= 'button'
@@ -95,6 +111,11 @@ module LinkHelper
   def button_link_to_destroy(object, options = {})
     options[:class] ||= 'button'
     link_to_destroy(object, options)
+  end
+
+  def button_link_to_action(object, action, options = {})
+    options[:class] ||= 'button'
+    link_to_action(object, action, options)
   end
 
   private
