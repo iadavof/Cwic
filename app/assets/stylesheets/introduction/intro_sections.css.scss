@@ -337,7 +337,6 @@ ul.feature-list {
         background-color: #1c9cb2;
         color: #fff;
         transition: 0.2s;
-        box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.3);
       }
 
       .cycle-prev,
@@ -373,6 +372,7 @@ ul.feature-list {
         .cycle-prev,
         .cycle-next {
           display: block;
+          box-shadow: 0 0 0.2em rgba(0, 0, 0, 0.3);
         }
         
         .cycle-prev {
@@ -459,6 +459,48 @@ table.features-comparison {
 .intro-sign-in,
 .intro-sign-out {
   margin-top: 2em;
+}
+
+@media (max-width: 95em) {
+  .onepage-scroll > section.intro-section-home {
+    div.home-text-section {
+      .intro-actions {
+        width: 50%;
+        left: 75%;
+      }
+
+      .home-intro-text {
+        width: 50%;
+      }
+    }
+
+    .background-slider > div:after {
+      transform: none;
+    }
+  }
+}
+
+@media (max-width: 75em) {
+  .onepage-scroll > section.intro-section-home {
+    div.home-text-section {
+      .intro-actions {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: auto;
+        transform: none;
+        padding: 5% 0;
+      }
+
+      .home-intro-text {
+        width: auto;
+        background-color: rgba(#1c9cb2,.75);
+      }
+    }
+    .background-slider > div:after {
+      display: none;
+    }
+  }
 }
 
 @media (max-width: 60em) {

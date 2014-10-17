@@ -11,6 +11,11 @@ section.intro-section-home.full-height
   = render 'layouts/flash_messages'
 
   .home-text-section
+    .home-intro-text
+      h1
+        = t('intro_section.home.title_html')
+      = t('intro_section.home.intro_html')
+      
     .intro-actions
       - if user_signed_in?
         .intro-go-to-app
@@ -34,11 +39,6 @@ section.intro-section-home.full-height
             = link_to(t('.start_using_cwic'), new_user_registration_path, class: 'button green')
         .intro-sign-in
           = link_to(t('.sign_in'), new_user_session_path, class: 'button')
-
-    .home-intro-text
-      h1
-        = t('intro_section.home.title_html')
-      = t('intro_section.home.intro_html')
 
 section.screenshots.full-height
   .text-section
