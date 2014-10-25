@@ -112,6 +112,7 @@ nl:
         password: 'Wachtwoord'
         password_confirmation: 'Bevestig wachtwoord'
         remember_me: 'Onthoud mij'
+        current_password: 'Huidig wachtwoord'
       organisation:
         name: 'Naam'
         address: 'Adres'
@@ -835,3 +836,24 @@ nl:
     thanks: 'Bedankt voor het aanmelden voor de Cwic nieuwsbrief! U hoort van ons!'
     invalid_email: 'Het ingevoerde e-mailadres voor de nieuwsbriefaanmelding lijkt niet te kloppen.'
     enter_your_email: 'Vul hier uw e-mailadres in...'
+
+  my_users:
+    show:
+      awaiting_confirmation_for_email: '(wachtend op bevestiging van %{email})'
+      email_not_yet_confirmed: '(nog niet bevestigd)'
+    edit_password:
+      change_password: 'Wachtwoord wijzigen'
+      change_my_password: 'Je wachtwoord veranderen'
+    update_password:
+      success: 'Wachtwoord succesvol gewijzigd'
+      failure: 'Het wachtwoord kon niet worden gewijzigd'
+    edit_email:
+      change_email: 'E-mail wijzigen'
+      change_my_email: 'Mijn e-mailadres wijzigen'
+    update_email:
+      success: 'E-mailadres succesvol gewijzigd'
+      failure: 'Het e-mailadres kon niet worden gewijzigd'
+  users:
+    details:
+      awaiting_confirmation_for_email: '(wachtend op bevestiging van %{email})'
+      email_not_yet_confirmed: '(nog niet bevestigd)'

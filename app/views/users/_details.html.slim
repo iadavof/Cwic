@@ -6,7 +6,10 @@ dl
   dt = User.human_attribute_name(:last_name)
   dd = user.last_name
   dt = User.human_attribute_name(:email)
-  dd = user.email
+  dd
+    => @user.email
+    => t('.email_not_yet_confirmed') unless @user.confirmed?
+    => t('.awaiting_confirmation_for_email', email: @user.unconfirmed_email) if @user.pending_reconfirmation?
   dt  = User.human_attribute_name(:sign_in_count)
   dd = user.sign_in_count
   dt = User.human_attribute_name(:created_at)

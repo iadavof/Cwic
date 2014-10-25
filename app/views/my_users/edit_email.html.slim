@@ -1,0 +1,17 @@
+- content_for :page_title do
+  = t('.change_my_email')
+
+- content_for :local_menu_navigation do
+  = button_link_to_show(@user, location: my_user_path(@user))
+
+= form_for(@user, url: { controller: 'my_users', action: 'update_email' }, method: 'put') do |f|
+  = render 'shared/error_messages', target: @user
+  .field
+    = f.label :current_password
+    = f.password_field :current_password
+  .field
+    = f.label :email
+    = f.email_field :email
+  .actions
+    = f.submit t('.change_email')
+end

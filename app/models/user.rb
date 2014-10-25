@@ -11,11 +11,17 @@ class User < ActiveRecord::Base
   has_many :organisations, through: :organisation_users
   has_many :invitations, class_name: 'User', as: :invited_by
 
+  # Model extensions
+  # For actions that require the users password (such as updating the password or the e-mail)
+  attr_accessor :current_password
+  attr_accessor :validate_current_password
+
   # Validations
   validates :first_name, presence: true, length: { maximum: 255 }
   validates :last_name, presence: true, length: { maximum: 255 }
   validates :infix, length: { maximum: 255 }
   validates :email, email: true
+  validate :current_password_validator, if: :validate_current_password
 
   # Nested attributes
   accepts_nested_attributes_for :organisations
@@ -57,5 +63,20 @@ class User < ActiveRecord::Base
       # User was invited. Do not (re)send confirmation e-mail, but resend invitation e-mail instead:
       self.invite!
     end
+  end
+
+  def email=(value)
+    if self.email == value
+      self.unconfirmed_email = nil # Reset unconfirmed email if we change the email back to the old, already confirmed email.
+    end
+    super
+  end
+
+  private
+
+  def current_password_validator
+    # We always check the current password against the password of the current logged in user (and not the current selected user, i.e. this player).
+    # This way admins can change passwords of other users by entering their password (as a security check).
+    errors[:current_password] << I18n.t('errors.messages.invalid') unless User.current.valid_password?(current_password)
   end
 end
