@@ -45,21 +45,21 @@ APP.reservations = {
     $(':radio[name="organisation_client_type"]').trigger('change');
   },
   bindOnSubmitMiniSearch: function() {
-    // TODO the checkDateAndSubmit function is not used ever, since it is not called when date fields change (the onchange callback submits the form without invoking the form's on submit callbacks).
-    // The function should be bound on the date fields directly and then let the function submit the form if the fields are valid
-    $('form.mini-search.with-date').on('submit.date-domain', APP.reservations.checkDateAndSubmit);
+    var form = $('form.mini-search.with-date');
+    form.find('input[type="submit"]').on('click', APP.reservations.checkDateAndSubmit);
+    form.find('input#date_domain_from, input#date_domain_to').on('change', APP.reservations.checkDateAndSubmit);
   },
   checkDateAndSubmit: function(e) {
     if(e) {
       e.preventDefault();
     }
-    var form = $(this);
+    var form = $(this).closest('form');
     var domainFrom = form.find('input#date_domain_from');
     var domainTo = form.find('input#date_domain_to');
 
     // If one of both date fields is empty, submit is ok
     if(domainFrom.val() == '' || domainTo.val() == '') {
-      form.off('submit.date-domain');
+      form.off('submit');
       form.submit();
       return true;
     }
@@ -70,7 +70,7 @@ APP.reservations = {
     if(domainFromMoment.unix() >= domainToMoment.unix()) {
       APP.util.setFieldErrorState(domainTo, true)
     } else {
-      form.off('submit.date-domain');
+      form.off('submit');
       form.submit();
       return true;
     }
