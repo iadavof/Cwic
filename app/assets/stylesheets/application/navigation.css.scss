@@ -433,3 +433,60 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
 .nav .ui-state-active a.with-errors:before {
   color: inherit;
 }
+
+.tabs {
+  background: #eee;
+  padding: 0 5px 5px;
+  margin-bottom: 1em;
+}
+
+.tabs {
+  .tabs-nav {
+    display: block;
+    padding: 0;
+    margin: 0;
+  }
+
+  .tabs-nav {
+    li {
+      display: inline-block;
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      line-height: normal;
+      border-top: 5px solid transparent;
+    }
+
+    li {
+      &:hover {
+        border-top-color: #ccc;
+      }
+
+      &.active {
+        border-top-color: #1c9cb2;
+        background: #fff;
+      }
+
+      a {
+        padding: 0.5em 1em;
+        line-height: 200%;
+        color: inherit;
+        text-decoration: none;
+        white-space: nowrap;
+      }
+
+      &.active a {
+        cursor: text;
+      }
+    }
+  }
+
+  .tab-wrapper {
+    background: #fff;
+  }
+
+  .tab {
+    padding: 1.4em 1.7em;
+    background-color: #fff;
+  }
+}
