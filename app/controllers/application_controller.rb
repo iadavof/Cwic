@@ -76,6 +76,16 @@ class ApplicationController < ActionController::Base
   end
   helper_method :current_menu_link
 
+  def matches?(controller_patterns)
+    Array.wrap(controller_patterns).any? do |controller_pattern|
+      if controller_pattern.include?('#')
+        controller_name == controller_pattern.split('#').first && action_name == controller_pattern.split('#').last
+      else
+        controller_name == controller_pattern
+      end
+    end
+  end
+
   private
 
   def set_locale

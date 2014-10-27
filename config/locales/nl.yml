@@ -65,8 +65,8 @@ nl:
         one: 'Contactpersoon'
         other: 'Contactpersonen'
       communication_record:
-        one: 'Communicatie'
-        other: 'Communicatie'
+        one: 'Contactregistratie'
+        other: 'Contactregistraties'
       entity_type_icon:
         one: 'Objecticoon'
         other: 'Objecticonen'
@@ -143,7 +143,7 @@ nl:
       organisation_client/contacts:
         first_name: 'Contactpersoon voornaam'
         last_name: 'Contactpersoon achternaam'
-      organisation_client/communication_records:
+      communication_record:
         reservation_id: 'Communicatie reserveringsnummer'
         contact: 'Communicatie contactpersoon'
         summary: 'Communicatie verslag'
@@ -578,12 +578,12 @@ nl:
     sections:
       contact: 'Contactgegevens'
       payment_details: 'Betalingsgegevens'
-    show:
+    show_layout:
       upcoming_reservations: 'Aankomende reserv.'
       past_reservations: 'Eerdere reserv.'
-    show_general_address:
+    show_address:
       download_vcard: 'Download de vCard van deze klant'
-    show_reservations:
+    reservations:
       upcoming_reservations: 'Aankomende reserveringen'
       past_reservations: 'Eerdere reserveringen'
       all_reservations_of_client: 'Alle reserveringen van %{client} bekijken'
@@ -594,7 +594,7 @@ nl:
   communication_records:
     communication_record:
       linked_reservation: 'Gekoppelde reservering'
-    fields:
+    form:
       method:
         phone: 'Telefonisch'
         email: 'Per e-mail'

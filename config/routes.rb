@@ -44,10 +44,15 @@ Cwic::Application.routes.draw do
     resources :organisation_clients do
       get :autocomplete, on: :collection
       get :vcard, on: :member
+      get :audits, on: :member
+      get :upcoming_reservations, on: :member
+      get :past_reservations, on: :member
       resources :organisation_client_contacts, only: [:show, :index] do
         get :vcard, on: :member
       end
+      resources :communication_records
       resources :reservations
+      resources :documents, except: [:edit, :update]
       concerns :stickable
     end
 

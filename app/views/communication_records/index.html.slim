@@ -1,0 +1,11 @@
+= render layout: 'layout' do
+  h2 = index_title(CommunicationRecord)
+
+  .navigation-actions
+    = button_link_to_new([@organisation, @organisation_client, CommunicationRecord])
+
+  - if @communication_records.empty?
+    p = t('.empty', default: :empty_objects, models: CommunicationRecord.model_name.human(count: 2).lcfirst)
+
+  - else
+    = render @communication_records

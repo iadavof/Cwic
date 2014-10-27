@@ -10,10 +10,21 @@ class OrganisationClientsController < CrudController
     # PostgreSQL has a feature to return the number of results without performing an extra query.
     # Maybe we could look into this some day. Or maybe we could remove pagination again (and just use a limit), to speed up things a little.
     @organisation_clients = parent.organisation_clients.autocomplete_search(params[:q]).page(params[:page]).accessible_by(current_ability, :index)
-    respond_with(@organisation_clients)
+    respond_with(@organisation, @organisation_clients)
   end
 
-  # GET /organisation_clients/1/vcard
+  def audits
+    respond_with(@organisation, @organisation_client)
+  end
+
+  def upcoming_reservations
+    respond_with(@organisation, @organisation_client)
+  end
+
+  def past_reservations
+    respond_with(@organisation, @organisation_client)
+  end
+
   def vcard
     send_data(@organisation_client.vcard.to_s, type: 'text/x-vcard', filename: @organisation_client.vcard_filename)
   end
@@ -29,8 +40,6 @@ class OrganisationClientsController < CrudController
       :tag_list, :business_client, :first_name, :infix, :last_name, :company_name, :email, :phone, :mobile_phone,
       :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :postal_code, :country,
       :tax_number, :iban, :iban_att,
-      documents_attributes: [:id, :document, :document_cache, :remote_document_url, :_destroy],
-      communication_records_attributes: [:id, :method, :emotion, :summary, :contact_id, :reservation_id, :_destroy],
       contacts_attributes: [
         :id, :first_name, :infix, :last_name, :position, :email, :phone, :mobile_phone,
         :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :postal_code, :country,
