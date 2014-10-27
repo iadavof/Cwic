@@ -853,6 +853,7 @@ nl:
     update_email:
       success: 'E-mailadres succesvol gewijzigd'
       failure: 'Het e-mailadres kon niet worden gewijzigd'
+
   users:
     details:
       awaiting_confirmation_for_email: '(wachtend op bevestiging van %{email})'

@@ -66,17 +66,14 @@ class User < ActiveRecord::Base
   end
 
   def email=(value)
-    if self.email == value
-      self.unconfirmed_email = nil # Reset unconfirmed email if we change the email back to the old, already confirmed email.
-    end
+    # Reset unconfirmed email if we change the email back to the old, already confirmed email.
+    self.unconfirmed_email = nil if email == value
     super
   end
 
   private
 
   def current_password_validator
-    # We always check the current password against the password of the current logged in user (and not the current selected user, i.e. this player).
-    # This way admins can change passwords of other users by entering their password (as a security check).
     errors[:current_password] << I18n.t('errors.messages.invalid') unless User.current.valid_password?(current_password)
   end
 end

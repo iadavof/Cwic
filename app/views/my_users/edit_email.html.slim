@@ -6,12 +6,13 @@
 
 = form_for(@user, url: { controller: 'my_users', action: 'update_email' }, method: 'put') do |f|
   = render 'shared/error_messages', target: @user
+
   .field
     = f.label :current_password
     = f.password_field :current_password
   .field
     = f.label :email
     = f.email_field :email
+
   .actions
     = f.submit t('.change_email')
-end
