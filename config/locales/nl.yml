@@ -513,7 +513,7 @@ nl:
         entities: 'Objecten'
         organisation_users: 'Gebruikers'
         entity_types: 'Objectsoorten'
-        documents: 'Documenten'
+        organisation_documents: 'Documenten'
         info_screens: 'Informatieschermen'
         organisations: 'Organisaties'
         my_organisations: 'Mijn organisatie'

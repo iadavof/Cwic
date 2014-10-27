@@ -2,4 +2,4 @@
   p = t('.empty', default: :empty_objects, models: Document.model_name.human(count: 2).lcfirst)
 
 - else
-  = render documents
+  = render partial: 'documents/document_overview', collection: documents, as: :document

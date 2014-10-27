@@ -55,7 +55,7 @@ Cwic::Application.routes.draw do
       get :reservations, on: :member
     end
 
-    resources :documents, except: [:new, :edit]
+    resources :documents, only: [:index, :show, :destroy], controller: :organisation_documents
 
     controller :schedule_view do
       # Horizontal day calendar
