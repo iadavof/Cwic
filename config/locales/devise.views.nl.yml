@@ -7,7 +7,7 @@ nl:
       confirmation_instructions:
         action: 'Bevestig mijn account'
         greeting: 'Welkom %{recipient}!'
-        instruction: ! 'U kunt uw email bevestigen via onderstaande link:'
+        instruction: 'U kunt uw email bevestigen via onderstaande link:'
         subject: 'Bevestiging-instructies'
       reset_password_instructions:
         action: 'Verander mijn wachtwoord'
@@ -19,7 +19,7 @@ nl:
       unlock_instructions:
         action: 'Ontgrendel mijn account'
         greeting: 'Hallo %{recipient}!'
-        instruction: ! 'U kunt uw account ontgrendelen via onderstaande link:'
+        instruction: 'U kunt uw account ontgrendelen via onderstaande link:'
         message: 'Uw account is vergrendeld wegens te veel mislukte pogingen in te loggen.'
         subject: 'Ontgrendel instructies'
     passwords:

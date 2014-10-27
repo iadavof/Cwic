@@ -4,6 +4,8 @@ nl:
       send_instructions: 'Een e-mail met instructies is verzonden naar %{email}.'
       invitation_token_invalid: 'De uitnodigingscode is niet geldig!'
       updated: 'Je wachtwoord is succesvol ingesteld. Je bent nu ingelogd.'
+      no_invitations_remaining: "Er zijn helaas geen uitnodigingen meer beschikbaar."
+      invitation_removed: 'Uw uitnodiging is verwijderd.'
       new:
         header: 'Verstuur een uitnodiging'
         submit_button: 'Verstuur uitnodiging'
@@ -13,4 +15,9 @@ nl:
     mailer:
       invitation_instructions:
         subject: 'Maak een account aan bij Cwic'
-        # TODO translations for body of invitation mail
+        hello: 'Beste %{email}'
+        someone_invited_you: 'Iemand heeft u uitgenodigd om het reserveringssysteem Cwic te gaan gebruiken (%{url}), u kunt de uitnodiging accepteren door op de link hieronder te klikken.'
+        accept: 'Uitnodiging accepteren'
+        ignore: "Als u deze uitnodiging niet wenst de accepteren, kunt u deze e-mail gewoon negeren.<br />Er zal dan geen account voor u aangemaakt worden totdat u de link hierboven gebruikt en een wachtwoord instelt."
+    failure:
+      invited: 'U heeft nog een uitnodiging openstaan, accepteer deze om uw account aan te maken.'
