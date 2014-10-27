@@ -4,7 +4,8 @@
   width: 23em;
 }
 
-#note-container + .ui-tabs {
+#note-container + .ui-tabs,
+#note-container + .tabs {
   margin-right: 24em;
 }
 
