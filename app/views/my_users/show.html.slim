@@ -3,5 +3,7 @@
 
 - content_for :local_menu_navigation do
   = button_link_to_edit(@user, location: edit_my_user_path(@user))
+  = button_link_to_edit(@user, location: edit_email_my_user_path(@user), name: t('my_users.edit_email.change_email'))
+  = button_link_to_edit(@user, location: edit_password_my_user_path(@user), name: t('my_users.edit_password.change_password'))
 
 = render 'users/details', user: @user

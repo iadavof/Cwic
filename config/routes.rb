@@ -11,7 +11,12 @@ Cwic::Application.routes.draw do
 
   get 'switch_organisation/:id/', controller: :application, action: :switch_organisation, as: :switch_organisation
 
-  resources :my_users, except: [:new, :create]
+  resources :my_users, except: [:new, :create] do
+    get :edit_password, on: :member
+    put :update_password, on: :member
+    get :edit_email, on: :member
+    put :update_email, on: :member
+  end
   resources :my_organisations, except: [:new, :create]
 
   resources :organisations do
