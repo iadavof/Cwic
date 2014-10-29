@@ -32,6 +32,10 @@ Cwic::Application.routes.draw do
 
     resources :entities do
       get :available, on: :collection
+      get :audits, on: :member
+      resources :entity_properties, except: [:show, :new, :create, :destroy]
+      resources :documents, except: [:edit, :update]
+      resources :entity_images, except: :show
       concerns :stickable
     end
 

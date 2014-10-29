@@ -32,11 +32,6 @@ class Entity < ActiveRecord::Base
   after_create :create_info_screen_entities
   after_save :update_reservations_slack_warnings
 
-  # Nested attributes
-  accepts_nested_attributes_for :properties, allow_destroy: true
-  accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :all_blank
-  accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
-
   # Scopes
   pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
 
@@ -94,7 +89,7 @@ class Entity < ActiveRecord::Base
     (next_reservation.begins_at - next_reservation.slack_before.minutes - ends_at) / 1.minute if next_reservation.present?
   end
 
-  def images(all = true)
+  def get_images(all = true)
     if all && include_entity_type_images
       super + entity_type.images
     else

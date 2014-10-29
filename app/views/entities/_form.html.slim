@@ -1,34 +1,15 @@
 #entity-form
-  = nested_form_for([@organisation, @entity]) do |f|
+  = form_for([@organisation, @entity]) do |f|
     = render 'tags/form', f: f
     = render 'shared/error_messages', target: @entity
 
-    #tabs
-      ul.nav
-        li
-          a.current href="#general"
-            = t('general')
-        - if @entity.properties.present?
-          li
-            a href="#properties"
-              = EntityProperty.model_name.human(count: 2)
-        li
-          a href="#documents"
-            = Document.model_name.human(count: 2)
-        li
-          a href="#images"
-            = EntityImage.model_name.human(count: 2)
-
-      .tab-wrap
-        #general
+    .content-columns.clearfix data-column-count="2"
+      .content-column
+        .content-block
           = render 'form_general', f: f
-        - if @entity.properties.present?
-          #properties
-            = render 'form_properties', f: f
-        #documents
-          = render 'form_documents', f: f
-        #images.hide
-          = render 'form_images', f: f
+      .content-column
+        .content-block
+          = render 'form_slack', f: f
 
     .actions
       = f.submit

@@ -648,11 +648,16 @@ nl:
   entities:
     form_general:
       entity_name_example: '4.13B, 9.5, foyer, loft'
+    form_slack:
       default_slack_times: 'Standaard speling'
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van dit object. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elke reservering nog afzonderlijk bij te stellen. De standaardwaarden voor speling voor dit object kunt u hieronder ingeven.'
+
+  entity_properties:
+    index:
+      empty: 'Er zijn geen eigenschappen voor deze objectsoort. Bewerk de objectsoort om eigenschapdefinities toe te voegen.'
+
   entity_images:
-    form:
-      help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
+    help: 'De foto''s die hier worden toegevoegd worden aan de klant getoond wanneer zij het object bekijken. Voeg foto''s toe met een zo hoog mogelijke resolutie.'
 
   reservations:
     show:

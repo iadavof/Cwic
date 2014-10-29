@@ -1,0 +1,27 @@
+- content_for :page_title do
+  = show_title(@entity)
+
+- content_for :local_menu_navigation do
+  = button_link_to_index([@organisation, Entity])
+  = button_link_to_edit([@organisation, @entity])
+  = button_link_to_destroy([@organisation, @entity])
+
+= render 'tags/list', tags: @entity.tags
+
+= render 'stickies/resource_stickies', backend_url: organisation_entity_stickies_url(@organisation, @entity)
+
+.tabs
+  ul.nav
+    li class=('active' if controller.matches?('entities#show'))
+      = link_to_show([@organisation, @entity], name: t('general'))
+    li class=('active' if controller.matches?('entity_properties'))
+      = link_to_index([@organisation, @entity, EntityProperty], name: EntityProperty.model_name.human(count: 2))
+    li class=('active' if controller.matches?('documents'))
+      = link_to_index([@organisation, @entity, Document], name: Document.model_name.human(count: 2))
+    li class=('active' if controller.matches?('entity_images'))
+      = link_to_index([@organisation, @entity, EntityImage], name: EntityImage.model_name.human(count: 2))
+    li class=('active' if controller.matches?('entities#audits'))
+      = link_to_action([@organisation, @entity], :audits, name: t('audits.logs'))
+
+  .tab-wrap
+    = yield

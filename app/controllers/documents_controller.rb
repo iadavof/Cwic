@@ -1,5 +1,5 @@
 class DocumentsController < CrudController
-  before_action :update_menu
+  before_action :set_menu
 
   def show
     send_file(@document.document.path, disposition: 'attachment', url_based_filename: false)
@@ -8,7 +8,7 @@ class DocumentsController < CrudController
   private
 
   def parent_models
-    [OrganisationClient]
+    [OrganisationClient, Entity]
   end
 
   def parent_path
@@ -23,8 +23,15 @@ class DocumentsController < CrudController
     [:document, :document_cache, :remote_document_url]
   end
 
-  def update_menu
-    @current_menu_sub_category = parent_model.model_name.route_key.to_sym
-    @current_menu_link = :show
+  def set_menu
+    case parent
+    when Entity
+      @current_menu_category = :entities
+      @current_menu_sub_category = @entity.entity_type.id
+      @current_menu_link = @entity.id
+    else
+      @current_menu_sub_category = parent_model.model_name.route_key.to_sym
+      @current_menu_link = :show
+    end
   end
 end

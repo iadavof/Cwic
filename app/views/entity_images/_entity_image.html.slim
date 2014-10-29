@@ -1,1 +1,4 @@
-= link_to(image_tag(entity_image.image.thumb.url, { alt: entity_image.title, title: entity_image.title }), entity_image.image.url)
+.image
+  = icon_link_to_destroy([@organisation, parent, entity_image])
+  = icon_link_to_edit([@organisation, parent, entity_image])
+  = link_to(image_tag(entity_image.image.thumb.url, { alt: entity_image.title, title: entity_image.title }), entity_image.image.url)
