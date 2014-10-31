@@ -24,7 +24,7 @@ CwicStickyNotes.prototype.getNotes = function() {
     type: 'GET',
     url: this.options.backend_url + '.json'
   }).fail(function(){
-    window.log('Error getting notes');
+    console.log('Error getting notes');
   }).success(function(response) {
     if(response && response.length > 0) {
       sn.renderNotes(response);
@@ -59,7 +59,7 @@ CwicStickyNotes.prototype.saveNote = function(note_element) {
       }
     }
   }).fail(function(){
-    window.log('Error saving');
+    console.log('Error saving');
   }).success(function(response) {
     if(new_note && response) {
       note.attr('id', 'note_' + response.id);
@@ -178,7 +178,7 @@ CwicStickyNotes.prototype.afterNoteMove = function(ui) {
       weights: weights
     }
   }).fail(function(){
-    window.log('Error updating note order');
+    console.log('Error updating note order');
   });
 };
 
@@ -212,7 +212,7 @@ CwicStickyNotes.prototype.deleteNote = function(element) {
       type: 'DELETE',
       url: this.options.backend_url + '/' + this.noteId(note) + '.json'
     }).fail(function(){
-      window.log('Error deleting note');
+      console.log('Error deleting note');
     });
   }
 
