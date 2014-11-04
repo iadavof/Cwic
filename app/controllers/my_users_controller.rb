@@ -1,5 +1,4 @@
 class MyUsersController < CrudController
-
   def edit_password
     respond_with(@user)
   end

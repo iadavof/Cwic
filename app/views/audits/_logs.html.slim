@@ -7,6 +7,7 @@ table
       th = t('audits.item')
       th = t('audits.before')
       th = t('audits.after')
+
   tbody
     - item.audits.reorder(version: :desc).includes(:user).first(20).each do |audit|
         - if audit.action == 'create'
