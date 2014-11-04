@@ -1,4 +1,6 @@
 class TodayAndTomorrowController < ApplicationController
+  before_action :set_menu
+
   respond_to :html, only: :index
   respond_to :json, only: :reservations
 
@@ -12,7 +14,10 @@ class TodayAndTomorrowController < ApplicationController
     respond_with(@reservations)
   end
 
-  def current_menu_sub_category
-    :schedule_view
+  private
+
+  def set_menu
+    @current_menu_sub_category = :schedule_view
+    @current_menu_link = :today_and_tomorrow
   end
 end
