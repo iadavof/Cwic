@@ -1,5 +1,5 @@
 class EntityTypeIconsController < CrudController
-  before_action :update_menu
+  before_action :set_organisation_scope_menu, if: -> { @organisation.present? }
 
   private
 
@@ -16,11 +16,8 @@ class EntityTypeIconsController < CrudController
     [:name, :image, :image_cache, :remote_image_url, :remove_image, (:organisation_id unless @organisation.present?)]
   end
 
-  def update_menu
-    if @organisation.present?
-      @current_menu_category = :settings
-      @current_menu_sub_category = :entity_types
-      @current_menu_link = :custom_icons
-    end
+  def set_organisation_scope_menu
+    @current_menu_sub_category = :entity_types
+    @current_menu_link = :custom_icons
   end
 end

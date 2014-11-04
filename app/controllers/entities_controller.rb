@@ -1,7 +1,7 @@
 class EntitiesController < CrudController
   skip_before_action :load_member, only: :available
   before_action :load_entity_type, only: :available
-  before_action :update_menu, only: :show
+  before_action :set_show_menu, only: :show
 
   respond_to :html, except: [:available]
   respond_to :json, only: [:index, :available]
@@ -59,7 +59,7 @@ class EntitiesController < CrudController
     @entity_type = @organisation.entity_types.find(params[:entity_type_id])
   end
 
-  def update_menu
+  def set_show_menu
     @current_menu_category = :entities
     @current_menu_sub_category = @entity.entity_type.id
     @current_menu_link = @entity.id
