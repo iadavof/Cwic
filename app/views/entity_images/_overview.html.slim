@@ -1,6 +1,0 @@
-- if entity_images.empty?
-  p = t('.empty', default: :empty_objects, models: EntityImage.model_name.human(count: 2).lcfirst)
-
-- else
-  - entity_images.each do |entity_image|
-    = link_to(image_tag(entity_image.image.thumb.url, { alt: entity_image.title, title: entity_image.title }), entity_image.image.url)
