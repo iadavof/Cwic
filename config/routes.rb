@@ -42,6 +42,8 @@ Cwic::Application.routes.draw do
     resources :reservations do
       post :multiple, on: :collection
       patch :update_status, on: :member
+      get :audits, on: :member
+      resources :documents, except: [:edit, :update]
       concerns :stickable
     end
 

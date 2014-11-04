@@ -95,6 +95,10 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, Reservation)
   end
 
+  def audits
+    respond_with(@organisation, @entity)
+  end
+
   private
 
   def multiple_action
@@ -246,10 +250,11 @@ class ReservationsController < ApplicationController
   end
 
   def resource_params
-    params.require(:reservation).permit(:tag_list, :description, :begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id, :slack_before, :slack_after,
+    params.require(:reservation).permit(
+      :tag_list, :description, :begins_at, :ends_at, :begins_at_date, :begins_at_tod, :ends_at_date, :ends_at_tod, :entity_id, :organisation_client_id, :slack_before, :slack_after,
       organisation_client_attributes: [:first_name, :infix, :last_name, :email, :phone, :mobile_phone, :route, :street_number, :locality, :administrative_area_level_2, :administrative_area_level_1, :country, :postal_code],
-      reservation_recurrence_definition_attributes: [:repeating, :repeating_unit_id, :repeating_every, { repeating_weekdays: [] }, { repeating_monthdays: [] }, :repeating_end, :repeating_until, :repeating_instances],
-      documents_attributes: [:id, :document, :document_cache, :remote_document_url, :_destroy])
+      reservation_recurrence_definition_attributes: [:repeating, :repeating_unit_id, :repeating_every, { repeating_weekdays: [] }, { repeating_monthdays: [] }, :repeating_end, :repeating_until, :repeating_instances]
+    )
   end
 
   def interpolation_options

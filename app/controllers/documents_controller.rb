@@ -8,7 +8,7 @@ class DocumentsController < CrudController
   private
 
   def parent_models
-    [OrganisationClient, Entity]
+    [Entity, OrganisationClient, Reservation]
   end
 
   def parent_path

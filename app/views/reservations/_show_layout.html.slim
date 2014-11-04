@@ -1,0 +1,27 @@
+- content_for :page_title do
+  = show_title(@reservation)
+  = search_shortcut(@reservation)
+
+- content_for :local_menu_navigation do
+  = button_link_to_index([@organisation, Reservation])
+  = button_link_to_edit([@organisation, @reservation])
+  = button_link_to_destroy([@organisation, @reservation])
+
+- content_for :local_menu_context do
+  = render'reservations/status_controls', reservation: @reservation
+
+= render 'tags/list', tags: @reservation.tags
+
+= render 'stickies/resource_stickies', backend_url: organisation_reservation_stickies_url(@organisation, @reservation)
+
+.tabs
+  ul.nav
+    li class=('active' if controller.matches?('reservations#show'))
+      = link_to_show([@organisation, @reservation], name: t('general'))
+    li class=('active' if controller.matches?('documents'))
+      = link_to_index([@organisation, @reservation, Document], name: Document.model_name.human(count: 2))
+    li class=('active' if controller.matches?('reservations#audits'))
+      = link_to_action([@organisation, @reservation], :audits, name: t('audits.logs'))
+
+  .tab-wrap
+    = yield

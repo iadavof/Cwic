@@ -1,12 +1,9 @@
 APP.reservations = {
+  init: function() {
+    APP.reservations.bindStatusSelectorControls();
+  },
   index: function() {
     APP.reservations.bindOnSubmitMiniSearch();
-  },
-  show: function() {
-    APP.reservations.bindStatusSelectorControls();
-  },
-  edit: function() {
-    APP.reservations.bindStatusSelectorControls();
   },
   multiple: function() {
     APP.reservations.bindSelectEditFields();
