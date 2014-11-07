@@ -280,9 +280,9 @@ nl:
         name: 'Naam'
         color: 'Kleur'
         default_status: 'Standaard'
-        blocking: 'Blok&shy;ka&shy;de'
-        info_boards: 'In&shy;for&shy;ma&shy;tie&shy;scher&shy;men'
-        billable: 'De&shy;cla&shy;reer&shy;baar'
+        blocking: 'Blokkade'
+        info_boards: 'Informatieschermen'
+        billable: 'Declareerbaar'
       reservation_period:
         name: 'Naam'
         period_amount: 'Periode aantal'
