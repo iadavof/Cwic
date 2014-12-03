@@ -1,0 +1,13 @@
+.showcase.galery
+  - @frontend.frontend_entity_types.active.each do |et|
+    h1 = et.instance_name
+    .objects.clearfix
+      - et.frontend_entities.active.each do |e|
+        .block
+          .object-image
+            = image_tag(e.entity.images.first.image.galery.url) if e.entity.images.present?
+          .object-info
+            dl.properties
+              - e.entity.properties.each do |p|
+                dt = p.property_type.name
+                dd = p.formatted_value

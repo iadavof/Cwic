@@ -1,0 +1,11 @@
+#main-menu
+  .menu-heading
+    a href="javascript:void(0)" class="menu-toggle" title=t('.toggle_menu')
+      i.icon-menu
+
+  ul.menu
+    li class=("active" if controller.matches?('home'))
+      = link_to(root_path) do
+        span.link-text
+          = t('.overview')
+        i.icon-home

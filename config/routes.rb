@@ -77,6 +77,8 @@ Cwic::Application.routes.draw do
       get :reservations, on: :member
     end
 
+    resources :frontends, except: :show
+
     resources :documents, only: [:index, :show, :destroy], controller: :organisation_documents
 
     controller :schedule_view do
@@ -123,5 +125,9 @@ Cwic::Application.routes.draw do
   resources :feedbacks, except: [:new, :edit]
   resources :newsletter_signups, except: [:show] do
     post :public_signup, on: :new
+  end
+
+  namespace :front do
+    resources :frontends, only: :show
   end
 end

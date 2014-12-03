@@ -205,6 +205,33 @@ ActiveRecord::Schema.define(version: 20141229130130) do
   add_index "feedbacks", ["organisation_id"], name: "index_feedbacks_on_organisation_id", using: :btree
   add_index "feedbacks", ["user_id"], name: "index_feedbacks_on_user_id", using: :btree
 
+  create_table "frontend_entities", force: true do |t|
+    t.integer "frontend_entity_type_id", limit: 8
+    t.integer "entity_id",               limit: 8
+    t.boolean "active"
+  end
+
+  add_index "frontend_entities", ["entity_id"], name: "index_frontend_entities_on_entity_id", using: :btree
+  add_index "frontend_entities", ["frontend_entity_type_id"], name: "index_frontend_entities_on_frontend_entity_type_id", using: :btree
+
+  create_table "frontend_entity_types", force: true do |t|
+    t.integer "frontend_id",      limit: 8
+    t.integer "entity_type_id",   limit: 8
+    t.boolean "active"
+    t.boolean "add_new_entities"
+  end
+
+  add_index "frontend_entity_types", ["entity_type_id"], name: "index_frontend_entity_types_on_entity_type_id", using: :btree
+  add_index "frontend_entity_types", ["frontend_id"], name: "index_frontend_entity_types_on_frontend_id", using: :btree
+
+  create_table "frontends", force: true do |t|
+    t.integer "organisation_id",      limit: 8
+    t.string  "name"
+    t.boolean "add_new_entity_types"
+  end
+
+  add_index "frontends", ["organisation_id"], name: "index_frontends_on_organisation_id", using: :btree
+
   create_table "info_screen_entities", force: true do |t|
     t.string   "direction_char"
     t.integer  "info_screen_entity_type_id", limit: 8

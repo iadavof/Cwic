@@ -1,0 +1,22 @@
+.frontend-entity-type.fields data-collapse=''
+  h3.collapse
+    span class=("active-sign " + (f.object.active? ? 'active' : ''))
+    = f.object.entity_type.instance_name
+
+  .content
+    .field
+      = f.label :active
+      = f.check_box :active, class: 'frontend-entity-type-active'
+    .field
+      = f.label :add_new_entities
+      = f.check_box :add_new_entities
+
+    h3 = t('.selected_entities')
+    .frontend-entities
+      - if f.object.frontend_entities.present?
+        = f.fields_for :frontend_entities, wrapper: false do |ef|
+          = render 'frontend_entity_fields', f: ef
+      - else
+        p = t('empty_objects_add_first_html', { models: Entity.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, Entity]) })
+
+  = f.hidden_field :entity_type_id

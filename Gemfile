@@ -64,6 +64,9 @@ gem 'cancancan'
 # Use I18n alchemy gem for easy date parsing and localization in forms
 gem 'i18n_alchemy'
 
+# Map id's to longer, random looking ids
+gem 'obfuscate_id', git: "https://github.com/namick/obfuscate_id"
+
 # Responders gem for nice and easy responses after CRUD actions
 gem 'responders'
 

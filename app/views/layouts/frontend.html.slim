@@ -1,0 +1,34 @@
+doctype html
+html.no-js.frontend
+  head
+    title
+      | Cwic
+    = favicon_link_tag "favicon.ico"
+    = stylesheet_link_tag "frontend", media: "all", "data-turbolinks-track" => true
+    = jquery_include_tag :google
+    = javascript_include_tag "frontend", "data-turbolinks-track" => true
+    meta name="viewport" content="width=device-width, user-scalable=yes"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    meta name="mobile-web-app-capable" content="yes"
+    = csrf_meta_tags
+
+  body[
+    class="controller-#{controller_name} action-#{action_name}"
+    data-controller=controller_name
+    data-action=action_name
+    data-current-organisation-id=current_organisation.try(:id)
+    data-current-locale=I18n.locale
+  ]
+
+  = render 'front/layout/menu'
+
+  #page-container
+    = render 'layouts/flash_messages'
+
+    - if content_for?(:heading)
+      section#heading
+        = yield(:heading)
+
+    section#content
+      .inner
+        = yield

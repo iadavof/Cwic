@@ -26,6 +26,14 @@ class EntityImageUploader < CarrierWave::Uploader::Base
      process resize_to_fit: [150, 150]
    end
 
+  version :galery do
+    process resize_to_fit: [640, 480]
+  end
+
+  version :list do
+    process resize_to_fit: [320, 240]
+  end
+
   # Add a white list of extensions which are allowed to be uploaded.
   # For images you might use something like this:
   def extension_white_list

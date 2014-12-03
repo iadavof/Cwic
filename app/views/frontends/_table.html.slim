@@ -1,0 +1,19 @@
+= paginate @frontends
+
+table
+  thead
+    tr
+      = sortable_table_head(Frontend, :name)
+      = table_head(Frontend, :active_entities)
+      th
+
+  tbody
+    - @frontends.each do |frontend|
+      tr
+        td = link_to(frontend.instance_name, front_frontend_path(frontend), target: :blank)
+        td = frontend.frontend_entities.where("#{FrontendEntityType.table_name}.active = true").active.map(&:instance_name).join(', ')
+        td.icons
+          = icon_link_to_edit([@organisation, frontend])
+          = icon_link_to_destroy([@organisation, frontend])
+
+= paginate @frontends

@@ -1,0 +1,11 @@
+- content_for :page_title do
+  = index_title(Frontend)
+
+- content_for :local_menu_navigation do
+  = button_link_to_new([@organisation, Frontend])
+
+- if @frontends.empty?
+  p = t('.empty', default: :empty_objects, models: Frontend.model_name.human(count: 2).lcfirst)
+
+- else
+  = render 'table'

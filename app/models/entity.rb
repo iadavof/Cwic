@@ -12,6 +12,7 @@ class Entity < ActiveRecord::Base
   has_many :day_occupations, dependent: :destroy
   has_many :week_occupations, dependent: :destroy
   has_many :info_screen_entities, dependent: :destroy
+  has_many :frontend_entities, dependent: :destroy
   has_many :stickies, as: :stickable, dependent: :destroy, inverse_of: :stickable
   has_many :images, class_name: 'EntityImage', as: :imageable, dependent: :destroy, inverse_of: :imageable
   has_many :documents, as: :documentable, dependent: :destroy, inverse_of: :documentable
@@ -29,7 +30,7 @@ class Entity < ActiveRecord::Base
 
   # Callbacks
   after_initialize :init, if: :new_record?
-  after_create :create_info_screen_entities
+  after_create :create_derived_entities
   after_save :update_reservations_slack_warnings
 
   # Nested attributes
@@ -163,10 +164,15 @@ class Entity < ActiveRecord::Base
 
   private
 
-  def create_info_screen_entities
+  def create_derived_entities
     self.organisation.info_screens.each do |is|
       iset = InfoScreenEntityType.where('entity_type_id = ? AND info_screen_id = ?', self.entity_type.id, is.id).first;
       InfoScreenEntity.create(entity: self, info_screen_entity_type: iset, active: iset.add_new_entities)
+    end
+
+    self.organisation.frontends.each do |f|
+      fet = FrontendEntityType.where('entity_type_id = ? AND frontend_id = ?', self.entity_type.id, f.id).first;
+      FrontendEntity.create(entity: self, frontend_entity_type: fet, active: fet.add_new_entities)
     end
   end
 end

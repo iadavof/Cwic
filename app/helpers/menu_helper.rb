@@ -76,6 +76,12 @@ module MenuHelper
             new: { url: new_organisation_info_screen_path(current_organisation), icon: 'icon-plus-sign' },
           },
         },
+        frontends: {
+          links: {
+            index: { url: organisation_frontends_path(current_organisation), icon: 'icon-list' },
+            new: { url: new_organisation_frontend_path(current_organisation), icon: 'icon-plus-sign' },
+          },
+        },
       },
     }
     if @admin
