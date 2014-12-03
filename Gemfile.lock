@@ -42,6 +42,14 @@ GIT
     websocket-rails-js (0.0.1)
       rails
 
+GIT
+  remote: https://github.com/namick/obfuscate_id
+  revision: 37fda6c458fe7bca970f6a801f23080ecd88dfb8
+  specs:
+    obfuscate_id (0.0.4)
+      rails (>= 3.2.15)
+      scatter_swap (~> 0.0.3)
+
 GEM
   remote: http://rubygems.org/
   specs:
@@ -128,7 +136,6 @@ GEM
       devise (>= 3.2.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
-    eventmachine (1.0.3-x86-mingw32)
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
       activesupport (>= 3.0.4)
@@ -261,6 +268,7 @@ GEM
       sass (~> 3.2.0)
       sprockets (~> 2.8, <= 2.11.0)
       sprockets-rails (~> 2.0)
+    scatter_swap (0.0.3)
     scss-lint (0.7.0)
       colorize
       sass
@@ -364,6 +372,7 @@ DEPENDENCIES
   momentjs-rails
   nested_form!
   numbers_and_words!
+  obfuscate_id!
   pg
   pg_search (~> 0.7.3)
   pry-rails

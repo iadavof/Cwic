@@ -1,0 +1,22 @@
+= form_for([@organisation, @frontend]) do |f|
+  = render 'shared/error_messages', target: @frontend
+
+  .field
+    = f.label :name
+    .field-with-example-wrapper
+      = f.text_field :name
+      p = t('for_example') + ': ' + t('.frontend_name_example')
+  .field
+    = f.label :add_new_entity_types
+    = f.check_box :add_new_entity_types
+
+  h2 = t('.selected_entity_types')
+  .frontend-entity-types
+    - if @frontend.frontend_entity_types.present?
+      = f.fields_for :frontend_entity_types do |etf|
+        = render 'frontend_entity_type_fields', f: etf
+    - else
+      p = t('empty_objects_add_first_html', { models: EntityType.model_name.human(count: 2).lcfirst, to_new_object_link: link_to_new([@organisation, EntityType]) })
+
+  .actions
+    = f.submit

@@ -1,0 +1,6 @@
+nl:
+  front:
+    layout:
+      menu:
+        toggle_menu: 'Menu in-/uitklappen'
+        overview: "Overzicht"

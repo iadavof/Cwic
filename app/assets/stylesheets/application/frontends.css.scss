@@ -1,0 +1,51 @@
+div.frontend-entity-type {
+  border: 2px solid #ccc;
+  margin: 10px;
+}
+
+div.frontend-entity-type {
+  h3.collapse,
+  h4.collapse {
+    width: 100%;
+    padding: 5px;
+    background-color: #ddd;
+    color: #444;
+    margin: 0;
+    box-sizing: border-box;
+  }
+
+  h3.collapse,
+  h4.collapse {
+    a {
+      width: 100%;
+      color: #444;
+      text-decoration: none;
+      outline: none;
+      display: block;
+    }
+
+    span.active-sign {
+      display: inline-block;
+      width: 30px;
+      padding: 5px;
+      height: 100%;
+      background-color: #ff3520;
+      margin-right: 10px;
+    }
+
+    span.active-sign {
+      &.active {
+        background-color: #18c13d;
+      }
+    }
+  }
+
+  div.content {
+    margin: 10px;
+  }
+
+  div.frontend-entity {
+    border: 2px solid #ccc;
+    margin: 10px;
+  }
+}

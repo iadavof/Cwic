@@ -1,0 +1,11 @@
+.frontend-entity.fields
+  h4.collapse
+    span class=("active-sign " + (f.object.frontend_entity_type.active? && f.object.active? ? 'active' : ''))
+    = f.object.entity.instance_name
+
+  .content.clearfix
+    .fields
+      = f.label :active
+      = f.check_box :active, class: 'frontend-entity-active'
+
+  = f.hidden_field :entity_id

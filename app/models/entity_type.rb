@@ -14,6 +14,7 @@ class EntityType < ActiveRecord::Base
   has_many :images, class_name: 'EntityImage', as: :imageable, dependent: :destroy, inverse_of: :imageable
   has_many :reservation_statuses, dependent: :destroy, inverse_of: :entity_type
   has_many :info_screen_entity_types, dependent: :destroy
+  has_many :frontend_entity_types, dependent: :destroy
   has_many :reservation_periods, dependent: :destroy, inverse_of: :entity_type
 
   # Validations
@@ -30,7 +31,7 @@ class EntityType < ActiveRecord::Base
 
   # Callbacks
   after_initialize :init, if: :new_record?
-  after_create :create_info_screen_entity_types
+  after_create :create_derived_entity_types
   after_save :update_reservations_slack_warnings
 
   # Nested attributes
@@ -116,10 +117,13 @@ class EntityType < ActiveRecord::Base
     reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4, blocking: true, info_boards: true, billable: true)
   end
 
-  def create_info_screen_entity_types
+  def create_derived_entity_types
     if self.organisation.present?
       self.organisation.info_screens.each do |is|
         InfoScreenEntityType.create(entity_type: self, info_screen: is, active: is.add_new_entity_types, add_new_entities: is.add_new_entity_types)
+      end
+      self.organisation.frontends.each do |f|
+        FrontendEntityType.create(entity_type: self, frontend: f, active: f.add_new_entity_types, add_new_entities: f.add_new_entity_types)
       end
     end
   end

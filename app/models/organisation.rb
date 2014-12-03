@@ -13,6 +13,7 @@ class Organisation < ActiveRecord::Base
   has_many :stickies, dependent: :destroy
   has_many :entity_images, dependent: :destroy
   has_many :info_screens, dependent: :destroy
+  has_many :frontends, dependent: :destroy
   has_many :documents, dependent: :destroy
 
   # Model extensions
