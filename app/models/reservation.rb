@@ -33,7 +33,7 @@ class Reservation < ActiveRecord::Base
   validates :organisation_client, presence: true
   validates :status, presence: true, if: -> { entity.present? }
   validates :begins_at, presence: true
-  validates :ends_at, presence: true, date_after: { date: :begins_at, date_error_format: :long }
+  validates :ends_at, presence: true, timeliness: { after: :begins_at }
   validates :slack_before, :slack_after, numericality: { allow_blank: true, greater_than_or_equal_to: 0 }
   validate :not_conflicting_with_reservations, if: -> { entity.present? && validate_not_conflicting }
   validate :ensure_recurrences_valid, on: :create, if: -> { recurrence_definition_recurring? && errors.empty? }
