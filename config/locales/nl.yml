@@ -301,11 +301,6 @@ nl:
         document_from_file: 'Lokaal document'
         remote_document_url: 'URL van extern document'
     errors:
-      messages:
-        date_blank: 'datum moet opgegeven zijn'
-        tod_blank: 'tijd moet opgegeven zijn'
-        not_a_date: 'datum is ongeldig'
-        not_a_tod: 'tijd is ongeldig'
       models:
         user:
           attributes:
@@ -338,9 +333,6 @@ nl:
         reservation_recurrence_definition:
           recurrence_collides_with_itself: 'De ingestelde herhalingen overlappen elkaar.'
           repeating_end: 'niet opgegeven'
-          attributes:
-            repeating_until:
-              invalid_date: 'ongeldige datum'
           repeating_until_before_end: 'voor herhalingsreeks valt voor het einde van de eerste reservering'
         organisation_client:
           attributes:
