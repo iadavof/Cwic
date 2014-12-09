@@ -49,10 +49,12 @@ module ApplicationHelper
   end
 
   def format_address(item)
-    if item.route || item.street_number || item.postal_code || item.administrative_area_level_2 || item.administrative_area_level_1 || item.locality || item.country
-      address = escape_once(item.route) + ' ' + escape_once(item.street_number) + tag('br') + escape_once(item.postal_code) + '&nbsp; ' + escape_once(item.locality).upcase + tag('br') + escape_once(item.country)
-      address.html_safe
-    end
+    lines = []
+    lines << "#{item.route} #{item.street_number}".strip if item.route.present? || item.street_number.present?
+    lines << "#{item.postal_code}  #{item.locality}".strip if item.postal_code.present? || item.locality.present?
+    lines << item.country if item.country.present?
+
+    safe_join(lines.map { |line| content_tag(:div, escape_once(line).gsub(' ', '&nbsp;').html_safe) })
   end
 
   def call_to(telephone_number, name = nil, html_options = {}, &block)
@@ -61,7 +63,7 @@ module ApplicationHelper
     html_options, name = name, nil if block_given?
     html_options = (html_options || {}).stringify_keys
 
-    html_options["href"] = "tel:#{telephone_number}".html_safe
+    html_options[:href] = "tel:#{telephone_number}".html_safe
 
     content_tag(:a, name || telephone_number.html_safe, html_options, &block)
   end
