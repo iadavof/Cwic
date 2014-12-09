@@ -40,6 +40,14 @@ nl:
   'yes': 'Ja'
   'no': 'Nee'
 
+  activerecord:
+    errors:
+      messages:
+        invalid_date: 'datum ongeldig'
+        invalid_time: 'tijd ongeldig'
+        after: 'moet na %{restriction} zijn'
+        overlap: 'overlapt met bestaand item'
+
   date:
     formats:
       default: '%d-%m-%Y'
@@ -51,6 +59,17 @@ nl:
   time_of_day:
     formats:
       default: '%H:%M'
+
+  validates_timeliness:
+    error_value_formats:
+      date: '%d-%m-%Y'
+      time: '%H:%M'
+      datetime: '%d-%m-%Y %H:%M'
+
+  valid_email:
+    validations:
+      email:
+        invalid: 'is ongeldig'
 
   helpers:
     select:

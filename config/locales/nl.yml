@@ -20,11 +20,6 @@ nl:
     save: 'Opslaan'
     edit_is_applied_to_the_following: 'Aanpassingen worden toegepast op de volgende reserveringen:'
 
-  valid_email:
-    validations:
-      email:
-        invalid: 'is ongeldig'
-
   activerecord:
     models:
       user:
