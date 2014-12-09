@@ -9,11 +9,10 @@ class ActiveModel::Errors
 
   # Empty messages for an attribute. This removes all errors and sets a new error with empty message if the attribute had errors
   def empty_messages(attribute)
-    if self[attribute].present?
-      # There were errors
-      self[attribute].clear
-      self.add(attribute, false)
-    end
+    return unless self[attribute].present?
+    # There were errors
+    self[attribute].clear
+    add(attribute, false)
   end
 
   # Allow html_safe error messages (e.g. to add links in error messages)

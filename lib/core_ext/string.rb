@@ -1,24 +1,25 @@
 class String
   def ucfirst
-    self.clone.ucfirst!
+    clone.ucfirst!
   end
 
   def ucfirst!
-    self[0] = self[0,1].upcase
+    self[0] = self[0, 1].upcase
     self
   end
 
   def lcfirst
-    self.clone.lcfirst!
+    clone.lcfirst!
   end
 
   def lcfirst!
-    self[0] = self[0,1].downcase
+    self[0] = self[0, 1].downcase
     self
   end
 
   def to_tod
-    self.to_time.to_tod
+    raise ArgumentError.new('invalid time of day') unless to_time
+    to_time.to_tod
   end
 
   # Comparator to sort strings such that letters (alphabetic characters) come before numbers and other characters
