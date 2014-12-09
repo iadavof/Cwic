@@ -56,8 +56,8 @@ class OrganisationClient < ActiveRecord::Base
   def self.sort_on_class_attribute(cls, sort, direction)
     if cls == self && sort == 'name'
       check_sort_direction(direction)
-      # TODO also sort on first_name and locality
-      reorder("CASE WHEN #{self.table_name}.business_client THEN #{self.table_name}.company_name ELSE #{self.table_name}.last_name END #{direction.upcase}").merge(@default_order)
+      # TODO: also sort on first_name and locality
+      reorder("CASE WHEN #{table_name}.business_client THEN #{table_name}.company_name ELSE #{table_name}.last_name END #{direction.upcase}").merge(@default_order)
     else
       super
     end
@@ -67,7 +67,7 @@ class OrganisationClient < ActiveRecord::Base
 
   # When changing this, also change the custom sorting for name (sortable table header), see sort_on_class_attribute
   def instance_name
-    name = (self.business_client ? company_name : full_name)
+    name = (business_client ? company_name : full_name)
     (locality.present? ? "#{name}, #{locality}" : name)
   end
 
@@ -80,28 +80,26 @@ class OrganisationClient < ActiveRecord::Base
   end
 
   def upcoming_reservations(limit)
-    rel = self.reservations.now_or_future.reorder(:begins_at)
+    rel = reservations.now_or_future.reorder(:begins_at)
     rel = rel.limit(limit) if limit.present?
     rel
   end
 
   def past_reservations(limit)
-    rel = self.reservations.past.reorder(ends_at: :desc)
+    rel = reservations.past.reorder(ends_at: :desc)
     rel = rel.limit(limit) if limit.present?
     rel
   end
 
   def iban_valid
-    iban_model = IBANTools::IBAN.new(self.iban)
+    iban_model = IBANTools::IBAN.new(iban)
     iban_errors = iban_model.validation_errors
     if iban_errors.present?
       iban_errors.each do |e|
         errors.add(:iban, e)
       end
-      false
     else
       self.iban = iban_model.prettify
-      true
     end
   end
 
