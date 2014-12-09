@@ -54,7 +54,7 @@ gem 'devise-i18n-views', '~> 0.2.8'
 # Use CanCan for access control / authorisation
 gem 'cancan'
 
-# Use I18n alchemy gem for easy number (and possibly date) parsing and localization in forms
+# Use I18n alchemy gem for easy date parsing and localization in forms
 gem 'i18n_alchemy'
 
 # Responders gem for nice and easy responses after CRUD actions
@@ -151,7 +151,7 @@ gem 'symbolize'
 # Tagging solution
 gem 'acts-as-taggable-on'
 
-# Alert us on application exception, by e-mail and push notification
+# Alert us on application exception, by e-mail and push notification (Flyblown)
 gem 'exception_notification'
 gem 'ruby-notify-my-android'
 
