@@ -1,0 +1,35 @@
+var current_user, current_organisation, current_locale;
+
+// Temporary disable Turbolinks page cache functionality to solve back-button related problems.
+// TODO: implement real solution for this and other Turbolinks problems and re-enable page cache.
+Turbolinks.pagesCached(0);
+
+APP.init = function() {
+  // Load current_user and current_organisation data
+  var body = $('body');
+  current_user = { id: parseInt(body.data('current-user-id')), name: body.data('current-user-name') };
+  current_organisation = { id: parseInt(body.data('current-organisation-id')) };
+  current_locale = body.data('current-locale');
+  this.global.initLocale(current_locale);
+
+  // Replace AJAX spinner with svg version if SMIL animations are available
+  if(Modernizr.backgroundsize && Modernizr.smil) {
+    $('img.ajax-wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
+    $('.ajax-wait:not(img)').css('background-image', 'url("<%= asset_path('ajax_wait.svg') %>") !important');
+  }
+
+  // Replace logo with svg version if svg is available
+  if (Modernizr.svg) {
+    $('#logo-container .logo').attr('src', '<%= asset_path('logo.svg') %>');
+  }
+
+  // Initialize Images containers
+  $('div.images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery: { enabled: true } });
+};
+
+APP.global = {
+  initLocale: function(locale) {
+    $.datepicker.setDefaults($.datepicker.regional[locale]);
+    jsLang = jsLangs[locale]; // TODO this is not very nice. Better to rewrite whole custom application JavaScript translations to I18n-js gem (if it is stable, ask Kevin for more information)
+  },
+};

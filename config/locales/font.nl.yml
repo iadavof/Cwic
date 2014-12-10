@@ -1,5 +1,6 @@
 nl:
   front:
+    from: 'Vanaf'
     layout:
       menu:
         toggle_menu: 'Menu in-/uitklappen'

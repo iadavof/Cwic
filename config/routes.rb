@@ -106,6 +106,10 @@ Cwic::Application.routes.draw do
   end
 
   namespace :front do
-    resources :frontends, only: :show
+    resources :frontends, only: :show do
+      get :gallery, on: :member
+      get :list, on: :member
+      resources :entities, only: :show
+    end
   end
 end

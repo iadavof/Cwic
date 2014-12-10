@@ -12,13 +12,13 @@ APP.init = function() {
   current_locale = body.data('current-locale');
   websocket_url = body.data('websocket-url');
   this.global.initLocale(current_locale);
-  
+
   // Replace AJAX spinner with svg version if SMIL animations are available
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax-wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('.ajax-wait:not(img)').css('background-image', 'url("<%= asset_path('ajax_wait.svg') %>") !important');
   }
-  
+
   // Replace logo with svg version if svg is available
   if (Modernizr.svg) {
     $('#logo-container .logo').attr('src', '<%= asset_path('logo.svg') %>');
