@@ -1,23 +1,79 @@
-.showcase.galery {
-  .block {
-    background-color: #fff;
-    float: left;
-    width: 24%;
-    box-sizing: border-box;
-    margin: 1% .5%;
-    padding: 1em;
-    box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
+.showcase.gallery {
+  .objects {
+    display: flex;
+    flex-flow: row wrap;
+    align-items: stretch;
   }
 
-  .block {
-    .object-image {
-      border: 1px solid #eee;
+  .objects {
+    .block {
+      flex: 1 0 400px;
+      background-color: #fff;
+      float: left;
+      width: calc(25% - 2em);
+      max-width: 400px;
+      box-sizing: border-box;
+      margin: 1em;
+      padding: 1em;
+      box-shadow: 0 0.25em 0.25em rgba(0, 0, 0, 0.1);
     }
 
-    .object-image {
-      img {
-        max-width: 100%;
+    .block {
+      .object-image {
+        position: relative;
+        border: 1px solid #eee;
+      }
+
+      .object-image {
+        img {
+          max-width: 100%;
+          display: block;
+        }
+
+        .price {
+          display: block;
+          position: absolute;
+          right: -.5em;
+          bottom: -.5em;
+          background-color: rgba(255, 53, 32, .8);
+          color: #fff;
+          z-index: 2;
+          padding: .8em;
+        }
+
+        .price {
+          span.va {
+            font-size: .9em;
+            display: block;
+            line-height: .9em;
+          }
+
+          span.amount {
+            font-size: 1.4em;
+            font-weight: bold;
+          }
+        }
+      }
+
+      a.object-title {
+        font-size: 1.8em;
+        text-decoration: none;
+        color: #444;
+        margin: .8em 0;
         display: block;
+      }
+
+      dl.properties {
+        dd, dt {
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin: 0;
+        }
+
+        dd {
+          margin-left: 1em;
+        }
       }
     }
   }

@@ -6,6 +6,7 @@ html.no-js.frontend
     = favicon_link_tag "favicon.ico"
     = stylesheet_link_tag "frontend", media: "all", "data-turbolinks-track" => true
     = jquery_include_tag :google
+    = jquery_ui_include_tag :google
     = javascript_include_tag "frontend", "data-turbolinks-track" => true
     meta name="viewport" content="width=device-width, user-scalable=yes"
     meta name="apple-mobile-web-app-capable" content="yes"
@@ -23,12 +24,14 @@ html.no-js.frontend
   = render 'front/layout/menu'
 
   #page-container
-    = render 'layouts/flash_messages'
 
     - if content_for?(:heading)
       section#heading
         = yield(:heading)
 
     section#content
+      - if content_for?(:above_content)
+        = yield(:above_content)
+      = render 'layouts/flash_messages'
       .inner
         = yield

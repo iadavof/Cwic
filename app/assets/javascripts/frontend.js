@@ -4,6 +4,7 @@
 //= require modernizr
 //= require moment
 //= require moment/nl.js
+//= require magnific-popup
 //= require gistyle
 //= require_tree ./shared/i18n
 //= require_tree ./shared/libraries

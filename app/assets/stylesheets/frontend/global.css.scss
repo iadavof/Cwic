@@ -1,6 +1,12 @@
+html, body {
+  height: 100%;
+}
+
 html.frontend {
   body {
     font-size: 1em;
+    margin: 0;
+    padding: 0;
   }
 }
 

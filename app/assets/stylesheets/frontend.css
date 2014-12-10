@@ -9,6 +9,7 @@
  * compiled file, but it's generally better to create a new file per style scope.
  *
  *= require_self
+*= require magnific-popup
  *= require ./shared/icons
  *= require ./shared/global
  *= require_directory ./shared

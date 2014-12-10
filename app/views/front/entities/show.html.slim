@@ -1,0 +1,32 @@
+- if @entity.images.present?
+  - content_for :above_content
+    .image-header
+      = render partial: 'ken_burns_slideshow', locals: { images: @entity.images }
+      = link_to '', :back, class: 'back icon-circle-arrow-left'
+      h1 = @entity.full_instance_name
+h2 = t('.details')
+.content-columns.clearfix data-column-count="2"
+  .content-column
+    .content-block
+      = simple_format(@entity.description)
+    .content-block.images-container.clearfix
+      = render '/entity_images/overview', entity_images: @entity.images
+  .content-column
+    .content-block
+      h2 = t('.check_availability')
+h2 = EntityProperty.model_name.human(count: 2)
+.content-columns.clearfix data-column-count="1"
+  .content-column
+    .content-block
+      | Eigenschappen
+h2 = t('.related_entities')
+.content-columns.clearfix data-column-count="3"
+  .content-column
+    .content-block
+      | Related 1
+  .content-column
+    .content-block
+      | Related 2
+  .content-column
+    .content-block
+      | Related 3
