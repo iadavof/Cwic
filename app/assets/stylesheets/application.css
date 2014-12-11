@@ -16,6 +16,7 @@
  *= require ./shared/icons
  *= require ./shared/global
  *= require_directory ./shared
+ *= require_directory ./shared/libraries
  *= require ./application/header
  *= require ./application/content
  *= require_directory ./application

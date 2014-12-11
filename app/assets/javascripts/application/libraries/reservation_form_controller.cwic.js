@@ -131,7 +131,7 @@ CwicReservationFormController.prototype.parseBeginAndEndFromFormFields = functio
   var beginValid = this.beginsAtDateField.val() !== '' && this.beginsAtTodField.val() !== '';
 
   var newBeginMoment = moment(this.beginsAtDateField.datepicker('getDate'));
-  this.updateMomentWithTime(newBeginMoment, this.beginsAtTodField.timepicker('getTime'));
+  this.updateMomentWithTime(newBeginMoment, this.beginsAtTodField.val());
 
   beginValid = beginValid && newBeginMoment.isValid();
   if(beginValid) {
@@ -143,7 +143,7 @@ CwicReservationFormController.prototype.parseBeginAndEndFromFormFields = functio
   var endValid = this.endsAtDateField.val() !== '' && this.endsAtTodField.val() !== '';
 
   var newEndMoment = moment(this.endsAtDateField.datepicker('getDate'));
-  this.updateMomentWithTime(newEndMoment, this.endsAtTodField.timepicker('getTime'));
+  this.updateMomentWithTime(newEndMoment, this.endsAtTodField.val());
 
   endValid = endValid && newEndMoment.isValid();
   if(endValid) {
