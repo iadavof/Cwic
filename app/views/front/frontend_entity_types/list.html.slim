@@ -8,7 +8,10 @@
     .row.clearfix
       .object-image
         = link_to(front_frontend_entity_path(@frontend, e.entity)) do
-          = image_tag(e.entity.images.first.image.galery.url) if e.entity.images.present?
+          - if e.entity.images.present?
+            = image_tag(e.entity.images.first.image.list.url)
+          - else
+            =image_tag(asset_path("fallback/list_entity_image_no_image.jpg"))
         end
       .object-info
         = link_to(e.entity.frontend_name, front_frontend_entity_path(@frontend, e.entity), class: 'object-title')

@@ -16,11 +16,6 @@ class EntityImageUploader < CarrierWave::Uploader::Base
     "uploads/#{model.class.to_s.underscore}/#{mounted_as}/#{model.id}"
   end
 
-  # Provide a default URL as a default if there hasn't been a file uploaded:
-  def default_url
-    ActionController::Base.helpers.asset_path("fallback/" + [version_name, "entity_image_no_image.png"].compact.join('_'))
-  end
-
   process :set_content_type
 
   # Process files as they are uploaded:
@@ -31,7 +26,7 @@ class EntityImageUploader < CarrierWave::Uploader::Base
      process resize_to_fit: [150, 150]
    end
 
-  version :galery do
+  version :gallery do
     process resize_to_fit: [640, 480]
   end
 
