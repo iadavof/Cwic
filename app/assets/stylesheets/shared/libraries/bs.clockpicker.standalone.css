@@ -2,7 +2,7 @@
  * ClockPicker v{package.version} for jQuery (http://weareoutman.github.io/clockpicker/)
  * Copyright 2014 Wang Shenwei.
  * Licensed under MIT (https://github.com/weareoutman/clockpicker/blob/gh-pages/LICENSE)
- * 
+ *
  * Bootstrap v3.1.1 (http://getbootstrap.com)
  * Copyright 2011-2014 Twitter, Inc.
  * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
@@ -197,5 +197,5 @@
   width: 100%;
 }
 .text-primary {
-  color: #428bca;
+  color: #FF3520;
 }
