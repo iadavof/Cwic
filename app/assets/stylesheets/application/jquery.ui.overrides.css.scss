@@ -1,6 +1,5 @@
-/* DATEPICKER & TIMEPICKER */
+/* DATEPICKER */
 
-.ui-timepicker .ui-widget-header,
 .ui-datepicker .ui-widget-header {
   background: transparent;
   border: 0 none;
@@ -13,7 +12,6 @@
   margin: -0.1em -0.1em 0;
 }
 
-.ui-timepicker .ui-state-default, .ui-timepicker .ui-widget-content .ui-state-default, .ui-timepicker .ui-widget-header .ui-state-default,
 .ui-datepicker .ui-state-default, .ui-datepicker .ui-widget-content .ui-state-default, .ui-datepicker .ui-widget-header .ui-state-default {
   background: #fff;
   color: #ff3520;
@@ -52,12 +50,6 @@
   padding: 0.1em;
 }
 
-.ui-timepicker-table td {
-  width: auto;
-}
-
-.ui-timepicker .ui-state-active, .ui-timepicker .ui-widget-content .ui-state-active, .ui-timepicker .ui-widget-header .ui-state-active,
-.ui-timepicker .ui-widget-content .ui-timepicker-minutes .ui-state-default.ui-state-active,
 .ui-datepicker .ui-datepicker-calendar .ui-state-default.ui-state-active {
   background: #ff3520;
   color: #fff;
@@ -65,30 +57,8 @@
   font-weight: bold;
 }
 
-.ui-timepicker .ui-widget-content {
-  color: inherit;
-  border-color: #b5b5b5;
-  border-radius: 0;
-  background: #ddd;
-}
-
-.ui-timepicker .ui-timepicker-table table {
-  border: 0 none;
-  background: transparent;
-}
-
-.ui-timepicker .ui-timepicker-table table tr:nth-child(2n),
 .ui-datepicker .ui-datepicker-calendar tr:nth-child(2n) {
   background: transparent;
-}
-
-.ui-timepicker .ui-timepicker-minutes {
-  background: #fff;
-}
-
-.ui-timepicker .ui-widget-content .ui-timepicker-minutes .ui-state-default {
-  background: #ddd;
-  border-color: #ddd;
 }
 
 .ui-datepicker {

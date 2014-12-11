@@ -93,7 +93,7 @@ body > *:not(.modal):not(.overlay) {
   transition: -webkit-filter .5s ease-in-out, filter .5s ease-in-out;
 }
 
-html.with-overlay body > *:not(.modal):not(.overlay):not(.ui-datepicker):not(.ui-timepicker):not(.select2-drop) {
+html.with-overlay body > *:not(.modal):not(.overlay):not(.clockpicker-popover):not(.ui-timepicker):not(.select2-drop) {
   -webkit-filter: blur(10px);
   filter: blur(10px);
 }
