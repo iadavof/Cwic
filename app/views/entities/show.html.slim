@@ -6,9 +6,6 @@
   = button_link_to_edit([@organisation, @entity])
   = button_link_to_destroy([@organisation, @entity])
 
-- if @entity.images.present?
-  = render 'entities/ken_burns_slideshow', images: @entity.images
-
 = render 'tags/list', tags: @entity.tags
 
 = render 'stickies/resource_stickies', backend_url: organisation_entity_stickies_url(@organisation, @entity)
