@@ -1,0 +1,20 @@
+.showcase.gallery
+  .actions
+    = link_to(list_front_frontend_frontend_entity_type_path(@frontend, @frontend_entity_type), class: 'button') do
+      i.icon-th-list
+      = t('.list_view')
+  h1 = @frontend_entity_type.instance_name
+  .objects.clearfix
+    - @frontend_entity_type.frontend_entities.active.each do |e|
+      .block
+        .object-image
+          = link_to(front_frontend_entity_path(@frontend, e.entity)) do
+            = image_tag(e.entity.images.first.image.galery.url) if e.entity.images.present?
+          end
+          .price
+            span.va
+              = t('front.from')
+            span.amount
+              | € 10,- / u
+        .object-info
+          = link_to(e.entity.frontend_name, front_frontend_entity_path(@frontend, e.entity), class: 'object-title')

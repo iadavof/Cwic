@@ -9,13 +9,9 @@
         span.link-text
           = t('.overview')
         i.icon-home
-    li class=("active" if controller.matches?('frontend'))
-      = link_to(gallery_front_frontend_path(@frontend)) do
-        span.link-text
-          = t('.gallery')
-        i.icon-images-gallery
-    li class=("active" if controller.matches?('frontend'))
-      = link_to(list_front_frontend_path(@frontend)) do
-        span.link-text
-          = t('.list')
-        i.icon-th-list
+    - @frontend.frontend_entity_types.each do |fet|
+      li class=("active" if defined?(@frontend_entity_type) && @frontend_entity_type == fet)
+        = link_to(gallery_front_frontend_frontend_entity_type_path(@frontend, fet)) do
+          span.link-text
+            = fet.instance_name
+          i
