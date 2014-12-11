@@ -9,8 +9,10 @@
       .block
         .object-image
           = link_to(front_frontend_entity_path(@frontend, e.entity)) do
-            = image_tag(e.entity.images.first.image.galery.url) if e.entity.images.present?
-          end
+            - if e.entity.images.present?
+              = image_tag(e.entity.images.first.image.gallery.url)
+            - else
+              =image_tag(asset_path("fallback/gallery_entity_image_no_image.jpg"))
           .price
             span.va
               = t('front.from')

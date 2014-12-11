@@ -26,7 +26,7 @@ class EntityImageUploader < CarrierWave::Uploader::Base
      process resize_to_fit: [150, 150]
    end
 
-  version :galery do
+  version :gallery do
     process resize_to_fit: [640, 480]
   end
 
