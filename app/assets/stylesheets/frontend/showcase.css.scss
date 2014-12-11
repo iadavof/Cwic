@@ -1,3 +1,122 @@
+.showcase {
+  .actions {
+    float: right;
+  }
+
+  .actions {
+    .button {
+      &:active,
+      &:hover {
+        background-color: #fff;
+      }
+    }
+  }
+}
+
+.showcase.list {
+  .row {
+    background-color: #fff;
+    padding: 1em;
+    margin: 2em 0;
+    position: relative;
+  }
+
+  .row {
+    .object-image,
+    .object-info,
+    .object-price {
+      float: left;
+      box-sizing: border-box;
+    }
+
+    .object-image {
+      width: 20%;
+    }
+
+    .object-image {
+      a {
+        display: block;
+        border: 1px solid #eee;
+      }
+
+      a {
+        img {
+          width: 100%;
+          display: block;
+        }
+      }
+    }
+
+    .object-info {
+      width: 60%;
+      padding: 0 1em;
+    }
+
+    .object-info {
+      a.object-title {
+        font-size: 1.8em;
+        text-decoration: none;
+        color: #444;
+        margin: 0 0 .8em;
+        display: block;
+      }
+
+      dl.properties {
+        dd, dt {
+          width: 25%;
+          float: left;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap;
+          margin: 0;
+        }
+      }
+    }
+
+    .object-price {
+      width: 20%;
+      height: 100%;
+      margin-bottom: 3em;
+    }
+
+    .object-price {
+      span.amount,
+      span.va {
+        font-weight: bold;
+        font-size: 1em;
+        display: block;
+      }
+
+      span.amount {
+        font-size: 2em;
+        margin: 1em;
+        color: #FF3520;
+      }
+    }
+
+    a.button.details {
+      width: 20%;
+      width: calc(20% + 1em);
+      box-sizing: border-box;
+      position: absolute;
+      bottom: 0;
+      right: 0;
+      text-align: center;
+      border-radius: 0;
+      background-color: #FF3520;
+      color: #fff;
+      font-size: 1.1em;
+    }
+
+    a.button.details {
+      &:hover {
+        background-color: #E4E4E4;
+        color: #444;
+      }
+    }
+  }
+}
+
 .showcase.gallery {
   .objects {
     display: flex;
@@ -61,19 +180,6 @@
         color: #444;
         margin: .8em 0;
         display: block;
-      }
-
-      dl.properties {
-        dd, dt {
-          overflow: hidden;
-          text-overflow: ellipsis;
-          white-space: nowrap;
-          margin: 0;
-        }
-
-        dd {
-          margin-left: 1em;
-        }
       }
     }
   }

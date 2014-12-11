@@ -5,3 +5,8 @@ nl:
       menu:
         toggle_menu: 'Menu in-/uitklappen'
         overview: "Overzicht"
+    frontend_entity_types:
+      gallery:
+        list_view: 'Lijstweergave'
+      list:
+        gallery_view: 'Galerijweergave'
