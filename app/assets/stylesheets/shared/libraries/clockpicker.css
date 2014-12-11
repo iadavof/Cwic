@@ -26,7 +26,7 @@
 }
 .clockpicker-popover .popover-title {
 	background-color: #fff;
-	color: #999;
+	color: #444;
 	font-size: 24px;
 	font-weight: bold;
 	line-height: 30px;
@@ -36,12 +36,8 @@
 	cursor: pointer;
 }
 .clockpicker-popover .popover-content {
-	background-color: #f8f8f8;
+	background-color: #ddd;
 	padding: 12px;
-}
-.popover-content:last-child {
-	border-bottom-left-radius: 5px;
-	border-bottom-right-radius: 5px;
 }
 .clockpicker-plate {
 	background-color: #fff;
@@ -72,7 +68,7 @@
 }
 .clockpicker-tick {
 	border-radius: 50%;
-	color: #666;
+	color: #444;
 	line-height: 26px;
 	text-align: center;
 	width: 26px;
