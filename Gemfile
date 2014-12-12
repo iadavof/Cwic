@@ -175,6 +175,11 @@ group :development do
   # Spring gem for application pre-loading leading to faster Rails commands
   gem 'spring'
 
+  # Capistrano for easy deployment
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-passenger'
+
   # Rubocop for code style checking of Ruby files (possibly in combination with SublimeLinter)
   gem 'rubocop', require: false
 
