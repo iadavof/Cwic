@@ -18,6 +18,10 @@ gem 'autoprefixer-rails'
 # Use Uglifier as compressor for JavaScript assets
 gem 'uglifier', '>= 1.3.0'
 
+# Use CoffeeScript for .js.coffee assets and views
+# Coffeescript is not actually used in this project, but some gems require it, and we get a warning when deploying if we do not include explicitly.
+gem 'coffee-rails', '~> 4.0.0'
+
 # See https://github.com/sstephenson/execjs#readme for more supported runtimes
 gem 'therubyracer', platforms: :ruby
 
@@ -170,6 +174,11 @@ group :development do
 
   # Spring gem for application pre-loading leading to faster Rails commands
   gem 'spring'
+
+  # Capistrano for easy deployment
+  gem 'capistrano-rails'
+  gem 'capistrano-rvm'
+  gem 'capistrano-passenger'
 
   # Rubocop for code style checking of Ruby files (possibly in combination with SublimeLinter)
   gem 'rubocop', require: false
