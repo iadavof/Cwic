@@ -336,6 +336,7 @@ DEPENDENCIES
   bullet
   cancan
   carrierwave
+  coffee-rails (~> 4.0.0)
   deep_cloneable
   devise (~> 3.2.4)
   devise-i18n (~> 0.10.3)
