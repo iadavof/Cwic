@@ -46,9 +46,6 @@ nl:
       entity_type_property_option:
         one: 'Optie'
         other: 'Opties'
-      entity_type_option:
-        one: 'Optie'
-        other: 'Opties'
       entity:
         one: 'Object'
         other: 'Objecten'

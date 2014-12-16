@@ -1,8 +1,0 @@
-h2 = EntityTypeOption.model_name.human(count: 2)
-= format_help(t('.options_help'))
-
-#entity-type-options.nested-form
-  = f.fields_for :options, @entity_type.options.sort_by(&:index), wrapper: false do |of|
-    = render 'entity_type_options/fields', f: of
-
-= f.link_to_add '', :options, data: { target: '#entity-type-options' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', model: EntityTypeOption.model_name.human)

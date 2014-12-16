@@ -12,9 +12,6 @@
           a href="#properties"
             = EntityTypeProperty.model_name.human(count: 2)
         li
-          a href="#options"
-            = EntityTypeOption.model_name.human(count: 2)
-        li
           a href="#reservation-statuses"
             = ReservationStatus.model_name.human(count: 2)
         li
@@ -29,8 +26,6 @@
           = render 'form_general', f: f
         #properties.hide
           = render 'form_properties', f: f
-        #options.hide
-          = render 'form_options', f: f
         #reservation-statuses.hide
           = render 'form_reservation_statuses', f: f
         #images.hide

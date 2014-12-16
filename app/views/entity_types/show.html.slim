@@ -20,9 +20,6 @@
       a href="#properties"
         = EntityTypeProperty.model_name.human(count: 2)
     li
-      a href="#options"
-        = EntityTypeOption.model_name.human(count: 2)
-    li
       a href="#reservation-statuses"
         = ReservationStatus.model_name.human(count: 2)
     li
@@ -40,8 +37,6 @@
       = render 'show_general'
     #properties
       = render 'show_properties'
-    #options
-      = render 'show_options'
     #reservation-statuses
       = render 'show_reservation_statuses'
     #images

@@ -1,8 +1,0 @@
-.fields.nested-object-wrapper data-valid=(f.object.persisted? && f.object.valid?)
-  .view.clearfix
-    = render 'entity_type_options/fields_view', f: f
-
-  .form.clearfix
-    = render 'entity_type_options/fields_form', f: f
-
-  = f.hidden_field :index, class: 'index-field'

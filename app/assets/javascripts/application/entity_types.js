@@ -6,10 +6,10 @@ APP.entity_types = {
 
     form.find('.property-wrapper').each(function () { APP.entity_types.initPropertyWrapper($(this)); })
     $(document).on('nested:fieldAdded:properties', function(event) { APP.entity_types.initPropertyWrapper(event.field); });
+    $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.initPropertyOptionWrapper(event.field); });
     $('#entity-type-properties').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
 
-    form.find('.option-wrapper').each(function () { APP.global.nested_objects.initWrapper($(this)); });
-    $(document).on('nested:fieldAdded:options', function(event) { APP.entity_types.onNestedFieldAddedOptions(event.field); });
+
     $('#entity-type-options').sortable({ placeholder: 'ui-state-highlight', handle: '.sort-handle' });
 
     APP.entity_types.initReservationStatusSort();
@@ -39,13 +39,6 @@ APP.entity_types = {
       $(".field-icon-select label").removeClass('active');
         $(this).addClass('active');
     });
-  },
-  onNestedFieldAddedOptions: function(field) {
-    if(field.hasClass('property-option-wrapper')) {
-      this.initPropertyOptionWrapper(field);
-    } else {
-      APP.global.nested_objects.initWrapper(field);
-    }
   },
   initPropertyWrapper: function(propertyWrapper) {
     // Initialize field actions
@@ -210,7 +203,7 @@ APP.entity_types = {
         $(this).find('.index-field').val(index);
       });
     });
-    $(form).find('.option-wrapper, .reservation-status-wrapper').each(function(index) {
+    $(form).find('.reservation-status-wrapper').each(function(index) {
       $(this).find('.index-field').val(index);
     });
   }
