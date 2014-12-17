@@ -1,6 +1,6 @@
 class Front::EntitiesController < CrudController
 
-  layout 'frontend'
+  include FrontMatter
 
   private
 

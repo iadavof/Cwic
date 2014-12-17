@@ -140,6 +140,10 @@ nl:
         tax_number: 'BTW-nummer'
         iban: 'Rekeningnummer (IBAN)'
         iban_att: 'Rekening ten name van'
+        password: 'Wachtwoord'
+        password_confirmation: 'Bevestig wachtwoord'
+        remember_me: 'Onthoud mij'
+        current_password: 'Huidig wachtwoord'
       organisation_client/contacts:
         first_name: 'Contactpersoon voornaam'
         last_name: 'Contactpersoon achternaam'

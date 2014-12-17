@@ -1,6 +1,6 @@
 class Front::FrontendEntityTypesController < CrudController
 
-  layout 'frontend'
+  include FrontMatter
 
   def gallery
 

@@ -7,7 +7,9 @@
 //= require magnific-popup
 //= require gistyle
 //= require_tree ./shared/i18n
+//= require_tree ./application_frontend_shared/i18n
 //= require_tree ./shared/libraries
+//= require_tree ./application_frontend_shared/libraries
 //= require_tree ./frontend/libraries
 //= require_directory ./shared
 //= require_directory ./frontend

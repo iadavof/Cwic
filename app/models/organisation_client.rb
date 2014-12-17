@@ -14,6 +14,9 @@ class OrganisationClient < ActiveRecord::Base
   has_many :communication_records, dependent: :destroy, inverse_of: :organisation_client
 
   # Model extensions
+  devise :database_authenticatable, :registerable, :confirmable,
+         :recoverable, :rememberable, :trackable, :validatable
+
   audited only: [:first_name, :last_name, :infix, :email, :route, :street_number, :postal_code, :locality, :country, :administrative_area_level_2, :administrative_area_level_1, :phone, :mobile_phone, :business_client, :company_name, :tax_number, :iban, :iban_att], allow_mass_assignment: true
 
   # Validations

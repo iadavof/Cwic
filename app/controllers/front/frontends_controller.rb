@@ -1,7 +1,11 @@
 class Front::FrontendsController < CrudController
 
-  layout 'frontend'
+  include FrontMatter
 
   private
+
+  def find_member
+    model.find(params[:frontend_id])
+  end
 
 end
