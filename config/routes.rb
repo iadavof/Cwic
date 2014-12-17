@@ -7,7 +7,11 @@ Cwic::Application.routes.draw do
   get 'home/index'
   root to: 'introduction#index'
 
-  devise_for :users, controllers: { sessions: 'users/sessions', registrations: 'users/registrations', invitations: 'users/invitations' }
+  devise_for :users, controllers: {
+    sessions: 'users/sessions',
+    registrations: 'users/registrations',
+    invitations: 'users/invitations'
+  }
 
   get 'switch_organisation/:id/', controller: :application, action: :switch_organisation, as: :switch_organisation
 
@@ -105,8 +109,17 @@ Cwic::Application.routes.draw do
     post :public_signup, on: :new
   end
 
+  devise_for :organisation_clients, path: '/front', controllers: {
+    sessions: 'front/organisation_clients/sessions',
+    confirmations: 'front/organisation_clients/confirmations',
+    passwords: 'front/organisation_clients/passwords',
+    registrations: 'front/organisation_clients/registrations'
+  }
+
   namespace :front do
-    resources :frontends, only: :show do
+    get 'frontends/:frontend_id/', controller: :frontends, action: :show, as: :frontend
+    resources :frontends, only: :none do
+      resources :organisation_clients, except: :index
       resources :frontend_entity_types, only: [] do
         get :gallery, on: :member
         get :list, on: :member

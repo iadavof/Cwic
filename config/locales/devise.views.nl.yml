@@ -1,5 +1,5 @@
 nl:
-  devise:
+  users:
     confirmations:
       new:
         resend_confirmation_instructions: 'Verstuur bevestiging-instructies opnieuw'

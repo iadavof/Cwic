@@ -54,12 +54,17 @@ html.frontend {
   }
 
   .menu {
-    flex: 1 1 auto;
     overflow: auto;
     list-style-type: none;
     padding: 0;
     margin: 0;
     text-align: left;
+  }
+
+  .menu.user {
+    margin-top: 20px;
+    border-top: 2px solid #aaa;
+    padding-top: 20px;
   }
 
   .menu {

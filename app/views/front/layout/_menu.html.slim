@@ -15,3 +15,21 @@
           span.link-text
             = fet.instance_name
           i
+  ul.menu.user
+    - if organisation_client_signed_in?
+      li
+        = link_to(front_frontend_organisation_client_path(@frontend, current_organisation_client)) do
+          span.link-text
+            = current_organisation_client.instance_name
+          i.icon-user
+      li
+        = link_to(destroy_organisation_client_session_path, method: :delete) do
+          span.link-text
+            = t('.sign_out')
+          i.icon-off
+    - else
+      li
+        = link_to(new_organisation_client_session_path) do
+          span.link-text
+            = t('.sign_in')
+          i.icon-user

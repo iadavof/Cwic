@@ -13,6 +13,8 @@
  *= require ./shared/icons
  *= require ./shared/global
  *= require_directory ./shared
+ *= require_directory ./application_frontend_shared
  *= require_directory ./shared/libraries
+ *= require_directory ./application_frontend_shared/libraries
  *= require_directory ./frontend
  */

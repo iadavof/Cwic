@@ -14,6 +14,7 @@ html.no-js.frontend
     class="controller-#{controller_name} action-#{action_name}"
     data-controller=controller_name
     data-action=action_name
+    data-current-frontend-id=current_frontend.try(:id)
     data-current-organisation-id=current_organisation.try(:id)
     data-current-locale=I18n.locale
   ]
