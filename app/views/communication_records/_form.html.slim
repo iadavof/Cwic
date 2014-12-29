@@ -1,7 +1,7 @@
 = form_for([@organisation, @organisation_client, @communication_record]) do |f|
   = render 'shared/error_messages', target: @communication_record
 
-  .communication-record.fields
+  .nested-object-wrapper.communication-record.fields
     .head.clearfix
       .methods
         - CommunicationRecord::METHODS.each do |method|

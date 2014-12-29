@@ -8,6 +8,7 @@ class EntityTypeProperty < ActiveRecord::Base
 
   # Model extensions
   delegate :string?, :integer?, :float?, :cast_value, :parse_value, :has_required?, to: :data_type
+  acts_as_list scope: :entity_type
 
   # Validations
   validates :entity_type, presence: true

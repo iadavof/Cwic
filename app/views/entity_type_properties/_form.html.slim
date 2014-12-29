@@ -1,0 +1,27 @@
+= nested_form_for([@organisation, parent, @entity_type_property]) do |f|
+  = render 'shared/error_messages', target: @entity_type_property
+
+  .fields.nested-object-wrapper.property-wrapper.clearfix
+    .field.horizontal-block.name
+      = f.text_field :name, placeholder: EntityTypeProperty.human_attribute_name(:name), title: EntityTypeProperty.human_attribute_name(:name)
+
+    .field.horizontal-block.description
+      = f.text_area :description, placeholder: EntityTypeProperty.human_attribute_name(:description), title: EntityTypeProperty.human_attribute_name(:description)
+
+    .horizontal-block.extra
+      .field.data-type
+        = f.label :data_type
+        = f.select :data_type_id, DataType.all.sort.map { |dt| [dt.human_name, dt.id, { title: dt.human_description, data: { key:  dt.key } }] }, { prompt: true }
+      .field.required
+        = f.label :required, title: t('.required_expl')
+        = f.check_box :required
+      .field.default-value
+        = f.label :default_value
+        span.default-value-formatted-field
+        = f.hidden_field :default_value, value: f.object.form_default_value, class: 'default-value-parsed-field'
+
+    .nested-form.property-options
+      = render 'entity_type_properties/property_options_fields', f: f
+
+  .actions
+    = f.submit

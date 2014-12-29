@@ -176,13 +176,6 @@ nl:
         slack_after: 'Speling achteraf'
         min_reservation_length: 'Minimale duur'
         max_reservation_length: 'Maximale duur'
-      entity_type/properties:
-        name: 'Eigenschapnaam'
-        description: 'Omschrijving bij eigenschap'
-        data_type: 'Datatype bij eigenschap'
-        default_value: 'Standaardwaarde bij eigenschap'
-      entity_type/properties/options:
-        name: 'Optiewaarde bij eigenschap'
       entity_type_property:
         name: 'Naam'
         description: 'Omschrijving'
@@ -192,15 +185,8 @@ nl:
       entity_type_property_option:
         name: 'Waarde'
         default: 'Standaard?'
-      entity_type_option:
-        name: 'Naam'
-        description: 'Omschrijving'
-        amount_relevant: 'Vraag aantal?'
-        default_price: 'Standaardprijs'
-      entity_type/options:
-        name: 'Optienaam'
-        description: 'Omschrijving bij optie'
-        default_price: 'Standaardprijs bij optie'
+      entity_type_property/options:
+        name: 'Optiewaarde'
       entity:
         entity_type: 'Objectsoort'
         name: 'Naam'
@@ -222,8 +208,6 @@ nl:
         remove_image: 'Verwijder afbeelding'
         remote_image_url: 'URL van externe afbeelding'
         image_from_file: 'Lokale afbeelding'
-      entity/properties:
-        value: 'Eigenschap'
       reservation:
         id: 'Reserveringsnummer'
         begins_at: 'Begint op'
@@ -285,10 +269,6 @@ nl:
         period_amount: 'Periode aantal'
         period_unit: 'Periode eenheid'
         price: 'Prijs'
-      entity_type/reservation_periods:
-        period_amount: 'Periode bij reserveerperiode'
-        period_unit: 'Periode bij reserveerperiode'
-        price: 'Prijs bij reserveerperiode'
       document:
         user: 'Toegevoegd door'
         created_at: 'Toegevoegd op'
@@ -307,9 +287,9 @@ nl:
           attributes:
             user:
               taken: 'bestaat al binnen de organisatie'
-        entity_type:
-          no_default_reservation_status: 'Er is geen standaard reserveringsstatus geselecteerd'
-          multiple_default_reservation_statuses: 'Er zijn meerdere standaard reserveringsstatussen geselecteerd'
+        reservation_status:
+          no_default_status: 'Er moet een standaard reserveringsstatus geselecteerd zijn'
+          multiple_default_statuses: 'Er zijn meerdere standaard reserveringsstatussen geselecteerd'
         reservation:
           period_not_allowed: 'De periode van de reservering is niet toegestaan volgens de gedefinieerde reserveerperioden voor dit object'
           period_too_small: 'Een reservering voor dit object moet minimaal %{count} minuten duren'
@@ -620,26 +600,33 @@ nl:
       other: 'Objectsoort %{name} wordt nog gebruikt door %{count} objecten. Als u deze objectsoort verwijderd, worden de objecten hiervan ook verwijderd. Weet u zeker dat u door wilt gaan?'
     form_general:
       entity_type_name_example: 'zaal, parkeerplaats, werkplek enz.'
+    form_slack:
       default_slack_times: 'Standaard speling'
       default_slack_times_help: 'Er kan door Cwic rekening gehouden worden met speling voor en na reserveringen van deze objectsoort. In deze tijd kan bijvoorbeeld onderhoud plaatsvinden of kan het object gereed gesteld worden. Deze tijden zijn voor elk object afzonderlijk in te stellen. De standaardwaarden voor speling voor deze objectsoort kunt u hieronder ingeven.'
-    form_properties:
-      properties_help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
-    form_options:
-      options_help: 'Gebruik opties om extra keuzes toe te voegen aan het reserveringsformulier voor objecten van deze objectsoort.'
-    form_reservation_statuses:
-      reservation_status_help: 'Met reserveringsstatussen kunt u aangeven waar een reservering zich bevindt in het verwerkingsproces. U kunt hier zelf statussen aanmaken die aansluiten bij uw werkwijze en instellen welke consequenties aan individuele statussen moeten worden verbonden (bijvoorbeeld of er nieuwe reserveringen kunnen worden aangemaakt die overlappen met een andere reservering met de status ''geannuleerd'').'
-    form_reservation_periods:
-      reservation_periods_help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor €0,20 als per uur voor €10,--, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€18,--), en niet op basis van 100 minuten (€20,--).'
-      reservation_length_limitations: 'Duurbeperkingen'
-    reservation_period_fields:
-      period: 'Periode'
-      per_period: 'per periode'
+    reservation_restrictions:
+      reservation_length_restrictions: 'Reserveringsduur beperkingen'
 
   entity_type_properties:
-    fields_form:
+    help: 'Gebruik eigenschappen om extra informatie aan een object toe te voegen, bijvoorbeeld afmetingen of gewicht. Toegevoegde eigenschappen zullen zichtbaar zijn op de overzichtspagina van objecten van deze objectsoort.'
+    form:
       required_expl: 'Moet deze eigenschap verplicht worden ingevuld voor elk object?'
     property_options_fields:
       clear: 'Leegmaken'
+
+  reservation_statuses:
+    help: 'Met reserveringsstatussen kunt u aangeven waar een reservering zich bevindt in het verwerkingsproces. U kunt hier zelf statussen aanmaken die aansluiten bij uw werkwijze en instellen welke consequenties aan individuele statussen moeten worden verbonden (bijvoorbeeld of er nieuwe reserveringen kunnen worden aangemaakt die overlappen met een andere reservering met de status ''geannuleerd'').'
+    default:
+      concept: 'Concept'
+      definitive: 'Definitief'
+      ready: 'Gereed'
+      canceled: 'Geannuleerd'
+      not_used: 'Niet gebruikt'
+
+  reservation_periods:
+    help: 'Hier kunt u instellen in welke tijdseenheden objecten van deze objectsoort gereserveerd kunnen worden. Indien u objecten van een bepaalde soort bijvoorbeeld alleen per uur wilt verhuren, kunt u een reserveerperiode met de duur van een uur toevoegen. U kunt per reserveerperiode een prijs invullen. Indien er meerdere reserveerperioden zijn ingesteld, wordt bij de berekening van de prijs van een reservering automatisch de laagst mogelijke prijs berekend. Indien u bijvoorbeeld zowel per minuut verhuurt voor € 0,20 als per uur voor € 10,-, dan zal bij een reservering van 100 minuten de prijs berekend worden op basis van een uur en 40 minuten (€ 18,-), en niet op basis van 100 minuten (€ 20,-).'
+    form:
+      period: 'Periode'
+      per_period: 'per periode'
 
   entity_type_icons:
     form:
@@ -794,14 +781,6 @@ nl:
       in_about: 'Over %{time_distance}'
     reservation_result:
       options: 'Opties'
-
-  reservation_statuses:
-    default:
-      concept: 'Concept'
-      definitive: 'Definitief'
-      ready: 'Gereed'
-      canceled: 'Geannuleerd'
-      not_used: 'Niet gebruikt'
 
   audits:
     logs: 'Geschiedenis'

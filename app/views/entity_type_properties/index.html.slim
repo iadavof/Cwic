@@ -1,0 +1,13 @@
+= render layout: 'layout' do
+  h2 = index_title(EntityType)
+  = format_help(t('entity_type_properties.help'))
+
+  .navigation-actions
+    = button_link_to_new([@organisation, parent, EntityTypeProperty])
+
+  - if @entity_type_properties.empty?
+    p = t('.empty', default: :empty_objects, models: EntityTypeProperty.model_name.human(count: 2).lcfirst)
+
+  - else
+    .sortable data-sort-update-url=sort_organisation_entity_type_entity_type_properties_path(@organisation, @entity_type)
+      = render @entity_type_properties

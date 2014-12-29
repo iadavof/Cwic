@@ -22,7 +22,6 @@ class EntityType < ActiveRecord::Base
   validates :slack_after, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :min_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :max_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-  validate :one_default_reservation_status
 
   # Model extensions
   audited only: [:name, :description, :slack_before, :slack_after, :min_reservation_length, :max_reservation_length], allow_mass_assignment: true
@@ -96,15 +95,6 @@ class EntityType < ActiveRecord::Base
   end
 
   private
-
-  def one_default_reservation_status
-    count = reservation_statuses.reject(&:marked_for_destruction?).count(&:default_status)
-    if count > 1
-      errors.add(:base, I18n.t('activerecord.errors.models.entity_type.multiple_default_reservation_statuses'))
-    elsif count < 1
-      errors.add(:base, I18n.t('activerecord.errors.models.entity_type.no_default_reservation_status'))
-    end
-  end
 
   def initialize_reservation_statuses
     reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#fff849', position: 1, default_status: true, blocking: true, info_boards: false, billable: false)

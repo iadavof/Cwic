@@ -1,0 +1,7 @@
+h2 = t('entity_types.form_slack.default_slack_times')
+
+dl
+  dt = Reservation.human_attribute_name(:slack_before)
+  dd = "#{@entity_type.slack_before} #{t('minutes').lcfirst}"
+  dt = Reservation.human_attribute_name(:slack_after)
+  dd = "#{@entity_type.slack_after} #{t('minutes').lcfirst}"

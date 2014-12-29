@@ -27,7 +27,18 @@ Cwic::Application.routes.draw do
       post :reinvite, on: :member
     end
 
-    resources :entity_types
+    resources :entity_types do
+      get :audits, on: :member
+      resources :entity_type_properties do
+        patch :sort, on: :collection
+      end
+      resources :entity_images, except: :show
+      resources :reservation_statuses do
+        patch :sort, on: :collection
+      end
+      resources :reservation_periods
+    end
+
     resources :entity_type_icons
 
     resources :entities do

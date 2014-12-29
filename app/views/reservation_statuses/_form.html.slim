@@ -1,0 +1,23 @@
+= form_for([@organisation, parent, @reservation_status]) do |f|
+  = render 'shared/error_messages', target: @reservation_status
+
+  table
+    thead
+      th = ReservationStatus.human_attribute_name(:name)
+      th = ReservationStatus.human_attribute_name(:color)
+      th = ReservationStatus.human_attribute_name(:default_status)
+      th = ReservationStatus.human_attribute_name(:blocking)
+      th = ReservationStatus.human_attribute_name(:info_boards)
+      th = ReservationStatus.human_attribute_name(:billable)
+
+    tbody
+      tr
+        td = f.text_field :name
+        td = f.text_field :color, class: 'colorpicker-field', autocomplete: :off
+        td.bool = f.check_box :default_status, class: 'default-status'
+        td.bool = f.check_box :blocking
+        td.bool = f.check_box :info_boards
+        td.bool = f.check_box :billable
+
+  .actions
+    = f.submit

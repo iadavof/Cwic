@@ -3,35 +3,15 @@
     = render 'tags/form', f: f
     = render 'shared/error_messages', target: @entity_type
 
-    #tabs
-      ul.nav
-        li
-          a.current href="#general"
-            = t('general')
-        li
-          a href="#properties"
-            = EntityTypeProperty.model_name.human(count: 2)
-        li
-          a href="#reservation-statuses"
-            = ReservationStatus.model_name.human(count: 2)
-        li
-          a href="#images"
-            = EntityImage.model_name.human(count: 2)
-        li
-          a href="#reservation-periods"
-            = ReservationPeriod.model_name.human(count: 2)
-
-      .tab-wrap
-        #general
+    .content-columns.clearfix data-column-count="2"
+      .content-column
+        .content-block
           = render 'form_general', f: f
-        #properties.hide
-          = render 'form_properties', f: f
-        #reservation-statuses.hide
-          = render 'form_reservation_statuses', f: f
-        #images.hide
-          = render 'form_images', f: f
-        #reservation-periods.hide
-          = render 'form_reservation_periods', f: f
+      .content-column
+        .content-block
+          = render 'form_slack', f: f
+        .content-block
+          = render 'form_reservation_restrictions', f: f
 
     .actions
       = f.submit
