@@ -4,18 +4,20 @@ class Sticky < ActiveRecord::Base
   belongs_to :organisation
   belongs_to :user
 
+  # Model extensions
+  acts_as_list scope: :stickable, add_new_at: :top
+
   # Validations
   validates :organisation, presence: true
   validates :stickable, presence: true
   validates :user, presence: true
-  validates :weight, numericality: true, allow_nil: true
 
   # Callbacks
   before_validation :set_organisation
   before_validation :set_user
 
   # Scopes
-  default_scope { order('weight ASC, created_at DESC'); }
+  default_scope { order(:position) }
 
   def instance_name
     "#{self.class.model_name.human} ##{self.id}"

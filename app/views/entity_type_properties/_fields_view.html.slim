@@ -15,7 +15,7 @@
     dt.required = EntityTypeProperty.human_attribute_name(:required)
     dd.required data-field="required" = format_bool(f.object.required)
     dt.property-options = EntityTypePropertyOption.model_name.human(count: 2)
-    dd.property-options data-field="property-options" = f.object.options.sort_by(&:index).map(&:name).to_sentence
+    dd.property-options data-field="property-options" = f.object.options.sort_by(&:position).map(&:name).to_sentence
     dt = EntityTypeProperty.human_attribute_name(:default_value)
     dd data-field="default-value" = format_text(f.object.formatted_default_value)
 

@@ -6,13 +6,12 @@ class EntityTypePropertyOption < ActiveRecord::Base
   # Validations
   validates :entity_type_property, presence: true
   validates :name, presence: true, length: { maximum: 255 }
-  validates :index, presence: true, numericality: { only_integer: true }
 
   # Callbacks
   after_destroy :clear_depending_entity_properties
 
   # Scopes
-  default_scope { order(:index) }
+  default_scope { order(:position) }
 
   def instance_name
     self.name

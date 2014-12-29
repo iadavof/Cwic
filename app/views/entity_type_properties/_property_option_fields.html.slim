@@ -6,5 +6,5 @@ tr.fields.property-option-wrapper
   td.default
     = f.check_box :default, class: 'default-field', title: EntityTypePropertyOption.human_attribute_name(:default)
   td
-    = f.hidden_field :index, class: 'index-field'
+    = f.hidden_field :position, class: 'position-field'
     = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: EntityTypePropertyOption.model_name.human)

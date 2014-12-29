@@ -1,7 +1,6 @@
 CwicStickyNotes.prototype.defaultNote = {
   id: null,
   author: { id: 0, name: '' },
-  weight: 0,
   created_at: ''
 };
 
@@ -100,8 +99,7 @@ CwicStickyNotes.prototype.bindControls = function() {
 CwicStickyNotes.prototype.newNote = function() {
   var note = this.defaultNote;
   note.author = this.options.current_author;
-  now = moment();
-  note.created_at = now.format('YYYY-MM-DD HH:mm');
+  note.created_at = moment().format('YYYY-MM-DD HH:mm');
   this.renderNote(note);
 };
 
@@ -132,21 +130,11 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
   textarea.autosize();
 
   var innerNotesContainer = this.noteContainer.find('div.notes');
-  innerNotesContainer.sortable({
-    handle: 'div.note-head',
-    connectWith: '.notes',
-    start: function(e, ui) {
-      if(!ui.item.attr('id')) {
-        // Note not saved yet. We need to save the sticky first, so it has an id.
-        sn.afterNoteEdit(ui.item);
-      }
-      ui.placeholder.height(ui.item.outerHeight());
-      ui.placeholder.width(ui.item.outerWidth());
-    },
-    stop: function(e, ui) {
-      sn.afterNoteMove(ui);
-    },
-    placeholder: 'ui-state-highlight'
+  innerNotesContainer.on('sortstart', function(e, ui) {
+    if(!ui.item.attr('id')) {
+      // Note not saved yet. We need to save the sticky first, so it has an id.
+      sn.afterNoteEdit(ui.item);
+    }
   });
 
   if(note_obj.id == null) {
@@ -160,26 +148,6 @@ CwicStickyNotes.prototype.renderNote = function(note_obj) {
     textarea.focus();
     textarea.select();
   }
-};
-
-CwicStickyNotes.prototype.afterNoteMove = function(ui) {
-  var sn = this;
-  var notes = this.noteContainer.find('div.notes div.note');
-
-  var weights = {};
-  notes.each(function(index, note) {
-    weights[sn.noteId($(note))] = index;
-  });
-
-  $.ajax({
-    type: 'PATCH',
-    url: this.options.backend_url + '/update_weights.json',
-    data: {
-      weights: weights
-    }
-  }).fail(function(){
-    console.log('Error updating note order');
-  });
 };
 
 CwicStickyNotes.prototype.afterNoteEdit = function(element) {

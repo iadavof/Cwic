@@ -57,6 +57,9 @@ APP.init = function() {
   // Initialize special form fields, such as date- and timepickers, special Cwic Controls (select, checkbox, ...)
   this.global.initializeSpecialFormFields();
 
+  // Initialize sortables
+  this.global.initializeSortables();
+
   // Make select all button on tables work
   this.global.bindSelectAllCheckboxEvents();
 
@@ -375,6 +378,28 @@ APP.global = {
 
     $parent.find('.select2-offscreen.autosubmit').on('change', function() {
       $(this).prev('.select2-container').addClass('autosubmit-busy');
+    });
+  },
+  initializeSortables: function() {
+    $('.sortable').sortable({
+      placeholder: 'ui-state-highlight',
+      handle: 'div.sort-handle',
+      start: function(e, ui) {
+        ui.placeholder.height(ui.item.outerHeight());
+        ui.placeholder.width(ui.item.outerWidth());
+      },
+      helper: function(e, ui) {
+        // Fix width of table cells if draggable (ui) is a tr
+        if(ui.is('tr')) {
+          ui.children().each(function() {
+            $(this).width($(this).width());
+          });
+        }
+        return ui;
+      },
+      stop: function(e, ui) {
+        $.patch($(this).data('sort-update-url'), $(this).sortable('serialize'));
+      }
     });
   },
   initializeInputWithClear: function() {

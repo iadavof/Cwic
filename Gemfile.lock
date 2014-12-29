@@ -77,6 +77,8 @@ GEM
       tzinfo (~> 1.1)
     acts-as-taggable-on (3.3.0)
       activerecord (>= 3, < 5)
+    acts_as_list (0.6.0)
+      activerecord (>= 3.0)
     ancestry (2.1.0)
       activerecord (>= 3.0.0)
     arel (5.0.1.20140414130214)
@@ -357,6 +359,7 @@ DEPENDENCIES
   activerecord-import
   activerecord-tableless
   acts-as-taggable-on
+  acts_as_list
   ancestry
   attribute_normalizer
   audited-activerecord

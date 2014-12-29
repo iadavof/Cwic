@@ -12,7 +12,7 @@ h2 = ReservationStatus.model_name.human(count: 2)
     div = ReservationStatus.human_attribute_name(:billable).html_safe
 
 ul#entity-type-reservation-statuses.nested-form
-  = f.fields_for :reservation_statuses, @entity_type.reservation_statuses.sort_by(&:index), wrapper: false do |rsf|
+  = f.fields_for :reservation_statuses, @entity_type.reservation_statuses.sort_by(&:position), wrapper: false do |rsf|
     = render 'reservation_status_fields', f: rsf
 
 = f.link_to_add '', :reservation_statuses, data: { target: '#entity-type-reservation-statuses' }, class: 'icon icon-plus action-button add-nested-object', title: t('add_nested_object', model: ReservationStatus.model_name.human)

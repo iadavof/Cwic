@@ -12,7 +12,7 @@ table
       th
 
   tbody.target
-    = f.fields_for :options, f.object.options.sort_by(&:index), wrapper: false do |of|
+    = f.fields_for :options, f.object.options.sort_by(&:position), wrapper: false do |of|
       = render 'entity_type_properties/property_option_fields', f: of
 
 = f.link_to_add '', :options, class: 'icon icon-plus action-button', title: t('add_nested_object', model: EntityTypePropertyOption.model_name.human)

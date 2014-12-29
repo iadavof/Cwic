@@ -1,7 +1,7 @@
 APP.entity_types = {
   _form: function() {
     var form = $('form.new_entity_type, form.edit_entity_type');
-    form.submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updateIndexes($(this)); })
+    form.submit(function () { APP.entity_types.parseFormattedDefaultValues($(this)); APP.entity_types.updatePositions($(this)); })
     this.initIconSelector();
 
     form.find('.property-wrapper').each(function () { APP.entity_types.initPropertyWrapper($(this)); })
@@ -196,15 +196,15 @@ APP.entity_types = {
       field.prop('checked', true).trigger('change.cwicControl');
     }
   },
-  updateIndexes: function(form) {
-    $(form).find('.property-wrapper').each(function(index) {
-      $(this).find('.index-field').val(index);
-      $(this).find('.property-option-wrapper').each(function(index) {
-        $(this).find('.index-field').val(index);
+  updatePositions: function(form) {
+    $(form).find('.property-wrapper').each(function(i) {
+      $(this).find('.position-field').val(i+1);
+      $(this).find('.property-option-wrapper').each(function(i) {
+        $(this).find('.position-field').val(i+1);
       });
     });
-    $(form).find('.reservation-status-wrapper').each(function(index) {
-      $(this).find('.index-field').val(index);
+    $(form).find('.reservation-status-wrapper').each(function(i) {
+      $(this).find('.position-field').val(i+1);
     });
   }
 };

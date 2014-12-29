@@ -14,7 +14,6 @@ class EntityTypeProperty < ActiveRecord::Base
   validates :name, presence: true, length: { maximum: 50 }
   validates :description, length: { maximum: 255 }
   validates :data_type, presence: true
-  validates :index, presence: true, numericality: { only_integer: true }
   validates :default_value, length: { maximum: 255 }, allow_blank: true, if: -> { data_type.present? && string? }
   validates :default_value, numericality: { only_integer: true }, allow_blank: true, if: -> { data_type.present? && integer? }
   validates :default_value, numericality: true, allow_blank: true, if: -> { data_type.present? && float? }
@@ -30,7 +29,7 @@ class EntityTypeProperty < ActiveRecord::Base
   accepts_nested_attributes_for :options, allow_destroy: true
 
   # Scopes
-  default_scope { order(:index) }
+  default_scope { order(:position) }
 
   def instance_name
     self.name

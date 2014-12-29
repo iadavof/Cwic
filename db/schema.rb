@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141216182007) do
+ActiveRecord::Schema.define(version: 20141229130130) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -158,7 +158,7 @@ ActiveRecord::Schema.define(version: 20141216182007) do
     t.datetime "updated_at"
     t.text     "default_value"
     t.boolean  "required",                 default: false
-    t.integer  "index",                    default: 0
+    t.integer  "position"
   end
 
   add_index "entity_type_properties", ["data_type_id"], name: "index_entity_type_properties_on_data_type_id", using: :btree
@@ -170,7 +170,7 @@ ActiveRecord::Schema.define(version: 20141216182007) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.boolean  "default"
-    t.integer  "index",                             default: 0
+    t.integer  "position"
   end
 
   add_index "entity_type_property_options", ["entity_type_property_id"], name: "index_entity_type_property_options_on_entity_type_property_id", using: :btree
@@ -357,7 +357,7 @@ ActiveRecord::Schema.define(version: 20141216182007) do
 
   create_table "reservation_statuses", force: true do |t|
     t.string   "name"
-    t.integer  "index"
+    t.integer  "position"
     t.string   "color"
     t.integer  "entity_type_id", limit: 8
     t.datetime "created_at"
@@ -400,7 +400,7 @@ ActiveRecord::Schema.define(version: 20141216182007) do
     t.datetime "updated_at"
     t.string   "stickable_type"
     t.integer  "organisation_id", limit: 8
-    t.integer  "weight",                    default: 0
+    t.integer  "position"
   end
 
   add_index "stickies", ["organisation_id"], name: "index_stickies_on_organisation_id", using: :btree

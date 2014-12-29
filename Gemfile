@@ -165,6 +165,9 @@ gem 'ruby-notify-my-android'
 # Tools for formatting and validating IBAN numbers
 gem 'iban-tools'
 
+# Easy (manual) positiong of ActiveRecord objects
+gem 'acts_as_list'
+
 group :development do
   # Disable messages about assets in development
   gem 'quiet_assets'

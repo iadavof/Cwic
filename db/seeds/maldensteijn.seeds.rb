@@ -1,7 +1,7 @@
 after 'iada' do
+  # Find or create users
   iada_user = User.find_by!(email: 'admin@iada.nl')
   christiaan_user = User.find_by!(email: 'christiaan@iada.nl')
-  # Create Maldensteijn admin user
   ard_user = User.create!(first_name: 'Ard', infix: 'van', last_name: 'Hulst', email: 'ard@maldensteijn.nl', password: 'cwictest', confirmed_at: DateTime.now)
   david_user = User.create!(first_name: 'David', last_name: 'Westen', email: 'david@maldensteijn.nl', password: 'cwictest', confirmed_at: DateTime.now)
 
@@ -19,18 +19,18 @@ after 'iada' do
   info_screen = InfoScreen.create!(organisation: maldensteijn, name: 'Entree', public: true, add_new_entity_types: true)
 
   # Create entity type property templates
-  people_property = EntityTypeProperty.new(name: 'Max. personen', description: 'Het maximale aantal personen', data_type: SeedHelper.data_type(:integer), required: true, index: 0)
-  seats_property = EntityTypeProperty.new(name: 'Zitplaatsen', description: 'Het aantal beschikbare zitplaatsen', data_type: SeedHelper.data_type(:integer), required: true, index: 1)
-  area_property = EntityTypeProperty.new(name: 'Oppervlakte', description: 'De oppervlakte in m²', data_type: SeedHelper.data_type(:float), index: 2)
-  drinks_property = EntityTypeProperty.new(name: 'Drank mogelijk', description: 'Kan er drank geserveerd worden?', data_type: SeedHelper.data_type(:boolean), index: 3)
-  shape_property = EntityTypeProperty.new(name: 'Vorm', description: 'De vorm van de ruimte', data_type: SeedHelper.data_type(:enum), index: 4, options_attributes: { 0 => { name: 'Vierkant', index: 0 }, 1 => { name: 'Rechthoekig', index: 1 }, 2 => { name: 'Langwerpig', index: 2 }, 3 => { name: 'Anders', index: 3 } })
+  people_property = EntityTypeProperty.new(name: 'Max. personen', description: 'Het maximale aantal personen', data_type: SeedHelper.data_type(:integer), required: true, position: 1)
+  seats_property = EntityTypeProperty.new(name: 'Zitplaatsen', description: 'Het aantal beschikbare zitplaatsen', data_type: SeedHelper.data_type(:integer), required: true, position: 2)
+  area_property = EntityTypeProperty.new(name: 'Oppervlakte', description: 'De oppervlakte in m²', data_type: SeedHelper.data_type(:float), position: 3)
+  drinks_property = EntityTypeProperty.new(name: 'Drank mogelijk', description: 'Kan er drank geserveerd worden?', data_type: SeedHelper.data_type(:boolean), position: 4)
+  shape_property = EntityTypeProperty.new(name: 'Vorm', description: 'De vorm van de ruimte', data_type: SeedHelper.data_type(:enum), position: 5, options_attributes: { 0 => { name: 'Vierkant', position: 1 }, 1 => { name: 'Rechthoekig', position: 2 }, 2 => { name: 'Langwerpig', position: 3 }, 3 => { name: 'Anders', position: 4 } })
 
   # Create entity types of Maldensteijn
   properties = [people_property.dup, seats_property.dup, area_property.dup]
   foyer = EntityType.create!(organisation: maldensteijn, name: 'Foyer', description: 'Open ruimte met een bar en luxe zitplaatsen.', properties: properties)
   foyer.reservation_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 100)
 
-  properties = [people_property.dup, area_property.dup.set(index: 1), drinks_property.dup.set(index: 2), shape_property.deep_clone(include: :options).set(index: 3)]
+  properties = [people_property.dup, area_property.dup.set(position: 2), drinks_property.dup.set(position: 3), shape_property.deep_clone(include: :options).set(position: 4)]
   zaal = EntityType.create!(organisation: maldensteijn, name: 'Zaal', description: 'Grote ruimte voor diverse doeleinden.', properties: properties)
   zaal.reservation_periods.create(period_unit: TimeUnit.find_by(key: :half_hour), price: 30)
   zaal.reservation_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 50)
@@ -39,7 +39,7 @@ after 'iada' do
   kantoorruimte = EntityType.create!(organisation: maldensteijn, name: 'Kantoorruimte', description: 'Grote ruimte voor vergaderingen en bijeenkomsten met koffie.', properties: properties)
   kantoorruimte.reservation_periods.create(period_unit: TimeUnit.find_by(key: :hour), price: 50)
 
-  properties = [seats_property.dup.set(index: 0)]
+  properties = [seats_property.dup.set(position: 1)]
   theaterzaal = EntityType.create!(organisation: maldensteijn, name: 'Theaterzaal', description: 'Grote theaterzaal met tribune.', properties: properties)
   theaterzaal.reservation_periods.create(period_amount: 6, period_unit: TimeUnit.find_by(key: :hour), price: 5000)
 
@@ -62,7 +62,7 @@ after 'iada' do
   entity.stickies.build(organisation: maldensteijn, user: david_user, sticky_text: 'De lamp is stuk!')
   entity.save!
   entity = Entity.new(organisation: maldensteijn, entity_type: zaal, name: '1.7', description: '')
-  entity.set_properties(8, 25, false, 'Anders')
+  entity.set_properties(8, 25, false.to_s, 'Anders') # No clue why the to_s is necessary in this case
   entity.save!
   entity = Entity.new(organisation: maldensteijn, entity_type: zaal, name: '1.8', description: '')
   entity.set_properties(10, 40, true)
