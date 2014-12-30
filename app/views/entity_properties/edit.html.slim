@@ -7,10 +7,7 @@
   = form_for([@organisation, parent, @entity_property]) do |f|
     = render 'shared/error_messages', target: @entity_property
 
-    .field
-      = f.hidden_field :property_type_id
-      = f.label :value, f.object.property_type.name, title: format_description_title(f.object.property_type)
-      = render_entity_property_field(f)
+    = render 'fields', f: f
 
     .actions
       = f.submit

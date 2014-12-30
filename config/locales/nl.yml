@@ -196,6 +196,10 @@ nl:
         slack_before: 'Speling vooraf'
         slack_after: 'Speling achteraf'
         include_entity_type_images: 'Voeg objectsoort foto''s toe'
+      entity_property:
+        value: 'Waarde bij eigenschap'
+      entity/properties:
+        value: 'Waarde bij eigenschap'
       entity_image:
         title: 'Titel'
         image: 'Foto'

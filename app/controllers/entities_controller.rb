@@ -51,7 +51,10 @@ class EntitiesController < CrudController
   end
 
   def permitted_params
-    [:tag_list, :name, :frontend_name, :color, :description, :entity_type_id, :include_entity_type_images, :slack_before, :slack_after]
+    [
+      :tag_list, :name, :frontend_name, :color, :description, :entity_type_id, :include_entity_type_images, :slack_before, :slack_after,
+      properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []]
+    ]
   end
 
   def load_entity_type

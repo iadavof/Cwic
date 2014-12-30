@@ -10,6 +10,9 @@
       .content-column
         .content-block
           = render 'form_slack', f: f
+        - if @entity.new_record? && @entity.properties.any?
+          .content-block
+            = render 'form_properties', f: f
 
     .actions
       = f.submit

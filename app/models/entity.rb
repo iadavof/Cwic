@@ -32,6 +32,9 @@ class Entity < ActiveRecord::Base
   after_create :create_info_screen_entities
   after_save :update_reservations_slack_warnings
 
+  # Nested attributes
+  accepts_nested_attributes_for :properties
+
   # Scopes
   pg_global_search against: { name: 'A', description: 'B' }, associated_against: { entity_type: { name: 'B' }, properties: { value: 'C' }, stickies: { sticky_text: 'C' } }
 
