@@ -1,5 +1,4 @@
 Cwic::Application.routes.draw do
-
   # Load routing concerns. This needs to happen before any concern is used.
   instance_eval(File.read(Rails.root.join('config/routing_concerns.rb')))
 
@@ -17,6 +16,7 @@ Cwic::Application.routes.draw do
     get :edit_email, on: :member
     put :update_email, on: :member
   end
+
   resources :my_organisations, except: [:new, :create]
 
   resources :organisations do

@@ -1,5 +1,4 @@
 class UsersController < CrudController
-
   private
 
   def permitted_params

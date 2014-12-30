@@ -11,7 +11,6 @@ class ReservationsController < ApplicationController
   respond_to :json, only: [:create, :update, :destroy]
   respond_to :csv, :xls, only: :index
 
-  # GET /reservations
   def index
     respond_with do |format|
       format.csv { send_data(@reservations.export(:csv), filename: Reservation.export_filename(:csv)) }
@@ -19,12 +18,10 @@ class ReservationsController < ApplicationController
     end
   end
 
-  # GET /reservations/1
   def show
     respond_with(@organisation, @reservation)
   end
 
-  # GET /reservations/new
   def new
     if @reservation.organisation_client.nil?
       @reservation.build_organisation_client
@@ -34,12 +31,10 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, @reservation)
   end
 
-  # GET /reservations/1/edit
   def edit
     respond_with(@organisation, @reservation)
   end
 
-  # POST /reservations
   def create
     # The tableless record is not persistent so we need to create it again
     @reservation.reservation_recurrence_definition = ReservationRecurrenceDefinition.new(reservation: @reservation)
@@ -70,17 +65,15 @@ class ReservationsController < ApplicationController
     respond_with(@organisation, @reservation)
   end
 
-  # PATCH/PUT /reservations/1
   def update
     @reservation.localized.update_attributes(resource_params)
     respond_with(@organisation, @reservation)
   end
 
-  # PATCH/PUT /reservations/1/multiple
   def multiple
     session[:return_to] ||= request.referer
     @return_url = session[:return_to]
-      # Check if nothing is selected
+    # Check if nothing is selected
     if @reservations.empty?
       redirect_to session.delete(:return_to)
       return
@@ -88,17 +81,15 @@ class ReservationsController < ApplicationController
     send multiple_action
   end
 
-  # PATCH/PUT /reservations/1/update_status
   def update_status
     @reservation.status = @reservation.entity.reservation_statuses.find(params[:status_id].to_i)
     if @reservation.status.present? && @reservation.save
-      render json: { }, status: :ok
+      render json: {}, status: :ok
     else
       render json: { error: 'no reservation status found' }, status: :not_found
     end
   end
 
-  # DELETE /reservations/1
   def destroy
     @reservation.destroy
     respond_with(@organisation, Reservation)
@@ -108,7 +99,7 @@ class ReservationsController < ApplicationController
 
   def multiple_action
     # Check if a parameter key edit or delete is defined, this is the name of the submit button that is clicked
-    action = %w(edit delete).detect { |a| params[a] }
+    action = %w(edit delete).find { |a| params[a] }
     "multiple_#{action}"
   end
 
@@ -208,22 +199,20 @@ class ReservationsController < ApplicationController
   end
 
   def load_organisation_client
-    if params[:organisation_client_id].present?
-      @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id])
-    end
+    @organisation_client = @organisation.organisation_clients.find(params[:organisation_client_id]) if params[:organisation_client_id].present?
   end
 
   def set_first_page
-    # If we render the index view without any configuration for the results table set (except for the limit value),
-    if params.slice(:date_domain_from, :date_domain_to, :mini_search, :sort, :direction, :page).blank?
-      # Then jump to the page with the first upcoming reservation on it.
-      past = reservations.past.ssp(params)
-      # We have the amount of reservations in the past,
-      # we add one to this (because we want to be on the page with the first upcoming, i.e. non-past, reservation),
-      # we divide this by the amount of results per page and round this up to get the correct page
-      page = ((past.total_count + 1) / past.limit_value.to_f).ceil
-      params[:page] = page
-    end
+    # Automatically jump to the page with the first upcoming reservation on it,
+    # but only if we render the index view with no configuration set for the results table (except for the limit value).
+    return if params.slice(:date_domain_from, :date_domain_to, :mini_search, :sort, :direction, :page).any?
+
+    # We have the amount of reservations in the past,
+    # we add one to this (because we want to be on the page with the first upcoming, i.e. non-past, reservation),
+    # we divide this by the amount of results per page and round this up to get the correct page
+    past = reservations.past.ssp(params)
+    page = ((past.total_count + 1) / past.limit_value.to_f).ceil
+    params[:page] = page
   end
 
   def load_resource
@@ -250,12 +239,10 @@ class ReservationsController < ApplicationController
   end
 
   def parse_date(string)
-    # IMPROVEMENT: this is used the date domain filter. It might be better to rewrite these filters to an active model object and use default Rails validations and I18n::Alchemy for parsing.
-    begin
-      I18n::Alchemy::DateParser.parse(string).to_date if string.present?
-    rescue ArgumentError
-      nil
-    end
+    # IMPROVEMENT: this is used by the date domain filter. It might be better to rewrite these filters to an active model object and use default Rails validations and I18n::Alchemy for parsing.
+    I18n::Alchemy::DateParser.parse(string).to_date if string.present?
+  rescue ArgumentError
+    nil
   end
 
   def resource_params

@@ -79,7 +79,7 @@ APP.reservations = {
   bindStatusSelectorControls: function(changedCallback) {
     $('div.status-selector').on('click', 'a', function() {
       var button = $(this);
-      var new_status_id = button.data('status-id');
+      var newStatusId = button.data('status-id');
       var selectorDiv = button.parents('div.status-selector');
 
       selectorDiv.find('a').removeClass('active');
@@ -89,7 +89,7 @@ APP.reservations = {
         type: 'PATCH',
         url: Routes.update_status_organisation_reservation_path(current_organisation, selectorDiv.data('reservation-id')) + '.json',
         data: {
-          status_id: new_status_id
+          status_id: newStatusId
         }
       }).success(function(response) {
         selectorDiv.find('p.saved-notification').show();
@@ -99,7 +99,6 @@ APP.reservations = {
           changedCallback(button);
         }
       });
-
     });
   },
   showHideWeekdayMonthdaySelectors: function() {

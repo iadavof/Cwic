@@ -37,7 +37,7 @@ class CrudController < ApplicationController
 
   def destroy
     member.destroy
-    respond_with(*member_path, location: respond_location, alert: member.errors[:base])
+    respond_with(*member_path, location: respond_location, alert: member.errors[:base].first)
   end
 
   protected
