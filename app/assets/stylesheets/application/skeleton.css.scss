@@ -43,8 +43,6 @@ html.logged-in {
 
 html.logged-in.js {
   body {
-    padding-top: 0.01px;
-    margin-top: -0.01px;
     overflow: hidden;
   }
 
@@ -135,11 +133,15 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
   #header {
     width: auto;
     flex: 0 0 auto;
+    min-height: 0;
+    min-width: 0;
     transform: none;
   }
 
   #below-header {
     flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
     display: flex;
     flex-flow: row nowrap;
     align-items: stretch;
@@ -147,10 +149,14 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
 
   #submenu-box {
     flex: 0 0 auto;
+    min-height: 0;
+    min-width: 0;
   }
 
   #main-area {
     flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
     display: flex;
     flex-flow: column nowrap;
     align-items: stretch;
@@ -158,6 +164,8 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
 
   #local-menu {
     flex: 0 0 auto;
+    min-height: 0;
+    min-width: 0;
     display: flex;
     flex-flow: row wrap;
     justify-content: space-between;
@@ -169,17 +177,22 @@ html.logged-in.flexbox, html.logged-in.js.flexbox {
 
     .navigation-actions, .context-actions, .page-actions {
       width: auto;
-      min-width: 0;
       flex: 0 0 auto;
+      min-height: 0;
+      min-width: 0;
     }
   }
 
   #under-local-menu {
     flex: 0 0 auto;
+    min-height: 0;
+    min-width: 0;
   }
 
   #content-area {
     flex: 1 1 auto;
+    min-height: 0;
+    min-width: 0;
   }
 }
 
