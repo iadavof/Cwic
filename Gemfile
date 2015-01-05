@@ -12,6 +12,9 @@ gem 'sass-rails'
 # Templating engine
 gem 'slim-rails'
 
+# The Thin webserver (since Puma has strange output logging)
+gem 'thin'
+
 # Use autoprefixer to add browser prefixes to css rules
 gem 'autoprefixer-rails'
 
