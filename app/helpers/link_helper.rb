@@ -68,14 +68,14 @@ module LinkHelper
   def icon_link_to_edit(object, options = {})
     options[:name] = ''
     options[:class] ||= 'icon icon-edit action-button'
-    options[:title] ||= t('.to_edit', default: :icon_to_edit_object, model: object_class_name(object).lcfirst, name: object_name(object))
+    options[:title] ||= t('.to_edit', default: :icon_to_edit_object, model: object_class_name(object), name: object_name(object))
     link_to_edit(object, options)
   end
 
   def icon_link_to_destroy(object, options = {})
     options[:name] = ''
     options[:class] ||= 'icon icon-remove action-button'
-    options[:title] ||= t('.to_destroy', default: :icon_to_destroy_object, model: object_class_name(object).lcfirst, name: object_name(object))
+    options[:title] ||= t('.to_destroy', default: :icon_to_destroy_object, model: object_class_name(object), name: object_name(object))
     link_to_destroy(object, options)
   end
 
@@ -83,7 +83,7 @@ module LinkHelper
     options[:name] = ''
     options[:class] ||= 'icon'
     options[:class] += " #{options[:icon]}" if options[:icon].present?
-    options[:title] ||= t(".to_#{action}", default: :to_action_object, action: action, class: object_class_name(object).lcfirst, name: object_name(object))
+    options[:title] ||= t(".to_#{action}", default: :to_action_object, action: action, model: object_class_name(object), name: object_name(object))
     link_to_action(object, action, options)
   end
 
