@@ -1,0 +1,5 @@
+.settings
+  = form_for([@organisation, parent], remote: true, data: { type: :json }) do |f|
+    .field
+      = f.label :include_entity_type_images
+      = f.check_box :include_entity_type_images, class: 'autosubmit'

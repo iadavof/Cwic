@@ -2,6 +2,9 @@
   h2 = index_title(EntityImage)
   = format_help(t('entity_images.help'))
 
+  - if parent.is_a?(Entity)
+    = render 'entity_settings'
+
   .navigation-actions
     = button_link_to_new([@organisation, parent, EntityImage])
 

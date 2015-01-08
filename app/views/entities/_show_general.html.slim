@@ -9,5 +9,3 @@ dl
   dd = name_link_to_show([@organisation, @entity.entity_type], title: format_description_title(@entity.entity_type))
   dt = Entity.human_attribute_name(:description)
   dd = simple_format(@entity.description)
-  dt = Entity.human_attribute_name(:include_entity_type_images)
-  dd = format_bool(@entity.include_entity_type_images)

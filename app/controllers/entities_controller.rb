@@ -4,7 +4,7 @@ class EntitiesController < CrudController
   before_action :set_show_menu, only: [:show, :audits]
 
   respond_to :html, except: [:available]
-  respond_to :json, only: [:index, :available]
+  respond_to :json, only: [:index, :update, :available]
 
   def create
     return if check_entity_type_changed('new')
