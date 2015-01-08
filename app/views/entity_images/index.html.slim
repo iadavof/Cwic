@@ -1,0 +1,16 @@
+= render layout: 'layout' do
+  h2 = index_title(EntityImage)
+  = format_help(t('entity_images.help'))
+
+  - if parent.is_a?(Entity)
+    = render 'entity_settings'
+
+  .navigation-actions
+    = button_link_to_new([@organisation, parent, EntityImage])
+
+  .images-container.clearfix
+    - if @entity_images.empty?
+      p = t('.empty', default: :empty_objects, models: EntityImage.model_name.human(count: 2).lcfirst)
+
+    - else
+      = render @entity_images

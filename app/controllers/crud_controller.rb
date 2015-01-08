@@ -96,7 +96,7 @@ class CrudController < ApplicationController
 
   # Interpolation options for respond messages (using the Responders gem)
   def interpolation_options
-    { resource_name: member.instance_name }
+    { model: model.model_name.human, name: member.instance_name }
   end
 
   # Parent

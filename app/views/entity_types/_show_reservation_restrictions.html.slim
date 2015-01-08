@@ -1,0 +1,7 @@
+h2 = t('entity_types.reservation_restrictions.reservation_length_restrictions')
+
+dl
+  dt = EntityType.human_attribute_name(:min_reservation_length)
+  dd = format_text(@entity_type.min_reservation_length ? "#{@entity_type.min_reservation_length} #{t('minutes').lcfirst}" : nil)
+  dt = EntityType.human_attribute_name(:max_reservation_length)
+  dd = format_text(@entity_type.max_reservation_length ? "#{@entity_type.max_reservation_length} #{t('minutes').lcfirst}" : nil)

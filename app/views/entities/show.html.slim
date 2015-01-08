@@ -1,46 +1,8 @@
-- content_for :page_title do
-  = t('.title_html', default: :show_object_html, model: Entity.model_name.human, name: @entity.instance_name + ' (' + @entity.entity_type.instance_name + ')')
-
-- content_for :local_menu_navigation do
-  = button_link_to_index([@organisation, Entity])
-  = button_link_to_edit([@organisation, @entity])
-  = button_link_to_destroy([@organisation, @entity])
-
-- if @entity.images.present?
-  = render 'entities/ken_burns_slideshow', images: @entity.images
-
-= render 'tags/list', tags: @entity.tags
-
-= render 'stickies/resource_stickies', backend_url: organisation_entity_stickies_url(@organisation, @entity)
-
-#tabs
-  ul.nav
-    li
-      a.current href="#general"
-        = t('general')
-    - if @entity.properties.present?
-      li
-        a href="#properties"
-          = EntityProperty.model_name.human(count: 2)
-    li
-      a href="#documents"
-        = Document.model_name.human(count: 2)
-    li
-      a href="#images"
-        = EntityImage.model_name.human(count: 2)
-    li
-      a href="#audits"
-        = t('audits.logs')
-
-  .tab-wrap
-    #general
-      = render 'show_general'
-    - if @entity.properties.present?
-      #properties
-        = render 'show_properties'
-    #documents
-      = render 'show_documents'
-    #images
-      = render 'show_images'
-    #audits
-      = render 'audits/logs', item: @entity
+= render layout: 'show_layout' do
+  .content-columns.clearfix data-column-count="2"
+    .content-column
+      .content-block
+        = render 'show_general'
+    .content-column
+      .content-block
+        = render 'show_slack'

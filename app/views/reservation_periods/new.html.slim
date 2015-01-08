@@ -1,0 +1,7 @@
+= render layout: 'layout' do
+  h2 = new_title(ReservationPeriod)
+
+  .navigation-actions
+    = button_link_to_index([@organisation, parent, ReservationPeriod])
+
+  = render 'form'

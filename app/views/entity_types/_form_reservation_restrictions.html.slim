@@ -1,0 +1,10 @@
+h2 = t('entity_types.reservation_restrictions.reservation_length_restrictions')
+
+.field
+  = f.label :min_reservation_length
+  = f.number_field :min_reservation_length, min: 0, value: f.object.min_reservation_length
+  span.field-suffix = t('minutes').lcfirst
+.field
+  = f.label :max_reservation_length
+  = f.number_field :max_reservation_length, min: 0, value: f.object.max_reservation_length
+  span.field-suffix = t('minutes').lcfirst

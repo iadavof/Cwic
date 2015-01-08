@@ -1,52 +1,10 @@
-- content_for :page_title do
-  = show_title(@entity_type)
-
-- content_for :local_menu_navigation do
-  = button_link_to_index([@organisation, EntityType])
-  = button_link_to_edit([@organisation, @entity_type])
-  = button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type))
-
-- if @entity_type.images.present?
-  = render 'entities/ken_burns_slideshow', images: @entity_type.images
-
-= render 'tags/list', tags: @entity_type.tags
-
-#tabs
-  ul.nav
-    li
-      a.current href="#general"
-        = t('general')
-    li
-      a href="#properties"
-        = EntityTypeProperty.model_name.human(count: 2)
-    li
-      a href="#options"
-        = EntityTypeOption.model_name.human(count: 2)
-    li
-      a href="#reservation-statuses"
-        = ReservationStatus.model_name.human(count: 2)
-    li
-      a href="#images"
-        = EntityImage.model_name.human(count: 2)
-    li
-      a href="#reservation-periods"
-        = ReservationPeriod.model_name.human(count: 2)
-    li
-      a href="#audits"
-        = t('audits.logs')
-
-  .tab-wrap
-    #general
-      = render 'show_general'
-    #properties
-      = render 'show_properties'
-    #options
-      = render 'show_options'
-    #reservation-statuses
-      = render 'show_reservation_statuses'
-    #images
-      = render 'show_images'
-    #reservation-periods
-      = render 'show_reservation_periods'
-    #audits
-      = render 'audits/logs', item: @entity_type
+= render layout: 'show_layout' do
+  .content-columns.clearfix data-column-count="2"
+    .content-column
+      .content-block
+        = render 'show_general'
+    .content-column
+      .content-block
+        = render 'show_slack'
+      .content-block
+        = render 'show_reservation_restrictions'

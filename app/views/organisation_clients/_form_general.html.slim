@@ -1,14 +1,5 @@
-.content-columns.clearfix data-column-count="3"
-  .content-column
-    .content-block
-      = render 'form_general_general', f: f
-    .content-block
-      = render 'form_general_payment_details', f: f
+h2
+  i.icon-home
+  = t('general')
 
-  .content-column
-    .content-block
-      = render 'form_general_contact', f: f
-
-  .content-column
-    .content-block
-      = render 'form_general_contacts', f: f
+= render 'client_form_fields', f: f

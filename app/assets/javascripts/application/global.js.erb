@@ -12,13 +12,13 @@ APP.init = function() {
   current_locale = body.data('current-locale');
   websocket_url = body.data('websocket-url');
   this.global.initLocale(current_locale);
-  
+
   // Replace AJAX spinner with svg version if SMIL animations are available
   if(Modernizr.backgroundsize && Modernizr.smil) {
     $('img.ajax-wait').attr('src', '<%= asset_path('ajax_wait.svg') %>');
     $('.ajax-wait:not(img)').css('background-image', 'url("<%= asset_path('ajax_wait.svg') %>") !important');
   }
-  
+
   // Replace logo with svg version if svg is available
   if (Modernizr.svg) {
     $('#logo-container .logo').attr('src', '<%= asset_path('logo.svg') %>');
@@ -51,11 +51,11 @@ APP.init = function() {
   // Set the upper nprogress bar as the default ajax complete and start handlers
   this.global.addProgressbarToAjax();
 
-  // Initialize tabs
-  this.global.initializeTabs();
-
   // Initialize special form fields, such as date- and timepickers, special Cwic Controls (select, checkbox, ...)
   this.global.initializeSpecialFormFields();
+
+  // Initialize sortables
+  this.global.initializeSortables();
 
   // Make select all button on tables work
   this.global.bindSelectAllCheckboxEvents();
@@ -64,7 +64,7 @@ APP.init = function() {
   this.global.loadTaggingSelect2Box();
 
   // Initialize Images containers
-  $('div.images-container').magnificPopup({ delegate: 'a', type: 'image',  gallery: { enabled: true } });
+  $('div.images-container').magnificPopup({ delegate: "a:not('.action-button')", type: 'image',  gallery: { enabled: true } });
 
   // Auto submit limiting fields
   $('#limiting select').on('change', function() { this.form.submit(); });
@@ -335,27 +335,6 @@ APP.global = {
 
     APP.modal.openModal('confirm', content);
   },
-  initializeTabs: function() {
-    var container = $('#tabs');
-    container.tabs({ active: this.determineFirstTabWithErrors(container) });
-  },
-  determineFirstTabWithErrors: function(container) {
-    // Determines the first tab to open. This is the first tab with errors (if any, else simply open the first tab). Also adds the 'with-errors' class to any tabs with errors.
-    var first = 0;
-    var determined = false;
-    container.find('.nav a').each(function(index) {
-      var id = $(this).attr('href'); // Starts with #
-      var tab = container.find(id);
-      if(tab.find('.validation-error').length) {
-        if(first == 0 && !determined) {
-          first = index;
-          determined = true;
-        }
-        $(this).addClass('with-errors');
-      }
-    });
-    return first;
-  },
   initializeSpecialFormFields: function(parent) {
     if(!parent) {
       parent = document.body;
@@ -368,13 +347,39 @@ APP.global = {
     });
     $parent.find('.datepicker-field').datepicker();
     $parent.find('.timepicker-field').timepicker({ showPeriodLabels: false });
+    $parent.find('.colorpicker-field').minicolors();
     $parent.find('input.organisation_client_select').each(this.initializeOrganisationClientSelect);
     $parent.find('input.with-clear').each(this.initializeInputWithClear);
 
-    $(document).on('nested:fieldAdded', function(e) { APP.global.initializeSpecialFormFields(e.field); });
-
     $parent.find('.select2-offscreen.autosubmit').on('change', function() {
       $(this).prev('.select2-container').addClass('autosubmit-busy');
+    });
+    $parent.find('.autosubmit').on('change', function() {
+      $(this).trigger('submit');
+    });
+
+    $(document).on('nested:fieldAdded', function(e) { APP.global.initializeSpecialFormFields(e.field); });
+  },
+  initializeSortables: function() {
+    $('.sortable').sortable({
+      placeholder: 'ui-state-highlight',
+      handle: 'div.sort-handle',
+      start: function(e, ui) {
+        ui.placeholder.height(ui.item.outerHeight());
+        ui.placeholder.width(ui.item.outerWidth());
+      },
+      helper: function(e, ui) {
+        // Fix width of table cells if draggable (ui) is a tr
+        if(ui.is('tr')) {
+          ui.children().each(function() {
+            $(this).width($(this).width());
+          });
+        }
+        return ui;
+      },
+      stop: function(e, ui) {
+        $.patch($(this).data('sort-update-url'), $(this).sortable('serialize'));
+      }
     });
   },
   initializeInputWithClear: function() {

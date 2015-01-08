@@ -173,6 +173,8 @@ APP.util = {
 };
 
 // JavaScript and jQuery extensions
+
+// $.size to easy get the size (length) of objects (hashes)
 $.size = function(obj) {
   if(typeof Object.keys !== 'undefined') {
     return Object.keys(obj).length;
@@ -183,4 +185,23 @@ $.size = function(obj) {
     }
     return size;
   }
-}
+};
+
+// $.patch, $.put and $.delete to easily send patch, put or delete AJAX request (similar to $.post and $.get)
+jQuery.each(['patch', 'put', 'delete'], function(i, method) {
+  jQuery[method] = function(url, data, callback, type) {
+    if(jQuery.isFunction(data)) {
+      type = type || callback;
+      callback = data;
+      data = undefined;
+    }
+
+    return jQuery.ajax({
+      url: url,
+      type: method,
+      dataType: type,
+      data: data,
+      success: callback
+    });
+  };
+});

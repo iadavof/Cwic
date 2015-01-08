@@ -1,4 +1,8 @@
 class EntityTypesController < CrudController
+  def audits
+    respond_with(@organisation, @entity_type)
+  end
+
   private
 
   def parent_model
@@ -7,15 +11,7 @@ class EntityTypesController < CrudController
 
   def permitted_params
     [
-      :tag_list, :name, :description, :icon_id, :slack_before, :slack_after, :min_reservation_length, :max_reservation_length,
-      properties_attributes: [
-        :id, :name, :description, :data_type_id, :required, :default_value, :index, :_destroy,
-        options_attributes: [:id, :name, :default, :index, :_destroy]
-      ],
-      options_attributes: [:id, :name, :description, :amount_relevant, :default_price, :index, :_destroy],
-      images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
-      reservation_statuses_attributes: [:id, :name, :color, :index, :default_status, :blocking, :info_boards, :billable, :_destroy],
-      reservation_periods_attributes: [:id, :name, :period_amount, :period_unit_id, :min_periods, :max_periods, :price, :_destroy],
+      :tag_list, :name, :description, :icon_id, :slack_before, :slack_after, :min_reservation_length, :max_reservation_length
     ]
   end
 end

@@ -1,0 +1,12 @@
+= render layout: 'layout' do
+  h2 = index_title(ReservationPeriod)
+  = format_help(t('reservation_periods.help'))
+
+  .navigation-actions
+    = button_link_to_new([@organisation, parent, ReservationPeriod])
+
+  - if @reservation_periods.empty?
+    p = t('.empty', default: :empty_objects, models: ReservationPeriod.model_name.human(count: 2).lcfirst)
+
+  - else
+    = render @reservation_periods

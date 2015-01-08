@@ -1,35 +1,29 @@
-- content_for :page_title do
-  = show_title(@reservation)
-  = search_shortcut(@reservation)
+= render layout: 'show_layout' do
+  h2 = t('general')
 
-- content_for :local_menu_navigation do
-  = button_link_to_index([@organisation, Reservation])
-  = button_link_to_edit([@organisation, @reservation])
-  = button_link_to_destroy([@organisation, @reservation])
+  dl
+    dt = Reservation.human_attribute_name(:begins_at)
+    dd
+      = l(@reservation.begins_at, format: :long)
+      = slack_before_overlap_warning(@reservation)
+    dt = Reservation.human_attribute_name(:ends_at)
+    dd
+      = l(@reservation.ends_at, format: :long)
+      = slack_after_overlap_warning(@reservation)
+    dt = Reservation.human_attribute_name(:entity)
+    dd = link_to(@reservation.entity.instance_name, organisation_entity_path(current_organisation, @reservation.entity))
+    dt = Reservation.human_attribute_name(:organisation_client)
+    dd = link_to(@reservation.organisation_client.instance_name, organisation_organisation_client_path(current_organisation, @reservation.organisation_client))
+    dt = Reservation.human_attribute_name(:cost)
+    dd = number_to_currency(@reservation.cost)
+    dt = Reservation.human_attribute_name(:slack_before)
+    dd = "#{@reservation.slack_before} #{t('minutes').lcfirst}"
+    dt = Reservation.human_attribute_name(:slack_after)
+    dd = "#{@reservation.slack_after} #{t('minutes').lcfirst}"
+    dt = Reservation.human_attribute_name(:created_at)
+    dd = l(@reservation.created_at, format: :long)
 
-- content_for :local_menu_context do
-  = render'reservations/status_controls', reservation: @reservation
+  - unless @reservation.recurrences.empty?
+    h2 = t('.repetitions')
 
-= render 'tags/list', tags: @reservation.tags
-
-= render 'stickies/resource_stickies', backend_url: organisation_reservation_stickies_url(@organisation, @reservation)
-
-#tabs
-  ul.nav
-    li
-      a.current href="#general"
-        = t('general')
-    li
-      a href="#documents"
-        = Document.model_name.human(count: 2)
-    li
-      a href="#audits"
-        = t('audits.logs')
-
-  .tab-wrap
-    #general
-      = render 'show_general'
-    #documents
-      = render 'show_documents'
-    #audits
-      = render 'audits/logs', item: @reservation
+    = render 'table', reservations: @reservation.recurrences.includes(:status, :organisation_client, :entity).ssp(params, prefix: 'recurrences'), include_date: true, highlight: [@reservation], prefix: 'recurrences'

@@ -10,7 +10,6 @@ class EntityType < ActiveRecord::Base
   has_many :entities, dependent: :destroy
   has_many :reservations, through: :entities
   has_many :properties, class_name: 'EntityTypeProperty', dependent: :destroy, inverse_of: :entity_type
-  has_many :options, class_name: 'EntityTypeOption', dependent: :destroy, inverse_of: :entity_type
   has_many :images, class_name: 'EntityImage', as: :imageable, dependent: :destroy, inverse_of: :imageable
   has_many :reservation_statuses, dependent: :destroy, inverse_of: :entity_type
   has_many :info_screen_entity_types, dependent: :destroy
@@ -23,7 +22,6 @@ class EntityType < ActiveRecord::Base
   validates :slack_after, presence: true, numericality: { greater_than_or_equal_to: 0 }
   validates :min_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
   validates :max_reservation_length, numericality: { greater_than_or_equal_to: 0, allow_nil: true }
-  validate :one_default_reservation_status
 
   # Model extensions
   audited only: [:name, :description, :slack_before, :slack_after, :min_reservation_length, :max_reservation_length], allow_mass_assignment: true
@@ -35,7 +33,6 @@ class EntityType < ActiveRecord::Base
 
   # Nested attributes
   accepts_nested_attributes_for :properties, allow_destroy: true
-  accepts_nested_attributes_for :options, allow_destroy: true
   accepts_nested_attributes_for :images, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :reservation_statuses, allow_destroy: true
   accepts_nested_attributes_for :reservation_periods, allow_destroy: true
@@ -99,21 +96,12 @@ class EntityType < ActiveRecord::Base
 
   private
 
-  def one_default_reservation_status
-    count = reservation_statuses.reject(&:marked_for_destruction?).count(&:default_status)
-    if count > 1
-      errors.add(:base, I18n.t('activerecord.errors.models.entity_type.multiple_default_reservation_statuses'))
-    elsif count < 1
-      errors.add(:base, I18n.t('activerecord.errors.models.entity_type.no_default_reservation_status'))
-    end
-  end
-
   def initialize_reservation_statuses
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#fff849', index: 0, default_status: true, blocking: true, info_boards: false, billable: false)
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#ffbc49', index: 1, blocking: true, info_boards: true, billable: true)
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18c13d', index: 2, blocking: true, info_boards: true, billable: true)
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', index: 3, blocking: false, info_boards: false, billable: false)
-    reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', index: 4, blocking: true, info_boards: true, billable: true)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.concept'), color: '#fff849', position: 1, default_status: true, blocking: true, info_boards: false, billable: false)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.definitive'), color: '#ffbc49', position: 2, blocking: true, info_boards: true, billable: true)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.ready'), color: '#18c13d', position: 3, blocking: true, info_boards: true, billable: true)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.canceled'), color: '#ff3520', position: 4, blocking: false, info_boards: false, billable: false)
+    reservation_statuses.build(name: I18n.t('reservation_statuses.default.not_used'), color: '#939393', position: 5, blocking: true, info_boards: true, billable: true)
   end
 
   def create_info_screen_entity_types

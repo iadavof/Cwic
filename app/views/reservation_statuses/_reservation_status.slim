@@ -1,0 +1,12 @@
+= content_tag_for(:tr, reservation_status) do
+  td
+    .icon.icon-resize-vertical.sort-handle title=t('order_nested_objects', models: ReservationStatus.model_name.human(count: 2).lcfirst)
+  td = reservation_status.name
+  td = reservation_status.color
+  td = format_bool(reservation_status.default_status)
+  td = format_bool(reservation_status.blocking)
+  td = format_bool(reservation_status.info_boards)
+  td = format_bool(reservation_status.billable)
+  td.icons
+    = icon_link_to_edit([@organisation, @entity_type, reservation_status])
+    = icon_link_to_destroy([@organisation, @entity_type, reservation_status])

@@ -239,17 +239,31 @@ html.flexbox {
 }
 
 div.images-container {
-  a {
+  .image {
     position: relative;
     float: left;
     border: 1px solid #ccc;
-    margin: 10px;
+    margin: 20px;
     outline: none;
     box-shadow:  2px 2px 2px 1px rgba(0, 0, 0, .1);
   }
-  a {
-    img {
-      border: 5px solid #fff;
+
+  .image {
+    a.action-button {
+      position: absolute;
+      left: -.75em;
+      top: -.75em;
+
+      &[data-method="delete"] {
+        left: auto;
+        right: -.75em;
+      }
+    }
+
+    a {
+      img {
+        border: 5px solid #fff;
+      }
     }
   }
 }
@@ -334,4 +348,8 @@ div.ajax-wait {
       }
     }
   }
+}
+
+div.sort-handle {
+  cursor: move;
 }

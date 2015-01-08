@@ -1,0 +1,7 @@
+= render layout: 'layout' do
+  h2 = edit_title(@entity_image)
+
+  .navigation-actions
+    = button_link_to_index([@organisation, parent, EntityImage])
+
+  = render 'form'

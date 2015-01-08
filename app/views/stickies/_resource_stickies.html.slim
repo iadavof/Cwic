@@ -3,11 +3,11 @@
     button.new-sticky
       = t('.add_note')
 
-  .notes
+  .notes.sortable data-sort-update-url="#{backend_url}/sort.json"
 
   script#note-template type="text/template"
     .note
-      .note-head
+      .note-head.sort-handle
         .inner.clearfix
           p.author
           p.created_at

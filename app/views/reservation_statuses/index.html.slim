@@ -1,0 +1,20 @@
+= render layout: 'layout' do
+  h2 = index_title(ReservationStatus)
+  = format_help(t('reservation_statuses.help'))
+
+  .navigation-actions
+    = button_link_to_new([@organisation, @entity_type, ReservationStatus])
+
+  table
+    thead
+      th
+      th = ReservationStatus.human_attribute_name(:name)
+      th = ReservationStatus.human_attribute_name(:color)
+      th = ReservationStatus.human_attribute_name(:default_status)
+      th = ReservationStatus.human_attribute_name(:blocking)
+      th = ReservationStatus.human_attribute_name(:info_boards)
+      th = ReservationStatus.human_attribute_name(:billable)
+      th
+
+    tbody.sortable data-sort-update-url=sort_organisation_entity_type_reservation_statuses_path(@organisation, @entity_type)
+      = render @reservation_statuses

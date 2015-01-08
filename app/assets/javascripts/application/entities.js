@@ -1,5 +1,5 @@
 APP.entities = {
-  init: function() {
+  _form: function() {
     $('#entity_color').minicolors();
   }
 };

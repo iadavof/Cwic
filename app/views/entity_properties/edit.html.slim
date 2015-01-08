@@ -1,0 +1,13 @@
+= render layout: 'layout' do
+  h2 = edit_title(@entity_property)
+
+  .navigation-actions
+    = button_link_to_index([@organisation, parent, EntityProperty])
+
+  = form_for([@organisation, parent, @entity_property]) do |f|
+    = render 'shared/error_messages', target: @entity_property
+
+    = render 'fields', f: f
+
+    .actions
+      = f.submit

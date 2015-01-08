@@ -1,0 +1,7 @@
+= render layout: 'layout' do
+  h2 = edit_title(@communication_record)
+
+  .navigation-actions
+    = button_link_to_index([@organisation, @organisation_client, CommunicationRecord])
+
+  = render 'form'

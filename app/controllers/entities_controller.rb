@@ -1,10 +1,10 @@
 class EntitiesController < CrudController
   skip_before_action :load_member, only: :available
   before_action :load_entity_type, only: :available
-  before_action :set_show_menu, only: :show
+  before_action :set_show_menu, only: [:show, :audits]
 
   respond_to :html, except: [:available]
-  respond_to :json, only: [:index, :available]
+  respond_to :json, only: [:index, :update, :available]
 
   def create
     return if check_entity_type_changed('new')
@@ -14,6 +14,10 @@ class EntitiesController < CrudController
   def update
     return if check_entity_type_changed('edit')
     super
+  end
+
+  def audits
+    respond_with(@organisation, @entity)
   end
 
   def available
@@ -48,10 +52,8 @@ class EntitiesController < CrudController
 
   def permitted_params
     [
-      :tag_list, :name, :frontend_name, :color, :description, :entity_type_id, :organisation_id, :include_entity_type_images, :slack_before, :slack_after,
-      properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []],
-      images_attributes: [:id, :title, :image, :image_cache, :remote_image_url, :_destroy],
-      documents_attributes: [:id, :document, :document_cache, :remote_document_url, :_destroy]
+      :tag_list, :name, :frontend_name, :color, :description, :entity_type_id, :include_entity_type_images, :slack_before, :slack_after,
+      properties_attributes: [:id, :property_type_id, :value, :value_id, value_ids: []]
     ]
   end
 

@@ -1,0 +1,22 @@
+= form_for([@organisation, parent, @entity_image]) do |f|
+  = render 'shared/error_messages', target: @entity_image
+
+  .fields.entity_image-wrapper
+    .field
+      = f.label :title
+      = f.text_field :title
+    - if f.object.image.present?
+      .field
+        = f.label :image
+        .entity-type-icon-image
+          = image_tag(f.object.image.thumb.url)
+    .field
+      = f.label :remote_image_url
+      = f.text_field :remote_image_url
+    .field
+      = f.label :image_from_file
+      = f.file_field :image
+    = f.hidden_field :image_cache
+
+  .actions
+    = f.submit

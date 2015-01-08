@@ -1,16 +1,11 @@
-- content_for :page_title do
-  = index_title(Document)
+= render layout: 'layout' do
+  h2 = index_title(Document)
 
-- content_for :local_menu_page do
-  = render 'layouts/mini_search', current_search_type: Document.model_name
+  .navigation-actions
+    = button_link_to_new([@organisation, parent, Document])
 
-- if @documents.empty? && params[:mini_search].present?
-  p
-    = t('empty_for_search', models: Document.model_name.human(count: 2).lcfirst, search: sanitize(params[:mini_search], :tags=>[])).html_safe
-    = link_to(t('remove_search'), organisation_documents_path(@organisation))
+  - if @documents.empty?
+    p = t('.empty', default: :empty_objects, models: Document.model_name.human(count: 2).lcfirst)
 
-- elsif @documents.empty?
-  p = t('.empty', default: :empty_objects, models: Document.model_name.human(count: 2).lcfirst)
-
-- else
-  = render 'table'
+  - else
+    = render @documents

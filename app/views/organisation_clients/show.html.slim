@@ -1,47 +1,16 @@
-- content_for :page_title do
-  = show_title(@organisation_client)
-  = search_shortcut(@organisation_client)
+= render layout: 'show_layout' do
+  .content-columns.clearfix data-column-count="3"
+    .content-column
+      .content-block
+        = render 'show_general'
+      .content-block
+        = render 'show_payment_details'
 
-- content_for :local_menu_navigation do
-  = button_link_to_index([@organisation, OrganisationClient])
-  = button_link_to_edit([@organisation, @organisation_client])
-  = button_link_to_destroy([@organisation, @organisation_client])
+    .content-column
+      .content-block.address
+        = render 'show_address'
 
-= render 'tags/list', tags: @organisation_client.tags
+    .content-column
+      .content-block
+        = render 'show_contacts'
 
-= render 'stickies/resource_stickies', backend_url: organisation_organisation_client_stickies_url(@organisation, @organisation_client)
-
-#tabs
-  ul.nav
-    li
-      a.current href="#general"
-        = t('general')
-    li
-      a href="#communication"
-        = CommunicationRecord.model_name.human(count: 2)
-    li
-      a href="#documents"
-        = Document.model_name.human(count: 2)
-    li
-      a href="#audits"
-        = t('audits.logs')
-    li
-      a href="#upcoming_reservations"
-        = t('.upcoming_reservations')
-    li
-      a href="#past_reservations"
-        = t('.past_reservations')
-
-  .tab-wrap
-    #general
-      = render 'show_general'
-    #communication
-      = render 'show_communication'
-    #documents
-      = render 'show_documents'
-    #audits
-      = render 'audits/logs', item: @organisation_client
-    #upcoming_reservations
-      = render 'show_reservations', type: :upcoming
-    #past_reservations
-      = render 'show_reservations', type: :past

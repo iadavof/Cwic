@@ -1,10 +1,10 @@
 tr.fields.property-option-wrapper
   td
-    .icon.icon-resize-vertical.option-sort-handle title=t('order_nested_objects', models: EntityTypePropertyOption.model_name.human(count: 2).lcfirst)
+    .icon.icon-resize-vertical.sort-handle title=t('order_nested_objects', models: EntityTypePropertyOption.model_name.human(count: 2).lcfirst)
   td
     = f.text_field :name, class: 'name-field'
   td.default
     = f.check_box :default, class: 'default-field', title: EntityTypePropertyOption.human_attribute_name(:default)
   td
-    = f.hidden_field :index, class: 'index-field'
+    = f.hidden_field :position, class: 'position-field'
     = f.link_to_remove '', class: 'icon icon-remove action-button', title: t('remove_nested_object', model: EntityTypePropertyOption.model_name.human)

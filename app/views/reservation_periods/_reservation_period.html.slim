@@ -1,0 +1,6 @@
+.reservation-period
+  => number_to_currency(reservation_period.price)
+  = reservation_period.name.lcfirst
+
+  = icon_link_to_edit([@organisation, @entity_type, reservation_period])
+  = icon_link_to_destroy([@organisation, @entity_type, reservation_period])

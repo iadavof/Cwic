@@ -1,0 +1,27 @@
+- content_for :page_title do
+  = show_title(@entity_type)
+
+- content_for :local_menu_navigation do
+  = button_link_to_index([@organisation, EntityType])
+  = button_link_to_edit([@organisation, @entity_type])
+  = button_link_to_destroy([@organisation, @entity_type], confirm: destroy_confirm(@entity_type))
+
+= render 'tags/list', tags: @entity_type.tags
+
+.tabs
+  ul.nav
+    li class=('active' if controller.matches?('entity_types#show'))
+      = link_to_show([@organisation, @entity_type], name: t('general'))
+    li class=('active' if controller.matches?('entity_type_properties'))
+      = link_to_index([@organisation, @entity_type, EntityTypeProperty], name: EntityTypeProperty.model_name.human(count: 2))
+    li class=('active' if controller.matches?('reservation_statuses'))
+      = link_to_index([@organisation, @entity_type, ReservationStatus], name: ReservationStatus.model_name.human(count: 2))
+    li class=('active' if controller.matches?('entity_images'))
+      = link_to_index([@organisation, @entity_type, EntityImage], name: EntityImage.model_name.human(count: 2))
+    li class=('active' if controller.matches?('reservation_periods'))
+      = link_to_index([@organisation, @entity_type, ReservationPeriod], name: ReservationPeriod.model_name.human(count: 2))
+    li class=('active' if controller.matches?('entity_types#audits'))
+      = link_to_action([@organisation, @entity_type], :audits, name: t('audits.logs'))
+
+  .tab-wrap
+    = yield

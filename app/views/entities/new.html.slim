@@ -9,7 +9,7 @@
 
 - elsif @entity.entity_type.blank? # No EntityType selected yet: show EntityType selection form
  = nested_form_for([@organisation, @entity]) do |f|
-  .field.autosubmit
+  .field
     = f.label :entity_type
     = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: true }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
 

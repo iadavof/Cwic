@@ -1,0 +1,7 @@
+= render layout: 'layout' do
+  h2 = new_title(EntityTypeProperty)
+
+  .navigation-actions
+    = button_link_to_index([@organisation, parent, EntityTypeProperty])
+
+  = render 'form'

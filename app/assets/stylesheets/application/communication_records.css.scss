@@ -1,9 +1,7 @@
-.communication-record {
-  position: relative;
-  margin: 1em 0;
-}
+.nested-object-wrapper.communication-record {
+  padding: 0;
+  border: none;
 
-.communication-record {
   .head {
     border-color: #ccc;
     border-style: solid;
@@ -30,6 +28,10 @@
     float: left;
     padding: 5px;
     box-sizing: border-box;
+  }
+
+  .actions {
+    padding-right: 5px;
   }
 
   .reservation-reference {

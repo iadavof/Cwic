@@ -27,27 +27,49 @@ Cwic::Application.routes.draw do
       post :reinvite, on: :member
     end
 
-    resources :entity_types
+    resources :entity_types do
+      get :audits, on: :member
+      resources :entity_type_properties do
+        patch :sort, on: :collection
+      end
+      resources :entity_images, except: :show
+      resources :reservation_statuses do
+        patch :sort, on: :collection
+      end
+      resources :reservation_periods
+    end
+
     resources :entity_type_icons
 
     resources :entities do
       get :available, on: :collection
+      get :audits, on: :member
+      resources :entity_properties, except: [:show, :new, :create, :destroy]
+      resources :documents, except: [:edit, :update]
+      resources :entity_images, except: :show
       concerns :stickable
     end
 
     resources :reservations do
       post :multiple, on: :collection
       patch :update_status, on: :member
+      get :audits, on: :member
+      resources :documents, except: [:edit, :update]
       concerns :stickable
     end
 
     resources :organisation_clients do
       get :autocomplete, on: :collection
       get :vcard, on: :member
+      get :audits, on: :member
+      get :upcoming_reservations, on: :member
+      get :past_reservations, on: :member
       resources :organisation_client_contacts, only: [:show, :index] do
         get :vcard, on: :member
       end
+      resources :communication_records
       resources :reservations
+      resources :documents, except: [:edit, :update]
       concerns :stickable
     end
 
@@ -55,7 +77,7 @@ Cwic::Application.routes.draw do
       get :reservations, on: :member
     end
 
-    resources :documents, except: [:new, :edit]
+    resources :documents, only: [:index, :show, :destroy], controller: :organisation_documents
 
     controller :schedule_view do
       # Horizontal day calendar

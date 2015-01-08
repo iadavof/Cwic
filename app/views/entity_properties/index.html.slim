@@ -1,0 +1,9 @@
+= render layout: 'layout' do
+  h2 = index_title(EntityProperty)
+
+  - if @entity_properties.empty?
+    p = t('.empty', default: :empty_objects, models: EntityProperty.model_name.human(count: 2).lcfirst)
+
+  - else
+    dl
+      = render @entity_properties

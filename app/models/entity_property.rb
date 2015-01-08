@@ -21,7 +21,7 @@ class EntityProperty < ActiveRecord::Base
   before_validation :parse_value
 
   # Scopes
-  default_scope { includes(:property_type).order('entity_type_properties.name') }
+  default_scope { includes(:property_type).order('entity_type_properties.position') }
 
   def init
     set_default_value if self.value.nil? && self.values.empty? # Set default value if value is not already set

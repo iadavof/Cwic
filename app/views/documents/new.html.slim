@@ -1,0 +1,21 @@
+= render layout: 'layout' do
+  h2 = new_title(Document)
+
+  .navigation-actions
+    = button_link_to_index([@organisation, parent, Document])
+
+  = form_for([@organisation, parent, @document]) do |f|
+    = render 'shared/error_messages', target: @document
+
+    .fields.upload-document-fields
+      .upload-document-fields-wrapper
+        .field
+          = f.label :remote_document_url
+          = f.text_field :remote_document_url
+        .field
+          = f.label :document_from_file
+          = f.file_field :document
+        = f.hidden_field :document_cache
+
+    .actions
+      = f.submit

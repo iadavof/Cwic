@@ -33,9 +33,7 @@ class OrganisationClient < ActiveRecord::Base
   validate :iban_valid, if: -> { iban.present? }
 
   # Nested attributes
-  accepts_nested_attributes_for :documents, allow_destroy: true, reject_if: :all_blank
   accepts_nested_attributes_for :contacts, allow_destroy: true
-  accepts_nested_attributes_for :communication_records, allow_destroy: true, reject_if: :all_blank
 
   # Scopes
   pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }

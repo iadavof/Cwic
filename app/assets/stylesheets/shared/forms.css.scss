@@ -282,3 +282,16 @@ div.field-with-clear {
   width: 8em;
   margin-right: 5px;
 }
+
+.colorpicker-field {
+  &.minicolors-input {
+    width: 10em;
+  }
+
+  + .minicolors-swatch {
+    width: 18px;
+    height: 18px;
+    top: 50%;
+    margin-top: -9px;
+  }
+}

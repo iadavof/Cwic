@@ -1,13 +1,13 @@
 class StickiesController < CrudController
-  skip_before_action :load_member, only: :update_weights
+  skip_before_action :load_member, only: :sort
 
   respond_to :json
 
-  def update_weights
-    @stickies.each do |st|
-      st.update(weight: params[:weights][st.id.to_s])
+  def sort
+    @stickies.each do |s|
+      s.set_list_position(params[:note].index(s.id.to_s) + 1)
     end
-    respond_with(@stickies)
+    render nothing: true
   end
 
   private

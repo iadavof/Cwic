@@ -1,23 +1,28 @@
-.nested-object-wrapper
-  .view.clearfix
-    .horizontal-block.name
-      .label = EntityTypeProperty.human_attribute_name(:name)
-      .value = entity_type_property.name
+= content_tag_for(:div, entity_type_property, class: 'nested-object-wrapper property-wrapper clearfix') do
+  .horizontal-block.icon.icon-resize-vertical.sort-handle title=t('order_nested_objects', models: EntityTypeProperty.model_name.human(count: 2).lcfirst)
 
-    .horizontal-block.description
-      .label = EntityTypeProperty.human_attribute_name(:description)
-      .value = entity_type_property.description
+  .horizontal-block.name
+    .label = EntityTypeProperty.human_attribute_name(:name)
+    .value = entity_type_property.name
 
-    .horizontal-block.extra
-      dl
-        dt = EntityTypeProperty.human_attribute_name(:data_type)
-        dd title=entity_type_property.data_type.human_description
-          = entity_type_property.data_type.human_name
-        - if entity_type_property.has_required?
-          dt = EntityTypeProperty.human_attribute_name(:required)
-          dd = format_bool(entity_type_property.required)
-        - if entity_type_property.has_options?
-          dt = EntityTypePropertyOption.model_name.human(count: 2)
-          dd = entity_type_property.options.map(&:name).to_sentence
-        dt = EntityTypeProperty.human_attribute_name(:default_value)
-        dd = format_text(entity_type_property.formatted_default_value)
+  .horizontal-block.description
+    .label = EntityTypeProperty.human_attribute_name(:description)
+    .value = format_text(entity_type_property.description)
+
+  .horizontal-block.extra
+    dl
+      dt = EntityTypeProperty.human_attribute_name(:data_type)
+      dd title=entity_type_property.data_type.human_description
+        = entity_type_property.data_type.human_name
+      - if entity_type_property.has_required?
+        dt = EntityTypeProperty.human_attribute_name(:required)
+        dd = format_bool(entity_type_property.required)
+      - if entity_type_property.has_options?
+        dt = EntityTypePropertyOption.model_name.human(count: 2)
+        dd = entity_type_property.options.map(&:name).to_sentence
+      dt = EntityTypeProperty.human_attribute_name(:default_value)
+      dd = format_text(entity_type_property.formatted_default_value)
+
+  .actions
+    = icon_link_to_edit([@organisation, @entity_type, entity_type_property])
+    = icon_link_to_destroy([@organisation, @entity_type, entity_type_property])

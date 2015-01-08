@@ -1,4 +1,4 @@
-.communication-record
+.nested-object-wrapper.communication-record
   .head.clearfix
     .methods
       div class="#{communication_record.method} active"
@@ -15,6 +15,9 @@
       - if communication_record.reservation.present?
         strong = t('.linked_reservation')
         div = link_to(communication_record.reservation.instance_name, organisation_reservation_path(@organisation, communication_record.reservation))
+    .actions
+      = icon_link_to_edit([@organisation, @organisation_client, communication_record])
+      = icon_link_to_destroy([@organisation, @organisation_client, communication_record])
 
   .summary
     = communication_record.summary

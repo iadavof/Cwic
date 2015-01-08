@@ -65,7 +65,7 @@ module MenuHelper
             new: { url: new_organisation_entity_path(current_organisation), icon: 'icon-plus-sign' },
           },
         },
-        documents: {
+        organisation_documents: {
           links: {
             index: { url: organisation_documents_path(current_organisation), icon: 'icon-list' },
           },

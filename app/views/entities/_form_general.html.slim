@@ -1,6 +1,6 @@
 h2 = t('general')
 
-.field.autosubmit
+.field
   = f.label :entity_type
   = f.select :entity_type_id, @organisation.entity_types.sort.map { |et| [et.name, et.id, { title: format_description_title(et) }] }, { prompt: true }, { onchange: "this.form.action += '?entity_type_changed=true'; this.form.submit();", class: "autosubmit" }
 .field
@@ -19,15 +19,3 @@ h2 = t('general')
 .field
   = f.label :description
   = f.text_area :description
-
-h2 = t('.default_slack_times')
-
-= format_help(t('.default_slack_times_help'))
-.field
-  = f.label :slack_before
-  = f.number_field :slack_before, placeholder: f.object.slack_before, min: 0
-  span.field-suffix = t('minutes').lcfirst
-.field
-  = f.label :slack_after
-  = f.number_field :slack_after, placeholder: f.object.slack_after, min: 0
-  span.field-suffix = t('minutes').lcfirst
