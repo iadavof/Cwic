@@ -20,7 +20,7 @@ nl:
   to_show_object: '%{name} bekijken'
   to_edit_object: 'Bewerken'
   to_destroy_object: 'Verwijderen'
-  to_destroy_object_confirm: 'Weet u zeker dat u %{name} wilt verwijderen?'
+  to_destroy_object_confirm: 'Weet u zeker dat u %{model} %{name} wilt verwijderen?'
   icon_to_new_object: '%{model} toevoegen'
   icon_to_edit_object: '%{model} %{name} bewerken'
   icon_to_destroy_object: '%{model} %{name} verwijderen'
