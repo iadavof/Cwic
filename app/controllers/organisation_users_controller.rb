@@ -50,7 +50,7 @@ class OrganisationUsersController < CrudController
   def interpolation_options
     user = (params[:action] == 'invite' ? @user : @organisation_user.user)
     if user.present?
-      { resource_name: user.instance_name, resource_email: user.email }
+      { model: OrganisationUser.model_name.human, name: user.instance_name, email: user.email }
     else
       {}
     end

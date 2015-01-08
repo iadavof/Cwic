@@ -258,6 +258,6 @@ class ReservationsController < ApplicationController
   end
 
   def interpolation_options
-    { resource_name: @reservation.instance_name }
+    { model: Reservation.model_name.human, name: @reservation.instance_name }
   end
 end

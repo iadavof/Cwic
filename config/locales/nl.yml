@@ -456,11 +456,11 @@ nl:
   flash:
     organisation_users:
       create:
-        notice: '%{resource_name} (%{resource_email}) is toegevoegd.'
+        notice: '%{model} %{name} (%{email}) is toegevoegd.'
       invite:
-        notice: '%{resource_name} (%{resource_email}) is uitgenodigd.'
+        notice: '%{model} %{name} (%{email}) is uitgenodigd.'
       reinvite:
-        notice: '%{resource_name} (%{resource_email}) is opnieuw uitgenodigd.'
+        notice: '%{model} %{name} (%{email}) is opnieuw uitgenodigd.'
 
   helpers:
     page_entries_info:

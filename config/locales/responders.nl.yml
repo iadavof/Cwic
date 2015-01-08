@@ -2,9 +2,9 @@ nl:
   flash:
     actions:
       create:
-        notice: '%{resource_name} aangemaakt.'
+        notice: '%{model} %{name} aangemaakt.'
       update:
-        notice: '%{resource_name} bijgewerkt.'
+        notice: '%{model} %{name} bijgewerkt.'
       destroy:
-        notice: '%{resource_name} verwijderd.'
-        alert: '%{resource_name} kon niet verwijderd worden.'
+        notice: '%{model} %{name} verwijderd.'
+        alert: '%{model} %{name} kon niet verwijderd worden.'
