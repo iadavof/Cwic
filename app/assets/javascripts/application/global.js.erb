@@ -354,6 +354,9 @@ APP.global = {
     $parent.find('.select2-offscreen.autosubmit').on('change', function() {
       $(this).prev('.select2-container').addClass('autosubmit-busy');
     });
+    $parent.find('.autosubmit').on('change', function() {
+      $(this).trigger('submit');
+    });
 
     $(document).on('nested:fieldAdded', function(e) { APP.global.initializeSpecialFormFields(e.field); });
   },
