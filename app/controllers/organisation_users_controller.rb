@@ -36,7 +36,7 @@ class OrganisationUsersController < CrudController
   end
 
   def permitted_params
-    [:user_id, :user_email, :organisation_id, :organisation_role_id]
+    [:user_id, :user_email, :organisation_role_id]
   end
 
   def invite_params
