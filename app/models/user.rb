@@ -2,9 +2,8 @@ class User < ActiveRecord::Base
   include PgSearch
   include Sspable
 
-  # Model extensions
-  devise :invitable, :database_authenticatable, :registerable, :confirmable,
-         :recoverable, :rememberable, :trackable, :validatable
+  # Devise setup
+  devise :invitable, :database_authenticatable, :registerable, :confirmable, :recoverable, :rememberable, :trackable, :validatable
 
   # Associations
   has_many :organisation_users, inverse_of: :user, dependent: :destroy
@@ -48,9 +47,9 @@ class User < ActiveRecord::Base
 
   def status
     if accepted_or_not_invited?
-      return :active
+      :active
     else
-      return :awaiting_invitation_acceptance
+      :awaiting_invitation_acceptance
     end
   end
 
