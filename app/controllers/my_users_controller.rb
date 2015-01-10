@@ -6,15 +6,7 @@ class MyUsersController < CrudController
   def update_password
     @user.validate_current_password = true
     @user.update(member_params)
-    respond_with(@user, location: respond_location) do |format|
-      if @user.valid?
-        sign_in(@user, bypass: true)
-        flash[:notice] = t('my_users.update_password.success')
-      else
-        flash[:error] = t('my_users.update_password.failure')
-        format.html { render 'edit_password' }
-      end
-    end
+    respond_with(@user, action: :edit_password, location: respond_location)
   end
 
   def edit_email
@@ -25,14 +17,7 @@ class MyUsersController < CrudController
   def update_email
     @user.validate_current_password = true
     @user.update(member_params)
-    respond_with(@user, location: respond_location) do |format|
-      if @user.valid?
-        flash[:notice] = t('my_users.update_email.success')
-      else
-        flash[:error] = t('my_users.update_email.failure')
-        format.html { render 'edit_email' }
-      end
-    end
+    respond_with(@user, action: :edit_email, location: respond_location)
   end
 
   private

@@ -461,6 +461,11 @@ nl:
         notice: '%{model} %{name} (%{email}) is uitgenodigd.'
       reinvite:
         notice: '%{model} %{name} (%{email}) is opnieuw uitgenodigd.'
+    my_users:
+      update_password:
+        notice: 'Wachtwoord succesvol gewijzigd'
+      update_email:
+        notice: 'E-mailadres succesvol gewijzigd'
 
   helpers:
     page_entries_info:
@@ -813,15 +818,9 @@ nl:
     edit_password:
       change_password: 'Wachtwoord wijzigen'
       change_my_password: 'Je wachtwoord veranderen'
-    update_password:
-      success: 'Wachtwoord succesvol gewijzigd'
-      failure: 'Het wachtwoord kon niet worden gewijzigd'
     edit_email:
       change_email: 'E-mail wijzigen'
       change_my_email: 'Mijn e-mailadres wijzigen'
-    update_email:
-      success: 'E-mailadres succesvol gewijzigd'
-      failure: 'Het e-mailadres kon niet worden gewijzigd'
 
   users:
     details:
