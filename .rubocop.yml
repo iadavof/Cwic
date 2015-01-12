@@ -30,7 +30,7 @@ Style/TrivialAccessors:
 
 Style/ClassAndModuleChildren:
   Enabled: false
-  EnforcedStyle: 'nested' # nested or compact
+  EnforcedStyle: nested # nested or compact
 
 Lint/UnusedBlockArgument:
   Enabled: false

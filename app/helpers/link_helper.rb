@@ -10,7 +10,7 @@ module LinkHelper
   end
 
   def link_to_new(object, options = {})
-    name =  options.delete(:name) || t('.to_new', default: :to_new_object, model: object_class_name(object))
+    name = options.delete(:name) || t('.to_new', default: :to_new_object, model: object_class_name(object))
     location_query = options.delete(:location_query) || {}
     location = options.delete(:location) || new_polymorphic_path(object, location_query)
     options = { data: { action: 'new' } }.deep_merge(options)
@@ -121,6 +121,7 @@ module LinkHelper
   private
 
   # Helpers for the link helpers
+
   def relevant_object(object)
     case object
     when Array
