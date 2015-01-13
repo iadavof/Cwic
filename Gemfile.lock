@@ -99,7 +99,7 @@ GEM
     bullet (4.11.3)
       activesupport (>= 3.0.0)
       uniform_notifier (>= 1.6.0)
-    cancan (1.6.10)
+    cancancan (1.10.0)
     capistrano (3.3.5)
       capistrano-stats (~> 1.1.0)
       i18n
@@ -148,6 +148,7 @@ GEM
       devise (>= 3.2.0)
     erubis (2.7.0)
     eventmachine (1.0.3)
+    eventmachine (1.0.3-x86-mingw32)
     exception_notification (4.0.1)
       actionmailer (>= 3.0.4)
       activesupport (>= 3.0.4)
@@ -365,7 +366,7 @@ DEPENDENCIES
   audited-activerecord
   autoprefixer-rails
   bullet
-  cancan
+  cancancan
   capistrano-passenger
   capistrano-rails
   capistrano-rvm

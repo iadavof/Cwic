@@ -58,8 +58,8 @@ gem 'devise_invitable', '~> 1.3.5'
 gem 'devise-i18n', '~> 0.10.3'
 gem 'devise-i18n-views', '~> 0.2.8'
 
-# Use CanCan for access control / authorisation
-gem 'cancan'
+# Use CanCanCan for access control / authorisation
+gem 'cancancan'
 
 # Use I18n alchemy gem for easy date parsing and localization in forms
 gem 'i18n_alchemy'
