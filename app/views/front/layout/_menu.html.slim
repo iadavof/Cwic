@@ -18,7 +18,7 @@
   ul.menu.user
     - if organisation_client_signed_in?
       li
-        = link_to(front_frontend_organisation_client_path(@frontend, current_organisation_client)) do
+        = link_to(front_frontend_organisation_client_path(@frontend)) do
           span.link-text
             = current_organisation_client.instance_name
           i.icon-user
