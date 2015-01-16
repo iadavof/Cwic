@@ -141,7 +141,7 @@ Cwic::Application.routes.draw do
   namespace :front do
     get 'frontends/:frontend_id/', controller: :frontends, action: :show, as: :frontend
     resources :frontends, only: :none do
-      resources :organisation_clients, except: :index
+      resource :organisation_client, only: [:show, :edit, :update], path: 'my_account'
       resources :frontend_entity_types, only: [] do
         get :gallery, on: :member
         get :list, on: :member
