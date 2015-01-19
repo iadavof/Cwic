@@ -351,11 +351,12 @@ APP.global = {
     $parent.find('input.organisation_client_select').each(this.initializeOrganisationClientSelect);
     $parent.find('input.with-clear').each(this.initializeInputWithClear);
 
-    $parent.find('.select2-offscreen.autosubmit').on('change', function() {
-      $(this).prev('.select2-container').addClass('autosubmit-busy');
-    });
     $parent.find('.autosubmit').on('change', function() {
-      $(this).trigger('submit');
+      $field = $(this);
+      if($field.hasClass('select2-offscreen')) {
+        $field.prev('.select2-container').addClass('autosubmit-busy');
+      }
+      $field.closest('form').trigger('submit');
     });
 
     $(document).on('nested:fieldAdded', function(e) { APP.global.initializeSpecialFormFields(e.field); });
