@@ -1,5 +1,5 @@
 class MyUsersController < CrudController
-
+  # TODO: Copy update_password/update_email structure from Saus (uses respond_with better, jo)
   def edit_password
     respond_with(@user)
   end
@@ -12,7 +12,7 @@ class MyUsersController < CrudController
         sign_in(@user, bypass: true)
         flash[:notice] = t('my_users.update_password.success')
       else
-        flash[:error] = t('my_users.update_password.failure')
+        flash[:alert] = t('my_users.update_password.failure')
         format.html { render 'edit_password' }
       end
     end
@@ -30,7 +30,7 @@ class MyUsersController < CrudController
       if @user.valid?
         flash[:notice] = t('my_users.update_email.success')
       else
-        flash[:error] = t('my_users.update_email.failure')
+        flash[:alert] = t('my_users.update_email.failure')
         format.html { render 'edit_email' }
       end
     end
