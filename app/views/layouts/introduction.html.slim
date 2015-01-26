@@ -7,6 +7,9 @@ html.no-js.introduction-page
     = stylesheet_link_tag "introduction", media: "all", "data-turbolinks-track" => true
     = jquery_include_tag :google
     = javascript_include_tag "introduction", "data-turbolinks-track" => true
+    meta name="viewport" content="width=device-width, user-scalable=yes"
+    meta name="apple-mobile-web-app-capable" content="yes"
+    meta name="mobile-web-app-capable" content="yes"
     = csrf_meta_tags
 
   body data-controller=controller_name data-action=action_name
