@@ -683,9 +683,9 @@ CwicScheduleView.prototype.setNewReservationForm = function(reservationForm, new
   var conceptEnd = newScheduleItem.getConceptEnd();
 
   reservationForm.find('input#begins_at_date').datepicker("setDate", conceptBegin.toDate());
-  reservationForm.find('input#begins_at_tod').val(conceptEnd.format('LT'));
-  reservationForm.find('input#ends_at_date').datepicker("setDate", conceptBegin.toDate());
-  reservationForm.find('input#ends_at_tod').val(conceptBegin.format('LT'));
+  reservationForm.find('input#begins_at_tod').val(conceptBegin.format('LT'));
+  reservationForm.find('input#ends_at_date').datepicker("setDate", conceptEnd.toDate());
+  reservationForm.find('input#ends_at_tod').val(conceptEnd.format('LT'));
   reservationForm.find('select#reservation_entity_id').val(newScheduleItem.scheduleEntity.entity_id);
 
   // Bind new client link
