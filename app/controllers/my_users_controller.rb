@@ -5,7 +5,7 @@ class MyUsersController < CrudController
 
   def update_password
     @user.validate_current_password = true
-    @user.update(member_params)
+    @user.update(params.require(:user).permit(:current_password, :password, :password_confirmation))
     respond_with(@user, action: :edit_password, location: respond_location)
   end
 
@@ -16,7 +16,7 @@ class MyUsersController < CrudController
 
   def update_email
     @user.validate_current_password = true
-    @user.update(member_params)
+    @user.update(params.require(:user).permit(:current_password, :email))
     respond_with(@user, action: :edit_email, location: respond_location)
   end
 
@@ -27,7 +27,7 @@ class MyUsersController < CrudController
   end
 
   def permitted_params
-    [:first_name, :last_name, :infix, :email, :current_password, :password, :password_confirmation]
+    [:first_name, :last_name, :infix]
   end
 
   def respond_location
