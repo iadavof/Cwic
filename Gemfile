@@ -181,6 +181,9 @@ group :development do
   # Spring gem for application pre-loading leading to faster Rails commands
   gem 'spring'
 
+  # Semver for easy versioning
+  gem 'semver'
+
   # Capistrano for easy deployment
   gem 'capistrano-rails'
   gem 'capistrano-rvm'
