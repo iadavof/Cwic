@@ -1,0 +1,70 @@
+#!/bin/bash
+
+set -e
+
+function print_help ()
+{
+   echo ""
+   echo "Make a release on master"
+   echo ""
+   echo "Syntax:"
+   echo ""
+   echo "  [-b]"
+   echo ""
+   echo "  -b  Bugfix release"
+   echo ""
+   echo "Examples:"
+   echo ""
+   echo "                        # Make a release of your local develop branch"
+   echo "  -b                    # Make a bugfix release of your locally patched master branch"
+   echo ""
+}
+
+bugfix="no"
+while getopts "bh" optionName; do
+  case "$optionName" in
+    h) print_help; exit;;
+    b) bugfix="yes";;
+    ?) print_help; exit;;
+  esac
+done
+shift $(($OPTIND - 1))
+
+if [ -n "$(git status --porcelain)" ]; then
+  echo "You have uncommitted changes, please commit first.";
+  exit
+fi
+
+CURRENT_BRANCH=`git rev-parse --abbrev-ref HEAD`
+
+# sync local master with remote
+git checkout master
+git pull --rebase
+
+if [ x$bugfix == xyes ]; then
+  bundle exec semver inc patch
+  git add .semver
+else
+  git checkout -b tmp/RELEASE develop
+  git merge -s ours master -m "Replace master with develop"
+
+  git checkout master
+  git merge --squash tmp/RELEASE
+  git branch -D tmp/RELEASE
+
+  git checkout HEAD .semver
+  bundle exec semver inc minor
+  git add .semver
+
+  git rev-parse develop > .git/MERGE_HEAD
+fi
+
+VERSION=`bundle exec semver tag`
+git commit -n -m "Release $VERSION"
+
+git tag $VERSION
+git push origin $VERSION
+
+git push
+
+git checkout $CURRENT_BRANCH
