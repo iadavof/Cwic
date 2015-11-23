@@ -36,7 +36,7 @@ class OrganisationClient < ActiveRecord::Base
   accepts_nested_attributes_for :contacts, allow_destroy: true
 
   # Scopes
-  pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
+  pg_global_search against: { first_name: 'A', infix: 'C', last_name: 'A', email: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', phone: 'C', mobile_phone: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
 
   default_scope { order(:last_name, :first_name, :locality) }
 

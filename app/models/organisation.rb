@@ -32,7 +32,7 @@ class Organisation < ActiveRecord::Base
   validates :lat, numericality: true, allow_blank: true
 
   # Scopes
-  pg_global_search against: { name: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', postal_code: 'B', phone_general: 'C', phone_reservations: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
+  pg_global_search against: { name: 'A', route: 'B', street_number: 'B', locality: 'B', postal_code: 'B', country: 'B', phone_general: 'C', phone_reservations: 'C' }, associated_against: { stickies: { sticky_text: 'C' } }
 
   # Class methods
 
