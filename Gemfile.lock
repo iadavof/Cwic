@@ -191,7 +191,7 @@ GEM
     js-routes (0.9.8)
       railties (>= 3.2)
       sprockets-rails
-    json (1.8.1)
+    json (1.8.3)
     kaminari (0.16.1)
       actionpack (>= 3.0.0)
       activesupport (>= 3.0.0)
@@ -427,3 +427,6 @@ DEPENDENCIES
   vcard
   websocket-rails!
   websocket-rails-js!
+
+BUNDLED WITH
+   1.10.6
