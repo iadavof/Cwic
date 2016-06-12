@@ -21,6 +21,24 @@ But... the flexibility comes at a cost. It takes very, very many man hours to im
 
 **[1]**: Specify your own configuration if neccesary.
 
+## Finished features
+* Managing Entity types (modelling what you are renting, with which kind of attributes etc.)
+* Managing Entities (instances of the things you are renting, so if you rent rooms, Room 1, with airconditioning, Room 2 with 30 square meters of room, etc).
+* Managing reservations. With availability tracker when making a new reservation.
+* Possiblity to add slack times to reservations, time that is automatically blocked before or after the reservation because it is needed to set up the entity for next use.
+* CRM features, keeping track of customer information, with conventient sticky notes and contact registration.
+* Custom statuses for entities.
+* Calendar views for getting insight in the bookings and availability.
+* Overview of current reservations and their progress.
+* Adding documents to clients, reservations or entities.
+* Easily create a screen for your guests with the starting and end time of upcomming reservations. Possibly with direction symbols for pointing to the location of the event.
+* 
+
+## What we are currently building
+* A frontend for letting the guest make reservations in the `frontend` and `frontend-rebased` branch.
+* A dashboard with all the information for the here and now after logging in to the application in the `dashboard` branch.
+* Construction of rules concerning availability and costs (per hour, week, month, part of a day, etc) and enforcing these renting periods when creating the reservation in the branch `reservation-rules`.
+
 ## Contribution
 We would really appreciate any contribution. Just create a Pull Request and we will be happy to give you feedback and merge additions.
 
