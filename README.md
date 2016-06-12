@@ -10,7 +10,7 @@ To get an impression of what is already done, you could visit the [homepage of t
 But... the flexibility comes at a cost. It takes very, very many man hours to implement all this flexible features. And our initial team only existed of three people. So, we decided to make it open source! Now you can use the system, change it the way you like, contribute to it and let's see where it goes from here. We will still support the project, but we currently have limited amounts of time to work on it.
 
 ## Installation
-1. `git clone ssh://git@github.com:CUnknown/Cwic.git`
+1. `git clone ssh://git@github.com:iadavof/Cwic.git`
 2. `cd cwic`
 3. Install postgresql if you don't already have it installed.
 4. Make sure you're running the required ruby version (see the Gemfile of the project)
