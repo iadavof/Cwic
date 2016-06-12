@@ -26,6 +26,7 @@ But... the flexibility comes at a cost. It takes very, very many man hours to im
 * Managing Entities (instances of the things you are renting, so if you rent rooms, Room 1, with airconditioning, Room 2 with 30 square meters of room, etc).
 * Adding pictures to entity types and entities, used for presentation of the entities.
 * Managing reservations. With availability tracker when making a new reservation.
+* Keeping a history of changes made to reservations by whom.
 * Possiblity to add slack times to reservations, time that is automatically blocked before or after the reservation because it is needed to set up the entity for next use.
 * CRM features, keeping track of customer information, with conventient sticky notes and contact registration. Possibility to add multiple contacts to one customer.
 * Custom statuses for entities.
