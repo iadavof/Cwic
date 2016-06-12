@@ -29,7 +29,7 @@ But... the flexibility comes at a cost. It takes very, very many man hours to im
 * Possiblity to add slack times to reservations, time that is automatically blocked before or after the reservation because it is needed to set up the entity for next use.
 * CRM features, keeping track of customer information, with conventient sticky notes and contact registration. Possibility to add multiple contacts to one customer.
 * Custom statuses for entities.
-* Calendar views for getting insight in the bookings and availability. And directly adding or editing of reservations.
+* Calendar views for getting insight in the bookings and availability. And directly adding or editing reservations.
 * Overview of current reservations and their progress.
 * Adding documents to clients, reservations or entities.
 * Easily create a screen for your guests with the starting and end time of upcomming reservations. Possibly with direction symbols for pointing to the location of the event.
