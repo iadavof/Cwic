@@ -34,16 +34,21 @@ But... the flexibility comes at a cost. It takes very, very many man hours to im
 * Overview of current reservations and their progress.
 * Adding documents to clients, reservations or entities.
 * Easily create a screen for your guests with the starting and end time of upcomming reservations. Possibly with direction symbols for pointing to the location of the event.
-* Global search: Search through all your entities, reservations, clients, sticky notes, contact registrations etc. at once and view them in convienient tiles.
+* Global search: Search through all your entities, reservations, clients, sticky notes, contact registrations etc. at once and view them in convenient tiles.
 * User management and multiple organsation support: One user can work at multiple organisations using the same credentials to log in to these organisations and use a organisation switcher to switch between these organisations.
 
 ## What we are currently building
 * A frontend for letting the guest make reservations in the `frontend` and `frontend-rebased` branch.
 * A dashboard with all the information for the here and now after logging in to the application in the `dashboard` branch.
-* Construction of rules concerning availability and costs (per hour, week, month, part of a day, etc) and enforcing these renting periods when creating the reservation in the branch `reservation-rules`.
+* Construction of rules concerning availability and costs (per hour, week, month, part of a day, etc) and enforcing these renting periods when creating the reservation. Already in `master` but not complete and thoroughly tested.
 
 ## Contribution
 We would really appreciate any contribution. Just create a Pull Request and we will be happy to give you feedback and merge additions.
+
+## Main contributors
+* [Kevin Reintjes](https://github.com/kreintjes)
+* [Christiaan Thijssen](https://github.com/CUnknown)
+* [Floris de Lange](https://github.com/florisdelange)
 
 ## License
 
@@ -57,3 +62,6 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 
 [license-image]: http://img.shields.io/badge/license-MIT-blue.svg?style=flat
 [license-url]: LICENSE
+
+## By the way
+We also created a system for tracking your time! Please have a look at [Saus](https://saus.io) for inspiration.
