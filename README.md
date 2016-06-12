@@ -24,14 +24,17 @@ But... the flexibility comes at a cost. It takes very, very many man hours to im
 ## Finished features
 * Managing Entity types (modelling what you are renting, with which kind of attributes etc.)
 * Managing Entities (instances of the things you are renting, so if you rent rooms, Room 1, with airconditioning, Room 2 with 30 square meters of room, etc).
+* Adding pictures to entity types and entities, used for presentation of the entities.
 * Managing reservations. With availability tracker when making a new reservation.
 * Possiblity to add slack times to reservations, time that is automatically blocked before or after the reservation because it is needed to set up the entity for next use.
-* CRM features, keeping track of customer information, with conventient sticky notes and contact registration.
+* CRM features, keeping track of customer information, with conventient sticky notes and contact registration. Possibility to add multiple contacts to one customer.
 * Custom statuses for entities.
 * Calendar views for getting insight in the bookings and availability. And directly adding or editing of reservations.
 * Overview of current reservations and their progress.
 * Adding documents to clients, reservations or entities.
 * Easily create a screen for your guests with the starting and end time of upcomming reservations. Possibly with direction symbols for pointing to the location of the event.
+* Global search: Search through all your entities, reservations, clients, sticky notes, contact registrations etc. at once and view them in convienient tiles.
+* User management and multiple organsation support: One user can work at multiple organisations using the same credentials to log in to these organisations and use a organisation switcher to switch between these organisations.
 
 ## What we are currently building
 * A frontend for letting the guest make reservations in the `frontend` and `frontend-rebased` branch.
