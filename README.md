@@ -45,7 +45,7 @@ But... the flexibility comes at a cost. It takes very, very many man hours to im
 ## Contribution
 We would really appreciate any contribution. Just create a Pull Request and we will be happy to give you feedback and merge additions.
 
-## Main contributors
+## Maintainers
 * [Kevin Reintjes](https://github.com/kreintjes)
 * [Christiaan Thijssen](https://github.com/CUnknown)
 * [Floris de Lange](https://github.com/florisdelange)
