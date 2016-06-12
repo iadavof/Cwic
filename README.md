@@ -64,4 +64,4 @@ THE SOFTWARE IS PROVIDED “AS IS”, WITHOUT WARRANTY OF ANY KIND, EXPRESS OR I
 [license-url]: LICENSE
 
 ## By the way
-We also created a system for tracking your time! Please have a look at [Saus](https://saus.io) for inspiration.
+We also created a time tracking tool! Please have a look at [Saus](https://saus.io) for inspiration.
