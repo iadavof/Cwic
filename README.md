@@ -28,7 +28,7 @@ But... the flexibility comes at a cost. It takes very, very many man hours to im
 * Managing reservations. With availability tracker when making a new reservation.
 * Keeping a history of changes made to reservations by whom.
 * Possiblity to add slack times to reservations, time that is automatically blocked before or after the reservation because it is needed to set up the entity for next use.
-* CRM features, keeping track of customer information, with conventient sticky notes and contact registration. Possibility to add multiple contacts to one customer.
+* CRM features, keeping track of customer information, with convenient sticky notes and contact registration. Possibility to add multiple contacts to one customer.
 * Custom statuses for entities.
 * Calendar views for getting insight in the bookings and availability. And directly adding or editing reservations.
 * Overview of current reservations and their progress.
